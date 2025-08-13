@@ -1,0 +1,242 @@
+---
+title: "Intro to R  Programming Fall 2025 - Syllabus"
+subtitle: "Boise State University, Anthropology Department"
+author: "Professor Lorraine Gaudio"
+date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Welcome to Intro to R Programming!
+
+
+This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code.
+
+# Course Informaiton
+
+## Course Format
+
+We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on graded assignments during our allotted time.
+
+## Prerequisites 
+
+None other than a basic understanding of how to operate and navigate a computer (especially the file system), the ability to download and upload files with Canvas, and a sense of integrity (especially the academic kind).
+
+## Main Course Learning Objectives
+
+A student successfully completing this course will be able to: 
+
+1. Navigate the R statistical language and programming environment
+
+2. Identify R Studio functions and programming concepts. 
+
+3. Discover the packages and code needed to conduct fundamental mathematical and statistical analysis in R
+
+4. Write code in R to solve sample problems 
+
+5. Explain the importance of an open-access software environment for accessibility, transparency, and reproducible social science. 
+
+## Additional Learning Objectives
+
+The rapid proliferation of artificial intelligence (AI) across all aspects of life is posing challenges to education systems aimed at preparing students. Given the transformative potential of AI for human societies, it is crucial to equip students with the values, knowledge and skills needed to navigate the future with AI. AI has an impact on student learning. This course is designed to give you the skills and foundation to be successful in an R statistics course, yet AI is highly proficient at producing code. As a researcher, you will not only need to precisely create new knowledge but also be able to explain it. Additionally, using generative AI to produce R code for you will not facilitate your learning. Yet at the same time, using generative AI to explore R code will also accelerate your learning. This course will help students strengthen their epistemic values while also targeting the development of several **AI competencies**, including: 
+
+1. **Human-centered mindset**: The dynamics of humans controlling AI versus AI controlling humans.
+
+2. **AI techniques and applications**: Whether or not to use a specific AI system to achieve a justified aim. Before using AI, ask:
+
+-  Should AI be used in a particular situation?
+
+-  Which AI tool to select for a given purpose or task?
+
+-  What are the boundaries, goals, and constraints of a problem? 
+
+3. **Ethics of AI**: Transparency of use and guidelines for utilizing AI within rules and regulations, and privacy risks of certain AI systems.
+
+\pagebreak
+
+The epistemic values of this course are associated with intellectual virtues or “**learning skills**.”
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+
+learning_skills <- tribble(
+  ~Skill, ~Meaning, 
+  "Curiosity",
+  "Asking new, relevant questions and investigating them beyond what’s assigned.",
+
+  "Autonomy",
+  "Taking initiative and making choices about your learning path, rather than waiting for exact instructions.",
+
+  "Thoroughness",
+  "Clearly documenting your steps and reasoning so someone else can follow your process.",
+  "Open-mindedness",
+  "Considering and testing alternative methods or perspectives, even if you already have a working answer.",
+  
+  "Courage",
+  "Speaking up with ideas or questions, especially when you’re unsure, and sharing your work for feedback.",
+
+  "Tenacity",
+  "Persisting through difficulties, revising code, and knowing when to seek help after genuine effort.",
+
+  "Transparency",
+  "Disclosing methods, materials, assumptions, values, and interests."
+)
+
+kbl(
+  learning_skills,
+  format = "latex", booktabs = TRUE, longtable = TRUE, escape = FALSE,
+  align = c("l","l","l")
+) |>
+  kable_styling(
+    latex_options = c("repeat_header","hold_position"),
+    font_size = 9   # shrink a bit so it fits comfortably
+  ) |>
+  # choose widths that sum to < text width (~16cm with default margins)
+  column_spec(1, width = "3cm") |>
+  column_spec(2, width = "5.5cm") |>
+  column_spec(3, width = "7.5cm")
+
+```
+
+
+# Course Requirements
+
+## Course Materials
+
+All required materials will be supplied and available to download via Canvas.
+
+The following resources are recommended but not required. They will help you learn R programming and data analysis concepts more effectively:
+
+- **R for Data Science** by Hadley Wickham and Garrett Grolemund [https://r4ds.had.co.nz/](https://r4ds.had.co.nz/). This book is a great introduction to R and data science concepts.
+
+- **Introduction to Data Science** by Rafael Irizarry [https://rafalab.dfci.harvard.edu/dsbook-part-1/](https://rafalab.dfci.harvard.edu/dsbook-part-1/)
+
+## Class Participation
+
+You will be doing coding in class with your peers. You need to be prepared by watching the video(s) and completing the assignment(s) ahead of time. This is because you will apply video content to additional problems and explore beyond what is demonstrated using your selected dataset. The instructor will be there to help you through the material. Learning to code is a trial-and-error process.
+
+## Study Time Required
+
+Expect to spend approximately one hour outside of class time per week reviewing video(s) and preparing for class. Please be aware that time estimates for each lesson and assignment are estimates only. The actual time you spend completing the course activities will vary depending on how quickly you read and the level of your technology skills. On average, students will need to spend more time preparing for class in the second half of the semester. Organize your time in a way that allows you to thoughtfully and thoroughly complete assignments.
+
+## Grading Information
+
+In this course, your grade starts at zero and grows as you earn points by showing what you can do—not by avoiding mistakes. You will never “lose” points because something went wrong. Instead, every activity is a chance to build your total toward 100 points. On assignment, half of your points will come from solving R problems (technical skills) and half from demonstrating learning skills. These habits, like curiosity, tenacity, and thoroughness, make you a stronger, more independent learner. I will model these skills in lectures and videos, and you will have many ways to show them in your work and class. The goal is for you to leave this course not only knowing R basics, but also knowing how to keep learning R (and other tools) long after the semester ends.
+
+Grades in this course are based on a 100-point grading system utilizing the allocation of points shown below.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tibble)
+library(kableExtra)
+
+tbl <- tribble(
+  ~`Graded Activity`, ~Points, ~Description,
+  "Document Technical Skill Practice", 40,
+  "14 self-guided problem-solving tasks linked to the video lectures. Each is worth 2.50 points. Highest points = correct answer with working code. Partial points = partially correct or code with minor errors. Attempted but incorrect = lower partial points. No submission = 0 points. Assignments have multiple opportunities to earn points.",
+  "Document Learning with Memos", 40,
+  "Short written reflections throughout your assignments that document your thought process, problem-solving steps, and use of targeted learning skills (Curiosity, Autonomy, Thoroughness, Open-mindedness, Courage, Tenacity, Transparency). Points are additive—you only gain points here, never lose them. Each memo can earn up to 0.5 points based on evidence of skill use.",
+  "Signature Assignment", 20,
+  "An independent project where you get to select a real dataset to play with. You will apply R packages/functions from the course and produce a reproducible report. Your submission will include: 1) clean, runnable code, 2) explanatory comments, and 3) memos throughout.",
+  "Total", 100, ""
+)
+
+kbl(
+  tbl, format = "latex", booktabs = TRUE, longtable = FALSE,
+  align = c("l","c","l"), linesep = ""
+) |>
+  kable_styling(latex_options = c("hold_position"), font_size = 9) |>
+  # Force wrapping — adjust widths to fit your margins (sum < ~16cm)
+  column_spec(1, width = "4.2cm") |>
+  column_spec(2, width = "1.2cm") |>
+  column_spec(3, width = "10.5cm") |>
+  row_spec(0, bold = TRUE, background = "#EEEEEE") |>
+  row_spec(nrow(tbl), bold = TRUE)
+
+```
+
+Tip: Confirm an assignment has been submitted and view all of your scores and accompanying comments on graded assignments by accessing “My Grades” in the Canvas course menu.
+
+## Final Letter Grades
+
+Final Letter Grades will be based on the following scale:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tibble)
+library(kableExtra)
+
+grades <- tribble(
+  ~`Grade band`, ~`Plus`,              ~`Base`,           ~`Minus`,
+  "A grades",     "100–98%: A+",        "97.5–93%: A",     "92.5–90%: A-",
+  "B grades",     "89.5–88%: B+",       "87.5–83%: B",     "82.5–80%: B-",
+  "C grades",     "79.5–78%: C+",       "78–73%: C",       "72–70%: C-",
+  "D grades",     "69.5–68%: D+",       "67.5–63%: D",     "62.5–60%: D-",
+  "F grades",     "59.5–0%: F",         "",                ""
+)
+
+kbl(
+  grades, format = "latex", booktabs = TRUE, align = c("l","l","l","l"),
+  linesep = ""
+) |>
+  kable_styling(font_size = 9, latex_options = c("hold_position")) |>
+  # widths sum to less than the text width; adjust if your margins differ
+  column_spec(1, width = "3.0cm") |>
+  column_spec(2, width = "3.5cm") |>
+  column_spec(3, width = "3.5cm") |>
+  column_spec(4, width = "3.5cm") |>
+  row_spec(0, bold = TRUE) |>
+  kableExtra::collapse_rows(columns = 1, valign = "top")  # optional: if you later stack subrows
+
+```
+
+# Student Expectations/Responsibilities
+
+## Academic Integrity
+
+Academic Integrity: a set of positive values and an agreement with ethical and professional principles, standards, and practices that involve the whole institution.
+Honesty, trust, fairness, respect, responsibility, and courage (to name a few)
+
+Boise State promotes Academic Excellence as a core Shared Value, upholding the virtue of honesty in the pursuit of knowledge. Behaving with integrity and honesty is a hallmark of a Boise State University graduate. The conferring of a degree represents the University’s indication that the recipient has engaged in academic work that is representative of her/his own efforts and completed with integrity and honesty.
+
+Upholding academic integrity in all assignments allows students to engage with the material being investigated and assert their evidence-based findings. This behavior demonstrates the commitment to learning and preparation necessary for a successful future. All work you submit must represent your own ideas and effort or be cited, including any material you wrote for another course; when work does not, it is academic dishonesty. Academic dishonesty in any form may result in failure in the course or dismissal from the Program and/or the University. See Boise State’s [Academic Integrity](https://www.boisestate.edu/registrar/general-information-and-policies/academic-integrity/) page for specific behaviors to avoid. 
+
+## Generative AI Use
+
+Assignments will explicitly say if and which generative AI (GAI) are allowed and how you are allowed to use them. In this course, you can always be allow to use [boisestate.ai](https://boisestate.ai) to help you troubleshoot error messages or support your curiosities. You must not use any AI tool to directly answer your assignment questions for you. Doing so will be a disservice to yourself, as you will not be prepared for subsequent courses. Additionally, this will breach our agreement as outlined in this syllabus and constitute a violation of academic integrity. 
+
+An essential part of learning and discovery is embracing its challenges. You’re not likely to learn effectively if a task isn’t pushing you out of your comfort zone. GAI tools can make work easier, but there is a risk of over-reliance. It is important to avoid skipping steps in the learning and creative process because each step contributes to a deeper understanding of the subject matter. AI should enhance your work, aid your curiosity, and not replace your unique contributions. To ensure generative AI does not blunt or prevent types of insights that you might only achieve through independent effort, you will define an AI-human effort use for your learning and research along with a reflection of how you feel this use case affected your learning. This model would clarify which research stages and processes can lean on AI automation, which need interactive AI tool use, and when the researcher must engage in deeper thought and reflection. 
+
+You will be transparent about when and how generative AI in your memos. Include: 
+
+1. A record of prompt and chat activity. 
+
+2. A reflection on how GAI might have aided or hindered learning or knowledge creation. 
+
+# Instructor Expectations/Responsibilities
+

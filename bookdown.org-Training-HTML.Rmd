@@ -1,0 +1,129 @@
+---
+title: "Styling in Markdown HTML"
+author: "Lorraine Gaudio"
+subtitle: "Intorduction to R Programming"
+team: "Fall 2025"
+date: "`r Sys.Date()`"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: assets/header.html
+      after_body: assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r setup2, include=FALSE}
+library(kableExtra)
+```
+
+# Centralized CSS File
+
+The `styles.css` CSS file styles the HTML documents with Boise State brand. We achieve consistent styling across multiple HTML documents and prevent redundancy of CSS code. This Master CSS File is the source of our consistent styling.
+
+`self_contained: true` By default, R Markdown produces self-contained HTML files. The resulting HTML file is fully self-contained, meaning we can easily share or move the file without worrying about missing resources. Everything needed to render the document is within a single file. We can send the HTML file via email, upload it to a web server, or distribute it in other ways without worrying about linked files. Embedding all resources can lead to a large HTML file, especially if it contains many or large images, videos, or complex CSS/JavaScript.
+
+`self_contained: false` R Markdown generates an HTML file with external dependencies. CSS files, JavaScript files, images, and other resources are not embedded in the HTML file. Instead, they are linked externally. The HTML file itself remains small and the browser can load and cache external resources more efficiently, especially if they are reused across multiple documents or web pages. This can lead to faster page load times. This is not for portable HTML files. If we are deploying the document to a web server where we can manage the external resources (e.g., a website) and to optimize loading performance, reuse resources across multiple documents, or frequently update shared resources like stylesheets or scripts.
+
+##  Use a Template Approach
+
+We’re generating multiple documents with similar structure and styling, consider creating an R Markdown template. Individuals at Boise State may already have a CSS template with Boise State's brand. Agreeing on the template with our colleagues ensuring that everyone produces documents with the same consistent styling. 
+
+We will create a custom template. Our CSS and other common elements in a template file are stored to reuse across different projects. R Markdown supports custom templates, allowing us to package our styling, YAML header, and any other common elements into a reusable format. CSS files can be hosted externally on GitHub but it requires an internet connection to load the document. 
+## Includes
+
+The includes option is designed for scenarios where we want to add custom HTML content or scripts to our document that are not easily handled within the regular Markdown syntax.
+
+For example, we might want to include a footer with specific branding, legal disclaimers, or navigation links that appear at the end of each document. Banners, navigation bars, or important notices can be added to the header or footer of the document. To use this feature, we'd need to create separate HTML files that contain the content you want to include in these specific parts of our document. 
+
+        includes:
+          in_header: header.html
+          before_body: doc_prefix.html
+          after_body: doc_suffix.html
+
+# Tabbed sections {.tabset .tabset-fade .tabset-pills}
+
+You can organize content using tabs by applying the .tabset class attribute to headers within a document. This will cause all sub-headers of the header with the .tabset attribute to appear within tabs rather than as standalone sections.
+
+## R Markdown Document
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Data frame printing
+
+You can enhance the default display of data frames via the df_print option. 
+
+## Paged printing
+
+The setting `df_print: paged` allows for paged printing of data frames.
+
+`rows.print`	The number of rows to display.
+`cols.print`	The number of columns to display.
+
+```{r cols.print=6, rows.print=8}
+mtcars
+```
+
+This interactive table is paginated, allowing you to scroll through the data frame by rows (See bottom right options "Previous 1 2 3 4 Next") and columns (See small carrot arrow right of the column names). The number displayed can be customized using the `rows.print` and `cols.print` chunk options.
+
+## kableExtra
+
+Our report might to switch between PDF and HTML with minimal changes. `kableExtra` is a strong choice, as it gracefully degrades from an interactive table in HTML to a clean, static table in PDF.
+
+```{r}
+# Example data frame
+data <- mtcars
+
+# Use kableExtra for enhanced table display
+kable(data, caption = "Summary of MTCARS Data") |>
+  kable_styling(full_width = F, position = "center")
+```
+
+
+#  MathJax
+
+MathJax allows us to write complex mathematical equations in LaTeX, a typesetting system widely used for academic and scientific documents, directly in your HTML files. These equations are then rendered beautifully in web browsers.
+
+Here’s an example of the time-dependent Schrödinger equation:
+
+\[
+i\hbar \frac{\partial}{\partial t}\Psi(\mathbf{r}, t) = \left[-\frac{\hbar^2}{2m} \nabla^2 + V(\mathbf{r}, t)\right] \Psi(\mathbf{r}, t)
+\]
+
+In this equation:
+- \( \Psi(\mathbf{r}, t) \) is the wave function of the quantum system, a function of position \( \mathbf{r} \) and time \( t \).
+- \( i \) is the imaginary unit.
+- \( \hbar \) is the reduced Planck's constant.
+- \( \frac{\partial}{\partial t} \) is the partial derivative with respect to time.
+- \( m \) is the mass of the particle.
+- \( \nabla^2 \) is the Laplacian operator, representing the spatial second derivatives.
+- \( V(\mathbf{r}, t) \) is the potential energy function.
+
+

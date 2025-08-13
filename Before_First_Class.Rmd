@@ -1,0 +1,61 @@
+---
+title: "Read Before Our First Class"
+author: "Lorraine Gaudio"
+subtitle: "Introduction to R Programming"
+team: "Fall 2025"
+date: "`r Sys.Date()`"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: assets/header.html
+      after_body: assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Welcome to Intro to R Programming! This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code. 
+
+We are using a computer lab classroom, but many students use their own laptop.  Using your own laptop will allow you to save your progress more efficiently.  You'll also only need to download certain packages once with your own laptop.
+
+Before the first day of the course, please download R and RStudio onto your personal laptops to be ready for the first lessons.
+
+## Download and Install R and RStudio
+
+RStudio works with a locally installed copy of R and does not include R itself. You can download R from CRAN.
+
+### Download and Install R
+
+1. Go to the [CRAN R Project for Statistical Computing](https://cran.r-project.org/) website.
+
+2. Download the correct file for your operating system. 
+
+a. Click on the "Download R for Windows" link if you are using Windows. You will download an .exe file. Open the file and accept defaults. Do not change the file location to your OneDrive cloud folder. 
+
+b. Click "Download R for macOS" if you are using a Mac. You will download a .pkg file. Open the file and accept defaults. You’ll get both the R framework and the R.app GUI.
+
+### Download and Install RStudio
+
+1. Go to the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+
+2. Choose the installer for your operating system and run it, accepting defaults.
+
+3. After installation, open RStudio. Open RStudio; it will auto‑detect your R installation.
+
+## RStudio Interface
+
+You should see a window with four panes: the script editor, console, environment/history, and files/plots/packages/help/viewer.
+
