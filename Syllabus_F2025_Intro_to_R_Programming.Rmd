@@ -35,14 +35,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Welcome to Intro to R Programming!
 
-
 This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code.
+
+We are using a computer lab classroom in Riverfront Hall (RFH), Room 208. Please attend your scheduled session on Monday from 9:00 AM to 9:50 AM or from 10:30 AM to 11:20 AM. In-class activities will be part of your grade, so please attend class. If you are unable to attend class, please contact me by email.
 
 # Course Informaiton
 
 ## Course Format
 
-We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on graded assignments during our allotted time.
+We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Videos and their accompanying assignments are due before each class. Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on graded assignments during our allotted time.
 
 ## Prerequisites 
 
@@ -215,7 +216,21 @@ kbl(
 
 ```
 
+## Late Work Policy
+
+It is always best to submit work on time, but I understand that sometimes extenuating circumstances make this difficult. My policy on late work is as follows: Everyone takes R at their own pace. The due dates are guidelines more than anything. Unfortunately, it is not possible to consider assignments turned in after **December 12th**. If you 
+
 # Student Expectations/Responsibilities
+
+## Communication
+
+Contact the instructor, Professor Gaudio, by email at **lorrainegaudio@boisestate.edu** to ask questions, give status reports, or request 1:1 assistance, if needed. You are encouraged to ask questions directly and immediately. I’d be happy to schedule an in-person or online Zoom session to help you out with any problem, big or small. **Every student in this course can and should be successful.** If you need help, please reach out.
+
+If you notice any problems in the course or seek clarification on an assignment, send me an email, a Google Chat message, or a Canvas Message. If you need technical assistance, please call the Help Desk. For assistance with technical problems in Canvas, please contact the Boise State Help Desk, **helpdesk@boisestate.edu**, tel. 208-426-4357, or see [https://www.boisestate.edu/oit-learning/canvas/](https://www.boisestate.edu/oit-learning/canvas/) and scroll to the Canvas for Students section.
+
+## Student Well-Being
+
+If you are struggling for any reason (COVID, relationship, family, or life’s stresses) and believe these may impact your performance in the course, we encourage you to contact the Dean of Students at (208) 426-1527 or email **deanofstudents@boisestate.edu** for support. Additionally, if you are comfortable doing so, please reach out to me and I will provide any resources or accommodations that I can. If you notice a significant change in your mood, sleep, feelings of hopelessness or a lack of self-worth, consider connecting immediately with Counseling Services (1529 Belmont Street, Norco Building) at (208) 426-1459 or email **healthservices@boisestate.edu***.
 
 ## Academic Integrity
 
@@ -226,7 +241,7 @@ Boise State promotes Academic Excellence as a core Shared Value, upholding the v
 
 Upholding academic integrity in all assignments allows students to engage with the material being investigated and assert their evidence-based findings. This behavior demonstrates the commitment to learning and preparation necessary for a successful future. All work you submit must represent your own ideas and effort or be cited, including any material you wrote for another course; when work does not, it is academic dishonesty. Academic dishonesty in any form may result in failure in the course or dismissal from the Program and/or the University. See Boise State’s [Academic Integrity](https://www.boisestate.edu/registrar/general-information-and-policies/academic-integrity/) page for specific behaviors to avoid. 
 
-## Generative AI Use
+## Student AI Use
 
 Assignments will explicitly say if and which generative AI (GAI) are allowed and how you are allowed to use them. In this course, you can always be allow to use [boisestate.ai](https://boisestate.ai) to help you troubleshoot error messages or support your curiosities. You must not use any AI tool to directly answer your assignment questions for you. Doing so will be a disservice to yourself, as you will not be prepared for subsequent courses. Additionally, this will breach our agreement as outlined in this syllabus and constitute a violation of academic integrity. 
 
@@ -239,4 +254,22 @@ You will be transparent about when and how generative AI in your memos. Include:
 2. A reflection on how GAI might have aided or hindered learning or knowledge creation. 
 
 # Instructor Expectations/Responsibilities
+
+## Instructor AI Use
+
+1. I may use GAI to aid in providing custom and personal feedback on your assignments. Your work is never uploaded into any AI tool. You may choose to opt out when submitting your assignment. 
+
+- Question: Will the AI tool replace instructor grading?
+
+Short Answer: No. I will never upload your work into an AI tool. Instead, I will use AI to improve on explaining.
+
+- Question: Does opting out affect my grade?
+
+Short Answer: No. Both submission routes are graded with the same rubric.
+
+2. I use GAI to aid in editing lessons and assignments. I am redesigning this course, and I am using AI to assist me in making improvements.
+
+# Additonal Syllabus Policies
+
+Please refer to these documents for more information about [University Guidelines and Policies](https://docs.google.com/document/d/14ZMRsHAgo356h0nHtJuStDKGwvg6LY-XOA7PxacwECw/edit?usp=sharing), and [Student Expectations and Guidelines](https://docs.google.com/document/d/1tO-RnUbkFoQTNhFLzo7HXers2p_3OS4NUFdowagugNw/edit?usp=sharing).
 
