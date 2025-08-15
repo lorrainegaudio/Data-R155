@@ -1,31 +1,81 @@
 ---
 title: "Lesson 1"
-author: "Lorraine Gaudio"
+subtitle: "Boise State University, Anthropology Department"
+author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
-output:
-  html_document:
-    toc: true
-    toc_depth: 3
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
-    number_sections: true
-    css: ../assets/styles.css
-    fig_caption: true
-    df_print: paged
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
-  pdf_document:
-    toc: true
-    toc_depth: '3'
-subtitle: Introduction to R Programming
-team: Fall 2025
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 1"
+subtitle: "Boise State University, Anthropology Department"
+author: "Professor Lorraine Gaudio"
+date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 1"
+subtitle: "Boise State University, Anthropology Department"
+author: "Professor Lorraine Gaudio"
+date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
 
 # 👋 Welcome to Lesson 1
 
@@ -68,13 +118,17 @@ In the next few minutes you will learn how to:
 ```{r}
 # Create a memo note in you R script. 
 
-## 1. Explain what you did, what your observations are, and what you expect to happen. 
+## 1. Explain what you did, what your observations are, and what you expect 
+# to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo
 
 ## Example:
 
-# I ran the command 3 + 4 in the console. I expect to see the result 7 printed in the console. I wondered what happens if there are no spaces between the numbers and the plus sign. I tested it and it still works. I learned that R ignores spaces in the code.
+# I ran the command 3 + 4 in the console. I expect to see the result 7 printed 
+# in the console. I wondered what happens if there are no spaces between 
+# the numbers and the plus sign. I tested it and it still works. I learned that 
+# R ignores spaces in the code.
 ```
 
 The value 7 isn't saved anywhere yet; it's just printed as a result in the console. Next we'll capture results as objects so we can reuse them.
@@ -97,15 +151,24 @@ Find the Environment pane (top-right) and see the new objects.
 
 ```{r}
 # Create a memo note in you R script. 
-## 1. Explain what you did, what your observations are, and what you expect to happen.
+## 1. Explain what you did, what your observations are, and what you expect 
+# to happen.
 
 ## 2. Demonstrate learning skill(s) in your memo
 
 # Example:
 
-# I created three objects: result, number, and ratio. I assigned the value of 3 + 4 to result, 42 to number, and calculated the ratio of number to result. When I typed the name of one object in the console, it printed the value of that object. 
+# I created three objects: result, number, and ratio. I assigned the value of 
+# 3 + 4 to result, 42 to number, and calculated the ratio of number to result.
+# When I typed the name of one object in the console, it printed the value of
+# that object. 
 
-# I decided to click around in the Environment pane and found a down carrot next to list. I switched it to Grid and then back again. I then decided to learn more about this by typing this into a internet search engine. "Explain the drop down carrot next to List in R Studio. What is the difference between Grid and List?" I learned that "Grid" is used to visualize data in a structured format where "List" is a simple way of organizing objects.
+# I decided to click around in the Environment pane and found a down carrot 
+# next to list. I switched it to Grid and then back again. I then decided to
+# learn more about this by typing this into a internet search engine. "Explain
+# the drop down carrot next to List in R Studio. What is the difference between
+# Grid and List?" I learned that "Grid" is used to visualize data in a 
+# structured format where "List" is a simple way of organizing objects.
 ```
 
 Reminder: Now would be a great time to click save (or press Ctrl + S) to save your script.
@@ -115,7 +178,6 @@ Reminder: Now would be a great time to click save (or press Ctrl + S) to save yo
 getwd()  # This shows your current working directory.
 
 If you have the course project open, it should show the correct folder. Additionally, you can set it with setwd() if needed. 
-
 
 🔍  Does RStudio have an autosave feature? What happens if you close RStudio without saving? How often should you save your work?
 
@@ -159,9 +221,13 @@ message   # Run to print the full message
 
 🗣️ Create your own *statement* with something you’d like to tell future‑you, then run it the message lines again.
 
+Example:
+own_message <- "I will remember to save my work often."
+
 ```{r}
 # Create a memo note in you R script.
-## 1. Explain what you did, what your observations are, and what you expect to happen.
+## 1. Explain what you did, what your observations are, and what you expect 
+# to happen.
 
 ## 2. Demonstrate learning skill(s) in your memo
 ```
@@ -222,13 +288,17 @@ my_object <- ___
 ```{r}
 # Create a memo note in your R script.
 
-## 1. Explain what you did, what your observations are, and what you expect to happen.
+## 1. Explain what you did, what your observations are, and what you expect 
+# to happen.
 
 ## 2. Demonstrate learning skill(s) in your memo
 
 # Example:
 
-# I tried to create an object called my_object that combines the sentence and total_revenue but I forgot that the quotation mark needed to be before the comma, not after. I had an error and it took me a few minutes to figure it out. I review the earlier script to compare and then I finally saw it. 
+# I tried to create an object called my_object that combines the sentence and
+# total_revenue but I forgot that the quotation mark needed to be before the
+# comma, not after. I had an error and it took me a few minutes to figure it 
+# out. I review the earlier script to compare and then I finally saw it. 
 ```
 
 # Save workspace

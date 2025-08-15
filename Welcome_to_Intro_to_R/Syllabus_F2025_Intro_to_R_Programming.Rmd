@@ -40,7 +40,7 @@ This course will cover how to use the R software environment for data analysis. 
 We are using a computer lab classroom in Riverfront Hall (RFH), Room 208. Please attend your scheduled session on Monday from 9:00 AM to 9:50 AM or from 10:30 AM to 11:20 AM. In-class activities will be part of your grade, so please attend class. If you are unable to attend class, please contact your instructor by email.
 
 ```{r instructor_photo, echo=FALSE, fig.align='center', out.width="25%"}
-knitr::include_graphics("images/DSC_0624_sqre.jpg")
+knitr::include_graphics("../images/DSC_0624_sqre.jpg")
 ```
 
 Email:	**lorrainegaudio@boisestate.edu** (You can call me “Professor Gaudio” or “Lorraine” is fine too!)

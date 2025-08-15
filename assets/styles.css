@@ -4,8 +4,21 @@ body {
     font-family: 'Garamond', serif;
     line-height: 1.6;
     margin: 0 20px;
-    color: #535455; /* Neutral text color */
+    color: #333333; /* Darker than #535455 */
     text-align: justify; /* Justify text margins */
+}
+
+/* Darker comments in code chunks (Pandoc + highlight.js + Pygments) */
+pre.sourceCode code span.co,
+code.sourceCode span.co,
+pre code span.co,          /* Pandoc */
+pre code .hljs-comment,    /* highlight.js */
+pre code .c,               /* Pygments generic comment */
+pre code .c1,              /* Pygments single-line */
+pre code .cm,              /* Pygments multi-line */
+pre code span.comment {    /* Legacy/other */
+  color: #333 !important;  /* go darker if you want: #222 or #000 */
+  font-style: italic;
 }
 
 h1, h2, h3, h4, h5, h6 {
