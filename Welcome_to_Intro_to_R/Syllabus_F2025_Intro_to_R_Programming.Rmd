@@ -12,7 +12,7 @@ output:
     fig_caption: true
     df_print: kable # Data frame printing
     includes:
-      in_header: assets/header.tex
+      in_header: ../assets/header.tex
     latex_engine: xelatex  # Use xelatex to support fontspec
 fontsize: 12pt
 geometry: margin=1in

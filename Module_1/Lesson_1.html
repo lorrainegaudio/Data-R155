@@ -12,7 +12,7 @@
 <meta name="author" content="Lorraine Gaudio" />
 
 
-<title>Learning Skills Quick Guide</title>
+<title>Lesson 1</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1275,83 +1275,6 @@ window.buildTabsets = function(tocID) {
   });
 };
 
-</script>
-<script>
-window.initializeCodeFolding = function(show) {
-
-  // handlers for show-all and hide all
-  $("#rmd-show-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('show');
-    });
-  });
-  $("#rmd-hide-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('hide');
-    });
-  });
-
-  // index for unique code element ids
-  var currentIndex = 1;
-
-  // select all R code blocks
-  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
-  rCodeBlocks.each(function() {
-    // skip if the block has fold-none class
-    if ($(this).hasClass('fold-none')) return;
-
-    // create a collapsable div to wrap the code in
-    var div = $('<div class="collapse r-code-collapse"></div>');
-    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
-    var id = 'rcode-643E0F36' + currentIndex++;
-    div.attr('id', id);
-    $(this).before(div);
-    $(this).detach().appendTo(div);
-
-    // add a show code button right above
-    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
-    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
-    showCodeButton.append(showCodeText);
-    showCodeButton
-        .attr('data-toggle', 'collapse')
-        .attr('data-bs-toggle', 'collapse') // BS5
-        .attr('data-target', '#' + id)
-        .attr('data-bs-target', '#' + id)   // BS5
-        .attr('aria-expanded', showThis)
-        .attr('aria-controls', id);
-
-    var buttonRow = $('<div class="row"></div>');
-    var buttonCol = $('<div class="col-md-12"></div>');
-
-    buttonCol.append(showCodeButton);
-    buttonRow.append(buttonCol);
-
-    div.before(buttonRow);
-
-    // show the div if necessary
-    if (showThis) div.collapse('show');
-
-    // update state of button on show/hide
-    //   * Change text
-    //   * add a class for intermediate states styling
-    div.on('hide.bs.collapse', function () {
-      showCodeText.text('Show');
-      showCodeButton.addClass('btn-collapsing');
-    });
-    div.on('hidden.bs.collapse', function () {
-      showCodeButton.removeClass('btn-collapsing');
-    });
-    div.on('show.bs.collapse', function () {
-      showCodeText.text('Hide');
-      showCodeButton.addClass('btn-expanding');
-    });
-    div.on('shown.bs.collapse', function () {
-      showCodeButton.removeClass('btn-expanding');
-    });
-
-  });
-
-}
 </script>
 <style type="text/css">.hljs-literal {
 color: #990073;
@@ -2643,230 +2566,6 @@ window.onload = function() {
   PagedTableDoc.initAll();
 };
 </script>
-<script>$(document).ready(function(){
-    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
-        $('[data-toggle="tooltip"]').tooltip();
-    }
-    if ($('[data-toggle="popover"]').popover === 'function') {
-        $('[data-toggle="popover"]').popover();
-    }
-});
-</script>
-<style type="text/css">
-.lightable-minimal {
-border-collapse: separate;
-border-spacing: 16px 1px;
-width: 100%;
-margin-bottom: 10px;
-}
-.lightable-minimal td {
-margin-left: 5px;
-margin-right: 5px;
-}
-.lightable-minimal th {
-margin-left: 5px;
-margin-right: 5px;
-}
-.lightable-minimal thead tr:last-child th {
-border-bottom: 2px solid #00000050;
-empty-cells: hide;
-}
-.lightable-minimal tbody tr:first-child td {
-padding-top: 0.5em;
-}
-.lightable-minimal.lightable-hover tbody tr:hover {
-background-color: #f5f5f5;
-}
-.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-classic {
-border-top: 0.16em solid #111111;
-border-bottom: 0.16em solid #111111;
-width: 100%;
-margin-bottom: 10px;
-margin: 10px 5px;
-}
-.lightable-classic tfoot tr td {
-border: 0;
-}
-.lightable-classic tfoot tr:first-child td {
-border-top: 0.14em solid #111111;
-}
-.lightable-classic caption {
-color: #222222;
-}
-.lightable-classic td {
-padding-left: 5px;
-padding-right: 5px;
-color: #222222;
-}
-.lightable-classic th {
-padding-left: 5px;
-padding-right: 5px;
-font-weight: normal;
-color: #222222;
-}
-.lightable-classic thead tr:last-child th {
-border-bottom: 0.10em solid #111111;
-}
-.lightable-classic.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-classic.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-classic-2 {
-border-top: 3px double #111111;
-border-bottom: 3px double #111111;
-width: 100%;
-margin-bottom: 10px;
-}
-.lightable-classic-2 tfoot tr td {
-border: 0;
-}
-.lightable-classic-2 tfoot tr:first-child td {
-border-top: 3px double #111111;
-}
-.lightable-classic-2 caption {
-color: #222222;
-}
-.lightable-classic-2 td {
-padding-left: 5px;
-padding-right: 5px;
-color: #222222;
-}
-.lightable-classic-2 th {
-padding-left: 5px;
-padding-right: 5px;
-font-weight: normal;
-color: #222222;
-}
-.lightable-classic-2 tbody tr:last-child td {
-border-bottom: 3px double #111111;
-}
-.lightable-classic-2 thead tr:last-child th {
-border-bottom: 1px solid #111111;
-}
-.lightable-classic-2.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-material {
-min-width: 100%;
-white-space: nowrap;
-table-layout: fixed;
-font-family: Roboto, sans-serif;
-border: 1px solid #EEE;
-border-collapse: collapse;
-margin-bottom: 10px;
-}
-.lightable-material tfoot tr td {
-border: 0;
-}
-.lightable-material tfoot tr:first-child td {
-border-top: 1px solid #EEE;
-}
-.lightable-material th {
-height: 56px;
-padding-left: 16px;
-padding-right: 16px;
-}
-.lightable-material td {
-height: 52px;
-padding-left: 16px;
-padding-right: 16px;
-border-top: 1px solid #eeeeee;
-}
-.lightable-material.lightable-hover tbody tr:hover {
-background-color: #f5f5f5;
-}
-.lightable-material.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-material.lightable-striped tbody td {
-border: 0;
-}
-.lightable-material.lightable-striped thead tr:last-child th {
-border-bottom: 1px solid #ddd;
-}
-.lightable-material-dark {
-min-width: 100%;
-white-space: nowrap;
-table-layout: fixed;
-font-family: Roboto, sans-serif;
-border: 1px solid #FFFFFF12;
-border-collapse: collapse;
-margin-bottom: 10px;
-background-color: #363640;
-}
-.lightable-material-dark tfoot tr td {
-border: 0;
-}
-.lightable-material-dark tfoot tr:first-child td {
-border-top: 1px solid #FFFFFF12;
-}
-.lightable-material-dark th {
-height: 56px;
-padding-left: 16px;
-padding-right: 16px;
-color: #FFFFFF60;
-}
-.lightable-material-dark td {
-height: 52px;
-padding-left: 16px;
-padding-right: 16px;
-color: #FFFFFF;
-border-top: 1px solid #FFFFFF12;
-}
-.lightable-material-dark.lightable-hover tbody tr:hover {
-background-color: #FFFFFF12;
-}
-.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
-background-color: #FFFFFF12;
-}
-.lightable-material-dark.lightable-striped tbody td {
-border: 0;
-}
-.lightable-material-dark.lightable-striped thead tr:last-child th {
-border-bottom: 1px solid #FFFFFF12;
-}
-.lightable-paper {
-width: 100%;
-margin-bottom: 10px;
-color: #444;
-}
-.lightable-paper tfoot tr td {
-border: 0;
-}
-.lightable-paper tfoot tr:first-child td {
-border-top: 1px solid #00000020;
-}
-.lightable-paper thead tr:last-child th {
-color: #666;
-vertical-align: bottom;
-border-bottom: 1px solid #00000020;
-line-height: 1.15em;
-padding: 10px 5px;
-}
-.lightable-paper td {
-vertical-align: middle;
-border-bottom: 1px solid #00000010;
-line-height: 1.15em;
-padding: 7px 5px;
-}
-.lightable-paper.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-paper.lightable-striped tbody tr:nth-child(even) {
-background-color: #00000008;
-}
-.lightable-paper.lightable-striped tbody td {
-border: 0;
-}
-</style>
 <header>
   <div class="header-wrapper">
     <h1>INTRODUCTION TO R PROGRAMMING</h1>
@@ -2901,29 +2600,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-
-div.csl-bib-body { }
-div.csl-entry {
-clear: both;
-margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-margin-left:2em;
-text-indent:-2em;
-}
-div.csl-left-margin {
-min-width:2em;
-float:left;
-}
-div.csl-right-inline {
-margin-left:2em;
-padding-left:1em;
-}
-div.csl-indent {
-margin-left: 2em;
-}
-</style>
 
 <style type="text/css">body {font-family: 'Garamond', serif;line-height: 1.6;margin: 0 20px;color: #535455; text-align: justify; }h1, h2, h3, h4, h5, h6 {font-family: 'Gotham', sans-serif;color: #0033A0; }a {color: #D64309; text-decoration: none;}a:hover {text-decoration: underline;}code {background-color: #f4f4f4;padding: 2px 5px;border-radius: 3px;font-family: "Courier New", Courier, monospace;}pre {background-color: #f4f4f4;padding: 10px;border-radius: 5px;overflow-x: auto;}header {width: 75%; height: 200px; background-color: #0033A0; color: #ffffff; margin: 50px auto; overflow: hidden; position: relative;z-index: 1; transform: skew(-35deg); display: flex;align-items: center; justify-content: flex-start; }.header-wrapper {transform: skew(35deg); padding-left: 80px; text-align: left; width: 100%; height: auto; display: flex;flex-direction: column; justify-content: center; }header h1 {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 36px; height: 50px; visibility: visible; display: block; }header p {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; visibility: visible;display: block;}header:before {content: "";position: absolute;top: 0;left: -1000px;width: 2000px; height: 200px; background-color: #0033A0; z-index: -1;transform: skew(35deg); }.orange-rectangle {position: absolute;bottom: 0px; right: 0px; background-color: #D64309; color: #ffffff; padding: 5px 40px; font-family: 'Gotham', sans-serif; text-transform: uppercase; border-radius: 0px; transform: skew(35deg); transform-origin: top right; z-index: 2; }footer {width: 100%; background-color: #0033A0; color: #ffffff; padding: 20px 0; text-align: center; position: relative;z-index: 1; }.footer-wrapper {width: 75%; margin: 0 auto; font-family: 'Gotham', sans-serif; font-size: 14px; }footer p {margin: 5px 0; }#TOC.tocify {background-color: #f9f9f9;border: 1px solid #ddd;padding: 15px;border-radius: 5px;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item {display: block;padding: 5px 0;color: #D64309 !important; text-decoration: none;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item:hover {background-color: #e9e9e9;}#TOC.tocify .tocify-item.active {background-color: #D64309 !important; color: #ffffff !important; }#TOC.tocify .tocify-item.next {background-color: #D64309 !important; color: #ffffff !important; }.tabset > .tabset-pills > .nav > li.active > a,.tabset > .nav > li.active > a {background-color: #D64309 !important; color: #ffffff !important; font-family: 'Garamond', serif !important; }.tabset > .tabset-pills > .nav > li > a,.tabset > .nav > li > a {color: #0033A0 !important; font-family: 'Garamond', serif !important; background-color: #e9e9e9 !important; border-color: #e9e9e9 !important; }.tabset > .tabset-pills > .nav > li > a:hover,.tabset > .nav > li > a:hover {background-color: #535455 !important; color: #ffffff !important; }</style>
 
@@ -3004,9 +2680,6 @@ display: none;
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -3090,17 +2763,9 @@ font-size: 0.95em;
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Learning Skills Quick Guide</h1>
+<h1 class="title toc-ignore">Lesson 1</h1>
 <h3 class="subtitle">Introduction to R Programming</h3>
 <h4 class="author">Lorraine Gaudio</h4>
 <h4 class="date">Report generated on August 15, 2025</h4>
@@ -3108,138 +2773,84 @@ font-size: 0.95em;
 </div>
 
 
-<div id="table" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Table</h1>
-<p>This guide summarizes the key learning skills we expect you to
-develop in this course.<br />
-Many of these skills and definitions were inspired by <em>Deep in
-Thought: A Practical Guide to Teaching for Intellectual Virtues</em>
-<span class="citation">(<a href="#ref-baehr2022deep">Baehr
-2022</a>)</span>.</p>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:450px; ">
-<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
-Skill
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
-Meaning
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
-Example
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Curiosity
-</td>
-<td style="text-align:left;width: 22em; ">
-Asking new, relevant questions and investigating them beyond what’s
-assigned.
-</td>
-<td style="text-align:left;width: 28em; ">
-“While completing Q3, I wondered if the trend would look different by
-gender. I created an extra plot splitting the data by
-<code>gender</code> to see.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Autonomy
-</td>
-<td style="text-align:left;width: 22em; ">
-Taking initiative and making choices about your learning path, rather
-than waiting for exact instructions.
-</td>
-<td style="text-align:left;width: 28em; ">
-“Instead of using the dataset in the example, I found a similar one from
-[source] so I could practice the same function on fresh data.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Thoroughness
-</td>
-<td style="text-align:left;width: 22em; ">
-Clearly documenting your steps and reasoning so someone else can follow
-your process.
-</td>
-<td style="text-align:left;width: 28em; ">
-“I tried two different ways to calculate the mean: <code>mean()</code>
-and <code>summarise()</code>. I noted both in my code with comments and
-explained why I chose to keep the <code>summarise()</code> method.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Open-mindedness
-</td>
-<td style="text-align:left;width: 22em; ">
-Considering and testing alternative methods or perspectives, even if you
-already have a working answer.
-</td>
-<td style="text-align:left;width: 28em; ">
-“After getting the result with <code>lm()</code>, I also tested a robust
-regression with <code>rlm()</code> to see if outliers were affecting my
-slope.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Courage
-</td>
-<td style="text-align:left;width: 22em; ">
-Speaking up with ideas or questions, especially when you’re unsure, and
-sharing your work for feedback.
-</td>
-<td style="text-align:left;width: 28em; ">
-“In class, I asked my partner to check my code because I wasn’t sure if
-my use of <code>mutate()</code> was efficient. Their suggestion helped
-me simplify it.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Tenacity
-</td>
-<td style="text-align:left;width: 22em; ">
-Persisting through difficulties, revising code, and knowing when to seek
-help after genuine effort.
-</td>
-<td style="text-align:left;width: 28em; ">
-“It took me three tries to debug the error in Q5. I checked my syntax,
-then my variable names, and finally Googled the error message before
-finding the typo.”
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 10em; ">
-Transparency
-</td>
-<td style="text-align:left;width: 22em; ">
-Disclosing methods, materials, assumptions, values, and interests.
-</td>
-<td style="text-align:left;width: 28em; ">
-“I used boisestate.ai to figure out the error”Error in
-<code>mutate()</code>: object ‘x’ not found” in my code. It was due to a
-missing package, which I installed. I noted this in my code comments.”
-</td>
-</tr>
-</tbody>
-</table>
+<p>Intro to R – Assignment 1</p>
+<p>Lesson focus: running code, arithmetic, assignment (&lt;-), character
+strings, paste(), workspace saving</p>
+<p>➤ INSTRUCTIONS</p>
+<ol style="list-style-type: decimal">
+<li><p>Work through each task in order. Replace the ___ with your
+code.</p></li>
+<li><p>Run each completed line to be sure no errors appear and objects
+show in the Environment.</p></li>
+<li><p>When finished, save your workspace with Task 7 and upload BOTH
+this script and the .RData file.</p></li>
+</ol>
+<div id="task-1-numeric-objects" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Task 1: Numeric
+objects</h2>
+<p>Store the quantity 62 in an object called items_sold</p>
+<p>items_sold &lt;- ___</p>
 </div>
+<div id="task-2" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Task 2</h2>
+<p>Store the unit_price 100 in an object called unit_price</p>
+<p>unit_price &lt;- ___</p>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-baehr2022deep" class="csl-entry">
-Baehr, Jason. 2022. <em>Deep in Thought: A Practical Guide to Teaching
-for Intellectual Virtues</em>. Harvard Education Press.
+<div id="task-3" class="section level2" number="0.3">
+<h2><span class="header-section-number">0.3</span> Task 3</h2>
+<p>Calculate total_revenue (items_sold * unit_price)</p>
+<p>total_revenue &lt;- ___ * ___ # edit only the blanks</p>
 </div>
+<div id="task-4-character-objects" class="section level2" number="0.4">
+<h2><span class="header-section-number">0.4</span> Task 4: Character
+objects</h2>
+<p>Store “yellow” in an object first_word</p>
+<p>first_word &lt;- ___</p>
 </div>
+<div id="task-5" class="section level2" number="0.5">
+<h2><span class="header-section-number">0.5</span> Task 5</h2>
+<p>Store “banana” in an object second_word</p>
+<p>second_word &lt;- ___</p>
+</div>
+<div id="task-6" class="section level2" number="0.6">
+<h2><span class="header-section-number">0.6</span> Task 6</h2>
+<p>Paste first_word and second_word with a space; call the result
+sentence</p>
+<p>sentence &lt;- paste(<strong><em>, </em></strong>)</p>
+</div>
+<div id="task-7-inspect-save" class="section level2" number="0.7">
+<h2><span class="header-section-number">0.7</span> Task 7: Inspect &amp;
+save</h2>
+<p>View object types</p>
+<p>class(total_revenue)</p>
+<p>What prints?</p>
+<p>class(sentence)</p>
+<p>What prints?</p>
+</div>
+<div id="task-8-create-your-own-challenge" class="section level2" number="0.8">
+<h2><span class="header-section-number">0.8</span> Task 8:
+Create-your-own (challenge)</h2>
+<p>Create ONE new object that combines skills above.</p>
+<p><strong>Example ideas</strong>:</p>
+<ul>
+<li>√total_revenue, paste(sentence, “smoothie”), etc.</li>
+</ul>
+<p>Name it my_object and write a comment describing what it does.
+my_object &lt;- ___ # your code here # Comment:
+____________________________________________</p>
+</div>
+<div id="save-workspace" class="section level2" number="0.9">
+<h2><span class="header-section-number">0.9</span> Save workspace</h2>
+<p>Note: Check your working directory.</p>
+<p>getwd() # This shows your current working directory.</p>
+<p>If you have the course project open, it should show the correct
+folder. Additionally, you can set it with setwd() if needed.</p>
+<p>save.image(“Assignment1_Workspace.RData”)</p>
+<p>Always save the R script before closing. If you don’t, you will lose
+your work.</p>
+</div>
+<div id="end" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> END</h1>
 </div>
 
 <footer>
@@ -3283,11 +2894,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

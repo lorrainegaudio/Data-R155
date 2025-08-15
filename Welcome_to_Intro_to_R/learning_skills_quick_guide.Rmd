@@ -3,8 +3,7 @@ title: "Learning Skills Quick Guide"
 author: "Lorraine Gaudio"
 subtitle: "Introduction to R Programming"
 team: "Fall 2025"
-date: "`r Sys.Date()`"
-
+date: "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
   html_document:
     toc: true
@@ -12,13 +11,13 @@ output:
       collapsed: false
       smooth_scroll: true
     number_sections: true
-    css: assets/styles.css
+    css: ../assets/styles.css
     fig_caption: true
     df_print: paged
     code_folding: hide
     includes:
-      in_header: assets/header.html
-      after_body: assets/footer.html
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
   pdf_document:
     toc: true
     number_sections: true

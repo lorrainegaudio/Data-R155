@@ -13,12 +13,12 @@ output:
       collapsed: false
       smooth_scroll: true
     number_sections: true
-    css: assets/styles.css
+    css: ../assets/styles.css
     fig_caption: true
     df_print: paged
     includes:
-      in_header: assets/header.html
-      after_body: assets/footer.html
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 subtitle: Introduction to R Programming
 team: Fall 2025
 ---
