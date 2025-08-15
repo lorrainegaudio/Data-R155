@@ -1,0 +1,93 @@
+---
+title: "Learning Skills Quick Guide"
+author: "Lorraine Gaudio"
+subtitle: "Introduction to R Programming"
+team: "Fall 2025"
+date: "`r Sys.Date()`"
+
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    css: assets/styles.css
+    fig_caption: true
+    df_print: paged
+    code_folding: hide
+    includes:
+      in_header: assets/header.html
+      after_body: assets/footer.html
+  pdf_document:
+    toc: true
+    number_sections: true
+    citation_package: natbib
+
+bibliography: references.bib     # Your .bib file
+biblio-style: apalike             # Style for natbib (PDF)
+natbiboptions: "round,authoryear" # Round brackets, Author (Year)
+link-citations: true              # Makes citation numbers/names clickable in HTML
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Table
+
+This guide summarizes the key learning skills we expect you to develop in this course.  
+Many of these skills and definitions were inspired by *Deep in Thought: A Practical Guide to Teaching for Intellectual Virtues* [@baehr2022deep].
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+
+learning_skills <- tribble(
+  ~Skill, ~Meaning, ~Example,
+  "Curiosity",
+  "Asking new, relevant questions and investigating them beyond what’s assigned.",
+  "“While completing Q3, I wondered if the trend would look different by gender. I created an extra plot splitting the data by `gender` to see.”",
+  "Autonomy",
+  "Taking initiative and making choices about your learning path, rather than waiting for exact instructions.",
+  "“Instead of using the dataset in the example, I found a similar one from [source] so I could practice the same function on fresh data.”",
+  "Thoroughness",
+  "Clearly documenting your steps and reasoning so someone else can follow your process.",
+  "“I tried two different ways to calculate the mean: `mean()` and `summarise()`. I noted both in my code with comments and explained why I chose to keep the `summarise()` method.”",
+  "Open-mindedness",
+  "Considering and testing alternative methods or perspectives, even if you already have a working answer.",
+  "“After getting the result with `lm()`, I also tested a robust regression with `rlm()` to see if outliers were affecting my slope.”",
+  "Courage",
+  "Speaking up with ideas or questions, especially when you’re unsure, and sharing your work for feedback.",
+  "“In class, I asked my partner to check my code because I wasn’t sure if my use of `mutate()` was efficient. Their suggestion helped me simplify it.”",
+  "Tenacity",
+  "Persisting through difficulties, revising code, and knowing when to seek help after genuine effort.",
+  "“It took me three tries to debug the error in Q5. I checked my syntax, then my variable names, and finally Googled the error message before finding the typo.”",
+  "Transparency",
+  "Disclosing methods, materials, assumptions, values, and interests.",
+  "“I used boisestate.ai to figure out the error \"Error in `mutate()`: object 'x' not found\" in my code. It was due to a missing package, which I installed. I noted this in my code comments.”"
+)
+
+kbl(
+  learning_skills,
+  format = "html",            # HTML output
+  align = c("l","l","l"),
+  escape = TRUE               # show backticks and [source] literally
+) |>
+  kable_styling(
+    bootstrap_options = c("striped","hover"),
+    full_width = FALSE,       # keep table readable within page width
+    fixed_thead = TRUE        # sticky header while scrolling
+  ) |>
+  column_spec(1, width = "10em") |>
+  column_spec(2, width = "22em") |>
+  column_spec(3, width = "28em") |>
+  scroll_box(height = "450px")  # adds a scrollable area if content is tall
+
+
+```
+
+
+# References
+
+

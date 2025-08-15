@@ -1,0 +1,194 @@
+---
+title: "Install R and RStudio on Your Computer"
+author: "Lorraine Gaudio"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: '3'
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    css: assets/styles.css
+    fig_caption: true
+    df_print: paged
+    includes:
+      in_header: assets/header.html
+      after_body: assets/footer.html
+subtitle: Introduction to R Programming
+team: Fall 2025
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Welcome to Intro to R Programming! This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code. 
+
+We are using a computer lab classroom, but many students use their own laptop.  Using your own laptop will allow you to save your progress more efficiently.  You'll also only need to download certain packages once with your own laptop.
+
+Before the first day of the course, please download R and RStudio onto your personal laptops to be ready for the first lessons.
+
+# Download and Install R and RStudio
+
+RStudio works with a locally installed copy of R and does not include R itself. You can download R from CRAN.
+
+## Download and Install R
+
+1. Go to the [CRAN R Project for Statistical Computing](https://cran.r-project.org/) website.
+
+2. Download the correct file for your operating system. 
+
+a. Click on the "Download R for Windows" link if you are using Windows. You will download an .exe file. Open the file and accept defaults. Do not change the file location to your OneDrive cloud folder. 
+
+b. Click "Download R for macOS" if you are using a Mac. You will download a .pkg file. Open the file and accept defaults. You’ll get both the R framework and the R.app GUI.
+
+## Download and Install RStudio
+
+1. Go to the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+
+2. Choose the installer for your operating system and run it, accepting defaults.
+
+3. After installation, open RStudio. Open RStudio; it will auto‑detect your R installation.
+
+# RStudio Interface
+
+In this short tour, you’ll learn the purpose of RStudio’s four panes and practice using them in this order:
+
+Console, 2) Environment, 3) Script Editor (Source), and 4) Files.
+
+Tip: If your layout looks different, that’s okay—RStudio lets you move panes. We’ll name each pane clearly so you can find it.
+
+## Console
+
+The Console is where R runs commands. Try a few calculations:
+
+```{r echo=TRUE}
+2 + 2
+3 * (5 + 1)
+10 / 4
+sqrt(81)
+```
+
+Notice how R prints results immediately. If you make a typo, use the Up/Down arrow keys to edit and re‑run.
+
+## Environment
+
+R does not “remember” results unless you assign them to a name. 
+
+Use the "<-" to store a result. Notice how it appears in the Environment pane. The Environment pane helps you track those names.
+
+```{r}
+result <- 2 + 2
+```
+
+The Environment pane shows all objects you create. Objects are like containers for data, such as numbers, text, or results. Additionally, you can do calculations with some of these objects.
+
+```{r}
+total <- 3 * (5 + result)
+```
+
+You can view or remove items:
+
+```{r}
+# Look at what's in the environment
+ls()
+
+# Remove one object 
+rm(total)
+```
+
+## Script Editor (Source)
+
+To document and track your work, use the Script Editor (Source pane). Here, you can write and save R code in a script file.
+
+
+To create a new script, click the "New File" icon (or use Ctrl+Shift+N). Manually type in the following script.
+
+```{r}
+# install_r_script.R
+# Lines that start with # are comments for humans, not code for R to run.
+
+# 1) Do some math
+a <- 6 * 7
+b <- a + 5
+result <- b / 3
+
+# 2) Check the results
+a
+b
+result
+
+# 3) A tiny vector example
+scores <- c(88, 92, 76, 95)
+mean(scores)   # average
+length(scores) # how many values?
+```
+
+Running code from a script (order matters!)
+
+1. Place your cursor on a line and click Run (or press Ctrl+Enter on Windows/Linux or Cmd+Return on macOS) to send that line to the Console where it executes.
+
+2. Select multiple lines to run them together.
+
+3. Run in order from top to bottom so that objects (like a, b, scores) exist before you use them.
+
+Pro move: You can quickly comment/uncomment selected lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).
+
+## Files
+
+Now save your script it with Ctrl+S. Navigate your folder system to find a good place to save it, like your Documents folder for this course. Name it `firstlastname_install_r_script.R`.
+
+The Files pane shows files in your current working directory. You can navigate folders, open files, and manage your workspace here. 
+
+```{r eval = FALSE}
+getwd()        # current working directory (matches what Files is showing)
+```
+
+```{r}
+# setwd("C:/Users/YourName/Documents/") # change to your desired folder
+```
+
+Note: Students using OneDrive may find issues navigating the folder system. 
+
+## RStudio Projects
+
+RStudio Projects help you organize your work. They create a self-contained environment with its own working directory, making it easier to manage files and settings. It's best practice to use a separate project per course or project. A project keeps all files—scripts, data, outputs—in one self-contained folder, making things organized, reproducible, and shareable. Using an RStudio project eliminates the need for setwd(). Instead, file paths can be relative to the project folder, which makes scripts more portable.
+
+1. Go to File → New Project…
+
+2. In the dialog that appears, choose “New Directory”.
+
+3. Select “Empty Project” (simplest for begginers) 
+
+4. Give your project a meaningful name like "Intro_to_R" and choose where it’ll be on your computer.
+
+5. Click Create Project.
+
+- This makes a new folder at the chosen location.
+
+- Inside this folder, RStudio creates a .Rproj file 
+
+6. RStudio automatically sets your working directory to this new project folder. Everything you read or write in R will happen here. Confirm with:
+
+```{r}
+getwd()  # should show your new project folder
+```
+
+Close the project by going to File → Close Project.
+
+Practice opening the project again by 
+
+1. Closing RStudio. Now find your project folder in your file system and double-click the .Rproj file and this will open RStudio.
+
+2. Going to File → Open Project and selecting the .Rproj file you just created.
+
+
+
+

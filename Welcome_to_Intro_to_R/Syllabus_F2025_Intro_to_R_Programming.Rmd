@@ -37,13 +37,26 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code.
 
-We are using a computer lab classroom in Riverfront Hall (RFH), Room 208. Please attend your scheduled session on Monday from 9:00 AM to 9:50 AM or from 10:30 AM to 11:20 AM. In-class activities will be part of your grade, so please attend class. If you are unable to attend class, please contact me by email.
+We are using a computer lab classroom in Riverfront Hall (RFH), Room 208. Please attend your scheduled session on Monday from 9:00 AM to 9:50 AM or from 10:30 AM to 11:20 AM. In-class activities will be part of your grade, so please attend class. If you are unable to attend class, please contact your instructor by email.
+
+```{r instructor_photo, echo=FALSE, fig.align='center', out.width="25%"}
+knitr::include_graphics("images/DSC_0624_sqre.jpg")
+```
+
+Email:	**lorrainegaudio@boisestate.edu** (You can call me “Professor Gaudio” or “Lorraine” is fine too!)
+
+Virtual Office Hours:	By appointment; please email to arrange a time.
+
+Office Location: I do not have an office this semester
+
+Contact instructions:	For the quickest response, I prefer that you contact me by email. I respond to emails within 24 hours, except on weekends and holidays (I may respond on weekends and holidays, but there is no guarantee). 
+
 
 # Course Informaiton
 
 ## Course Format
 
-We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Videos and their accompanying assignments are due before each class. Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on graded assignments during our allotted time.
+We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Videos and their accompanying assignments are due before each class. Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on the signature assignment during our in-person class.
 
 ## Prerequisites 
 
@@ -131,13 +144,13 @@ kbl(
 
 ## Course Materials
 
-All required materials will be supplied and available to download via Canvas.
+All required materials will be supplied and available to download via Canvas. The following FREE resources are recommended but *not required*. They will help you learn R programming and data analysis concepts more effectively:
 
-The following resources are recommended but not required. They will help you learn R programming and data analysis concepts more effectively:
+- **Introduction to Data Science** by Rafael Irizarry [https://rafalab.dfci.harvard.edu/dsbook-part-1/](https://rafalab.dfci.harvard.edu/dsbook-part-1/). This book provides a comprehensive introduction to data science concepts and R programming.
 
-- **R for Data Science** by Hadley Wickham and Garrett Grolemund [https://r4ds.had.co.nz/](https://r4ds.had.co.nz/). This book is a great introduction to R and data science concepts.
+- **R for Data Science** by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/). This book provides a gentle introduction to programming concepts and R.
 
-- **Introduction to Data Science** by Rafael Irizarry [https://rafalab.dfci.harvard.edu/dsbook-part-1/](https://rafalab.dfci.harvard.edu/dsbook-part-1/)
+- **bookdown: Authoring Books and Technical Documents with R Markdown** by Yihui Xie [https://bookdown.org/yihui/bookdown/]https://bookdown.org/yihui/bookdown/). This book provides a comprehensive guide to using R Markdown for technical writing and documentation.
 
 ## Class Participation
 
@@ -149,9 +162,7 @@ Expect to spend approximately one hour outside of class time per week reviewing 
 
 ## Grading Information
 
-In this course, your grade starts at zero and grows as you earn points by showing what you can do—not by avoiding mistakes. You will never “lose” points because something went wrong. Instead, every activity is a chance to build your total toward 100 points. On assignment, half of your points will come from solving R problems (technical skills) and half from demonstrating learning skills. These habits, like curiosity, tenacity, and thoroughness, make you a stronger, more independent learner. I will model these skills in lectures and videos, and you will have many ways to show them in your work and class. The goal is for you to leave this course not only knowing R basics, but also knowing how to keep learning R (and other tools) long after the semester ends.
-
-Grades in this course are based on a 100-point grading system utilizing the allocation of points shown below.
+In this course, your grade starts at zero and grows as you earn points by showing what you can do—not by avoiding mistakes. You will never “lose” points because something went wrong. Instead, every activity is a chance to build your total toward 100 points. On assignment, half of your points will come from solving R problems (technical skills) and half from demonstrating learning skills. These habits, like curiosity, tenacity, and thoroughness, make you a stronger, more independent learner. I will model these skills in lectures and videos, and you will have many ways to show them in your work and class. The goal is for you to leave this course not only knowing R basics, but also knowing how to keep learning R (and other tools) long after the semester ends. Grades in this course are based on a 100-point grading system utilizing the allocation of points shown below.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tibble)
@@ -177,7 +188,7 @@ kbl(
   column_spec(1, width = "4.2cm") |>
   column_spec(2, width = "1.2cm") |>
   column_spec(3, width = "10.5cm") |>
-  row_spec(0, bold = TRUE, background = "#EEEEEE") |>
+  row_spec(0, bold = TRUE) |>
   row_spec(nrow(tbl), bold = TRUE)
 
 ```
@@ -226,7 +237,7 @@ It is always best to submit work on time, but I understand that sometimes extenu
 
 Contact the instructor, Professor Gaudio, by email at **lorrainegaudio@boisestate.edu** to ask questions, give status reports, or request 1:1 assistance, if needed. You are encouraged to ask questions directly and immediately. I’d be happy to schedule an in-person or online Zoom session to help you out with any problem, big or small. **Every student in this course can and should be successful.** If you need help, please reach out.
 
-If you notice any problems in the course or seek clarification on an assignment, send me an email, a Google Chat message, or a Canvas Message. If you need technical assistance, please call the Help Desk. For assistance with technical problems in Canvas, please contact the Boise State Help Desk, **helpdesk@boisestate.edu**, tel. 208-426-4357, or see [https://www.boisestate.edu/oit-learning/canvas/](https://www.boisestate.edu/oit-learning/canvas/) and scroll to the Canvas for Students section.
+If you notice any problems in the course or seek clarification on an assignment, send me an email or a Canvas Message. If you need technical assistance, please call the Help Desk. For assistance with technical problems in Canvas, please contact the Boise State Help Desk, **helpdesk@boisestate.edu**, tel. 208-426-4357, or see [https://www.boisestate.edu/oit-learning/canvas/](https://www.boisestate.edu/oit-learning/canvas/) and scroll to the Canvas for Students section.
 
 ## Student Well-Being
 
@@ -243,9 +254,9 @@ Upholding academic integrity in all assignments allows students to engage with t
 
 ## Student AI Use
 
-Assignments will explicitly say if and which generative AI (GAI) are allowed and how you are allowed to use them. In this course, you can always be allow to use [boisestate.ai](https://boisestate.ai) to help you troubleshoot error messages or support your curiosities. You must not use any AI tool to directly answer your assignment questions for you. Doing so will be a disservice to yourself, as you will not be prepared for subsequent courses. Additionally, this will breach our agreement as outlined in this syllabus and constitute a violation of academic integrity. 
+Assignments will explicitly say if and which generative AI (GAI) are allowed and how you are allowed to use them. In this course, you are allowed to use [boisestate.ai](https://boisestate.ai) to help you troubleshoot error messages or support your curiosities. You must not use any AI tool to directly answer your assignment questions for you. Doing so will be a disservice to yourself, as you will not be prepared for subsequent courses. Additionally, this will breach our agreement as outlined in this syllabus and constitute a violation of academic integrity. All code should by physically typed in by you and not copied and pasted from an AI tool or other source.
 
-An essential part of learning and discovery is embracing its challenges. You’re not likely to learn effectively if a task isn’t pushing you out of your comfort zone. GAI tools can make work easier, but there is a risk of over-reliance. It is important to avoid skipping steps in the learning and creative process because each step contributes to a deeper understanding of the subject matter. AI should enhance your work, aid your curiosity, and not replace your unique contributions. To ensure generative AI does not blunt or prevent types of insights that you might only achieve through independent effort, you will define an AI-human effort use for your learning and research along with a reflection of how you feel this use case affected your learning. This model would clarify which research stages and processes can lean on AI automation, which need interactive AI tool use, and when the researcher must engage in deeper thought and reflection. 
+An essential part of learning and discovery is embracing its challenges. You’re not likely to learn effectively if a task isn’t pushing you out of your comfort zone. GAI tools can make work easier, which is great! However, grit (tenacity) will help you learn. Additionally, there is a risk of over-reliance, preventing you from remaining in control of your work. It is important to avoid skipping steps in the learning and creative process because each step contributes to a deeper understanding of the subject matter. AI should enhance your work, aid your curiosity, and not replace your unique contributions. To ensure generative AI does not blunt or prevent types of insights that you might only achieve through independent effort, you will define an AI-human effort use for your learning and research along with a reflection of how you feel this use case affected your learning. This model would clarify which research stages and processes can lean on AI automation, which need interactive AI tool use, and when the researcher must engage in deeper thought and reflection. 
 
 You will be transparent about when and how generative AI in your memos. Include: 
 
