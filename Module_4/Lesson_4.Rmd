@@ -4,14 +4,14 @@ author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
-  html_document: # To create an HTML document from R Markdown
+  html_document: # To create an HTML document from R Notebook
     toc: true # Table of contents (TOC)
-    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
     number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Notebook file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
     code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
@@ -58,14 +58,14 @@ author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
-  html_document: # To create an HTML document from R Markdown
+  html_document: # To create an HTML document from R Notebook
     toc: true # Table of contents (TOC)
-    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
     number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Notebook file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
     code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
@@ -83,7 +83,7 @@ To begin Lesson 4, follow these steps:
 
 1. Open your course project for RStudio 
    
-2. Create a new file. Today, let's try 📝 "R Markdown"  (File > New File > R Markdown).
+2. Create a new file. Today, let's try 📝 "R Notebook"  (File > New File > R Notebook).
 
 3. Type in the code provide in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
@@ -234,7 +234,7 @@ Now it's your turn to practice creating and using vector objects. Follow the tas
 
 2. Run each completed line to be sure no errors appear and objects show in the Environment.
 
-3. When finished, save your workspace and submit this R Markdown file (RMD) plus the .RData file.
+3. When finished, save your workspace and submit this R Notebook file (RMD) plus the .RData file.
 
 ## Task 0
 
@@ -316,7 +316,7 @@ Choice & reason: ___
  
 # Save and Upload
 
-1. You will be submitting **both** the R Markdown and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Markdown document:
+1. You will be submitting **both** the R Notebook and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Notebook document:
 
 `save.image("Assignment3_Workspace.RData")`
 

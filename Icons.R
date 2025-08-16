@@ -1,5 +1,7 @@
 ✔️ Nice!
   
+✅ 
+  
 ➡ 
   
 👀 Check-in: or What happened?
@@ -31,6 +33,8 @@
 🎉
 
 📍 Identify
+
+📌
 
 🛠 Break Things!
   
