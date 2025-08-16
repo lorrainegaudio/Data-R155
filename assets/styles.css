@@ -6,6 +6,7 @@ body {
     margin: 0 20px;
     color: #333333; /* Darker than #535455 */
     text-align: justify; /* Justify text margins */
+    font-size: 18px; /* Increase body text size */
 }
 
 /* Darker comments in code chunks (Pandoc + highlight.js + Pygments) */

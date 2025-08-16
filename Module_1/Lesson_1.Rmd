@@ -1,6 +1,5 @@
 ---
 title: "Lesson 1"
-subtitle: "Boise State University, Anthropology Department"
 author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
@@ -26,7 +25,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Lesson 1"
-subtitle: "Boise State University, Anthropology Department"
 author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -55,7 +53,6 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
  
 Or
 title: "Lesson 1"
-subtitle: "Boise State University, Anthropology Department"
 author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
@@ -116,7 +113,7 @@ In the next few minutes you will learn how to:
 ✔️ Nice! You just ran your first R command. The simplest usage of R is performing basic calculations. You can do addition (+), subtraction (-), multiplication (*), and division (/).
 
 ```{r}
-# Create a memo note in you R script. 
+# Create a memo note in your R script. 
 
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen. 
@@ -150,7 +147,7 @@ Find the Environment pane (top-right) and see the new objects.
 🔍 Type the name of one of the objects in the Console and press Enter. What happened?
 
 ```{r}
-# Create a memo note in you R script. 
+# Create a memo note in your R script. 
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
 
@@ -181,9 +178,9 @@ If you have the course project open, it should show the correct folder. Addition
 
 🔍  Does RStudio have an autosave feature? What happens if you close RStudio without saving? How often should you save your work?
 
-➤ Part I ASSIGNMENT INSTRUCTIONS
+# ➤ Part I Assignment
 
-Now it's your turn to practice creating and using objects. Follow the tasks below to complete the assignment.
+Now it's your turn to practice. Follow the tasks below to complete part of the **technical skill practice assignment**.
 
 1. Work through each task in order. Replace the ___ with your code.
 
@@ -225,14 +222,14 @@ Example:
 own_message <- "I will remember to save my work often."
 
 ```{r}
-# Create a memo note in you R script.
+# Create a memo note in your R script.
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
 
 ## 2. Demonstrate learning skill(s) in your memo
 ```
 
-➤ Part II ASSIGNMENT INSTRUCTIONS
+# ➤ Part II Assignment
 
 1. Work through each task in order. Replace the ___ with your code.
 
@@ -268,7 +265,9 @@ class(sentence)
 
 🔍 What prints?
 
-➤ Part III ASSIGNMENT INSTRUCTIONS
+# ➤ Part III  Assignment
+
+Now it's your turn to practice. Follow the tasks below to complete part of the **technical skill practice assignment**.
 
 1. Work through each task in order. Replace the ___ with your code.
 
