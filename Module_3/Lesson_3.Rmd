@@ -1,22 +1,30 @@
 ---
-title: "Lesson 2"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+title: "Lesson 3"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
-  html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
-    toc_depth: 2 #(meaning that level 1, 2 headers will be included in the table of contents
-    toc_float: # Float the table of contents to the left of the main document
-      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
-      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
-    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
-    fig_caption: true #Whether figures are rendered with captions.
-    df_print: paged # Printing data frames with interactivne scrolling
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
     includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 ---
 
 ```{r setup, include=FALSE}
@@ -24,13 +32,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-title: "Lesson 1"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+title: "Lesson 3"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
   pdf_document:
     toc: true
-    toc_depth: 3
+    toc_depth: 2
     number_sections: true
     citation_package: natbib
     fig_caption: true
@@ -53,13 +61,13 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
  
 Or
 title: "Lesson 3"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
-    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
@@ -74,9 +82,9 @@ output:
 ```
 
 
-# 👋 Welcome back! 
+# 🎉 Welcome back to R! 
 
-In Lesson one and 2 you learned about objects, vectors, and created a simple dataframe. Now you’ll learn how to *do things* with them using **functions**.
+In lesson one and two you learned about objects, vectors, and created a simple dataframe. Now you’ll learn how to *do things* with them using **functions**.
 
 To begin Lesson 3, follow these steps:
 
@@ -86,7 +94,7 @@ To begin Lesson 3, follow these steps:
 
 3. Type in the code provide in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
-## Lesson Overview
+**Lesson Overview**
 
 In the next few minutes you will learn how to:
 
@@ -106,455 +114,239 @@ In the next few minutes you will learn how to:
 
 🧠 **Concept**  A *function object* is stored code; a *function call* runs it. The parentheses trigger execution. Objects or strings without `()` just print. Type in the following into your R script and run each line. Comment out lines that produce an error. 
 
-`thing_1`             # object? (expect an error‑message: not found)
+```{r , eval=FALSE}
+thing_1             # object? (expect an error‑message: not found)
 
-"thing_1"          # character string — prints literally
+"thing_1"           # character string — prints literally
 
-`3`                   # numeric literal
+3                   # numeric literal
 
-`mean`               # function *object* → prints the function body
+mean                # function *object* → prints the function body
 
-`mean()`              # function *call*   → error: argument is missing
+mean()              # function *call*   → error: argument is missing
+```
 
-👀 Check‑in: What happens if you try  sum   vs.   sum(1:5)  ?
+👀 Check-in: What happens if you try  sum vs. sum(1:5)  ?
 
 # Date and Time
 
-🕰️ R has built‑in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time‑stamp results for reports or file names. 
+🕰️ R has built-in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time-stamp results for reports or file names. 
 
-`Sys.Date()`      # current date (yyyy‑mm‑dd)
+```{r , eval=FALSE}
+Sys.Date()      # current date (yyyy-mm-dd)
 
-`Sys.time()`      # current date + time
+Sys.time()      # current date + time
 
-`Sys.timezone()`  # your local timezone string
+Sys.timezone()  # your local timezone string
+```
 
-I use `format(Sys.Date(), '%B %d, %Y')` to format dates in Lesson reports.
 
-🔍 Dig deeper: What is the function of `%` in '%Y-%m-%d'?
+🔍 Dig deeper: I use `format(Sys.Date(), '%B %d, %Y')` to format dates in Lesson reports. What is the function of `%` in '%Y-%m-%d'?
 
 ```{r}
-# Create a memo note in your R script 🔍 Dig deeper. 
+# Create a learning skills memo note in your R script if you did 
+# the 👀 Check‑in and 🔍 Dig deeper. 
 
-## 1. Explain what you did to discover more about Date and Time settings in reports, what your observations are, and what you expect 
-# to happen. 
+## 1. Explain what you did to discover more about Functions-Call Basics and 
+# Date and Time settings in reports, what your observations are, and what you 
+# expect to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo
 ```
 
 # Using Help
 
-🔍 **Why**  Nobody memorizes every argument. `?function_name` opens the help file.  
+🔍 **Why use Help**?  Nobody memorizes every argument. `?function_name` opens the help file.  
 
-Read the *Usage* section for defaults, and the *Arguments* list for details.
+Type the following R code into your script. Read the help tab for more about the *Usage* section for defaults, and the *Arguments* list for details.
 
-`?mean`               # opens in Help pane (bottom‑right)
+```{r , eval=FALSE}
+?mean               # opens in Help pane (bottom-right)
 
-`help(sample)`        # alternate syntax works the same
+help(sample)        # alternate syntax works the same
+```
 
-💡 Pro‑tip:  args(mean)  prints the argument names inline.
+💡 Pro-tip:  `args(mean)`  prints the argument names inline.
 
-# Required vs. Default Arguments
+# Required vs. Default
 
 ⚖️ **Key Idea**  If R supplies a default you can omit that argument; if not, you *must* provide it. Use named arguments for clarity. Type the following into your R script and run each line.
 
-`values <- c(1, 2, 3, 4, 5, NA)`
+```{r , eval=FALSE}
+values <- c(1, 2, 3, 4, 5, NA)
 
-`mean(values)`                       # default na.rm = FALSE → returns NA
+mean(values)                       # default na.rm = FALSE → returns NA
 
-`mean(values, na.rm = TRUE)`         # ignore missing values
+mean(values, na.rm = TRUE)         # ignore missing values
 
-`mean(values, trim = 0.2, na.rm = TRUE)`  # drop 20% from each end first
+mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first
+```
 
-👀 Try `median(values, na.rm = TRUE)`. Why doesn’t median() need trim?
+📍 Identify: Try `median(values, na.rm = TRUE)`. Why doesn’t `median() `need trim?
 
-# Start Here For editing
+🔍 Look deeper: What is bootstrapping in statistics?
 
+Type the following code in your R script and run each line.
 
-🚀 Explore and Play: 
+```{r , eval=FALSE}
+set.seed(123)          # reproducible randomness
 
-🛠 Break Things! 
+numbers <- 1:10
+
+sample(numbers, 3)                 # three unique picks
+
+sample(numbers, 10, replace = TRUE)  # allow repeats
+```
+
+🧠 Challenge: Draw 5 numbers without replacement and sort them ascending.
 
 ```{r}
-# Create a memo note in your R script 🚀 Explore and Play and 🛠 Break Things!. 
+# Create a memo note in your R script if you did 📍 Identify, 🔍 Look deeper, and 🧠 Challenge. 
 
-## 1. Explain what you did in Required vs. Default Arguments, what your observations are, and what you expect 
+## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo
 ```
 
-# Vector arithmetic
+# Nesting Functions
 
-You can perform arithmetic operations on vectors. R will apply the operation element‑wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
+💡 **Idea**  Feed the output of one function straight into another. Type the following R script in your document script and run. 
 
-Recall that we created the objects
-`numbers   <- c(4, 8, 15, 16, 23, 42)`   
-`steps     <- seq(from = 0, to = 1, by = 0.2)`  
+```{r , eval=FALSE}
+mean(sample(numbers, size = 5, replace = TRUE))  # sample then average
+```
 
-🔍 What is the length of `numbers` and `steps`?
+🚀 Explore and Play: Run the line above twice. Why does the result change each time even though the code is identical? 
 
-Let's do some vector arithmetic with these two vectors. Type the following into your R script and run each line.
+🔍 Look deeper: From the functions we have learned about, which can be nested and how?
 
-`numbers - steps`
+```{r}
+# Create a memo note in your R script if you did 🚀 Explore and Play and 🔍 Look deeper.
 
-# ➤ Part I Assignment
+## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
+
+# ➤ Assignment
 
 Now it's your turn to practice creating and using vector objects. Follow the tasks below to complete part of the **technical skill practice assignment**.
 
-1. Work through each task in order. Replace the ___ with your code.
+1. Work through each task in order. Replace the TODO with your code.
 
 2. Run each completed line to be sure no errors appear and objects show in the Environment.
 
-## Task 1
+3. When finished, save your workspace and submit this script plus the .RData file.
 
-Build two numeric vectors where both vectors are the same length.
+## Task 1 
 
-1.  Create a vector called `sales_q1` with FOUR numbers of your choice.
+🛠 Build a random data set
 
-2.  Create a vector called `sales_q2` with FOUR numbers of your choice.
+Set a reproducible seed (pick any whole number you like). Use `sample()` and `seq()` together to create a vector called scores that contains 25 random numbers between 60 and 100, inclusive. Include at least 3 NA values in scores (hint: combine vectors with `c()`).
 
-## Task 2
+TODO
 
-Using vector arithmetic, create an object named `growth` that stores the difference between `sales_q2` and `sales_q1`.
+## Task 2 
 
-🚀 Explore and Play: What happens if you try to subtract a vector of different lengths? 
+🚀 Explore function arguments
 
-```{r}
-# Create a memo note in your R script if you did the 🚀 Explore and Play. 
+Open the help file for `sample()` **in the console**. In the comment block below, list TWO required arguments and TWO default arguments for `sample()` exactly as they appear in the Usage section.
 
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
+1. Required arguments: TODO
 
-## 2. Demonstrate learning skill(s) in your memo
+2. Default arguments:  TODO
 
-```
+## Task 3
+
+⚠️ Handle missing data
+
+Calculate the mean of scores and store it in `average_raw`. Calculate the mean of scores again, this time **excluding** `NA` values, and store it in `average_clean`.
+
+TODO
+
+## Task 4
+
+⚖️ Practice named vs. positional arguments
+
+Use `sample()` to draw 10 values **with replacement** from scores and store them in `sample_scores_positional` **WITHOUT naming any arguments**. Repeat the same call, but this time **name every argument**; store as `sample_scores_named`.
+
+TODO
+
+## Task 5
+
+📦 Nesting functions
+
+Combine `mean()` and `sample()` to calculate the mean of 5 random draws from scores (allow replacement); store the result in `mean_of_five`. Do this in **one** line of code.
+
+TODO
+
+## Task 6
+
+🕰 Quick time-stamp
+
+Use `Sys.Date()` and `Sys.time()` to create two separate objects, `today_date` and `now_time`.
+
+TODO
+
+## Task 7
+
+🗣 Reflection
+
+In one sentence, explain the difference between a *function object* (e.g., mean) and a *function call* (e.g., `mean()`).
+
+Answer: TODO
 
 _Reminder: Now would be a great time to click save (or press Ctrl + S) to save your script._
 
-✔️ Nice! Now, we'll dig a little deeper into other types of vectors.
+# Practice Space 
 
-# Character Vectors
+The following provides you more opportunities to earn points demonstrating **learning skills**
 
-Frequently used as plot labels, text data, or categories. Use quotes to create character strings. Type the following into your R script and run each line.
+🔗 Link today’s skills with vectors from Lesson 2. Review Lesson 2, create vectors and then apply functions to them.
 
-`chars     <- c("apple", "banana", "cherry")`    # character vector
+🛠 Build ONE new object of your choice that demonstrates any two skills from Lesson 3 (e.g., help file reading, required/default arguments, nesting). Name it `my_object` and leave a brief comment describing what it does.
 
-`chars2    <- c("red", "yellow", "green")`       # another character vector
+🚀 Explore and Play IDEAS:
 
-`chars3    <- c("A", "B", "C")`                  # single letters as characters
+1.  Use `runif()` to create 10 random decimals, then `round()` them.
 
-👀 Check‑in: What happens if you don't put quotations around character strings? Try it with `c(apple, banana, cherry)` and see what R does. What happens if you put the entire vector in quotes like this `c("apple, banana, cherry")`?  What happens if you quote numbers like `c("1", "2", "3")`? 
+2.  Nest `sample()` inside `paste()` to build a random silly password.
+
+3.  Open `?sd` and compute the standard deviation of values after removing `NA`.
 
 ```{r}
-# Create a memo note in your R script if you completed this 👀 Check‑in. 
+# Create a memo note in your R script if you did the Practice Space.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo
 ```
-
-# Missing Values
-
-Sometimes data is missing or unknown. R uses `NA` to represent these missing values. You can create a vector with `NA` like this:
-
-`z <- c(1, 2, NA, 4, 5)`  # vector with a missing value
-
-👀 Check‑in: What happens if you run `z + 2`?  What happens if you type `0/0` or `Inf - Inf` in the console?
-
-🔍 Look deeper: What is Inf? Type `?Inf` in the console. What happens?
-
-_Note: `NaN` stands for "Not a Number" and is used when a calculation does not produce a valid number._
-
-
-```{r}
-# Create a memo note in your R script if you did the 👀 Check‑in and 🔍 Look deeper. 
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-
-```
-
-
-
-# Logical Vectors
-
-Logical vectors are used for conditions and comparisons. They contain TRUE or FALSE values.
-
-`logicals  <- c(TRUE, FALSE, TRUE, NA)`              # logical (TRUE/FALSE)
-
-`logicals2 <- c(1 > 2, 3 < 5, 4 == 4)`           # logical comparisons
-
-The logical operators are:
-
-- `>` greater than
-
-- `<` less than
-
-- `==` equal to
-
-- `>=` greater than or equal to
-
-- `<=` less than or equal to
-
-- `!=` not equal to
-
-Additionally, if `logical` and `logical2` are logical expressions, then `logical & logical2` is their intersection (*and* operator), and `logical | logical2` is their union (*or* operator). We'll cover logical vectors in more detail in a later lesson.
-
-👀 Check‑in: Run each name (numbers, chars, …) in the Console-notice how R prints them neatly in rows. After running, peek at the Environment (Grid view) to see each vector shows its type & size.
-
-🚀 Explore and Play: Are there different ways to assign an object? Try using `=` or `->` instead of `<-` and see what happens.
-
-```{r}
-# Create a memo note in your R script if you did the 👀 Check‑in and 🚀 Explore and Play. 
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-
-# Indexing
-
-Indexing is how you access specific elements in a vector. R uses 1-based indexing, meaning the first element is at position 1. You can use square brackets `[ ]` to index vectors.
-
-Recall that we created: 
-
-`z <- c(1, 2, NA, 4, 5)` 
-`numbers3  <- c(1.5, 2.5, -3.5)`   
-
-## Sub-setting Vectors
-
-🎯 **Goal**  Pull out the pieces you need.  Use `[ ]` with positions or a logical test. Remember: positions start at 1 in R (not 0).
-
-Type the following into your R script and run each line. 
-
-`z[1]`       # first element by position
-
-`z[3]`       # third element by position
-
-`z[2:4]`     # last two elements by position 
-
-`z[-(1, 5)]` # all but first and last elements
-
-🛠 Break Things! What happens if you try to index with a number larger than the vector length, like `z[6]`? ⚡ Explain the error message you see.
-
-👀 Challenge: Extract the last two fruits from *chars*.
-
-## Logical Indexing
-
-Type the following into your R script and run.
-
-`numbers3[numbers3 > 0]` # keep only positives
-
-👀 Check‑in: What happens if you run`y <- z[(!is.na(z))]`?  Hint: The function `is.na()` checks for missing values (NA) in the vector. The `!` operator negates the logical vector. Print `y`.⚡ Eplain the results.
-
-```{r}
-# Create a memo note in your R script if you did 🛠 Break Things and 👀 Check‑ins. 
-
-## 1. Explain what you did in Indexing, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-# Inspecting Vectors
-
-Before using data, we know confirm *what* it is.  `str()` gives a compact summary, `length()` counts elements, and `class()` reveals type. Please type the following into your R script and run each line.
  
-## Length
+# Save and Upload
 
-`length(chars)`  
+1. You will be submitting **both** the R script and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in your R script:
 
-🔎 Explore the length of objects in the Environment pane.
-
-## Class
-
-`class(logicals)` 
-
-🔎 Explore the class of objects in the Environment pane.
-
-**Some types of classes in R include:**
-
-- **numeric**: numbers (e.g., `1`, `3.14`)
-
-- **character**: text strings (e.g., `"Hello World", "R is fun"`)
-
-- **logical**: `TRUE` or `FALSE` values
-
-- **integer**: whole numbers (e.g., `1L`, `2L`)
-
-- **factor**: categorical data (e.g., `"red"`, `"blue"`) is
-  a special type of character vector used for categorical data.
-
-- **NULL**: represents an empty object (e.g., `NULL`)
-
-- **complex**: complex numbers (e.g., `1 + 2i`)
-
-- **Index**: a special type of vector used for indexing (e.g., `1:10`)
-
-- **list**: a collection of objects (e.g., `list(a = 1, b = "text")`)
-
-- **matrix**: a two-dimensional array (e.g., `matrix(1:6, nrow = 2)`)
-
-- **array**: a multi-dimensional array (e.g., `array(1:12, dim = c(2, 3, 2))`)
-
-- **data.frame**: a table-like structure (e.g., `data.frame(name = c("Alice", "Bob"), age = c(25, 30))`)
-
-## Structure
-
-`str(numbers)`    # shows type = num, length = 6
-
-🔍 Look deeper: What other functions can you use to inspect objects? 
-
-```{r}
-# Create a memo note in your R script if you did 🔍 Look deeper. 
-
-## 1. Explain what you did to discover more functions, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-# ➤ Part II Assignment
-
-Now it's your turn to practice creating and inspecting vector objects. Follow the tasks below to complete part of the **technical skill practice assignment**.
-
-1. Work through each task in order.
-
-2. Run each completed line to be sure no errors appear and objects show in the Environment.
-
-## Task 3: Inspect
-
-1. Use `class()` and `str()` to inspect the `object` growth.
-
-2. Write a one‑line comment describing what `str()` reveals.
-
-## Task 4: Subset
-
-1. Create a new vector `positive_growth` that contains only values in growth that are greater than zero. (hint: see logical vectors)
-
-2. Create a new vector `last_two` that contains the last TWO elements of `sales_q2` (use numeric positions, not names).
-
-✔️ Nice! Next, lets try to break some rules and learn more functions.
-
-_Reminder: Now would be a great time to click save (or press Ctrl + S) to save your script._
-
-# Data Coercion
-
-⚠️ **Key Idea**  A vector can only hold *one* type. Mixing types triggers *coercion* to the most flexible type (logical → numeric → character).
-
-What happens if you mix numbers and characters like this 
-`mixed <- c("candy", 4, "book", 92)`?
-
-`class(mixed)`            # character: all elements coerced to character
-
-The `as.numeric()` function tries to convert characters to numbers. If it can't, it returns `NA` (not available).
-
-as.numeric(mixed)            # character → numeric: text converts to NA
-
-as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
-
-🔍 Look deeper: What are other ways to convert class types? 
-
-```{r}
-# Create a memo note in your R script if you did 🔍 Look deeper. 
-
-## 1. Explain what you did to discover the functions, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-# Vectorized Functions
-
-⚡ **Why it’s cool**  Functions like sum(), mean(), and sd() automatically loop over every element—no for‑loop needed. This is called *vectorization*.
-
-Recall we created `series    <- 1:10`
-
-sum(series) 
-
-mean(series)
-
-sd(series) 
-
-# Cleaning Up
-
-🧹 **When to sweep**  Large projects can crowd the Environment. Use rm() to remove objects you no longer need and free memory.
-
-rm(mixed)      # mixed disappears from the Environment pane
-
-# Dataframe function
-
-📊  **What & Why**  A data frame is like a spreadsheet: a table of rows and columns. Use data.frame() to create one from vectors of the same length. Each vector becomes a column. 
-
-`column_1 <- c(1, 2, 3)`
-
-`column_2 <- c("A", "B", "C")`
-
-`column_3 <- c(TRUE, FALSE, TRUE)`
-
-`data_frame <- data.frame(column_1, column_2, column_3)`
-
-# ➤ Part III Assignment
-
-Now it's your turn to practice creating and inspecting vector objects. Follow the tasks below to complete part of the **technical skill practice assignment**.
-
-1. Work through each task in order.
-
-2. Run each completed line to be sure no errors appear and objects show in the Environment.
-
-## Task 5: Vectorised summaries
-
-1. Calculate the average of `sales_q2`; save as `avg_q2`.
-
-2. Calculate the total of `sales_q1`; save as `total_q1`.
-
-## Task 6: Mini data frame 
-
-1. Create a character vector `months` that names four months (e.g., "Jan").
-
-2. Combine months, `sales_q1`, `sales_q2` and `growth` into a data frame called `sales`.
-
-3. Check the structure of sales with `str()`. Explain what it shows.
-
-## Task 7 Reflection
-
-🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
-
-# Save workspace
-
-You will be submitting both the R script and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in your R script:
-
-save.image("Assignment2_Workspace.RData")
+`save.image("Assignment3_Workspace.RData")`
 
 Or you can click the "Save Workspace" button in the Environment pane. 
 
 **Always save the R script before closing. If you don't, you will lose your work.**
 
-# Upload to Canvas
-
-Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
+2. Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
 
 # Today you practiced:
 
-- Building numeric, character, and logical vectors.
+- Recognizing function objects vs. calls.
 
-- Inspecting structure, length, and data type.
+- Reading help files and spotting default arguments.
 
-- Understanding and witnessing type coercion.
+- Controlling `na.rm` and other named parameters.
 
-- Sub-setting vectors with positions and logical tests.
+- Creating reproducible random samples.
 
-- Applying vectorised summary functions.
+- Nesting functions for concise workflows.
 
-- Tidying your workspace with rm().
-
-- Creating a data frame from vectors.
-
-🚀 Great progress! Vectors form the foundation for data frames in the next lesson, so revisit any section and experiment until it feels comfortable.
-
-
+🚀 Great progress! 

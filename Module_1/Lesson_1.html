@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Professor Lorraine Gaudio" />
+<meta name="author" content="by Lorraine Gaudio" />
 
 
 <title>Lesson 1</title>
@@ -2766,8 +2766,8 @@ font-size: 0.95em;
 
 
 <h1 class="title toc-ignore">Lesson 1</h1>
-<h4 class="author">Professor Lorraine Gaudio</h4>
-<h4 class="date">Report generated on August 15, 2025</h4>
+<h4 class="author">by Lorraine Gaudio</h4>
+<h4 class="date">Lesson generated on August 16, 2025</h4>
 
 </div>
 
@@ -2791,8 +2791,8 @@ questions, dig deeper or add memo notes.</p></li>
 <li><p>📍 Run code from a script or the console.</p></li>
 <li><p>⚡ Do simple arithmetic in R.</p></li>
 <li><p>🛠 Create and inspect objects with the assignment operator
-(&lt;-).</p></li>
-<li><p>📊 Combine words with the paste() function.</p></li>
+(<code>&lt;-</code>).</p></li>
+<li><p>📊 Combine words with the <code>paste()</code> function.</p></li>
 <li><p>📦 Save your workspace so nothing is lost.</p></li>
 <li><p>🔍 Follow R’s object-naming rules.</p></li>
 </ul>
@@ -2802,13 +2802,14 @@ questions, dig deeper or add memo notes.</p></li>
 <h1><span class="header-section-number">2</span> Running Code</h1>
 <p>⤵️ Try running the next line in your console. Notice that R
 immediately prints the answer.</p>
-<p>3 + 4</p>
+<p><code>3 + 4</code></p>
 <pre class="r"><code># Type this line in your console and click Run or press Ctrl + Enter
 3 + 4  </code></pre>
 <pre><code>## [1] 7</code></pre>
 <p>✔️ Nice! You just ran your first R command. The simplest usage of R
-is performing basic calculations. You can do addition (+), subtraction
-(-), multiplication (*), and division (/).</p>
+is performing basic calculations. You can do addition (<code>+</code>),
+subtraction (<code>-</code>), multiplication (<code>*</code>), and
+division (<code>/</code>).</p>
 <pre class="r"><code># Create a memo note in your R script. 
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -2829,9 +2830,9 @@ them.</p>
 <div id="objects-assignment" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Objects &amp;
 Assignment</h1>
-<p>In R, <em>everything</em> is an object. Use “&lt;-” to assign a value
-to a name. Type the following into your R script. Then run each line and
-watch the Environment pane for new entries.</p>
+<p>In R, <em>everything</em> is an object. Use “<code>&lt;-</code>” to
+assign a value to a name. Type the following into your R script. Then
+run each line and watch the Environment pane for new entries.</p>
 <pre class="r"><code>result &lt;- 3 + 4       # store the arithmetic output
 
 number &lt;- 42          # store a simple number
@@ -2840,7 +2841,14 @@ ratio  &lt;- number / result   # reuse objects to calculate 42 / 7</code></pre>
 <p>Find the Environment pane (top-right) and see the new objects.</p>
 <p>🔍 Type the name of one of the objects in the Console and press
 Enter. What happened?</p>
-<pre class="r"><code># Create a memo note in your R script. 
+<p>🛠 Break Things! Try different ways of typing equations.</p>
+<p>🛠 Break Things! What are ways that creating a vector causes an Error?
+Try naming an object with a number at the start, like
+<code>3numbers  &lt;- seq(from = 1, to = 10, by = 2)</code>.</p>
+<p>🚀 Explore and Play: Are there different ways to assign an object?
+Try using <code>=</code> or <code>-&gt;</code> instead of
+<code>&lt;-</code> and see what happens.</p>
+<pre class="r"><code># Create a memo note in your R script if you did 🛠 Break Things! and 🚀 Explore and Play. (This is where you could earn points for demonstrating learning skills.)
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
 
@@ -2864,11 +2872,19 @@ to save your script.</p>
 <ul>
 <li>Note: Check your working directory.</li>
 </ul>
-<p>getwd() # This shows your current working directory.</p>
+<pre class="r"><code>getwd()  # This shows your current working directory.</code></pre>
 <p>If you have the course project open, it should show the correct
-folder. Additionally, you can set it with setwd() if needed.</p>
-<p>🔍 Does RStudio have an autosave feature? What happens if you close
-RStudio without saving? How often should you save your work?</p>
+folder. Additionally, you can set it with <code>setwd()</code> if
+needed.</p>
+<p>🔍 Look deeper: Does RStudio have an auto-save feature? What happens
+if you close RStudio without saving? How often should you save your
+work?</p>
+<pre class="r"><code># Create a memo note in your R script if you did 🔍 Look deeper. 
+
+## 1. Explain what you did to discover saving in R, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
 <div id="part-i-assignment" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> ➤ Part I
@@ -2885,19 +2901,19 @@ show in the Environment.</p></li>
 <h2><span class="header-section-number">4.1</span> Task 1</h2>
 <p>Store the quantity <span class="math inline">\(62\)</span> in an
 object called <code>items_sold</code></p>
-<p>items_sold &lt;- ___</p>
+<pre class="r"><code>items_sold &lt;- ___</code></pre>
 </div>
 <div id="task-2" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Task 2</h2>
 <p>Store the unit price <span class="math inline">\(100\)</span> in an
 object called <code>unit_price</code></p>
-<p>unit_price &lt;- ___</p>
+<pre class="r"><code>unit_price &lt;- ___</code></pre>
 </div>
 <div id="task-3" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Task 3</h2>
 <p>Calculate <code>total_revenue</code> by multiplying
 <code>items_sold</code> and <code>unit_price</code></p>
-<p>total_revenue &lt;- ___ * ___ # edit only the blanks</p>
+<pre class="r"><code>total_revenue &lt;- ___ * ___      # edit only the blanks</code></pre>
 </div>
 </div>
 <div id="character-strings" class="section level1" number="5">
@@ -2910,11 +2926,10 @@ following into your R script and run each line:</p>
 statement &lt;- &quot;Productive code is clear and reproducible.&quot;
 message   &lt;- paste(greeting, statement)  # combine the two sentences
 message   # Run to print the full message</code></pre>
-<pre><code>## [1] &quot;Welcome to R. Productive code is clear and reproducible.&quot;</code></pre>
 <p>🗣️ Create your own <em>statement</em> with something you’d like to
 tell future‑you, then run it the message lines again.</p>
-<p>Example: own_message &lt;- “I will remember to save my work
-often.”</p>
+<p>Example:</p>
+<pre class="r"><code>own_message &lt;- &quot;I will remember to save my work often.&quot;</code></pre>
 <pre class="r"><code># Create a memo note in your R script.
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
@@ -2933,27 +2948,27 @@ show in the Environment.</p></li>
 <div id="task-4-character-objects" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Task 4: Character
 objects</h2>
-<p>Store “yellow” in an object first_word</p>
-<p>first_word &lt;- ___</p>
+<p>Store <code>&quot;yellow&quot;</code> in an object <code>first_word</code></p>
+<pre class="r"><code>first_word &lt;- ___</code></pre>
 </div>
 <div id="task-5" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Task 5</h2>
-<p>Store “banana” in an object second_word</p>
-<p>second_word &lt;- ___</p>
+<p>Store <code>&quot;banana&quot;</code> in an object <code>second_word</code></p>
+<pre class="r"><code>second_word &lt;- ___</code></pre>
 </div>
 <div id="task-6" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Task 6</h2>
-<p>Paste first_word and second_word with a space; call the result
-sentence</p>
-<p>sentence &lt;- paste(<strong><em>, </em></strong>)</p>
+<p>Paste <code>first_word</code> and <code>second_word</code> with a
+space; call the result sentence</p>
+<pre class="r"><code>sentence &lt;- paste(___, ___)</code></pre>
 </div>
 <div id="task-7-inspect-save" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Task 7: Inspect &amp;
 save</h2>
 <p>View object types</p>
-<p>class(total_revenue)</p>
+<pre class="r"><code>class(total_revenue)</code></pre>
 <p>🔍 What prints?</p>
-<p>class(sentence)</p>
+<pre class="r"><code>class(sentence)         </code></pre>
 <p>🔍 What prints?</p>
 </div>
 </div>
@@ -2970,11 +2985,11 @@ show in the Environment.</p></li>
 </ol>
 <div id="task-8" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Task 8</h2>
-<p>Create-your-own (challenge)</p>
+<p>🧠 Create-your-own (challenge)</p>
 <p>It’s play time! Create new object(s) that combines skills above.</p>
 <p>Name it <code>my_object</code> and write a comment describing what it
 does.</p>
-<p>my_object &lt;- ___</p>
+<pre class="r"><code>my_object &lt;- ___    </code></pre>
 <pre class="r"><code># Create a memo note in your R script.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -2990,20 +3005,35 @@ does.</p>
 # out. I review the earlier script to compare and then I finally saw it. </code></pre>
 </div>
 </div>
-<div id="save-workspace" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Save workspace</h1>
-<p>You will be submitting both the R script and the workspace file. The
+<div id="save-and-upload" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Save and Upload</h1>
+<ol style="list-style-type: decimal">
+<li>You will be submitting both the R script and the workspace file. The
 workspace file saves all the objects in your environment that you
 created in this lesson. You can save the workspace by running the
-following command in your R script:</p>
-<p>save.image(“Assignment1_Workspace.RData”)</p>
+following command in your R script:</li>
+</ol>
+<pre class="r"><code>save.image(&quot;Assignment1_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
 <p><strong>Always save the R script before closing. If you don’t, you
 will lose your work.</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Find the assignment in this week’s module in Canvas and upload
+<strong>both</strong> the R script and the workspace file.</li>
+</ol>
 </div>
-<div id="upload-to-canvas" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Upload to Canvas</h1>
+<div id="today-you-practiced" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Today you
+practiced</h1>
+<ul>
+<li><p>Running code</p></li>
+<li><p>Storing objects in the environment</p></li>
+<li><p>Creating character strings</p></li>
+<li><p>Saving your workspace and R script</p></li>
+</ul>
+<p>🚀 Great progress! In the next lesson, we’ll learn more about objects
+called vectors.</p>
 </div>
 
 <footer>
@@ -3061,7 +3091,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

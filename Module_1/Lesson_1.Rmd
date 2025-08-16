@@ -1,12 +1,12 @@
 ---
 title: "Lesson 1"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
-    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
@@ -25,12 +25,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Lesson 1"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
   pdf_document:
     toc: true
-    toc_depth: 3
+    toc_depth: 2
     number_sections: true
     citation_package: natbib
     fig_caption: true
@@ -53,13 +53,13 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
  
 Or
 title: "Lesson 1"
-author: "Professor Lorraine Gaudio"
-date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
-    toc_depth: 3 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
@@ -67,7 +67,6 @@ output:
     css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
@@ -91,9 +90,9 @@ In the next few minutes you will learn how to:
 
 - ⚡ Do simple arithmetic in R.
 
-- 🛠 Create and inspect objects with the assignment operator (<-).
+- 🛠 Create and inspect objects with the assignment operator (`<-`).
 
-- 📊 Combine words with the paste() function.
+- 📊 Combine words with the `paste()` function.
 
 - 📦 Save your workspace so nothing is lost.
 
@@ -103,18 +102,20 @@ In the next few minutes you will learn how to:
 
 ⤵️ Try running the next line in your console. Notice that R immediately prints the answer.
 
-3 + 4  
+`3 + 4`  
 
 ```{r}
 # Type this line in your console and click Run or press Ctrl + Enter
 3 + 4  
 ```
 
-✔️ Nice! You just ran your first R command. The simplest usage of R is performing basic calculations. You can do addition (+), subtraction (-), multiplication (*), and division (/).
+✔️ Nice! You just ran your first R command. The simplest usage of R is performing basic calculations. You can do addition (`+`), subtraction (`-`), multiplication (`*`), and division (`/`).
+
+🛠 Break Things! Try different ways of typing equations. 
 
 ```{r}
-# Create a memo note in your R script. 
-
+# Create a memo note in your R script if you did 🛠 Break Things!. 
+# This is where you could earn points for demonstrating learning skills.
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen. 
 
@@ -132,9 +133,9 @@ The value 7 isn't saved anywhere yet; it's just printed as a result in the conso
 
 # Objects & Assignment
 
-In R, *everything* is an object. Use  "<-"  to assign a value to a name. Type the following into your R script. Then run each line and watch the Environment pane for new entries.
+In R, *everything* is an object. Use  "`<-`"  to assign a value to a name. Type the following into your R script. Then run each line and watch the Environment pane for new entries.
 
-```{r}
+```{r eval=FALSE}
 result <- 3 + 4       # store the arithmetic output
 
 number <- 42          # store a simple number
@@ -144,10 +145,15 @@ ratio  <- number / result   # reuse objects to calculate 42 / 7
 
 Find the Environment pane (top-right) and see the new objects.
 
-🔍 Type the name of one of the objects in the Console and press Enter. What happened?
+👀 What happened? Type the name of one of the objects in the Console and press Enter. What happened?
+
+🛠 Break Things! What are ways that creating a vector causes an Error? Try naming an object with a number at the start, like `3numbers  <- seq(from = 1, to = 10, by = 2)`.   
+
+🚀 Explore and Play: Are there different ways to assign an object? Try using `=` or `->` instead of `<-` and see what happens.
 
 ```{r}
-# Create a memo note in your R script. 
+# Create a memo note in your R script if you did 👀 What happened?, 🛠 Break Things!, and 🚀 Explore and Play. 
+# This is where you could earn points for demonstrating learning skills.
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
 
@@ -172,11 +178,22 @@ Reminder: Now would be a great time to click save (or press Ctrl + S) to save yo
 
 - Note: Check your working directory. 
 
+```{r , eval=FALSE}
 getwd()  # This shows your current working directory.
+```
 
-If you have the course project open, it should show the correct folder. Additionally, you can set it with setwd() if needed. 
+If you have the course project open, it should show the correct folder. Additionally, you can set it with `setwd()` if needed. 
 
-🔍  Does RStudio have an autosave feature? What happens if you close RStudio without saving? How often should you save your work?
+🔍 Look deeper: Does RStudio have an auto-save feature? What happens if you close RStudio without saving? How often should you save your work?
+
+```{r}
+# Create a memo note in your R script if you did 🔍 Look deeper. 
+# This is where you could earn points for demonstrating learning skills.
+## 1. Explain what you did to discover saving in R, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
 
 # ➤ Part I Assignment
 
@@ -190,26 +207,32 @@ Now it's your turn to practice. Follow the tasks below to complete part of the *
 
 Store the quantity $62$ in an object called `items_sold`
 
+```{r , eval=FALSE}
 items_sold <- ___
+```
 
 ## Task 2
 
 Store the unit price $100$ in an object called `unit_price`
 
+```{r , eval=FALSE}
 unit_price <- ___
+```
 
 ## Task 3
 
 Calculate `total_revenue` by multiplying `items_sold`  and `unit_price`
 
+```{r , eval=FALSE}
 total_revenue <- ___ * ___      # edit only the blanks
+```
 
 # Character Strings
 
 Computers don’t just crunch numbers—they handle text too! Strings live inside quotation marks.  
 `paste()` joins them with spaces by default. Type the following into your R script and run each line:
 
-```{r}
+```{r , eval=FALSE}
 greeting  <- "Welcome to R."
 statement <- "Productive code is clear and reproducible."
 message   <- paste(greeting, statement)  # combine the two sentences
@@ -219,10 +242,13 @@ message   # Run to print the full message
 🗣️ Create your own *statement* with something you’d like to tell future‑you, then run it the message lines again.
 
 Example:
-own_message <- "I will remember to save my work often."
 
+```{r , eval=FALSE}
+own_message <- "I will remember to save my work often."
+```
 ```{r}
-# Create a memo note in your R script.
+# Create a memo note in your R script if you did 🗣️ Create your own statement.
+# This is where you could earn points for demonstrating learning skills.
 ## 1. Explain what you did, what your observations are, and what you expect 
 # to happen.
 
@@ -237,33 +263,43 @@ own_message <- "I will remember to save my work often."
 
 ## Task 4: Character objects
 
-Store "yellow" in an object first_word
+Store `"yellow"` in an object `first_word`
 
+```{r , eval=FALSE}
 first_word <- ___
+```
 
 ## Task 5
 
-Store "banana" in an object second_word
+Store `"banana"` in an object `second_word`
 
+```{r , eval=FALSE}
 second_word <- ___
+```
 
 ## Task 6
 
-Paste first_word and second_word with a space; call the result sentence
+Paste `first_word` and `second_word` with a space; call the result sentence
 
+```{r , eval=FALSE}
 sentence <- paste(___, ___)
+```
 
 ## Task 7: Inspect & save
 
 View object types
 
-class(total_revenue)    
+```{r , eval=FALSE}
+class(total_revenue)
+```
 
-🔍 What prints?
+👀 What happened? What prints?
 
+```{r, eval=FALSE}
 class(sentence)         
+```
 
-🔍 What prints?
+👀 What happened? What prints?
 
 # ➤ Part III  Assignment
 
@@ -275,22 +311,23 @@ Now it's your turn to practice. Follow the tasks below to complete part of the *
 
 ## Task 8
 
-Create-your-own (challenge)
+🧠 Create-your-own (challenge)
 
 It's play time! Create new object(s) that combines skills above.
 
 Name it `my_object` and write a comment describing what it does.
 
+```{r , eval=FALSE}
 my_object <- ___    
-
+```
 
 ```{r}
-# Create a memo note in your R script.
+# Create a memo note in your R script if you struggled with the technical skill assignment question 🧠 Create-your-own (challenge)
+# You can earn points for demonstrating learning skills while completing your technical skill assignment!
 
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen.
-
-## 2. Demonstrate learning skill(s) in your memo
+## 1. Explain what you did, what your observations are, and what you did 
+# to figure out the error.
+## 2. Demonstrate a learning skill(s) in your memo
 
 # Example:
 
@@ -300,16 +337,28 @@ my_object <- ___
 # out. I review the earlier script to compare and then I finally saw it. 
 ```
 
-# Save workspace
+# Save and Upload
 
-You will be submitting both the R script and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in your R script:
+1. You will be submitting both the R script and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in your R script:
 
+```{r , eval=FALSE}
 save.image("Assignment1_Workspace.RData")
+```
 
 Or you can click the "Save Workspace" button in the Environment pane. 
 
 **Always save the R script before closing. If you don't, you will lose your work.**
 
-# Upload to Canvas
+2. Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
 
+# Today you practiced
 
+- Running code
+
+- Storing objects in the environment
+
+- Creating character strings
+
+- Saving your workspace and R script
+
+🚀 Great progress! In the next lesson, we'll learn more about objects called vectors. 

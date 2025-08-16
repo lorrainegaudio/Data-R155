@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 2</title>
+<title>Lesson 3</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2765,20 +2765,20 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 2</h1>
+<h1 class="title toc-ignore">Lesson 3</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on August 16, 2025</h4>
 
 </div>
 
 
-<div id="welcome-back" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 👋 Welcome back!</h1>
-<p>In lesson 1 you learned how to run code and create simple objects.
-Lesson 2 moves one step further: you’ll meet <em>vectors</em> which are
-ordered collections of values that form the backbone of nearly
-everything in R.</p>
-<p>To begin Lesson 2, follow these steps:</p>
+<div id="welcome-back-to-r" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> 🎉 Welcome back to
+R!</h1>
+<p>In lesson one and two you learned about objects, vectors, and created
+a simple dataframe. Now you’ll learn how to <em>do things</em> with them
+using <strong>functions</strong>.</p>
+<p>To begin Lesson 3, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new R script file (File &gt; New File &gt; R
@@ -2787,458 +2787,240 @@ Script).</p></li>
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
-<div id="lesson-overview" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Lesson Overview</h2>
+<p><strong>Lesson Overview</strong></p>
 <p>In the next few minutes you will learn how to:</p>
 <ul>
-<li><p>🛠 Build numeric, character, and logical vectors.</p></li>
-<li><p>🔍 Check the structure, length, and data type of any
-object.</p></li>
-<li><p>⚡ Explain how R coerces mixed‑type vectors.</p></li>
-<li><p>📊 Subset vectors by position or logical tests.</p></li>
-<li><p>📍 Summarize vectors with built‑in, <em>vectorised</em>
-functions.</p></li>
-<li><p>📦 Remove objects you no longer need.</p></li>
+<li><p>🔍 Distinguish a function <em>object</em> from a <em>function
+call</em>.</p></li>
+<li><p>📍 Read help files to discover arguments and defaults.</p></li>
+<li><p>🛠 Use required vs. default, positional vs. named
+arguments.</p></li>
+<li><p>⚡ Handle missing values with na.rm.</p></li>
+<li><p>📊 Generate random samples and set a seed for
+reproducibility.</p></li>
+<li><p>📦 Nest functions to build compact pipelines.</p></li>
 </ul>
 </div>
-</div>
-<div id="functions" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Functions</h1>
-<p>Many mathematical operations in R are performed using
-<strong>functions</strong>. A function is a reusable block of code that
-takes inputs, processes them, and returns an output. Functions can be
-built‑in or user‑defined. Arguments are the inputs to a function, and
-they can be required or optional. Functions can return a single value or
-multiple values, and they can be nested within other functions. We’ll be
-using functions throughout this course. We’ll start with the very basics
-in this lesson to help up create vectors and a data frame.</p>
-</div>
-<div id="numeric-vectors" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Numeric Vectors</h1>
-<p>A <strong>vector</strong> is like a row in a spreadsheet: a single
-dimension of related values. Use <code>c()</code> to <em>combine</em>,
-<code>:</code> to create a simple sequence, or <code>seq()</code> for
-custom steps. Please type the following into your R script and run each
-line.</p>
-<div id="c" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> <code>c()</code></h2>
-<pre class="r"><code>numbers   &lt;- c(4, 8, 15, 16, 23, 42)          # numeric via c()
+<div id="functions-call-basics" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Functions-Call
+Basics</h1>
+<p>🧠 <strong>Concept</strong> A <em>function object</em> is stored
+code; a <em>function call</em> runs it. The parentheses trigger
+execution. Objects or strings without <code>()</code> just print. Type
+in the following into your R script and run each line. Comment out lines
+that produce an error.</p>
+<pre class="r"><code>thing_1             # object? (expect an error‑message: not found)
 
-numbers3  &lt;- c(1.5, 2.5, -3.5)                # numeric with decimals and negative</code></pre>
-</div>
-<div id="seq" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span>
-<code>seq()</code></h2>
-<p>Generating a sequence of numbers is useful for creating evenly spaced
-values. Use <code>seq()</code> to specify the start, end, and step size.
-Type the following into your R script and run each line.</p>
-<pre class="r"><code>numbers5  &lt;- seq(from = 1, to = 10, by = 2)   
+&quot;thing_1&quot;           # character string — prints literally
 
-steps     &lt;- seq(from = 0, to = 1, by = 0.2)</code></pre>
-<p>👀 Check‑in: What did <code>seq</code> do? Run “numbers3” in the
-Console to see the result.</p>
+3                   # numeric literal
+
+mean                # function *object* → prints the function body
+
+mean()              # function *call*   → error: argument is missing</code></pre>
+<p>👀 Check‑in: What happens if you try sum vs. sum(1:5) ?</p>
 </div>
-<div id="section" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> <code>:</code></h2>
-<p>Please type the following into your R script and run.</p>
-<pre class="r"><code>series    &lt;- 1:10                             # shortcut 1,2,…,10</code></pre>
-<p>🚀 Explore and Play: What are other ways you can create numeric
-vectors? For example, try <code>rep()</code> to repeat values.</p>
-<pre class="r"><code># Create a memo note in your R script 🚀 Explore and Play. 
-# This is where you could earn points for demonstrating learning skills.
-## 1. Explain what you did in creating vectors, what your observations are, and 
-# what you expect to happen. 
+<div id="date-and-time" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Date and Time</h1>
+<p>🕰️ R has built‑in date and time functions. Type the following into
+your R script and run each line. <strong>Utility</strong> Quickly
+time‑stamp results for reports or file names.</p>
+<pre class="r"><code>Sys.Date()      # current date (yyyy‑mm‑dd)
+
+Sys.time()      # current date + time
+
+Sys.timezone()  # your local timezone string</code></pre>
+<p>🔍 Dig deeper: I use <code>format(Sys.Date(), &#39;%B %d, %Y&#39;)</code> to
+format dates in Lesson reports. What is the function of <code>%</code>
+in ‘%Y-%m-%d’?</p>
+<pre class="r"><code># Create a learning skills memo note in your R script if you did 
+# the 👀 Check‑in and 🔍 Dig deeper. 
+
+## 1. Explain what you did to discover more about Functions-Call Basics and Date and Time settings in reports, what your observations are, and what you expect 
+# to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
+<div id="using-help" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Using Help</h1>
+<p>🔍 <strong>Why use Help</strong>? Nobody memorizes every argument.
+<code>?function_name</code> opens the help file.</p>
+<p>Type the following R code into your script. Read the help tab for
+more about the <em>Usage</em> section for defaults, and the
+<em>Arguments</em> list for details.</p>
+<pre class="r"><code>?mean               # opens in Help pane (bottom‑right)
+
+help(sample)        # alternate syntax works the same</code></pre>
+<p>💡 Pro‑tip: <code>args(mean)</code> prints the argument names
+inline.</p>
 </div>
-<div id="vector-arithmetic" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Vector arithmetic</h1>
-<p>You can perform arithmetic operations on vectors. R will apply the
-operation element‑wise, meaning it will add, subtract, multiply, or
-divide corresponding elements in the vectors.</p>
-<p>Recall that we created the objects:</p>
-<pre class="r"><code>numbers   &lt;- c(4, 8, 15, 16, 23, 42)
-steps     &lt;- seq(from = 0, to = 1, by = 0.2)</code></pre>
-<p>🔍 What is the length of <code>numbers</code> and
-<code>steps</code>?</p>
-<p>Let’s do some vector arithmetic with these two vectors. Type the
-following into your R script and run each line.</p>
-<pre class="r"><code>numbers - steps</code></pre>
+<div id="required-vs.-default" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Required
+vs. Default</h1>
+<p>⚖️ <strong>Key Idea</strong> If R supplies a default you can omit
+that argument; if not, you <em>must</em> provide it. Use named arguments
+for clarity. Type the following into your R script and run each
+line.</p>
+<pre class="r"><code>values &lt;- c(1, 2, 3, 4, 5, NA)
+
+mean(values)                       # default na.rm = FALSE → returns NA
+
+mean(values, na.rm = TRUE)         # ignore missing values
+
+mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
+<p>📍 Identify: Try <code>median(values, na.rm = TRUE)</code>. Why
+doesn’t <code>median()</code>need trim?</p>
+<p>🔍 Look deeper: What is bootstrapping in statistics?</p>
+<p>Type the following code in your R script and run each line.</p>
+<pre class="r"><code>set.seed(123)          # reproducible randomness
+
+numbers &lt;- 1:10
+
+sample(numbers, 3)                 # three unique picks
+
+sample(numbers, 10, replace = TRUE)  # allow repeats</code></pre>
+<p>🧠 Challenge: Draw 5 numbers without replacement and sort them
+ascending.</p>
+<pre class="r"><code># Create a memo note in your R script if you did 📍 Identify, 🔍 Look deeper, and 🧠 Challenge. 
+
+## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
-<div id="part-i-assignment" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> ➤ Part I
-Assignment</h1>
+<div id="nesting-functions" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Nesting Functions</h1>
+<p>💡 <strong>Idea</strong> Feed the output of one function straight
+into another. Type the following R script in your document script and
+run.</p>
+<pre class="r"><code>mean(sample(numbers, size = 5, replace = TRUE))  # sample then average</code></pre>
+<p>🚀 Explore and Play: Run the line above twice. Why does the result
+change each time even though the code is identical?</p>
+<p>🔍 Look deeper: From the functions we have learned about, which can
+be nested and how?</p>
+<pre class="r"><code># Create a memo note in your R script if you did 🚀 Explore and Play and 🔍 Look deeper.
+
+## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo</code></pre>
+</div>
+<div id="assignment" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> ➤ Assignment</h1>
 <p>Now it’s your turn to practice creating and using vector objects.
 Follow the tasks below to complete part of the <strong>technical skill
 practice assignment</strong>.</p>
 <ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the ___ with your
+<li><p>Work through each task in order. Replace the TODO with your
 code.</p></li>
 <li><p>Run each completed line to be sure no errors appear and objects
 show in the Environment.</p></li>
+<li><p>When finished, save your workspace and submit this script plus
+the .RData file.</p></li>
 </ol>
-<div id="task-1" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Task 1</h2>
-<p>Build two numeric vectors where both vectors are the same length.</p>
+<div id="task-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Task 1</h2>
+<p>🛠 Build a random data set</p>
+<p>Set a reproducible seed (pick any whole number you like). Use
+<code>sample()</code> and <code>seq()</code> together to create a vector
+called scores that contains 25 random numbers between 60 and 100,
+inclusive. Include at least 3 NA values in scores (hint: combine vectors
+with <code>c()</code>).</p>
+<p>TODO</p>
+</div>
+<div id="task-2" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Task 2</h2>
+<p>🚀 Explore function arguments</p>
+<p>Open the help file for <code>sample()</code> <strong>in the
+console</strong>. In the comment block below, list TWO required
+arguments and TWO default arguments for <code>sample()</code> exactly as
+they appear in the Usage section.</p>
 <ol style="list-style-type: decimal">
-<li><p>Create a vector called <code>sales_q1</code> with FOUR numbers of
-your choice.</p></li>
-<li><p>Create a vector called <code>sales_q2</code> with FOUR numbers of
-your choice.</p></li>
+<li><p>Required arguments: TODO</p></li>
+<li><p>Default arguments: TODO</p></li>
 </ol>
 </div>
-<div id="task-2" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Task 2</h2>
-<p>Using vector arithmetic, create an object named <code>growth</code>
-that stores the difference between <code>sales_q2</code> and
-<code>sales_q1</code>.</p>
-<p>🚀 Explore and Play: What happens if you try to subtract a vector of
-different lengths?</p>
-<pre class="r"><code># Create a memo note in your R script if you did the 🚀 Explore and Play. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-<p><em>Reminder: Now would be a great time to click save (or press Ctrl
-+ S) to save your script.</em></p>
-<p>✔️ Nice! Now, we’ll dig a little deeper into other types of
-vectors.</p>
+<div id="task-3" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Task 3</h2>
+<p>⚠️ Handle missing data</p>
+<p>Calculate the mean of scores and store it in
+<code>average_raw</code>. Calculate the mean of scores again, this time
+<strong>excluding</strong> <code>NA</code> values, and store it in
+<code>average_clean</code>.</p>
+<p>TODO</p>
 </div>
+<div id="task-4" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Task 4</h2>
+<p>⚖️ Practice named vs. positional arguments</p>
+<p>Use <code>sample()</code> to draw 10 values <strong>with
+replacement</strong> from scores and store them in
+<code>sample_scores_positional</code> <strong>WITHOUT naming any
+arguments</strong>. Repeat the same call, but this time <strong>name
+every argument</strong>; store as <code>sample_scores_named</code>.</p>
+<p>TODO</p>
 </div>
-<div id="character-vectors" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Character Vectors</h1>
-<p>Frequently used as plot labels, text data, or categories. Use quotes
-to create character strings. Type the following into your R script and
-run each line.</p>
-<pre class="r"><code>chars     &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;)    # character vector
-
-chars2    &lt;- c(&quot;red&quot;, &quot;yellow&quot;, &quot;green&quot;)       # another character vector
-
-chars3    &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)                  # single letters as characters</code></pre>
-<p>👀 Check‑in: What happens if you don’t put quotations around
-character strings? Try it with <code>c(apple, banana, cherry)</code> and
-see what R does. What happens if you put the entire vector in quotes
-like this <code>c(&quot;apple, banana, cherry&quot;)</code>? What happens if you
-quote numbers like <code>c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)</code>?</p>
-<pre class="r"><code># Create a memo note in your R script if you completed this 👀 Check‑in. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
+<div id="task-5" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Task 5</h2>
+<p>📦 Nesting functions</p>
+<p>Combine <code>mean()</code> and <code>sample()</code> to calculate
+the mean of 5 random draws from scores (allow replacement); store the
+result in <code>mean_of_five</code>. Do this in <strong>one</strong>
+line of code.</p>
+<p>TODO</p>
 </div>
-<div id="missing-values" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Missing Values</h1>
-<p>Sometimes data is missing or unknown. R uses <code>NA</code> to
-represent these missing values. You can create a vector with
-<code>NA</code> like this:</p>
-<pre class="r"><code>z &lt;- c(1, 2, NA, 4, 5)  # vector with a missing value</code></pre>
-<p>👀 Check‑in: What happens if you run <code>z + 2</code>? What happens
-if you type <code>0/0</code> or <code>Inf - Inf</code> in the
-console?</p>
-<p>🔍 Look deeper: What is Inf? Type <code>?Inf</code> in the console.
-What happens?</p>
-<p><em>Note: <code>NaN</code> stands for “Not a Number” and is used when
-a calculation does not produce a valid number.</em></p>
-<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check‑in and 🔍 Look deeper. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
+<div id="task-6" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Task 6</h2>
+<p>🕰 Quick time‑stamp</p>
+<p>Use <code>Sys.Date()</code> and <code>Sys.time()</code> to create two
+separate objects, <code>today_date</code> and <code>now_time</code>.</p>
+<p>TODO</p>
 </div>
-<div id="logical-vectors" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Logical Vectors</h1>
-<p>Logical vectors are used for conditions and comparisons. They contain
-TRUE or FALSE values.</p>
-<pre class="r"><code>logicals  &lt;- c(TRUE, FALSE, TRUE, NA)          # logical (TRUE/FALSE)
-
-logicals2 &lt;- c(1 &gt; 2, 3 &lt; 5, 4 == 4)           # logical comparisons</code></pre>
-<p>The logical operators are:</p>
-<ul>
-<li><p><code>&gt;</code> greater than</p></li>
-<li><p><code>&lt;</code> less than</p></li>
-<li><p><code>==</code> equal to</p></li>
-<li><p><code>&gt;=</code> greater than or equal to</p></li>
-<li><p><code>&lt;=</code> less than or equal to</p></li>
-<li><p><code>!=</code> not equal to</p></li>
-</ul>
-<p>Additionally, if <code>logical</code> and <code>logical2</code> are
-logical expressions, then <code>logical &amp; logical2</code> is their
-intersection (<em>and</em> operator), and
-<code>logical | logical2</code> is their union (<em>or</em> operator).
-We’ll cover logical vectors in more detail in a later lesson.</p>
-<p>👀 Check‑in: Run each name (numbers, chars, …) in your environment by
-typing the object name. Note how R prints them. After running, peek at
-the Environment (Grid view) to see each vector shows its type &amp;
-size.</p>
-<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check‑in. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="indexing" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Indexing</h1>
-<p>Indexing is how you access specific elements in a vector. R uses
-1-based indexing, meaning the first element is at position 1. You can
-use square brackets <code>[ ]</code> to index vectors.</p>
-<p>Recall that we created:</p>
-<pre class="r"><code>z &lt;- c(1, 2, NA, 4, 5)
-
-numbers3  &lt;- c(1.5, 2.5, -3.5)</code></pre>
-<div id="sub-setting-vectors" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Sub-setting
-Vectors</h2>
-<p>🎯 <strong>Goal</strong> Pull out the pieces you need. Use
-<code>[ ]</code> with positions or a logical test.</p>
-<p>🧠 Remember: positions start at 1 in R (not 0).</p>
-<p>Type the following into your R script and run each line.</p>
-<pre class="r"><code>z[1]       # first element by position
-
-z[3]       # third element by position
-
-z[2:4]     # last two elements by position 
-
-z[-(1, 5)] # all but first and last elements</code></pre>
-<p>🛠 Break Things! What happens if you try to index with a number larger
-than the vector length, like <code>z[6]</code>? ⚡ Explain any error
-message you see.</p>
-<p>🧠 Challenge: Extract the last two fruits from <em>chars</em>.</p>
-</div>
-<div id="logical-indexing" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Logical Indexing</h2>
-<p>Type the following into your R script and run.</p>
-<pre class="r"><code>numbers3[numbers3 &gt; 0] # keep only positives</code></pre>
-<p>🔍 Look deeper: What happens if you
-run<code>y &lt;- z[(!is.na(z))]</code>? Hint: The function
-<code>is.na()</code> checks for missing values (NA) in the vector. The
-<code>!</code> operator negates the logical vector. Print
-<code>y</code>. 👀 What happened?⚡ Explain</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🛠 Break Things and 🧠 Challenge 
-# Or if you did the 🔍 Look deeper, and 👀 What happened?. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did in Indexing, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-</div>
-<div id="inspecting-vectors" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Inspecting
-Vectors</h1>
-<p>Before using data, we know confirm <em>what</em> it is.
-<code>str()</code> gives a compact summary, <code>length()</code> counts
-elements, and <code>class()</code> reveals type. Please type the
-following into your R script and run each line.</p>
-<div id="length" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Length</h2>
-<p>Type the following into your R script and run.</p>
-<pre class="r"><code>length(chars)</code></pre>
-<p>🔎 Explore the length of objects in the Environment pane.</p>
-</div>
-<div id="class" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Class</h2>
-<p><code>class(logicals)</code></p>
-<p>🔎 Explore the class of objects in the Environment pane.</p>
-<p><strong>Some types of classes in R include:</strong></p>
-<ul>
-<li><p><strong>numeric</strong>: numbers (e.g., <code>1</code>,
-<code>3.14</code>)</p></li>
-<li><p><strong>character</strong>: text strings (e.g.,
-<code>&quot;Hello World&quot;, &quot;R is fun&quot;</code>)</p></li>
-<li><p><strong>logical</strong>: <code>TRUE</code> or <code>FALSE</code>
-values</p></li>
-<li><p><strong>integer</strong>: whole numbers (e.g., <code>1L</code>,
-<code>2L</code>)</p></li>
-<li><p><strong>factor</strong>: categorical data (e.g.,
-<code>&quot;red&quot;</code>, <code>&quot;blue&quot;</code>) is a special type of character
-vector used for categorical data.</p></li>
-<li><p><strong>NULL</strong>: represents an empty object (e.g.,
-<code>NULL</code>)</p></li>
-<li><p><strong>complex</strong>: complex numbers (e.g.,
-<code>1 + 2i</code>)</p></li>
-<li><p><strong>Index</strong>: a special type of vector used for
-indexing (e.g., <code>1:10</code>)</p></li>
-<li><p><strong>list</strong>: a collection of objects (e.g.,
-<code>list(a = 1, b = &quot;text&quot;)</code>)</p></li>
-<li><p><strong>matrix</strong>: a two-dimensional array (e.g.,
-<code>matrix(1:6, nrow = 2)</code>)</p></li>
-<li><p><strong>array</strong>: a multi-dimensional array (e.g.,
-<code>array(1:12, dim = c(2, 3, 2))</code>)</p></li>
-<li><p><strong>data.frame</strong>: a table-like structure (e.g.,
-<code>data.frame(name = c(&quot;Alice&quot;, &quot;Bob&quot;), age = c(25, 30))</code>)</p></li>
-</ul>
-</div>
-<div id="structure" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Structure</h2>
-<p>Type the following into your R script and run.</p>
-<pre class="r"><code>str(numbers)    # shows type = num, length = 6</code></pre>
-<p>🔍 Look deeper: What other functions can you use to inspect
-objects?</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🔍 Look deeper. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did to discover more functions, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-</div>
-<div id="part-ii-assignment" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> ➤ Part II
-Assignment</h1>
-<p>Now it’s your turn to practice creating and inspecting vector
-objects. Follow the tasks below to complete part of the
-<strong>technical skill practice assignment</strong>.</p>
-<ol style="list-style-type: decimal">
-<li><p>Work through each task in order.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-</ol>
-<div id="task-3-inspect" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Task 3: Inspect</h2>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>class()</code> and <code>str()</code> to inspect the
-<code>object</code> growth.</p></li>
-<li><p>Write a one‑line comment describing what <code>str()</code>
-reveals.</p></li>
-</ol>
-</div>
-<div id="task-4-subset" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Task 4: Subset</h2>
-<ol style="list-style-type: decimal">
-<li><p>Create a new vector <code>positive_growth</code> that contains
-only values in growth that are greater than zero. (hint: see logical
-vectors)</p></li>
-<li><p>Create a new vector <code>last_two</code> that contains the last
-TWO elements of <code>sales_q2</code> (use numeric positions, not
-names).</p></li>
-</ol>
-<p>✔️ Nice! Next, lets try to break some rules and learn more
-functions.</p>
+<div id="task-7" class="section level2" number="7.7">
+<h2><span class="header-section-number">7.7</span> Task 7</h2>
+<p>🗣 Reflection</p>
+<p>In one sentence, explain the difference between a <em>function
+object</em> (e.g., mean) and a <em>function call</em> (e.g.,
+<code>mean()</code>).</p>
+<p>Answer: TODO</p>
 <p><em>Reminder: Now would be a great time to click save (or press Ctrl
 + S) to save your script.</em></p>
 </div>
 </div>
-<div id="data-coercion" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Data Coercion</h1>
-<p>⚠️ <strong>Key Idea</strong> A vector can only hold <em>one</em>
-type. Mixing types triggers <em>coercion</em> to the most flexible type
-(logical → numeric → character).</p>
-<p>What happens if you mix numbers and characters?</p>
-<pre class="r"><code>mixed &lt;- c(&quot;candy&quot;, 4, &quot;book&quot;, 92)
+<div id="practice-space" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Practice Space</h1>
+<p>The following provides you more opportunities to earn points
+demonstrating <strong>learning skills</strong></p>
+<p>🔗 Link today’s skills with vectors from Lesson 2. Review Lesson 2,
+create vectors and then apply functions to them.</p>
+<p>🛠 Build ONE new object of your choice that demonstrates any two
+skills from Lesson 3 (e.g., help file reading, required/default
+arguments, nesting). Name it <code>my_object</code> and leave a brief
+comment describing what it does.</p>
+<p>🚀 Explore and Play IDEAS:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>runif()</code> to create 10 random decimals, then
+<code>round()</code> them.</p></li>
+<li><p>Nest <code>sample()</code> inside <code>paste()</code> to build a
+random silly password.</p></li>
+<li><p>Open <code>?sd</code> and compute the standard deviation of
+values after removing <code>NA</code>.</p></li>
+</ol>
+<pre class="r"><code># Create a memo note in your R script if you did the Practice Space.
 
-class(mixed)            # character: all elements coerced to character</code></pre>
-<p>The <code>as.numeric()</code> function tries to convert characters to
-numbers. If it can’t, it returns <code>NA</code> (not available).</p>
-<pre class="r"><code>as.numeric(mixed)            # character → numeric: text converts to NA
-
-as.numeric(c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)) # character → numeric: text converts to numbers</code></pre>
-<p>🔍 Look deeper: What are other ways to convert class types?</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🔍 Look deeper. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did to discover the functions, what your observations are, and what you expect 
+## 1. Explain what you did, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
-<div id="vectorized-functions" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Vectorized
-Functions</h1>
-<p>⚡ <strong>Why it’s cool</strong> Functions like <code>sum(),</code>
-<code>mean(),</code> and <code>sd()</code> automatically loop over every
-element—no for‑loop needed. This is called <em>vectorization</em>.</p>
-<p>Recall we created <code>series &lt;- 1:10</code></p>
-<p>Type the following R code into your script and run. 🗣 Comment about
-the output.</p>
-<pre class="r"><code>sum(series)
-
-mean(series)
-
-sd(series) </code></pre>
-</div>
-<div id="cleaning-up" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Cleaning Up</h1>
-<p>🧹 <strong>When to sweep</strong> Large projects can crowd the
-Environment. Use rm() to remove objects you no longer need and free
-memory. Type the following into your R script and run.</p>
-<pre class="r"><code>rm(mixed)      # mixed disappears from the Environment pane</code></pre>
-</div>
-<div id="dataframe-function" class="section level1" number="15">
-<h1><span class="header-section-number">15</span> Dataframe
-function</h1>
-<p>Vectors form the foundation for data frames.</p>
-<p>📊 <strong>What &amp; Why</strong> A data frame is like a
-spreadsheet: a table of rows and columns. Use data.frame() to create one
-from vectors of the same length. Each vector becomes a column.</p>
-<pre class="r"><code>column_1 &lt;- c(1, 2, 3)
-
-column_2 &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)
-
-column_3 &lt;- c(TRUE, FALSE, TRUE)
-
-data_frame &lt;- data.frame(column_1, column_2, column_3)</code></pre>
-</div>
-<div id="part-iii-assignment" class="section level1" number="16">
-<h1><span class="header-section-number">16</span> ➤ Part III
-Assignment</h1>
-<p>Now it’s your turn to practice creating and inspecting vector
-objects. Follow the tasks below to complete part of the
-<strong>technical skill practice assignment</strong>.</p>
+<div id="save-and-upload" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li><p>Work through each task in order.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
+<li>You will be submitting <strong>both</strong> the R script and the
+workspace file. The workspace file saves all the objects in your
+environment that you created in this lesson. You can save the workspace
+by running the following command in your R script:</li>
 </ol>
-<div id="task-5-vectorised-summaries" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> Task 5: Vectorised
-summaries</h2>
-<ol style="list-style-type: decimal">
-<li><p>Calculate the average of <code>sales_q2</code>; save as
-<code>avg_q2</code>.</p></li>
-<li><p>Calculate the total of <code>sales_q1</code>; save as
-<code>total_q1</code>.</p></li>
-</ol>
-</div>
-<div id="task-6-mini-data-frame" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span> Task 6: Mini data
-frame</h2>
-<ol style="list-style-type: decimal">
-<li><p>Create a character vector <code>months</code> that names four
-months (e.g., “Jan”).</p></li>
-<li><p>Combine months, <code>sales_q1</code>, <code>sales_q2</code> and
-<code>growth</code> into a data frame called
-<code>sales</code>.</p></li>
-<li><p>Check the structure of sales with <code>str()</code>. Explain
-what it shows.</p></li>
-</ol>
-</div>
-<div id="task-7-reflection" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> Task 7
-Reflection</h2>
-<p>🗣 In one sentence, explain why numeric values may be coerced to
-character if you mix them inside a single vector.</p>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="17">
-<h1><span class="header-section-number">17</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting both the R script and the workspace file. The
-workspace file saves all the objects in your environment that you
-created in this lesson. You can save the workspace by running the
-following command in your R script:</li>
-</ol>
-<pre class="r"><code>save.image(&quot;Assignment2_Workspace.RData&quot;)</code></pre>
+<p><code>save.image(&quot;Assignment3_Workspace.RData&quot;)</code></p>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
 <p><strong>Always save the R script before closing. If you don’t, you
@@ -3248,20 +3030,18 @@ will lose your work.</strong></p>
 <strong>both</strong> the R script and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="18">
-<h1><span class="header-section-number">18</span> Today you
-practiced</h1>
+<div id="today-you-practiced" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Today you
+practiced:</h1>
 <ul>
-<li><p>Building numeric, character, and logical vectors.</p></li>
-<li><p>Inspecting structure, length, and data type.</p></li>
-<li><p>Understanding and witnessing type coercion.</p></li>
-<li><p>Sub-setting vectors with positions and logical tests.</p></li>
-<li><p>Applying vectorised summary functions.</p></li>
-<li><p>Tidying your workspace with <code>rm()</code>.</p></li>
-<li><p>Creating a data frame from vectors.</p></li>
+<li><p>Recognizing function objects vs. calls.</p></li>
+<li><p>Reading help files and spotting default arguments.</p></li>
+<li><p>Controlling <code>na.rm</code> and other named
+parameters.</p></li>
+<li><p>Creating reproducible random samples.</p></li>
+<li><p>Nesting functions for concise workflows.</p></li>
 </ul>
-<p>🚀 Great progress! In the next lesson, we’ll learn more about
-functions.</p>
+<p>🚀 Great progress!</p>
 </div>
 
 <footer>
@@ -3319,7 +3099,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
