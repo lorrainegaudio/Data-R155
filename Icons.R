@@ -1,5 +1,7 @@
 ✔️ Nice!
   
+➡ 
+  
 👀 Check-in: or What happened?
   
 🚀 Explore and Play:
@@ -35,3 +37,27 @@
 📊 Group
 
 📦 Pack/ Unpack
+
+📜 Script
+
+▶
+
+📖
+
+📝
+
+🧐 NOTICE: 
+  
+🤔
+
+🧭
+
+🧩
+
+🌟
+
+💪
+
+🚦
+
+👋
