@@ -76,9 +76,9 @@ output:
 
 # 👋 Welcome back! 
 
-In Lesson 1 you learned how to run code and create simple objects. Lesson 2 moves one step further: you’ll meet *vectors* which are ordered collections of values that form the backbone of nearly everything in R.
+In Lesson one and 2 you learned about objects, vectors, and created a simple dataframe. Now you’ll learn how to *do things* with them using **functions**.
 
-To begin Lesson 2, follow these steps:
+To begin Lesson 3, follow these steps:
 
 1. Open your course project for RStudio 
    
@@ -90,54 +90,94 @@ To begin Lesson 2, follow these steps:
 
 In the next few minutes you will learn how to:
 
-- 🛠 Build numeric, character, and logical vectors.
+- 🔍 Distinguish a function *object* from a *function call*.
 
-- 🔍 Check the structure, length, and data type of any object.
+- 📍 Read help files to discover arguments and defaults.
 
-- ⚡ Explain how R coerces mixed‑type vectors.
+- 🛠 Use required vs. default, positional vs. named arguments.
 
-- 📊 Subset vectors by position or logical tests.
+- ⚡ Handle missing values with na.rm.
 
-- 📍 Summarize vectors with built‑in, *vectorised* functions.
+- 📊 Generate random samples and set a seed for reproducibility.
 
-- 📦 Remove objects you no longer need.
+- 📦 Nest functions to build compact pipelines.
 
-# Functions
+# Functions-Call Basics
 
-Many mathematical operations in R are performed using **functions**. A function is a reusable block of code that takes inputs, processes them, and returns an output. Functions can be built‑in or user‑defined. Arguments are the inputs to a function, and they can be required or optional. Functions can return a single value or multiple values, and they can be nested within other functions. We'll be using functions throughout this course, so let's start with some basics.
+🧠 **Concept**  A *function object* is stored code; a *function call* runs it. The parentheses trigger execution. Objects or strings without `()` just print. Type in the following into your R script and run each line. Comment out lines that produce an error. 
 
-# Numeric Vectors
+`thing_1`             # object? (expect an error‑message: not found)
 
-A **vector** is like a row in a spreadsheet: a single dimension of related values.  Use `c()` to *combine*, `:`  to create a simple sequence, or  `seq()`  for custom steps.  Please type the following into your R script and run each line.
+"thing_1"          # character string — prints literally
 
-## `c()`
+`3`                   # numeric literal
 
-`numbers   <- c(4, 8, 15, 16, 23, 42)`          # numeric via c()
+`mean`               # function *object* → prints the function body
 
-`numbers3  <- c(1.5, 2.5, -3.5)`               # numeric with decimals and negative
+`mean()`              # function *call*   → error: argument is missing
 
-## `seq()`
+👀 Check‑in: What happens if you try  sum   vs.   sum(1:5)  ?
 
-Generating a sequence of numbers is useful for creating evenly spaced values. Use `seq()` to specify the start, end, and step size. Type the following into your R script and run each line.
+# Date and Time
 
-`numbers5  <- seq(from = 1, to = 10, by = 2)`   
+🕰️ R has built‑in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time‑stamp results for reports or file names. 
 
-`steps     <- seq(from = 0, to = 1, by = 0.2)`  
+`Sys.Date()`      # current date (yyyy‑mm‑dd)
 
-👀 Check‑in: What did `seq` do? Run "numbers3" in the Console to see the result.
+`Sys.time()`      # current date + time
 
-## `:`
+`Sys.timezone()`  # your local timezone string
 
-`series    <- 1:10`                              # shortcut 1,2,…,10
+I use `format(Sys.Date(), '%B %d, %Y')` to format dates in Lesson reports.
 
-🚀 Explore and Play: What are other ways you can create numeric vectors? Try `rep()` to repeat values.
+🔍 Dig deeper: What is the function of `%` in '%Y-%m-%d'?
 
-🛠 Break Things! What are ways that creating a vector causes an Error? Try naming an object with a number at the start, like `3numbers  <- seq(from = 1, to = 10, by = 2)`.   
+```{r}
+# Create a memo note in your R script 🔍 Dig deeper. 
+
+## 1. Explain what you did to discover more about Date and Time settings in reports, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
+
+# Using Help
+
+🔍 **Why**  Nobody memorizes every argument. `?function_name` opens the help file.  
+
+Read the *Usage* section for defaults, and the *Arguments* list for details.
+
+`?mean`               # opens in Help pane (bottom‑right)
+
+`help(sample)`        # alternate syntax works the same
+
+💡 Pro‑tip:  args(mean)  prints the argument names inline.
+
+# Required vs. Default Arguments
+
+⚖️ **Key Idea**  If R supplies a default you can omit that argument; if not, you *must* provide it. Use named arguments for clarity. Type the following into your R script and run each line.
+
+`values <- c(1, 2, 3, 4, 5, NA)`
+
+`mean(values)`                       # default na.rm = FALSE → returns NA
+
+`mean(values, na.rm = TRUE)`         # ignore missing values
+
+`mean(values, trim = 0.2, na.rm = TRUE)`  # drop 20% from each end first
+
+👀 Try `median(values, na.rm = TRUE)`. Why doesn’t median() need trim?
+
+# Start Here For editing
+
+
+🚀 Explore and Play: 
+
+🛠 Break Things! 
 
 ```{r}
 # Create a memo note in your R script 🚀 Explore and Play and 🛠 Break Things!. 
 
-## 1. Explain what you did in creating vectors, what your observations are, and what you expect 
+## 1. Explain what you did in Required vs. Default Arguments, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo
