@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 4</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 16, 2025</h4>
+<h4 class="date">Lesson generated on August 18, 2025</h4>
 
 </div>
 
@@ -2868,8 +2868,8 @@ functions. Now you’ll learn more about handling missing data in R.</p>
 <p>To begin Lesson 4, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “R Markdown” (File &gt;
-New File &gt; R Markdown).</p></li>
+<li><p>Create a new file. Today, let’s try 📝 “R Notebook” (File &gt;
+New File &gt; R Notebook).</p></li>
 <li><p>Type in the code provide in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
@@ -2998,7 +2998,7 @@ you <em>do</em> about them? Here are two beginner‑friendly options.
 <pre class="r"><code>clean_vec &lt;- LargeVec[!is.na(LargeVec)]   # Keeps only observed values</code></pre>
 <p>🔗 Link: The brackets are using indexing and the logical operator
 <code>!</code> before the function <code>is.na</code>. 📦 Unpack how
-this nesting is acts on each function. (Hint: Review lesson 2.) Create a
+this nesting acts on each function. (Hint: Review lesson 2.) Create a
 memo note, demonstrate learning skill(s) used.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Impute: replace <code>NA</code> with the mean of present values</li>
@@ -3006,9 +3006,6 @@ memo note, demonstrate learning skill(s) used.</p>
 <pre class="r"><code>imputed &lt;- LargeVec                       # ▶ Make a copy to preserve original
 
 imputed[is.na(imputed)] &lt;- mean(imputed, na.rm = TRUE)</code></pre>
-<p>📝 Reflect: Removal is simple but reduces sample size.
-Mean‑imputation keeps size but may shrink variability. Between these two
-options, which do you think is best practice and why?</p>
 <p>🔍 Look deeper: What are other ways you can handle <code>NA</code>?
 What is the R code to act on your data set?</p>
 </div>
@@ -3022,7 +3019,7 @@ practice assignment</strong>.</p>
 your code or short written answer.</p></li>
 <li><p>Run each completed line to be sure no errors appear and objects
 show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Markdown
+<li><p>When finished, save your workspace and submit this R Notebook
 file (RMD) plus the .RData file.</p></li>
 </ol>
 <div id="task-0" class="section level2" number="8.1">
@@ -3096,17 +3093,16 @@ where 40% of the values are missing and why.</li>
 <div id="save-and-upload" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Markdown and the
+<li>You will be submitting <strong>both</strong> the R Notebook and the
 workspace file. The workspace file saves all the objects in your
 environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the R Markdown
+by running the following command in a code chunk of the R Notebook
 document:</li>
 </ol>
-<p><code>save.image(&quot;Assignment3_Workspace.RData&quot;)</code></p>
+<pre class="r"><code>save.image(&quot;Assignment4_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
-<p><strong>Always save the R documents before closing. If you don’t, you
-will lose your work.</strong></p>
+<p>💾 <strong>Always save the R documents before closing.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Find the assignment in this week’s module in Canvas and upload
 <strong>both</strong> the RMD and the workspace file.</li>
@@ -3189,7 +3185,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

@@ -554,7 +554,7 @@ save.image("Assignment2_Workspace.RData")
 
 Or you can click the "Save Workspace" button in the Environment pane. 
 
-**Always save the R script before closing. If you don't, you will lose your work.**
+💾 **Always save the R documents before closing. If you don't, you will lose your work.**
 
 2. Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
 

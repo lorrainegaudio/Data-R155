@@ -593,11 +593,13 @@ cars_safe$Efficiency_Class <- ___
 
 1. You will be submitting **both** the R Markdown and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Markdown document:
 
-`save.image("Assignment3_Workspace.RData")`
+```{r , eval=FALSE}
+save.image("Assignment5_Workspace.RData")
+```
 
 Or you can click the "Save Workspace" button in the Environment pane. 
 
-**Always save the R documents before closing. If you don't, you will lose your work.**
+💾 **Always save the R documents before closing.**
 
 2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
 

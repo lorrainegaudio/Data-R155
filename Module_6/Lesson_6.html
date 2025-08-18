@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 5</title>
+<title>Lesson 6</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,7 +2853,7 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 5</h1>
+<h1 class="title toc-ignore">Lesson 6</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on August 18, 2025</h4>
 
@@ -2861,467 +2861,213 @@ font-size: 0.95em;
 
 
 <div id="welcome-back-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 💪 Welcome back to
+<h1><span class="header-section-number">1</span> 💾 Welcome back to
 R!</h1>
-<p>In lesson one, through four you learned about objects, vectors,
-functions and how to handle missing data in R. In this lesson, you will
-learn about subsetting, extraction, and insertion in data frames. You
-rarely analyse an entire data table at once. You nearly always pull out
-specific rows or columns, or write back cleaned-up values. Mastering R’s
-bracket “<code>[ ]</code>” syntax is therefore foundational.</p>
-<p>To begin Lesson 5, follow these steps:</p>
+<p>In lesson one, through five you learned about objects, vectors,
+functions, handling missing data in R and subsetting, extraction, and
+insertion in data frames. This week we will learn how to import external
+data files (e.g., CSV, XLSX, SAV, OBJ). Almost every research project
+begins with <em>bringing external data into R</em>. Today you will learn
+four common import workflows using RStudio’s graphical <strong>Import
+Dataset</strong> helpers and their code equivalents. Mastering these
+steps ensures that you can work with spreadsheets, SPSS files, and even
+3‑D objects.</p>
+<p>To begin Lesson 6, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “R Markdown” (File &gt;
-New File &gt; R Markdown).</p></li>
+<li><p>Create a new file. Today, let’s try 📝 “Quarto Document” (File
+&gt; New File &gt; Quarto Document).</p></li>
 <li><p>Type in the code provide in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
 <p><strong>Lesson Overview</strong></p>
-<p>By the end of Lesson 5 you will be able to:</p>
+<p>By the end of Lesson 6 you will be able to:</p>
 <ol style="list-style-type: decimal">
-<li><p>⚡ Remember – State R’s basic subsetting template:
-<code>x[rows, cols]</code>.</p></li>
-<li><p>🔍 Understand – Describe the difference between <code>$</code>
-and <code>[ ]</code> for data frames.</p></li>
-<li><p>📍 Apply – Use logical tests + <code>which()</code> to select
-rows.</p></li>
-<li><p>📊 Analyze – Summarize a subset to answer a question.</p></li>
-<li><p>🛠️ Evaluate – Choose an insertion (overwrite) vs. safe copy
-strategy</p></li>
+<li><p>⚡ Remember – Recall which R function reads CSV, XLSX, SAV, and
+OBJ.</p></li>
+<li><p>🔍 Understand – Explain how RStudio’s Import Dataset dialog
+writes code you can reuse.</p></li>
+<li><p>🛠 Apply – Import four file types using both GUI and
+script</p></li>
+<li><p>📊 Analyze – Verify that objects arrived with expected
+rows/columns and classes.</p></li>
+<li><p>🧠️ Evaluate –Decide when manual Files‑pane navigation is faster
+than typing a path.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
 <div id="quick-warmup" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Quick Warm‑up</h1>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code># Review the `sample()` function from lesson 3. 
-set.seed(1)
-
-args(sample)  # ✅ Check the arguments of sample()</code></pre>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>trial_vec &lt;- sample(x = c(1:3, NA, NA, NA, NA), size = 25, replace = TRUE)
-trial_vec</code></pre>
-<p>Type the following code in a new code chunk and run. Create a memo
-note, demonstrate learning skill(s) used.</p>
-<pre class="r"><code>trial_vec &lt;- sample(size = 25, replace = TRUE, x = c(1:3, NA, NA, NA, NA))
-trial_vec </code></pre>
-<p>🧐 NOTICE: How does changing the order of arguments affect the
-output? Create a memo note, demonstrate learning skill(s) used.</p>
-<p>Review <code>is.na()</code> and <code>which()</code> from lesson
-4.</p>
-<pre class="r"><code># Review is.na() and which() from lesson 4 and Nesting from lesson 3
-is.na(trial_vec)
-which(is.na(trial_vec))  
-which(!is.na(trial_vec)) </code></pre>
-<p>🚦 Are you ready? Remember, you can summon help whenever you need
-it.</p>
+<p>It is helpful to have the file to be uploading in your working
+directory. This is one of the stickiest points to importing data.</p>
+<pre class="r"><code>getwd()  # shows current project folder</code></pre>
+<p>Are your data files located <em>inside</em> this folder? If not, move
+them or <code>setwd(&quot;path/to/folder&quot;)</code>.</p>
 </div>
-<div id="build-a-data-frame" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Build a Data Frame</h1>
-<p>In lesson 2, you learned how to create a data frame using the
-function <code>data.frame()</code> to combine three vectors of equal
-length. You created these vectors using the <code>c()</code> function.
-In this lesson, you will create the vectors using the
-<code>ifelse()</code> function. Type the following code in a new code
-chunk.</p>
-<pre class="r"><code>?ifelse
-args(&quot;ifelse&quot;)  # ✅ Check the arguments of ifelse()</code></pre>
-<p><code>ifelse()</code> is a vectorized function that allows you to
-create a new variable based on a condition. Type the following code in a
-new code chunk.</p>
-<pre class="r"><code># Example: Create a new vector trial_vec2 based on trial_vec
-trial_vec2 &lt;- ifelse(trial_vec == 2, &quot;two&quot;, &quot;not two&quot;)</code></pre>
-<p>This creates a new vector where each element is “two” if the
-corresponding element in <code>trial_vec</code> is 2, and “not two”
-otherwise. It takes three arguments:</p>
-<ul>
-<li><p>condition: a logical test (e.g.,
-<code>trial_vec == 2</code>)</p></li>
-<li><p><code>value_if_true</code>: the value to assign if the condition
-is TRUE</p></li>
-<li><p><code>value_if_false</code>: the value to assign if the condition
-is FALSE</p></li>
-</ul>
-<p>Now, let’s create a data frame using <code>trial_vec</code> and
-<code>trial_vec2</code>. Type the following code in a new code chunk and
-run.</p>
-<pre class="r"><code># Create a data frame with trial_vec and trial_vec2
-trial_df &lt;- data.frame(trial_vec, trial_vec2)</code></pre>
-<pre class="r"><code># View(trial_df)  # ✅ Check the data frame with two columns
-View(trial_df) # (opens a new tab in RStudio)</code></pre>
-<p>🎯 That was a practice round. Now, let’s create a more complex data
-frame with two long vectors of equal length.</p>
-<p>We’ll simulate a small inventory called <code>snack_box</code> with
-two columns:</p>
-<ul>
-<li><p>Type – “Cereal” or “Marshmallow”</p></li>
-<li><p>Shape – shape names for marshmallows, placeholder for
-cereal</p></li>
-</ul>
-<p>Type the following code in a new code chunk.</p>
-<pre class="r"><code>set.seed(8)
-Type  &lt;- sample(c(rep(&quot;Cereal&quot;, 3091), rep(&quot;Marshmallow&quot;, 287)))
-Shape &lt;- ifelse(Type == &quot;Cereal&quot;, &quot;Plain&quot;, 
-                sample(c(&quot;Heart&quot;, &quot;Star&quot;, &quot;Horseshoe&quot;, &quot;Clover&quot;,
-                         &quot;Blue_Moon&quot;, &quot;Pot_of_Gold&quot;, &quot;Rainbow&quot;, 
-                         &quot;Red_Balloon&quot;), length(Type), replace = TRUE))
-snack_box &lt;- data.frame(Type, Shape)
-
-# View the data
-View(snack_box)</code></pre>
-<p>🔍 Look deeper: Why does the code has line breaks with indentation?
-What is the advantage? Explain when to break and how far to indent.
+<div id="packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Packages</h1>
+<p>So far, we have use functions that are built into R. In this lesson,
+we will use functions from packages. A package is a collection of
+functions, data, and documentation that extends the capabilities of R.
+Packages are used to perform specific tasks or analyses, such as data
+manipulation, statistical modeling, or visualization.</p>
+<p>You need to download the package before you can use it. You only need
+to install the package once. Packages, will need to be updated from time
+to time. In the files pane, you will see a tab called “Packages.” This
+is where RStudio lists the packages you have installed.</p>
+<p>You will use the function <code>install.packages()</code> to install
+a package. In this lesson, you will install the <code>readr</code>,
+<code>readxl</code>, <code>haven</code> and <code>rgl</code> package,
+which provides functions for reading and writing data files. Type the
+following code in a new code chunk and run.</p>
+<pre class="r"><code>install.packages(c(&quot;readr&quot;, &quot;readxl&quot;, &quot;haven&quot;, &quot;rgl&quot;))</code></pre>
+<p>This code installs the <code>readr</code>, <code>readxl</code>,
+<code>haven</code>, and <code>rgl</code> packages. The <code>c()</code>
+function combines the package names into a vector, allowing you to
+install multiple packages at once.</p>
+<p>🚀 Explore and Play: What are other ways you can install packages?
 Create a memo note, demonstrate learning skill(s) used.</p>
-</div>
-<div id="bracket-syntax" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Bracket Syntax</h1>
-<p>📖 Review Lesson 2 about indexing vectors <code>x[]</code>. Create a
-memo note, demonstrate learning skill(s) used. Create a memo note,
-demonstrate learning skill(s) used.</p>
-<p>In this lesson we will use the same syntax to subset data frames.</p>
-<ul>
-<li><p><code>x</code> is the object (vector, data frame, etc.)</p></li>
-<li><p><code>[]</code> is the bracket operator for subsetting</p></li>
-<li><p><code>x[rows, cols]</code> extracts specific rows and columns
-from <code>x</code>.</p></li>
-<li><p>rows and cols can be: indices (<code>1, 3:5</code>), names
-(<code>&quot;Shape&quot;</code>), or a logical vector / expression
-(<code>Type == &quot;Marshmallow&quot;</code>).</p></li>
-</ul>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>snack_box[1:3, ]  # ✅ Shows full row extraction</code></pre>
-<pre class="r"><code># R&#39;s subsetting format:  x[rows, columns]
-snack_box[1:3, 1]  # ✅ Shows first three rows of first column
-snack_box[1:3, c(1, 2)]  # ✅ Shows first three rows of first and second</code></pre>
-</div>
-<div id="subsetting" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Subsetting</h1>
-<p>We’ll start with <code>trial_df</code> from earlier. Type the
-following code in a new code chunk and run.</p>
-<pre class="r"><code>trial_df[trial_df$trial_vec == 2, ]
-# Test direct subsetting (will include NA rows)
-direct_subset &lt;- trial_df[trial_df$trial_vec == 2, ]
-print(direct_subset)
-trial_df[trial_df$trial_vec == 2, ]</code></pre>
-<p>📍 Identify: which rows are extracted?</p>
-<ul>
-<li><p>TRUE (2 == 2)</p></li>
-<li><p>FALSE (1 == 2)</p></li>
-<li><p>FALSE (3 == 2)</p></li>
-<li><p>NA (NA == 2)</p></li>
-</ul>
-<p>🎯 <strong>Goal: isolate only the marshmallows.</strong></p>
-<p>⚖️ <strong>Step 1</strong> – create a logical test: <code>[ ]</code>
-vs. <code>$</code>. Type the following code in a new code chunk and
-run.</p>
-<pre class="r"><code>snack_box[snack_box$Type == &quot;Marshmallow&quot;, ]</code></pre>
-<p><code>snack_box[snack_box$Type == &quot;Marshmallow&quot;, ]</code> returns the
-rows where the condition is TRUE, along with all columns.</p>
-<pre class="r"><code>snack_box$Type == &quot;Marshmallow&quot;            # TRUE/FALSE for each row</code></pre>
-<p><code>snack_box$Type == &quot;Marshmallow&quot;</code> returns a logical
-vector.</p>
-<p>📊 <strong>Step 2</strong> – Store subset of <code>snack_box</code>
-data frame as a new data frame. Type the following code in a new code
+<p>After installing the package, you need to load it into your R session
+using the <code>library()</code> function. This makes the functions in
+the package available for use. Type the following code in a new code
 chunk and run.</p>
-<pre class="r"><code>marshmallows_only &lt;- snack_box[snack_box$Type == &quot;Marshmallow&quot;, ]</code></pre>
-<p>🔍 Look deeper: How many <em>rows</em> did we keep? How could you
-check the number of rows in a data set? Create a memo note, demonstrate
-learning skill(s) used, including method you used to answer the
-question.</p>
-<p>Type the following code in a new code chunk and run.</p>
+<pre class="r"><code>library(readr)   # For reading CSV files
+library(readxl)  # For reading Excel files
+library(haven)   # For reading SPSS, SAS, and Stata files
+library(rgl)     # For reading 3D object files</code></pre>
 </div>
-<div id="extraction" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Extraction</h1>
-<p>Using <code>which()</code> is a strategy to handle potential NA
-values in your data. When the test could include NA, wrap it in
-<code>which()</code> to drop unknowns.</p>
-<p>Type the following R script in your document script and run.</p>
-<pre class="r"><code>rows_without_na &lt;- which(trial_df$trial_vec == 2)
-
-which_subset &lt;- trial_df[rows_without_na, ]
-
-print(which_subset)</code></pre>
-<p>🚀 Explore and Play: What is the difference between running
-<code>print(which_subset)</code> and <code>which_subset</code>? Create a
-memo note, demonstrate learning skill(s) used.</p>
-<p>When you use a direct logical condition like
-<code>trial_df$trial_vec == 2</code>, any <code>NA</code> values in the
-Type column will result in <code>NA</code> in the logical vector. You
-get only the indices where the condition is <code>TRUE</code>,
-effectively dropping/ignoring any rows where the comparison resulted in
-<code>NA</code>. You get a result that excludes rows with
-<code>NA</code> in the Type column</p>
-<div id="vs." class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> <code>$</code>
-vs. <code>[ ]</code></h2>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>row_idx &lt;- which(snack_box[,&quot;Type&quot;] == &quot;Marshmallow&quot; &amp; snack_box[,&quot;Shape&quot;] == &quot;Star&quot;)</code></pre>
-<p>The bracket notation <code>[,&quot;column_name&quot;]</code> uses matrix-style
-indexing.</p>
-<p>You can access the same columns using <code>$</code> notation where
-<code>snack_box$Type</code> replaces <code>snack_box[,&quot;Type&quot;]</code> and
-<code>snack_box$Shape</code> replaces <code>snack_box[,&quot;Shape&quot;]</code>.
-Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>row_idx2 &lt;- which(snack_box$Type == &quot;Marshmallow&quot; &amp; snack_box$Shape == &quot;Star&quot;)</code></pre>
-<p>⚠️ Common Pain Point: Using <code>which()</code> but forgetting to
-subset columns. Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>subset_star &lt;- snack_box[row_idx, ]
-head(subset_star)  # ✅ Practice Task 5 logic with known data
-head(x = subset_star, n= 3) </code></pre>
-<p>⚡ Explain the function <code>head()</code> and how it works with the
-<code>n</code> argument. Create a memo note, demonstrate learning
-skill(s) used.</p>
+<div id="importing-a-csv" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Importing a CSV</h1>
+<p>🧭 GUI path is recommended for beginners.</p>
+<ol style="list-style-type: decimal">
+<li><p>Click the <em>Environment</em> pane ▸ <em>Import Dataset</em> ▸
+<em>From Text (readr)</em>.</p></li>
+<li><p>Browse to <strong>Sex Ratio MalesFemales10.csv</strong> and click
+<em>Open</em>.</p></li>
+<li><p>Inspect preview ▶ click <em>Import</em>.</p></li>
+<li><p>RStudio inserts code like:
+<code>Sex_Ratio_MalesFemales10 &lt;- read_csv(&quot;??file_path/Sex Ratio MalesFemales10.csv&quot;)</code>
+Look at your console to see the code that was generated.</p></li>
+</ol>
 </div>
-<div id="selecting-columns" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Selecting
-Columns</h2>
-<p>🧭 Method 1: Select columns by name using indexing.</p>
-<p>Recall that columns can be chosen by index or name.</p>
-<ul>
-<li><p>By index: <code>snack_box[ , 2]</code> (second column)</p></li>
-<li><p>By name : <code>snack_box[ , &quot;Shape&quot;]</code></p></li>
-</ul>
-<pre class="r"><code>head(subset_star[ , &quot;Shape&quot;])</code></pre>
-<p>You can combine row + column ideas: shapes of the first 10
-marshmallows. Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>snack_box[1:10, &quot;Shape&quot;]</code></pre>
-<p>🤔 Why did we use <code>head()</code> in the first chunk and not in
-the second? Create a memo note, demonstrate learning skill(s) used.</p>
-<p>🧭 Method 2: Select columns by name using <code>$</code>. Type the
-following code in a new code chunk and run.</p>
-<pre class="r"><code>Cereal_Shapes &lt;- snack_box$Shape[snack_box$Type == &quot;Cereal&quot;]</code></pre>
-<p>This creates a vector called <code>Cereal_Shapes</code> that contains
-only the shapes from rows where the type is <code>&quot;Cereal&quot;</code>. Type
-the following code in a new code chunk and run.</p>
-<pre class="r"><code>Marshmallow_Shapes &lt;- snack_box$Shape[snack_box$Type == &quot;Marshmallow&quot;]</code></pre>
-<p>It’s particularly useful when you want to:</p>
-<ul>
-<li><p>Analyze the distribution of <code>&quot;Shapes&quot;</code> within each
-<code>&quot;Type&quot;</code>.</p></li>
-<li><p>Compare properties between different categories.</p></li>
-<li><p>Create separate vectors for further analysis by
-category.</p></li>
-</ul>
-<p>This creates a vector called <code>Marshmallow_Shapes</code> with
-only shapes from marshmallow rows.</p>
-<p>🎉 Bonus: Two conditions + column subset</p>
-<p>Use <code>snack_box</code>: Pick shapes that are
-<code>Red_Balloon</code> and <code>Type = Marshmallow</code>. Type the
-following code in a new code chunk and run.</p>
-<pre class="r"><code>marshmallow_data &lt;- snack_box[snack_box$Type == &quot;Marshmallow&quot;, ]
-
-red_balloon_rows &lt;- which(marshmallow_data$Shape == &quot;Red_Balloon&quot;)
-
-red_balloon_marshmallows &lt;- marshmallow_data[red_balloon_rows, ]</code></pre>
+<div id="assignment-part-i" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> ➤ Assignment: Part
+I</h1>
+<p>Replace the ___ placeholder with your code or short written
+answer.</p>
+<div id="task-1" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Task 1</h2>
+<p>📝 Copy the code appears in the console-copy it into your script
+below so future you can reproduce the import. (e.g.,
+<code>Sex_Ratio_MalesFemales10 &lt;- read_csv(&quot;??file_path/Sex Ratio MalesFemales10.csv&quot;)</code></p>
+<hr />
+<p>🧐 NOTICE: Use <code>str(survey_results)</code> Do the column types
+look right? Explore this data set using the skills you developed in
+previous lessons. Create a memo note, demonstrate learning skill(s)
+used.</p>
 </div>
 </div>
-<div id="insertion" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Insertion</h1>
-<p>Insertion is the process of adding or modifying values in a data
-frame. You can insert new values or overwrite existing ones.</p>
-<div id="overwrite-values" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Overwrite Values</h2>
-<p>Suppose we decide to rename “Cereal” to “Grain” in the Type
-column.</p>
-<p>🌟 Good practice: make a backup first! Type the following code in a
-new code chunk and run.</p>
-<pre class="r"><code>box_safe &lt;- snack_box          # copy
-indices_cereal &lt;- which(snack_box$Type == &quot;Cereal&quot;)
-box_safe[indices_cereal, &quot;Shape&quot;] &lt;- &quot;Grain&quot;</code></pre>
-<p>👀 Check-in: Look at the format of that code:
-<code>x[row, column] &lt;- value</code>. The <code>&lt;-</code> operator
-is not just for assigning a value to a variable name.
-<code>&lt;- Grain</code> is assigned as the new value
-<code>&quot;Grain&quot;</code> to replace the existing value
-<code>&quot;Cereal&quot;</code>. The column name remains <code>&quot;Type&quot;</code>.</p>
-<pre class="r"><code># Verify the change
-unique(box_safe$Shape)</code></pre>
-<p>🗣 Comment: Why is <code>snack_box</code> unchanged while editing
-<code>box_safe</code>? Why is this good practice? Create a memo note,
+<div id="importing-an-excel-xlsx" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Importing an Excel
+(XLSX)</h1>
+<p>🌟 Repeat the steps but choose <em>From Excel</em> in the dialog.</p>
+<p>Code produced will resemble:
+<code>Album &lt;- read_xlsx(&quot;??file_path/Album.xlsx&quot;)</code></p>
+</div>
+<div id="assignment-part-ii" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> ➤ Assignment: Part
+II</h1>
+<p>Replace the ___ placeholder with your code or short written
+answer.</p>
+<div id="task-2" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Task 2</h2>
+<p>📝 Copy the code appears in the console-copy it into your script
+below so future you can reproduce the import. (e.g.,
+<code>Album &lt;- read_xlsx(&quot;??file_path/Album.xlsx&quot;)</code>)</p>
+<hr />
+<p>🧐 NOTICE: Explore this data set using the skills you developed in
+previous lessons. Create a memo note, demonstrate learning skill(s)
+used.</p>
+<p>🔍 Look deeper: What are the differences between a CSV and XLSX
+files? Create a memo note, demonstrate learning skill(s) used.</p>
+</div>
+</div>
+<div id="importing-an-spss-sav-file" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Importing an SPSS (SAV)
+File</h1>
+<p>Use <em>Import Dataset ▸ From SPSS</em>.</p>
+<p>Generated code example:
+<code>Cats &lt;- read_sav(&quot;??file_path/Cats.sav&quot;)</code></p>
+</div>
+<div id="assignment-part-iii" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> ➤ Assignment: Part
+III</h1>
+<p>Replace the ___ placeholder with your code or short written
+answer.</p>
+<div id="task-3" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Task 3</h2>
+<p>📝 Copy the code appears in the console-copy it into your script
+below so future you can reproduce the import. (e.g.,
+<code>Cats &lt;- read_sav(&quot;??file_path/Cats.sav&quot;)</code>)</p>
+<hr />
+<p>👀 Check‑in: Are labelled variables imported as factors? What
+functions can you use to check the variable types? Create a memo note,
 demonstrate learning skill(s) used.</p>
 </div>
 </div>
-<div id="renaming-columns" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Renaming Columns</h1>
-<p>Example 1: To rename a column, you can use the
-<code>colnames()</code> function. Type the following code in a new code
-chunk and run.</p>
-<pre class="r"><code>names(box_safe)
-
-colnames(box_safe) &lt;- c(&quot;Piece_Type&quot;, &quot;Piece_Shape&quot;)
-head(box_safe)</code></pre>
-<p>📍 Identify: Which columns are renamed? 🔍 Look deeper: Create a list
-of all the different ways you might identify the column names of a data
-frame? Create a memo note, demonstrate learning skill(s) used.</p>
-<p>Example 2: You can also rename a specific column by index. Type the
-following code in a new code chunk and run.</p>
-<pre class="r"><code>box_safe2 &lt;- snack_box     # ✅ Always copy first
-names(box_safe2)[which(names(box_safe2) == &quot;Type&quot;)] &lt;- &quot;Piece_Type&quot;
-names(box_safe2)[which(names(box_safe2) == &quot;Shape&quot;)] &lt;- &quot;Piece_Shape&quot;</code></pre>
-</div>
-<div id="replace-missing-values" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Replace Missing
-Values</h1>
-<p>In lesson 4, you learned about handling missing values. Now, let’s
-practice replacing missing values in a data frame. Recall that when a
-numeric vector has gaps, you can impute with the mean.</p>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code># Before
-trial_vec</code></pre>
-<pre class="r"><code>trial_vec[is.na(trial_vec)] &lt;- mean(trial_vec, na.rm = TRUE)</code></pre>
-<p>The &lt;- operator is not just for assigning a value to a variable
-name. Here the <code>&lt;-</code> operator is used to assign the mean of
-the non-NA values`</p>
-<p><strong>Left side of the assignment</strong>:
-<code>trial_vec[is.na(trial_vec)]</code></p>
-<ul>
-<li><p><code>x[ ]</code> index of a vector: Recall we can use
-“<code>:</code>” like <code>1:3</code></p></li>
-<li><p>index value is <code>is.na(trial_vec)</code> making logical
-vector (<code>TRUE</code>/<code>FALSE</code>) marking which elements are
-<code>NA</code>.</p></li>
-</ul>
-<p><strong>Right side of the assignment</strong>:
-<code>mean(trial_vec, na.rm = TRUE)</code></p>
-<ul>
-<li><code>mean()</code> calculates the mean of the non-NA values in
-<code>trial_vec</code></li>
-</ul>
-<p>The assignment operator &lt;- takes the value from the right side,
-places it into the specific positions identified on the left side.</p>
-<pre class="r"><code># After
-trial_vec</code></pre>
-<p>R took all the non-missing values, calculated their mean and replaced
-all the NA values with this decimal mean</p>
-</div>
-<div id="assignment" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> ➤ Assignment</h1>
-<p>Now it’s your turn to practice creating and using vector objects.
-Follow the tasks below to complete part of the <strong>technical skill
-practice assignment</strong>.</p>
+<div id="loading-a-3d-obj-file" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Loading a 3‑D OBJ
+File</h1>
+<p>OBJ files store 3‑D meshes. The <code>rgl</code> package’s
+<code>readOBJ()</code> needs the <em>full file path</em>.
+<code>human_skull &lt;- readOBJ(&quot;??file_path/human_skull.obj&quot;)</code></p>
+<p>Here are two easy ways to capture that path:</p>
+<p>➡ Method one: <strong>Files‑pane click‑copy</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the ___ placeholder with
-your code or short written answer.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Markdown
-file (RMD) plus the .RData file.</p></li>
+<li><p>In the bottom‑right Files pane, navigate to
+<em>human_skull.obj</em>.</p></li>
+<li><p>Click the triangle ▸ <em>Copy Path</em> ▸ <em>Absolute
+path</em>.</p></li>
+<li><p>Paste between the quotes below.</p></li>
 </ol>
-<div id="task-0" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Task 0</h2>
-<p>Setup: Load the built‑in data set and take a quick look. Identify
-what the columns contain and meaning of that content.</p>
-<pre class="r"><code>data(mtcars)
-View(mtcars)</code></pre>
-<p>🗣 Comment: Explain R’s basic subsetting template. Hint: It looks like
-<code>data[ rows , columns ]</code></p>
+<p><strong>Direct code example (replace path with your
+path):</strong></p>
+<pre class="r"><code>human_skull &lt;- readOBJ(&quot;Paste between the quotes/human_skull.obj&quot;)</code></pre>
+<p>➡ Method two: <strong>file.choose() helper</strong></p>
+<pre class="r"><code># file.choose() opens a file dialog to select the file interactively
+human_skull_path &lt;- file.choose()  # interactively pick file</code></pre>
 </div>
-<div id="task-1" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Task 1</h2>
-<p>⚖️ Manual vs. Automatic</p>
+<div id="assignment-part-iv" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> ➤ Assignment: Part
+IV</h1>
+<p>Replace the ___ placeholder with your code or short written
+answer.</p>
+<div id="task-4" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Task 4</h2>
+<p>📝 Copy the code appears in the console-copy it into your script
+below so future you can reproduce the import. (e.g.,
+<code>human_skull &lt;- readOBJ(&quot;Paste between the quotes/human_skull.obj&quot;)</code>)</p>
+<hr />
+<p>🚀 Explore and Play: Render quick preview (optional heavy
+graphics)</p>
+<pre class="r"><code>open3d(); shade3d(human_skull, col = &quot;white&quot;); bg3d(&quot;black&quot;)</code></pre>
+<p>👀 Check‑in: Can you rotate the image?</p>
+<p>🗣 Comment: The <code>rgl</code> package is powerful for 3D
+visualization, but it can be resource-intensive. If you encounter
+performance issues, consider using a smaller or simpler 3D model.</p>
+</div>
+</div>
+<div id="save-and-upload" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>Create <code>Manual_Cars</code>: all rows where <code>am == 1</code>
-(manual), all columns.</li>
-</ol>
-<pre class="r"><code>Manual_Cars &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Use <code>nrow()</code> to record how many manual cars there are
-(store in <code>n_manual</code>).</li>
-</ol>
-<pre class="r"><code>n_manual &lt;- ___ # numeric count</code></pre>
-</div>
-<div id="task-2" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 2</h2>
-<p>🔍 MPG by Cylinder</p>
-<p>Extract mpg for each cylinder group into separate objects. Hint:
-Repeat the bracket pattern</p>
-<pre class="r"><code>Four_Cyl_MPG  &lt;- mtcars[mtcars$cyl == 4, &quot;mpg&quot;]
-Six_Cyl_MPG   &lt;- ___
-Eight_Cyl_MPG &lt;- ___</code></pre>
-</div>
-<div id="task-3" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 3</h2>
-<p>🧐 Analyze Fuel Efficiency</p>
-<ol style="list-style-type: decimal">
-<li>Compute the mean mpg for each object.</li>
-</ol>
-<pre class="r"><code>mean_4  &lt;- mean(___)
-mean_6  &lt;- mean(___)
-mean_8  &lt;- mean(___)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>🗣 Comment: Which cylinder group is most fuel‑efficient? Answer in
-one word or number.</li>
-</ol>
-<p>Most efficient: ___</p>
-</div>
-<div id="task-4" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 4</h2>
-<p>🚦 Safe vs. Direct Editing</p>
-<ol style="list-style-type: decimal">
-<li>Make a safe copy of <code>mtcars</code> called
-<code>cars_safe</code>.</li>
-</ol>
-<pre class="r"><code>cars_safe &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Rename the <code>&#39;am&#39;</code> column in <code>cars_safe</code> to
-<code>&quot;Transmission_Type&quot;</code>.</li>
-</ol>
-<pre class="r"><code>colnames(cars_safe)[___] &lt;- ___</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>🗣 Comment: Explain <em>why</em> working on cars_safe (a copy) is
-safer than editing mtcars directly.</li>
-</ol>
-<p>Answer: ___</p>
-</div>
-<div id="task-5" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 5</h2>
-<p>📝 Practice <code>which()</code></p>
-<p>Using <code>cars_safe</code>, extract the rows for V‑shaped engines
-(<code>vs == 0</code>) <em>and</em> horsepower (<code>hp</code>) above
-<code>150</code>. Use <code>which()</code> for the row indices and keep
-only <code>mpg</code>, <code>hp</code>, and <code>cyl</code> columns.
-Name the object <code>hi_power_v</code>.</p>
-<ol style="list-style-type: decimal">
-<li>Create <code>row_idx</code> for the condition above.</li>
-</ol>
-<ul>
-<li><p><code>cars_safe$vs</code> ? <code>0</code></p></li>
-<li><p><code>&amp;</code></p></li>
-<li><p><code>cars_safe$hp</code> ? <code>150</code></p></li>
-<li><p><code>cars_safe[row_idx , c(&quot;mpg&quot;,&quot;hp&quot;,&quot;cyl&quot;)]</code></p></li>
-</ul>
-<pre class="r"><code>row_idx      &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Subset cars_safe with <code>row_idx</code> and columns
-<code>mpg</code>, <code>hp</code>, <code>cyl</code>. Name object
-<code>hi_power_v</code>.</li>
-</ol>
-<pre class="r"><code>hi_power_v   &lt;- ___
-head(hi_power_v)</code></pre>
-</div>
-<div id="task-6" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 6</h2>
-<p>🛠 Insertion Example</p>
-<p>Add a new column called <code>&quot;Efficiency_Class&quot;</code> to
-<code>cars_safe</code>. Label <code>&quot;High&quot;</code> if
-<code>mpg &gt;= 25</code>, <code>&quot;Low&quot;</code> otherwise.</p>
-<p>Hint: use <code>ifelse()</code> and
-<code>cars_safe$mpg &gt;= 25, &quot;?&quot;, &quot;?&quot;</code></p>
-<pre class="r"><code>cars_safe$Efficiency_Class &lt;- ___</code></pre>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Markdown and the
-workspace file. The workspace file saves all the objects in your
+<li>You will be submitting <strong>both</strong> the Quarto Document and
+the workspace file. The workspace file saves all the objects in your
 environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the R Markdown
+by running the following command in a code chunk of the Quarto Document
 document:</li>
 </ol>
-<p><code>save.image(&quot;Assignment5_Workspace.RData&quot;)</code></p>
+<pre class="r"><code>save.image(&quot;Assignment6_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
 <p>💾 <strong>Always save the R documents before closing.</strong></p>
@@ -3330,16 +3076,16 @@ pane.</p>
 <strong>both</strong> the RMD and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Today you
+<div id="today-you-practiced" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Today you
 practiced:</h1>
 <ul>
-<li><p>Reading R’s subsetting template x[rows, cols].</p></li>
-<li><p>Extracting rows with logical tests and which().</p></li>
-<li><p>Selecting columns by index or name.</p></li>
-<li><p>Safely overwriting values (insertion) after making a
-copy.</p></li>
-<li><p>Renaming columns and imputing simple missing values.</p></li>
+<li><p>Imported CSV via readr::read_csv() or GUI helper.</p></li>
+<li><p>Imported Excel via readxl::read_xlsx().</p></li>
+<li><p>Imported SPSS via haven::read_sav().</p></li>
+<li><p>Loaded an OBJ mesh with rgl::readOBJ() and rendered it.</p></li>
+<li><p>Compared GUI vs code‑only workflows and verified
+structure.</p></li>
 </ul>
 <p>💪 Great job! Subsetting is the gateway to every data-cleaning
 task.</p>

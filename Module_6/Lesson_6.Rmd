@@ -1,0 +1,285 @@
+---
+title: "Lesson 6"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 6"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 6"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# 💾 Welcome back to R! 
+
+In lesson one, through five you learned about objects, vectors, functions, handling missing data in R and subsetting, extraction, and insertion in data frames. This week we will learn how to import external data files (e.g., CSV, XLSX, SAV, OBJ). Almost every research project begins with *bringing external data into R*. Today you will learn four common import workflows using RStudio’s graphical **Import Dataset** helpers and their code equivalents. Mastering these steps ensures that you can work with spreadsheets, SPSS files, and even 3‑D objects.
+
+To begin Lesson 6, follow these steps:
+
+1. Open your course project for RStudio 
+   
+2. Create a new file. Today, let's try 📝 "Quarto Document"  (File > New File > Quarto Document).
+
+3. Type in the code provide in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+
+**Lesson Overview**
+
+By the end of Lesson 6 you will be able to:
+
+1. ⚡ Remember – Recall which R function reads CSV, XLSX, SAV, and OBJ.
+
+2. 🔍 Understand – Explain how RStudio’s Import Dataset dialog writes code you can reuse.
+
+3. 🛠 Apply –  Import four file types using both GUI and script
+
+4. 📊 Analyze – Verify that objects arrived with expected rows/columns and classes.
+
+5. 🧠️ Evaluate –Decide when manual Files‑pane navigation is faster than typing a path.
+
+Keep these goals in mind as you move through each section.
+
+# Quick Warm‑up
+
+It is helpful to have the file to be uploading in your working directory. This is one of the stickiest points to importing data.
+
+```{r , eval=FALSE}
+getwd()  # shows current project folder
+```
+
+Are your data files located *inside* this folder? If not, move them or `setwd("path/to/folder")`.
+
+# 📦 Packages
+
+So far, we have use functions that are built into R. In this lesson, we will use functions from packages. A package is a collection of functions, data, and documentation that extends the capabilities of R. Packages are used to perform specific tasks or analyses, such as data manipulation, statistical modeling, or visualization.
+
+You need to download the package before you can use it. You only need to install the package once. Packages, will need to be updated from time to time. In the files pane, you will see a tab called "Packages." This is where RStudio lists the packages you have installed.
+
+You will use the function `install.packages()` to install a package. In this lesson, you will install the `readr`, `readxl`, `haven` and `rgl` package, which provides functions for reading and writing data files. Type the following code in a new code chunk and run.
+
+```{r , eval=FALSE}
+install.packages(c("readr", "readxl", "haven", "rgl"))
+```
+
+This code installs the `readr`, `readxl`, `haven`, and `rgl` packages. The `c()` function combines the package names into a vector, allowing you to install multiple packages at once.
+
+🚀 Explore and Play: What are other ways you can install packages? Create a memo note, demonstrate learning skill(s) used.
+
+After installing the package, you need to load it into your R session using the `library()` function. This makes the functions in the package available for use. Type the following code in a new code chunk and run.
+
+```{r , eval=FALSE}
+library(readr)   # For reading CSV files
+library(readxl)  # For reading Excel files
+library(haven)   # For reading SPSS, SAS, and Stata files
+library(rgl)     # For reading 3D object files
+```
+
+# Importing a CSV
+
+🧭 GUI path is recommended for beginners.
+
+   1. Click the *Environment* pane ▸ *Import Dataset* ▸ *From Text (readr)*.
+
+   2. Browse to **Sex Ratio MalesFemales10.csv** and click *Open*.
+
+   3. Inspect preview ▶ click *Import*.
+
+   4. RStudio inserts code like: `Sex_Ratio_MalesFemales10 <- read_csv("??file_path/Sex Ratio MalesFemales10.csv")` Look at your console to see the code that was generated.
+
+# ➤ Assignment: Part I
+
+Replace the ___ placeholder with your code or short written answer.
+
+## Task 1
+
+📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `Sex_Ratio_MalesFemales10 <- read_csv("??file_path/Sex Ratio MalesFemales10.csv")`
+
+____
+
+🧐 NOTICE: Use `str(survey_results)` Do the column types look right? Explore this data set using the skills you developed in previous lessons. Create a memo note, demonstrate learning skill(s) used.
+
+# Importing an Excel (XLSX)
+
+🌟 Repeat the steps but choose *From Excel* in the dialog.
+
+Code produced will resemble: `Album <- read_xlsx("??file_path/Album.xlsx")`
+
+# ➤ Assignment: Part II
+
+Replace the ___ placeholder with your code or short written answer.
+
+## Task 2
+
+📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `Album <- read_xlsx("??file_path/Album.xlsx")`)
+
+____
+
+🧐 NOTICE: Explore this data set using the skills you developed in previous lessons. Create a memo note, demonstrate learning skill(s) used.
+
+🔍 Look deeper: What are the differences between a CSV and XLSX files? Create a memo note, demonstrate learning skill(s) used.
+
+# Importing an SPSS (SAV) File
+
+Use *Import Dataset ▸ From SPSS*.
+
+Generated code example: `Cats <- read_sav("??file_path/Cats.sav")`
+
+# ➤ Assignment: Part III
+
+Replace the ___ placeholder with your code or short written answer.
+
+## Task 3
+
+
+📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `Cats <- read_sav("??file_path/Cats.sav")`)
+
+____
+
+👀 Check‑in: Are labelled variables imported as factors? What functions can you use to check the variable types? Create a memo note, demonstrate learning skill(s) used.
+
+# Loading a 3‑D OBJ File 
+
+OBJ files store 3‑D meshes. The `rgl` package’s `readOBJ()` needs the *full file path*. 
+`human_skull <- readOBJ("??file_path/human_skull.obj")`
+
+Here are two easy ways to capture that path:
+
+➡ Method one: **Files‑pane click‑copy**
+
+   1. In the bottom‑right Files pane, navigate to *human_skull.obj*.
+
+   2. Click the triangle ▸ *Copy Path* ▸ *Absolute path*.
+
+   3. Paste between the quotes below.
+   
+**Direct code example (replace path with your path):**
+
+```{r , eval=FALSE}
+human_skull <- readOBJ("Paste between the quotes/human_skull.obj")
+```
+
+➡ Method two: **file.choose() helper**
+
+```{r , eval=FALSE}
+# file.choose() opens a file dialog to select the file interactively
+human_skull_path <- file.choose()  # interactively pick file
+```
+
+# ➤ Assignment: Part IV
+
+Replace the ___ placeholder with your code or short written answer.
+
+## Task 4
+
+📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `human_skull <- readOBJ("Paste between the quotes/human_skull.obj")`)
+
+____
+
+🚀 Explore and Play: Render quick preview (optional heavy graphics)
+
+```{r , eval=FALSE}
+open3d(); shade3d(human_skull, col = "white"); bg3d("black")
+```
+
+👀 Check‑in: Can you rotate the image?
+
+🗣 Comment: The `rgl` package is powerful for 3D visualization, but it can be resource-intensive. If you encounter performance issues, consider using a smaller or simpler 3D model.
+
+```{r , eval=FALSE}
+options(warn = -1)
+layout3d(matrix(c(1:1),ncol=1))
+bg3d("black")
+shade3d(human_skull, col="white")
+```
+
+# Save and Upload
+
+1. You will be submitting **both** the Quarto Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+
+```{r , eval=FALSE}
+save.image("Assignment6_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save the R documents before closing.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
+
+# Today you practiced:
+
+- Imported CSV via readr::read_csv() or GUI helper.
+
+- Imported Excel via readxl::read_xlsx().
+
+- Imported SPSS via haven::read_sav().
+
+- Loaded an OBJ mesh with rgl::readOBJ() and rendered it.
+
+- Compared GUI vs code‑only workflows and verified structure.
+
+🎯 Great job! Uploading data files is a crucial skill for data analysis.
