@@ -476,7 +476,7 @@ Now it's your turn to practice creating and using vector objects. Follow the tas
 
 ## Task 0
 
-Setup: Load the built‑in data set and take a quick look. Identify what the columns contain and meaning of that content.
+🚗 Setup: Load the built-in data set `mtcars` and take a quick look. Identify what the columns contain and meaning of that content.
 
 ```{r ,eval=FALSE}
 data(mtcars)
