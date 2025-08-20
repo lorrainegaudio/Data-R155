@@ -3,6 +3,8 @@
 ✅ 
   
 ➡ 
+
+→
   
 👀 Check-in: or What happened?
   
@@ -14,7 +16,7 @@
 
 🔍 Look deeper: 
 
-⚠️
+⚠️ Common Pain Point:
 
 🧹
 
@@ -48,19 +50,21 @@
 
 ▶
 
-📖
+📖 Review
 
-📝
+📝 Notes:
+
+✍️ Practice:
 
 💾
 
 🧐 NOTICE: 
   
-🤔
+🤔 Reflect:
 
 🧭
 
-🧩
+🧩 Explanation:
 
 🌟
 
@@ -69,5 +73,7 @@
 🚦
 
 👋
+
+👉
 
 🚗

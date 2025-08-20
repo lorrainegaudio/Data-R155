@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 7</title>
+<title>Lesson 9</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,313 +2853,263 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 7</h1>
+<h1 class="title toc-ignore">Lesson 9</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on August 20, 2025</h4>
 
 </div>
 
 
-<div id="more-subsetting-in-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 🛠 More Subsetting in
+<div id="clean-up-on-aisle-r" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> 🧹 Clean up on aisle
 R!</h1>
-<p>In lesson five, you learned about subsetting, extraction, and
-insertion in data frames. This week, we cover advanced subsetting in
-base R. Clean analysis starts with pulling out the exact rows and
-columns you need. R’s logical operators (<code>&gt;</code>,
-<code>&lt;</code>, <code>==</code>, <code>!=</code>, <code>&amp;</code>
-, <code>|</code>, <code>%in%</code>) and how they power precise
-subsetting with brackets <code>[rows , cols]</code>.</p>
-<p>To begin Lesson 7, follow these steps:</p>
+<p>In lesson 8, we learned about about subsetting with
+<code>dplyr</code> (<code>select()</code> &amp; <code>filter()</code>).
+This week, we will look at other functions in the <code>dplyr</code>
+package (<code>mutate()</code>and <code>ifelse()</code>) . Real-world
+data often needs <em>new</em> or <em>cleaner</em> variables before
+analysis. The <strong>dplyr</strong> verb <code>mutate()</code> lets you
+create or modify columns, while <code>base‑R</code>
+<code>ifelse()</code> supplies the logic for quick recoding. Together
+they form a duo you will use in nearly every data project.</p>
+<p>To begin Lesson 9, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “Quarto Document” (File
-&gt; New File &gt; Quarto Document).</p></li>
+<li><p>Create a new file. From the file types we have used so far, pick
+which file type you want to use. (File &gt; New File &gt; ???).</p></li>
 <li><p>Type in the code provide in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
 <p><strong>Lesson Overview</strong></p>
-<p>By the end of Lesson 7 you will be able to:</p>
+<p>By the end of Lesson 9 you will be able to:</p>
 <ol style="list-style-type: decimal">
-<li><p>⚡ Remember – List R’s primary logical operators and their
-purpose.</p></li>
-<li><p>🔍 Understand – Describe how logical tests return
-<code>TRUE</code>/<code>FALSE</code>/<code>NA</code>.</p></li>
-<li><p>📍 Apply – Use logical conditions inside <code>[ ]</code> and
-<code>which()</code> to subset</p></li>
-<li><p>📊 Analyze – Compare results from different operators or
-thresholds.</p></li>
-<li><p>🛠️ Evaluate –Choose operators and subsetting strategy for a
-goal.</p></li>
+<li><p>⚡ Remember – State the purposes of <code>mutate()</code> and
+<code>ifelse()</code>.</p></li>
+<li><p>🔍 Understand – Explain how <code>ifelse()</code> replaces values
+based on a test.</p></li>
+<li><p>🛠 Apply – Overwrite or add columns using <code>mutate()</code> +
+<code>ifelse()</code></p></li>
+<li><p>📊 Analyze – Build multi‑level recodes with nested
+<code>ifelse()</code>.</p></li>
+<li><p>🧠️ Evaluate – Choose between overwriting vs. keeping the original
+data.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="quick-warmup" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Quick Warm‑up</h1>
-<p>We will use the built-in mtcars dataset. View it for context.</p>
-<pre class="r"><code>data(&quot;mtcars&quot;)
-?mtcars      # help file (opens in Help tab)
-View(mtcars) # spreadsheet view (top‑left pane)</code></pre>
-<p>🤔 Hypotheses then Test: What will <code>mtcars[ , -c(8,9)]</code>
-return? 🗣 Give your best guess and explain why that is your guess. ⚡
-Test and explain the results. Create a memo note, demonstrate learning
-skill(s) used.</p>
+<div id="packages" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> 📦 Packages</h1>
+<p>Install once (if needed): <code>install.packages(&quot;dplyr&quot;)</code>;
+<code>install.packages(&quot;dslabs&quot;)</code></p>
+<p>Load the packages at the start of every session:</p>
+<pre class="r"><code>library(dslabs)  # Data science labs package
+library(dplyr)   # Data manipulation package</code></pre>
 </div>
-<div id="excluding-columns" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Excluding Columns</h1>
-<p>📖 Review: Subsetting template:
-<code>object[ ROWS , COLS ]</code></p>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>no_cat &lt;- mtcars[ , -c(8, 9)]   
-head(no_cat)</code></pre>
-<p>🧐 NOTICE that the row names (car models) and remaining columns are
-untouched.</p>
-<p>👉 Up Next! Logical operators: the key to subsetting data frames.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Operator</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>&amp;</code></td>
-<td>and</td>
-</tr>
-<tr class="even">
-<td><code>|</code></td>
-<td>or</td>
-</tr>
-<tr class="odd">
-<td><code>%in%</code></td>
-<td>in set</td>
-</tr>
-<tr class="even">
-<td><code>!</code></td>
-<td>not</td>
-</tr>
-<tr class="odd">
-<td><code>==</code></td>
-<td>equal to</td>
-</tr>
-<tr class="even">
-<td><code>!=</code></td>
-<td>not equal to</td>
-</tr>
-<tr class="odd">
-<td><code>&gt;</code></td>
-<td>greater than</td>
-</tr>
-<tr class="even">
-<td><code>&lt;</code></td>
-<td>less than</td>
-</tr>
-<tr class="odd">
-<td><code>&gt;=</code></td>
-<td>greater <em>or</em> equal</td>
-</tr>
-<tr class="even">
-<td><code>&lt;=</code></td>
-<td>less <em>or</em> equal</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="equality-and-inequality" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Equality and
-Inequality</h1>
-<p><code>==</code> asks “is exactly equal to?”</p>
-<p><code>!=</code> asks “is NOT equal to?”.</p>
-<p>Both return a logical vector.</p>
-<pre class="r"><code>mtcars$cyl == 6        # ➡ TRUE where cylinders equal 6
-mtcars$gear != 4       # ➡ TRUE where gears are NOT 4</code></pre>
-<p>👀 Check‑in: How many cars in the dataset have
-<code>mpg ≤ 15?</code></p>
-<pre class="r"><code>sum(mtcars$mpg &lt;= 15)</code></pre>
-<p>🚀 Explore and Play: 🤔 Create your own questions based on the
-available data in <code>mtcars</code> <em>then</em> 📝 Write the script
-to answer those questions. Create a memo note, demonstrate learning
-skill(s) used.</p>
-<p>Other applications: 👉 Using these
-<code>TRUE</code>/<code>FALSE</code> results inside <code>[ ]</code>
-keeps only rows that satisfy the test.</p>
-<pre class="r"><code># Example 1: cars with exactly 6 cylinders
-six_cyl &lt;- mtcars[mtcars$cyl == 6, ]
-head(six_cyl)</code></pre>
-<pre class="r"><code># Example 2: cars with average mile per gallon over 22.
-high_mpg &lt;- mtcars[mtcars$mpg &gt; 22, ]
-# Verify
-unique(high_mpg$mpg)</code></pre>
-<p>🤔 Remember how negative column indices work?</p>
-<pre class="r"><code>selection &lt;- mtcars[mtcars$hp &gt;= 100, -c(3, 5, 8:9)]
-head(selection)</code></pre>
-<p>“<code>-c(3,5,8:9)</code>” drops columns 3, 5, 8, 9. This keeps other
-variables.</p>
-</div>
-<div id="which-from-logical-to-position" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> <code>which()</code>:
-From Logical to Position</h1>
-<p><code>which()</code> converts <code>TRUE</code> positions to row
-indices (numbers). This avoids errors when <code>NA</code> is present
-and is handy for re‑use.</p>
-<pre class="r"><code>rows_fast &lt;- which(mtcars$qsec &lt; 16)  # quarter‑mile &lt; 16 sec
-mtcars[rows_fast, c(&quot;mpg&quot;, &quot;qsec&quot;)]  # inspect subset</code></pre>
-</div>
-<div id="combining-conditions" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Combining
-Conditions</h1>
-<div id="and" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> And
-<code>&amp;</code></h2>
-<p>🎯 Goal: automatic (<code>am == 0</code>) <em>and</em> average miles
-per gallon is less than or equal to 22.</p>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>auto_efficient &lt;- mtcars[mtcars$am == 0 &amp; mtcars$mpg &gt;= 22, ]
-auto_efficient</code></pre>
-<p>🧩 Explanation: both tests must be TRUE for a row to survive.</p>
-</div>
-<div id="or" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Or
-<code>|</code></h2>
-<p>🎯 Goal: cars with 4 <em>or</em> 8 cylinders.</p>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>four_or_eight &lt;- mtcars[mtcars$cyl == 4 | mtcars$cyl == 8, ]</code></pre>
-<p>⚠️ Common Pain Point: using <code>|</code> where you meant
-<code>&amp;</code> (or vice‑versa). Think in words first: “I want rows
-that are both A <strong>and</strong> B” 👉 use <code>&amp;</code>. “I
-want rows that are either A <strong>or</strong> B” 👉 use
-<code>|</code>.</p>
-</div>
-<div id="membership-in" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Membership
-<code>%in%</code></h2>
-<p>Same task as above but scalable.</p>
-<pre class="r"><code>four_or_eight_2 &lt;- mtcars[mtcars$cyl %in% c(4, 8), ]</code></pre>
-<p>⚖️ Compare <code>nrow(four_or_eight)</code> to
-<code>nrow(four_or_eight_2)</code>.</p>
-<pre class="r"><code>nrow(four_or_eight) == nrow(four_or_eight_2) </code></pre>
-<p>🔍 Look deeper: How are <code>|</code> and <code>%n%</code> similar
-and different from each other? 📝 Create a memo note, demonstrate
-learning skill(s) used.</p>
-</div>
-<div id="putting-it-all-together" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Putting It All
-Together</h2>
-<p>🚗 Scenario: Pick cars that weigh &lt; 3,000 lb, have hourse power
-between 110 and 180, and cylinders {4,6}.</p>
-<pre class="r"><code>light_midpower &lt;- mtcars[mtcars$wt &lt; 3 &amp;           
-                           mtcars$hp &gt;= 110 &amp; mtcars$hp &lt;= 180 &amp;
-                           mtcars$cyl %in% c(4, 6), ]
-light_midpower</code></pre>
-<p>⚠️ Common Pain Point: Forgetting weight is in 1000s of lbs.</p>
-<pre class="r"><code>snack_box[1:10, &quot;Shape&quot;]</code></pre>
-<p>✍️ Practice: fill in the blank prompt</p>
-<pre class="r"><code># Replace the blanks and run:
-sporty &lt;- mtcars[mtcars$am == __ &amp; mtcars$qsec &lt; __ , ]
-
-nrow(sporty)</code></pre>
-</div>
-</div>
-<div id="assignment" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> ➤ Assignment</h1>
-<p>Now it’s your turn to practice creating and using vector objects.
-Follow the tasks below to complete part of the <strong>technical skill
-practice assignment</strong>.</p>
+<div id="warmup" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Warm‑Up</h1>
 <ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the ___ placeholder with
-your code or short written answer.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Markdown
-file (RMD) plus the .RData file.</p></li>
+<li>Logical Test Review</li>
 </ol>
-<div id="task-0" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Task 0</h2>
-<p>🚗 Setup: Load the built-in data set <code>mtcars</code> and take a
-quick look. Identify what the columns contain and meaning of that
-content.</p>
-<pre class="r"><code>data(&quot;mtcars&quot;)   # already in memory but this keeps the workflow explicit
-?mtcars        # help file for variable descriptions
-View(mtcars)   # spreadsheet view (optional)</code></pre>
+<pre class="r"><code># Run and read: TRUE appears where the test is met.
+c(1, 2, 3, 4, 5) &gt; 3</code></pre>
+<p>🤔 Reflect: How many <code>TRUE</code> values do you expect? Run and
+read: <code>TRUE</code> appears where the test is met.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>sample()</code> Review</li>
+</ol>
+<p>Recall <code>sample()</code> is a <code>base-R</code> function that
+randomly selects elements from a vector.</p>
+<p>✍️ Practice using <code>sample()</code></p>
 </div>
-<div id="task-1" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Task 1</h2>
-<p>🕰 Time‑Traveler</p>
-<p>I want to travel back to the ’70s and buy a <em>very</em> thirsty
-muscle car. Create a data frame named
-<strong><code>Time_Traveler</code></strong> that keeps cars that less
-than 11 mile per gallon <strong>AND</strong> have 8 cylinders,
-<strong>AND</strong> weigh more than 4000 lb. After creating the object,
-print rownames to see which cars are thirsty.</p>
-<pre class="r"><code># TODO 1‑A: Write the subsetting code 
-Time_Traveler &lt;- ___</code></pre>
-<pre class="r"><code># TODO 1‑B: Display the matching models.
-                        # this should list 2–3 cars when correct</code></pre>
+<div id="sample_n" class="section level1" number="4">
+<h1><span class="header-section-number">4</span>
+<code>sample_n()</code></h1>
+<p>📜 The
+SYNTAX:<code>sample_n(data, size, replace = FALSE, weight = NULL)</code></p>
+<pre class="r"><code>sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame
+mtcars %&gt;% sample_n(10)  # Using with pipe</code></pre>
+<p>We’ll come back to <code>sample_n()</code> latter in this lesson.</p>
 </div>
-<div id="task-2" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Task 2</h2>
-<p>🗣 Negative Indexing</p>
-<p>Run the chunk below, then describe what the <em>selection</em> holds
-and how negative column indices work.</p>
-<pre class="r"><code>mtcars                 # for comparison
-selection &lt;- mtcars[ mtcars$hp &gt;= 100 , -c(3, 5, 8:9) ]
-selection</code></pre>
-<p>Type your brief explanation describing the selection and how negative
-column indices work.</p>
-<p>✍️ EXPLANATION: “___”</p>
+<div id="ifelse" class="section level1" number="5">
+<h1><span class="header-section-number">5</span>
+<code>ifelse()</code></h1>
+<p><code>ifelse()</code> tests the data.</p>
+<p>📜 The SYNTAX: <code>ifelse(test, yes, no)</code></p>
+<ul>
+<li><p><em>test</em> – logical vector
+(<code>TRUE</code>/<code>FALSE</code>/<code>NA</code>)</p></li>
+<li><p><em>yes</em> – value to insert where test is
+<code>TRUE</code></p></li>
+<li><p><em>no</em> – value to insert where test is <code>FALSE</code> or
+<code>NA</code></p></li>
+</ul>
+<pre class="r"><code>ifelse(test = c(1, 2, 3, 4, 5) &gt; 3, yes = &quot;Big&quot;, no = &quot;Small&quot;)</code></pre>
+<p>👀 Check-in: Which numbers were labeled “Big”?</p>
 </div>
-<div id="task-3" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Task 3</h2>
-<p>👋 Say Hello to <code>iris</code></p>
-<p>We will switch datasets for a moment. Explore
-<em><code>iris</code></em> so you know its layout.</p>
-<pre class="r"><code>data(&quot;iris&quot;) 
-?iris
-View(iris)</code></pre>
-<pre class="r"><code># Explore iris</code></pre>
+<div id="simple-recoding" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Simple Recoding</h1>
+<pre class="r"><code>object &lt;- c(&quot;Yellow&quot;, &quot;Jello&quot;, &quot;Gefilte Fish&quot;)
+ifelse(object == &quot;Yellow&quot;, yes = &quot;color&quot;, no = &quot;not a color&quot;)</code></pre>
+<p>🚀 Explore and Play: Try swapping the test to identify food
+words.</p>
 </div>
-<div id="task-4" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Task 4</h2>
-<p>Long-and-Short Virginica</p>
-<p>Create <strong><code>Long_and_Short_Virginica</code></strong> that
-keeps <code>Species</code> equals <code>&quot;virginica&quot;</code>,
-<strong>AND</strong> <code>Petal.Length</code> greater than 6.0
-<strong>OR</strong> <code>Petal.Length</code> less then 5.0. Keep
-<em>all</em> columns.</p>
-<pre class="r"><code># TODO 4: Write the extraction line.
-Long_and_Short_Virginica &lt;- ___</code></pre>
-<pre class="r"><code># Check your work
-# option:
-nrow(Long_and_Short_Virginica)</code></pre>
+<div id="multilevel-recoding" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Multi‑Level
+Recoding</h1>
+<p>Nested <code>ifelse()</code></p>
+<pre class="r"><code>object2 &lt;- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
+ifelse(object2 == 1, &quot;One&quot;,
+       ifelse(object2 == 2, &quot;Two&quot;,
+              ifelse(object2 == 3, &quot;Three&quot;,
+                     ifelse(object2 == 4, &quot;Four&quot;, &quot;Five&quot;))))</code></pre>
+<p>🤔 Reflect: Why didn’t we need an explicit test for 5?</p>
 </div>
-<div id="task-5" class="section level2" number="7.6">
-<h2><span class="header-section-number">7.6</span> Task 5</h2>
-<p>🧐 <code>stringr</code> Detective</p>
-<p>Install/load <em>stringr</em> and re‑run the supplied code. Explain
-what <code>str_detect()</code> accomplished.</p>
-<pre class="r"><code># install.packages(&quot;stringr&quot;)  # uncomment if first time
-library(stringr)
-?str_detect
-
-mtcars                    # for comparison
-mtcars[str_detect(row.names(mtcars), &quot;Merc&quot;), ]</code></pre>
-<p>Type your brief explanation explaining <code>str_detect</code> and
-how it worked in this script</p>
-<p>✍️ EXPLANATION: “___”</p>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Save and Upload</h1>
+<div id="mutate" class="section level1" number="8">
+<h1><span class="header-section-number">8</span>
+<code>mutate()</code></h1>
+<div id="overwrite-columns" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Overwrite
+Columns</h2>
+<p><code>mutate()</code> is a function that adds new columns or modifies
+existing ones</p>
+<p>📜 The SYNTAX: <code>mutate(data, new_col = value)</code></p>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Markdown and the
-workspace file. The workspace file saves all the objects in your
+<li>Create a copy of a column</li>
+</ol>
+<pre class="r"><code>names(mtcars) # Check the column names</code></pre>
+<pre class="r"><code>mtcars2 &lt;- mtcars %&gt;% 
+  mutate(new_column_copy = mpg)</code></pre>
+<pre class="r"><code>names(mtcars2) # Check the column names again</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Overwriting approach - replaces original column</li>
+</ol>
+<pre class="r"><code>cars_overwrite &lt;- mtcars %&gt;%
+  mutate(am = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Keeping original approach - creates new column</li>
+</ol>
+<pre class="r"><code>cars_keep &lt;- mtcars %&gt;%
+  mutate(transmission = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))</code></pre>
+<p>🗣 Comment: What is the difference between the code that creates
+<code>cars_overwrite</code> and <code>cars_keep</code>?</p>
+<pre class="r"><code>cars_overwrite$am</code></pre>
+<pre class="r"><code>cars_overwrite %&gt;% select(am)</code></pre>
+<pre class="r"><code>cars_keep$transmission</code></pre>
+</div>
+<div id="overwrite-with-factors" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Overwrite with
+Factors</h2>
+<p>Let’s create a sample of the <code>movielens</code> dataset using
+<code>sample_n()</code> in to practice overwriting a column
+variables.</p>
+<pre class="r"><code>data(&quot;movielens&quot;)
+?movielens</code></pre>
+<pre class="r"><code>set.seed(99)
+
+# Sample 100 movies from the movielens dataset
+smaller_movies &lt;- movielens %&gt;% 
+  sample_n(100) %&gt;% 
+  select(title, rating)
+
+head(smaller_movies)</code></pre>
+<p>We’ll apply <code>mutate()</code> to <code>smaller_movies</code> to
+recode the rating column to “Good” or “Bad”.</p>
+<p>📜 The SYNTAX:
+<code>mutate(data, new_col = ifelse(test, yes, no))</code></p>
+<pre class="r"><code>names(smaller_movies) # Check the column names)
+movies_overwrite &lt;- smaller_movies %&gt;%
+  mutate(rating = ifelse(rating &gt;= 4, &quot;Good&quot;, &quot;Bad&quot;))
+head(movies_overwrite)</code></pre>
+<p>👉 Overwriting keeps the column name but changes its contents.</p>
+</div>
+<div id="bonus-example" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Bonus Example</h2>
+<pre class="r"><code>smaller_movies %&gt;%
+  mutate(rating_label = ifelse(rating &gt;= 4, &quot;Good&quot;, &quot;Bad&quot;))
+head(movies_newcol) -&gt; movies_newcol</code></pre>
+<p>🧐 NOTICE: What is happening here
+<code>-&gt; movies_newcol</code>?</p>
+<p>🛠Break Things! How can you reorganize this script?</p>
+</div>
+<div id="calculations" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Calculations</h2>
+<p>🚗 Using <code>mtcars</code>, let’s use create a column
+<code>l_per_100km</code> that converts from US units (miles per gallon)
+to metric units (liters per 100km). 235.215 is the conversion factor
+between these units</p>
+<ul>
+<li><code>round(..., 1)</code> rounds to 1 decimal place</li>
+</ul>
+<pre class="r"><code>mtcars_units &lt;- mtcars %&gt;%
+  mutate(l_per_100km = round(235.215 / mpg, 1))
+head(mtcars_units)</code></pre>
+<p>👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?</p>
+<p>✍️ Practice: Recode the mpg column. Use <code>mutate()</code> and
+<code>ifelse()</code></p>
+<p>Fill in the Blanks</p>
+<pre class="r"><code>mtcars %&gt;%
+  _____(mpg_class = _____(mpg &gt; 25, &quot;High MPG&quot;,
+                            _____(mpg &lt; 15, &quot;Low MPG&quot;, &quot;Medium MPG&quot;))) -&gt; mpg_recode
+View(mpg_recode)</code></pre>
+</div>
+</div>
+<div id="assignment" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> ➤ Assignment</h1>
+<p>Replace each ____ placeholder with working code or a short written
+answer. Run each section; be sure the requested objects appear in the
+Environment. When finished, save <strong>BOTH</strong> this script and
+your .RData workspace and upload.</p>
+<div id="task-1" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Task 1</h2>
+<p>📦 Library it up!</p>
+<p>Make sure there is script in your document to load <code>dplyr</code>
+and <code>dslabs</code> packages so their functions / datasets load.</p>
+</div>
+<div id="task-2" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Task 2</h2>
+<p>📝 Recode ranges (overwrite)</p>
+<p>Using <code>quakes</code>, recode <code>mag</code> into THREE ordered
+levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
+<strong>overwriting</strong> the original column. Use
+<code>mutate()</code> and <code>ifelse()</code> chain and pipe
+(<code>%&gt;%</code>). Store as
+<strong><code>quake_recode</code></strong>.</p>
+<pre class="r"><code>____ &lt;- _____</code></pre>
+<pre class="r"><code># Quick check
+table(quake_recode$mag)   # should show exactly 3 levels</code></pre>
+</div>
+<div id="task-3" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Task 3</h2>
+<p>Recode categories (new col)</p>
+<p>🌟 With <code>stars</code>, turn the one-letter <em>type</em> into a
+descriptive phrase of your own in a <strong>new</strong> column called
+<code>full_type</code>. Keep the original type. Store as
+<strong>stars_recode</strong>.</p>
+<pre class="r"><code>____ &lt;- _____</code></pre>
+<pre class="r"><code># Quick check
+head(select(stars_recode, type, full_type))</code></pre>
+</div>
+<div id="task-4" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Task 4</h2>
+<p>Unit conversion</p>
+<p>Create <code>international_friendly_heights</code> by adding a
+<code>height_cm</code> column to heights (inches × 2.54). Leave original
+height.</p>
+<pre class="r"><code>____ &lt;- _____</code></pre>
+<p>🤔 Reflect: Why add—not overwrite—the height column?</p>
+<p>✍️ EXPLANATION: “___”</p>
+</div>
+</div>
+<div id="save-and-upload" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Save and Upload</h1>
+<ol style="list-style-type: decimal">
+<li>You will be submitting <strong>both</strong> the Quarto Document and
+the workspace file. The workspace file saves all the objects in your
 environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the R Markdown
+by running the following command in a code chunk of the Quarto Document
 document:</li>
 </ol>
-<pre class="r"><code>save.image(&quot;Assignment7_Workspace.RData&quot;)</code></pre>
+<pre class="r"><code>save.image(&quot;Assignment9_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
 <p>💾 <strong>Always save the R documents before closing.</strong></p>
@@ -3168,23 +3118,19 @@ pane.</p>
 <strong>both</strong> the RMD and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Today you
+<div id="today-you-practiced" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Today you
 practiced:</h1>
 <ul>
-<li><p>Learned R’s logical operators and how they create
-<code>TRUE</code>/<code>FALSE</code> vectors.</p></li>
-<li><p>Practiced negative indices to drop columns.</p></li>
-<li><p>Used <code>which()</code> to convert logical results into row
-positions.</p></li>
-<li><p>Combined conditions with <code>&amp;</code>, <code>|</code>, and
-<code>%in%</code> for flexible subsetting.</p></li>
-<li><p>Built step‑by‑step filters to answer targeted questions about
-<code>mtcars</code> and <code>iris</code>.</p></li>
+<li><p>Practiced logical tests and the structure of
+<code>ifelse()</code>.</p></li>
+<li><p>Created binary and multi‑level recodes.</p></li>
+<li><p>Used <code>mutate()</code> to overwrite or create
+columns.</p></li>
+<li><p>Performed inline calculations for unit conversion.</p></li>
 </ul>
-<p>🚀 Keep experimenting! Logic is the engine behind every data filter
-you will ever write in R. In our next lesson, we explore subsetting with
-the with <code>dplyr</code> package.</p>
+<p>🛠 Continue experimenting. Recoding and mutation are the building
+blocks of clean, analysis‑ready data!</p>
 </div>
 
 <footer>
