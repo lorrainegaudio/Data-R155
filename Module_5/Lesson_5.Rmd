@@ -85,7 +85,7 @@ To begin Lesson 5, follow these steps:
    
 2. Create a new file. Open another 📝 "R Notebook"  (File > New File > R Notebook).
 
-3. Type in the code provide in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
 **Lesson Overview**
 

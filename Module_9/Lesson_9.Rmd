@@ -85,7 +85,7 @@ To begin Lesson 9, follow these steps:
    
 2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
 
-3. Type in the code provide in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
 **Lesson Overview**
 
@@ -295,6 +295,8 @@ head(mtcars_units)
 ```
 
 👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?
+
+# 📝 Practice Space
 
 ✍️ Practice: Recode the mpg column. Use `mutate()` and `ifelse()`
 

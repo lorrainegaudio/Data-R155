@@ -44,6 +44,8 @@
   
 📊 Group
 
+📦 Packages
+
 📦 Pack/ Unpack
 
 📜 Script
@@ -53,6 +55,8 @@
 📖 Review
 
 📝 Notes:
+  
+📝 Practice Space
 
 ✍️ Practice:
 

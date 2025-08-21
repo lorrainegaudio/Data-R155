@@ -1,0 +1,569 @@
+---
+title: "Lesson 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# (maybe a dice icon?) Welcome Back to R! 
+
+We shift (gears) from the `dyplr` functions to using R’s built‑in random‑number tools to make simuations. Simulation lets you create synthetic data, test ideas quickly, and understand probability without a math degree. 
+
+📦 No extra packages are needed today. We'll be using built-in stats functions. 
+
+To begin Lesson 12, follow these steps:
+
+1. Open your course project for RStudio 
+   
+2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
+
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+
+**Lesson Overview**
+
+By the end of Lesson 12 you will be able to:
+
+1. ⚡ Remember – Name `sample()`, `rnorm()`, and `replicate()`.
+
+2. 🔍 Understand – Explain when to use replacement and probability weights in `sample()`.
+
+3. 🛠 Apply –    Simulate coins, dice, and normal data with code
+
+4. 📊 Analyze –  Visualize simulated results with `hist()` and interpret shapes.
+
+5. 🧠️ Evaluate –Judge whether simulated outcomes match an expected distribution (fair vs. biased).
+
+Keep these goals in mind as you move through each section.
+
+# Warm‑Up
+
+👀 Peek at the help file
+
+```{r , eval=FALSE}
+?sample      # skim Usage and Arguments
+```
+
+🧐 NOTICE: Which argument controls replacement (`TRUE`/`FALSE`)?
+
+# Simulating Coin Flips 
+
+🎯 The GOAL: Flip 1,000 fair coins (0 = heads, 1 = tails) and count tails.
+
+```{r , eval=FALSE}
+set.seed(123)  # for reproducibility
+```
+
+🔍 Look deeper: How does `set.seed()` work? Do you need to set seed every time before running a simulation? What happens when you don't set seed? What does it mean to "re-run without set.seed()"?
+
+1. Start with the data
+
+```{r , eval=FALSE}
+# sample(x, size, replace = FALSE, prob = NULL)
+coins <- sample(x = 0:1, size = 1000, replace = TRUE)
+```
+
+🧩 Explanation: `replace = TRUE` because we "put the coin back" each flip.
+
+```{r , eval=FALSE}
+head(coins)   # first few flips
+```
+
+🗣 Comment: What type of object is coins?
+
+How many tails are in our data set? We use sum to count the number of tails because 1 = tails
+
+```{r , eval=FALSE}
+sum(coins)    
+```
+
+🤔 Reflect: How might we calculate the number of heads using `coins`?
+
+🚀 Explore and Play: Can you make a new data set where heads = 1? 
+
+🛠 Break Things! What happens if replace = FALSE and the size = 1000?
+
+# Dice Rolls and Histograms
+
+🎯 The GOAL: Simulate 10,000 rolls of a fair 6‑sided die and plot the results.
+
+```{r , eval=FALSE}
+dice <- sample(1:6, 10000, replace = TRUE)
+```
+
+`hist()` creates a histogram of the dice rolls, showing the frequency of each face value.
+
+```{r , eval=FALSE}
+?hist
+```
+
+```{r , eval=FALSE}
+hist(dice,                  # The data to plot
+     breaks = 6,
+     col    = "lightblue",  # Color of the bars
+     main   = "10,000 Fair Die Rolls", # Title of the plot
+     xlab   = "Face Value") # Label for the x-axis
+```
+
+🧩 Explanation:
+
+- y-axis label is automatically set to "Frequency" by default.
+
+- Bars should be roughly equal height — that’s a uniform distribution.
+
+- When you specify breaks = 6, R doesn't necessarily create bins that align perfectly with our integer values 1-6.
+
+```{r , eval=FALSE}
+hist(dice,
+     breaks = seq(0.5, 6.5, by = 1),  # Explicit breaks between integers
+     col    = "lightblue",
+     main   = "10,000 Fair Die Rolls",
+     xlab   = "Face Value")
+```
+
+# Adding Two Dice 
+
+🔍 Look deeper:  What is the *Central‑Limit Theorem*
+
+🎯 The GOAL: Roll two dice 10,000 times, add the results, plot.
+
+```{r , eval=FALSE}
+sum_two <- sample(1:6, 10000, TRUE) + sample(1:6, 10000, TRUE)
+
+hist(sum_two,
+     breaks = 11,
+     col    = "salmon",
+     main   = "Sum of Two Dice (10,000 trials)",
+     xlab   = "Total")
+```
+
+✔️  How to Check for Issues
+
+🤔 Reflect: What shape do you expect: triangular, flat, or skewed?
+
+```{r , eval=FALSE}
+h <- hist(sum_two, breaks = 11, plot = FALSE)
+h$breaks  # Shows the actual break points used
+```
+
+🧐 NOTICE: We stored the histogram in `h` without plotting it.
+
+Use explicit breaks that align with the possible values
+
+```{r , eval=FALSE}
+hist(sum_two,
+     breaks = seq(1.5, 12.5, by = 1),  # Creates bins centered on integers 2-12
+     col    = "salmon",
+     main   = "Sum of Two Dice (10,000 trials)",
+     xlab   = "Total")
+```
+
+# Normal Data
+
+🎯 The GOAL: Simulate 1,000 adult female heights (mean 64 in, SD 2.5 in).
+
+`rnorm()` generates a vector of random numbers that form a normal distribution.
+
+```{r , eval=FALSE}
+?rnorm  # Check the help file for rnorm()
+```
+
+📜 The SYNTAX: `rnorm(n, mean = 0, sd = 1)`
+
+```{r , eval=FALSE}
+heights <- rnorm(n = 1000, mean = 64, sd = 2.5)
+```
+
+```{r , eval=FALSE}
+hist(heights,
+     breaks = "Scott",
+     col    = "lavender",
+     main   = "Simulated Female Heights",
+     xlab   = "Height (inches)")
+```
+
+🔍 Look deeper: What are "Scott" breaks in Histograms?
+
+```{r eval=FALSE, include=FALSE}
+#   This is automatic algorithms to determine the optimal number and width of 
+#   bins, rather than specifying them manually.
+
+#  "Scott" uses a rule based on the standard deviation of the data
+# Scott's rule calculates bin width as:
+#    bin_width = 3.5 * sd(x) / n^(1/3)
+
+# Therefore, if you know the bin width and sample size, you can solve for SD:
+#    sd(x) = bin_width * n^(1/3) / 3.5
+
+h <- hist(heights, breaks = "Scott", plot = FALSE)
+# Calculate the bin width (assuming uniform bin widths)
+bin_width <- diff(h$breaks)[1]  # Take first difference between breaks
+# Get sample size
+n <- sum(h$counts)
+
+# Estimate SD using Scott's formula
+#    sd(x) = bin_width * n^(1/3) / 3.5
+estimated_sd <- bin_width * n^(1/3) / 3.5
+
+# Compare with actual SD
+actual_sd <- sd(heights)
+
+# Print results
+cat("Estimated SD from histogram breaks:", estimated_sd, "\n")
+cat("Actual SD from data:", actual_sd, "\n")
+
+# 👀 Check‑in: Roughly what fraction of heights fall below 60 in? Try
+
+mean(heights < 60)
+
+```
+
+
+# Repeating a Simulation
+
+🎯 The GOAL: How variable is the number of tails in 5,000 flips? Repeat 100 times.
+
+```{r , eval=FALSE}
+?replicate  # Check the help file for replicate()
+```
+
+📜 The SYNTAX: `replicate(n, expr, simplify = "array")`
+
+`expr` is the expression (a language object, usually a call) to evaluate repeatedly.
+
+```{r , eval=FALSE}
+tails_100 <- replicate(n = 100, expr = sum(sample(0:1, 5000, TRUE)))
+summary(tails_100)
+```
+
+👀 Check-in: What is `expr` in this case?  Why is `simplify = "array"` not included?
+
+🧩 Explanation: 
+
+The replicate() function will:
+
+1.   Evaluate this entire expression 100 times (because `n = 100`)
+
+2.   Each evaluation is independent (gets its own random sampling)
+
+3.   Store the 100 results in a vector called `tails_100`
+
+```{r eval=FALSE, include=FALSE}
+# This expression represents a simulation of 5,000 coin flips and 
+#   the counting the number of tails
+```
+
+```{r , eval=FALSE}
+hist(tails_100,
+     breaks = "Scott",
+     col    = "gold",
+     main   = "Distribution of Tails in 5,000 Coin Flips (100 reps)",
+     xlab   = "Count of Tails")
+```
+
+🧐 NOTICE: The spread shows sampling variability around the theoretical 2,500.
+
+
+🎯 The GOAL: Sum `rnorm()` for `expr` in `replicate()`. Count how many values in each sample are below a threshold.
+
+```{r , eval=FALSE}
+values_below_zero <- replicate(n = 200, expr = sum(rnorm(50, mean = 2, sd = 3) < 0))
+```
+
+Order of Operations:
+
+  1. `rnorm(n = 50, mean = 2, sd = 3)` generates a sample of 50 random numbers.
+
+  2. `sum(... < 0)` counts how many of those numbers are below zero.
+
+  3. `replicate(n = 200, expr = ...)` repeats this process 200 times.
+
+  4. The result is a vector of counts, one for each of the 200 samples.
+
+Simplified example
+
+🎯 The GOAL: Generate 10 random numbers, Compare each to zero, Count how many are below zero
+
+```{r , eval=FALSE}
+# Generate 10 random numbers 
+x <- rnorm(n = 10, mean = 2, sd = 3)
+print(x)
+
+# Compare each to zero
+below_zero <- x < 0
+print(below_zero)
+
+# Count how many are below zero
+count <- sum(below_zero)
+print(count)
+```
+
+# Fair‑Dice Check
+
+Probability weights in `sample()` let you simulate biased outcomes.
+
+📜 The SYNTAX: `sample(x, size, replace = FALSE, prob = NULL)`
+
+The `prob` parameter specifies the probability weights for each element in the sampling pool.
+
+```{r , eval=FALSE}
+first_time_prob <- sample(1:6, 1000, prob = c(.12,.13,.07,.23,.22,.23))
+```
+
+This simulates rolling a biased or "loaded" die `1000` times. The length of the prob vector must match the number of sampled values (x= `1:6`). The probabilities should sum to 1`
+
+👀 Check‑in: What does `TRUE` mean in the `sample()` calls?
+
+```{r eval=FALSE, include=FALSE}
+# TRUE means we allow replacement, so each roll is independent and can repeat values.
+```
+
+🤔 Your "friend's" dice look suspiciously unfair. Compare it to our fair dice.
+
+```{r , eval=FALSE}
+set.seed(8000)
+friend_sum <- sample(1:6, 1000, prob = c(.12,.13,.07,.23,.22,.23), TRUE) +
+  sample(1:6, 1000, prob = c(.12,.13,.07,.23,.22,.23), TRUE)
+```
+
+```{r , eval=FALSE}
+fair_sum <- sample(1:6, 1000, TRUE) + sample(1:6, 1000, TRUE)
+```
+
+🧩 Explanation: Understanding the Sum of Two Samples
+
+The simulates rolling two biased dice 1000 times. This is like you and a friend each rolling a biased die 1000 times simultaneously and recording the sum for each pair of rolls:
+
+```{r , eval=FALSE}
+hist(friend_sum,
+     breaks = "Scott",
+     col    = rgb(1,0,0,.4),
+     freq   = FALSE,
+     main   = "Friend vs. Fair Dice (1000 rolls)",
+     xlab   = "Sum of Two Dice")
+```
+
+```{r , eval=FALSE}
+hist(fair_sum,
+     breaks = "Scott",
+     col    = rgb(0,0,1,.4),
+     freq   = FALSE,
+     add    = TRUE)
+```
+
+```{r , eval=FALSE}
+legend("topright", legend = c("Friend","Fair"),
+       fill = c(rgb(1,0,0,.4), rgb(0,0,1,.4)))
+```
+
+👀 Check‑in: Do the red bars lean high or low compared with blue?
+
+# 📝 Practice Space
+
+✍️ Practice: Replace the blanks (___) and run. 
+
+🎯 The GOAL: Simulate 300 rolls of a 20‑sided die (values `1:20`) and store in **`big_die`**
+
+```{r , eval=FALSE}
+big_die <- sample( ___ , size = ___ , replace = ___ )
+
+# Using `any()`, did you roll a 20?
+any(big_die == ___ )
+```
+
+✍️ Practice: 
+
+   1. Simulate weekly demand for a product using `rpois()` (hint: `?rpois`).
+
+   2. Try different probability weights in `sample()` to make a loaded coin.
+
+   3. Write a pipeline that creates 1,000 random heights, bins them with `cut()`, and counts the number in each bin.
+
+Add your experiments below and include at least one 👀 check‑in of your own.
+
+```{r , eval=FALSE}
+
+
+```
+
+# ➤ Assignment
+
+Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, save **BOTH** this script and your .RData workspace and upload.
+
+When you’re done, your workspace should contain FOUR new objects: `boring_weekend`, `d20_counts`, `blanketed_babies`, `weeks_too_long`
+
+## Task 1
+
+D20 marathon
+
+Simulate 5221 rolls of a fair 20-sided die. Store as **`boring_weekend`** using `sample()`.
+
+```{r, eval=FALSE}
+____ <- _____
+```
+
+## Task 2
+
+✅  Quick frequency check
+
+Create **`d20_counts`**: a table of how many times each face appeared.
+
+```{r, eval=FALSE}
+____ <- _____
+```
+
+```{r, eval=FALSE}
+# Quick check
+print(d20_counts)
+```
+
+## Task 3
+
+Hit rate
+
+What proportion of rolls were natural 20s?  (one line of code, no object)
+
+```{r, eval=FALSE}
+____
+```
+
+## Task 4
+
+Baby-blanket test
+
+Simulate 100 newborn lengths (inches) with mean 20.0, SD 0.9. Store as **`blanketed_babies`**.  Use `rnorm()`.
+
+```{r, eval=FALSE}
+____ <- _____
+```
+
+## Task 5
+
+Too long?
+
+Using `any()`, were ANY `babies > 23` in?  Also count how many. No object.
+
+```{r, eval=FALSE}
+____(____)
+
+____(____)
+```
+
+🗣 Comment TODO: Write Yes / No – does the hospital need longer blankets?
+
+🗣 Comment: "___"
+
+## Task 6
+
+⚠️  Week-to-week risk
+
+Repeat Task 4 & 5 for 1000 simulated weeks. Store a vector **`weeks_too_long`** that records, for each week, the number of babies over 23 inches.  Hint: `replicate()`.
+
+```{r, eval=FALSE}
+____ <- _____
+```
+
+## Task 7
+
+🤔 Reflect
+
+📝 Write a short paragraph reflecting on what the utility of `replicate()` was in task 6?
+
+✍️ EXPLANATION: "___"
+
+# Save and Upload
+
+1. You will be submitting **both** the Quarto Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+
+```{r , eval=FALSE}
+save.image("Assignment12_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save the R documents before closing.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
+
+# Today you practiced:
+
+- Used `sample()` for discrete simulations with or without replacement.
+
+- Visualized uniform and aggregated dice results with histograms.
+
+- Generated normal random numbers with `rnorm()` and plotted the shape.
+
+- Repeated an experiment easily with `replicate()`.
+
+- Compared two simulated distributions to spot bias.
+
+

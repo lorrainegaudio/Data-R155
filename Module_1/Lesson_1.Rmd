@@ -80,7 +80,7 @@ output:
    
 2. Create a new R script file (File > New File > R Script).
 
-3. Type in the code provide in this document and as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+3. Type in the code provided in this document and as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
 ## Lesson Overview
 
