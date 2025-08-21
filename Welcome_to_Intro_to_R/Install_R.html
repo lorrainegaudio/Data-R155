@@ -11,7 +11,6 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2025-08-15" />
 
 <title>Install R and RStudio on Your Computer</title>
 
@@ -2602,7 +2601,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">body {font-family: 'Garamond', serif;line-height: 1.6;margin: 0 20px;color: #535455; text-align: justify; }h1, h2, h3, h4, h5, h6 {font-family: 'Gotham', sans-serif;color: #0033A0; }a {color: #D64309; text-decoration: none;}a:hover {text-decoration: underline;}code {background-color: #f4f4f4;padding: 2px 5px;border-radius: 3px;font-family: "Courier New", Courier, monospace;}pre {background-color: #f4f4f4;padding: 10px;border-radius: 5px;overflow-x: auto;}header {width: 75%; height: 200px; background-color: #0033A0; color: #ffffff; margin: 50px auto; overflow: hidden; position: relative;z-index: 1; transform: skew(-35deg); display: flex;align-items: center; justify-content: flex-start; }.header-wrapper {transform: skew(35deg); padding-left: 80px; text-align: left; width: 100%; height: auto; display: flex;flex-direction: column; justify-content: center; }header h1 {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 36px; height: 50px; visibility: visible; display: block; }header p {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; visibility: visible;display: block;}header:before {content: "";position: absolute;top: 0;left: -1000px;width: 2000px; height: 200px; background-color: #0033A0; z-index: -1;transform: skew(35deg); }.orange-rectangle {position: absolute;bottom: 0px; right: 0px; background-color: #D64309; color: #ffffff; padding: 5px 40px; font-family: 'Gotham', sans-serif; text-transform: uppercase; border-radius: 0px; transform: skew(35deg); transform-origin: top right; z-index: 2; }footer {width: 100%; background-color: #0033A0; color: #ffffff; padding: 20px 0; text-align: center; position: relative;z-index: 1; }.footer-wrapper {width: 75%; margin: 0 auto; font-family: 'Gotham', sans-serif; font-size: 14px; }footer p {margin: 5px 0; }#TOC.tocify {background-color: #f9f9f9;border: 1px solid #ddd;padding: 15px;border-radius: 5px;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item {display: block;padding: 5px 0;color: #D64309 !important; text-decoration: none;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item:hover {background-color: #e9e9e9;}#TOC.tocify .tocify-item.active {background-color: #D64309 !important; color: #ffffff !important; }#TOC.tocify .tocify-item.next {background-color: #D64309 !important; color: #ffffff !important; }.tabset > .tabset-pills > .nav > li.active > a,.tabset > .nav > li.active > a {background-color: #D64309 !important; color: #ffffff !important; font-family: 'Garamond', serif !important; }.tabset > .tabset-pills > .nav > li > a,.tabset > .nav > li > a {color: #0033A0 !important; font-family: 'Garamond', serif !important; background-color: #e9e9e9 !important; border-color: #e9e9e9 !important; }.tabset > .tabset-pills > .nav > li > a:hover,.tabset > .nav > li > a:hover {background-color: #535455 !important; color: #ffffff !important; }</style>
+<style type="text/css">body {font-family: 'Garamond', serif;line-height: 1.6;margin: 0 20px;color: #333333; text-align: justify; font-size: 18px; }pre.sourceCode code span.co,code.sourceCode span.co,pre code span.co, pre code .hljs-comment, pre code .c, pre code .c1, pre code .cm, pre code span.comment { color: #333 !important; font-style: italic;}h1, h2, h3, h4, h5, h6 {font-family: 'Gotham', sans-serif;color: #0033A0; }a {color: #D64309; text-decoration: none;}a:hover {text-decoration: underline;}code {background-color: #f4f4f4;padding: 2px 5px;border-radius: 3px;font-family: "Courier New", Courier, monospace;}pre {background-color: #f4f4f4;padding: 10px;border-radius: 5px;overflow-x: auto;}header {width: 75%; height: 200px; background-color: #0033A0; color: #ffffff; margin: 50px auto; overflow: hidden; position: relative;z-index: 1; transform: skew(-35deg); display: flex;align-items: center; justify-content: flex-start; }.header-wrapper {transform: skew(35deg); padding-left: 80px; text-align: left; width: 100%; height: auto; display: flex;flex-direction: column; justify-content: center; }header h1 {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 36px; height: 50px; visibility: visible; display: block; }header p {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; visibility: visible;display: block;}header:before {content: "";position: absolute;top: 0;left: -1000px;width: 2000px; height: 200px; background-color: #0033A0; z-index: -1;transform: skew(35deg); }.orange-rectangle {position: absolute;bottom: 0px; right: 0px; background-color: #D64309; color: #ffffff; padding: 5px 40px; font-family: 'Gotham', sans-serif; text-transform: uppercase; border-radius: 0px; transform: skew(35deg); transform-origin: top right; z-index: 2; }footer {width: 100%; background-color: #0033A0; color: #ffffff; padding: 20px 0; text-align: center; position: relative;z-index: 1; }.footer-wrapper {width: 75%; margin: 0 auto; font-family: 'Gotham', sans-serif; font-size: 14px; }footer p {margin: 5px 0; }#TOC.tocify {background-color: #f9f9f9;border: 1px solid #ddd;padding: 15px;border-radius: 5px;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item {display: block;padding: 5px 0;color: #D64309 !important; text-decoration: none;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item:hover {background-color: #e9e9e9;}#TOC.tocify .tocify-item.active {background-color: #D64309 !important; color: #ffffff !important; }#TOC.tocify .tocify-item.next {background-color: #D64309 !important; color: #ffffff !important; }.tabset > .tabset-pills > .nav > li.active > a,.tabset > .nav > li.active > a {background-color: #D64309 !important; color: #ffffff !important; font-family: 'Garamond', serif !important; }.tabset > .tabset-pills > .nav > li > a,.tabset > .nav > li > a {color: #0033A0 !important; font-family: 'Garamond', serif !important; background-color: #e9e9e9 !important; border-color: #e9e9e9 !important; }.tabset > .tabset-pills > .nav > li > a:hover,.tabset > .nav > li > a:hover {background-color: #535455 !important; color: #ffffff !important; }</style>
 
 
 
@@ -2767,9 +2766,8 @@ font-size: 0.95em;
 
 
 <h1 class="title toc-ignore">Install R and RStudio on Your Computer</h1>
-<h3 class="subtitle">Introduction to R Programming</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">2025-08-15</h4>
+<h4 class="date">Lesson generated on August 21, 2025</h4>
 
 </div>
 
@@ -2910,7 +2908,6 @@ course. Name it <code>firstlastname_install_r_script.R</code>.</p>
 <p>The Files pane shows files in your current working directory. You can
 navigate folders, open files, and manage your workspace here.</p>
 <pre class="r"><code>getwd()        # current working directory (matches what Files is showing)</code></pre>
-<pre><code>## [1] &quot;C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155&quot;</code></pre>
 <pre class="r"><code># setwd(&quot;C:/Users/YourName/Documents/&quot;) # change to your desired folder</code></pre>
 <p>Note: Students using OneDrive may find issues navigating the folder
 system.</p>
@@ -2943,7 +2940,6 @@ project folder. Everything you read or write in R will happen here.
 Confirm with:</li>
 </ol>
 <pre class="r"><code>getwd()  # should show your new project folder</code></pre>
-<pre><code>## [1] &quot;C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155&quot;</code></pre>
 <p>Close the project by going to File → Close Project.</p>
 <p>Practice opening the project again by</p>
 <ol style="list-style-type: decimal">
@@ -2958,7 +2954,7 @@ just created.</p></li>
 <footer>
   <div class="footer-wrapper">
     <p>© 2025 Boise State University | All Rights Reserved</p>
-    <p>Contact me at: lorrainegaudio@boisestate.edu | 123 University Drive, Boise, ID 83725</p>
+    <p>Contact: lorrainegaudio@boisestate.edu | 123 University Drive, Boise, ID 83725</p>
   </div>
 </footer>
 
@@ -3010,7 +3006,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

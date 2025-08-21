@@ -1276,6 +1276,83 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<script>
+window.initializeCodeFolding = function(show) {
+
+  // handlers for show-all and hide all
+  $("#rmd-show-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('show');
+    });
+  });
+  $("#rmd-hide-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('hide');
+    });
+  });
+
+  // index for unique code element ids
+  var currentIndex = 1;
+
+  // select all R code blocks
+  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
+  rCodeBlocks.each(function() {
+    // skip if the block has fold-none class
+    if ($(this).hasClass('fold-none')) return;
+
+    // create a collapsable div to wrap the code in
+    var div = $('<div class="collapse r-code-collapse"></div>');
+    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
+    var id = 'rcode-643E0F36' + currentIndex++;
+    div.attr('id', id);
+    $(this).before(div);
+    $(this).detach().appendTo(div);
+
+    // add a show code button right above
+    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
+    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
+    showCodeButton.append(showCodeText);
+    showCodeButton
+        .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
+        .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
+        .attr('aria-expanded', showThis)
+        .attr('aria-controls', id);
+
+    var buttonRow = $('<div class="row"></div>');
+    var buttonCol = $('<div class="col-md-12"></div>');
+
+    buttonCol.append(showCodeButton);
+    buttonRow.append(buttonCol);
+
+    div.before(buttonRow);
+
+    // show the div if necessary
+    if (showThis) div.collapse('show');
+
+    // update state of button on show/hide
+    //   * Change text
+    //   * add a class for intermediate states styling
+    div.on('hide.bs.collapse', function () {
+      showCodeText.text('Show');
+      showCodeButton.addClass('btn-collapsing');
+    });
+    div.on('hidden.bs.collapse', function () {
+      showCodeButton.removeClass('btn-collapsing');
+    });
+    div.on('show.bs.collapse', function () {
+      showCodeText.text('Hide');
+      showCodeButton.addClass('btn-expanding');
+    });
+    div.on('shown.bs.collapse', function () {
+      showCodeButton.removeClass('btn-expanding');
+    });
+
+  });
+
+}
+</script>
 <style type="text/css">.hljs-literal {
 color: #990073;
 }
@@ -2680,6 +2757,9 @@ display: none;
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -2763,11 +2843,19 @@ font-size: 0.95em;
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Lesson 3</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 16, 2025</h4>
+<h4 class="date">Lesson generated on August 21, 2025</h4>
 
 </div>
 
@@ -2783,7 +2871,7 @@ using <strong>functions</strong>.</p>
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new R script file (File &gt; New File &gt; R
 Script).</p></li>
-<li><p>Type in the code provide in this document as you follow along
+<li><p>Type in the code provided in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
@@ -2818,14 +2906,14 @@ that produce an error.</p>
 mean                # function *object* → prints the function body
 
 mean()              # function *call*   → error: argument is missing</code></pre>
-<p>👀 Check‑in: What happens if you try sum vs. sum(1:5) ?</p>
+<p>👀 Check-in: What happens if you try sum vs. sum(1:5) ?</p>
 </div>
 <div id="date-and-time" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Date and Time</h1>
-<p>🕰️ R has built‑in date and time functions. Type the following into
+<p>🕰️ R has built-in date and time functions. Type the following into
 your R script and run each line. <strong>Utility</strong> Quickly
-time‑stamp results for reports or file names.</p>
-<pre class="r"><code>Sys.Date()      # current date (yyyy‑mm‑dd)
+time-stamp results for reports or file names.</p>
+<pre class="r"><code>Sys.Date()      # current date (yyyy-mm-dd)
 
 Sys.time()      # current date + time
 
@@ -2836,8 +2924,9 @@ in ‘%Y-%m-%d’?</p>
 <pre class="r"><code># Create a learning skills memo note in your R script if you did 
 # the 👀 Check‑in and 🔍 Dig deeper. 
 
-## 1. Explain what you did to discover more about Functions-Call Basics and Date and Time settings in reports, what your observations are, and what you expect 
-# to happen. 
+## 1. Explain what you did to discover more about Functions-Call Basics and 
+# Date and Time settings in reports, what your observations are, and what you 
+# expect to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
@@ -2848,10 +2937,10 @@ in ‘%Y-%m-%d’?</p>
 <p>Type the following R code into your script. Read the help tab for
 more about the <em>Usage</em> section for defaults, and the
 <em>Arguments</em> list for details.</p>
-<pre class="r"><code>?mean               # opens in Help pane (bottom‑right)
+<pre class="r"><code>?mean               # opens in Help pane (bottom-right)
 
 help(sample)        # alternate syntax works the same</code></pre>
-<p>💡 Pro‑tip: <code>args(mean)</code> prints the argument names
+<p>💡 Pro-tip: <code>args(mean)</code> prints the argument names
 inline.</p>
 </div>
 <div id="required-vs.-default" class="section level1" number="5">
@@ -2970,7 +3059,7 @@ line of code.</p>
 </div>
 <div id="task-6" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Task 6</h2>
-<p>🕰 Quick time‑stamp</p>
+<p>🕰 Quick time-stamp</p>
 <p>Use <code>Sys.Date()</code> and <code>Sys.time()</code> to create two
 separate objects, <code>today_date</code> and <code>now_time</code>.</p>
 <p>TODO</p>
@@ -3020,11 +3109,11 @@ workspace file. The workspace file saves all the objects in your
 environment that you created in this lesson. You can save the workspace
 by running the following command in your R script:</li>
 </ol>
-<p><code>save.image(&quot;Assignment3_Workspace.RData&quot;)</code></p>
+<pre class="r"><code>save.image(&quot;Assignment3_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
-<p><strong>Always save the R script before closing. If you don’t, you
-will lose your work.</strong></p>
+<p>💾 <strong>Always save your R documents before closing. If you don’t,
+you will lose your work.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Find the assignment in this week’s module in Canvas and upload
 <strong>both</strong> the R script and the workspace file.</li>
@@ -3047,7 +3136,7 @@ parameters.</p></li>
 <footer>
   <div class="footer-wrapper">
     <p>© 2025 Boise State University | All Rights Reserved</p>
-    <p>Contact me at: lorrainegaudio@boisestate.edu | 123 University Drive, Boise, ID 83725</p>
+    <p>Contact: lorrainegaudio@boisestate.edu | 123 University Drive, Boise, ID 83725</p>
   </div>
 </footer>
 
@@ -3085,6 +3174,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

@@ -1,5 +1,53 @@
 ---
 title: "Intro to R  Programming Fall 2025 - Syllabus"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+title: "Intro to R  Programming Fall 2025 - Syllabus"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+      
+title: "Intro to R  Programming Fall 2025 - Syllabus"
 subtitle: "Boise State University, Anthropology Department"
 author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
@@ -26,11 +74,6 @@ citecolor: black # Customizes the color of citations
 bibliography: references.bib # Bibliography file
 biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
----
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Welcome to Intro to R Programming!
@@ -283,4 +326,30 @@ Short Answer: No. Both submission routes are graded with the same rubric.
 # Additonal Syllabus Policies
 
 Please refer to these documents for more information about [University Guidelines and Policies](https://docs.google.com/document/d/14ZMRsHAgo356h0nHtJuStDKGwvg6LY-XOA7PxacwECw/edit?usp=sharing), and [Student Expectations and Guidelines](https://docs.google.com/document/d/1tO-RnUbkFoQTNhFLzo7HXers2p_3OS4NUFdowagugNw/edit?usp=sharing).
+
+## Course Content and Idaho Law
+
+Boise State University is committed to free expression, academic freedom, and academic responsibility, as outlined in existing University policies and guidance. In this course, your instructor is dedicated to fostering open, respectful conversations and promoting the exploration of different perspectives. Our goal is to create an environment where you are empowered to engage with and think critically about the content and topics covered in this course. You are not required to agree with everything you read, hear, or discuss; ultimately, you get to decide what you believe. However, we hope you will remain open to listening, reflecting, learning, and asking insightful questions along the way.
+
+
+Under Idaho law (Section § 67-5909D), some university courses with content related to diversity, equity, inclusion, or critical theory may be subject to certain restrictions. However, the law affirms and does not limit free discussion in the learning environment. Like all Boise State courses, this course supports open inquiry, intellectual honesty, and respectful engagement with a range of perspectives, all of which are consistent with student rights and responsibilities described in the [Student Code of Conduct (Policy 2020)](https://www.boisestate.edu/policy/student-affairs/code-of-conduct/).
+
+It is your responsibility to review the course syllabus closely to understand the course content and expectations.
+
+This course provides a space for open dialogue and thoughtful discussion, including around complex or challenging topics. Everyone is expected to engage with curiosity, listen respectfully, and contribute in ways that support a productive and welcoming learning environment.
+
+Boise State and the Idaho State Board of Education affirm the importance of free expression and academic inquiry. As outlined in SBOE Policy III.B:
+
+
+**"Membership in the academic community imposes on administrators, faculty members, other institutional employees, and students an obligation to respect the dignity of others, to acknowledge the right of others to express differing opinions, and to foster and defend intellectual honesty, freedom of inquiry and instruction, and free expression on and off the campus of an institution."**
+
+Disruptive behavior that interferes with the learning environment will not be tolerated and may result in removal from this course, in line with university policy [(See Policy 3240 Maintaining Effective Learning Environments)](https://www.boisestate.edu/policy/academic-affairs-student/maintaining-effective-learning-environments/).
+
+Your instructor will foster critical discussion and analysis, and a respectful consideration of a wide range of ideas, in accordance with the [Faculty Code of Rights, Responsibilities, and Conduct (Policy 4000)](https://www.boisestate.edu/policy/academic-affairs-faculty-administration/faculty-code-of-rights-responsibilities-and-conduct/). You are encouraged to question ideas and form your own conclusions.
+
+As always, you have the freedom to choose courses that align with your academic goals—if you have concerns about course content, please talk with your instructor. Your academic advisor is a great resource to explore additional course options. Refer to the [academic calendar](https://www.boisestate.edu/registrar/boise-state-academic-calendars/) for important deadlines related to adding and dropping classes.
+
+To learn more about this law and how it applies to courses at Boise State, visit this [link](https://www.boisestate.edu/academics/information-regarding-section-67-5909d-course-and-curriculum/).
+
+
 

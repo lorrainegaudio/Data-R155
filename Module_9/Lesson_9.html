@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 9</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 20, 2025</h4>
+<h4 class="date">Lesson generated on August 21, 2025</h4>
 
 </div>
 
@@ -2877,7 +2877,7 @@ they form a duo you will use in nearly every data project.</p>
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new file. From the file types we have used so far, pick
 which file type you want to use. (File &gt; New File &gt; ???).</p></li>
-<li><p>Type in the code provide in this document as you follow along
+<li><p>Type in the code provided in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
@@ -3044,6 +3044,10 @@ between these units</p>
   mutate(l_per_100km = round(235.215 / mpg, 1))
 head(mtcars_units)</code></pre>
 <p>👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?</p>
+</div>
+</div>
+<div id="practice-space" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
 <p>✍️ Practice: Recode the mpg column. Use <code>mutate()</code> and
 <code>ifelse()</code></p>
 <p>Fill in the Blanks</p>
@@ -3052,21 +3056,20 @@ head(mtcars_units)</code></pre>
                             _____(mpg &lt; 15, &quot;Low MPG&quot;, &quot;Medium MPG&quot;))) -&gt; mpg_recode
 View(mpg_recode)</code></pre>
 </div>
-</div>
-<div id="assignment" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> ➤ Assignment</h1>
+<div id="assignment" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> ➤ Assignment</h1>
 <p>Replace each ____ placeholder with working code or a short written
 answer. Run each section; be sure the requested objects appear in the
 Environment. When finished, save <strong>BOTH</strong> this script and
 your .RData workspace and upload.</p>
-<div id="task-1" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Task 1</h2>
+<div id="task-1" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Task 1</h2>
 <p>📦 Library it up!</p>
 <p>Make sure there is script in your document to load <code>dplyr</code>
 and <code>dslabs</code> packages so their functions / datasets load.</p>
 </div>
-<div id="task-2" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Task 2</h2>
 <p>📝 Recode ranges (overwrite)</p>
 <p>Using <code>quakes</code>, recode <code>mag</code> into THREE ordered
 levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
@@ -3078,8 +3081,8 @@ levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
 <pre class="r"><code># Quick check
 table(quake_recode$mag)   # should show exactly 3 levels</code></pre>
 </div>
-<div id="task-3" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Task 3</h2>
 <p>Recode categories (new col)</p>
 <p>🌟 With <code>stars</code>, turn the one-letter <em>type</em> into a
 descriptive phrase of your own in a <strong>new</strong> column called
@@ -3089,8 +3092,8 @@ descriptive phrase of your own in a <strong>new</strong> column called
 <pre class="r"><code># Quick check
 head(select(stars_recode, type, full_type))</code></pre>
 </div>
-<div id="task-4" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Task 4</h2>
 <p>Unit conversion</p>
 <p>Create <code>international_friendly_heights</code> by adding a
 <code>height_cm</code> column to heights (inches × 2.54). Leave original
@@ -3100,8 +3103,8 @@ height.</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
 <li>You will be submitting <strong>both</strong> the Quarto Document and
 the workspace file. The workspace file saves all the objects in your
@@ -3118,8 +3121,8 @@ pane.</p>
 <strong>both</strong> the RMD and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Today you
+<div id="today-you-practiced" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Practiced logical tests and the structure of
