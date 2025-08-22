@@ -40,6 +40,22 @@
 
 🔹
 
+▶
+
+⚙️
+
+📥 Download
+
+📂
+
+📘 
+
+📄 Open the PDF
+
+💻 Open HTML
+
+🎥 Watch the Lesson Video
+
 🛠 Break Things!
   
 📊 Group
@@ -78,6 +94,6 @@
 
 👋
 
-👉
+👉 Tip
 
 🚗

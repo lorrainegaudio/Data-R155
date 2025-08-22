@@ -84,7 +84,7 @@ output:
 
 # 🚦 Ready, Set, R! 
 
-In lesson 8 and 9, we explored several functions from `dplyr` (`select()`, `filter()`, `mutate()`, and `ifelse()`). This week, we will look at other functions in the `dplyr` package (`group_by` and `summarize()`) that will speed your ability to compare sub-groups and calculate descriptive statistics.
+In lesson 8 and 9, we explored several functions from `dplyr` (`select()`, `filter()`, `mutate()`, and `ifelse()`). This week, we will look at other functions in the `dplyr` package (`group_by()` and `summarize()`) that will speed your ability to compare sub-groups and calculate descriptive statistics.
 
 To begin Lesson 10, follow these steps:
 

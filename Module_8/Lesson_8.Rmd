@@ -281,7 +281,7 @@ sample_n(Movie_Night, 10)                # random sample of 10 rows
 
 🗣 Comment: What would happen if we didn't use unique()? Create a memo note, demonstrate learning skill(s) used.
 
-🧠 Challenge: Demonstrate learning skill(s) by completing this bonus practice. Fill the blanks. Use the `gapminder` dataset.
+✍️ Practice: Demonstrate learning skill(s) by completing this bonus practice. Fill the blanks. Use the `gapminder` dataset.
 
 ```{r , eval=FALSE}
 ___ %>%
