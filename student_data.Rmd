@@ -1,0 +1,123 @@
+---
+title: "Student_Data"
+author: "Lorraine Gaudio"
+date: "2025-08-24"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+In this document, I wrangle student data. 
+
+
+# Roster
+
+
+I need the emailing roster so that I can email students the pre- and post- survey
+
+```{r load-data, message=FALSE, warning=FALSE}
+# ---- Step 1: Load Excel (sheets "900" and "1030") --------------------------
+library(readxl)
+library(dplyr)
+library(janitor)
+
+# Path to the roster file
+roster_path <- "data/Class_Roster.xlsx"
+
+# Sanity check
+if (!file.exists(roster_path)) {
+  stop("File not found: data/Class_Roster.xlsx (check working directory).")
+}
+
+# List sheets
+sheets_available <- excel_sheets(roster_path)
+required_sheets  <- c("900", "1030")
+missing_sheets   <- setdiff(required_sheets, sheets_available)
+if (length(missing_sheets)) {
+  stop("Missing sheet(s): ", paste(missing_sheets, collapse = ", "),
+       ". Found sheets: ", paste(sheets_available, collapse = ", "))
+}
+
+# Helper function: read, clean, drop NA course_id
+read_roster_sheet <- function(path, sheet_name) {
+  read_excel(path, sheet = sheet_name, col_types = "text") |>
+    clean_names() |>
+    filter(!is.na(course_id)) |>   # remove NA course_id
+    mutate(section = sheet_name, .before = 1)
+}
+
+# Keep each section separate
+roster_900  <- read_roster_sheet(roster_path, "900")
+roster_1030 <- read_roster_sheet(roster_path, "1030")
+
+# Quick peek
+glimpse(roster_900)
+glimpse(roster_1030)
+```
+
+
+I need to create several new columns in both datasets. 1. We need to create a random nine-digit identification number for each row called "ExternalDataReference" 2. We need to create a column "FirstName" and "LastName" from the column name. The column name, in both datasets, is formatted like this: "LastName,FirstName". It is comma-seperated with no space, and the last name is first.
+
+
+```{r add-qualtrics-columns, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+# Helper to generate unique 9-digit IDs (as zero-padded text)
+make_ids <- function(n) {
+  formatC(sample(0:999999999, n, replace = FALSE), width = 9, format = "d", flag = "0")
+}
+
+transform_roster <- function(df) {
+  df %>%
+    mutate(
+      # 1) Unique 9-digit ExternalDataReference (text, preserves leading zeros)
+      ExternalDataReference = make_ids(n())
+    ) %>%
+    mutate(name = as.character(name)) %>%
+    # 2) Split "LastName,FirstName" -> LastName, FirstName
+    separate(name, into = c("LastName", "FirstName"), sep = ",", fill = "right", remove = FALSE) %>%
+    mutate(
+      FirstName = str_trim(coalesce(FirstName, "")),
+      LastName  = str_trim(coalesce(LastName, ""))
+    )
+}
+
+# Apply to both datasets
+roster_900  <- transform_roster(roster_900)
+roster_1030 <- transform_roster(roster_1030)
+
+# Quick check
+roster_900  %>% select(section, name, FirstName, LastName, ExternalDataReference) %>% head()
+roster_1030 %>% select(section, name, FirstName, LastName, ExternalDataReference) %>% head()
+```
+I rename email and "Email"and select columns c(FirstName, LastName, Email, ExternalDataReference)
+Then I store both datasets in the data folder so I can upload them into Qualtrics.
+
+```{r prep-for-qualtrics, message=FALSE, warning=FALSE}
+library(readr)
+
+# Helper to finalize Qualtrics format
+finalize_roster <- function(df) {
+  df %>%
+    rename(Email = email) %>%
+    select(FirstName, LastName, Email, ExternalDataReference)
+}
+
+# Apply to each section
+roster_900_final  <- finalize_roster(roster_900)
+roster_1030_final <- finalize_roster(roster_1030)
+
+# Save to data folder as CSV
+write_csv(roster_900_final,  "data/roster_900.csv")
+write_csv(roster_1030_final, "data/roster_1030.csv")
+
+# Quick peek
+head(roster_900_final)
+head(roster_1030_final)
+```
