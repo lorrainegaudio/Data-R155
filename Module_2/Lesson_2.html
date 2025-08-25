@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 2</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 21, 2025</h4>
+<h4 class="date">Lesson generated on August 25, 2025</h4>
 
 </div>
 
@@ -2895,7 +2895,7 @@ functions.</p></li>
 <p>Many mathematical operations in R are performed using
 <strong>functions</strong>. A function is a reusable block of code that
 takes inputs, processes them, and returns an output. Functions can be
-built‑in or user‑defined. Arguments are the inputs to a function, and
+built‑in or user-defined. Arguments are the inputs to a function, and
 they can be required or optional. Functions can return a single value or
 multiple values, and they can be nested within other functions. We’ll be
 using functions throughout this course. We’ll start with the very basics
@@ -2923,7 +2923,7 @@ Type the following into your R script and run each line.</p>
 <pre class="r"><code>numbers5  &lt;- seq(from = 1, to = 10, by = 2)   
 
 steps     &lt;- seq(from = 0, to = 1, by = 0.2)</code></pre>
-<p>👀 Check‑in: What did <code>seq</code> do? Run “numbers3” in the
+<p>👀 Check-in: What did <code>seq</code> do? Run “numbers3” in the
 Console to see the result.</p>
 </div>
 <div id="section" class="section level2" number="3.3">
@@ -2953,6 +2953,7 @@ steps     &lt;- seq(from = 0, to = 1, by = 0.2)</code></pre>
 <p>Let’s do some vector arithmetic with these two vectors. Type the
 following into your R script and run each line.</p>
 <pre class="r"><code>numbers - steps</code></pre>
+<p>That’s numbers minus steps.</p>
 </div>
 <div id="part-i-assignment" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> ➤ Part I
@@ -3006,12 +3007,12 @@ run each line.</p>
 chars2    &lt;- c(&quot;red&quot;, &quot;yellow&quot;, &quot;green&quot;)       # another character vector
 
 chars3    &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)                  # single letters as characters</code></pre>
-<p>👀 Check‑in: What happens if you don’t put quotations around
+<p>👀 Check-in: What happens if you don’t put quotations around
 character strings? Try it with <code>c(apple, banana, cherry)</code> and
 see what R does. What happens if you put the entire vector in quotes
 like this <code>c(&quot;apple, banana, cherry&quot;)</code>? What happens if you
 quote numbers like <code>c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)</code>?</p>
-<pre class="r"><code># Create a memo note in your R script if you completed this 👀 Check‑in. 
+<pre class="r"><code># Create a memo note in your R script if you completed this 👀 Check-in. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -3025,14 +3026,14 @@ quote numbers like <code>c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)</code>?<
 represent these missing values. You can create a vector with
 <code>NA</code> like this:</p>
 <pre class="r"><code>z &lt;- c(1, 2, NA, 4, 5)  # vector with a missing value</code></pre>
-<p>👀 Check‑in: What happens if you run <code>z + 2</code>? What happens
+<p>👀 Check-in: What happens if you run <code>z + 2</code>? What happens
 if you type <code>0/0</code> or <code>Inf - Inf</code> in the
 console?</p>
 <p>🔍 Look deeper: What is Inf? Type <code>?Inf</code> in the console.
 What happens?</p>
 <p><em>Note: <code>NaN</code> stands for “Not a Number” and is used when
 a calculation does not produce a valid number.</em></p>
-<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check‑in and 🔍 Look deeper. 
+<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check-in and 🔍 Look deeper. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -3061,11 +3062,11 @@ logical expressions, then <code>logical &amp; logical2</code> is their
 intersection (<em>and</em> operator), and
 <code>logical | logical2</code> is their union (<em>or</em> operator).
 We’ll cover logical vectors in more detail in a later lesson.</p>
-<p>👀 Check‑in: Run each name (numbers, chars, …) in your environment by
+<p>👀 Check-in: Run each name (numbers, chars, …) in your environment by
 typing the object name. Note how R prints them. After running, peek at
 the Environment (Grid view) to see each vector shows its type &amp;
 size.</p>
-<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check‑in. 
+<pre class="r"><code># Create a memo note in your R script if you did the 👀 Check-in. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -3197,7 +3198,7 @@ show in the Environment.</p></li>
 <ol style="list-style-type: decimal">
 <li><p>Use <code>class()</code> and <code>str()</code> to inspect the
 <code>object</code> growth.</p></li>
-<li><p>Write a one‑line comment describing what <code>str()</code>
+<li><p>Write a one-line comment describing what <code>str()</code>
 reveals.</p></li>
 </ol>
 </div>
@@ -3245,7 +3246,8 @@ as.numeric(c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)) # character → numer
 Functions</h1>
 <p>⚡ <strong>Why it’s cool</strong> Functions like <code>sum(),</code>
 <code>mean(),</code> and <code>sd()</code> automatically loop over every
-element—no for‑loop needed. This is called <em>vectorization</em>.</p>
+element—no for-loop needed. This is called <em>vectorization</em>.</p>
+<p>🔍 Look deeper: What is a for-loop?</p>
 <p>Recall we created <code>series &lt;- 1:10</code></p>
 <p>Type the following R code into your script and run. 🗣 Comment about
 the output.</p>
@@ -3258,8 +3260,8 @@ sd(series) </code></pre>
 <div id="cleaning-up" class="section level1" number="14">
 <h1><span class="header-section-number">14</span> Cleaning Up</h1>
 <p>🧹 <strong>When to sweep</strong> Large projects can crowd the
-Environment. Use rm() to remove objects you no longer need and free
-memory. Type the following into your R script and run.</p>
+Environment. Use <code>rm()</code> to remove objects you no longer need
+and free memory. Type the following into your R script and run.</p>
 <pre class="r"><code>rm(mixed)      # mixed disappears from the Environment pane</code></pre>
 </div>
 <div id="dataframe-function" class="section level1" number="15">
@@ -3267,8 +3269,9 @@ memory. Type the following into your R script and run.</p>
 function</h1>
 <p>Vectors form the foundation for data frames.</p>
 <p>📊 <strong>What &amp; Why</strong> A data frame is like a
-spreadsheet: a table of rows and columns. Use data.frame() to create one
-from vectors of the same length. Each vector becomes a column.</p>
+spreadsheet: a table of rows and columns. Use <code>data.frame()</code>
+to create one from vectors of the same length. Each vector becomes a
+column.</p>
 <pre class="r"><code>column_1 &lt;- c(1, 2, 3)
 
 column_2 &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)
@@ -3395,7 +3398,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 

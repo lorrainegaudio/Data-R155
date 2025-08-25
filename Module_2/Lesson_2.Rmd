@@ -2,22 +2,29 @@
 title: "Lesson 2"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
 output: 
-  html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
-    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
-    toc_float: # Float the table of contents to the left of the main document
-      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
-      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
-    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
-    fig_caption: true #Whether figures are rendered with captions.
-    df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+  pdf_document:
+    toc: true
+    toc_depth: 1
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
     includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 ---
 
 ```{r setup, include=FALSE}
@@ -68,7 +75,7 @@ output:
     css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
@@ -105,7 +112,7 @@ In the next few minutes you will learn how to:
 
 # Functions
 
-Many mathematical operations in R are performed using **functions**. A function is a reusable block of code that takes inputs, processes them, and returns an output. Functions can be built‑in or user‑defined. Arguments are the inputs to a function, and they can be required or optional. Functions can return a single value or multiple values, and they can be nested within other functions. We'll be using functions throughout this course. We'll start with the very basics in this lesson to help up create vectors and a data frame. 
+Many mathematical operations in R are performed using **functions**. A function is a reusable block of code that takes inputs, processes them, and returns an output. Functions can be built‑in or user-defined. Arguments are the inputs to a function, and they can be required or optional. Functions can return a single value or multiple values, and they can be nested within other functions. We'll be using functions throughout this course. We'll start with the very basics in this lesson to help up create vectors and a data frame. 
 
 # Numeric Vectors
 
@@ -129,7 +136,7 @@ numbers5  <- seq(from = 1, to = 10, by = 2)
 steps     <- seq(from = 0, to = 1, by = 0.2)
 ```
 
-👀 Check‑in: What did `seq` do? Run "numbers3" in the Console to see the result.
+👀 Check-in: What did `seq` do? Run "numbers3" in the Console to see the result.
 
 ## `:`
 
@@ -168,6 +175,8 @@ Let's do some vector arithmetic with these two vectors. Type the following into 
 ```{r , eval=FALSE}
 numbers - steps
 ```
+
+That's numbers minus steps.
 
 # ➤ Part I Assignment
 
@@ -218,10 +227,10 @@ chars2    <- c("red", "yellow", "green")       # another character vector
 chars3    <- c("A", "B", "C")                  # single letters as characters
 ```
 
-👀 Check‑in: What happens if you don't put quotations around character strings? Try it with `c(apple, banana, cherry)` and see what R does. What happens if you put the entire vector in quotes like this `c("apple, banana, cherry")`?  What happens if you quote numbers like `c("1", "2", "3")`? 
+👀 Check-in: What happens if you don't put quotations around character strings? Try it with `c(apple, banana, cherry)` and see what R does. What happens if you put the entire vector in quotes like this `c("apple, banana, cherry")`?  What happens if you quote numbers like `c("1", "2", "3")`? 
 
 ```{r}
-# Create a memo note in your R script if you completed this 👀 Check‑in. 
+# Create a memo note in your R script if you completed this 👀 Check-in. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -238,14 +247,14 @@ Sometimes data is missing or unknown. R uses `NA` to represent these missing val
 z <- c(1, 2, NA, 4, 5)  # vector with a missing value
 ```
 
-👀 Check‑in: What happens if you run `z + 2`?  What happens if you type `0/0` or `Inf - Inf` in the console?
+👀 Check-in: What happens if you run `z + 2`?  What happens if you type `0/0` or `Inf - Inf` in the console?
 
 🔍 Look deeper: What is Inf? Type `?Inf` in the console. What happens?
 
 _Note: `NaN` stands for "Not a Number" and is used when a calculation does not produce a valid number._
 
 ```{r}
-# Create a memo note in your R script if you did the 👀 Check‑in and 🔍 Look deeper. 
+# Create a memo note in your R script if you did the 👀 Check-in and 🔍 Look deeper. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -281,10 +290,10 @@ The logical operators are:
 
 Additionally, if `logical` and `logical2` are logical expressions, then `logical & logical2` is their intersection (*and* operator), and `logical | logical2` is their union (*or* operator). We'll cover logical vectors in more detail in a later lesson.
 
-👀 Check‑in: Run each name (numbers, chars, …) in your environment by typing the object name. Note how R prints them. After running, peek at the Environment (Grid view) to see each vector shows its type & size.
+👀 Check-in: Run each name (numbers, chars, …) in your environment by typing the object name. Note how R prints them. After running, peek at the Environment (Grid view) to see each vector shows its type & size.
 
 ```{r}
-# Create a memo note in your R script if you did the 👀 Check‑in. 
+# Create a memo note in your R script if you did the 👀 Check-in. 
 # This is where you could earn points for demonstrating learning skills.
 
 ## 1. Explain what you did, what your observations are, and what you expect 
@@ -427,7 +436,7 @@ Now it's your turn to practice creating and inspecting vector objects. Follow th
 
 1. Use `class()` and `str()` to inspect the `object` growth.
 
-2. Write a one‑line comment describing what `str()` reveals.
+2. Write a one-line comment describing what `str()` reveals.
 
 ## Task 4: Subset
 
@@ -473,7 +482,9 @@ as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
 
 # Vectorized Functions
 
-⚡ **Why it’s cool**  Functions like `sum(),` `mean(),` and `sd()` automatically loop over every element—no for‑loop needed. This is called *vectorization*.
+⚡ **Why it’s cool**  Functions like `sum(),` `mean(),` and `sd()` automatically loop over every element—no for-loop needed. This is called *vectorization*.
+
+🔍 Look deeper: What is a for-loop? 
 
 Recall we created `series <- 1:10`
 
@@ -489,7 +500,7 @@ sd(series)
 
 # Cleaning Up
 
-🧹 **When to sweep**  Large projects can crowd the Environment. Use rm() to remove objects you no longer need and free memory. Type the following into your R script and run.
+🧹 **When to sweep**  Large projects can crowd the Environment. Use `rm()` to remove objects you no longer need and free memory. Type the following into your R script and run.
 
 ```{r , eval=FALSE}
 rm(mixed)      # mixed disappears from the Environment pane
@@ -499,7 +510,7 @@ rm(mixed)      # mixed disappears from the Environment pane
 
 Vectors form the foundation for data frames. 
 
-📊  **What & Why**  A data frame is like a spreadsheet: a table of rows and columns. Use data.frame() to create one from vectors of the same length. Each vector becomes a column. 
+📊  **What & Why**  A data frame is like a spreadsheet: a table of rows and columns. Use `data.frame()` to create one from vectors of the same length. Each vector becomes a column. 
 
 ```{r , eval=FALSE}
 column_1 <- c(1, 2, 3)
