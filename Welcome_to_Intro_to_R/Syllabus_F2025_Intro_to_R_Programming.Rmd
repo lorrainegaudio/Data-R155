@@ -208,9 +208,12 @@ Expect to spend approximately one hour outside of class time per week reviewing 
 
 In this course, your grade starts at zero and grows as you earn points by showing what you can do—not by avoiding mistakes. You will never “lose” points because something went wrong. Instead, every activity is a chance to build your total toward 100 points. On assignment, half of your points will come from solving R problems (technical skills) and half from demonstrating learning skills. These habits, like curiosity, tenacity, and thoroughness, make you a stronger, more independent learner. I will model these skills in lectures and videos, and you will have many ways to show them in your work and class. The goal is for you to leave this course not only knowing R basics, but also knowing how to keep learning R (and other tools) long after the semester ends. Grades in this course are based on a 100-point grading system utilizing the allocation of points shown below.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r graded-activity, echo=FALSE, message=FALSE, warning=FALSE}
 library(tibble)
+library(knitr)
 library(kableExtra)
+
+is_html <- knitr::is_html_output()
 
 tbl <- tribble(
   ~`Graded Activity`, ~Points, ~Description,
@@ -223,18 +226,37 @@ tbl <- tribble(
   "Total", 100, ""
 )
 
-kbl(
-  tbl, format = "latex", booktabs = TRUE, longtable = FALSE,
-  align = c("l","c","l"), linesep = ""
-) |>
-  kable_styling(latex_options = c("hold_position"), font_size = 9) |>
-  # Force wrapping — adjust widths to fit your margins (sum < ~16cm)
-  column_spec(1, width = "4.2cm") |>
-  column_spec(2, width = "1.2cm") |>
-  column_spec(3, width = "10.5cm") |>
-  row_spec(0, bold = TRUE) |>
-  row_spec(nrow(tbl), bold = TRUE)
+k <- kbl(
+  tbl,
+  format   = if (is_html) "html" else "latex",
+  align    = c("l","c","l"),
+  booktabs = !is_html,
+  escape   = TRUE
+)
 
+k <- if (is_html) {
+  k |>
+    kable_styling(
+      bootstrap_options = c("striped","hover","condensed"),
+      full_width = FALSE, fixed_thead = TRUE, position = "left"
+    ) |>
+    # Use %/em widths for HTML and force wrapping for long text
+    column_spec(1, width = "22%", extra_css = "word-break: break-word;") |>
+    column_spec(2, width = "10%") |>
+    column_spec(3, width = "68%", extra_css = "word-break: break-word;") |>
+    row_spec(0, bold = TRUE) |>
+    row_spec(nrow(tbl), bold = TRUE)
+} else {
+  k |>
+    kable_styling(latex_options = c("hold_position"), font_size = 9) |>
+    column_spec(1, width = "4.2cm") |>
+    column_spec(2, width = "1.2cm") |>
+    column_spec(3, width = "10.5cm") |>
+    row_spec(0, bold = TRUE) |>
+    row_spec(nrow(tbl), bold = TRUE)
+}
+
+k
 ```
 
 Tip: Confirm an assignment has been submitted and view all of your scores and accompanying comments on graded assignments by accessing “My Grades” in the Canvas course menu.
@@ -243,9 +265,12 @@ Tip: Confirm an assignment has been submitted and view all of your scores and ac
 
 Final Letter Grades will be based on the following scale:
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r grade-bands, echo=FALSE, message=FALSE, warning=FALSE}
 library(tibble)
+library(knitr)
 library(kableExtra)
+
+is_html <- knitr::is_html_output()
 
 grades <- tribble(
   ~`Grade band`, ~`Plus`,              ~`Base`,           ~`Minus`,
@@ -256,19 +281,37 @@ grades <- tribble(
   "F grades",     "59.5–0%: F",         "",                ""
 )
 
-kbl(
-  grades, format = "latex", booktabs = TRUE, align = c("l","l","l","l"),
-  linesep = ""
-) |>
-  kable_styling(font_size = 9, latex_options = c("hold_position")) |>
-  # widths sum to less than the text width; adjust if your margins differ
-  column_spec(1, width = "3.0cm") |>
-  column_spec(2, width = "3.5cm") |>
-  column_spec(3, width = "3.5cm") |>
-  column_spec(4, width = "3.5cm") |>
-  row_spec(0, bold = TRUE) |>
-  kableExtra::collapse_rows(columns = 1, valign = "top")  # optional: if you later stack subrows
+k <- kbl(
+  grades,
+  format   = if (is_html) "html" else "latex",
+  align    = c("l","l","l","l"),
+  booktabs = !is_html,
+  escape   = TRUE
+)
 
+k <- if (is_html) {
+  k |>
+    kable_styling(
+      bootstrap_options = c("striped","hover","condensed"),
+      full_width = FALSE, fixed_thead = TRUE, position = "left"
+    ) |>
+    column_spec(1, width = "20%") |>
+    column_spec(2, width = "26%", extra_css = "word-break: break-word;") |>
+    column_spec(3, width = "26%", extra_css = "word-break: break-word;") |>
+    column_spec(4, width = "26%", extra_css = "word-break: break-word;") |>
+    row_spec(0, bold = TRUE)
+} else {
+  k |>
+    kable_styling(font_size = 9, latex_options = c("hold_position")) |>
+    column_spec(1, width = "3.0cm") |>
+    column_spec(2, width = "3.5cm") |>
+    column_spec(3, width = "3.5cm") |>
+    column_spec(4, width = "3.5cm") |>
+    row_spec(0, bold = TRUE) |>
+    kableExtra::collapse_rows(columns = 1, valign = "top")
+}
+
+k
 ```
 
 ## Late Work Policy
