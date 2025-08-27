@@ -121,3 +121,29 @@ write_csv(roster_1030_final, "data/roster_1030.csv")
 head(roster_900_final)
 head(roster_1030_final)
 ```
+
+
+
+# Pre-survey
+
+I downloaded and manually cleaned the pre-survey data. I changed the column names to be consistent with the previous survey I did in the summer. I will load the dataset then I will arrange (lesson 11) the rows by last name so I can easily mark attendance. 
+
+```{r}
+library(readxl)
+pre_survey <- read_excel("data/pre_survey_manual_edit.xlsx")
+```
+
+```{r}
+library(dplyr)
+pre_survey <- pre_survey %>%
+  arrange(Last_Name)
+```
+
+
+
+
+
+
+
+
+
