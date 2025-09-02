@@ -126,24 +126,121 @@ head(roster_1030_final)
 
 # Pre-survey
 
-I downloaded and manually cleaned the pre-survey data. I changed the column names to be consistent with the previous survey I did in the summer. I will load the dataset then I will arrange (lesson 11) the rows by last name so I can easily mark attendance. 
+I downloaded and manually cleaned the pre-survey data. I changed the column names to be consistent with the previous survey I did in the summer. 
 
 ```{r}
 library(readxl)
 pre_survey <- read_excel("data/pre_survey_manual_edit.xlsx")
+available_fields <- read_excel("data/pre_survey_manual_edit.xlsx", 
+    sheet = "available_fields")
 ```
 
 ```{r}
-library(dplyr)
-pre_survey <- pre_survey %>%
-  arrange(Last_Name)
+colnames(pre_survey)
+```
+
+## Instructor Tips
+
+The first priority is to determine what tips do students have for me. I will read these tips, add important notes to the Class_Roster online and schedule check ins. 
+
+```{r}
+# Base R
+# 1) Keep only the needed columns; rename `First _Name` -> First_Name
+tips <- pre_survey[, c("Start_Date", "Last_Name", "First _Name", "instructor_tips")]
+names(tips)[names(tips) == "First _Name"] <- "First_Name"
+
+# 2) Trim whitespace in character columns (so "   " becomes "")
+tips$instructor_tips <- trimws(tips$instructor_tips)
+
+# 3) Keep rows where instructor_tips is not NA and not empty
+tips <- tips[!is.na(tips$instructor_tips) & tips$instructor_tips != "", ]
+
+# 4) Print all rows
+print(tips)
 ```
 
 
+```{r}
+# dplyr
+library(dplyr)
+
+# 1) Keep only the needed columns; rename `First _Name` -> First_Name
+tips <- pre_survey %>%
+  select(Start_Date, Last_Name, First_Name = `First _Name`, instructor_tips)
+
+# 2) Trim whitespace in character columns (so "   " becomes "")
+tips <- tips %>%
+  mutate(across(where(is.character), trimws))
+
+# 3) Keep rows where instructor_tips is not NA and not empty
+tips <- tips %>%
+  filter(!is.na(instructor_tips) & instructor_tips != "")
+
+# 4) Print all rows
+print(tips, n = Inf)
+```
 
 
+## Low Skill Managing Files
+
+The next thing we need to do is determine who scored two or below on familiarity_managing_files?
+
+```{r}
+str(pre_survey$familiarity_managing_files)
+```
 
 
+```{r}
+# Base R
+
+# 1) Keep only the columns we need; fix the space in First _Name
+low_files <- pre_survey[, c("Last_Name", "First _Name", "Email_address", "familiarity_managing_files")]
+names(low_files)[names(low_files) == "First _Name"] <- "First_Name"
+
+# 2) Tidy text fields (trim spaces) and standardize email to lowercase
+low_files$Last_Name <- trimws(low_files$Last_Name)
+low_files$First_Name <- trimws(low_files$First_Name)
+low_files$Email_address <- tolower(trimws(low_files$Email_address))
+
+# 3) Recode NA values to 0
+low_files$familiarity_managing_files[is.na(low_files$familiarity_managing_files)] <- 0
+
+# 4) Filter to scores of 2 or below
+low_files <- low_files[low_files$familiarity_managing_files <= 2, ]
+
+# 5) Arrange for easy reading
+low_files <- low_files[order(low_files$Last_Name, low_files$First_Name), ]
+
+# 6) Print the table
+print(low_files)
+```
+
+
+```{r}
+library(dplyr)
+
+low_files <- pre_survey %>%
+  # 1) Keep only the columns we need; fix the space in First _Name
+  select(Last_Name, First_Name = `First _Name`, Email_address, familiarity_managing_files) %>%
+  
+  # 2) Tidy text fields (trim spaces) and standardize email to lowercase
+  mutate(
+    across(c(Last_Name, First_Name, Email_address), trimws),
+    Email_address = tolower(Email_address),
+    
+    # 3) Recode NA values to 0
+    familiarity_managing_files = ifelse(is.na(familiarity_managing_files), 0, familiarity_managing_files)
+  ) %>%
+  
+  # 4) Filter to scores of 2 or below
+  filter(familiarity_managing_files <= 2) %>%
+  
+  # 5) Arrange for easy reading
+  arrange(Last_Name, First_Name)
+
+# 6) Print the table
+print(low_files, n = Inf)
+```
 
 
 
