@@ -62,9 +62,16 @@ social_media_platform<- c("X", "Mastodon", "Instagram", "LinkedIn")
 
 call_to_action       <- c("Click to learn", "Try the code", "Share your plot", "Follow for tips")
 
+outcomes <- c(
+  "It instantly became a viral dance challenge.",
+  "The post was quickly reshared on thousands of stories.",
+  "Thousands of comments asked for a full video tutorial.",
+  "The post led to a surprise real-time photo collab."
+)
+
 ## E) Factor vectors
 
-mood_factor   <- factor(c("focused", "curious", "tired", "motivated")) # mood
+emotion   <- factor(c("focused", "curious", "tired", "motivated")) # mood
 
 retro_game    <- factor(c("Pac-Man", "Tetris", "Galaga", "Oregon Trail")) # names of games of the past
 
@@ -78,30 +85,38 @@ pick <- function(x) sample(x, 1)
 
 # ---------- Story 1 ----------
 story1 <- paste(
-  "After a long week,", pick(name), "unplugged by trying", pick(self_care_activity),
+  "After a long week,", pick(name), "unplugged by trying", pick(activity),
   "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
   "Vibe rating:", paste0(pick(number_1_to_10), "."),
   "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
   "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
+  "Reminding each other that ", paste0(pick(call_to_action), "."),
   "They made a plan for Episode", paste0(pick(integer), ","),
-  "closing with a", paste0(pick(mood_factor), " mood.")
+  "closing with a", paste0(pick(emotion), " mood.")
 )
 
 print(story1)
 # ---------- Story 2 ----------
+
+# We now select a single random index to pick from both vectors
+selected_index <- sample(1:length(social_media_platform), 1)
+selected_platform <- social_media_platform[selected_index]
+platform_outcome <- platform_outcomes[selected_index]
+
 story2 <- paste(
   "On a mission for a fashion comeback,", pick(name), "found", pick(item),
   "at", pick(location), "that screamed Y2K.",
   "They spent a total of", paste0(pick(numeric), " dollars—"),
   "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
-  "After posting a 'before' shot on", paste0(pick(social_media_platform), ","),
+  "After posting a 'before' shot on", paste0(pick(selected_index), ","),
   "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
   "Their retro level was officially", paste0(pick(retro_game), " status,"),
-  "and they immediately scheduled Drop", pick(integer),
-  "to sell the upcycled item online."
+  "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars—"),  
+  "and sold in", pick(integer), "minutes.", 
+  "The community response was so strong, they had this final message for their followers:", 
+  paste0(pick(call_to_action), ".")
 )
 print(story2)
-
 # ---------- Story 3 ----------
 story3 <- paste(
   "The internet went wild when", pick(at_handle), "dueted with", pick(at_handle2),

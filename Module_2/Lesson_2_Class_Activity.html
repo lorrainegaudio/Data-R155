@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 3</title>
+<title>Lesson 2 Activity</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,284 +2853,291 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 3</h1>
+<h1 class="title toc-ignore">Lesson 2 Activity</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on September 05, 2025</h4>
 
 </div>
 
 
-<div id="welcome-back-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 🎉 Welcome back to
-R!</h1>
-<p>In lesson one and two you learned about objects, vectors, and created
-a simple dataframe. Now you’ll learn how to <em>do things</em> with them
-using <strong>functions</strong>.</p>
-<p>To begin Lesson 3, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new R script file (File &gt; New File &gt; R
-Script).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
-<p><strong>Lesson Overview</strong></p>
+<div id="in-class-activity-vector-playlab" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> In-Class Activity:
+Vector Playlab 🎮</h1>
+<p>Today’s activity is a group challenge to deepen your understanding of
+vectors in R — and to see what happens when you push them into data
+frames, matrices, and lists. Work together, write your own code, and
+discuss your results. By the end of this activity, you will be able to
+create and inspect vectors of different types, perform vector arithmetic
+(including recycling), and organize data into data frames, lists, and
+matrices.</p>
+<div id="activity-overview" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Activity
+Overview</h2>
 <p>In the next few minutes you will learn how to:</p>
+<p>🔍 Differentiate between numeric and integer vector types and explain
+how R treats them.</p>
+<p>⚙️ Perform arithmetic operations with vectors and describe how R
+handles vectors of unequal length (including recycling rules).</p>
+<p>🔨 Construct and manipulate vectors, matrices, data frames, and lists
+to see how R organizes and stores different types of data.</p>
+<p>🏆 Recognize how type differences and mismatched lengths affect data
+structures when combining vectors.</p>
+</div>
+</div>
+<div id="activity-prep" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Activity Prep</h1>
+<p>To prep for our activity today think on how you would answer the
+following prompts. Write your answers on a piece of paper, type it in
+your computer notes, or simply think about how you would answer these
+prompts.</p>
+<ol style="list-style-type: decimal">
+<li><p>Your name</p></li>
+<li><p>Another random person’s name</p></li>
+<li><p>Dream team name (group name)</p></li>
+<li><p>An <code>@handle</code>(any social media handle)</p></li>
+<li><p>An activity (something you do)</p></li>
+<li><p>Location (any place to go real or imagined)</p></li>
+<li><p>Call to action (a catch phrase or statement)</p></li>
+<li><p>An outcome (a phrase describing a result “They lived happily ever
+after”)</p></li>
+<li><p>An emotion</p></li>
+<li><p>Old Game (game title from the past)</p></li>
+</ol>
+</div>
+<div id="find-your-group" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Find Your Group</h1>
+<p>Step One: Split into groups of approximately 4 people 👨🏻👩🏼👧🏽👦🏾.</p>
+<p>Step Two: Assign Roles</p>
 <ul>
-<li><p>🔍 Distinguish a function <em>object</em> from a <em>function
-call</em>.</p></li>
-<li><p>📍 Read help files to discover arguments and defaults.</p></li>
-<li><p>🛠 Use required vs. default, positional vs. named
-arguments.</p></li>
-<li><p>⚡ Handle missing values with na.rm.</p></li>
-<li><p>📊 Generate random samples and set a seed for
-reproducibility.</p></li>
-<li><p>📦 Nest functions to build compact pipelines.</p></li>
+<li><p>Time Keeper: keeping the project moving. If a task is not
+finished on time, the team needs to move on.</p></li>
+<li><p>Reporter: The R User typing code in a script and submitting the R
+script to Canvas.</p>
+<ul>
+<li>Have the activity document open for copy and paste actions</li>
+<li>Write everyone’s name at the top of the script</li>
+</ul></li>
+<li><p>Activity Leader: facilitating the conversation, follows the
+activity document</p></li>
+<li><p>Investigator: Finds answers to questions and solutions to
+problems.</p></li>
+<li><p>Brainstomer: Comes up with cleaver ideas for the team to
+use</p></li>
 </ul>
 </div>
-<div id="functions-call-basics" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Functions-Call
-Basics</h1>
-<p>🧠 <strong>Concept</strong> A <em>function object</em> is stored
-code; a <em>function call</em> runs it. The parentheses trigger
-execution. Objects or strings without <code>()</code> just print. Type
-in the following into your R script and run each line. Comment out lines
-that produce an error.</p>
-<pre class="r"><code>thing_1             # object? (expect an error‑message: not found)
-
-&quot;thing_1&quot;           # character string — prints literally
-
-3                   # numeric literal
-
-mean                # function *object* → prints the function body
-
-mean()              # function *call*   → error: argument is missing</code></pre>
-<p>👀 Check-in: What happens if you try sum vs. sum(1:5) ?</p>
-</div>
-<div id="date-and-time" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Date and Time</h1>
-<p>🕰️ R has built-in date and time functions. Type the following into
-your R script and run each line. <strong>Utility</strong> Quickly
-time-stamp results for reports or file names.</p>
-<pre class="r"><code>Sys.Date()      # current date (yyyy-mm-dd)
-
-Sys.time()      # current date + time
-
-Sys.timezone()  # your local timezone string</code></pre>
-<p>🔍 Dig deeper: I use <code>format(Sys.Date(), &#39;%B %d, %Y&#39;)</code> to
-format dates in Lesson reports. What is the function of <code>%</code>
-in ‘%Y-%m-%d’?</p>
-<pre class="r"><code># Create a learning skills memo note in your R script if you did 
-# the 👀 Check‑in and 🔍 Dig deeper. 
-
-## 1. Explain what you did to discover more about Functions-Call Basics and 
-# Date and Time settings in reports, what your observations are, and what you 
-# expect to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="using-help" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Using Help</h1>
-<p>🔍 <strong>Why use Help</strong>? Nobody memorizes every argument.
-<code>?function_name</code> opens the help file.</p>
-<p>Type the following R code into your script. Read the help tab for
-more about the <em>Usage</em> section for defaults, and the
-<em>Arguments</em> list for details.</p>
-<pre class="r"><code>?mean               # opens in Help pane (bottom-right)
-
-help(sample)        # alternate syntax works the same</code></pre>
-<p>💡 Pro-tip: <code>args(mean)</code> prints the argument names
-inline.</p>
-</div>
-<div id="required-vs.-default" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Required
-vs. Default</h1>
-<p>⚖️ <strong>Key Idea</strong> If R supplies a default you can omit
-that argument; if not, you <em>must</em> provide it. Use named arguments
-for clarity. Type the following into your R script and run each
-line.</p>
-<pre class="r"><code>values &lt;- c(1, 2, 3, 4, 5, NA)
-
-mean(values)                       # default na.rm = FALSE → returns NA
-
-mean(values, na.rm = TRUE)         # ignore missing values
-
-mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
-<p>📍 Identify: Try <code>median(values, na.rm = TRUE)</code>. Why
-doesn’t <code>median()</code>need trim?</p>
-<p>🔍 Look deeper: What is bootstrapping in statistics?</p>
-<p>Type the following code in your R script and run each line.</p>
-<pre class="r"><code>set.seed(123)          # reproducible randomness
-
-numbers &lt;- 1:10
-
-sample(numbers, 3)                 # three unique picks
-
-sample(numbers, 10, replace = TRUE)  # allow repeats</code></pre>
-<p>🧠 Challenge: Draw 5 numbers without replacement and sort them
-ascending.</p>
-<pre class="r"><code># Create a memo note in your R script if you did 📍 Identify, 🔍 Look deeper, and 🧠 Challenge. 
-
-## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="nesting-functions" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Nesting Functions</h1>
-<p>💡 <strong>Idea</strong> Feed the output of one function straight
-into another. Type the following R script in your document script and
-run.</p>
-<pre class="r"><code>mean(sample(numbers, size = 5, replace = TRUE))  # sample then average</code></pre>
-<p>🚀 Explore and Play: Run the line above twice. Why does the result
-change each time even though the code is identical?</p>
-<p>🔍 Look deeper: From the functions we have learned about, which can
-be nested and how?</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🚀 Explore and Play and 🔍 Look deeper.
-
-## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="assignment" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> ➤ Assignment</h1>
-<p>Now it’s your turn to practice creating and using vector objects.
-Follow the tasks below to complete part of the <strong>technical skill
-practice assignment</strong>.</p>
-<ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the TODO with your
-code.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this script plus
-the .RData file.</p></li>
-</ol>
-<div id="task-1" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Task 1</h2>
-<p>🛠 Build a random data set</p>
-<p>Set a reproducible seed (pick any whole number you like). Use
-<code>sample()</code> and <code>seq()</code> together to create a vector
-called scores that contains 25 random numbers between 60 and 100,
-inclusive. Include at least 3 NA values in scores (hint: combine vectors
-with <code>c()</code>).</p>
-<p>TODO</p>
-</div>
-<div id="task-2" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Task 2</h2>
-<p>🚀 Explore function arguments</p>
-<p>Open the help file for <code>sample()</code> <strong>in the
-console</strong>. In the comment block below, list TWO required
-arguments and TWO default arguments for <code>sample()</code> exactly as
-they appear in the Usage section.</p>
-<ol style="list-style-type: decimal">
-<li><p>Required arguments: TODO</p></li>
-<li><p>Default arguments: TODO</p></li>
-</ol>
-</div>
-<div id="task-3" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Task 3</h2>
-<p>⚠️ Handle missing data</p>
-<p>Calculate the mean of scores and store it in
-<code>average_raw</code>. Calculate the mean of scores again, this time
-<strong>excluding</strong> <code>NA</code> values, and store it in
-<code>average_clean</code>.</p>
-<p>TODO</p>
-</div>
-<div id="task-4" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Task 4</h2>
-<p>⚖️ Practice named vs. positional arguments</p>
-<p>Use <code>sample()</code> to draw 10 values <strong>with
-replacement</strong> from scores and store them in
-<code>sample_scores_positional</code> <strong>WITHOUT naming any
-arguments</strong>. Repeat the same call, but this time <strong>name
-every argument</strong>; store as <code>sample_scores_named</code>.</p>
-<p>TODO</p>
-</div>
-<div id="task-5" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Task 5</h2>
-<p>📦 Nesting functions</p>
-<p>Combine <code>mean()</code> and <code>sample()</code> to calculate
-the mean of 5 random draws from scores (allow replacement); store the
-result in <code>mean_of_five</code>. Do this in <strong>one</strong>
-line of code.</p>
-<p>TODO</p>
-</div>
-<div id="task-6" class="section level2" number="7.6">
-<h2><span class="header-section-number">7.6</span> Task 6</h2>
-<p>🕰 Quick time-stamp</p>
-<p>Use <code>Sys.Date()</code> and <code>Sys.time()</code> to create two
-separate objects, <code>today_date</code> and <code>now_time</code>.</p>
-<p>TODO</p>
-</div>
-<div id="task-7" class="section level2" number="7.7">
-<h2><span class="header-section-number">7.7</span> Task 7</h2>
-<p>🗣 Reflection</p>
-<p>In one sentence, explain the difference between a <em>function
-object</em> (e.g., mean) and a <em>function call</em> (e.g.,
-<code>mean()</code>).</p>
-<p>Answer: TODO</p>
-<p><em>Reminder: Now would be a great time to click save (or press Ctrl
-+ S) to save your script.</em></p>
-</div>
-</div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Practice Space</h1>
-<p>The following provides you more opportunities to earn points
-demonstrating <strong>learning skills</strong></p>
-<p>🔗 Link today’s skills with vectors from Lesson 2. Review Lesson 2,
-create vectors and then apply functions to them.</p>
-<p>🛠 Build ONE new object of your choice that demonstrates any two
-skills from Lesson 3 (e.g., help file reading, required/default
-arguments, nesting). Name it <code>my_object</code> and leave a brief
-comment describing what it does.</p>
-<p>🚀 Explore and Play IDEAS:</p>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>runif()</code> to create 10 random decimals, then
-<code>round()</code> them.</p></li>
-<li><p>Nest <code>sample()</code> inside <code>paste()</code> to build a
-random silly password.</p></li>
-<li><p>Open <code>?sd</code> and compute the standard deviation of
-values after removing <code>NA</code>.</p></li>
-</ol>
-<pre class="r"><code># Create a memo note in your R script if you did the Practice Space.
-
-## 1. Explain what you did, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="save-and-upload" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R script and the
-workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in your R script:</li>
-</ol>
-<pre class="r"><code>save.image(&quot;Assignment3_Workspace.RData&quot;)</code></pre>
-<p>Or you can click the “Save Workspace” button in the Environment
-pane.</p>
-<p>💾 <strong>Always save your R documents before closing. If you don’t,
-you will lose your work.</strong></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the R script and the workspace file.</li>
-</ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Today you
-practiced:</h1>
+<div id="vectors" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Vectors</h1>
+<div id="create-vectors" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Create Vectors</h2>
+<p>*Rules**: Name your vectors exactly as listed. Follow the rules for
+each type. Duplication is permissible. (10 Minutes Maximum)</p>
+<p>A. Numeric vector</p>
+<p>➤ <code>numeric</code> → all real numbers (length = 10)</p>
+<p>B. Integer vector</p>
+<p>➤ <code>integer</code> → must use the L suffix (length = 4 or group
+size)</p>
+<p>C. Logical vector</p>
+<p>➤ <code>logical</code> → build with <strong>logical</strong>
+operators (length = 4 or group size)</p>
+<p>D. Character vectors</p>
+<p>➤ Make each character vector with words or phrases of your
+choice:</p>
 <ul>
-<li><p>Recognizing function objects vs. calls.</p></li>
-<li><p>Reading help files and spotting default arguments.</p></li>
-<li><p>Controlling <code>na.rm</code> and other named
-parameters.</p></li>
-<li><p>Creating reproducible random samples.</p></li>
-<li><p>Nesting functions for concise workflows.</p></li>
+<li><p><code>name</code> → any person’s name (length = 10)</p></li>
+<li><p><code>group_name</code> → name of your group (length = 4 or group
+size)</p></li>
+<li><p><code>at_handle</code> → any social media handle (length = 4 or
+group size)</p></li>
+<li><p><code>item</code> → any kind of thing (length = 10)</p></li>
+<li><p><code>activity</code> → something you do (length = 10)</p></li>
+<li><p><code>location</code> → any place to go (real or imagined)
+(length = 4 or group size)</p></li>
+<li><p><code>call_to_action</code> → a catch phrase or statement (length
+= 4 or group size)</p></li>
+<li><p><code>outcomes</code> → phrase describing a result (length = 4 or
+group size)</p></li>
+<li><p><code>emotion</code> → a mood or feeling (length = 10)</p></li>
+<li><p><code>retro_game</code> → any old-school game title (length = 4
+or group size)</p></li>
 </ul>
-<p>🚀 Great progress!</p>
+</div>
+<div id="factor-class" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Factor class</h2>
+<div id="part-1" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Part 1</h3>
+<p>Change a change character vector(s) into factor class. (5
+minutes)</p>
+<p>➤ Step 1: Check the Class</p>
+<p>Select 3 Character vectors and use a function <code>class()</code> to
+check the class of the vector.</p>
+<p>➤ Step 2: Change Class to Factor</p>
+<p>Use the <code>as.factor()</code> function to change <em>at least
+one</em> character vector into factor class.</p>
+<p>➤ Step 3: Check the Class</p>
+<p>Verify that the class of the vector(s) have changes.</p>
+</div>
+<div id="part-2" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Part 2</h3>
+<p>(5 minutes)</p>
+<p>➤ Make a Factor Vector</p>
+<p>Here is an example to follow:</p>
+<pre class="r"><code># Creating a character vector
+tshirt_sizes_data &lt;- c(&quot;M&quot;, &quot;L&quot;, &quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;S&quot;)
+# Changing the character vector to a factor class with levels
+tshirt_sizes &lt;- factor(tshirt_sizes_data, levels = c(&quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;))
+# Investigating your factor class with levels
+unique(tshirt_sizes)</code></pre>
+<p>🗣 Comment: Describe factor class and how levels works. (5
+minutes)</p>
+<p>➤ Now, create your own factor vector called
+<code>social_media_platform</code>. Pick at least 4 social media /
+online networking platforms to create your vector. Duplication is fine.
+Rank the platforms using the <code>levels</code>. (5 minutes)</p>
+</div>
+</div>
+<div id="story" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Story</h2>
+<p>➤ Copy and paste the following code and read your Mad Lib Story!</p>
+<pre class="r"><code>pick &lt;- function(x) sample(x, 1)
+
+# ---------- Story 1 ----------
+story1 &lt;- paste(
+  &quot;After a long week,&quot;, pick(name), &quot;unplugged by trying&quot;, pick(activity),
+  &quot;with&quot;, pick(group_name), &quot;at their favorite spot,&quot;, paste0(pick(location), &quot;.&quot;),
+  &quot;Vibe rating:&quot;, paste0(pick(number_1_to_10), &quot;.&quot;),
+  &quot;The &quot;, pick(activity), &quot;was going so well, but then a crucial missing&quot;, paste0(pick(item), &quot; was discovered.&quot;),
+  &quot;Going with the flow was&quot;, ifelse(pick(logical), &quot;reasonable.&quot;, &quot;unreasonable.&quot;),
+  &quot;Reminding each other&quot;, paste0(pick(call_to_action), &quot;.&quot;),
+  &quot;They made a plan for Episode&quot;, paste0(pick(integer), &quot;,&quot;),
+  &quot;closing with a&quot;, paste0(pick(emotion), &quot; mood.&quot;)
+)
+
+print(story1)
+# ---------- Story 2 ----------
+# Using Factor Level to pick 
+selected_index &lt;- sample(1:length(social_media_platform), 1)
+selected_platform &lt;- social_media_platform[selected_index]
+outcome &lt;- outcomes[selected_index]
+
+story2 &lt;- paste(
+  &quot;On a mission for a fashion comeback,&quot;, pick(name), &quot;found&quot;, pick(item),
+  &quot;at&quot;, pick(location), &quot;that screamed Y2K.&quot;,
+  &quot;They spent a total of&quot;, paste0(pick(numeric), &quot; dollars&quot;),
+  &quot;but they&quot;, ifelse(pick(logical), &quot;remembered&quot;, &quot;forgot&quot;), &quot;to get a receipt!&quot;,
+  &quot;After posting a &#39;before&#39; shot on&quot;, paste0(pick(selected_index), &quot;,&quot;),
+  &quot;the post went viral&quot;, ifelse(pick(logical), &quot;by midnight.&quot;, &quot;by the next day.&quot;),
+  &quot;Their retro level was officially&quot;, paste0(pick(retro_game), &quot; status,&quot;),
+  &quot;and they immediately upcycled the item online for&quot;, paste0(pick(numeric), &quot; dollars&quot;),  
+  &quot;and sold in&quot;, pick(integer), &quot;minutes.&quot;, 
+  &quot;The community response was so strong, they had this final message for their followers:&quot;, 
+  paste0(pick(call_to_action), &quot;.&quot;)
+)
+print(story2)</code></pre>
+</div>
+</div>
+<div id="dataframes" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Dataframes</h1>
+<pre class="r"><code># Build a tiny table you can reference as “credits” under the stories.
+
+people &lt;- data.frame(
+  name = name,
+  handle = at_handle,
+  likes_it = logical,
+  score = numeric,
+  ep = integer
+)
+str(people)</code></pre>
+<p>(5 minutes)</p>
+<p>➤ Task: Build a data frame using several of your vectors using
+<code>data.frame()</code>.</p>
+<ul>
+<li><p>Combining vectors with the same lengths.</p></li>
+<li><p>Try combining vectors with different lengths. What error or
+warning do you see? What does it mean?</p></li>
+</ul>
+</div>
+<div id="matrices" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Matrices</h1>
+<p>Bonus 🧠 Challenge!</p>
+<p>You can easily create a matrix from a numeric vector using the
+<code>matrix()</code> function in R. A matrix is a two-dimensional data
+structure, which means it has both rows and columns.</p>
+<pre class="r"><code># Create a numeric vector with 9 elements
+my_vector &lt;- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+# Create a 3x3 matrix from the vector, filled by rows
+my_matrix &lt;- matrix(my_vector, nrow = 3, ncol = 3, byrow = TRUE)
+
+# Print the matrix to see the result
+print(my_matrix)
+
+# Check the class to confirm it is a matrix
+class(my_matrix)</code></pre>
+<p>➤ Now, convert your numeric vector into a matrix.</p>
+<p>🗣 Comment: What do you notice about how R arranges the numbers?</p>
+</div>
+<div id="lists" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Lists</h1>
+<p>In R, a list is a special type of data structure that can hold
+elements of different classes. This is a key difference between a list
+and a vector or a data frame, which can only hold elements of the same
+class. A list is essentially a collection of items, and each item can be
+a vector, a matrix, a data frame, or even another list.</p>
+<pre class="r"><code># Create a list about Taylor Swift
+taylor_swift_list &lt;- list(
+  name = &quot;Taylor Swift&quot;,
+  albums = c(&quot;Fearless&quot;, &quot;Red&quot;, &quot;1989&quot;, &quot;folklore&quot;, &quot;Midnights&quot;),
+  release_years = c(2008, 2012, 2014, 2020, 2022),
+  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
+  favorite_song = list(
+    title = &quot;All Too Well (10 Minute Version)&quot;,
+    album = &quot;Red&quot;,
+    length_minutes = 10.13
+  )
+)
+
+# Print the full list
+print(taylor_swift_list)</code></pre>
+<pre><code>## $name
+## [1] &quot;Taylor Swift&quot;
+## 
+## $albums
+## [1] &quot;Fearless&quot;  &quot;Red&quot;       &quot;1989&quot;      &quot;folklore&quot;  &quot;Midnights&quot;
+## 
+## $release_years
+## [1] 2008 2012 2014 2020 2022
+## 
+## $album_of_the_year_wins
+## [1]  TRUE FALSE  TRUE  TRUE FALSE
+## 
+## $favorite_song
+## $favorite_song$title
+## [1] &quot;All Too Well (10 Minute Version)&quot;
+## 
+## $favorite_song$album
+## [1] &quot;Red&quot;
+## 
+## $favorite_song$length_minutes
+## [1] 10.13</code></pre>
+<p>➤ Bonus 🧠 Challenge! Make a List. Any List.</p>
+</div>
+<div id="today-you-practiced" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Today you
+practiced</h1>
+<p>In this activity, your group practiced:</p>
+<p>-Creating vectors of different types (numeric, integer, character,
+and logical).</p>
+<p>-Performing vector arithmetic and observing how recycling works when
+vector lengths don’t match.</p>
+<p>-Combining vectors into a data frame and noticing what happens when
+lengths are unequal.</p>
+<p>-Exploring lists and matrices as alternative ways of organizing
+data.</p>
+<p>Your work today previewed how R organizes and manages different data
+structures.</p>
+<p>👉 Before leaving, have the person in the Reporter role submit the R
+script on Canvas. This script should show all of the vectors and data
+structures you created during the activity.</p>
 </div>
 
 <footer>
@@ -3193,7 +3200,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

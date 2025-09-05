@@ -2,29 +2,21 @@
 title: "Lesson 1"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
 output: 
-  pdf_document:
-    toc: true
-    toc_depth: 1
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
     includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -119,7 +111,41 @@ In the next few minutes you will learn how to:
 
 ✔️ Nice! You just ran your first R command. The simplest usage of R is performing basic calculations. You can do addition (`+`), subtraction (`-`), multiplication (`*`), and division (`/`).
 
-🛠 Break Things! Try different ways of typing equations. 
+# Using R Scripts
+
+Documenting your work allows you and other to understand how you came to your results. In R Studio, you can open an existing R script by going to the File menu, selecting Open File..., and then navigating to the location of your script. Alternatively, you can use the keyboard shortcut Ctrl + O (or Cmd + O on a Mac) to bring up the file browser and choose your script.
+
+To add comments in an R script, simply use the # symbol at the beginning of a line to indicate that the following text is a comment and should be ignored by the R interpreter.
+
+```{r eval=FALSE}
+# This script performs simple arithmetic operations.
+
+# Addition
+2 + 3  # Adds 2 and 3
+
+# Subtraction
+10 - 4 # Subtracts 4 from 10
+
+# Multiplication
+5 * 6  # Multiplies 5 and 6
+
+# Division
+20 / 4 # Divides 20 by 4
+
+# Exponents
+3^2    # Calculates 3 to the power of 2
+```
+
+You can add a line break to a long comment by using the # symbol on each new line. This is necessary because R interprets everything on a single line after the first # as part of the comment. For example:
+
+```{r}
+# This is a very long comment that explains what the code does that I experimented,
+# and we need to use a new line to keep it readable and within the editor's width.
+# It helps to explain complex functions or the purpose of an entire script.
+# Do this to document your learning process
+```
+
+🛠 Break Things! Try different ways of typing equations. Type all kinds of basic calculations. What works? What didn't?
 
 ```{r}
 # Create a memo note in your R script if you did 🛠 Break Things!. 
@@ -137,7 +163,7 @@ In the next few minutes you will learn how to:
 # R ignores spaces in the code.
 ```
 
-The value 7 isn't saved anywhere yet; it's just printed as a result in the console. Next we'll capture results as objects so we can reuse them.
+Earlier, we typed `3 + 4` in the console and got the output of 7. The value 7 isn't saved anywhere yet; it's just printed as a result in the console. Next we'll capture results as objects so we can reuse them.
 
 # Objects & Assignment
 

@@ -14,7 +14,7 @@ output:
     css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
@@ -68,7 +68,7 @@ output:
     css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: hide # Enables you to include R code but have it hidden by default. (Show hide button)
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
@@ -239,7 +239,10 @@ Now it's your turn to practice creating and using vector objects. Follow the tas
 
 Set a reproducible seed (pick any whole number you like). Use `sample()` and `seq()` together to create a vector called scores that contains 25 random numbers between 60 and 100, inclusive. Include at least 3 NA values in scores (hint: combine vectors with `c()`).
 
+```{r , eval=FALSE}
 TODO
+```
+
 
 ## Task 2 
 
@@ -247,9 +250,16 @@ TODO
 
 Open the help file for `sample()` **in the console**. In the comment block below, list TWO required arguments and TWO default arguments for `sample()` exactly as they appear in the Usage section.
 
-1. Required arguments: TODO
+1. Required arguments: 
 
-2. Default arguments:  TODO
+```{r , eval=FALSE}
+TODO
+```
+2. Default arguments: 
+
+```{r , eval=FALSE}
+TODO
+```
 
 ## Task 3
 
@@ -257,7 +267,9 @@ Open the help file for `sample()` **in the console**. In the comment block below
 
 Calculate the mean of scores and store it in `average_raw`. Calculate the mean of scores again, this time **excluding** `NA` values, and store it in `average_clean`.
 
+```{r , eval=FALSE}
 TODO
+```
 
 ## Task 4
 
@@ -265,7 +277,9 @@ TODO
 
 Use `sample()` to draw 10 values **with replacement** from scores and store them in `sample_scores_positional` **WITHOUT naming any arguments**. Repeat the same call, but this time **name every argument**; store as `sample_scores_named`.
 
+```{r , eval=FALSE}
 TODO
+```
 
 ## Task 5
 
@@ -273,7 +287,9 @@ TODO
 
 Combine `mean()` and `sample()` to calculate the mean of 5 random draws from scores (allow replacement); store the result in `mean_of_five`. Do this in **one** line of code.
 
+```{r , eval=FALSE}
 TODO
+```
 
 ## Task 6
 
@@ -281,7 +297,9 @@ TODO
 
 Use `Sys.Date()` and `Sys.time()` to create two separate objects, `today_date` and `now_time`.
 
+```{r , eval=FALSE}
 TODO
+```
 
 ## Task 7
 
@@ -289,7 +307,9 @@ TODO
 
 In one sentence, explain the difference between a *function object* (e.g., mean) and a *function call* (e.g., `mean()`).
 
-Answer: TODO
+```{r , eval=FALSE}
+# Answer: TODO
+```
 
 _Reminder: Now would be a great time to click save (or press Ctrl + S) to save your script._
 
@@ -328,7 +348,7 @@ save.image("Assignment3_Workspace.RData")
 
 Or you can click the "Save Workspace" button in the Environment pane. 
 
-💾 **Always save your R documents before closing. If you don't, you will lose your work.**
+💾 **Always save your R documents before closing. If you don't, you could lose your work.**
 
 2. Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
 

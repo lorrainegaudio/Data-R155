@@ -316,9 +316,9 @@ k
 
 ## Late Work Policy
 
-It is always best to submit work on time, but I understand that sometimes extenuating circumstances make this difficult. My policy on late work is as follows: Everyone takes R at their own pace. The due dates are guidelines more than anything. Unfortunately, it is not possible to consider assignments turned in after **December 12th**. If you 
+It is always best to submit work on time, but I understand that sometimes extenuating circumstances make this difficult. My policy on late work is as follows: Everyone takes R at their own pace. The due dates are guidelines more than anything. Unfortunately, it is not possible to consider assignments turned in after **December 12th**.  
 
-# Student Expectations/Responsibilities
+# Student Responsibilities
 
 ## Communication
 
@@ -351,7 +351,7 @@ You will be transparent about when and how generative AI in your memos. Include:
 
 2. A reflection on how GAI might have aided or hindered learning or knowledge creation. 
 
-# Instructor Expectations/Responsibilities
+# Instructor Responsibilities
 
 ## Instructor AI Use
 
@@ -359,11 +359,11 @@ You will be transparent about when and how generative AI in your memos. Include:
 
 - Question: Will the AI tool replace instructor grading?
 
-Short Answer: No. I will never upload your work into an AI tool. Instead, I will use AI to improve on explaining.
+Answer: No. I will never upload your work into an AI tool. Instead, I will use AI to improve on explaining.
 
 - Question: Does opting out affect my grade?
 
-Short Answer: No. Both submission routes are graded with the same rubric.
+Answer: No. Both submission routes are graded with the same rubric.
 
 2. I use GAI to aid in editing lessons and assignments. I am redesigning this course, and I am using AI to assist me in making improvements.
 

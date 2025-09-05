@@ -1,0 +1,350 @@
+---
+title: "Lesson 2 Activity"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+encoding: UTF-8
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 2 Activity"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 1
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 2 Activity"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# In-Class Activity: Vector Playlab 🎮
+
+Today’s activity is a group challenge to deepen your understanding of vectors in R — and to see what happens when you push them into data frames, matrices, and lists. Work together, write your own code, and discuss your results. By the end of this activity, you will be able to create and inspect vectors of different types, perform vector arithmetic (including recycling), and organize data into data frames, lists, and matrices.
+
+## Activity Overview
+
+In the next few minutes you will learn how to:
+
+🔍 Differentiate between numeric and integer vector types and explain how R treats them.
+
+⚙️ Perform arithmetic operations with vectors and describe how R handles vectors of unequal length (including recycling rules).
+
+🔨 Construct and manipulate vectors, matrices, data frames, and lists to see how R organizes and stores different types of data.
+
+🏆 Recognize how type differences and mismatched lengths affect data structures when combining vectors.
+
+# Activity Prep
+
+To prep for our activity today think on how you would answer the following prompts. Write your answers on a piece of paper, type it in your computer notes, or simply think about how you would answer these prompts. 
+
+1. Your name
+
+2. Another random person's name
+
+3. Dream team name (group name)
+
+4. An `@handle`(any social media handle)
+
+5. An activity (something you do)
+
+6. Location (any place to go real or imagined)
+
+7. Call to action (a catch phrase or statement)
+
+8. An outcome (a phrase describing a result "They lived happily ever after")
+
+9. An emotion
+
+10. Old Game (game title from the past)
+
+# Find Your Group
+
+Step One: Split into groups of approximately 4 people 👨🏻👩🏼👧🏽👦🏾. 
+
+Step Two: Assign Roles
+
+- Time Keeper: keeping the project moving. If a task is not finished on time, the team needs to move on.
+
+- Reporter: The R User typing code in a script and submitting the R script to Canvas. 
+  - Have the activity document open for copy and paste actions
+  - Write everyone's name at the top of the script
+
+- Activity Leader: facilitating the conversation, follows the activity document
+
+- Investigator: Finds answers to questions and solutions to problems. 
+
+- Brainstomer: Comes up with cleaver ideas for the team to use
+
+# Vectors
+
+## Create Vectors
+
+*Rules**: Name your vectors exactly as listed. Follow the rules for each type. Duplication is permissible. (10 Minutes Maximum)
+
+A. Numeric vector
+
+➤  `numeric` → all real numbers (length = 10)
+
+B. Integer vector
+
+➤  `integer` → must use the L suffix (length = 4 or group size)
+
+C. Logical vector
+
+➤  `logical` → build with **logical** operators (length = 4 or group size)
+
+D. Character vectors
+
+➤  Make each character vector with words or phrases of your choice:
+
+- `name` → any person’s name (length = 10)
+
+- `group_name` → name of your group (length = 4 or group size)
+
+- `at_handle` → any social media handle (length = 4 or group size)
+
+- `item` → any kind of thing (length = 10)
+
+- `activity` → something you do (length = 10)
+
+- `location` → any place to go (real or imagined) (length = 4 or group size)
+
+- `call_to_action` → a catch phrase or statement (length = 4 or group size)
+
+- `outcomes` → phrase describing a result (length = 4 or group size)
+
+- `emotion` → a mood or feeling (length = 10)
+
+- `retro_game` → any old-school game title (length = 4 or group size)
+
+## Factor class
+
+### Part 1
+
+Change a change character vector(s) into factor class. (5 minutes)
+
+➤  Step 1: Check the Class
+
+Select 3 Character vectors and use a function `class()` to check the class of the vector.
+
+➤  Step 2: Change Class to Factor
+
+Use the `as.factor()` function to change *at least one* character vector into factor class.
+
+➤  Step 3: Check the Class
+
+Verify that the class of the vector(s) have changes.
+
+### Part 2
+
+(5 minutes)
+
+➤  Make a Factor Vector
+
+Here is an example to follow: 
+
+```{r eval=FALSE}
+# Creating a character vector
+tshirt_sizes_data <- c("M", "L", "S", "M", "L", "XL", "S")
+# Changing the character vector to a factor class with levels
+tshirt_sizes <- factor(tshirt_sizes_data, levels = c("S", "M", "L", "XL"))
+# Investigating your factor class with levels
+unique(tshirt_sizes)
+```
+
+🗣 Comment: Describe factor class and how levels works. (5 minutes)
+
+➤  Now, create your own factor vector called `social_media_platform`. Pick at least 4 social media / online networking platforms to create your vector. Duplication is fine. Rank the platforms using the `levels`. (5 minutes)
+
+
+## Story
+
+➤  Copy and paste the following code and read your Mad Lib Story!
+
+```{r , eval=FALSE}
+pick <- function(x) sample(x, 1)
+
+# ---------- Story 1 ----------
+story1 <- paste(
+  "After a long week,", pick(name), "unplugged by trying", pick(activity),
+  "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
+  "Vibe rating:", paste0(pick(number_1_to_10), "."),
+  "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
+  "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
+  "Reminding each other", paste0(pick(call_to_action), "."),
+  "They made a plan for Episode", paste0(pick(integer), ","),
+  "closing with a", paste0(pick(emotion), " mood.")
+)
+
+print(story1)
+# ---------- Story 2 ----------
+# Using Factor Level to pick 
+selected_index <- sample(1:length(social_media_platform), 1)
+selected_platform <- social_media_platform[selected_index]
+outcome <- outcomes[selected_index]
+
+story2 <- paste(
+  "On a mission for a fashion comeback,", pick(name), "found", pick(item),
+  "at", pick(location), "that screamed Y2K.",
+  "They spent a total of", paste0(pick(numeric), " dollars"),
+  "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
+  "After posting a 'before' shot on", paste0(pick(selected_index), ","),
+  "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
+  "Their retro level was officially", paste0(pick(retro_game), " status,"),
+  "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars"),  
+  "and sold in", pick(integer), "minutes.", 
+  "The community response was so strong, they had this final message for their followers:", 
+  paste0(pick(call_to_action), ".")
+)
+print(story2)
+```
+
+
+# Dataframes
+
+```{r eval=FALSE}
+# Build a tiny table you can reference as “credits” under the stories.
+
+people <- data.frame(
+  name = name,
+  handle = at_handle,
+  likes_it = logical,
+  score = numeric,
+  ep = integer
+)
+str(people)
+```
+
+(5 minutes)
+
+➤ Task: Build a data frame using several of your vectors using `data.frame()`.
+
+- Combining vectors with the same lengths.
+
+- Try combining vectors with different lengths. What error or warning do you see? What does it mean?
+
+
+# Matrices
+
+Bonus 🧠 Challenge!
+
+You can easily create a matrix from a numeric vector using the `matrix()` function in R. A matrix is a two-dimensional data structure, which means it has both rows and columns.
+
+```{r, eval=FALSE}
+# Create a numeric vector with 9 elements
+my_vector <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+# Create a 3x3 matrix from the vector, filled by rows
+my_matrix <- matrix(my_vector, nrow = 3, ncol = 3, byrow = TRUE)
+
+# Print the matrix to see the result
+print(my_matrix)
+
+# Check the class to confirm it is a matrix
+class(my_matrix)
+```
+
+➤  Now, convert your numeric vector into a matrix.
+
+🗣 Comment: What do you notice about how R arranges the numbers?
+
+
+# Lists
+
+In R, a list is a special type of data structure that can hold elements of different classes. This is a key difference between a list and a vector or a data frame, which can only hold elements of the same class. A list is essentially a collection of items, and each item can be a vector, a matrix, a data frame, or even another list.
+
+```{r}
+# Create a list about Taylor Swift
+taylor_swift_list <- list(
+  name = "Taylor Swift",
+  albums = c("Fearless", "Red", "1989", "folklore", "Midnights"),
+  release_years = c(2008, 2012, 2014, 2020, 2022),
+  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
+  favorite_song = list(
+    title = "All Too Well (10 Minute Version)",
+    album = "Red",
+    length_minutes = 10.13
+  )
+)
+
+# Print the full list
+print(taylor_swift_list)
+```
+
+
+➤  Bonus 🧠 Challenge! Make a List. Any List.
+
+# Today you practiced
+
+In this activity, your group practiced:
+
+-Creating vectors of different types (numeric, integer, character, and logical).
+
+-Performing vector arithmetic and observing how recycling works when vector lengths don’t match.
+
+-Combining vectors into a data frame and noticing what happens when lengths are unequal.
+
+-Exploring lists and matrices as alternative ways of organizing data.
+
+Your work today previewed how R organizes and manages different data structures.
+
+👉 Before leaving, have the person in the Reporter role submit the R script on Canvas. This script should show all of the vectors and data structures you created during the activity.
