@@ -2,22 +2,29 @@
 title: "Lesson 3"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
 output: 
-  html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
-    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
-    toc_float: # Float the table of contents to the left of the main document
-      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
-      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
-    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
-    fig_caption: true #Whether figures are rendered with captions.
-    df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
     includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 ---
 
 ```{r setup, include=FALSE}
@@ -119,35 +126,7 @@ mean                # function *object* → prints the function body
 mean()              # function *call*   → error: argument is missing
 ```
 
-👀 Check-in: What happens if you try  sum vs. sum(1:5)  ?
-
-# Date and Time
-
-🕰️ R has built-in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time-stamp results for reports or file names. 
-
-```{r , eval=FALSE}
-Sys.Date()      # current date (yyyy-mm-dd)
-
-Sys.time()      # current date + time
-
-Sys.timezone()  # your local timezone string
-```
-
-
-🔍 Dig deeper: I use `format(Sys.Date(), '%B %d, %Y')` to format dates in Lesson reports. What is the function of `%` in '%Y-%m-%d'?
-
-```{r}
-# Create a learning skills memo note in your R script if you did 
-# the 👀 Check‑in and 🔍 Dig deeper. 
-
-## 1. Explain what you did to discover more about Functions-Call Basics and 
-# Date and Time settings in reports, what your observations are, and what you 
-# expect to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-# Using Help
+## Using Help
 
 🔍 **Why use Help**?  Nobody memorizes every argument. `?function_name` opens the help file.  
 
@@ -161,9 +140,56 @@ help(sample)        # alternate syntax works the same
 
 💡 Pro-tip:  `args(mean)`  prints the argument names inline.
 
-# Required vs. Default
+## Required vs. Default
 
 ⚖️ **Key Idea**  If R supplies a default you can omit that argument; if not, you *must* provide it. Use named arguments for clarity. Type the following into your R script and run each line.
+
+1. Example **Date and Time**
+
+🕰️ R has built-in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time-stamp results for reports or file names. 
+
+```{r , eval=FALSE}
+Sys.Date()      # current date (yyyy-mm-dd)
+
+Sys.time()      # current date + time
+
+Sys.timezone()  # your local timezone string
+
+# Coerce to Date with as.Date()
+as.Date("2025-09-07")
+```
+
+2. Example **sample**
+
+🎲 Type the following code in your R script and run each line.
+
+```{r , eval=FALSE}
+set.seed(123)          # reproducible randomness
+
+numbers <- 1:10       
+
+sample(numbers, 3)                 # three unique picks
+
+sample(numbers, 10, replace = TRUE)  # allow repeats
+```
+
+**Creation & Basic Manipulation**
+
+| Function       | What it does               | Example                      |
+| -------------- | -------------------------- | ---------------------------- |
+| `c()`          | Combine values             | `c(1, 2, 3)`                 |
+| `seq()`        | Sequences                  | `seq(1, 10, by = 2)`         |
+| `rep()`        | Repeat values              | `rep(1:3, times = 2)`        |
+| `append()`     | Insert/append into vector  | `append(1:3, 99, after = 2)` |
+| `:`(colon)     | Integer sequence shorthand | `1:10`                       |
+| `unique()`     | Keep unique elements       | `unique(c(1,1,2))`           |
+| `duplicated()` | Flags repeated elements    | `duplicated(c(1,1,2))`       |
+| `rev()`        | Reverse order              | `rev(1:5)`                   |
+
+
+3. Example *mean**
+
+⚖️ Type the following code in your R script and run each line.
 
 ```{r , eval=FALSE}
 values <- c(1, 2, 3, 4, 5, NA)
@@ -175,26 +201,24 @@ mean(values, na.rm = TRUE)         # ignore missing values
 mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first
 ```
 
+**Descriptive Statistics & Summaries**
+
+| Function                    | What it does     | Example                    |
+| --------------------------- | ---------------- | -------------------------- |
+| `sum()`, `prod()`           | Sum/product      | `sum(x, na.rm = TRUE)`     |
+| `mean()`, `median()`        | Central tendency | `mean(x, na.rm = TRUE)`    |
+| `min()`, `max()`, `range()` | Extrema/range    | `range(x, na.rm = TRUE)`   |
+| `sd()`, `var()`             | Spread           | `sd(x, na.rm = TRUE)`      |
+| `quantile()`                | Quantiles        | `quantile(x, probs = .25)` |
+
+
 📍 Identify: Try `median(values, na.rm = TRUE)`. Why doesn’t `median() `need trim?
 
-🔍 Look deeper: What is bootstrapping in statistics?
+🚀 Explore and Play: What happens if you try  sum vs. sum(1:5)? Try out the descriptive statistics and summaries functions on objects.
 
-Type the following code in your R script and run each line.
-
-```{r , eval=FALSE}
-set.seed(123)          # reproducible randomness
-
-numbers <- 1:10
-
-sample(numbers, 3)                 # three unique picks
-
-sample(numbers, 10, replace = TRUE)  # allow repeats
-```
-
-🧠 Challenge: Draw 5 numbers without replacement and sort them ascending.
 
 ```{r}
-# Create a memo note in your R script if you did 📍 Identify, 🔍 Look deeper, and 🧠 Challenge. 
+# Create a memo note in your R script if you did 📍 Identify, and 🚀 Explore and Play. 
 
 ## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
 # to happen. 
@@ -212,10 +236,31 @@ mean(sample(numbers, size = 5, replace = TRUE))  # sample then average
 
 🚀 Explore and Play: Run the line above twice. Why does the result change each time even though the code is identical? 
 
-🔍 Look deeper: From the functions we have learned about, which can be nested and how?
+## Other Functions
+
+**Sorting, Ordering, Rounding & Formatting**
+
+| Function  | What it does         | Example                            |
+| --------- | -------------------- | ---------------------------------- |
+| `sort()`  | Sort values          | `sort(x, decreasing = TRUE)`       |
+| `order()` | Order indices        | `x[order(x)]`                      |
+| `rank()`  | Ranks (ties handled) | `rank(x, ties.method = "average")` |
+| `round()` | Round to digits      | `round(runif(5), 2)`               |
+| `format()`| Pretty formatting    | `format(Sys.Date(), "%B %d, %Y")`  |
+| `rev()`   | Reverse order        | `rev(1:5)`                         |
+| `as.numeric()`| Coerce vector    | `as.numeric("1", "2", "3")`        |
+| `as.character()`| Coerce vector  | `as.character(1:3)`                |
+| `length()`| Count elements       | `length(x)`                        |
+| `head()`  | First part           | `head(x, 3)`                       |
+|`tail()`   | Last part            | `tail(x, 3)`                       |
+
+🧠 Challenge: Draw 5 numbers without replacement and sort them ascending.
+
+
+✍️ Practice: From the functions we have learned about, pratice nesting. 
 
 ```{r}
-# Create a memo note in your R script if you did 🚀 Explore and Play and 🔍 Look deeper.
+# Create a memo note in your R script if you did 🧠 Challenge and ✍️ Practice.
 
 ## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
 # to happen. 

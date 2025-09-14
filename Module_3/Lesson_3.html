@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 3</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on September 05, 2025</h4>
+<h4 class="date">Lesson generated on September 07, 2025</h4>
 
 </div>
 
@@ -2906,32 +2906,8 @@ that produce an error.</p>
 mean                # function *object* → prints the function body
 
 mean()              # function *call*   → error: argument is missing</code></pre>
-<p>👀 Check-in: What happens if you try sum vs. sum(1:5) ?</p>
-</div>
-<div id="date-and-time" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Date and Time</h1>
-<p>🕰️ R has built-in date and time functions. Type the following into
-your R script and run each line. <strong>Utility</strong> Quickly
-time-stamp results for reports or file names.</p>
-<pre class="r"><code>Sys.Date()      # current date (yyyy-mm-dd)
-
-Sys.time()      # current date + time
-
-Sys.timezone()  # your local timezone string</code></pre>
-<p>🔍 Dig deeper: I use <code>format(Sys.Date(), &#39;%B %d, %Y&#39;)</code> to
-format dates in Lesson reports. What is the function of <code>%</code>
-in ‘%Y-%m-%d’?</p>
-<pre class="r"><code># Create a learning skills memo note in your R script if you did 
-# the 👀 Check‑in and 🔍 Dig deeper. 
-
-## 1. Explain what you did to discover more about Functions-Call Basics and 
-# Date and Time settings in reports, what your observations are, and what you 
-# expect to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-</div>
-<div id="using-help" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Using Help</h1>
+<div id="using-help" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Using Help</h2>
 <p>🔍 <strong>Why use Help</strong>? Nobody memorizes every argument.
 <code>?function_name</code> opens the help file.</p>
 <p>Type the following R code into your script. Read the help tab for
@@ -2943,13 +2919,99 @@ help(sample)        # alternate syntax works the same</code></pre>
 <p>💡 Pro-tip: <code>args(mean)</code> prints the argument names
 inline.</p>
 </div>
-<div id="required-vs.-default" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Required
-vs. Default</h1>
+<div id="required-vs.-default" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Required
+vs. Default</h2>
 <p>⚖️ <strong>Key Idea</strong> If R supplies a default you can omit
 that argument; if not, you <em>must</em> provide it. Use named arguments
 for clarity. Type the following into your R script and run each
 line.</p>
+<ol style="list-style-type: decimal">
+<li>Example <strong>Date and Time</strong></li>
+</ol>
+<p>🕰️ R has built-in date and time functions. Type the following into
+your R script and run each line. <strong>Utility</strong> Quickly
+time-stamp results for reports or file names.</p>
+<pre class="r"><code>Sys.Date()      # current date (yyyy-mm-dd)
+
+Sys.time()      # current date + time
+
+Sys.timezone()  # your local timezone string
+
+# Coerce to Date with as.Date()
+as.Date(&quot;2025-09-07&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Example <strong>sample</strong></li>
+</ol>
+<p>🎲 Type the following code in your R script and run each line.</p>
+<pre class="r"><code>set.seed(123)          # reproducible randomness
+
+numbers &lt;- 1:10       
+
+sample(numbers, 3)                 # three unique picks
+
+sample(numbers, 10, replace = TRUE)  # allow repeats</code></pre>
+<p><strong>Creation &amp; Basic Manipulation</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="20%" />
+<col width="38%" />
+<col width="41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>c()</code></td>
+<td>Combine values</td>
+<td><code>c(1, 2, 3)</code></td>
+</tr>
+<tr class="even">
+<td><code>seq()</code></td>
+<td>Sequences</td>
+<td><code>seq(1, 10, by = 2)</code></td>
+</tr>
+<tr class="odd">
+<td><code>rep()</code></td>
+<td>Repeat values</td>
+<td><code>rep(1:3, times = 2)</code></td>
+</tr>
+<tr class="even">
+<td><code>append()</code></td>
+<td>Insert/append into vector</td>
+<td><code>append(1:3, 99, after = 2)</code></td>
+</tr>
+<tr class="odd">
+<td><code>:</code>(colon)</td>
+<td>Integer sequence shorthand</td>
+<td><code>1:10</code></td>
+</tr>
+<tr class="even">
+<td><code>unique()</code></td>
+<td>Keep unique elements</td>
+<td><code>unique(c(1,1,2))</code></td>
+</tr>
+<tr class="odd">
+<td><code>duplicated()</code></td>
+<td>Flags repeated elements</td>
+<td><code>duplicated(c(1,1,2))</code></td>
+</tr>
+<tr class="even">
+<td><code>rev()</code></td>
+<td>Reverse order</td>
+<td><code>rev(1:5)</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
+<li>Example *mean**</li>
+</ol>
+<p>⚖️ Type the following code in your R script and run each line.</p>
 <pre class="r"><code>values &lt;- c(1, 2, 3, 4, 5, NA)
 
 mean(values)                       # default na.rm = FALSE → returns NA
@@ -2957,45 +3019,156 @@ mean(values)                       # default na.rm = FALSE → returns NA
 mean(values, na.rm = TRUE)         # ignore missing values
 
 mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
+<p><strong>Descriptive Statistics &amp; Summaries</strong></p>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="23%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sum()</code>, <code>prod()</code></td>
+<td>Sum/product</td>
+<td><code>sum(x, na.rm = TRUE)</code></td>
+</tr>
+<tr class="even">
+<td><code>mean()</code>, <code>median()</code></td>
+<td>Central tendency</td>
+<td><code>mean(x, na.rm = TRUE)</code></td>
+</tr>
+<tr class="odd">
+<td><code>min()</code>, <code>max()</code>, <code>range()</code></td>
+<td>Extrema/range</td>
+<td><code>range(x, na.rm = TRUE)</code></td>
+</tr>
+<tr class="even">
+<td><code>sd()</code>, <code>var()</code></td>
+<td>Spread</td>
+<td><code>sd(x, na.rm = TRUE)</code></td>
+</tr>
+<tr class="odd">
+<td><code>quantile()</code></td>
+<td>Quantiles</td>
+<td><code>quantile(x, probs = .25)</code></td>
+</tr>
+</tbody>
+</table>
 <p>📍 Identify: Try <code>median(values, na.rm = TRUE)</code>. Why
 doesn’t <code>median()</code>need trim?</p>
-<p>🔍 Look deeper: What is bootstrapping in statistics?</p>
-<p>Type the following code in your R script and run each line.</p>
-<pre class="r"><code>set.seed(123)          # reproducible randomness
-
-numbers &lt;- 1:10
-
-sample(numbers, 3)                 # three unique picks
-
-sample(numbers, 10, replace = TRUE)  # allow repeats</code></pre>
-<p>🧠 Challenge: Draw 5 numbers without replacement and sort them
-ascending.</p>
-<pre class="r"><code># Create a memo note in your R script if you did 📍 Identify, 🔍 Look deeper, and 🧠 Challenge. 
+<p>🚀 Explore and Play: What happens if you try sum vs. sum(1:5)? Try
+out the descriptive statistics and summaries functions on objects.</p>
+<pre class="r"><code># Create a memo note in your R script if you did 📍 Identify, and 🚀 Explore and Play. 
 
 ## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
-<div id="nesting-functions" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Nesting Functions</h1>
+</div>
+<div id="nesting-functions" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Nesting Functions</h1>
 <p>💡 <strong>Idea</strong> Feed the output of one function straight
 into another. Type the following R script in your document script and
 run.</p>
 <pre class="r"><code>mean(sample(numbers, size = 5, replace = TRUE))  # sample then average</code></pre>
 <p>🚀 Explore and Play: Run the line above twice. Why does the result
 change each time even though the code is identical?</p>
-<p>🔍 Look deeper: From the functions we have learned about, which can
-be nested and how?</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🚀 Explore and Play and 🔍 Look deeper.
+<div id="other-functions" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Other Functions</h2>
+<p><strong>Sorting, Ordering, Rounding &amp; Formatting</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="31%" />
+<col width="53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sort()</code></td>
+<td>Sort values</td>
+<td><code>sort(x, decreasing = TRUE)</code></td>
+</tr>
+<tr class="even">
+<td><code>order()</code></td>
+<td>Order indices</td>
+<td><code>x[order(x)]</code></td>
+</tr>
+<tr class="odd">
+<td><code>rank()</code></td>
+<td>Ranks (ties handled)</td>
+<td><code>rank(x, ties.method = &quot;average&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><code>round()</code></td>
+<td>Round to digits</td>
+<td><code>round(runif(5), 2)</code></td>
+</tr>
+<tr class="odd">
+<td><code>format()</code></td>
+<td>Pretty formatting</td>
+<td><code>format(Sys.Date(), &quot;%B %d, %Y&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><code>rev()</code></td>
+<td>Reverse order</td>
+<td><code>rev(1:5)</code></td>
+</tr>
+<tr class="odd">
+<td><code>as.numeric()</code></td>
+<td>Coerce vector</td>
+<td><code>as.numeric(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><code>as.character()</code></td>
+<td>Coerce vector</td>
+<td><code>as.character(1:3)</code></td>
+</tr>
+<tr class="odd">
+<td><code>length()</code></td>
+<td>Count elements</td>
+<td><code>length(x)</code></td>
+</tr>
+<tr class="even">
+<td><code>head()</code></td>
+<td>First part</td>
+<td><code>head(x, 3)</code></td>
+</tr>
+<tr class="odd">
+<td><code>tail()</code></td>
+<td>Last part</td>
+<td><code>tail(x, 3)</code></td>
+</tr>
+</tbody>
+</table>
+<p>🧠 Challenge: Draw 5 numbers without replacement and sort them
+ascending.</p>
+<p>✍️ Practice: From the functions we have learned about, pratice
+nesting.</p>
+<pre class="r"><code># Create a memo note in your R script if you did 🧠 Challenge and ✍️ Practice.
 
 ## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
 # to happen. 
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
-<div id="assignment" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> ➤ Assignment</h1>
+</div>
+<div id="assignment" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> ➤ Assignment</h1>
 <p>Now it’s your turn to practice creating and using vector objects.
 Follow the tasks below to complete part of the <strong>technical skill
 practice assignment</strong>.</p>
@@ -3007,76 +3180,80 @@ show in the Environment.</p></li>
 <li><p>When finished, save your workspace and submit this script plus
 the .RData file.</p></li>
 </ol>
-<div id="task-1" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Task 1</h2>
+<div id="task-1" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Task 1</h2>
 <p>🛠 Build a random data set</p>
 <p>Set a reproducible seed (pick any whole number you like). Use
 <code>sample()</code> and <code>seq()</code> together to create a vector
 called scores that contains 25 random numbers between 60 and 100,
 inclusive. Include at least 3 NA values in scores (hint: combine vectors
 with <code>c()</code>).</p>
-<p>TODO</p>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-2" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Task 2</h2>
 <p>🚀 Explore function arguments</p>
 <p>Open the help file for <code>sample()</code> <strong>in the
 console</strong>. In the comment block below, list TWO required
 arguments and TWO default arguments for <code>sample()</code> exactly as
 they appear in the Usage section.</p>
 <ol style="list-style-type: decimal">
-<li><p>Required arguments: TODO</p></li>
-<li><p>Default arguments: TODO</p></li>
+<li>Required arguments:</li>
 </ol>
+<pre class="r"><code>TODO</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Default arguments:</li>
+</ol>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-3" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Task 3</h2>
 <p>⚠️ Handle missing data</p>
 <p>Calculate the mean of scores and store it in
 <code>average_raw</code>. Calculate the mean of scores again, this time
 <strong>excluding</strong> <code>NA</code> values, and store it in
 <code>average_clean</code>.</p>
-<p>TODO</p>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-4" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Task 4</h2>
 <p>⚖️ Practice named vs. positional arguments</p>
 <p>Use <code>sample()</code> to draw 10 values <strong>with
 replacement</strong> from scores and store them in
 <code>sample_scores_positional</code> <strong>WITHOUT naming any
 arguments</strong>. Repeat the same call, but this time <strong>name
 every argument</strong>; store as <code>sample_scores_named</code>.</p>
-<p>TODO</p>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-5" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Task 5</h2>
+<div id="task-5" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Task 5</h2>
 <p>📦 Nesting functions</p>
 <p>Combine <code>mean()</code> and <code>sample()</code> to calculate
 the mean of 5 random draws from scores (allow replacement); store the
 result in <code>mean_of_five</code>. Do this in <strong>one</strong>
 line of code.</p>
-<p>TODO</p>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-6" class="section level2" number="7.6">
-<h2><span class="header-section-number">7.6</span> Task 6</h2>
+<div id="task-6" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Task 6</h2>
 <p>🕰 Quick time-stamp</p>
 <p>Use <code>Sys.Date()</code> and <code>Sys.time()</code> to create two
 separate objects, <code>today_date</code> and <code>now_time</code>.</p>
-<p>TODO</p>
+<pre class="r"><code>TODO</code></pre>
 </div>
-<div id="task-7" class="section level2" number="7.7">
-<h2><span class="header-section-number">7.7</span> Task 7</h2>
+<div id="task-7" class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> Task 7</h2>
 <p>🗣 Reflection</p>
 <p>In one sentence, explain the difference between a <em>function
 object</em> (e.g., mean) and a <em>function call</em> (e.g.,
 <code>mean()</code>).</p>
-<p>Answer: TODO</p>
+<pre class="r"><code># Answer: TODO</code></pre>
 <p><em>Reminder: Now would be a great time to click save (or press Ctrl
 + S) to save your script.</em></p>
 </div>
 </div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Practice Space</h1>
+<div id="practice-space" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Practice Space</h1>
 <p>The following provides you more opportunities to earn points
 demonstrating <strong>learning skills</strong></p>
 <p>🔗 Link today’s skills with vectors from Lesson 2. Review Lesson 2,
@@ -3101,8 +3278,8 @@ values after removing <code>NA</code>.</p></li>
 
 ## 2. Demonstrate learning skill(s) in your memo</code></pre>
 </div>
-<div id="save-and-upload" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
 <li>You will be submitting <strong>both</strong> the R script and the
 workspace file. The workspace file saves all the objects in your
@@ -3113,14 +3290,14 @@ by running the following command in your R script:</li>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
 <p>💾 <strong>Always save your R documents before closing. If you don’t,
-you will lose your work.</strong></p>
+you could lose your work.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Find the assignment in this week’s module in Canvas and upload
 <strong>both</strong> the R script and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Today you
+<div id="today-you-practiced" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Recognizing function objects vs. calls.</p></li>

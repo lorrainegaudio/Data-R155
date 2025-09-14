@@ -239,7 +239,7 @@ Now it's your turn to practice. Follow the tasks below to complete part of the *
 
 ## Task 1
 
-Store the quantity $62$ in an object called `items_sold`
+Store the quantity 62 in an object called `items_sold`
 
 ```{r , eval=FALSE}
 items_sold <- ___
@@ -247,7 +247,7 @@ items_sold <- ___
 
 ## Task 2
 
-Store the unit price $100$ in an object called `unit_price`
+Store the unit price 100 in an object called `unit_price`
 
 ```{r , eval=FALSE}
 unit_price <- ___

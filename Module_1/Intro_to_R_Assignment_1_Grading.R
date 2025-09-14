@@ -2,11 +2,11 @@
 # -------------------------------------------------------------------
 # GRADING KEY (rubric overview)
 # Points | Criterion                               | Common Pain Point                          | Grader Tip
-# 1      | Tasks 1‑3 numeric objects               | '=' instead of '<-' ; hard‑coded numbers   | Confirm total_revenue uses objects
-# 1      | Tasks 4‑6 character + paste()           | missing quotes ; paste default sep = ""    | sentence must be "yellow banana"
-# 1      | Task 7 class() + save.image()           | wrong directory ; thinking class() mutates | Check workspace file exists
-# 1      | Task 8 new object + comment             | reuses one skill only ; no comment         | Look for combo + meaningful comment
-# 1      | Technical quality & submission          | script errors ; missing files              | Source entire script, verify uploads
+# .5      | Tasks 1‑3 numeric objects               | '=' instead of '<-' ; hard‑coded numbers   | Confirm total_revenue uses objects
+# .5      | Tasks 4‑6 character + paste()           | missing quotes ; paste default sep = ""    | sentence must be "yellow banana"
+# .5      | Task 7 class() + save.image()           | wrong directory ; thinking class() mutates | Check workspace file exists
+# .5      | Task 8 new object + comment             | reuses one skill only ; no comment         | Look for combo + meaningful comment
+# .5      | Technical quality & submission          | script errors ; missing files              | Source entire script, verify uploads
 # -------------------------------------------------------------------
 # Directions for graders: run top‑to‑bottom; inspect Environment pane;
 # compare against notes above.

@@ -2,11 +2,11 @@
 # -------------------------------------------------------------------
 # GRADING KEY (rubric overview)
 # Points | Criterion                           | Common Pain Point                              | Grader Tip
-# 1      | Tasks 1‑2 vector foundations        | Different vector lengths; manual growth calc   | growth must use vector subtraction
-# 1      | Tasks 3‑4 exploration & subsetting  | forgetting str(); wrong logical condition      | positive_growth uses >0 ; last_two uses index 3:4
-# 1      | Task 5 summaries                    | using loops; forgetting na.rm; calc wrong obj  | use mean()/sum()
-# 1      | Task 6 data frame                   | vectors different length; forgot growth col    | str(sales) shows 4 vars × 4 obs
-# 1      | Technical quality & submission      | script errors; missing .RData upload           | Source entire script, verify no errors
+# 0.5    | Tasks 1‑2 vector foundations        | Different vector lengths; manual growth calc   | growth must use vector subtraction
+# 0.5    | Tasks 3‑4 exploration & subsetting  | forgetting str(); wrong logical condition      | positive_growth uses >0 ; last_two uses index 3:4
+# 0.5    | Task 5 summaries                    | using loops; forgetting na.rm; calc wrong obj  | use mean()/sum()
+# 0.5    | Task 6 data frame                   | vectors different length; forgot growth col    | str(sales) shows 4 vars × 4 obs
+# 0.5    | Technical quality & submission      | script errors; missing .RData upload           | Source entire script, verify no errors
 # -------------------------------------------------------------------
 # Directions for graders: run top‑to‑bottom; objects appear; check against key.
 
