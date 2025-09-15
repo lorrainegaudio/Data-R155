@@ -110,7 +110,7 @@ By the end of Lesson 4 you will be able to:
 
 Keep these goals in mind as you move through each section.
 
-# Quick Warm‑up
+# Quick Warm-up
 
 Before diving into new territory, let's flex a skill you met last time: opening R help pages. Being comfortable with documentation means you can teach yourself any function you meet in the future.
 
@@ -135,7 +135,7 @@ Create an R script chunk by clicking the green C on the top right of the script 
 ```{r , eval=FALSE}
 0 / 0      # Produces NaN – undefined arithmetic
 
-NA         # Built‑in constant representing a missing value
+NA         # Built-in constant representing a missing value
 ```
 
 🧐 NOTICE: R prints `NA` and `NaN` in the Console so you can spot them quickly. Even though they look similar, treat them differently: `NA` means "value absent"; `NaN` means "math error".
@@ -156,7 +156,7 @@ Vector_NA <- c(3, 7, NA, 12)  # Our sample data – one value is missing
 anyNA(Vector_NA)              # TRUE means “Something is missing!"
 ```
 
-📝 Reflect: If you saw FALSE, you could relax; the vector has no gaps. Seeing TRUE tells you to investigate further. 🤔 What are causes for NA in real data and how might it impact your research? How is data that is not available different from not possible or null?
+🤔 Reflect: If you saw `FALSE`, you could relax; the vector has no gaps. Seeing TRUE tells you to investigate further. 🤔 What are causes for `NA` in real data and how might it impact your research? How is data that is not available different from not possible or `Null`?
 
 # Locating Missing Values
 
@@ -186,15 +186,15 @@ LargeVec <- sample(c(1:10, rep(NA, 10)))  # 20 vals, ~10 NA
 which(is.na(LargeVec))                    # ▶ Where are the gaps?
 ```
 
-🔗 Link: We used the `c()` function in lesson 2 and the `sample()` function in lesson 3. Here we have nested `c()` inside of `sample()`. 📦 Unpack how this nesting is acts on each function. Create a memo note, demonstrate learning skill(s) used.
+🔗 Link: We used the `c()` function in lesson 2 and the `sample()` function in lesson 3. Here we have nested `c()` inside of `sample()`. ⚡ Explain how this nesting is acts on each function. Create a memo note, demonstrate learning skill(s) used.
 
 # Summarizing "Missingness"
 
 🚦 **WHY COUNT?**  Knowing *how much* data is missing guides your next step:
 
-- A single NA might be harmless.
+- A single `NA` might be harmless.
 
-- 40% missing could bias results and needs attention.
+- 50% missing will bias results and needs attention.
 
 Type the following R script in your document script and run. 
 
@@ -205,11 +205,13 @@ sum(is.na(LargeVec))
 mean(is.na(LargeVec))   
 ```
 
+# 📝 Practice Space
+
 📝 Interpret: What does `sum()` tell us? 
 
-🤔 Think: How does `mean()` calculate `TRUE` and `FALSE`? How do you interpret the fraction?
+🤔 Reflect: How does `mean()` calculate `TRUE` and `FALSE`? How do you interpret the fraction?
 
-Create a memo note, demonstrate learning skill(s) used to answer 📝 Interpret and 🤔 Think to potentially earn leaning skills points.
+Create a memo note, demonstrate learning skill(s) used to answer 📝 Interpret and 🤔 Reflect to potentially earn leaning skills points.
 
 # Action Strategies
 
@@ -221,7 +223,7 @@ Now that you can *detect* and *locate* gaps, what will you *do* about them? Here
 clean_vec <- LargeVec[!is.na(LargeVec)]   # Keeps only observed values
 ```
 
-🔗 Link: The brackets are using indexing and the logical operator `!` before the function `is.na`. 📦 Unpack how this nesting acts on each function. (Hint: Review lesson 2.) Create a memo note, demonstrate learning skill(s) used.
+🔗 Link: The brackets are using indexing and the logical operator `!` before the function `is.na`. ⚡ Explain how this nesting acts on each function. (Hint: Review lesson 2.) Create a memo note, demonstrate learning skill(s) used.
 
 2. Impute: replace `NA` with the mean of present values
 
@@ -231,7 +233,7 @@ imputed <- LargeVec                       # ▶ Make a copy to preserve original
 imputed[is.na(imputed)] <- mean(imputed, na.rm = TRUE)
 ```
 
-🔍 Look deeper: What are other ways you can handle `NA`? What is the R code to act on your data set?
+🔍 Look deeper: What are other ways data analysts can handle `NA`? What R code demonstrates these alternative methods?
 
 # ➤ Assignment
 
@@ -245,20 +247,35 @@ Now it's your turn to practice creating and using vector objects. Follow the tas
 
 ## Task 0
 
-Run everything in this block first.
+Theme setup: Choose ONE theme (🏈 Football or 🌊 River) to use for Tasks 1–5.
 
 ```{r}
-set.seed(3)
-
-Ninety_Nine_Red_NAs <- sample(c(1:5, rep(NA, 99)))
-
-Did_NA_Make_It      <- sample(c(1:99, NA), 20)
+# Boise State Football — Crowd Noise by Game Minute
+set.seed(42)
+BlueTurf_Noise_60 <- sample(c(sample(1:5, 36, replace = TRUE), rep(NA, 24)))
+Did_Reading_Register <- sample(c(1:60, NA), 20)
+```
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+River_Quality_52 <- sample(c(sample(1:5, 31, replace = TRUE), rep(NA, 21)))
+Did_Sample_Arrive <- sample(c(1:52, NA), 20)
 ```
 
+Theme Key (what to use later)
+
+* If you choose Football:
+- DATA vector: `BlueTurf_Noise_60`
+- ID vector: `Did_Reading_Register`
+
+* If you choose River:
+- DATA vector: `River_Quality_52`
+- ID vector: `Did_Sample_Arrive`
+
+In the tasks below, when you see **DATA vector**, use the one that matches your theme. When you see **ID vector**, use the one that matches your theme.
 
 ## Task 1 
 
-📝 In one statement each, write your own definition of `NA` and `NaN`.
+🗣 Comment: In one statement each, write your own definition of `NA` and `NaN`.
 
 NA: ___
 
@@ -266,74 +283,85 @@ NaN: ___
 
 ## Task 2 
 
-🔍 Detect "Missingness" Use `anyNA()` to test `Did_NA_Make_It` for missing values.
+🔍 Use anyNA() to test your **ID vector** for missing values. Write one line of code that returns `TRUE`/`FALSE` and saves it in `Made_NA`.
 
-`Made_NA <- ___`      
+```{r , eval=FALSE}
+Made_NA <- "__"
+```
 
 ## Task 3
 
 ⚠️ Locate Missing & Complete Values: 
 
-1. Get the indices of missing values in Did_NA_Make_It.
+1. Get the indices of missing values in your **ID vector**.
 
-`Missing_Idx <- ___`
+```{r , eval=FALSE}
+Missing_Idx <- "__"
+```
 
-2. Get the indices of NON‑missing values in Ninety_Nine_Red_NAs.
+2. Get the indices of NON-missing values in your **DATA vector**.
 
-`Keep_Idx <- ___`
-
+```{r, eval=FALSE}
+Keep_Idx <- "__"
+```
 
 ## Task 4
 
 ⚖️ Quantify "Missingness"
 
-For each vector, calculate the total number and proportion of missing values.
+For each vector (your **ID vector** and your **DATA vector**), calculate the total number and proportion of missing values.
 
-`Total_Missing_DidNA <- ___`
+```{r, eval=FALSE}
+Total_Missing_IDs <- "__"
 
-`Prop_Missing_DidNA  <- ___`
+Prop_Missing_IDs  <- "__"
 
-`Total_Missing_99NA  <- ___`
+Total_Missing_Data  <- "__"
 
-`Prop_Missing_99NA   <- ___`
+Prop_Missing_Data   <- "__"
+```
+
+**Hints**:
+
+- `sum(is.na(x))` counts missing values.
+
+- `mean(is.na(x))` gives the proportion missing.
 
 ## Task 5
 
 📦 Compare Handling Strategies
 
-Focus on `Ninety_Nine_Red_NAs`. Create two cleaned versions:
+Focus on your **DATA vector**. Create two cleaned versions:
 
 1. `vec_removed` – drop all NA values.
 
 2. `vec_imputed` – replace NA with the mean of observed values.
 
-`vec_removed <- ___`
+```{r eval=FALSE}
+vec_removed <- "__"
 
-`vec_imputed <- ___`
+vec_imputed <- "__"
+```
 
 3. Compute and compare the mean of each cleaned vector.
 
-`Mean_Removed <- ___`
+```{r eval=FALSE}
+Mean_Removed <- "__"
 
-`Mean_Imputed <- ___`
+Mean_Imputed <- "__"
+```
 
-4. 🗣 Comment: State which strategy you would choose for a data set where 40% of the values are missing and why.
+4. 🗣 Comment: Which strategy would you choose if ~40% of values are missing, and why? Consider how dropping `NA`s changes your sample vs. how mean-imputation might bias results for this theme.
 
 Choice & reason: ___
  
 # Save and Upload
 
-1. You will be submitting **both** the R Notebook and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Notebook document:
+1. You will be submitting **both** the R Notebook (RMD) and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace (RData) by clicking the "Save Workspace" button in the Environment pane. 
 
-```{r , eval=FALSE}
-save.image("Assignment4_Workspace.RData")
-```
+💾 **Always save before closing.**
 
-Or you can click the "Save Workspace" button in the Environment pane. 
-
-💾 **Always save the R documents before closing.**
-
-2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
+2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the RData file.
 
 # Today you practiced:
 

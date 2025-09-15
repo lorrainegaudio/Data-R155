@@ -1,0 +1,214 @@
+---
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Introduction
+
+This thirty minute lab activity will turn your questions into next steps with the help of a peer. Before you begin, completely review the Courage Lab document. 
+
+Points: Earn up to 2 learning skill points for participating in this activity. 
+
+⏱️ 30 minute plan at a glance
+
+ - 0-7 min — Question Inventory (2–3 items)
+
+ - 7-22 min — Partner Work (or solo) on one question
+
+ - 22-30 min — Submission
+ 
+If you don’t have questions, be a 🚑 helper for someone who does to earn learning skill points.
+
+# 🔎 Quiet review
+
+Please take 7 minutes to review your scores & comments, and create a question inventory:
+
+1. Open RStudio. *Hint*: If you have a course project, open it.
+
+2. Start a new R script named `courage_lab.R`and title it in the file `# Courage Lab`: 
+
+```{r}
+# Courage Lab 
+# Your First and Last Name
+
+# Question Inventory (template)
+
+# 1) Source: ____   My question:
+#    Code or error:
+
+# 2) Source: ____   My question:
+#    Code or error:
+```
+
+3. Open Canvas ► Grades 
+
+- Look at Assignments 1 & 2 and Class Activity 1 & 2 comments.
+
+```{r}
+# Source: Instructor Comments 
+
+## Do you have questions about the course?
+## Do you have questions about the points you earned?
+## Do you have questions about the instructor comments?
+## Additionally, feel free to provide the instructor feedback about the course in this space. 
+```
+
+4. Open your completed assignments in R Studio and review.
+
+⚠️ Common Pain Points:
+
+- Jot anything that’s unclear in your R script.
+
+- Identify any unanswered questions.
+
+- Identify code that you do not understand.
+
+```{r}
+# Source: Assignment 1 & 2 Questions
+
+## Did you ask questions in memos but did not or could not answer them?
+## Did you write code that you do not understand and could not explain?
+## Did you have unresolved errors?
+```
+```{r}
+# Source: Assignment 3 Questions
+
+## Did you ask questions in memos but did not or could not answer them?
+## Did you write code that you do not understand and could not explain?
+## Did you have unresolved errors?
+```
+
+5. No questions yet? Open up the Class Activity 1 & 2 HTML: Vector Playlab 🎮 class activity handout
+
+```{r}
+# Source: Vector Playlab
+
+## Your question(s) could be to complete the 5 Dataframes, 6 Matrices, and/or 7 Lists
+```
+
+6. Choose your question
+
+- From the list of questions, select *at least* one question you want to answer today. 
+
+# 🤝 Partner Work
+
+Form 👥 pairs (or work solo if you prefer). Record the name of your partner. Choose **one** R coding question to pursue first.
+
+```{r}
+# Partner Name (if any): 
+```
+
+**Record:**
+
+1. 🧩 **Error** Reproduce the issue. Comment it out.  
+
+2. 🪞 **Memo** Add a reflection about the discovery and learning process. 
+
+3. 🔁 **Change one thing**, re-run, and record what happened (try **two** new strategies).  
+
+4. 📚 **Use resources:** `?function` in RStudio Help, textbook, instructor, boisestate.ai, web search (*try Substack*), other peers. Remember to document resources and how you use them.  
+
+5. 🗣️ **Explain your code in plain English.** If it’s beyond our current skill level, annotate line-by-line. Rewrite the code within your skill level.
+
+
+**Helper role template** Log who you helped and what you explained.
+
+```{r}
+# Helper Log
+# I helped: ________   On: ________
+# What I explained / what changed:
+```
+
+**Reflection Prompts** 
+
+```{r}
+# Reflection (3–4 sentences):
+# - What failed or confused me?
+# - What changed after my two tries?
+# - What I learned / my next step:
+```
+
+# ✅ Submit
+
+Each person uploads one R script to Class Activity 3 named `courage_lab.R`
+
+📏 Scoring rubric (Points are additive in this course. There are many ways you can earn points. The *maximum points* for this learning skill activity is **2**)
+
+- 🦁 **Real risk & engagement** (tackled a hard question or many questions) — **up to 1.5 pts**  
+- 🔧 **Process** (two new strategies + resource use documented) — **up to 1 pt**  
+- 🪞 **Memos** (clear, specific, honest) — **up to 1 pt**  
+- 🤝 **Partner bonus** (👥 pairing or 🚑 helper role) — **0 or 0.5 pt**
+
+
+

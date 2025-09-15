@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 4</title>
+<title>Courage Lab</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,309 +2853,146 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 4</h1>
+<h1 class="title toc-ignore">Courage Lab</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on September 14, 2025</h4>
 
 </div>
 
 
-<div id="welcome-back-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 🌟 Welcome back to
-R!</h1>
-<p>In lesson one, two and three you learned about objects, vectors, and
-functions. Now you’ll learn more about handling missing data in R.</p>
-<p>To begin Lesson 4, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “R Notebook” (File &gt;
-New File &gt; R Notebook).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
-<p><strong>Lesson Overview</strong></p>
-<p>By the end of Lesson 4 you will be able to:</p>
-<ol style="list-style-type: decimal">
-<li><p>⚡ Remember – Define NA vs. NaN in R.</p></li>
-<li><p>🔍 Understand – Use anyNA() to ask “Is <em>anything</em> missing
-here?”.</p></li>
-<li><p>📍 Apply – Pinpoint missing values with is.na() and
-which().</p></li>
-<li><p>📊 Analyze – Count and summarize how much data is
-missing.</p></li>
-<li><p>🛠️ Evaluate – Choose a simple strategy: keep, drop, or
-impute.</p></li>
-</ol>
-<p>Keep these goals in mind as you move through each section.</p>
-</div>
-<div id="quick-warm-up" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Quick Warm-up</h1>
-<p>Before diving into new territory, let’s flex a skill you met last
-time: opening R help pages. Being comfortable with documentation means
-you can teach yourself any function you meet in the future.</p>
-<p>Create an R script chunk by clicking the green C on the top right of
-the script window. Then type in the following code and run.</p>
-<pre class="r"><code>?gsub</code></pre>
-<p>📖 After viewing the page, close it or leave it open for
-reference.</p>
-<p>✔️ Nice! Summon help whenever you need it.</p>
-</div>
-<div id="na-vs-nan" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> NA vs NaN</h1>
-<p><strong>What &amp; Why</strong> Both are special markers, not
-ordinary numbers.</p>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>This thirty minute lab activity will turn your questions into next
+steps with the help of a peer.</p>
+<p>Points: Earn up to 2 learning skill points for participating in this
+activity.</p>
+<p>⏱️ 30 minute plan at a glance</p>
 <ul>
-<li><p><code>NA</code> (“Not Available”) signals <em>missing</em>
-information: the value simply was not recorded.</p></li>
-<li><p><code>NaN</code> (“Not a Number”) signals an <em>undefined</em>
-numeric result, such as 0 divided by 0.</p></li>
+<li><p>0-7 min — Question Inventory (2–3 items)</p></li>
+<li><p>7-22 min — Partner Work (or solo) on one question</p></li>
+<li><p>22-30 min — Submission</p></li>
 </ul>
-<pre class="r"><code>0 / 0      # Produces NaN – undefined arithmetic
-
-NA         # Built-in constant representing a missing value</code></pre>
-<p>🧐 NOTICE: R prints <code>NA</code> and <code>NaN</code> in the
-Console so you can spot them quickly. Even though they look similar,
-treat them differently: <code>NA</code> means “value absent”;
-<code>NaN</code> means “math error”.</p>
+<p>If you don’t have questions, be a helper for someone who does to earn
+learning skill points.</p>
 </div>
-<div id="detecting-missing-values" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Detecting Missing
-Values</h1>
-<p><strong>What &amp; Why</strong></p>
-<ul>
-<li><p><code>anyNA(x)</code> returns <code>TRUE</code> if <em>any</em>
-element in x is <code>NA</code> or <code>NaN</code>.</p></li>
-<li><p>A quick yes/no check prevents surprises later in your
-workflow.</p></li>
-</ul>
-<p>Type the following code in a new code chunk.</p>
-<pre class="r"><code>Vector_NA &lt;- c(3, 7, NA, 12)  # Our sample data – one value is missing
-
-anyNA(Vector_NA)              # TRUE means “Something is missing!&quot;</code></pre>
-<p>📝 Reflect: If you saw <code>FALSE</code>, you could relax; the
-vector has no gaps. Seeing TRUE tells you to investigate further. 🤔
-What are causes for <code>NA</code> in real data and how might it impact
-your research? How is data that is not available different from not
-possible or <code>Null</code>?</p>
-</div>
-<div id="locating-missing-values" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Locating Missing
-Values</h1>
-<p><strong>What &amp; Why</strong></p>
-<ul>
-<li><p><code>is.na(x)</code> returns a logical vector: <code>TRUE</code>
-wherever x is <code>NA</code> or <code>NaN</code>.</p></li>
-<li><p><code>which(logical_vec)</code> converts <code>TRUE</code>
-positions into numeric indices (handy for slicing or replacing
-values).</p></li>
-<li><p>Precise locations let you decide row-by-row what to do.</p></li>
-</ul>
-<p>Type the following into a R code chunk then run.</p>
-<pre class="r"><code>is.na(Vector_NA)          # Notice that it is TRUE at position 3
-
-which(is.na(Vector_NA))   # Returns index 3 directly
-
-mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
-<pre class="r"><code>set.seed(100)
-
-LargeVec &lt;- sample(c(1:10, rep(NA, 10)))  # 20 vals, ~10 NA
-
-which(is.na(LargeVec))                    # ▶ Where are the gaps?</code></pre>
-<p>🔗 Link: We used the <code>c()</code> function in lesson 2 and the
-<code>sample()</code> function in lesson 3. Here we have nested
-<code>c()</code> inside of <code>sample()</code>. ⚡ Explain how this
-nesting is acts on each function. Create a memo note, demonstrate
-learning skill(s) used.</p>
-</div>
-<div id="summarizing-missingness" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Summarizing
-“Missingness”</h1>
-<p>🚦 <strong>WHY COUNT?</strong> Knowing <em>how much</em> data is
-missing guides your next step:</p>
-<ul>
-<li><p>A single <code>NA</code> might be harmless.</p></li>
-<li><p>50% missing will bias results and needs attention.</p></li>
-</ul>
-<p>Type the following R script in your document script and run.</p>
-<pre class="r"><code># COMMON TOOLS
-sum(is.na(LargeVec))    
-
-mean(is.na(LargeVec))   </code></pre>
-</div>
-<div id="practice-space" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
-<p>📝 Interpret: What does <code>sum()</code> tell us?</p>
-<p>🤔 Reflect: How does <code>mean()</code> calculate <code>TRUE</code>
-and <code>FALSE</code>? How do you interpret the fraction?</p>
-<p>Create a memo note, demonstrate learning skill(s) used to answer 📝
-Interpret and 🤔 Reflect to potentially earn leaning skills points.</p>
-</div>
-<div id="action-strategies" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Action Strategies</h1>
-<p>Now that you can <em>detect</em> and <em>locate</em> gaps, what will
-you <em>do</em> about them? Here are two beginner‑friendly options.
-(Data scientists debate this a lot!)</p>
+<div id="quiet-review" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> 🔎 Quiet review</h1>
+<p>Please take 7 minutes to review your scores &amp; comments, and
+create a question inventory:</p>
 <ol style="list-style-type: decimal">
-<li>Remove rows containing NA (“complete‑case analysis”)</li>
+<li><p>Open RStudio. <em>Hint</em>: If you have a course project, open
+it.</p></li>
+<li><p>Start a new R script named <code>courage_lab.R</code>and title it
+in the file <code># Courage Lab</code>:</p></li>
 </ol>
-<pre class="r"><code>clean_vec &lt;- LargeVec[!is.na(LargeVec)]   # Keeps only observed values</code></pre>
-<p>🔗 Link: The brackets are using indexing and the logical operator
-<code>!</code> before the function <code>is.na</code>. ⚡ Explain how
-this nesting acts on each function. (Hint: Review lesson 2.) Create a
-memo note, demonstrate learning skill(s) used.</p>
-<ol start="2" style="list-style-type: decimal">
-<li>Impute: replace <code>NA</code> with the mean of present values</li>
-</ol>
-<pre class="r"><code>imputed &lt;- LargeVec                       # ▶ Make a copy to preserve original
+<pre class="r"><code># Courage Lab 
+# Your First and Last Name
 
-imputed[is.na(imputed)] &lt;- mean(imputed, na.rm = TRUE)</code></pre>
-<p>🔍 Look deeper: What are other ways data analysts can handle
-<code>NA</code>? What R code demonstrates these alternative methods?</p>
-</div>
-<div id="assignment" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> ➤ Assignment</h1>
-<p>Now it’s your turn to practice creating and using vector objects.
-Follow the tasks below to complete part of the <strong>technical skill
-practice assignment</strong>.</p>
-<ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the ___ placeholder with
-your code or short written answer.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Notebook
-file (RMD) plus the .RData file.</p></li>
-</ol>
-<div id="task-0" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Task 0</h2>
-<p>Theme setup: Choose ONE theme (Football or River) to use for Tasks
-1–5.</p>
-<pre class="r"><code># Boise State Football — Crowd Noise by Game Minute
-set.seed(42)
-BlueTurf_Noise_60 &lt;- sample(c(sample(1:5, 36, replace = TRUE), rep(NA, 24)))
-Did_Reading_Register &lt;- sample(c(1:60, NA), 20)</code></pre>
-<pre class="r"><code># Sustainability — Boise River Weekly Water Quality
-River_Quality_52 &lt;- sample(c(sample(1:5, 31, replace = TRUE), rep(NA, 21)))
-Did_Sample_Arrive &lt;- sample(c(1:52, NA), 20)</code></pre>
-<p>Theme Key (what to use later)</p>
-<ul>
-<li><p>If you choose Football:</p></li>
-<li><p>DATA vector: <code>BlueTurf_Noise_60</code></p></li>
-<li><p>ID vector: <code>Did_Reading_Register</code></p></li>
-<li><p>If you choose River:</p></li>
-<li><p>DATA vector: <code>River_Quality_52</code></p></li>
-<li><p>ID vector: <code>Did_Sample_Arrive</code></p></li>
-</ul>
-<p>In the tasks below, when you see <strong>DATA vector</strong>, use
-the one that matches your theme. When you see <strong>ID
-vector</strong>, use the one that matches your theme.</p>
-</div>
-<div id="task-1" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Task 1</h2>
-<p>🗣 Comment: In one statement each, write your own definition of
-<code>NA</code> and <code>NaN</code>.</p>
-<p>NA: ___</p>
-<p>NaN: ___</p>
-</div>
-<div id="task-2" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Task 2</h2>
-<p>🔍 Use anyNA() to test your <strong>ID vector</strong> for missing
-values. Write one line of code that returns
-<code>TRUE</code>/<code>FALSE</code> and saves it in
-<code>Made_NA</code>.</p>
-<pre class="r"><code>Made_NA &lt;- &quot;__&quot;</code></pre>
-</div>
-<div id="task-3" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Task 3</h2>
-<p>⚠️ Locate Missing &amp; Complete Values:</p>
-<ol style="list-style-type: decimal">
-<li>Get the indices of missing values in your <strong>ID
-vector</strong>.</li>
-</ol>
-<pre class="r"><code>Missing_Idx &lt;- &quot;__&quot;</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Get the indices of NON-missing values in your <strong>DATA
-vector</strong>.</li>
-</ol>
-<pre class="r"><code>Keep_Idx &lt;- &quot;__&quot;</code></pre>
-</div>
-<div id="task-4" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Task 4</h2>
-<p>⚖️ Quantify “Missingness”</p>
-<p>For each vector (your <strong>ID vector</strong> and your
-<strong>DATA vector</strong>), calculate the total number and proportion
-of missing values.</p>
-<pre class="r"><code>Total_Missing_IDs &lt;- &quot;__&quot;
+# Question Inventory (template)
 
-Prop_Missing_IDs  &lt;- &quot;__&quot;
+# 1) Source: ____   My question:
+#    Code or error:
 
-Total_Missing_Data  &lt;- &quot;__&quot;
-
-Prop_Missing_Data   &lt;- &quot;__&quot;</code></pre>
-<p><strong>Hints</strong>:</p>
-<ul>
-<li><p><code>sum(is.na(x))</code> counts missing values.</p></li>
-<li><p><code>mean(is.na(x))</code> gives the proportion
-missing.</p></li>
-</ul>
-</div>
-<div id="task-5" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Task 5</h2>
-<p>📦 Compare Handling Strategies</p>
-<p>Focus on your <strong>DATA vector</strong>. Create two cleaned
-versions:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>vec_removed</code> – drop all NA values.</p></li>
-<li><p><code>vec_imputed</code> – replace NA with the mean of observed
-values.</p></li>
-</ol>
-<pre class="r"><code>vec_removed &lt;- &quot;__&quot;
-
-vec_imputed &lt;- &quot;__&quot;</code></pre>
+# 2) Source: ____   My question:
+#    Code or error:</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li>Compute and compare the mean of each cleaned vector.</li>
+<li>Open Canvas ► Grades</li>
 </ol>
-<pre class="r"><code>Mean_Removed &lt;- &quot;__&quot;
-
-Mean_Imputed &lt;- &quot;__&quot;</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>🗣 Comment: Which strategy would you choose if ~40% of values are
-missing, and why? Consider how dropping NAs changes your sample vs. how
-mean-imputation might bias results for this theme.</li>
-</ol>
-<p>Choice &amp; reason: ___</p>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Notebook (RMD)
-and the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-(RData) by clicking the “Save Workspace” button in the Environment
-pane.</li>
-</ol>
-<p>💾 <strong>Always save before closing.</strong></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the RMD and the RData file.</li>
-</ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Today you
-practiced:</h1>
 <ul>
-<li><p>Discovered the difference between <code>NA</code> and
-<code>NaN</code>.</p></li>
-<li><p>Ran <code>anyNA()</code> to test for “missingness”
-quickly.</p></li>
-<li><p>Used <code>is.na()</code> + <code>which()</code> to locate gaps
-precisely.</p></li>
-<li><p>Counted and summarized missing data to gauge its impact.</p></li>
-<li><p>Practiced two basic strategies: dropping or mean‑imputing
-values.</p></li>
+<li><p>Look at Assignments 1 &amp; 2 and Class Activity 1 &amp; 2
+comments.</p></li>
+<li><p>Jot anything that’s unclear in your R script.</p></li>
 </ul>
-<p>🎉 Excellent progress! Missing data is no longer a mystery.</p>
+<pre class="r"><code># Source: Instructor Comments 
+
+## Do you have questions about the course?
+## Do you have questions about the points you earned?
+## Do you have questions about the instructor comments?
+## Additionally, feel free to provide the instructor feedback about the course in this space. </code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Open your completed assignments in R Studio and review.</li>
+</ol>
+<ul>
+<li><p>Identify any unanswered questions.</p></li>
+<li><p>Identify code that you do not understand.</p></li>
+</ul>
+<pre class="r"><code># Source: Assignment 1 &amp; 2 Questions
+
+## Did you ask questions in memos but did not or could not answer them?
+## Did you write code that you do not understand and could not explain?
+## Did you have unresolved errors?</code></pre>
+<pre class="r"><code># Source: Assignment 3 Questions
+
+## Did you ask questions in memos but did not or could not answer them?
+## Did you write code that you do not understand and could not explain?
+## Did you have unresolved errors?</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>No questions yet? Open up the Class Activity 1&amp;2: Vector Playlab
+🎮 Class Activity handout</li>
+</ol>
+<pre class="r"><code># Source: Vector Playlab
+
+## Your question(s) could be to complete the 5 Dataframes, 6 Matrices, and/or 7 Lists</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Choose your question</li>
+</ol>
+<ul>
+<li>From the list of questions, select <em>at least</em> one question
+you want to answer today.</li>
+</ul>
+</div>
+<div id="partner-work" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 🤝 Partner Work</h1>
+<p>Form 👥 pairs (or work solo if you prefer). Record the name of your
+partner. Choose <strong>one</strong> R coding question to pursue
+first.</p>
+<pre class="r"><code># Partner Name (if any): </code></pre>
+<p><strong>Record:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>🧩 <strong>Error</strong> Reproduce the issue. Comment it
+out.</p></li>
+<li><p>🖼 <strong>Locate</strong> the exact error/line or behavior.
+Explain in a memo.</p></li>
+<li><p>🔁 <strong>Change one thing</strong>, re-run, and record what
+happened (try <strong>two</strong> new strategies).</p></li>
+<li><p>📚 <strong>Use resources:</strong> <code>?function</code> in
+RStudio Help, textbook, instructor, boisestate.ai, web search (<em>try
+Substack</em>). Document resources and how you use them.</p></li>
+<li><p>🗣️ <strong>Explain your code in plain English.</strong> If it’s
+beyond our current skill level, annotate line-by-line. Rewrite the code
+within your skill level.</p></li>
+</ol>
+<p><strong>Helper role counts!</strong> Log who you helped and what you
+explained.</p>
+<pre class="r"><code># Helper Log
+# I helped: ________   On: ________
+# What I explained / what changed:</code></pre>
+<p><strong>Reflection</strong></p>
+<pre class="r"><code># Reflection (3–4 sentences):
+# - What failed or confused me?
+# - What changed after my two tries?
+# - What I learned / my next step:</code></pre>
+</div>
+<div id="submit" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Submit</h1>
+<p>Each person uploads one R script to Class Activity 3 named
+<code>courage_lab.R</code></p>
+<p>📏 Scoring rubric (Points are additive in this course. There are many
+ways you can earn points. The <em>maximum points</em> for this learning
+skill activity is <strong>2</strong>)</p>
+<ul>
+<li>🦁 <strong>Real risk &amp; engagement</strong> (tackled a hard
+question or many questions) — <strong>up to 1.5 pts</strong><br />
+</li>
+<li>🔧 <strong>Process</strong> (two new strategies + resource use
+documented) — <strong>up to 1 pt</strong><br />
+</li>
+<li>🪞 <strong>Memos</strong> (clear, specific, honest) — <strong>up to
+1 pt</strong><br />
+</li>
+<li>🤝 <strong>Partner bonus</strong> (pairing or helper role) —
+<strong>0 or 0.5 pt</strong></li>
+</ul>
 </div>
 
 <footer>
@@ -3201,7 +3038,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 
@@ -3218,7 +3055,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
