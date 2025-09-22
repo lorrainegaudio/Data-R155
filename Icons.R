@@ -21,6 +21,8 @@
 ⚠️ Common Pain Point:
 
 🚧
+❓
+🆘
 
 🧹
 
@@ -66,9 +68,15 @@
 
 📂
 
-🗂️ Project Folder
+🗂️ Project Folder 
 
 📁
+
+🔒 Restricted
+
+🛡️Confidential
+
+🌐 Public 
 
 📘 
 

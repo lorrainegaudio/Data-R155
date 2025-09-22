@@ -82,7 +82,7 @@ output:
 ```
 
 
-# (maybe a dice icon?) Welcome Back to R! 
+# Welcome Back to R! 
 
 In lesson 12, we did simple data visualizations using R’s built‑in function `hist()`. Today, we use the package `ggplot2` to turn data frames into clear, publication‑quality plots. Specificaly, we'll look at the grammar of graphics.
 

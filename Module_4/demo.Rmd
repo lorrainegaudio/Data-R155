@@ -1,0 +1,115 @@
+---
+title: "Lesson 4"
+output: html_notebook
+---
+
+# Warm up
+
+I can type freely with out using the "#" here
+
+```{r}
+# This is an R script Code Chunk
+?gsub
+```
+
+# NA vs NaN
+
+I know that I don't need to use the # but when I do, it makes a heading. Check out the outline.
+
+## sub header
+
+```{r}
+0/0
+```
+
+The NaN is not a number as anything over zero is not a number.
+
+```{r}
+NA
+```
+
+NA is a missing value in a vector or cell of a dataframe.
+
+# Detecting Missing Values
+
+```{r}
+Vector_NA <- c(3, 7, NA, 12)
+```
+This created the numeric vector Vector_NA
+
+```{r}
+anyNA(Vector_NA)
+
+```
+
+This result TRUE means that there is NA in Vector_NA
+
+# Locating Missing Value
+
+```{r}
+is.na(Vector_NA)
+```
+
+This returned FALSE in the first, second, and fourth position and TRUE in the third position which corresponds with the order the values were typed in when storing Vector_NA.
+
+```{r}
+which(is.na(Vector_NA))
+```
+
+which() returns the index number for the TRUE value(s) that is.na() tests. The number 3 means that the third position is TRUE.
+
+We need to test this with a larger vector
+
+```{r}
+set.seed(100)
+LargeVec <- sample(c(1:10, rep(NA, 10)))
+LargeVec
+```
+
+```{r}
+which(is.na(LargeVec))
+```
+
+This returns the index positions for NA.
+
+# Summarizing "Missingness"
+
+```{r}
+sum(is.na(LargeVec))
+```
+
+Memo:
+
+```{r}
+mean(is.na(LargeVec))
+```
+
+Memo:
+
+# Action Strategies
+```{r}
+LargeVec
+```
+
+```{r}
+clean_vec <- LargeVec[!is.na(LargeVec)]
+clean_vec
+```
+
+All of the NA values have been removed and it is stored in a new vector called clean_vec.
+
+```{r}
+impute <- LargeVec
+impute
+```
+
+```{r}
+impute[is.na(impute)] <- mean(impute, na.rm = TRUE)
+```
+
+```{r}
+impute
+```
+
+
+

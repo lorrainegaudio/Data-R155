@@ -1,0 +1,424 @@
+---
+title: "Lesson 4 Grading"
+output: html_notebook
+---
+
+# Warm up
+
+I can type freely with out using the "#" here
+
+```{r}
+# This is an R script Code Chunk
+?gsub
+```
+
+# NA vs NaN
+
+I know that I don't need to use the # but when I do, it makes a heading. Check out the outline.
+
+## sub header
+
+```{r}
+0/0
+```
+
+The NaN is not a number as anything over zero is not a number.
+
+```{r}
+NA
+```
+
+NA is a missing value in a vector or cell of a dataframe.
+
+# Detecting Missing Values
+
+```{r}
+Vector_NA <- c(3, 7, NA, 12)
+Vector_NA
+```
+This created the numeric vector Vector_NA
+
+```{r}
+anyNA(Vector_NA)
+
+```
+
+This result TRUE means that there is NA in Vector_NA
+
+# Locating Missing Value
+
+```{r}
+is.na(Vector_NA)
+```
+
+This returned FALSE in the first, second, and fourth position and TRUE in the third position which corresponds with the order the values were typed in when storing Vector_NA.
+
+```{r}
+which(is.na(Vector_NA))
+```
+
+which() returns the index number for the TRUE value(s) that is.na() tests. The number 3 means that the third position is TRUE.
+
+We need to test this with a larger vector
+
+```{r}
+set.seed(100)
+LargeVec <- sample(c(1:10, rep(NA, 10)))
+LargeVec
+```
+
+```{r}
+which(is.na(LargeVec))
+```
+
+This returns the index positions for NA.
+
+🔗 Link: We used the c() function in lesson 2 and the sample() function in lesson 3. Here we have nested c() inside of sample(). ⚡ Explain how this nesting is acts on each function. Create a memo note, demonstrate learning skill(s) used.
+
+Memo:
+- 1:10 makes the sequence 1, 2, …, 10. simple integer vector
+- rep(na, 10) makes ten missing values in a row.
+- c(1:10, rep(na, 10)) glues those two pieces together into one vector of length 20. because na is logical and the numbers are numeric, r coerces the whole thing to numeric; the na’s stay as missing numeric values. nothing gets dropped.
+- sample(...) with a single argument just shuffles the whole vector. defualt behavior is size = 
+- length(x) and replace = FALSE, so you get the same 20 items—numbers 1–10 and ten na’s—just in random order. na’s are kept and can land anywhere.
+- finally, largevec <- ... assigns that shuffled vector to the name largevec.
+
+
+# Summarizing "Missingness"
+
+```{r}
+sum(is.na(LargeVec))
+```
+
+📝 Interpret: What does sum() tell us?
+
+counts how many entries are missing. in your construction there are 20 elements total (1–10 plus ten NAs), so the sum is 10. sampling only shuffles; it doesn’t change the count.
+
+```{r}
+mean(is.na(LargeVec))
+```
+
+🤔 Reflect: How does mean() calculate TRUE and FALSE? How do you interpret the fraction?
+
+r coerces logicals to numbers: TRUE -> 1, FALSE -> 0. so mean(logical) is just (# of TRUEs) / (length). here that’s 10 / 20 = 0.5. interpret it as: 50% of the vector is missing. if you want a percent, use mean(is.na(LargeVec)) * 100.
+
+# Action Strategies
+
+```{r}
+LargeVec
+```
+
+```{r}
+clean_vec <- LargeVec[!is.na(LargeVec)]
+clean_vec
+```
+
+All of the NA values have been removed and it is stored in a new vector called clean_vec.
+
+🔗 Link: The brackets are using indexing and the logical operator ! before the function is.na. ⚡ Explain how this nesting acts on each function. 
+
+- is.na(largevec) scans each element and returns a logical vector the same length: true where a value is missing (na), false otherwise.
+
+- ! flips those booleans, so you now have true exactly where the data are not missing. using !is.na(...) also guarantees the index itself has no na values (because is.na only yields true/false).
+
+- largevec[ ... ] does logical indexing: it keeps the elements where the inside vector is true and drops the rest. order is preserved; only nas are removed.
+
+```{r}
+impute <- LargeVec
+impute
+```
+
+```{r}
+impute[is.na(impute)] <- mean(impute, na.rm = TRUE)
+```
+
+```{r}
+impute
+```
+
+🔍 Look deeper: What are other ways data analysts can handle NA? What R code demonstrates these alternative methods?
+
+1. drop missings (complete cases)
+
+```{r}
+x <- LargeVec
+
+x_clean <- x[!is.na(x)]
+x_clean
+```
+
+Keeps only observed values and reduces the vector’s length. Fast and simple, but results can be biased unless the data are Missing Completely At Random (MCAR).
+
+2. single imputation (numeric)
+
+```{r}
+# constant
+x_const <- x; x_const[is.na(x_const)] <- 0
+
+# mean
+x_mean  <- x; x_mean[is.na(x_mean)]   <- mean(x_mean, na.rm = TRUE)
+
+# median
+x_med   <- x; x_med[is.na(x_med)]     <- median(x_med, na.rm = TRUE)
+x_med
+```
+
+Replaces each NA with a single value: 0 (sentinel), the mean (preserves the sample mean), or the median (more robust to skew/outliers). Useful for quick EDA, but it shrinks variance and can distort correlations and standard errors—poor for final inference.
+
+3. hot-deck (sample from observed values)
+
+```{r}
+x_hot <- x
+obs   <- x_hot[!is.na(x_hot)]
+nas   <- is.na(x_hot)
+x_hot[nas] <- sample(obs, sum(nas), replace = TRUE)
+```
+
+Fills NAs by sampling from the existing non-missing values so replacements are plausible members of the distribution. Tends to preserve the marginal distribution but ignores relationships unless you stratify the sampling.
+
+4. random draw from fitted normal (keeps mean/sd, adds noise)
+
+```{r}
+x_norm <- x
+m  <- mean(x_norm, na.rm = TRUE)
+sd <- stats::sd(x_norm, na.rm = TRUE)
+x_norm[is.na(x_norm)] <- rnorm(sum(is.na(x_norm)), mean = m, sd = sd)
+```
+
+Fits a Normal(mean = observed mean, sd = observed sd) and draws a random value for each NA. Preserves mean and variance in expectation and adds noise, but assumes normality and can generate impossible values (e.g., negatives for inherently positive data).
+
+5. linear interpolation (time-series)
+
+```{r}
+idx <- seq_along(x)
+x_lin <- approx(idx, x, xout = idx)$y
+x_lin
+```
+
+Treats the vector as ordered and fills interior gaps by connecting neighboring points with straight lines. Works for smoothly varying series, but it suppresses volatility and needs special handling for leading/trailing gaps.
+
+6. keep a missingness flag (for later checks)
+
+```{r}
+x_miss_flag <- as.integer(is.na(x))   # 1 = was missing, 0 = observed
+x_imp_med   <- ifelse(is.na(x), median(x, na.rm = TRUE), x)
+x_imp_med
+```
+
+Creates an indicator (1 = was missing, 0 = observed) alongside an imputed version for continuity. Use the flag to diagnose bias or inform models that can exploit missingness, but beware of leakage or collinearity in linear models.
+
+
+# Assignment
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+set.seed(42)
+BlueTurf_Noise_60 <- sample(c(sample(1:5, 36, replace = TRUE), rep(NA, 24)))
+BlueTurf_Noise_60
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Did_Reading_Register <- sample(c(1:60, NA), 20)
+Did_Reading_Register
+```
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+River_Quality_52 <- sample(c(sample(1:5, 31, replace = TRUE), rep(NA, 21)))
+River_Quality_52
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Did_Sample_Arrive <- sample(c(1:52, NA), 20)
+Did_Sample_Arrive
+```
+
+## Task 1
+
+NA: a typed missing-value marker in r indicating an unknown or unrecorded value that propagates through calculations unless explicitly handled.
+
+NaN: a numeric-only “not a number” marker produced by undefined arithmetic (e.g., 0/0 or Inf - Inf), which is also treated as NA but specifically flags an invalid numeric result.
+
+## Task 2
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Made_NA <- anyNA(Did_Reading_Register)
+Made_NA
+```
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Made_NA <- anyNA(Did_Sample_Arrive)
+Made_NA
+```
+
+## Task 3
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+# 1. Get the indices of missing values in your ID vector.
+Missing_Idx <- which(is.na(Did_Reading_Register))
+Missing_Idx
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+# 2. Get the indices of NON-missing values in your DATA vector.
+Keep_Idx <- which(!is.na(BlueTurf_Noise_60))
+```
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+# 1. Get the indices of missing values in your ID vector.
+Missing_Idx <- which(is.na(Did_Sample_Arrive ))
+Missing_Idx
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+# 2. Get the indices of NON-missing values in your DATA vector.
+Keep_Idx <- which(!is.na(River_Quality_52))
+```
+
+## Task 4
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Total_Missing_IDs   <- sum(is.na(Did_Reading_Register))
+Total_Missing_IDs
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Prop_Missing_IDs    <- mean(is.na(Did_Reading_Register))
+Prop_Missing_IDs
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Total_Missing_Data  <- sum(is.na(BlueTurf_Noise_60))
+Total_Missing_Data
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+Prop_Missing_Data   <- mean(is.na(BlueTurf_Noise_60))
+Prop_Missing_Data 
+```
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Total_Missing_IDs   <- sum(is.na(Did_Sample_Arrive))
+Total_Missing_IDs 
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Prop_Missing_IDs    <- mean(is.na(Did_Sample_Arrive))
+Prop_Missing_IDs
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Total_Missing_Data  <- sum(is.na(River_Quality_52))
+Total_Missing_Data
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+Prop_Missing_Data   <- mean(is.na(River_Quality_52))
+Prop_Missing_Data 
+```
+
+
+## Task 5
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+## 1. vec_removed – drop all NA values.
+vec_removed <- BlueTurf_Noise_60[!is.na(BlueTurf_Noise_60)]
+vec_removed
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+## 2. vec_imputed – replace NA with the mean of observed values.
+vec_imputed <- ifelse(is.na(BlueTurf_Noise_60),
+                      mean(BlueTurf_Noise_60, na.rm = TRUE),
+                      BlueTurf_Noise_60)
+vec_imputed
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+## 3. Compute and compare the mean of each cleaned vector.
+Mean_Removed <- mean(vec_removed)
+Mean_Removed
+```
+
+
+```{r}
+# Boise State Football — Crowd Noise by Game Minute
+## 3. Compute and compare the mean of each cleaned vector.
+Mean_Imputed <- mean(vec_imputed)
+Mean_Imputed
+```
+
+The two means are identical, because imputing with the observed mean preserves the mean.
+
+Imagine you’re tracking Boise State crowd noise (in decibels) for every game minute on the blue turf, but a few minutes didn’t record. You first average the minutes you do have, say that’s 96 dB—then you fill each missing minute with 96 dB; because you only added more “typical” minutes, the overall average stays 96. The catch: those filled-in minutes flatten the story, big third-down roars and quiet timeouts get diluted, so the data look smoother and less true to the game.
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+## 1. vec_removed – drop all NA values.
+vec_removed <- BlueTurf_Noise_60[!is.na(BlueTurf_Noise_60)]
+vec_removed
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+## 2. vec_imputed – replace NA with the mean of observed values.
+vec_imputed <- ifelse(is.na(BlueTurf_Noise_60),
+                      mean(BlueTurf_Noise_60, na.rm = TRUE),
+                      BlueTurf_Noise_60)
+vec_imputed
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+## 3. Compute and compare the mean of each cleaned vector.
+Mean_Removed <- mean(vec_removed)
+Mean_Removed
+```
+
+
+```{r}
+# Sustainability — Boise River Weekly Water Quality
+## 3. Compute and compare the mean of each cleaned vector.
+Mean_Imputed <- mean(vec_imputed)
+Mean_Imputed
+```
+
+The two means are identical, because imputing with the observed mean preserves the mean.
+
+Imagine you’re tracking weekly Boise River water-quality scores (1–5) for a year, but some weeks are missing because the sample didn’t arrive. First, you average the weeks you did measure—say that’s 3.2. Then you fill every missing week with 3.2, because you only added more copies of the existing average, the overall average stays 3.2. The trade-off is that those filled weeks erase real ups and downs (i.e., storm-runoff dips or cleanup spikes), so the data look smoother and less truthful about what actually happened.
+
+

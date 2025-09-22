@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 4</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on September 14, 2025</h4>
+<h4 class="date">Lesson generated on September 15, 2025</h4>
 
 </div>
 
@@ -2933,7 +2933,7 @@ workflow.</p></li>
 <pre class="r"><code>Vector_NA &lt;- c(3, 7, NA, 12)  # Our sample data – one value is missing
 
 anyNA(Vector_NA)              # TRUE means “Something is missing!&quot;</code></pre>
-<p>📝 Reflect: If you saw <code>FALSE</code>, you could relax; the
+<p>🤔 Reflect: If you saw <code>FALSE</code>, you could relax; the
 vector has no gaps. Seeing TRUE tells you to investigate further. 🤔
 What are causes for <code>NA</code> in real data and how might it impact
 your research? How is data that is not available different from not
@@ -2982,17 +2982,14 @@ missing guides your next step:</p>
 sum(is.na(LargeVec))    
 
 mean(is.na(LargeVec))   </code></pre>
-</div>
-<div id="practice-space" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
 <p>📝 Interpret: What does <code>sum()</code> tell us?</p>
 <p>🤔 Reflect: How does <code>mean()</code> calculate <code>TRUE</code>
 and <code>FALSE</code>? How do you interpret the fraction?</p>
 <p>Create a memo note, demonstrate learning skill(s) used to answer 📝
 Interpret and 🤔 Reflect to potentially earn leaning skills points.</p>
 </div>
-<div id="action-strategies" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Action Strategies</h1>
+<div id="action-strategies" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Action Strategies</h1>
 <p>Now that you can <em>detect</em> and <em>locate</em> gaps, what will
 you <em>do</em> about them? Here are two beginner‑friendly options.
 (Data scientists debate this a lot!)</p>
@@ -3013,8 +3010,8 @@ imputed[is.na(imputed)] &lt;- mean(imputed, na.rm = TRUE)</code></pre>
 <p>🔍 Look deeper: What are other ways data analysts can handle
 <code>NA</code>? What R code demonstrates these alternative methods?</p>
 </div>
-<div id="assignment" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> ➤ Assignment</h1>
+<div id="assignment" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> ➤ Assignment</h1>
 <p>Now it’s your turn to practice creating and using vector objects.
 Follow the tasks below to complete part of the <strong>technical skill
 practice assignment</strong>.</p>
@@ -3026,10 +3023,10 @@ show in the Environment.</p></li>
 <li><p>When finished, save your workspace and submit this R Notebook
 file (RMD) plus the .RData file.</p></li>
 </ol>
-<div id="task-0" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Task 0</h2>
-<p>Theme setup: Choose ONE theme (Football or River) to use for Tasks
-1–5.</p>
+<div id="task-0" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Task 0</h2>
+<p>Theme setup: Choose ONE theme (🏈 Football or 🌊 River) to use for
+Tasks 1–5.</p>
 <pre class="r"><code># Boise State Football — Crowd Noise by Game Minute
 set.seed(42)
 BlueTurf_Noise_60 &lt;- sample(c(sample(1:5, 36, replace = TRUE), rep(NA, 24)))
@@ -3050,23 +3047,23 @@ Did_Sample_Arrive &lt;- sample(c(1:52, NA), 20)</code></pre>
 the one that matches your theme. When you see <strong>ID
 vector</strong>, use the one that matches your theme.</p>
 </div>
-<div id="task-1" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Task 1</h2>
+<div id="task-1" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Task 1</h2>
 <p>🗣 Comment: In one statement each, write your own definition of
 <code>NA</code> and <code>NaN</code>.</p>
 <p>NA: ___</p>
 <p>NaN: ___</p>
 </div>
-<div id="task-2" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Task 2</h2>
+<div id="task-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Task 2</h2>
 <p>🔍 Use anyNA() to test your <strong>ID vector</strong> for missing
 values. Write one line of code that returns
 <code>TRUE</code>/<code>FALSE</code> and saves it in
 <code>Made_NA</code>.</p>
 <pre class="r"><code>Made_NA &lt;- &quot;__&quot;</code></pre>
 </div>
-<div id="task-3" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Task 3</h2>
+<div id="task-3" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Task 3</h2>
 <p>⚠️ Locate Missing &amp; Complete Values:</p>
 <ol style="list-style-type: decimal">
 <li>Get the indices of missing values in your <strong>ID
@@ -3079,8 +3076,8 @@ vector</strong>.</li>
 </ol>
 <pre class="r"><code>Keep_Idx &lt;- &quot;__&quot;</code></pre>
 </div>
-<div id="task-4" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Task 4</h2>
+<div id="task-4" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Task 4</h2>
 <p>⚖️ Quantify “Missingness”</p>
 <p>For each vector (your <strong>ID vector</strong> and your
 <strong>DATA vector</strong>), calculate the total number and proportion
@@ -3099,8 +3096,8 @@ Prop_Missing_Data   &lt;- &quot;__&quot;</code></pre>
 missing.</p></li>
 </ul>
 </div>
-<div id="task-5" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Task 5</h2>
+<div id="task-5" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Task 5</h2>
 <p>📦 Compare Handling Strategies</p>
 <p>Focus on your <strong>DATA vector</strong>. Create two cleaned
 versions:</p>
@@ -3120,14 +3117,14 @@ vec_imputed &lt;- &quot;__&quot;</code></pre>
 Mean_Imputed &lt;- &quot;__&quot;</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>🗣 Comment: Which strategy would you choose if ~40% of values are
-missing, and why? Consider how dropping NAs changes your sample vs. how
-mean-imputation might bias results for this theme.</li>
+missing, and why? Consider how dropping <code>NA</code>s changes your
+sample vs. how mean-imputation might bias results for this theme.</li>
 </ol>
 <p>Choice &amp; reason: ___</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
 <li>You will be submitting <strong>both</strong> the R Notebook (RMD)
 and the workspace file. The workspace file saves all the objects in your
@@ -3141,8 +3138,8 @@ pane.</li>
 <strong>both</strong> the RMD and the RData file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Today you
+<div id="today-you-practiced" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Discovered the difference between <code>NA</code> and
