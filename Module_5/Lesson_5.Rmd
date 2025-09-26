@@ -2,22 +2,29 @@
 title: "Lesson 5"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
 output: 
-  html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
-    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
-    toc_float: # Float the table of contents to the left of the main document
-      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
-      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
-    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
-    fig_caption: true #Whether figures are rendered with captions.
-    df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
     includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 ---
 
 ```{r setup, include=FALSE}
@@ -83,7 +90,7 @@ To begin Lesson 5, follow these steps:
 
 1. Open your course project for RStudio 
    
-2. Create a new file. Open another 📝 "R Notebook"  (File > New File > R Notebook).
+2. Create a new file. Today, let's try 📝 "R Notebook"  (File > New File > R Notebook). You'll need to first download the "R Markdown" package.
 
 3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
@@ -103,22 +110,17 @@ By the end of Lesson 5 you will be able to:
 
 Keep these goals in mind as you move through each section.
 
-# Quick Warm-up
-
-It is helpful to have the file to be uploading in your working directory. This is one of the stickiest points to importing data.
-
-```{r , eval=FALSE}
-getwd()  # shows current project folder
-```
-Are your data files located *inside* this folder? If not, move them or `setwd("path/to/folder")`.
-
 # 📦 Packages
 
 So far, we have use functions that are built into R. In this lesson, we will use functions from packages. A package is a collection of functions, data, and documentation that extends the capabilities of R. Packages are used to perform specific tasks or analyses, such as data manipulation, statistical modeling, or visualization.
 
-You need to download the package before you can use it. You only need to install the package once. Packages, will need to be updated from time to time. In the files pane, you will see a tab called "Packages." This is where RStudio lists the packages you have installed.
+You need to download the package before you can use it. You only need to install the package once. Packages, will need to be updated from time to time. In the files pane, you will see a tab called "Packages." This is where RStudio lists the packages you have installed. You can install packages by clicking the Install. 
 
-You will use the function `install.packages()` to install a package. In this lesson, you will install the `readr`, `readxl`, `dslabs` package, which provides functions for reading and writing data files. Type the following code in a new code chunk and run.
+![Click the Install button then type "rmarkdown" in the the Packages box to download from the Package Repository CRAN](Packages.png)
+
+Now you can open the R Notebook. In the main RStudio bar at the top of the screen, click File > New File > R Notebook. Remove the example writing and rename the title of your document "Assignment 5." Save the R Notebook in the correct folder as `Intro_to_R_Assignment_5`. 
+
+Often times, you will use the function `install.packages()` to install a package. In this lesson, you will install the `readr`, `readxl`, `dslabs` package, which provides functions for reading and writing data files. Type the following code in a new code chunk and run.
 
 ```{r , eval=FALSE}
 install.packages("dslabs")                # You can install one package at a time
@@ -137,6 +139,15 @@ library(readr)   # For reading CSV files
 library(readxl)  # For reading Excel files
 library(dslabs)  # For more datasets (along side other utilities)
 ```
+
+# Quick Warm-up
+
+It is helpful to have the file to be uploading in your working directory. This is one of the stickiest points to importing data.
+
+```{r , eval=FALSE}
+getwd()  # shows current project folder
+```
+Are your data files located *inside* this folder? If not, move them or `setwd("path/to/folder")`.
 
 # Base R Datasets
 

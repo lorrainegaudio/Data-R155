@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 5</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on September 21, 2025</h4>
+<h4 class="date">Lesson generated on September 22, 2025</h4>
 
 </div>
 
@@ -2872,8 +2872,9 @@ Mastering these steps ensures that you can work with spreadsheets.</p>
 <p>To begin Lesson 5, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Open another 📝 “R Notebook” (File &gt; New
-File &gt; R Notebook).</p></li>
+<li><p>Create a new file. Today, let’s try 📝 “R Notebook” (File &gt;
+New File &gt; R Notebook). You’ll need to first download the “R
+Markdown” package.</p></li>
 <li><p>Type in the code provided in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
@@ -2893,16 +2894,8 @@ than typing a path.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="quick-warm-up" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Quick Warm-up</h1>
-<p>It is helpful to have the file to be uploading in your working
-directory. This is one of the stickiest points to importing data.</p>
-<pre class="r"><code>getwd()  # shows current project folder</code></pre>
-<p>Are your data files located <em>inside</em> this folder? If not, move
-them or <code>setwd(&quot;path/to/folder&quot;)</code>.</p>
-</div>
-<div id="packages" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> 📦 Packages</h1>
+<div id="packages" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> 📦 Packages</h1>
 <p>So far, we have use functions that are built into R. In this lesson,
 we will use functions from packages. A package is a collection of
 functions, data, and documentation that extends the capabilities of R.
@@ -2911,12 +2904,25 @@ manipulation, statistical modeling, or visualization.</p>
 <p>You need to download the package before you can use it. You only need
 to install the package once. Packages, will need to be updated from time
 to time. In the files pane, you will see a tab called “Packages.” This
-is where RStudio lists the packages you have installed.</p>
-<p>You will use the function <code>install.packages()</code> to install
-a package. In this lesson, you will install the <code>readr</code>,
-<code>readxl</code>, <code>dslabs</code> package, which provides
-functions for reading and writing data files. Type the following code in
-a new code chunk and run.</p>
+is where RStudio lists the packages you have installed. You can install
+packages by clicking the Install.</p>
+<div class="float">
+<img role="img" aria-label="Click the Install button then type “rmarkdown” in the the Packages box to download from the Package Repository CRAN" src="data:image/png;base64,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" alt="Click the Install button then type “rmarkdown” in the the Packages box to download from the Package Repository CRAN" />
+<div class="figcaption">Click the Install button then type “rmarkdown”
+in the the Packages box to download from the Package Repository
+CRAN</div>
+</div>
+<p>Now you can open the R Notebook. In the main RStudio bar at the top
+of the screen, click File &gt; New File &gt; R Notebook. Remove the
+example writing and rename the title of your document “Assignment 5.”
+Save the R Notebook in the correct folder as
+<code>Intro_to_R_Assignment_5</code>.</p>
+<p>Often times, you will use the function
+<code>install.packages()</code> to install a package. In this lesson,
+you will install the <code>readr</code>, <code>readxl</code>,
+<code>dslabs</code> package, which provides functions for reading and
+writing data files. Type the following code in a new code chunk and
+run.</p>
 <pre class="r"><code>install.packages(&quot;dslabs&quot;)                # You can install one package at a time
 install.packages(c(&quot;readr&quot;, &quot;readxl&quot;))    # You use c()</code></pre>
 <p>This code installs the <code>readr</code> and <code>readxl</code>
@@ -2936,6 +2942,14 @@ chunk and run.</p>
 library(readr)   # For reading CSV files
 library(readxl)  # For reading Excel files
 library(dslabs)  # For more datasets (along side other utilities)</code></pre>
+</div>
+<div id="quick-warm-up" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Quick Warm-up</h1>
+<p>It is helpful to have the file to be uploading in your working
+directory. This is one of the stickiest points to importing data.</p>
+<pre class="r"><code>getwd()  # shows current project folder</code></pre>
+<p>Are your data files located <em>inside</em> this folder? If not, move
+them or <code>setwd(&quot;path/to/folder&quot;)</code>.</p>
 </div>
 <div id="base-r-datasets" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Base R Datasets</h1>

@@ -1,6 +1,8 @@
 ---
 title: "Lesson 4 Grading"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Warm up
@@ -357,9 +359,7 @@ vec_removed
 ```{r}
 # Boise State Football — Crowd Noise by Game Minute
 ## 2. vec_imputed – replace NA with the mean of observed values.
-vec_imputed <- ifelse(is.na(BlueTurf_Noise_60),
-                      mean(BlueTurf_Noise_60, na.rm = TRUE),
-                      BlueTurf_Noise_60)
+vec_imputed[is.na(vec_imputed)] <- mean(BlueTurf_Noise_60, na.rm = TRUE)
 vec_imputed
 ```
 
@@ -395,9 +395,7 @@ vec_removed
 ```{r}
 # Sustainability — Boise River Weekly Water Quality
 ## 2. vec_imputed – replace NA with the mean of observed values.
-vec_imputed <- ifelse(is.na(BlueTurf_Noise_60),
-                      mean(BlueTurf_Noise_60, na.rm = TRUE),
-                      BlueTurf_Noise_60)
+vec_imputed[is.na(vec_imputed)] <- mean(River_Quality_52, na.rm = TRUE)
 vec_imputed
 ```
 

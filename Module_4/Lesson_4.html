@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 4</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on September 15, 2025</h4>
+<h4 class="date">Lesson generated on September 22, 2025</h4>
 
 </div>
 
@@ -2868,8 +2868,8 @@ functions. Now you’ll learn more about handling missing data in R.</p>
 <p>To begin Lesson 4, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “R Notebook” (File &gt;
-New File &gt; R Notebook).</p></li>
+<li><p>Create a new R script file (File &gt; New File &gt; R
+Script).</p></li>
 <li><p>Type in the code provided in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
@@ -2956,7 +2956,7 @@ values).</p></li>
 
 which(is.na(Vector_NA))   # Returns index 3 directly
 
-mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
+mean(Vector_NA, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first</code></pre>
 <pre class="r"><code>set.seed(100)
 
 LargeVec &lt;- sample(c(1:10, rep(NA, 10)))  # 20 vals, ~10 NA
@@ -3020,8 +3020,8 @@ practice assignment</strong>.</p>
 your code or short written answer.</p></li>
 <li><p>Run each completed line to be sure no errors appear and objects
 show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Notebook
-file (RMD) plus the .RData file.</p></li>
+<li><p>When finished, save and submit your workspace (.RData) and R
+script file (.R) .</p></li>
 </ol>
 <div id="task-0" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Task 0</h2>
@@ -3126,11 +3126,11 @@ sample vs. how mean-imputation might bias results for this theme.</li>
 <div id="save-and-upload" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Notebook (RMD)
-and the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-(RData) by clicking the “Save Workspace” button in the Environment
-pane.</li>
+<li>You will be submitting <strong>both</strong> the R script (.R) and
+the workspace file (RData). The workspace file saves all the objects in
+your environment that you created in this lesson. You can save the
+workspace (RData) by clicking the “Save Workspace” button in the
+Environment pane.</li>
 </ol>
 <p>💾 <strong>Always save before closing.</strong></p>
 <ol start="2" style="list-style-type: decimal">
@@ -3198,7 +3198,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 
