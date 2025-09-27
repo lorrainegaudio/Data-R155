@@ -243,4 +243,144 @@ print(low_files, n = Inf)
 ```
 
 
+# Signature Assignment
+
+I will use this data as my signature assignment example. To do this, I need to select the columns that are appropriate use. Then I need to add rows with fake data. I will need to randomly replicate values in each of the selected columns except for the id column. The id column needs to still be unique identifiers so the new, random rows need to have unique ids that are different from the real data.  
+
+```{r}
+# --- Setup ----
+# Uses dplyr only; remove set.seed() if you don't want reproducibility
+library(dplyr)
+set.seed(42)
+
+# Columns you want to keep (will silently drop any that don't exist)
+cols_to_use <- c(
+  "id","study_area","familiarity_managing_files","familiarity_running_R_console",
+  "familiarity_saving_script","familiarity_packages","familiarity_loaddata",
+  "familiarity_dataframes","familiarity_ggplot2","familiarity_pipe","adopter_group",
+  "slider_curiosity","slider_autonomy","slider_thoroughness","slider_openmind",
+  "slider_courage","slider_tenacity","slider_transparency","humans_versus_AI_control",
+  "protect_human_agency","human_accountability","societal_impact_citizenship",
+  "ethical_concerns_in_applications","systems_cause_harm",
+  "data_privacy_intellectual_property","basic_capable_limits","decision_to_use",
+  "specific_use_case","creative_uses"
+)
+
+# --- Function to add synthetic rows ----
+add_fake_rows <- function(df, keep_cols, n_fake = nrow(df), id_col = "id") {
+  # keep only requested, existing columns
+  df1 <- df %>% select(any_of(keep_cols))
+  stopifnot(id_col %in% names(df1))
+  
+  # If ID is a factor, coerce to character to avoid level issues when adding new IDs
+  if (is.factor(df1[[id_col]])) {
+    df1[[id_col]] <- as.character(df1[[id_col]])
+  }
+  
+  # Helper: generate IDs that don't collide with existing
+  make_unique_ids <- function(existing_ids, n) {
+    # numeric/integer IDs: append a sequential block after the current max
+    if (is.numeric(existing_ids)) {
+      start <- suppressWarnings(max(existing_ids, na.rm = TRUE))
+      if (!is.finite(start)) start <- 0
+      out <- seq(from = start + 1, length.out = n, by = 1)
+      # preserve integer class if needed
+      if (inherits(existing_ids, "integer")) out <- as.integer(out)
+      return(out)
+    }
+    # everything else -> character IDs with a clear prefix
+    existing_chr <- as.character(existing_ids)
+    # generate more than needed, then trim to first n unique & not-in-existing
+    pool <- character(0)
+    while (length(unique(setdiff(pool, existing_chr))) < n) {
+      batch <- paste0(
+        "FAKE_", sprintf("%05d", seq_along(pool) + 1L),
+        "_", replicate(1000, paste0(sample(c(letters, 0:9), 6, TRUE), collapse = ""))
+      )
+      pool <- c(pool, batch)
+    }
+    unique_new <- setdiff(unique(pool), existing_chr)[seq_len(n)]
+    return(unique_new)
+  }
+  
+  existing_ids <- df1[[id_col]]
+  new_ids <- make_unique_ids(existing_ids, n_fake)
+  
+  # Independently sample each non-ID column with replacement
+  sampled_cols <- lapply(names(df1), function(nm) {
+    x <- df1[[nm]]
+    if (nm == id_col) {
+      return(new_ids)
+    } else {
+      # sample preserves types (including factor levels) and NA frequency
+      return(sample(x, size = n_fake, replace = TRUE))
+    }
+  })
+  names(sampled_cols) <- names(df1)
+  
+  fake_df <- tibble::as_tibble(sampled_cols)
+  
+  # Bind real + fake; verify ID uniqueness
+  out <- bind_rows(df1, fake_df)
+  if (any(duplicated(out[[id_col]]))) {
+    stop("Duplicate IDs detected after augmentation. Adjust ID-generation logic.")
+  }
+  out
+}
+
+# --- Use it ----
+# Example: add the same number of fake rows as real rows
+pre_survey_augmented <- add_fake_rows(
+  df        = pre_survey,
+  keep_cols = cols_to_use,
+  n_fake    = nrow(pre_survey),  # change this to any number of synthetic rows you want
+  id_col    = "id"
+)
+
+# Result:
+# pre_survey_augmented now contains the selected columns + appended synthetic rows
+# with unique IDs and per-column random replication (independent sampling).
+
+```
+
+```{r}
+# Helper to generate unique "Su#######" IDs not colliding with existing
+make_su_ids <- function(n, existing_ids = character()) {
+  existing_ids <- as.character(existing_ids)
+  out <- character(0)
+  while (length(out) < n) {
+    k <- max(1000L, (n - length(out)) * 3L)  # oversample to reduce loops
+    # 0..9,999,999 (allows leading zeros to ensure 7 digits)
+    candidates <- sprintf("Su%07d", sample.int(10^7, k, replace = TRUE) - 1L)
+    candidates <- setdiff(unique(candidates), c(existing_ids, out))
+    out <- c(out, candidates)
+  }
+  out[seq_len(n)]
+}
+
+# Identify FAKE rows and coerce ID to character to avoid factor-level issues
+fake_rows <- grepl("^FAKE", pre_survey_augmented$id)
+pre_survey_augmented$id <- as.character(pre_survey_augmented$id)
+
+# Generate and assign new unique IDs
+pre_survey_augmented$id[fake_rows] <- make_su_ids(
+  n = sum(fake_rows),
+  existing_ids = pre_survey_augmented$id[!fake_rows]
+)
+
+# Sanity check: all IDs must be unique
+stopifnot(!any(duplicated(pre_survey_augmented$id)))
+```
+
+```{r}
+# Randomly shuffle the row order (reproducible if you keep the seed)
+set.seed(42)
+pre_survey_augmented <- dplyr::slice_sample(pre_survey_augmented, prop = 1)
+rownames(pre_survey_augmented) <- NULL
+
+```
+```{r}
+# Save to data folder as CSV
+write_csv(pre_survey_augmented,  "data/signature_assignment_example.csv")
+```
 

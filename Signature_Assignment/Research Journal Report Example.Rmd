@@ -1,0 +1,52 @@
+---
+title: "Research Journal Report Example"
+author: "Lorraine Gaudio"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Learning R by Doing: A Research-Journal Report
+
+This is the signature assignment for an introductory R course. It is written in research-journal style and documents how I explored, cleaned, and lightly analyzed an open dataset using tools covered this term. Before each code chunk, I'll state the goal, explain my reasoning, show attempts and checks, cite what I used to learn, and reflect on results and next steps.
+
+I use a de-identified pre-course survey dataset drawn from multiple sections and sources between summer and fall semester 2025 to create fabricated rows. It’s a deliberate choice because it has direct relevance to the course learning outcomes, the data is messy enough to practice using without being overwelming, it contains an analytic range of numeric and categorical fields, and its small enough to run quickly in RStudio on my laptops. 
+
+This report is an example of a research journal report for students to use as a template. However, having an example is useful for understanding at least one possible way of writing this report. Students should not copy this report, as this does not demonstrate learning skills.
+
+## Dataset Citation & License
+
+De-identified pre-course survey responses collected across multiple undergraduate and graduate sections and sources at Boise State between Summer and Fall 2025. Approximately 50 % of rows are synthetically generated from the empirical distributions of the original pre-survey to protect privacy. Items cover study area (major), R familiarity tasks (file management, scripts, packages, data import, data frames, ggplot2, pipes), seven 0–100 self-regulation sliders, and nine AI-literacy items recorded on a five-level ordered scale (“No awareness” → “Create”).
+
+Gaudio, L. (2025). Boise State Intro to R Pre-Course Survey (demo) [Data set, v1.0]. Boise State University.
+
+```{r load-data, message=FALSE, warning=FALSE}
+# library the required package
+library(readr)
+
+# load the csv file
+example_data <- read_csv("data/signature_assignment_example.csv")
+```
+
+## Data Overview
+
+```{r}
+# head (standart)
+head(example_data)
+```
+
+
+```{r}
+# First Three Rows
+head(example_data, 3)
+```
+
+```{r}
+# Check for the number of NA values in each column
+na_counts <- colSums(is.na(example_data))
+na_counts
+```
+
