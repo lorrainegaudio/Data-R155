@@ -1,33 +1,5 @@
 ---
-title: "Lesson 6 Ornithology"
-author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-output: 
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
-    includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
- 
-Or
-title: "Lesson 6 Ornithology"
+title: "Lesson 6 Ornithology Theme"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
@@ -53,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-title: "Lesson 6 Ornithology"
+title: "Lesson 6 Ornithology Theme"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -81,7 +53,7 @@ biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
  
 Or
-title: "Lesson 6 Ornithology"
+title: "Lesson 6 Ornithology Theme"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
@@ -111,7 +83,7 @@ To begin Lesson 6, follow these steps:
 
 1. Open your course project for RStudio 
    
-2. Create a new file. Today, let's try 📝 "R Markdown"  (File > New File > R Markdown).
+2. Create a new file. Today, let's use 📝 "R Markdown" again (File > New File > R Markdown).
 
 3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 
@@ -145,6 +117,7 @@ args(sample)  # ✅ Check the arguments of sample()
 Type the following code in a new code chunk and run.
 
 ```{r}
+set.seed(1)
 trial_vec <- sample(x = c(1:3, NA, NA, NA, NA), size = 25, replace = TRUE)
 trial_vec
 ```
@@ -152,29 +125,51 @@ trial_vec
 Type the following code in a new code chunk and run. 
 
 ```{r}
+set.seed(1)
 trial_vec <- sample(size = 25, replace = TRUE, x = c(1:3, NA, NA, NA, NA))
 trial_vec 
 ```
 
-🧐 NOTICE: How does changing the order of arguments affect the output? Create a memo note, demonstrate learning skill(s) used.
+🧐 NOTICE: Does changing the order of arguments affect the output? Why? 
 
-Review `is.na()` and `which()` from lesson 4.
+🛠 Break Things! Can you change the order of the arguments without assigning the argument name (e.g,`TRUE`,  `25`, `c(1:3, NA, NA, NA, NA)`) instead of `replace = TRUE`, `size = 25`, `x = c(1:3, NA, NA, NA, NA)`)? Create a memo note, demonstrate learning skill(s) used.
+
+___
+
+Learning Skill: Review `is.na()` and `which()` from lesson 4 and Nesting from lesson 3
 
 ```{r}
-# Review is.na() and which() from lesson 4 and Nesting from lesson 3
+# Part 1
 is.na(trial_vec)
-which(is.na(trial_vec))  
+```
+⚡ Explain:  What type of object is returned?  What is its length relative to `trial_vec`? 
+
+```{r}
+# Part 2
+which(is.na(trial_vec))
+```
+
+⚡ Explain: What are these numbers: values from the vector or positions in the vector? How do these numbers relate to the `TRUE` entries from part (1)?
+
+```{r}
+# Part 3
 which(!is.na(trial_vec)) 
 ```
 
-🚦 Are you ready? Remember, you can summon help whenever you need it.
+⚡ Explain:  Interpret these numbers the same way as in part (2). Create a memo note, demonstrate learning skill(s) used.
+___
+
+🚦 Are you ready? Remember to summon help whenever you need it.
 
 # Build a Data Frame
 
 In lesson 2 you learned how to create a data frame using the function `data.frame()` to combine three vectors of equal length. You created these vectors using the `c()` function. In this lesson, you will create the vectors using the `ifelse()` function. Type the following code in a new code chunk.
 
+```{r message=FALSE, warning=FALSE}
+?ifelse # Open the Help for the ifelse() function
+```
+
 ```{r}
-?ifelse
 args("ifelse")  # ✅ Check the arguments of ifelse()
 ```
 
@@ -201,10 +196,14 @@ Now, let's create a data frame using `trial_vec` and `trial_vec2`. Type the foll
 trial_df <- data.frame(trial_vec, trial_vec2)
 ```
 
+✅ Check the data frame `trial_df`.
+
 ```{r}
-# View(trial_df)  # ✅ Check the data frame with two columns
-View(trial_df) # (opens a new tab in RStudio)
+# head(trial_df)  
+head(trial_df) # Prints only for first 6 rows of trial_df
 ```
+
+🗣 Comment: Describe `trial_df`.
 
 🎯 That was a practice round. Now, let's create a more complex data frame with two long vectors of equal length. 
 
@@ -218,7 +217,7 @@ We’ll simulate a small inventory called `field_sightings` with two columns:
 
 - Band_Color – If a bird is untagged, the value is "None." If it is tagged, the value is one of several possible band colors.
 
-Type the following code in a new code chunk.
+**Cope and paste** the following code in a new code chunk.
 
 ```{r}
 set.seed(8)
@@ -233,7 +232,27 @@ field_sightings <- data.frame(Status, Band_Color)
 View(field_sightings)
 ```
 
-🔍 Look deeper: Why does the code has line breaks with indentation? What is the advantage? Explain when to break and how far to indent. Create a memo note, demonstrate learning skill(s) used.
+🔍 Look deeper: Why does the code has line breaks with indentation? What is the advantage of indented line breaks? When might this be useful for you? Create a memo note, demonstrate learning skill(s) used.
+
+
+**Cope and paste** the following code in a new code chunk.
+
+```{r}
+cohort_means <- c(Red=14, Blue=20, Green=26, Yellow=32, Silver=38, Black=44, Orange=50, White=56)
+cohort_means
+```
+
+
+```{r}
+field_sightings$Age_Months <- round(ifelse(field_sightings$Status=="Untagged",
+  pmin(pmax(rnorm(nrow(field_sightings), 6, 3), 0), 11),
+  pmax(12, rnorm(nrow(field_sightings),
+                 mean = replace(cohort_means[field_sightings$Band_Color],
+                                is.na(cohort_means[field_sightings$Band_Color]), 20),
+                 sd = 3))))
+
+View(field_sightings)
+```
 
 # Bracket Syntax
 
@@ -313,6 +332,8 @@ Type the following code in a new code chunk and run.
 n_manual <- nrow(tagged_only)  # ✅ Check number of rows
 nrow(tagged_only)
 ```
+
+And 287 makes sense because of this code that created the dataset: `Status  <- sample(c(rep("Untagged", 3091), rep("Tagged", 287)))`
 
 # Extraction
 
@@ -425,6 +446,7 @@ Suppose we decide to rename "Untagged" to "Wild_Hatch" in the Status column.
 🌟 Good practice: make a backup first! Type the following code in a new code chunk and run.
 
 ```{r}
+# Part 1
 reintroduction <- field_sightings          # copy
 indices_untagged <- which(field_sightings$Status == "Untagged")
 reintroduction[indices_untagged, "Band_Color"] <- "Wild_Hatch"
@@ -444,20 +466,28 @@ unique(reintroduction$Band_Color)
 Example 1: To rename a column, you can use the `colnames()` function. Type the following code in a new code chunk and run.
 
 ```{r}
+# Part 2
 names(reintroduction)
 
-colnames(reintroduction) <- c("Band_Status", "Bird_Age")
+colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort", "Age_Months")
 head(reintroduction)
 ```
 
 📍 Identify: Which columns are renamed? 🔍 Look deeper: Create a list of all the different ways you might identify the column names of a data frame? Create a memo note, demonstrate learning skill(s) used.
+
+🛠 Break Things! What happens is you don't include "Age_Months" in the code `colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort", "Age_Months")`? Rerun the your script starting from Part 1: `reintroduction <- field_sightings`, leaving off "Age_Months". `colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort")`. 
+
+___
 
 Example 2: You can also rename a specific column by index. Type the following code in a new code chunk and run.
 
 ```{r}
 reintroduction2 <- field_sightings     # ✅ Always copy first
 names(reintroduction2)[which(names(reintroduction2) == "Status")] <- "Band_Status"
-names(reintroduction2)[which(names(reintroduction2) == "Band_Color")] <- "Bird_Age"
+names(reintroduction2)[which(names(reintroduction2) == "Band_Color")] <- "Breeding_Cohort"
+```
+```{r}
+reintroduction2
 ```
 
 # Replace Missing Values

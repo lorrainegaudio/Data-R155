@@ -2,29 +2,22 @@
 title: "Lesson 5"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
 output: 
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -200,13 +193,23 @@ Replace the ___ placeholder with your code or short written answer.
 
 📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `file_name <- read_csv("??file_path/file_name.csv")`
 
+RAM issue for the Excel file. 
+You can limit how much of the Excel loads into R:
+
+```{r}
+# file_name <- read_csv("data/file_name.csv")
+```
 ____
 
 🧐 NOTICE: Use `View(file_name)` Do the column types look right? Explore this data set using the skills you developed in previous lessons. Create a memo note, demonstrate learning skill(s) used.
 
+____
+
 **Example for Signature Assignment: Dataset Citation & License**
 
-You can use generative AI to aid in creating the dataset citation. You must verify that the information generated is correct.
+Below is an example of the information to collect for the project. If you are uploading data in this assignment that you plan to use for the project, you can record that information in your assignment document.
+
+*You can use generative AI to aid in creating the dataset citation. You must verify that the information generated is correct.*
 
 1. Source data (primary citation)
 
@@ -247,6 +250,8 @@ Federal Communications Commission
 
 - Data Is Plural — 2015-10-28 edition: “Data-shaming the robocallers.” Highlights the FCC complaints data and tools derived from it. Include only if you discovered the dataset through this newsletter.
 
+____
+
 # Importing an Excel (XLSX)
 
 🌟 Repeat the steps but choose *From Excel* in the dialog.
@@ -261,16 +266,36 @@ Replace the ___ placeholder with your code or short written answer.
 
 ## Task 2
 
-📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `Album <- read_xlsx("??file_path/Album.xlsx")`)
+📝 Copy the code appears in the console-copy it into your script below so future you can reproduce the import. (e.g., `file_name <- read_xlsx("??file_path/file_name.xlsx")`)
 
+```{r eval=FALSE}
+file_name <- read_xlsx("data/file_name.xlsx")
+```
+
+For huge files, you can call the the sheet name to aid loading speed and include a row range to limit the amount of data pulled into R.
+
+```{r eval=FALSE}
+#install.packages("here")
+library(here)
+
+# read a subset by sheet name + range
+df <- read_excel(
+  here("data", "file_name.xlsx"),
+  sheet = "name_of_sheet",
+  range = "A1:Z10000"
+)
+```
 ____
 
 🧐 NOTICE: Explore this data set using the skills you developed in previous lessons. Create a memo note, demonstrate learning skill(s) used.
 
 🔍 Look deeper: What are the differences between a CSV and XLSX files? Create a memo note, demonstrate learning skill(s) used.
 
+____
 
 **Example for Signature Assignment: Dataset Citation & License**
+
+Below is an example of the information to collect for the project. If you are uploading data in this assignment that you plan to use for the project, you can record that information in your assignment document.
 
 - Title: College Scorecard — Most Recent Data by Field of Study
 
@@ -290,6 +315,7 @@ ____
 
 - (Optional) Found via: Data Is Plural newsletter.
 
+____
 
 # Save and Upload
 
@@ -311,5 +337,6 @@ ____
 
 - Imported Excel via `readxl::read_xlsx()`.
 
+____
 
 🎯 Great job! Uploading data files is a crucial skill for data analysis. In our next lesson, we'll learn about subsetting, extraction, and insertion in data frames. 
