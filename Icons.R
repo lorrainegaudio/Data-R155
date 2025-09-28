@@ -14,9 +14,13 @@
 
 💥
 
+✨ (Sparkles)
+
 ⚡ Explain
 
 🔍 Look deeper: 
+  
+  🗣 Comment:
 
 ⚠️ Common Pain Point:
 
@@ -102,6 +106,8 @@
   
 📊 Group
 
+📈 (Chart Increasing)
+
 📦 Packages
 
 📦 Pack/ Unpack
@@ -137,6 +143,8 @@
 🌟
 
 💪
+
+⏫  Level UP
 
 🚦
 

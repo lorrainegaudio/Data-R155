@@ -1,0 +1,154 @@
+---
+title: "Lesson 6 Grading"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Warm up
+
+
+
+
+# ➤ Assignment
+
+## Task 0
+
+🚗 Setup: Load the built-in data set `mtcars` and take a quick look. Identify what the columns contain and meaning of that content.
+
+```{r ,eval=FALSE}
+data("mtcars")   # already in memory but this keeps the workflow explicit
+?mtcars        # help file for variable descriptions
+View(mtcars)   # spreadsheet view (optional)
+```
+
+🗣 Comment: Explain R’s basic subsetting template. Hint: It looks like `data[ rows , columns ]`
+
+## Task 1 
+
+⚖️ Manual vs. Automatic
+
+1. Create `Manual_Cars`: all rows where `am == 1` (manual), all columns.
+
+```{r}
+# 1. All rows where am == 1, all columns
+Manual_Cars <- mtcars[ mtcars[ , "am"] == 1 , ]
+
+```
+
+2. Use `nrow()` to record how many manual cars there are (store in `n_manual`).
+
+```{r}
+# 2. Count rows
+n_manual <- nrow(Manual_Cars)
+```
+
+## Task 2 
+
+🔍 MPG by Cylinder
+
+Extract mpg for each cylinder group into separate objects. Hint: Repeat the bracket pattern
+
+```{r , eval=FALSE}
+Four_Cyl_MPG  <- mtcars[ mtcars[ , "cyl"] == 4 , "mpg" ]
+Six_Cyl_MPG   <- mtcars[ mtcars[ , "cyl"] == 6 , "mpg" ]
+Eight_Cyl_MPG <- mtcars[ mtcars[ , "cyl"] == 8 , "mpg" ]
+```
+
+## Task 3
+
+🧐 Analyze Fuel Efficiency
+
+1. Compute the mean mpg for each object.
+
+```{r , eval=FALSE}
+mean_4 <- mean(Four_Cyl_MPG)
+mean_6 <- mean(Six_Cyl_MPG)
+mean_8 <- mean(Eight_Cyl_MPG)
+```
+
+2. 🗣 Comment: Which cylinder group is most fuel‑efficient? Answer in one word or number.
+
+Most efficient: 4 or "Four"
+
+## Task 4
+
+🚦 Safe vs. Direct Editing
+
+1. Make a safe copy of `mtcars` called `cars_safe`.
+
+```{r , eval=FALSE}
+# 1. Safe copy
+cars_safe <- mtcars
+```
+
+2. Rename the `'am'` column in `cars_safe` to `"Transmission_Type"`.
+
+```{r , eval=FALSE}
+# 2. Rename 'am' to 'Transmission_Type' using indexing
+colnames(cars_safe)[ colnames(cars_safe) == "am" ] <- "Transmission_Type"
+```
+
+3. 🗣 Comment: Explain *why* working on cars_safe (a copy) is safer than editing mtcars directly.  
+
+Editing a copy prevents accidental, irreversible changes to the original data (mtcars). If something breaks, you still have the untouched source.
+
+## Task 5
+
+📝 Practice `which()`
+
+Using `cars_safe`, extract the rows for V‑shaped engines (`vs == 0`) *and* horsepower (`hp`) above `150`. Use `which()` for the row indices and keep only `mpg`, `hp`, and `cyl` columns. Name the object `hi_power_v`.
+
+1. Create `row_idx` for the condition above.
+
+- `cars_safe[ , "vs"]` ? `0` 
+
+- `&` 
+
+- `cars_safe[ , "hp"]` ? `150`
+
+- `cars_safe[row_idx , c("mpg","hp","cyl")]`
+
+
+```{r , eval=FALSE}
+# 1. Row indices: V-shaped engines (vs == 0) AND hp > 150
+row_idx <- which( cars_safe[ , "vs"] == 0 & cars_safe[ , "hp"] > 150 )
+```
+
+2. Subset cars_safe with `row_idx` and columns `mpg`, `hp`, `cyl`. Name object `hi_power_v`.
+
+```{r , eval=FALSE}
+# 2. Keep only mpg, hp, cyl
+hi_power_v <- cars_safe[ row_idx , c("mpg", "hp", "cyl") ]
+head(hi_power_v)
+```
+
+## Task 6
+
+🛠 Insertion Example
+
+Add a new column called `"Efficiency_Class"` to `cars_safe`. Label `"High"` if `mpg >= 25`, `"Low"` otherwise.
+
+Hint: use `ifelse()` and `cars_safe[ , "mpg"] >= 25, "?", "?"`
+
+```{r , eval=FALSE}
+cars_safe[ , "Efficiency_Class"] <- ifelse(
+  cars_safe[ , "mpg"] >= 25, "High", "Low"
+)
+```
+ 
+
+
+
+
+
+
+
+
+
+
+

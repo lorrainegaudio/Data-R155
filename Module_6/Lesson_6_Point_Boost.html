@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 6 Ornithology Theme</title>
+<title>Lesson 6 Point Boost</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,23 +2853,23 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 6 Ornithology Theme</h1>
+<h1 class="title toc-ignore">Lesson 6 Point Boost</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
 <h4 class="date">Lesson generated on September 28, 2025</h4>
 
 </div>
 
 
-<div id="welcome-back-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 💪 Welcome back to
-R!</h1>
-<p>In lesson one through four you learned about objects, vectors,
-functions and how to handle missing data in R. In this lesson, you will
-learn about subsetting, extraction, and insertion in data frames. You
-rarely analyse an entire data table at once. You nearly always pull out
-specific rows or columns, or write back cleaned-up values. Mastering R’s
-bracket “<code>[ ]</code>” syntax is therefore foundational.</p>
-<p>To begin Lesson 6, follow these steps:</p>
+<div id="level-up-in-lesson-6" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> ⏫ Level Up in Lesson
+6</h1>
+<p>In lesson 6 you learn about subsetting, extraction, and insertion in
+data frames. You explored how to use R’s bracket “<code>[ ]</code>”
+syntax is therefore foundational. In this Technical Skill and Learning
+Point Boost, you will do a side-by-side comparision of <code>$</code>
+and <code>[ ]</code>. Addiionally, we we review ideas from previous
+lessons.</p>
+<p>To begin Lesson 6 Point Boost, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new file. Today, let’s use 📝 “R Markdown” again (File
@@ -2886,32 +2886,103 @@ lesson.</p></li>
 <ol style="list-style-type: decimal">
 <li><p>⚡ Remember – State R’s basic subsetting template:
 <code>x[rows, cols]</code>.</p></li>
-<li><p>🔍 Understand – Describe the usefulness of creating a copy of
-original data.</p></li>
-<li><p>📍 Apply – Use logical tests + <code>which()</code> to select
-rows.</p></li>
+<li><p>🔍 Understand – Describe the difference between <code>$</code>
+and <code>[ ]</code> for data frames.</p></li>
+<li><p>📍 Apply – Use <code>ifelse()</code> to create a themed
+dataset.</p></li>
 <li><p>📊 Analyze – Summarize a subset to answer a question.</p></li>
 <li><p>🛠️ Evaluate – Choose an insertion (overwrite) vs. safe copy
 strategy</p></li>
 </ol>
-<p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="build-dataframes" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Build Dataframes</h1>
-<p>We’ll need example dataframes to play with for this lesson. You can
-copy and paste the code that creates the dataframes. To learn more about
-how these dataframes were created, complete the Lesson 6 Point
-Boost!</p>
-<div id="simple-dataframe" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Simple Dataframe</h2>
-<p>We create trial_df as a simple example. Type or copy and paste the
-following code in a new code chunk and run.</p>
+<div id="quick-warm-up" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Quick Warm-up</h1>
+<p>Type the following code in a new code chunk and run.</p>
+<pre class="r"><code># Review the `sample()` function from lesson 3. 
+set.seed(1)
+
+args(sample)  # ✅ Check the arguments of sample()</code></pre>
+<pre><code>## function (x, size, replace = FALSE, prob = NULL) 
+## NULL</code></pre>
+</div>
+<div id="quick-set-up" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Quick Set-up</h1>
+<p>Type the following code in a new code chunk and run.</p>
 <pre class="r"><code>set.seed(1)
 trial_vec &lt;- sample(x = c(1:3, NA, NA, NA, NA), size = 25, replace = TRUE)
 trial_vec</code></pre>
 <pre><code>##  [1]  1 NA NA  1  2 NA NA  3 NA  2  3  3  1 NA NA  2 NA NA  2 NA  1 NA NA NA  1</code></pre>
+<p>Type the following code in a new code chunk and run.</p>
+<pre class="r"><code>set.seed(1)
+trial_vec &lt;- sample(size = 25, replace = TRUE, x = c(1:3, NA, NA, NA, NA))
+trial_vec </code></pre>
+<pre><code>##  [1]  1 NA NA  1  2 NA NA  3 NA  2  3  3  1 NA NA  2 NA NA  2 NA  1 NA NA NA  1</code></pre>
+<p>🧐 NOTICE: Does changing the order of arguments affect the output?
+Why?</p>
+<p>🛠 Break Things! Can you change the order of the arguments without
+assigning the argument name (e.g,<code>TRUE</code>, <code>25</code>,
+<code>c(1:3, NA, NA, NA, NA)</code>) instead of
+<code>replace = TRUE</code>, <code>size = 25</code>,
+<code>x = c(1:3, NA, NA, NA, NA)</code>)? Create a memo note,
+demonstrate learning skill(s) used.</p>
+<p>We will be using <code>trial_vec</code> throughout the lesson as a
+simple example. Be sure the you have a working <code>trial_vec</code>
+object in your environment.</p>
+<pre class="r"><code>print(trial_vec)</code></pre>
+<pre><code>##  [1]  1 NA NA  1  2 NA NA  3 NA  2  3  3  1 NA NA  2 NA NA  2 NA  1 NA NA NA  1</code></pre>
+<hr />
+<p>Learning Skill: Review <code>is.na()</code> and <code>which()</code>
+from lesson 4 and Nesting from lesson 3</p>
+<pre class="r"><code># Part 1
+is.na(trial_vec)</code></pre>
+<pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE
+## [13] FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+## [25] FALSE</code></pre>
+<p>⚡ Explain: What type of object is returned? What is its length
+relative to <code>trial_vec</code>?</p>
+<pre class="r"><code># Part 2
+which(is.na(trial_vec))</code></pre>
+<pre><code>##  [1]  2  3  6  7  9 14 15 17 18 20 22 23 24</code></pre>
+<p>⚡ Explain: What are these numbers: values from the vector or
+positions in the vector? How do these numbers relate to the
+<code>TRUE</code> entries from part (1)?</p>
+<pre class="r"><code># Part 3
+which(!is.na(trial_vec)) </code></pre>
+<pre><code>##  [1]  1  4  5  8 10 11 12 13 16 19 21 25</code></pre>
+<p>⚡ Explain: Interpret these numbers the same way as in part (2).
+Create a memo note, demonstrate learning skill(s) used. ___</p>
+</div>
+<div id="build-a-data-frame" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Build a Data Frame</h1>
+<p>In lesson 2 you learned how to create a data frame using the function
+<code>data.frame()</code> to combine three vectors of equal length. You
+created these vectors using the <code>c()</code> function. In Lesson 6,
+we created a bird band dataset using the <code>ifelse()</code> function.
+To level up, explore the <code>ifelse()</code> function. Using this
+skill, you will create a dataset that contains your own theme.</p>
+<p>Type the following code in a new code chunk.</p>
+<pre class="r"><code>?ifelse # Open the Help for the ifelse() function</code></pre>
+<pre class="r"><code>args(&quot;ifelse&quot;)  # ✅ Check the arguments of ifelse()</code></pre>
+<pre><code>## function (test, yes, no) 
+## NULL</code></pre>
+<p><code>ifelse()</code> is a vectorized function that allows you to
+create a new variable based on a condition. Type the following code in a
+new code chunk.</p>
+<div id="trial_vec2" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> trial_vec2</h2>
 <pre class="r"><code># Example: Create a new vector trial_vec2 based on trial_vec
 trial_vec2 &lt;- ifelse(trial_vec == 2, &quot;two&quot;, &quot;not two&quot;)</code></pre>
+<p>This creates a new vector where each element is “two” if the
+corresponding element in <code>trial_vec</code> is 2, and “not two”
+otherwise. It takes three arguments:</p>
+<ul>
+<li><p>condition: a logical test (e.g.,
+<code>trial_vec == 2</code>)</p></li>
+<li><p><code>value_if_true</code>: the value to assign if the condition
+is TRUE</p></li>
+<li><p><code>value_if_false</code>: the value to assign if the condition
+is FALSE</p></li>
+</ul>
 <p>Now, let’s create a data frame using <code>trial_vec</code> and
 <code>trial_vec2</code>. Type the following code in a new code chunk and
 run.</p>
@@ -2925,24 +2996,31 @@ head(trial_df) # Prints only for first 6 rows of trial_df</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["trial_vec"],"name":[1],"type":["int"],"align":["right"]},{"label":["trial_vec2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"not two","_rn_":"1"},{"1":"NA","2":"NA","_rn_":"2"},{"1":"NA","2":"NA","_rn_":"3"},{"1":"1","2":"not two","_rn_":"4"},{"1":"2","2":"two","_rn_":"5"},{"1":"NA","2":"NA","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🚦 Are you ready? Remember to summon ?help whenever you need it.</p>
+<p>🗣 Comment: Describe <code>trial_df</code>.</p>
+<hr />
 </div>
-<div id="field-biology" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Field Biology</h2>
-<p>Dataset theme: Bird Band Observations 🐦</p>
+<div id="themes" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Themes</h2>
+<p>In Lesson 6, we created a bird band dataset. In this point boost
+activity, you will create a dataset that contains your own theme. Here’s
+what we did in the lesson.</p>
+<ol style="list-style-type: decimal">
+<li>Dataset theme: Bird Band Observations 🐦</li>
+</ol>
 <p>This theme simulates data from a field biologist observing a
 population of birds, where most are untagged, but a small number have
 been previously captured and marked with colored leg bands. This is a
 very common practice in ecology and behavioral studies.</p>
-<p>We’ll simulate a small inventory called <code>field_sightings</code>
+<p>We simulated a small inventory called <code>field_sightings</code>
 with two columns:</p>
 <ul>
-<li><p>Status – Describes whether the sighted bird is “Untagged” (the
-common case) or “Tagged” (the rare case).</p></li>
-<li><p>Band_Color – If a bird is untagged, the value is “None.” If it is
-tagged, the value is one of several possible band colors.</p></li>
+<li><p><code>Status</code> – Describes whether the sighted bird is
+“Untagged” (the common case) or “Tagged” (the rare case).</p></li>
+<li><p><code>Band_Color</code> – If a bird is untagged, the value is
+“None.” If it is tagged, the value is one of several possible band
+colors.</p></li>
 </ul>
-<p><strong>Copy and paste</strong> the following code in a new code
+<p><strong>Cope and paste</strong> the following code in a new code
 chunk.</p>
 <pre class="r"><code>set.seed(8)
 Status  &lt;- sample(c(rep(&quot;Untagged&quot;, 4168), rep(&quot;Tagged&quot;, 302)))
@@ -2954,54 +3032,241 @@ field_sightings &lt;- data.frame(Status, Band_Color)
 
 # View the data
 View(field_sightings)</code></pre>
-<p>🔍 Look deeper: Why does the code have line breaks with indentation?
-What is the advantage of indented line breaks? When might this be useful
-for you? Create a memo note, demonstrate learning skill(s) used.</p>
+<p>Here is another example of a theme.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Anthropology: Archaeological Pottery Shards 🏺</li>
+</ol>
+<p>This theme is based on an archaeological dig where researchers are
+cataloging pottery fragments (shards). Most shards are plain,
+undecorated earthenware, but a few special ones feature distinct
+decorative motifs.</p>
+<p>Column 1 (<code>Find_Type</code>): Differentiates between
+“Plain_Earthenware” (common) and “Decorated_Ware” (rare).</p>
+<p>Column 2 (<code>Motif</code>): Plain shards are “Undecorated.”
+Decorated ones can have various patterns like “Incised_Lines” or
+“Cross_Hatching.”</p>
+<pre class="r"><code>set.seed(8)
+Find_Type &lt;- sample(c(rep(&quot;Plain_Earthenware&quot;, 1642), rep(&quot;Decorated_Ware&quot;, 158)))
+Motif &lt;- ifelse(Find_Type == &quot;Plain_Earthenware&quot;, &quot;Undecorated&quot;, 
+                sample(c(&quot;Incised_Lines&quot;, &quot;Cross_Hatching&quot;, &quot;Punctate&quot;,
+                         &quot;Cord_Marked&quot;, &quot;Stamped_Circle&quot;, &quot;Wavy_Line&quot;, 
+                         &quot;Polychrome_Geometric&quot;, &quot;Zoned_Red&quot;), 
+                       length(Find_Type), replace = TRUE))
+sherd_inventory &lt;- data.frame(Find_Type, Motif)
+# View the data
+head(sherd_inventory)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Find_Type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Motif"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Plain_Earthenware","2":"Undecorated","_rn_":"1"},{"1":"Plain_Earthenware","2":"Undecorated","_rn_":"2"},{"1":"Decorated_Ware","2":"Incised_Lines","_rn_":"3"},{"1":"Plain_Earthenware","2":"Undecorated","_rn_":"4"},{"1":"Plain_Earthenware","2":"Undecorated","_rn_":"5"},{"1":"Plain_Earthenware","2":"Undecorated","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
-<div id="bracket-syntax" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Bracket Syntax</h1>
-<p>📖 Review Lesson 2 about indexing vectors <code>x[ ]</code>. Create a
-memo note, demonstrate learning skill(s) used. Create a memo note,
-demonstrate learning skill(s) used.</p>
-<p>In this lesson we will use the same syntax to subset data frames.</p>
+<div id="task-1" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> ▶ Task 1</h2>
+<p>Create you own, more complex data frame, with two long vectors of
+equal length. Be creative!</p>
+<ol style="list-style-type: decimal">
+<li>Describe Your Dataset</li>
+</ol>
+<p>First, compose a written description of your dataset’s theme. Your
+description should clearly explain the scenario you are simulating and
+what each of your two columns represents. Use the bird and pottery
+examples above as a guide.</p>
+<p>Theme: You are a <em>profession</em> collecting data on
+<code>Subject_Type</code>. Most of the <code>Subject_Type</code> you
+find are “Common_Type”, but occasionally you find a “Rare_Type”. For the
+common species, you just note its “Common_Attribute”. For the
+“Rare_Type”, you identify its “Specific_Attribute”.</p>
+<p>Column 1 (Subject_Type): “Common_Type” vs. “Rare_Type”</p>
+<p>Column 2 (Attribute_Name): “Common_Attribute” vs. a list of
+“Rare_Type”’s “Specific_Attribute” names like “Attribute_1”,
+“Attribute_2”, etc. (Your list can have a range of lengths).</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Use the R template below to create your dataset in R.</li>
+</ol>
+<pre class="r"><code># Step 1: Create the first vector for the main category
+# This vector, `Subject_Type`, will contain many &quot;Common_Type&quot; items
+# and a few &quot;Rare_Type&quot; items.
+Subject_Type &lt;- sample(c(rep(&quot;Common_Type&quot;, 1250), rep(&quot;Rare_Type&quot;, 95)))
+
+
+# Step 2: Create the second vector for the sub-category
+# This vector, `Attribute_Name`, gives a specific detail. The detail depends
+# on whether the item is common or rare.
+Attribute_Name &lt;- ifelse(Subject_Type == &quot;Common_Type&quot;, &quot;Common_Attribute&quot;, 
+                         sample(c(&quot;Attribute_1&quot;, &quot;Attribute_2&quot;, &quot;Attribute_3&quot;, 
+                                  &quot;Attribute_4&quot;, &quot;Attribute_5&quot;, &quot;Attribute_6&quot;), 
+                                length(Subject_Type), replace = TRUE))
+
+
+# Step 3: Combine the vectors into a data frame
+# Give your final data frame a descriptive name by replacing `your_dataframe`.
+your_dataframe &lt;- data.frame(Subject_Type, Attribute_Name)
+
+
+# Step 4: View the first few rows of your data frame
+head(your_dataframe)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Subject_Type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Attribute_Name"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Common_Type","2":"Common_Attribute","_rn_":"1"},{"1":"Common_Type","2":"Common_Attribute","_rn_":"2"},{"1":"Common_Type","2":"Common_Attribute","_rn_":"3"},{"1":"Common_Type","2":"Common_Attribute","_rn_":"4"},{"1":"Rare_Type","2":"Attribute_3","_rn_":"5"},{"1":"Common_Type","2":"Common_Attribute","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="numeric-column" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Numeric Column</h1>
+<p>In your practice dataset, you’ll want to add numeric values. Here is
+an example using the Bird Band Observations 🐦 theme.</p>
+<p><strong>Tagged Birds: The Release Cohorts</strong></p>
+<p>In conservation, it’s common for birds bred in captivity to be
+released into the wild in groups at different times. Each group is
+called a cohort, and they are often marked with a specific color band to
+identify which release program and year they belong to.</p>
 <ul>
-<li><p><code>x</code> is the object (vector, data frame, etc.)</p></li>
-<li><p><code>[ ]</code> is the bracket operator for subsetting</p></li>
-<li><p><code>x[rows, cols]</code> extracts specific rows and columns
-from <code>x</code>.</p></li>
-<li><p>rows and cols can be: indices (<code>1, 3:5</code>), names
-(<code>&quot;Band_Color&quot;</code>), or a logical vector / expression
-(<code>Status == &quot;Tagged&quot;</code>).</p></li>
+<li>Age and Band Color are Linked: The code establishes a direct link
+between a bird’s band color and its age. The <code>cohort_means</code>
+vector defines the average age, in months, for each colored cohort at
+the time of the field study.
+<ul>
+<li>Red=14: The red-banded birds are the youngest cohort, with an
+average age of 14 months. They were likely released most recently.</li>
+<li>White=56: The white-banded birds are the oldest cohort, with an
+average age of 56 months (about 4.5 years). They were released much
+earlier than the red-banded group.</li>
+</ul></li>
+<li>Simulating Age: For each tagged bird, the code generates a random
+age from a normal distribution centered on the mean age for its specific
+color. This creates a realistic spread of ages within each cohort. All
+tagged birds are simulated to be at least 12 months old, indicating they
+are adults that were part of these established release programs.</li>
 </ul>
-<p>Type the following code in a new code chunk and run.</p>
-<pre class="r"><code>field_sightings[1:3, ]  # ✅ Shows full row extraction</code></pre>
+<p><strong>Untagged Birds: The Wild Population</strong></p>
+<p>The untagged birds represent the general wild population with unknown
+origins.</p>
+<ul>
+<li><p>Unknown and Younger: Since their history is unknown, they are
+simulated as a younger group. The code assigns them a random age between
+0 and 11 months, with the average being around 6 months.</p></li>
+<li><p>Biological Assumption: This reflects a natural population, which
+typically includes a large number of juveniles and sub-adults that have
+not yet been captured and banded.</p></li>
+</ul>
+<p><strong>Cope and paste</strong> the following code in a new code
+chunk.</p>
+<pre class="r"><code># cohort_means
+cohort_means &lt;- c(Red=14, Blue=20, Green=26, Yellow=32, Silver=38, Black=44, Orange=50, White=56)
+cohort_means</code></pre>
+<pre><code>##    Red   Blue  Green Yellow Silver  Black Orange  White 
+##     14     20     26     32     38     44     50     56</code></pre>
+<p><strong>Cope and paste</strong> the following code in a new code
+chunk. The code below will be explained in later lessons.</p>
+<pre class="r"><code># Random assignment within normal bell curve
+field_sightings$Age_Months &lt;- round(ifelse(field_sightings$Status==&quot;Untagged&quot;,
+  pmin(pmax(rnorm(nrow(field_sightings), 6, 3), 0), 11),
+  pmax(12, rnorm(nrow(field_sightings),
+                 mean = replace(cohort_means[field_sightings$Band_Color],
+                                is.na(cohort_means[field_sightings$Band_Color]), 20),
+                 sd = 3))))
+
+View(field_sightings)</code></pre>
+<div id="task-2" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> ▶ Task 2</h2>
+<ol style="list-style-type: decimal">
+<li>Describe Your Numeric Column</li>
+</ol>
+<p>First, write a brief description of what your new numeric column
+represents. Explain how its values relate to the two categories in your
+first column (<code>Common_Type</code> vs. <code>Rare_Type</code>),
+similar to the explanation for the bird example.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Fill Out the Template</li>
+</ol>
+<p>Use the R code template below to add the numeric column to your data
+frame. Read the comments (#) to understand which parts you need to
+change.</p>
+<pre class="r"><code># Step 1: Create the vector of means for your rare items
+# This named vector links each of your &quot;Rare_Type&quot; attributes to an average numeric value.
+# TODO: The names (&quot;Attribute_1&quot;, &quot;Attribute_2&quot;, etc.) MUST EXACTLY MATCH the rare
+#       attribute names you created in Task 1.
+# TODO: Replace the numbers (14, 20, 26, etc.) with the mean values that make
+#       sense for your theme.
+attribute_means &lt;- c(Attribute_1=14, Attribute_2=20, Attribute_3=26,
+                     Attribute_4=32, Attribute_5=38, Attribute_6=44)
+attribute_means</code></pre>
+<pre><code>## Attribute_1 Attribute_2 Attribute_3 Attribute_4 Attribute_5 Attribute_6 
+##          14          20          26          32          38          44</code></pre>
+<pre class="r"><code># Step 2: Add the new numeric column to your data frame 
+
+# This code creates the new column using ifelse(). It assigns one set of numeric
+# values to your &quot;Common_Type&quot; and a different set to your &quot;Rare_Type&quot;.
+
+# TODO: Replace `your_dataframe` with the name of your data frame from Task 1.
+# TODO: Replace `Numeric_Column_Name` with a descriptive name for your new column.
+# TODO: Make sure `Subject_Type == &quot;Common_Type&quot;` matches the names from your data frame.
+
+# For the &quot;Common_Type&quot; (the first rnorm line):
+# TODO: Change the mean (6) and standard deviation (3) to fit your theme.
+# TODO: Change the min (0) and max (11) values for the common items.
+
+# For the &quot;Rare_Type&quot; (the second rnorm line):
+# TODO: Change the minimum value (12) for the rare items. This should be higher
+#       than the max value for your common items.
+# TODO: Make sure the code uses `attribute_means[your_dataframe$Attribute_Name]` to look up the correct mean.
+
+your_dataframe$Numeric_Column_Name &lt;- round(ifelse(your_dataframe$Subject_Type == &quot;Common_Type&quot;,
+  pmin(pmax(rnorm(nrow(your_dataframe), 6, 3), 0), 11),
+  pmax(12, rnorm(nrow(your_dataframe),
+                 mean = replace(attribute_means[your_dataframe$Attribute_Name],
+                                is.na(attribute_means[your_dataframe$Attribute_Name]), 20),
+                 sd = 3))))
+
+# Step 3: View your updated data frame
+head(your_dataframe)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None","_rn_":"1"},{"1":"Untagged","2":"None","_rn_":"2"},{"1":"Untagged","2":"None","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<pre class="r"><code># R&#39;s subsetting format:  x[rows, columns]
-field_sightings[1:3, 1]  # ✅ Shows first three rows of first column</code></pre>
-<pre><code>## [1] &quot;Untagged&quot; &quot;Untagged&quot; &quot;Untagged&quot;</code></pre>
-<pre class="r"><code>field_sightings[1:3, c(1, 2)]  # ✅ Shows first three rows of first and second</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None","_rn_":"1"},{"1":"Untagged","2":"None","_rn_":"2"},{"1":"Untagged","2":"None","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Subject_Type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Attribute_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Numeric_Column_Name"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Common_Type","2":"Common_Attribute","3":"3","_rn_":"1"},{"1":"Common_Type","2":"Common_Attribute","3":"8","_rn_":"2"},{"1":"Common_Type","2":"Common_Attribute","3":"5","_rn_":"3"},{"1":"Common_Type","2":"Common_Attribute","3":"10","_rn_":"4"},{"1":"Rare_Type","2":"Attribute_3","3":"28","_rn_":"5"},{"1":"Common_Type","2":"Common_Attribute","3":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
-<div id="subsetting" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Subsetting</h1>
+</div>
+<div id="vs." class="section level1" number="6">
+<h1><span class="header-section-number">6</span> <code>$</code>
+vs. <code>[ ]</code></h1>
+<div id="subsetting" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Subsetting</h2>
 <p>We’ll start with <code>trial_df</code> from earlier. Type the
 following code in a new code chunk and run.</p>
-<pre class="r"><code># Subsetting
-# trial_df[ trial_df[ , &quot;trial_vec&quot;] == 2 , ] </code></pre>
-<pre class="r"><code>direct_subset &lt;- trial_df[ trial_df[ , &quot;trial_vec&quot;] == 2 , ]
-head(direct_subset)</code></pre>
+<pre class="r"><code>trial_df[trial_df$trial_vec == 2, ]</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["trial_vec"],"name":[1],"type":["int"],"align":["right"]},{"label":["trial_vec2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"NA","2":"NA","_rn_":"__NA__"},{"1":"NA","2":"NA","_rn_":"NA.1"},{"1":"2","2":"two","_rn_":"5"},{"1":"NA","2":"NA","_rn_":"NA.2"},{"1":"NA","2":"NA","_rn_":"NA.3"},{"1":"NA","2":"NA","_rn_":"NA.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["trial_vec"],"name":[1],"type":["int"],"align":["right"]},{"label":["trial_vec2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"NA","2":"NA","_rn_":"__NA__"},{"1":"NA","2":"NA","_rn_":"NA.1"},{"1":"2","2":"two","_rn_":"5"},{"1":"NA","2":"NA","_rn_":"NA.2"},{"1":"NA","2":"NA","_rn_":"NA.3"},{"1":"NA","2":"NA","_rn_":"NA.4"},{"1":"2","2":"two","_rn_":"10"},{"1":"NA","2":"NA","_rn_":"NA.5"},{"1":"NA","2":"NA","_rn_":"NA.6"},{"1":"2","2":"two","_rn_":"16"},{"1":"NA","2":"NA","_rn_":"NA.7"},{"1":"NA","2":"NA","_rn_":"NA.8"},{"1":"2","2":"two","_rn_":"19"},{"1":"NA","2":"NA","_rn_":"NA.9"},{"1":"NA","2":"NA","_rn_":"NA.10"},{"1":"NA","2":"NA","_rn_":"NA.11"},{"1":"NA","2":"NA","_rn_":"NA.12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># Test direct subsetting (will include NA rows)
+direct_subset &lt;- trial_df[trial_df$trial_vec == 2, ]
+print(direct_subset)</code></pre>
+<pre><code>##       trial_vec trial_vec2
+## NA           NA       &lt;NA&gt;
+## NA.1         NA       &lt;NA&gt;
+## 5             2        two
+## NA.2         NA       &lt;NA&gt;
+## NA.3         NA       &lt;NA&gt;
+## NA.4         NA       &lt;NA&gt;
+## 10            2        two
+## NA.5         NA       &lt;NA&gt;
+## NA.6         NA       &lt;NA&gt;
+## 16            2        two
+## NA.7         NA       &lt;NA&gt;
+## NA.8         NA       &lt;NA&gt;
+## 19            2        two
+## NA.9         NA       &lt;NA&gt;
+## NA.10        NA       &lt;NA&gt;
+## NA.11        NA       &lt;NA&gt;
+## NA.12        NA       &lt;NA&gt;</code></pre>
+<pre class="r"><code>trial_df[trial_df$trial_vec == 2, ]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["trial_vec"],"name":[1],"type":["int"],"align":["right"]},{"label":["trial_vec2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"NA","2":"NA","_rn_":"__NA__"},{"1":"NA","2":"NA","_rn_":"NA.1"},{"1":"2","2":"two","_rn_":"5"},{"1":"NA","2":"NA","_rn_":"NA.2"},{"1":"NA","2":"NA","_rn_":"NA.3"},{"1":"NA","2":"NA","_rn_":"NA.4"},{"1":"2","2":"two","_rn_":"10"},{"1":"NA","2":"NA","_rn_":"NA.5"},{"1":"NA","2":"NA","_rn_":"NA.6"},{"1":"2","2":"two","_rn_":"16"},{"1":"NA","2":"NA","_rn_":"NA.7"},{"1":"NA","2":"NA","_rn_":"NA.8"},{"1":"2","2":"two","_rn_":"19"},{"1":"NA","2":"NA","_rn_":"NA.9"},{"1":"NA","2":"NA","_rn_":"NA.10"},{"1":"NA","2":"NA","_rn_":"NA.11"},{"1":"NA","2":"NA","_rn_":"NA.12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>📍 Identify: which rows are extracted?</p>
@@ -3012,32 +3277,20 @@ head(direct_subset)</code></pre>
 <li><p>NA (NA == 2)</p></li>
 </ul>
 <p>🎯 <strong>Goal: isolate only the tagged birds.</strong></p>
-<p>⚖️ <strong>Step 1</strong> – create a logical test using
-<code>[ ]</code>. Type the following code in a new code chunk and
+<p>⚖️ <strong>Step 1</strong> – create a logical test: <code>[ ]</code>
+vs. <code>$</code>. Type the following code in a new code chunk and
 run.</p>
-<pre class="r"><code># Step 1 — Create and store the logical test (no big printout)
-logical_test &lt;- field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot;
-
-# un-comment the line below to see the object logical_test
-# print(logical_test) #prints a long list of values
-
-# Instead, lets make a quick table of logical_test
-table(logical_test, useNA = &quot;ifany&quot;)   # counts of TRUE / FALSE / NA</code></pre>
-<pre><code>## logical_test
-## FALSE  TRUE 
-##  4168   302</code></pre>
+<pre class="r"><code>field_sightings[field_sightings$Status == &quot;Tagged&quot;, ]</code></pre>
+<p><code>field_sightings[field_sightings$Status == &quot;Tagged&quot;, ]</code>
+returns the rows where the condition is TRUE, along with all
+columns.</p>
+<pre class="r"><code>field_sightings$Status == &quot;Tagged&quot;            # TRUE/FALSE for each row</code></pre>
+<p><code>field_sightings$Status == &quot;Tagged&quot;</code> returns a logical
+vector.</p>
 <p>📊 <strong>Step 2</strong> – Store subset of
 <code>field_sightings</code> data frame as a new data frame. Type the
 following code in a new code chunk and run.</p>
-<pre class="r"><code># Step 2 — Store the subset as a new data frame
-tagged_only &lt;- field_sightings[ field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot; , ]
-
-head(tagged_only)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Orange","_rn_":"18"},{"1":"Tagged","2":"Silver","_rn_":"22"},{"1":"Tagged","2":"Green","_rn_":"31"},{"1":"Tagged","2":"Black","_rn_":"41"},{"1":"Tagged","2":"Silver","_rn_":"50"},{"1":"Tagged","2":"Blue","_rn_":"66"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<pre class="r"><code>tagged_only &lt;- field_sightings[field_sightings$Status == &quot;Tagged&quot;, ]</code></pre>
 <p>🔍 Look deeper: How many <em>rows</em> did we keep? How could you
 check the number of rows in a data set? Create a memo note, demonstrate
 learning skill(s) used, including method you used to answer the
@@ -3047,20 +3300,16 @@ question.</p>
 print(n_tagged)</code></pre>
 <pre><code>## [1] 302</code></pre>
 <p>And 302 makes sense because of this code that helped create the
-dataset replicated “Tagged” 302 times.</p>
-<pre class="r"><code># Confirm the filter worked
-all(tagged_only[ , &quot;Status&quot;] == &quot;Tagged&quot;)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>unique(tagged_only[ , &quot;Status&quot;])</code></pre>
-<pre><code>## [1] &quot;Tagged&quot;</code></pre>
+dataset:
+<code>Status  &lt;- sample(c(rep(&quot;Untagged&quot;, 4168), rep(&quot;Tagged&quot;, 302)))</code></p>
 </div>
-<div id="extraction" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Extraction</h1>
+<div id="extraction" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Extraction</h2>
 <p>Using <code>which()</code> is a strategy to handle potential NA
 values in your data. When the test could include NA, wrap it in
 <code>which()</code> to drop unknowns.</p>
 <p>Type the following R script in your document script and run.</p>
-<pre class="r"><code>rows_without_na &lt;- which(trial_df[ , &quot;trial_vec&quot;] == 2)
+<pre class="r"><code>rows_without_na &lt;- which(trial_df$trial_vec == 2)
 
 which_subset &lt;- trial_df[rows_without_na, ]
 
@@ -3074,38 +3323,45 @@ print(which_subset)</code></pre>
 <code>print(which_subset)</code> and <code>which_subset</code>? Create a
 memo note, demonstrate learning skill(s) used.</p>
 <p>When you use a direct logical condition like
-<code>trial_df[ , &quot;trial_vec&quot;] == 2</code>, any NA values produce NA in
-the logical vector. Wrapping the condition in <code>which()</code>
-returns only the row positions where the test is TRUE, effectively
-dropping rows where the comparison is NA.</p>
-<pre class="r"><code># Two conditions
-row_idx &lt;- which(field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot; &amp;
-                  field_sightings[ , &quot;Band_Color&quot;] == &quot;Blue&quot;)
-
-subset_blue &lt;- field_sightings[row_idx, ]</code></pre>
-<p><code>row_idx</code> stores the row positions where both conditions
-are <code>TRUE</code> - <code>Status == &quot;Tagged&quot;</code> -
-<code>Band_Color == &quot;Blue&quot;</code></p>
-<p>Wrapping the test in <code>which()</code> returns only those
-positions (and automatically drops any rows where the comparison was
-NA).</p>
-<p><code>subset_blue &lt;- field_sightings[row_idx, ]</code> then keeps
-all columns but only the matching rows, preserving the original row
-order and row names.</p>
-<p>Let’s verify that it worked.</p>
-<pre class="r"><code>head(subset_blue)</code></pre>
+<code>trial_df$trial_vec == 2</code>, any <code>NA</code> values in the
+trial_vec column will result in <code>NA</code> in the logical vector.
+You get only the indices where the condition is <code>TRUE</code>,
+effectively dropping/ignoring any rows where the comparison resulted in
+<code>NA</code>. You get a result that excludes rows with
+<code>NA</code> in the trial_vec column.</p>
+<p>Type the following code in a new code chunk and run.</p>
+<pre class="r"><code>row_idx &lt;- which(field_sightings[,&quot;Status&quot;] == &quot;Tagged&quot; &amp; field_sightings[,&quot;Band_Color&quot;] == &quot;Blue&quot;)</code></pre>
+<p>The bracket notation <code>[,&quot;column_name&quot;]</code> uses matrix-style
+indexing.</p>
+<p>You can access the same columns using <code>$</code> notation where
+<code>field_sightings$Status</code> replaces
+<code>field_sightings[,&quot;Status&quot;]</code> and
+<code>field_sightings$Band_Color</code> replaces
+<code>field_sightings[,&quot;Band_Color&quot;]</code>. Type the following code in
+a new code chunk and run.</p>
+<pre class="r"><code>row_idx2 &lt;- which(field_sightings$Status == &quot;Tagged&quot; &amp; field_sightings$Band_Color == &quot;Blue&quot;)</code></pre>
+<p>⚠️ Common Pain Point: Using <code>which()</code> but forgetting to
+subset columns. Type the following code in a new code chunk and run.</p>
+<pre class="r"><code>subset_blue &lt;- field_sightings[row_idx, ]
+head(subset_blue)  # ✅ Practice Task 5 logic with known data</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Blue","_rn_":"66"},{"1":"Tagged","2":"Blue","_rn_":"284"},{"1":"Tagged","2":"Blue","_rn_":"430"},{"1":"Tagged","2":"Blue","_rn_":"675"},{"1":"Tagged","2":"Blue","_rn_":"700"},{"1":"Tagged","2":"Blue","_rn_":"751"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Age_Months"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Tagged","2":"Blue","3":"13","_rn_":"66"},{"1":"Tagged","2":"Blue","3":"25","_rn_":"284"},{"1":"Tagged","2":"Blue","3":"16","_rn_":"430"},{"1":"Tagged","2":"Blue","3":"25","_rn_":"675"},{"1":"Tagged","2":"Blue","3":"21","_rn_":"700"},{"1":"Tagged","2":"Blue","3":"25","_rn_":"751"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🗣 Comment (respond in one or two sentences): What changed in the data
-after subsetting (rows, columns, values)? What stayed the same (column
-names, column order, data types)?</p>
-<div id="selecting-columns" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Selecting
-Columns</h2>
-<p>🧭 Select columns by name or by index using indexing.</p>
+<pre class="r"><code>head(x = subset_blue, n= 3) </code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Age_Months"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Tagged","2":"Blue","3":"13","_rn_":"66"},{"1":"Tagged","2":"Blue","3":"25","_rn_":"284"},{"1":"Tagged","2":"Blue","3":"16","_rn_":"430"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>⚡ Explain the function <code>head()</code> and how it works with the
+<code>n</code> argument. Create a memo note, demonstrate learning
+skill(s) used.</p>
+<div id="selecting-columns" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Selecting
+Columns</h3>
+<p>🧭 Method 1: Select columns by name using indexing.</p>
 <p>Recall that columns can be chosen by index or name.</p>
 <ul>
 <li><p>By index: <code>field_sightings[ , 2]</code> (second
@@ -3120,90 +3376,79 @@ Type the following code in a new code chunk and run.</p>
 <pre><code>##  [1] &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot; &quot;None&quot;</code></pre>
 <p>🤔 Why did we use <code>head()</code> in the first chunk and not in
 the second? Create a memo note, demonstrate learning skill(s) used.</p>
-</div>
-<div id="selecting-multiple-columns" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Selecting Multiple
-Columns</h2>
-<ol style="list-style-type: decimal">
-<li><p>Compute a filtered row index with which(), then</p></li>
-<li><p>Select multiple columns with df[row_idx, c(“colA”,“colB”,
-…)].</p></li>
-</ol>
-<pre class="r"><code>#  1) Row index with two conditions
-row_idx &lt;- which(
-  field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot; &amp;
-  (field_sightings[ , &quot;Band_Color&quot;] == &quot;Blue&quot; |
-   field_sightings[ , &quot;Band_Color&quot;] == &quot;White&quot;)
-)
+<p>🧭 Method 2: Select columns by name using <code>$</code>. Type the
+following code in a new code chunk and run.</p>
+<pre class="r"><code>Untagged_Birds &lt;- field_sightings$Band_Color[field_sightings$Status == &quot;Untagged&quot;]</code></pre>
+<p>This creates a vector called <code>Untagged_Birds</code> that
+contains only the band colors from rows where the status is
+<code>&quot;Untagged&quot;</code>. Type the following code in a new code chunk and
+run.</p>
+<pre class="r"><code>Tagged_Birds &lt;- field_sightings$Band_Color[field_sightings$Status == &quot;Tagged&quot;]</code></pre>
+<p>It’s particularly useful when you want to:</p>
+<ul>
+<li><p>Analyze the distribution of <code>&quot;Band_Colors&quot;</code> within
+each <code>&quot;Status&quot;</code>.</p></li>
+<li><p>Compare properties between different categories.</p></li>
+<li><p>Create separate vectors for further analysis by
+category.</p></li>
+</ul>
+<p>This creates a vector called <code>Tagged_Birds</code> with only band
+colors from tagged birds rows.</p>
+<p>🎉 Bonus: Two conditions + column subset</p>
+<p>Use <code>field_sightings</code>: Pick band colors that are
+<code>White</code> and <code>Status = Tagged</code>. Type the following
+code in a new code chunk and run.</p>
+<pre class="r"><code>tagged_data &lt;- field_sightings[field_sightings$Status == &quot;Tagged&quot;, ]
 
-# 2) Apply row + multi-column selection (select multiple columns by NAME)
-tagged_blue_white &lt;- field_sightings[row_idx, c(&quot;Status&quot;, &quot;Band_Color&quot;)]
+white_rows &lt;- which(tagged_data$Band_Color == &quot;White&quot;)
 
-head(tagged_blue_white)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Blue","_rn_":"66"},{"1":"Tagged","2":"White","_rn_":"84"},{"1":"Tagged","2":"White","_rn_":"238"},{"1":"Tagged","2":"White","_rn_":"247"},{"1":"Tagged","2":"Blue","_rn_":"284"},{"1":"Tagged","2":"White","_rn_":"397"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<p>🗣 Comment: What changed after subsetting—rows, columns, or both?
-Verify the filter worked: do all rows have Status == “Tagged” and
-Band_Color in c(“Blue”,“White”)? About how many rows remain compared to
-the full field_sightings? Why is that number smaller?</p>
+white_tagged &lt;- tagged_data[white_rows, ]</code></pre>
 </div>
 </div>
-<div id="insertion" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Insertion</h1>
+<div id="insertion" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Insertion</h2>
 <p>Insertion is the process of adding or modifying values in a data
 frame. You can insert new values or overwrite existing ones.</p>
-<div id="overwrite-values" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Overwrite Values</h2>
+<div id="overwrite-values" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Overwrite
+Values</h3>
 <p>Suppose we decide to rename “Untagged” to “Wild_Hatch” in the Status
 column.</p>
 <p>🌟 Good practice: make a backup first! Type the following code in a
 new code chunk and run.</p>
 <pre class="r"><code># Part 1
 reintroduction &lt;- field_sightings          # copy
-indices_untagged &lt;- which(field_sightings[ , &quot;Status&quot;] == &quot;Untagged&quot;)
+indices_untagged &lt;- which(field_sightings$Status == &quot;Untagged&quot;)
 reintroduction[indices_untagged, &quot;Status&quot;] &lt;- &quot;Wild_Hatch&quot;</code></pre>
 <p>👀 Check-in: Look at the format of that code:
-<code>x[rows, column] &lt;- value</code>. Here, we assign the character
-value <code>&quot;Wild_Hatch&quot;</code> into reintroduction at the rows given by
-<code>indices_untagged</code> and the <code>&quot;Status&quot;</code> column.</p>
+<code>x[row, column] &lt;- value</code>. The <code>&lt;-</code> operator
+is not just for assigning a value to a variable name.
+<code>&lt;- Wild_Hatch</code> is assigned as the new value
+<code>&quot;Wild_Hatch&quot;</code> to replace the existing value
+<code>&quot;Untagged&quot;</code>. The column name remains
+<code>&quot;Status&quot;</code>.</p>
 <pre class="r"><code># Verify the change
-unique(reintroduction[ , &quot;Status&quot;])</code></pre>
-<pre><code>## [1] &quot;Wild_Hatch&quot; &quot;Tagged&quot;</code></pre>
+unique(reintroduction$Band_Color)</code></pre>
+<pre><code>## [1] &quot;None&quot;   &quot;Orange&quot; &quot;Silver&quot; &quot;Green&quot;  &quot;Black&quot;  &quot;Blue&quot;   &quot;White&quot;  &quot;Red&quot;   
+## [9] &quot;Yellow&quot;</code></pre>
 <p>🗣 Comment: Why is <code>field_sightings</code> unchanged while
 editing <code>reintroduction</code>? Why is this good practice? Create a
 memo note, demonstrate learning skill(s) used.</p>
-<div id="renaming-columns" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Renaming
-columns</h3>
-<pre class="r"><code># Part 2 — Add a new column pattern
-reintroduction[ , &quot;Tag_Flag&quot;] &lt;- ifelse(
-  reintroduction[ , &quot;Status&quot;] == &quot;Tagged&quot;, &quot;Yes&quot;, &quot;No&quot;
-)
-head(reintroduction[ , c(&quot;Status&quot;, &quot;Tag_Flag&quot;)])</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Wild_Hatch","2":"No","_rn_":"1"},{"1":"Wild_Hatch","2":"No","_rn_":"2"},{"1":"Wild_Hatch","2":"No","_rn_":"3"},{"1":"Wild_Hatch","2":"No","_rn_":"4"},{"1":"Wild_Hatch","2":"No","_rn_":"5"},{"1":"Wild_Hatch","2":"No","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
 </div>
 </div>
-</div>
-</div>
-<div id="renaming-columns-1" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Renaming Columns</h1>
+<div id="renaming-columns" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Renaming Columns</h2>
 <p>Example 1: To rename a column, you can use the
 <code>colnames()</code> function. Type the following code in a new code
 chunk and run.</p>
 <pre class="r"><code># Part 2
 names(reintroduction)</code></pre>
-<pre><code>## [1] &quot;Status&quot;     &quot;Band_Color&quot; &quot;Tag_Flag&quot;</code></pre>
-<pre class="r"><code>colnames(reintroduction) &lt;- c(&quot;Band_Status&quot;, &quot;Breeding_Cohort&quot;, &quot;Tag_Flag&quot;)
+<pre><code>## [1] &quot;Status&quot;     &quot;Band_Color&quot; &quot;Age_Months&quot;</code></pre>
+<pre class="r"><code>colnames(reintroduction) &lt;- c(&quot;Band_Status&quot;, &quot;Breeding_Cohort&quot;)
 head(reintroduction)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Band_Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Breeding_Cohort"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"1"},{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"2"},{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"3"},{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"4"},{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"5"},{"1":"Wild_Hatch","2":"None","3":"No","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Band_Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Breeding_Cohort"],"name":[2],"type":["chr"],"align":["left"]},{"label":[null],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Wild_Hatch","2":"None","3":"11","_rn_":"1"},{"1":"Wild_Hatch","2":"None","3":"5","_rn_":"2"},{"1":"Wild_Hatch","2":"None","3":"5","_rn_":"3"},{"1":"Wild_Hatch","2":"None","3":"5","_rn_":"4"},{"1":"Wild_Hatch","2":"None","3":"10","_rn_":"5"},{"1":"Wild_Hatch","2":"None","3":"3","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>📍 Identify: Which columns are renamed? 🔍 Look deeper: Create a list
@@ -3218,156 +3463,50 @@ names(reintroduction2)[which(names(reintroduction2) == &quot;Band_Color&quot;)] 
 <pre class="r"><code>head(reintroduction2)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Band_Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Breeding_Cohort"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None","_rn_":"1"},{"1":"Untagged","2":"None","_rn_":"2"},{"1":"Untagged","2":"None","_rn_":"3"},{"1":"Untagged","2":"None","_rn_":"4"},{"1":"Untagged","2":"None","_rn_":"5"},{"1":"Untagged","2":"None","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Band_Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Breeding_Cohort"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Age_Months"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Untagged","2":"None","3":"11","_rn_":"1"},{"1":"Untagged","2":"None","3":"5","_rn_":"2"},{"1":"Untagged","2":"None","3":"5","_rn_":"3"},{"1":"Untagged","2":"None","3":"5","_rn_":"4"},{"1":"Untagged","2":"None","3":"10","_rn_":"5"},{"1":"Untagged","2":"None","3":"3","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
-<div id="assignment" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> ➤ Assignment</h1>
-<p>Now it’s your turn to practice creating and using vector objects.
-Follow the tasks below to complete part of the <strong>technical skill
-practice assignment</strong>.</p>
-<ol style="list-style-type: decimal">
-<li><p>Work through each task in order. Replace the ___ placeholder with
-your code or short written answer.</p></li>
-<li><p>Run each completed line to be sure no errors appear and objects
-show in the Environment.</p></li>
-<li><p>When finished, save your workspace and submit this R Markdown
-file (RMD) plus the .RData file.</p></li>
-</ol>
-<div id="task-0" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Task 0</h2>
-<p>🚗 Setup: Load the built-in data set <code>mtcars</code> and take a
-quick look. Identify what the columns contain and meaning of that
-content.</p>
-<pre class="r"><code>data(&quot;mtcars&quot;)   # already in memory but this keeps the workflow explicit
-?mtcars        # help file for variable descriptions
-View(mtcars)   # spreadsheet view (optional)</code></pre>
-<p>🗣 Comment: Explain R’s basic subsetting template. Hint: It looks like
-<code>data[ rows , columns ]</code></p>
 </div>
-<div id="task-1" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 1</h2>
-<p>⚖️ Manual vs. Automatic</p>
-<ol style="list-style-type: decimal">
-<li>Create <code>Manual_Cars</code>: all rows where <code>am == 1</code>
-(manual), all columns.</li>
-</ol>
-<pre class="r"><code>Manual_Cars &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Use <code>nrow()</code> to record how many manual cars there are
-(store in <code>n_manual</code>).</li>
-</ol>
-<pre class="r"><code>n_manual &lt;- ___ # numeric count</code></pre>
-</div>
-<div id="task-2" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Task 2</h2>
-<p>🔍 MPG by Cylinder</p>
-<p>Extract mpg for each cylinder group into separate objects. Hint:
-Repeat the bracket pattern</p>
-<pre class="r"><code>Four_Cyl_MPG  &lt;- mtcars[ mtcars[ , &quot;cyl&quot;] == 4 , 
-Six_Cyl_MPG   &lt;- ___
-Eight_Cyl_MPG &lt;- ___</code></pre>
-</div>
-<div id="task-3" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Task 3</h2>
-<p>🧐 Analyze Fuel Efficiency</p>
-<ol style="list-style-type: decimal">
-<li>Compute the mean mpg for each object.</li>
-</ol>
-<pre class="r"><code>mean_4  &lt;- mean(___)
-mean_6  &lt;- mean(___)
-mean_8  &lt;- mean(___)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>🗣 Comment: Which cylinder group is most fuel‑efficient? Answer in
-one word or number.</li>
-</ol>
-<p>Most efficient: ___</p>
-</div>
-<div id="task-4" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Task 4</h2>
-<p>🚦 Safe vs. Direct Editing</p>
-<ol style="list-style-type: decimal">
-<li>Make a safe copy of <code>mtcars</code> called
-<code>cars_safe</code>.</li>
-</ol>
-<pre class="r"><code>cars_safe &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Rename the <code>&#39;am&#39;</code> column in <code>cars_safe</code> to
-<code>&quot;Transmission_Type&quot;</code>.</li>
-</ol>
-<pre class="r"><code>colnames(cars_safe)[___] &lt;- ___</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>🗣 Comment: Explain <em>why</em> working on cars_safe (a copy) is
-safer than editing mtcars directly.</li>
-</ol>
-<p>Answer: ___</p>
-</div>
-<div id="task-5" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Task 5</h2>
-<p>📝 Practice <code>which()</code></p>
-<p>Using <code>cars_safe</code>, extract the rows for V‑shaped engines
-(<code>vs == 0</code>) <em>and</em> horsepower (<code>hp</code>) above
-<code>150</code>. Use <code>which()</code> for the row indices and keep
-only <code>mpg</code>, <code>hp</code>, and <code>cyl</code> columns.
-Name the object <code>hi_power_v</code>.</p>
-<ol style="list-style-type: decimal">
-<li>Create <code>row_idx</code> for the condition above.</li>
-</ol>
+<div id="replace-missing-values" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Replace Missing
+Values</h1>
+<p>In lesson 4, you learned about handling missing values. Now, let’s
+practice replacing missing values in a data frame. Recall that when a
+numeric vector has gaps, you can impute with the mean.</p>
+<p>Type the following code in a new code chunk and run.</p>
+<pre class="r"><code># Before
+trial_vec</code></pre>
+<pre><code>##  [1]  1 NA NA  1  2 NA NA  3 NA  2  3  3  1 NA NA  2 NA NA  2 NA  1 NA NA NA  1</code></pre>
+<pre class="r"><code>trial_vec[is.na(trial_vec)] &lt;- mean(trial_vec, na.rm = TRUE)</code></pre>
+<p>The &lt;- operator is not just for assigning a value to a variable
+name. Here the <code>&lt;-</code> operator is used to assign the mean of
+the non-NA values`</p>
+<p><strong>Left side of the assignment</strong>:
+<code>trial_vec[is.na(trial_vec)]</code></p>
 <ul>
-<li><p><code>cars_safe[ , &quot;vs&quot;]</code> ? <code>0</code></p></li>
-<li><p><code>&amp;</code></p></li>
-<li><p><code>cars_safe[ , &quot;hp&quot;]</code> ? <code>150</code></p></li>
-<li><p><code>cars_safe[row_idx , c(&quot;mpg&quot;,&quot;hp&quot;,&quot;cyl&quot;)]</code></p></li>
+<li><p><code>x[ ]</code> index of a vector: Recall we can use
+“<code>:</code>” like <code>1:3</code></p></li>
+<li><p>index value is <code>is.na(trial_vec)</code> making logical
+vector (<code>TRUE</code>/<code>FALSE</code>) marking which elements are
+<code>NA</code>.</p></li>
 </ul>
-<pre class="r"><code>row_idx      &lt;- ___</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Subset cars_safe with <code>row_idx</code> and columns
-<code>mpg</code>, <code>hp</code>, <code>cyl</code>. Name object
-<code>hi_power_v</code>.</li>
-</ol>
-<pre class="r"><code>hi_power_v   &lt;- ___
-head(hi_power_v)</code></pre>
-</div>
-<div id="task-6" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Task 6</h2>
-<p>🛠 Insertion Example</p>
-<p>Add a new column called <code>&quot;Efficiency_Class&quot;</code> to
-<code>cars_safe</code>. Label <code>&quot;High&quot;</code> if
-<code>mpg &gt;= 25</code>, <code>&quot;Low&quot;</code> otherwise.</p>
-<p>Hint: use <code>ifelse()</code> and
-<code>cars_safe[ , &quot;mpg&quot;] &gt;= 25, &quot;?&quot;, &quot;?&quot;</code></p>
-<pre class="r"><code>cars_safe[ , &quot;Efficiency_Class&quot;] &lt;- ___</code></pre>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the R Markdown and the
-workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson.</li>
-</ol>
-<p>Or you can click the “Save Workspace” button in the Environment
-pane.</p>
-<p>💾 <strong>Always save the R documents before closing.</strong></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the RMD and the workspace file.</li>
-</ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Today you
-practiced:</h1>
+<p><strong>Right side of the assignment</strong>:
+<code>mean(trial_vec, na.rm = TRUE)</code></p>
 <ul>
-<li><p>Reading R’s subsetting template x[rows, cols].</p></li>
-<li><p>Extracting rows with logical tests and which().</p></li>
-<li><p>Selecting columns by index or name.</p></li>
-<li><p>Safely overwriting values (insertion) after making a
-copy.</p></li>
-<li><p>Renaming columns.</p></li>
+<li><code>mean()</code> calculates the mean of the non-NA values in
+<code>trial_vec</code></li>
 </ul>
-<p>💪 Great job! Subsetting is the gateway to every data-cleaning
-task.</p>
+<p>The assignment operator &lt;- takes the value from the right side,
+places it into the specific positions identified on the left side.</p>
+<pre class="r"><code># After
+trial_vec</code></pre>
+<pre><code>##  [1] 1.000000 1.833333 1.833333 1.000000 2.000000 1.833333 1.833333 3.000000
+##  [9] 1.833333 2.000000 3.000000 3.000000 1.000000 1.833333 1.833333 2.000000
+## [17] 1.833333 1.833333 2.000000 1.833333 1.000000 1.833333 1.833333 1.833333
+## [25] 1.000000</code></pre>
+<p>R took all the non-missing values, calculated their mean and replaced
+all the NA values with this decimal mean</p>
 </div>
 
 <footer>

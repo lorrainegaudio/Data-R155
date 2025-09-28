@@ -77,7 +77,7 @@ output:
 
 # 💪 Welcome back to R! 
 
-In lesson one, through four you learned about objects, vectors, functions and how to handle missing data in R. In this lesson, you will learn about subsetting, extraction, and insertion in data frames. You rarely analyse an entire data table at once. You nearly always pull out specific rows or columns, or write back cleaned-up values. Mastering R’s bracket "`[ ]`" syntax is therefore foundational.
+In lesson one through four you learned about objects, vectors, functions and how to handle missing data in R. In this lesson, you will learn about subsetting, extraction, and insertion in data frames. You rarely analyse an entire data table at once. You nearly always pull out specific rows or columns, or write back cleaned-up values. Mastering R’s bracket "`[ ]`" syntax is therefore foundational.
 
 To begin Lesson 6, follow these steps:
 
@@ -85,7 +85,11 @@ To begin Lesson 6, follow these steps:
    
 2. Create a new file. Today, let's use 📝 "R Markdown" again (File > New File > R Markdown).
 
-3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer learning skill prompts by digging deeper or add memo notes. 
+
+4. Complete the assignment questions in this same document. 
+
+5. Submit the RMD and RData file to the Canvas assignment for this lesson.
 
 **Lesson Overview**
 
@@ -93,7 +97,7 @@ By the end of Lesson 6 you will be able to:
 
 1. ⚡ Remember – State R’s basic subsetting template: `x[rows, cols]`.
 
-2. 🔍 Understand – Describe the difference between `$` and `[ ]` for data frames.
+2. 🔍 Understand – Describe the usefulness of creating a copy of original data.
 
 3. 📍 Apply – Use logical tests + `which()` to select rows.
 
@@ -103,18 +107,13 @@ By the end of Lesson 6 you will be able to:
 
 Keep these goals in mind as you move through each section.
 
-# Quick Warm-up
+# Build Dataframes
 
-Type the following code in a new code chunk and run.
+We'll need example dataframes to play with for this lesson. You can copy and paste the code that creates the dataframes. To learn more about how these dataframes were created, complete the Lesson 6 Point Boost!
 
-```{r}
-# Review the `sample()` function from lesson 3. 
-set.seed(1)
+## Simple Dataframe
 
-args(sample)  # ✅ Check the arguments of sample()
-```
-
-Type the following code in a new code chunk and run.
+We create trial_df as a simple example. Type or copy and paste the following code in a new code chunk and run.
 
 ```{r}
 set.seed(1)
@@ -122,72 +121,10 @@ trial_vec <- sample(x = c(1:3, NA, NA, NA, NA), size = 25, replace = TRUE)
 trial_vec
 ```
 
-Type the following code in a new code chunk and run. 
-
-```{r}
-set.seed(1)
-trial_vec <- sample(size = 25, replace = TRUE, x = c(1:3, NA, NA, NA, NA))
-trial_vec 
-```
-
-🧐 NOTICE: Does changing the order of arguments affect the output? Why? 
-
-🛠 Break Things! Can you change the order of the arguments without assigning the argument name (e.g,`TRUE`,  `25`, `c(1:3, NA, NA, NA, NA)`) instead of `replace = TRUE`, `size = 25`, `x = c(1:3, NA, NA, NA, NA)`)? Create a memo note, demonstrate learning skill(s) used.
-
-___
-
-Learning Skill: Review `is.na()` and `which()` from lesson 4 and Nesting from lesson 3
-
-```{r}
-# Part 1
-is.na(trial_vec)
-```
-⚡ Explain:  What type of object is returned?  What is its length relative to `trial_vec`? 
-
-```{r}
-# Part 2
-which(is.na(trial_vec))
-```
-
-⚡ Explain: What are these numbers: values from the vector or positions in the vector? How do these numbers relate to the `TRUE` entries from part (1)?
-
-```{r}
-# Part 3
-which(!is.na(trial_vec)) 
-```
-
-⚡ Explain:  Interpret these numbers the same way as in part (2). Create a memo note, demonstrate learning skill(s) used.
-___
-
-🚦 Are you ready? Remember to summon help whenever you need it.
-
-# Build a Data Frame
-
-In lesson 2 you learned how to create a data frame using the function `data.frame()` to combine three vectors of equal length. You created these vectors using the `c()` function. In this lesson, you will create the vectors using the `ifelse()` function. Type the following code in a new code chunk.
-
-```{r message=FALSE, warning=FALSE}
-?ifelse # Open the Help for the ifelse() function
-```
-
-```{r}
-args("ifelse")  # ✅ Check the arguments of ifelse()
-```
-
-`ifelse()` is a vectorized function that allows you to create a new variable based on a condition. Type the following code in a new code chunk.
-
 ```{r}
 # Example: Create a new vector trial_vec2 based on trial_vec
 trial_vec2 <- ifelse(trial_vec == 2, "two", "not two")
-
 ```
-
-This creates a new vector where each element is "two" if the corresponding element in `trial_vec` is 2, and "not two" otherwise. It takes three arguments:
-
--  condition: a logical test (e.g., `trial_vec == 2`)
-
-- `value_if_true`: the value to assign if the condition is TRUE
-
-- `value_if_false`: the value to assign if the condition is FALSE
 
 Now, let's create a data frame using `trial_vec` and `trial_vec2`. Type the following code in a new code chunk and run.
 
@@ -203,11 +140,11 @@ trial_df <- data.frame(trial_vec, trial_vec2)
 head(trial_df) # Prints only for first 6 rows of trial_df
 ```
 
-🗣 Comment: Describe `trial_df`.
+🚦 Are you ready? Remember to summon ?help whenever you need it.
 
-🎯 That was a practice round. Now, let's create a more complex data frame with two long vectors of equal length. 
+## Field Biology
 
-Field Biology: Bird Banding Observations 🐦
+Dataset theme: Bird Band Observations 🐦
 
 This theme simulates data from a field biologist observing a population of birds, where most are untagged, but a small number have been previously captured and marked with colored leg bands. This is a very common practice in ecology and behavioral studies.
 
@@ -217,11 +154,11 @@ We’ll simulate a small inventory called `field_sightings` with two columns:
 
 - Band_Color – If a bird is untagged, the value is "None." If it is tagged, the value is one of several possible band colors.
 
-**Cope and paste** the following code in a new code chunk.
+**Copy and paste** the following code in a new code chunk.
 
 ```{r}
 set.seed(8)
-Status  <- sample(c(rep("Untagged", 3091), rep("Tagged", 287)))
+Status  <- sample(c(rep("Untagged", 4168), rep("Tagged", 302)))
 Band_Color <- ifelse(Status == "Untagged", "None", 
                 sample(c("Red", "Blue", "Green", "Yellow",
                          "Silver", "Black", "Orange", 
@@ -232,27 +169,7 @@ field_sightings <- data.frame(Status, Band_Color)
 View(field_sightings)
 ```
 
-🔍 Look deeper: Why does the code has line breaks with indentation? What is the advantage of indented line breaks? When might this be useful for you? Create a memo note, demonstrate learning skill(s) used.
-
-
-**Cope and paste** the following code in a new code chunk.
-
-```{r}
-cohort_means <- c(Red=14, Blue=20, Green=26, Yellow=32, Silver=38, Black=44, Orange=50, White=56)
-cohort_means
-```
-
-
-```{r}
-field_sightings$Age_Months <- round(ifelse(field_sightings$Status=="Untagged",
-  pmin(pmax(rnorm(nrow(field_sightings), 6, 3), 0), 11),
-  pmax(12, rnorm(nrow(field_sightings),
-                 mean = replace(cohort_means[field_sightings$Band_Color],
-                                is.na(cohort_means[field_sightings$Band_Color]), 20),
-                 sd = 3))))
-
-View(field_sightings)
-```
+🔍 Look deeper: Why does the code have line breaks with indentation? What is the advantage of indented line breaks? When might this be useful for you? Create a memo note, demonstrate learning skill(s) used.
 
 # Bracket Syntax
 
@@ -285,11 +202,13 @@ field_sightings[1:3, c(1, 2)]  # ✅ Shows first three rows of first and second
 We'll start with `trial_df` from earlier. Type the following code in a new code chunk and run.
 
 ```{r}
-trial_df[trial_df$trial_vec == 2, ]
-# Test direct subsetting (will include NA rows)
-direct_subset <- trial_df[trial_df$trial_vec == 2, ]
-print(direct_subset)
-trial_df[trial_df$trial_vec == 2, ]
+# Subsetting
+# trial_df[ trial_df[ , "trial_vec"] == 2 , ] 
+```
+
+```{r}
+direct_subset <- trial_df[ trial_df[ , "trial_vec"] == 2 , ]
+head(direct_subset)
 ```
 
 📍 Identify: which rows are extracted?
@@ -304,24 +223,29 @@ trial_df[trial_df$trial_vec == 2, ]
 
 🎯 **Goal: isolate only the tagged birds.**
 
-⚖️ **Step 1** – create a logical test: `[ ]` vs. `$`. Type the following code in a new code chunk and run.
+⚖️ **Step 1** – create a logical test using `[ ]`. Type the following code in a new code chunk and run.
 
-```{r , eval=FALSE}
-field_sightings[field_sightings$Status == "Tagged", ]
+```{r}
+# Step 1 — Create and store the logical test (no big printout)
+logical_test <- field_sightings[ , "Status"] == "Tagged"
+
+# un-comment the line below to see the object logical_test
+# print(logical_test) #prints a long list of values
+
+# Instead, lets make a quick table of logical_test
+table(logical_test, useNA = "ifany")   # counts of TRUE / FALSE / NA
+
+
 ```
 
-`field_sightings[field_sightings$Status == "Tagged", ]` returns the rows where the condition is TRUE, along with all columns.
-
-```{r , eval=FALSE}
-field_sightings$Status == "Tagged"            # TRUE/FALSE for each row
-```
-
-`field_sightings$Status == "Tagged"` returns a logical vector. 
 
 📊 **Step 2** – Store subset of `field_sightings` data frame as a new data frame. Type the following code in a new code chunk and run.
 
 ```{r}
-tagged_only <- field_sightings[field_sightings$Status == "Tagged", ]
+# Step 2 — Store the subset as a new data frame
+tagged_only <- field_sightings[ field_sightings[ , "Status"] == "Tagged" , ]
+
+head(tagged_only)
 ```
 
 🔍 Look deeper:  How many *rows* did we keep? How could you check the number of rows in a data set? Create a memo note, demonstrate learning skill(s) used, including method you used to answer the question.
@@ -329,11 +253,17 @@ tagged_only <- field_sightings[field_sightings$Status == "Tagged", ]
 Type the following code in a new code chunk and run.
 
 ```{r}
-n_manual <- nrow(tagged_only)  # ✅ Check number of rows
-nrow(tagged_only)
+n_tagged <- nrow(tagged_only)  # ✅ Check number of rows
+print(n_tagged)
 ```
 
-And 287 makes sense because of this code that created the dataset: `Status  <- sample(c(rep("Untagged", 3091), rep("Tagged", 287)))`
+And 302 makes sense because of this code that helped create the dataset replicated "Tagged" 302 times. 
+
+```{r}
+# Confirm the filter worked
+all(tagged_only[ , "Status"] == "Tagged")
+unique(tagged_only[ , "Status"])
+```
 
 # Extraction
 
@@ -342,7 +272,7 @@ Using `which()` is a strategy to handle potential NA values in your data. When t
 Type the following R script in your document script and run. 
 
 ```{r}
-rows_without_na <- which(trial_df$trial_vec == 2)
+rows_without_na <- which(trial_df[ , "trial_vec"] == 2)
 
 which_subset <- trial_df[rows_without_na, ]
 
@@ -351,37 +281,37 @@ print(which_subset)
 
 🚀 Explore and Play: What is the difference between running `print(which_subset)` and `which_subset`? Create a memo note, demonstrate learning skill(s) used.
 
-When you use a direct logical condition like `trial_df$trial_vec == 2`, any `NA` values in the Status column will result in `NA` in the logical vector. You get only the indices where the condition is `TRUE`, effectively dropping/ignoring any rows where the comparison resulted in `NA`. You get a result that excludes rows with `NA` in the Status column
+When you use a direct logical condition like `trial_df[ , "trial_vec"] == 2`, any NA values produce NA in the logical vector. Wrapping the condition in `which()` returns only the row positions where the test is TRUE, effectively dropping rows where the comparison is NA.
 
-## `$` vs. `[ ]`
-
-Type the following code in a new code chunk and run.
 
 ```{r}
-row_idx <- which(field_sightings[,"Status"] == "Tagged" & field_sightings[,"Band_Color"] == "Blue")
-```
+# Two conditions
+row_idx <- which(field_sightings[ , "Status"] == "Tagged" &
+                  field_sightings[ , "Band_Color"] == "Blue")
 
-The bracket notation `[,"column_name"]` uses matrix-style indexing.
-
-You can access the same columns using `$` notation where `field_sightings$Status` replaces `field_sightings[,"Status"]` and `field_sightings$Band_Color` replaces `field_sightings[,"Band_Color"]`. Type the following code in a new code chunk and run.
-
-```{r}
-row_idx2 <- which(field_sightings$Status == "Tagged" & field_sightings$Band_Color == "Blue")
-```
-
-⚠️ Common Pain Point: Using `which()` but forgetting to subset columns. Type the following code in a new code chunk and run.
-
-```{r}
 subset_blue <- field_sightings[row_idx, ]
-head(subset_blue)  # ✅ Practice Task 5 logic with known data
-head(x = subset_blue, n= 3) 
 ```
 
-⚡ Explain the function `head()` and how it works with the `n` argument. Create a memo note, demonstrate learning skill(s) used.
+`row_idx` stores the row positions where both conditions are `TRUE`
+- `Status == "Tagged"`
+- `Band_Color == "Blue"`
+
+Wrapping the test in `which()` returns only those positions (and automatically drops any rows where the comparison was NA). 
+
+`subset_blue <- field_sightings[row_idx, ]` then keeps all columns but only the matching rows, preserving the original row order and row names.
+
+Let's verify that it worked.
+
+```{r}
+head(subset_blue)
+```
+
+🗣 Comment (respond in one or two sentences): What changed in the data after subsetting (rows, columns, values)? What stayed the same (column names, column order, data types)?
+
 
 ## Selecting Columns
 
-🧭 Method 1: Select columns by name using indexing.
+🧭 Select columns by name or by index using indexing.
 
 Recall that columns can be chosen by index or name.
 
@@ -401,39 +331,28 @@ field_sightings[1:10, "Band_Color"]
 
 🤔 Why did we use `head()` in the first chunk and not in the second? Create a memo note, demonstrate learning skill(s) used.
 
-🧭 Method 2: Select columns by name using `$`. Type the following code in a new code chunk and run.
+## Selecting Multiple Columns
+
+1. Compute a filtered row index with which(), then
+
+2. Select multiple columns with df[row_idx, c("colA","colB", ...)].
 
 ```{r}
-Untagged_Birds <- field_sightings$Band_Color[field_sightings$Status == "Untagged"]
+#  1) Row index with two conditions
+row_idx <- which(
+  field_sightings[ , "Status"] == "Tagged" &
+  (field_sightings[ , "Band_Color"] == "Blue" |
+   field_sightings[ , "Band_Color"] == "White")
+)
+
+# 2) Apply row + multi-column selection (select multiple columns by NAME)
+tagged_blue_white <- field_sightings[row_idx, c("Status", "Band_Color")]
+
+head(tagged_blue_white)
+
 ```
 
-This creates a vector called `Untagged_Birds` that contains only the band colors from rows where the status is `"Untagged"`. Type the following code in a new code chunk and run.
-
-```{r}
-Tagged_Birds <- field_sightings$Band_Color[field_sightings$Status == "Tagged"]
-```
-
-It's particularly useful when you want to:
-
-- Analyze the distribution of `"Band_Colors"` within each `"Status"`.
-
-- Compare properties between different categories.
-
-- Create separate vectors for further analysis by category.
-
-This creates a vector called `Tagged_Birds` with only band colors from tagged birds rows.
-
-🎉 Bonus: Two conditions + column subset
-
-Use `field_sightings`: Pick band colors that are `White` and `Status = Tagged`. Type the following code in a new code chunk and run.
-
-```{r}
-tagged_data <- field_sightings[field_sightings$Status == "Tagged", ]
-
-white_rows <- which(tagged_data$Band_Color == "White")
-
-white_tagged <- tagged_data[white_rows, ]
-```
+🗣 Comment: What changed after subsetting—rows, columns, or both? Verify the filter worked: do all rows have Status == "Tagged" and Band_Color in c("Blue","White")? About how many rows remain compared to the full field_sightings? Why is that number smaller?
 
 # Insertion
 
@@ -448,18 +367,30 @@ Suppose we decide to rename "Untagged" to "Wild_Hatch" in the Status column.
 ```{r}
 # Part 1
 reintroduction <- field_sightings          # copy
-indices_untagged <- which(field_sightings$Status == "Untagged")
-reintroduction[indices_untagged, "Band_Color"] <- "Wild_Hatch"
+indices_untagged <- which(field_sightings[ , "Status"] == "Untagged")
+reintroduction[indices_untagged, "Status"] <- "Wild_Hatch"
 ```
 
-👀 Check-in: Look at the format of that code: `x[row, column] <- value`. The `<-` operator is not just for assigning a value to a variable name. `<- Wild_Hatch` is assigned as the new value `"Wild_Hatch"` to replace the existing value `"Untagged"`. The column name remains `"Status"`.
+👀 Check-in: Look at the format of that code: `x[rows, column] <- value`.
+Here, we assign the character value `"Wild_Hatch"` into reintroduction at the rows given by `indices_untagged` and the `"Status"` column.
 
 ```{r}
 # Verify the change
-unique(reintroduction$Band_Color)
+unique(reintroduction[ , "Status"])
 ```
 
 🗣 Comment: Why is `field_sightings` unchanged while editing `reintroduction`? Why is this good practice? Create a memo note, demonstrate learning skill(s) used.
+
+### Renaming columns 
+
+```{r}
+# Part 2 — Add a new column pattern
+reintroduction[ , "Tag_Flag"] <- ifelse(
+  reintroduction[ , "Status"] == "Tagged", "Yes", "No"
+)
+head(reintroduction[ , c("Status", "Tag_Flag")])
+```
+
 
 # Renaming Columns
 
@@ -469,13 +400,11 @@ Example 1: To rename a column, you can use the `colnames()` function. Type the f
 # Part 2
 names(reintroduction)
 
-colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort", "Age_Months")
+colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort", "Tag_Flag")
 head(reintroduction)
 ```
 
 📍 Identify: Which columns are renamed? 🔍 Look deeper: Create a list of all the different ways you might identify the column names of a data frame? Create a memo note, demonstrate learning skill(s) used.
-
-🛠 Break Things! What happens is you don't include "Age_Months" in the code `colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort", "Age_Months")`? Rerun the your script starting from Part 1: `reintroduction <- field_sightings`, leaving off "Age_Months". `colnames(reintroduction) <- c("Band_Status", "Breeding_Cohort")`. 
 
 ___
 
@@ -487,44 +416,9 @@ names(reintroduction2)[which(names(reintroduction2) == "Status")] <- "Band_Statu
 names(reintroduction2)[which(names(reintroduction2) == "Band_Color")] <- "Breeding_Cohort"
 ```
 ```{r}
-reintroduction2
+head(reintroduction2)
 ```
 
-# Replace Missing Values
-
-In lesson 4, you learned about handling missing values. Now, let's practice replacing missing values in a data frame. Recall that when a numeric vector has gaps, you can impute with the mean.
-
-Type the following code in a new code chunk and run.
-
-```{r}
-# Before
-trial_vec
-```
-
-```{r}
-trial_vec[is.na(trial_vec)] <- mean(trial_vec, na.rm = TRUE)
-```
-
-The <- operator is not just for assigning a value to a variable name. Here the `<-` operator is used to assign the mean of the non-NA values` 
-
-**Left side of the assignment**: `trial_vec[is.na(trial_vec)]`
-
-- `x[ ]` index of a vector: Recall we can use "`:`" like `1:3` 
-
-- index value is `is.na(trial_vec)` making logical vector (`TRUE`/`FALSE`) marking which elements are `NA`.
-
-**Right side of the assignment**: `mean(trial_vec, na.rm = TRUE)`
-
-- `mean()` calculates the mean of the non-NA values in `trial_vec`
-
-The assignment operator <- takes the value from the right side, places it into the specific positions identified on the left side.
-
-```{r}
-# After
-trial_vec
-```
-
-R took all the non-missing values, calculated their mean and replaced all the NA values with this decimal mean
 
 # ➤ Assignment
 
@@ -571,7 +465,7 @@ n_manual <- ___ # numeric count
 Extract mpg for each cylinder group into separate objects. Hint: Repeat the bracket pattern
 
 ```{r , eval=FALSE}
-Four_Cyl_MPG  <- mtcars[mtcars$cyl == 4, "mpg"]
+Four_Cyl_MPG  <- mtcars[ mtcars[ , "cyl"] == 4 , 
 Six_Cyl_MPG   <- ___
 Eight_Cyl_MPG <- ___
 ```
@@ -620,11 +514,11 @@ Using `cars_safe`, extract the rows for V‑shaped engines (`vs == 0`) *and* hor
 
 1. Create `row_idx` for the condition above.
 
-- `cars_safe$vs` ? `0` 
+- `cars_safe[ , "vs"]` ? `0` 
 
 - `&` 
 
-- `cars_safe$hp` ? `150`
+- `cars_safe[ , "hp"]` ? `150`
 
 - `cars_safe[row_idx , c("mpg","hp","cyl")]`
 
@@ -646,10 +540,10 @@ head(hi_power_v)
 
 Add a new column called `"Efficiency_Class"` to `cars_safe`. Label `"High"` if `mpg >= 25`, `"Low"` otherwise.
 
-Hint: use `ifelse()` and `cars_safe$mpg >= 25, "?", "?"`
+Hint: use `ifelse()` and `cars_safe[ , "mpg"] >= 25, "?", "?"`
 
 ```{r , eval=FALSE}
-cars_safe$Efficiency_Class <- ___
+cars_safe[ , "Efficiency_Class"] <- ___
 ```
  
 # Save and Upload
@@ -672,6 +566,6 @@ Or you can click the "Save Workspace" button in the Environment pane.
 
 - Safely overwriting values (insertion) after making a copy.
 
-- Renaming columns and imputing simple missing values.
+- Renaming columns.
 
 💪 Great job! Subsetting is the gateway to every data-cleaning task.
