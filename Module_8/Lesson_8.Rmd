@@ -90,7 +90,7 @@ To begin Lesson 8, follow these steps:
 
 1. Open your course project for RStudio 
    
-2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
+2. Create a new file. Today, let's try 📝 "Quarto Document"  (File > New File > Quarto Document).
 
 3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
 

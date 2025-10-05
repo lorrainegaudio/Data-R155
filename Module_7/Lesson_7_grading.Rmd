@@ -1,0 +1,333 @@
+---
+title: "Lesson 7 grading"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 7 grading"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 7 grading"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+
+
+# ➤ Assignment
+
+Grading Notes
+
+* Accept any valid target_year and any two valid region names that appear in unique(gapminder$region).
+
+* For Tasks 4–7, counts and countries will vary by the student’s year/region choices; grade correctness of logic and syntax ([], logical operators, %in%, negative column indices, which()), not the exact numbers.
+
+* Explanations/memos should be short, accurate, and use correct vocabulary (logical vector, rows/cols slots, membership, AND/OR).
+
+**Campus NGO Health Pilot** 🌍💉
+
+Imagine your nonprofit received 100 vaccine coolers and one charter flight. You must assemble a shortlist of countries for a health-equity pilot within the next few weeks. Use dslabs::gapminder to (a) focus on specific regions, (b) filter by need indicators, and (c) apply a simple feasibility window based on population size.
+
+## Task 0
+
+🚀 Setup & Orientation
+
+Load the data, read the help page, and become familiar with the `gapminder` dataset.
+
+```{r}
+# install.packages("dslabs")  # uncomment if first time
+
+# TODO 0-A: Load the package and data
+library(dslabs)  # use library() to load the package
+data("gapminder")   # use data() to load the dataset "gapminder"
+
+?gapminder   # pull up gapminder in the help window
+```
+
+
+```{r}
+colnames(gapminder)      # use colnames() to list names of the columns in gapminder
+```
+
+```{r}
+names(gapminder)      # use names() to list names of the columns in gapminder 
+```
+
+✍️ LEARNING SKILL MEMO (1–2 sentences): Compare functions `colnames()` and `names()` output.
+
+`colnames()` and `names()` both return the column names for a data frame. `names()` is more general (works for lists, too); for data frames both produce the same column name vector.
+
+```{r}
+# TODO 2-C: How many rows are in gapminder?
+nrow(gapminder)
+```
+
+## Task 1 
+
+📅 Pick a Year
+
+Choose ONE specific year present in the data and store it:
+
+1. Use unique() to print the available `years` in `gapminder`.
+
+```{r}
+# TODO 1‑A: list years
+unique(gapminder$year)     # list available years
+```
+
+```{r}
+# TODO 1‑A: Select ONE year
+target_year <- 2010
+```
+
+✍️ MEMO (1–2 sentences): “I chose target_year = 2010 because it’s recent enough to reflect current patterns and is present in the dataset.”
+
+## Task 2 
+
+🎯 Focus the Pool (`year` `&` `region` with `%in%`)
+
+First, find the exact region names; then keep only rows from your chosen year and your two target regions.
+
+1. Identify the `unique` `region` options in `gapminder`.
+
+```{r}
+# TODO 2-A: Show all region options
+unique(gapminder$region)     
+```
+
+*Use this to select two regions. Copy exact names.*
+
+2. Create `focus_pool` that keeps rows from your `target_year` AND restricts to two regions you want to prioritize. Use unique(`gapminder$region`) above to copy region names exactly.
+
+```{r}
+# TODO 2-B: Create focus_pool using year AND region membership
+focus_pool <- gapminder[gapminder$year == target_year & gapminder$region %in% c("Eastern Asia", "Southern Asia"),]
+```
+
+
+```{r}
+# TODO 2-C: How many rows are in focus_pool?
+nrow(focus_pool)
+```
+
+Compare the number of rows in `gapminder` with the number of rows in `focus_pool`
+
+```{r}
+# TODO 2-D: Preview a few informative columns
+head(focus_pool[, c("country", "region",
+                    "life_expectancy", "infant_mortality",
+                    "fertility", "population")])
+```
+
+✍️ MEMO (1–2 sentences): Describe what `%in%` and `&` are doing here, and why you used `$` with column names.
+
+EXPLANATION: `%in%` keeps rows where region matches any value in the set provided. `&` requires both conditions to be `TRUE` (the row is from `target_year` and the region is one of the two). `$` is used to refer to a specific column inside the data frame.
+
+## Task 3
+
+🗂 Negative Column Indices (Drop Columns by Position)
+
+Create a simpler briefing table `brief_sheet` by dropping exactly two columns by position (not by name). Choose any two you don’t need to discuss need.
+
+```{r}
+brief_sheet <- focus_pool[, -c(7, 8)]
+head(brief_sheet)
+```
+
+✍️ MEMO: Explain how negative indices work for column selection.
+
+EXPLANATION: Negative indices remove columns at those positions. The remaining columns stay in the same order.
+
+## Task 4
+
+🔢 Quick Check with Inequality
+
+How many countries in `focus_pool` have `life_expectancy` >= 70? 60?
+
+```{r}
+# Count countries with life expectancy ≥ 70
+sum(focus_pool$life_expectancy >= 70)
+
+# (Optional extra from prompt: also ≥ 60)
+sum(focus_pool$life_expectancy >= 60)
+```
+
+✍️ MEMO (1 sentence): What value is `sum()` counting in this context?
+
+EXPLANATION: sum(logical_vector) counts the number of TRUE values.
+
+## Task 5
+
+🧪 Need Screen (Combine Conditions with `&`)
+
+1. Build `needs_screen` (keep all columns) using these **AND** conditions:
+
+`life_expectancy <= a` where `a` is an appropriate number for your data set. 
+
+`infant_mortality >= b` where `b` is an appropriate number for your data set. 
+
+`fertility >= c` where `c` is an appropriate number for your data set. 
+
+```{r , eval=FALSE}
+# TODO 5-A: Create needs_screen using three AND-ed conditions
+needs_screen <- focus_pool[
+  focus_pool$life_expectancy <= 70 &
+    focus_pool$infant_mortality >= 35 &
+    focus_pool$fertility >= 2,
+]
+```
+
+🛠 Break Things! Learning Skills challenge: What would happen if you used `|` instead of `&` here?
+
+We use `&` because we only want rows meeting all three criteria simultaneously. Using `|` would include rows that satisfy only one condition, which is not the goal.
+
+2. Print the number of rows and show a view of only key columns
+
+```{r , eval=FALSE}
+# TODO 5-B: How many rows survived? Show a compact view of key columns.
+nrow(needs_screen)
+```
+
+```{r}
+# TODO 5-B: Show a compact view of key columns.
+needs_screen[, c("country", "region",
+                 "life_expectancy", "infant_mortality",
+                 "fertility", "population")]
+```
+
+## Task 6
+
+🔁 `|` vs `%in%` (Same Result, Different Syntax)
+
+1. Show that filtering the same two regions with `|` is equivalent to using `%in%`.
+
+```{r}
+# TODO 6-A: 
+## Recreate the two-region filter using | (OR)
+A_or_B <- gapminder[
+  gapminder$year == target_year &
+    (gapminder$region == "Eastern Asia" |
+     gapminder$region == "Southern Asia"),
+]
+
+## Recreate the two-region filter using %in%
+in_set <- gapminder[
+  gapminder$year == target_year &
+    gapminder$region %in% c("Eastern Asia", "Southern Asia"),
+]
+```
+
+2. Do both approaches return the same number of rows?
+
+```{r , eval=FALSE}
+# TODO 6-B:
+nrow(A_or_B) == nrow(in_set)
+```
+ 
+✍️ MEMO (1–2 sentences): Briefly compare `|` and `%in%`. When is `%in%` preferable?
+
+EXPLANATION: `|` chains individual equality tests; `%in%` checks membership in a set and is shorter and less error-prone when matching multiple categories.
+
+## Task 6
+
+📍 Feasibility with `which()` (Population Window)
+
+From `needs_screen`, keep countries with population between 2 million and 50 million (inclusive). Use `which()` to convert the logical test to row positions, then subset.
+
+```{r , eval=FALSE}
+# TODO 7-A: Build an index of matching rows with which()
+idx <- which(needs_screen$population >= 2e6 &
+             needs_screen$population <= 5e7)
+```
+
+
+```{r , eval=FALSE}
+# TODO 7-B: Subset rows using idx to create shortlist
+shortlist <- needs_screen[idx, ]
+```
+
+How many countries are in shortlist? Which regions appear in shortlist?
+
+```{r , eval=FALSE}
+# TODO 7-C: Display a compact table of shortlist (choose a few columns)
+shortlist[, c("country", "region",
+              "life_expectancy", "infant_mortality",
+              "fertility", "population")]
+
+```
+
+✍️ MEMO  (1–2 sentences): What does `which()` return, and why might it be useful to store these positions?
+ 
+EXPLANATION: `which()` returns the numeric positions of the `TRUE` rows. Saving indices is helpful when you want to reuse the same row selection across multiple views or operations.
+
