@@ -12,7 +12,7 @@
 <meta name="author" content="by Lorraine Gaudio" />
 
 
-<title>Lesson 8</title>
+<title>Reproducible Workflow</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2853,427 +2853,471 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lesson 8</h1>
+<h1 class="title toc-ignore">Reproducible Workflow</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on October 10, 2025</h4>
+<h4 class="date">Activity generated on October 05, 2025</h4>
 
 </div>
 
 
-<div id="welcome-back-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 📊 Welcome back to
-R!</h1>
-<p>In lesson 6 and 7, you learned about subsetting, extraction, and
-insertion in data frames using base R functions. Today, you will learn
-easier subsetting with <code>dplyr</code> (<code>select()</code> &amp;
-<code>filter()</code>). The <code>dplyr</code> package simplifies column
-and row extraction, making code shorter and easier to read than base-R
-brackets. Mastering <code>select()</code>, <code>filter()</code>, and
-the pipe <code>%&gt;%</code> will speed up every day tasks.</p>
-<p>To begin Lesson 8, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “Quarto Document” (File
-&gt; New File &gt; Quarto Document).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
+<div id="class-activity-part-one" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Class Activity (Part
+One)</h1>
+<p>A reproducible workflow enables someone else to run your analysis on
+a different computer and obtain the same results. Today, you will
+package your data, containing minimal transforms, into a small, portable
+project using the appropriate file formats for the target audiences (R
+users vs. non-R users). This activity is offered as an optional
+opportunity to earn technical skill points.</p>
 <p><strong>Lesson Overview</strong></p>
-<p>By the end of Lesson 8 you will be able to:</p>
+<p>By the end of this activity you will be able to:</p>
 <ol style="list-style-type: decimal">
-<li><p>⚡ Remember – List what <code>select()</code>,
-<code>filter()</code>, and <code>%&gt;%</code> do.</p></li>
-<li><p>🔍 Understand – Explain how <code>select()</code> (columns)
-differs from <code>filter()</code> (rows).</p></li>
-<li><p>🛠 Apply – Use <code>select()</code> and <code>filter()</code> to
-subset a data frame.</p></li>
-<li><p>📊 Analyze – Chain multiple verbs with <code>%&gt;%</code> to
-answer a real question.</p></li>
-<li><p>🧠️ Evaluate – Decide when <code>dplyr</code> is preferable to
-<code>base-R</code> brackets.</p></li>
+<li><p>⚡ Remember – common save formats and their trade-offs.</p></li>
+<li><p>🔍 Understand – why Projects + relative paths support
+portability.</p></li>
+<li><p>📍 Apply – a minimal Lesson-6 transform and save results to
+data_clean/.</p></li>
+<li><p>📊 Analyze – object structure after saving and
+re-loading.</p></li>
+<li><p>🛠️ Evaluate – which format to share with R vs. non-R
+users.</p></li>
+<li><p>🧰 Create – a runnable, documented mini-pipeline that another
+student can execute in Part 2.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
-</div>
-<div id="packages" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> 📦 Packages</h1>
-<p>🧠 Recall that we need to download packages <strong>once</strong>. If
-needed, install the required packages we will use in this lesson. After
-installation, comment <code>#</code> out the
-<code>install.packages</code> code.</p>
-<pre class="r"><code>#install.packages(&quot;dslabs&quot;)
-install.packages(&quot;dplyr&quot;)</code></pre>
-<p>After installing the package, you need to load it into your R session
-using the <code>library()</code> function. Each time you open R, you
-will need to “library” the packages. This makes the functions in the
-package available for use. Type the following code in a new code chunk
-and run.</p>
-<p>💡 Pro tip: You can load multiple packages in one
-<code>library()</code> call by separating package names with commas.</p>
-<pre class="r"><code>library(dslabs, dplyr)</code></pre>
-</div>
-<div id="the-pipe" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> The Pipe (%&gt;%)</h1>
-<p>🎯 The pipe operator passes the result of the left side into the
-first argument of the right side, reading like “and then”. It cuts
-repetition and keeps code in logical order.</p>
-<pre class="r"><code># ⚡ Test
-mtcars %&gt;%        # start with data
-  head()          # ▶ shows first six rows</code></pre>
-<p>🔗 Link Concepts: What other ways have you learned to write code that
-will view the first six rows of a data frame? Write this code and a memo
-to demonstrate learning skills.</p>
-</div>
-<div id="selecting-columns" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Selecting Columns</h1>
-<p>🎯 The GOAL of <code>select()</code> is to keep or drop specific
-<strong>columns</strong>.</p>
-<p>📜 The SYNTAX is <code>select(data, col1, col2, …)</code></p>
-<div id="positive-selection" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Positive
-Selection</h2>
-<p>🎯 Goal: keep specific columns by name.</p>
-<pre class="r"><code># ⚡ Test
-select(mtcars, mpg, cyl, hp)    # keep three columns</code></pre>
-</div>
-<div id="negative-selection" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Negative
-Selection</h2>
-<p>🎯 Goal: remove columns with a leading <code>-</code>.</p>
-<pre class="r"><code>select(mtcars, -gear)   # drop one column</code></pre>
-</div>
-<div id="piping-with-select" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Piping with
-Select</h2>
-<p>🎯 Goal: Let’s add a pipe!</p>
-<pre class="r"><code>mtcars %&gt;% 
-  select(mpg, cyl, hp)                  # easier to read</code></pre>
-</div>
-<div id="subset-with-select" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Subset with
-Select</h2>
-<p>We’ll mix it up by using a different data set, <code>gapminder</code>
-from <code>dslabs</code>. This data set contains information about
-countries over time.</p>
-<pre class="r"><code>?gapminder</code></pre>
-<p>🎯 Goal: Create a copy of the <code>gapminder</code> dataset that
-contains only specific columns!</p>
-<pre class="r"><code># ⚡ Test:
-I_Demo &lt;- gapminder %&gt;% 
-  select(country, year, infant_mortality, continent)</code></pre>
-<pre class="r"><code># ✅  Verify
-head(I_Demo)</code></pre>
-<p>🗣 Explain: A new dataset called <code>I_Demo</code> was created from
-the <code>gapminder</code> dataset that only contains the columns
-<code>country</code>, <code>year</code>, <code>infant_mortality</code>,
-and <code>continent</code>.</p>
-<p>✍️ Practice: fill in the blank prompt</p>
-<p>You try to design your own subsetting operation.</p>
-<p>🎯 Goal: Write an example that selects only the columns you
-choose.</p>
-<pre class="r"><code># ⚡ Test: 
-
-
-# ✅  Verify</code></pre>
-<p>🗣 Explain: What columns did you choose and why? Create a memo note,
-demonstrate learning skill(s) used.</p>
-</div>
-</div>
-<div id="filtering-rows" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Filtering Rows</h1>
-<p>🎯 The GOAL of <code>filter()</code> is to keep or drop specific
-<strong>rows</strong> based on conditions.</p>
-<p>📜 The SYNTAX is
-<code>filter(data, condition1, condition2, …)</code></p>
-<div id="single-condition" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Single Condition</h2>
-<p>🎯 <code>filter()</code> uses logical operators!</p>
-<pre class="r"><code># ⚡ Test:
-filter(mtcars, mpg &gt;= 25)               # high‑mileage cars</code></pre>
-</div>
-<div id="piping-with-filter" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Piping with
-Filter</h2>
-<p>We’ll mix it up by using a different data set, <code>murders</code>
-from <code>dslabs</code>. This data set contains information about gun
-murders in the US.</p>
-<pre class="r"><code>?murders</code></pre>
-<p>🎯 Goal: Create a copy of the <code>murders</code> dataset that
-excludes Washington state.</p>
-<p>💬 Prediction: 50 states</p>
-<pre class="r"><code># ⚡ Test:
-nrow(murders)  </code></pre>
-<p>🗣 Explain: … Wait, what? … ❓ Question: What are these 51 states?</p>
-<pre class="r"><code>#⚡ Test:
-unique(murders$state)  # 51 states</code></pre>
-<p>🗣 Explain: Ohhhhh! “District of Columbia” is included in the
-dataset.</p>
-<p>Back to the 🎯 Goal: Create a copy of the <code>murders</code>
-dataset that excludes Washington state.</p>
-<pre class="r"><code># ⚡ Test:
-No_Washington &lt;- murders %&gt;% 
-  filter(state != &quot;Washington&quot;)</code></pre>
-<pre class="r"><code># ✅  Verify
-nrow(No_Washington)  # 49 states</code></pre>
-<p>🗣 Explain: A new dataset called <code>No_Washington</code> was
-created from the <code>murders</code> dataset that excludes Washington
-state.</p>
-<p>🧐 Review: What is the difference between <code>==</code> and
-<code>!=</code>?</p>
-<p>🛠 Break Things! What happens when you use <code>=</code> instead of
-<code>==</code>? or <code>=!</code> instead of <code>!=</code>? Create a
-memo note, demonstrate learning skill(s) used.</p>
-</div>
-<div id="multiple-conditions-with-and" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Multiple Conditions
-with AND</h2>
-<p>📌 In <code>filter()</code>, commas = AND (<code>&amp;</code>).</p>
-<p>🎯 Goal: Let’s filter with two conditions and while we are at it,
-let’s add a pipe!</p>
-<p>❓ Question: How many cars have <em>both</em> mpg ≥ 25 <em>and</em> 4
-cylinders?</p>
-<pre class="r"><code># ⚡ Test:
-mtcars %&gt;%
-  filter(mpg &gt;= 25, cyl == 4)           # two conditions</code></pre>
-<p>✅ Verify: How many cars have <em>both</em> mpg ≥ 25 <em>and</em> 4
-cylinders? What code would you use to verify the success of this filter?
-Create a memo note, demonstrate learning skill(s) used by writing and
-running the code.</p>
-</div>
-<div id="multiple-conditions-with-or" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Multiple Conditions
-with OR</h2>
-<p>📌 In <code>dplyr::filter()</code>, the OR operator is the same as
-base R <code>|</code> or <code>%in%</code>.</p>
-<div id="section" class="section level3" number="5.4.1">
-<h3><span class="header-section-number">5.4.1</span> |</h3>
-<p>🎯 Goal: Let’s filter with two conditions using OR
-(<code>|</code>).</p>
-<p>❓ Question: How many cars have <em>either</em> mpg ≥ 25 <em>or</em>
-4 cylinders?</p>
-<pre class="r"><code># ⚡ Test:
-mtcars %&gt;%
-  filter(mpg &gt;= 25 | cyl == 4)           # two conditions</code></pre>
-<p>✅ Verify: How many cars have <em>either</em> mpg ≥ 25 <em>or</em> 4
-cylinders? What code would you use to verify the success of this filter?
-Create a memo note, demonstrate learning skill(s) used by writing and
-running the code.</p>
-</div>
-<div id="in" class="section level3" number="5.4.2">
-<h3><span class="header-section-number">5.4.2</span> %in%</h3>
-<p>🎯 Goal: The <code>%in%</code> operator is used to check if a value
-is in a set. It’s like “is this value one of these?”</p>
-<pre class="r"><code># ⚡ Test
-filter(mtcars, cyl %in% c(4, 6))        # 4 or 6 cylinders</code></pre>
-</div>
-</div>
-</div>
-<div id="filter-and-select" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> filter() AND
-select()</h1>
-<p>🎯 The GOAL of combining <code>filter()</code> and
-<code>select()</code> is to <strong>subset</strong> a data frame by both
-rows and columns.</p>
-<p>💪 Best practice: filter rows first, then select columns.</p>
-<p>📜 The SYNTAX is
-<code>data %&gt;% filter(condition) %&gt;% select(col1, col2, …)</code></p>
-<p>We’ll mix it up by using a different data set,
-<code>us_contagious_diseases</code> from <code>dslabs</code>. This data
-set contains information about contagious diseases in the US.</p>
-<pre class="r"><code>?us_contagious_diseases</code></pre>
-<pre class="r"><code>#⚡ Test
-us_contagious_diseases %&gt;% 
-  filter(state == &quot;Alaska&quot;, year &gt;= 1980) %&gt;%   # rows
-  select(year, disease, count)                  # columns</code></pre>
-<p>🚀 Explore and Play: What are the unique diseases in this Alaska
-subset? Use skills you developed in previous lessons to explore this
-data set. Compare filter and select with subsetting with brackets
-<code>[ ]</code>. Create a memo note, demonstrate learning skill(s)
-used.</p>
-</div>
-<div id="one-application" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> One Application</h1>
-<p>🧐 Let’s say you have the research question, ❓“Which automatic cars
-(am == 0) in mtcars have horsepower &gt; 150? 🎯 Goal: Your report
-should show only hp and mpg.</p>
-<pre class="r"><code>#⚡ Test
-mtcars %&gt;%
-  filter(am == 0, hp &gt; 150) %&gt;%
-  select(hp, mpg) %&gt;%
-  head()</code></pre>
-<p>🗣 Explain:</p>
+<div id="what-youll-do" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> What you’ll do</h2>
+<p><strong>Part one</strong> (40 min):</p>
 <ol style="list-style-type: decimal">
-<li><p><code>filter()</code> keeps matching rows.</p></li>
-<li><p><code>select()</code> trims to needed columns.</p></li>
-<li><p><code>head()</code> previews results. Bonus: Add row count for
-exploration.</p></li>
+<li><p>Create a new RStudio Project and folders (optional)</p></li>
+<li><p>Load a raw dataset (built-in or your own CSV)</p></li>
+<li><p>Apply a minimal transform (e.g., from Lesson 6)</p></li>
+<li><p>Save the cleaned dataset as .rds (for R users) and .csv (for
+non-R users)</p></li>
+</ol>
+<p><strong>Part two</strong> (preview):</p>
+<p>We’ll swap your .rds (and .csv) + 01_save_data.Rmd with a peer. Your
+peer will clone your structure, re-run your script, load your .rds, and
+verify that object names, dimensions. They’ll document any issues and
+fixes and offer suggestion on other minimal transformations. (No action
+needed now.)</p>
+<ol style="list-style-type: decimal">
+<li><p>Load your peer’s .rds to verify it works</p></li>
+<li><p>Explore the object structure</p></li>
+<li><p>Apply a minimal transform (e.g., from Lesson 6-7)</p></li>
+<li><p>Save the cleaned dataset as .rds (for R users) and .csv (for
+non-R users)</p></li>
 </ol>
 </div>
-<div id="duplicates-sampling" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Duplicates &amp;
-Sampling</h1>
-<p>Sometimes, you may need to remove duplicate rows or sample a subset
-of rows. <code>unique()</code> removes duplicate rows;
-<code>slice_sample()</code> picks random rows. 👀 Type
-<code>?slice_sample()</code> to learn more about this <code>dplyr</code>
-function.</p>
-<p>🎯 Goal: We’ll mix it up by using a different data set,
-<code>movielens</code> from <code>dslabs</code>. This data set contains
-information about movies and ratings.</p>
-<pre class="r"><code>?movielens</code></pre>
-<pre class="r"><code>nrow(movielens)   # how many rows at start?</code></pre>
-<pre class="r"><code># ⚡ Test
-Movie_Night &lt;- movielens %&gt;%
-  filter(rating &gt;= 4) %&gt;%        # keep high ratings
-  select(title, rating) %&gt;%      # keep title and rating
-  unique()                       # remove duplicates</code></pre>
-<pre class="r"><code># ✅  Verify
-nrow(Movie_Night)  # how many rows after filter, select, and unique?</code></pre>
-<p>Filter kept only the rows with ratings 4 or higher. Select kept only
-the title and rating columns. Unique removed duplicate rows, so each
-movie title appears only once.</p>
-<p>❓ Question: What movie should I watch on movie night?</p>
-<p>🎯 Goal: Let’s randomly sample 10 movies with ratings four or
-higher.</p>
-<pre class="r"><code>set.seed(420)
-# ⚡ Test
-Movie_Night %&gt;%
-  slice_sample(n=10)  # random sample of 10 rows</code></pre>
-<p>🗣 Comment: What movie would you choose?</p>
-<p>🚀 Explore and Play: What would happen if we didn’t use unique()? Why
-might unique be useful for our question? Create a memo note, demonstrate
-learning skill(s) used.</p>
+<div id="points-rubric" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Points Rubric</h2>
+<p>This optional activity could earn you up to 2 technical skill
+points!</p>
+<table>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Create a new RStudio Project and folders</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>Load a raw dataset (built-in or your own CSV)</td>
+<td>0.25</td>
+</tr>
+<tr class="odd">
+<td>Apply a minimal transform (e.g., from Lesson 6)</td>
+<td>1.50</td>
+</tr>
+<tr class="even">
+<td>Save the cleaned dataset as .rds (for R users) and .csv (for</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>non-R users)</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="extra-practice" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Extra Practice</h1>
-<p>✍️ Practice: Demonstrate learning skill(s) by completing this bonus
-practice. Fill the blanks. Use the <code>gapminder</code> dataset.</p>
-<pre class="r"><code>___ %&gt;%
-   filter(life_expectancy &gt;= quantile(life_expectancy, ___)) %&gt;%
-   select(country, ___, life_expectancy) -&gt; Top_LifeExp
-View(Top_LifeExp)</code></pre>
-<p>🗣 Explain: What is the <code>-&gt; Top_LifeExp</code> do in the code
-above?</p>
-<p>❓ Question: What is the highest life expectancy in this subset?</p>
-<p>❓ Question: How many countries are in the <code>Top_LifeExp</code>
-data frame?</p>
-<p>❓ Question: What is the average life expectancy in this subset?</p>
-</div>
-<div id="assignment" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> ➤ Assignment</h1>
-<p>Replace each ____ placeholder (and any TODO comments) with working
-code or a short written answer. Run each section; be sure the requested
-objects appear in the Environment. When finished, save
-<strong>BOTH</strong> your script (which should include your lesson
-notes and completed assignment) and your <code>.RData</code> workspace
-and upload to Canvas Assignment 8 in Module 8.</p>
-<div id="task-0" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Task 0</h2>
-<p>📦 Make sure <code>dplyr</code> and <code>dslabs</code> packages are
-attached so their functions / datasets load.</p>
-</div>
-<div id="task-1" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Task 1</h2>
-<p>Column Selection</p>
-<p>📝 Create <strong><code>C_Overload</code></strong> that keeps only
-year and <code>carbon_emissions</code> from the <code>temp_carbon</code>
-data frame. Use <code>select()</code> with or without
-<code>%&gt;%</code>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-2" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 2</h2>
-<p>Single-Column Extraction</p>
-<p>🌟 Pipe the <code>stars</code> dataset in <code>dslabs</code> through
-<code>select()</code> to keep only the <code>star</code> column. Name
-the result <strong><code>star_names</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-3" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 3</h2>
-<p>Row Filtering</p>
-<p>⚠️ From <code>murders</code>, remove every row where state equals
-<code>&quot;Florida&quot;</code>. Name the object
-<strong><code>No_Florida</code></strong> (any method is fine).</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-4" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 4</h2>
-<p>Multiple Conditions</p>
-<p>🚗 From <code>mtcars</code>, use <code>filter()</code> +
-<code>%&gt;%</code>, pull cars in mtcars that are manual, have 8
-cylinders, and have <code>qsec &lt; 15</code>. Store as
-<strong><code>Fast_n_Furious</code></strong>.</p>
-<pre class="r"><code>summary(mtcars$qsec)  # check qsec range</code></pre>
-<p>Is <code>qsec &lt; 15</code> within range?</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-6" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 6</h2>
-<p>OR Logic + Column Slice</p>
-<p>In 🚗 <code>mtcars</code>, show only rows where
-<code>disp &gt; 250</code> OR <code>disp &lt; 160</code> and display
-just the first three columns.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-7" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 7</h2>
-<p>Reflection</p>
-<p>📝 Write a few sentences comparing dplyr verbs over base-R brackets
-(from lesson 6 &amp; 7) for subsetting.</p>
-</div>
-</div>
-<div id="save-and-upload" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Save and Upload</h1>
-<ol start="0" style="list-style-type: decimal">
-<li>Self-check checklist:</li>
+<div id="what-is-an-.rds" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> ❓ What is an
+.rds?</h2>
+<p>It’s a single, compressed R object saved to disk (serialization). It
+preserves the object’s classes, factors, dates, list-columns,
+attributes. This allows you to share data and workflows with
+collaborators. The purpose of this activity is to practice saving a data
+frame from your R session as different kinds of shareable files. This is
+an essential step in a reproducible R workflow.</p>
+<p>See this quick format guide for when to use .rds, .RData, .csv, and
+.xlsx.</p>
+<ol style="list-style-type: decimal">
+<li>.rds</li>
 </ol>
-<p>For the assignment protion, your environment should contain the
-following items:</p>
 <ul>
-<li><p><code>C_Overload</code> exists and has only <code>year</code> and
-<code>carbon_emissions</code>.</p></li>
-<li><p><code>star_names</code> exists and has one column named
-<code>star</code>.</p></li>
-<li><p><code>No_Florida</code> has 0 rows with
-<code>state == &#39;Florida&#39;</code>.</p></li>
-<li><p><code>Fast_n_Furious</code> with rows that only contain manual, 8
-cylinders, and where <code>qsec &lt; 15</code>.</p></li>
-<li><p><strong>All code in your Quarto document runs top-to-bottom
-without errors.</strong></p></li>
+<li><p>Use when: you want a single object saved exactly as-is, for fast,
+reliable re-use inside R projects.</p></li>
+<li><p>Pros: preserves types/attributes; fast; compact; explicit (you
+assign the name on load).</p></li>
+<li><p>Cons: R-specific; not human-readable; one object per
+file.</p></li>
 </ul>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the Quarto document and
-the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the Quarto Document
-document:</li>
-</ol>
-<pre class="r"><code>save.image(&quot;Assignment8_Workspace.RData&quot;)</code></pre>
-<p>Or you can click the “Save Workspace” button in the Environment
-pane.</p>
-<p>💾 <strong>Always save the R documents before closing.</strong></p>
 <ol start="2" style="list-style-type: decimal">
-<li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the <code>.qmd</code> and the workspace file
-(<code>RData</code>).</li>
+<li>.RData (created with <code>save()</code>/<code>load()</code>)</li>
 </ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Today you
-practiced:</h1>
 <ul>
-<li><p>Installed / loaded packages for extra tools.</p></li>
-<li><p>Used the pipe <code>%&gt;%</code> to chain steps
-left-to-right.</p></li>
-<li><p>Selected columns with <code>select()</code> (including negative
-selection).</p></li>
-<li><p>Filtered rows with <code>filter()</code> using logical tests and
-<code>%in%</code>.</p></li>
-<li><p>Combined verbs to answer data questions concisely.</p></li>
+<li><p>Use when: you want to snapshot many objects together.</p></li>
+<li><p>Pros: multiple objects; same fidelity as
+<code>.rds</code>.</p></li>
+<li><p>Cons: <code>load()</code> dumps objects into your workspace by
+their old names (less explicit/reproducible); R-only.</p></li>
 </ul>
-<p>🎯 Great job! Keep practicing piping and you’ll soon write clear,
-readable R code!</p>
+<ol start="3" style="list-style-type: decimal">
+<li>.csv</li>
+</ol>
+<ul>
+<li><p>Use when: you need a simple, universal text file to share with
+anyone (Python, Excel, Stata, etc.).</p></li>
+<li><p>Pros: human-readable; portable; tiny dependency surface.</p></li>
+<li><p>Cons: loses metadata (factors, classes); can mangle types (e.g.,
+character vs numeric); can’t store list-columns; larger than .rds for
+complex data.</p></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>.xlsx (Excel workbook)</li>
+</ol>
+<ul>
+<li><p>Use when: a stakeholder requires Excel (multi-sheet handoff,
+lightweight manual review).</p></li>
+<li><p>Pros: multi-sheet; familiar to non-coders.</p></li>
+<li><p>Cons: manual edits reduce reproducibility; type guessing can
+break things (dates, leading zeros); heavier dependencies; not ideal for
+scripted pipelines.</p></li>
+</ul>
+<p><strong>Rule of thumb</strong>: use .rds for your internal, scripted
+workflow; export .csv (or .xlsx only if asked) for sharing with
+<em>non-R users</em>; use .RData sparingly for multi-object
+checkpoints.</p>
+</div>
+</div>
+<div id="mini-reproducible-workflow" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Mini reproducible
+workflow</h1>
+<p>Below is a starter pattern you can run on any machine with R +
+RStudio.</p>
+<div id="setup-5-min" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Setup (5 min)</h2>
+<p>Create a new RStudio Project and folders (optional), move your raw
+data to the correct folder, and create a new R Markdown file.</p>
+<div id="make-a-project-folders" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Make a Project
+&amp; folders</h3>
+<p>Step one: Create a new RStudio Project (File &gt; New Project &gt;
+New Directory &gt; New Project).</p>
+<p>Step two: Name it something relevant (e.g.,
+“<code>save_rds_activity</code>”) within the folder of this course. This
+will create a new folder nested inside your course folder and a new
+.Rproj file.</p>
+<p>Step three: 🎯 Create folders: data, scripts, output.</p>
+<pre class="r"><code># ⚡ Create folders
+dirs &lt;- c(&quot;data_raw&quot;, &quot;data_clean&quot;)
+invisible(lapply(dirs, dir.create, showWarnings = FALSE))</code></pre>
+<p>✅ This creates folders, (<code>data_raw</code> and
+<code>data_clean</code>) if they don’t already exist, and suppresses
+warnings if they do. 👀 Check your file explorer or finder to verify the
+folders are there.</p>
+</div>
+<div id="r-markdown" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> R Markdown</h3>
+<p>Step one: Create a new R Markdown file (File &gt; New File &gt; R
+Markdown).</p>
+<p>Step two: Name it and save it as <code>01_save_data.Rmd</code>. Save
+it in the Project root (same level as data_clean/).</p>
+</div>
+</div>
+<div id="load-raw-data-5-min" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Load Raw data (5
+min)</h2>
+<p>Choose ONE path</p>
+<p>You need to choose a “raw” dataset for this activity. You can use (A)
+a built-in/package dataset or (B) a CSV on your computer (place it in
+data_raw/).</p>
+<p>Ideally, you will use the dataset you will be using for your
+signature assignment. If you do not have a dataset ready for your
+signature assignment, consider using a dataset from dslabs for this
+activity.</p>
+<pre class="r"><code># Option A — use a package dataset
+# dslabs package
+library(dslabs)  # For more datasets
+utils::data(package = &quot;dslabs&quot;)$results[, &quot;Item&quot;]</code></pre>
+<pre><code>##  [1] &quot;admissions&quot;                                       
+##  [2] &quot;brca&quot;                                             
+##  [3] &quot;brexit_polls&quot;                                     
+##  [4] &quot;death_prob&quot;                                       
+##  [5] &quot;divorce_margarine&quot;                                
+##  [6] &quot;gapminder&quot;                                        
+##  [7] &quot;greenhouse_gases&quot;                                 
+##  [8] &quot;heights&quot;                                          
+##  [9] &quot;historic_co2&quot;                                     
+## [10] &quot;mice_weights (mice_weigths)&quot;                      
+## [11] &quot;mnist_127&quot;                                        
+## [12] &quot;mnist_27&quot;                                         
+## [13] &quot;movielens&quot;                                        
+## [14] &quot;murders&quot;                                          
+## [15] &quot;na_example&quot;                                       
+## [16] &quot;nyc_regents_scores&quot;                               
+## [17] &quot;oecd (gapminder)&quot;                                 
+## [18] &quot;olive&quot;                                            
+## [19] &quot;opec (gapminder)&quot;                                 
+## [20] &quot;outlier_example&quot;                                  
+## [21] &quot;polls_2008&quot;                                       
+## [22] &quot;polls_us_election_2016&quot;                           
+## [23] &quot;pr_death_counts (pr-death-counts)&quot;                
+## [24] &quot;raw_data_research_funding_rates&quot;                  
+## [25] &quot;reported_heights&quot;                                 
+## [26] &quot;research_funding_rates&quot;                           
+## [27] &quot;results_us_election_2012&quot;                         
+## [28] &quot;results_us_election_2016 (polls_us_election_2016)&quot;
+## [29] &quot;sentiment_counts (trump_tweets)&quot;                  
+## [30] &quot;stars&quot;                                            
+## [31] &quot;temp_carbon&quot;                                      
+## [32] &quot;tissue_gene_expression&quot;                           
+## [33] &quot;trump_tweets&quot;                                     
+## [34] &quot;us_contagious_diseases&quot;</code></pre>
+<p>🎯 If you choose a dataset from dslabs, you can load it with
+data(“dataset_name”).</p>
+<pre class="r"><code># ⚡ load dataset from dslabs
+data(&quot;movielens&quot;)
+# ✅  Verify
+head(movielens)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["movieId"],"name":[1],"type":["int"],"align":["right"]},{"label":["title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["genres"],"name":[4],"type":["fct"],"align":["left"]},{"label":["userId"],"name":[5],"type":["int"],"align":["right"]},{"label":["rating"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["timestamp"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"31","2":"Dangerous Minds","3":"1995","4":"Drama","5":"1","6":"2.5","7":"1260759144","_rn_":"1"},{"1":"1029","2":"Dumbo","3":"1941","4":"Animation|Children|Drama|Musical","5":"1","6":"3.0","7":"1260759179","_rn_":"2"},{"1":"1061","2":"Sleepers","3":"1996","4":"Thriller","5":"1","6":"3.0","7":"1260759182","_rn_":"3"},{"1":"1129","2":"Escape from New York","3":"1981","4":"Action|Adventure|Sci-Fi|Thriller","5":"1","6":"2.0","7":"1260759185","_rn_":"4"},{"1":"1172","2":"Cinema Paradiso (Nuovo cinema Paradiso)","3":"1989","4":"Drama","5":"1","6":"4.0","7":"1260759205","_rn_":"5"},{"1":"1263","2":"Deer Hunter, The","3":"1978","4":"Drama|War","5":"1","6":"2.0","7":"1260759151","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🎯 I use <code>mtcars</code> for an example in this activity of how
+to use a built-in dataset.</p>
+<pre class="r"><code># ⚡ Example &quot;import&quot; step (pretend mtcars is your raw data)
+mtcars_df &lt;- mtcars
+# ✅  Verify
+mtcars_df[1:6 , c(1, 4)]   </code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"110","_rn_":"Mazda RX4"},{"1":"21.0","2":"110","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"93","_rn_":"Datsun 710"},{"1":"21.4","2":"110","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"175","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"105","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>If you choose a CSV dataset from your own computer, read it in with
+<code>read.csv()</code> or <code>readr::read_csv()</code>. Place the raw
+data file in the data_raw folder you created above. As an example of
+loading and external dataset, 🎯 I’ll load
+<code>signature_assignment_example.csv</code> from the
+<code>data_raw</code> folder.</p>
+<pre class="r"><code># Option B — use your own CSV (put it in data_raw/)
+# ⚡ Example load dataset from your computer
+example_df &lt;- read.csv(file.path(&quot;data_raw&quot;, &quot;signature_assignment_example.csv&quot;))
+# ✅
+example_df[1:6 , c(1:2,19)]  # show first 6 rows and a few columns</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["study_area"],"name":[2],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"187150405","2":"Natural Sciences (e.g., biology, chemistry, physics, astronomy, environmental science, evolutionary anthropology, neruopsychology)","3":"3. Aquire","_rn_":"1"},{"1":"Su8274642","2":"Natural Sciences (e.g., biology, chemistry, physics, astronomy, environmental science, evolutionary anthropology, neruopsychology)","3":"2. Awareness","_rn_":"2"},{"1":"Su6073642","2":"Social Sciences (e.g., sociology, cultural anthropology, social psychology)","3":"2. Awareness","_rn_":"3"},{"1":"046627462","2":"Social Sciences (e.g., sociology, cultural anthropology, social psychology)","3":"2. Awareness","_rn_":"4"},{"1":"Su0435824","2":"Natural Sciences (e.g., biology, chemistry, physics, astronomy, environmental science, evolutionary anthropology, neruopsychology)","3":"2. Awareness","_rn_":"5"},{"1":"Su6718158","2":"Health Sciences (e.g., medicine, nursing, pharmacy, dentistry, veterinary medicine, public health)","3":"2. Awareness","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 The dataset loaded successfully.</p>
+</div>
+<div id="cleantransform-in-scripts-15-min" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Clean/transform in
+scripts (15 min)</h2>
+<p>Make a transformation or two to the dataset. Your example can do
+minimal transformations. Apply any steps you would like to practice from
+Lesson 6.</p>
+<div id="mtcars-example-transformations" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> mtcars example
+transformations</h3>
+<pre class="r"><code># Step one: explore the data
+mtcars_df[1:6 , c(&quot;mpg&quot;, &quot;cyl&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","_rn_":"Datsun 710"},{"1":"21.4","2":"6","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🎯 I add a new column called “model” that contains the row names.</p>
+<pre class="r"><code># ⚡ keep model names as a column
+mtcars_df[ , &quot;model&quot;] &lt;- rownames(mtcars_df)</code></pre>
+<pre class="r"><code># ✅ Verify:
+mtcars_df[1:6 , c(&quot;model&quot;, &quot;mpg&quot;, &quot;cyl&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mpg"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Mazda RX4","2":"21.0","3":"6","_rn_":"Mazda RX4"},{"1":"Mazda RX4 Wag","2":"21.0","3":"6","_rn_":"Mazda RX4 Wag"},{"1":"Datsun 710","2":"22.8","3":"4","_rn_":"Datsun 710"},{"1":"Hornet 4 Drive","2":"21.4","3":"6","_rn_":"Hornet 4 Drive"},{"1":"Hornet Sportabout","2":"18.7","3":"8","_rn_":"Hornet Sportabout"},{"1":"Valiant","2":"18.1","3":"6","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 The change was successful. rownames(mtcars_df) collects the
+rownames as a vertex then mtcars_df[ , “model”] assigns the vertex to a
+new column called “model”.</p>
+<p>🎯 I remove the row names.</p>
+<pre class="r"><code># ⚡ remove row names
+rownames(mtcars_df) &lt;- NULL</code></pre>
+<pre class="r"><code># ✅ Verify: 
+mtcars_df[1:6 , c(&quot;model&quot;, &quot;mpg&quot;, &quot;cyl&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mpg"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Mazda RX4","2":"21.0","3":"6","_rn_":"1"},{"1":"Mazda RX4 Wag","2":"21.0","3":"6","_rn_":"2"},{"1":"Datsun 710","2":"22.8","3":"4","_rn_":"3"},{"1":"Hornet 4 Drive","2":"21.4","3":"6","_rn_":"4"},{"1":"Hornet Sportabout","2":"18.7","3":"8","_rn_":"5"},{"1":"Valiant","2":"18.1","3":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 The change was successful. The rownames(mtcars_df) &lt;- NULL
+command successfully removed the row names.</p>
+</div>
+<div id="signature-assignment-example-transformations" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Signature
+assignment example transformations</h3>
+<pre class="r"><code># Step one: explore the data
+example_df[1:6, c(&quot;id&quot;, &quot;humans_versus_AI_control&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"187150405","2":"3. Aquire","_rn_":"1"},{"1":"Su8274642","2":"2. Awareness","_rn_":"2"},{"1":"Su6073642","2":"2. Awareness","_rn_":"3"},{"1":"046627462","2":"2. Awareness","_rn_":"4"},{"1":"Su0435824","2":"2. Awareness","_rn_":"5"},{"1":"Su6718158","2":"2. Awareness","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🎯 I want to make two different types of columns for the AI
+Competency results section. I would like to have the numeric values in
+one column and the words in another column. This will make it easier to
+analyze.</p>
+<pre class="r"><code># What are my options
+unique(example_df$humans_versus_AI_control) # An example column</code></pre>
+<pre><code>## [1] &quot;3. Aquire&quot;       &quot;2. Awareness&quot;    &quot;4. Deepen&quot;       &quot;5. Create&quot;      
+## [5] &quot;1. No Awareness&quot;</code></pre>
+<p>🎯 Using ifelse() and overwriting values from lesson 6, I will create
+a new column called <code>humans_versus_AI_control_num</code> that
+contains numeric values for the <code>humans_versus_AI_control</code>
+column. I will then overwrite the values in the original column so that
+it only contains the words.</p>
+<ol style="list-style-type: decimal">
+<li>🎯 Create a numeric column with ifelse()</li>
+</ol>
+<pre class="r"><code># ⚡ Create numeric column for humans_versus_AI_control
+example_df[ , &quot;humans_versus_AI_control_num&quot;] &lt;-
+  ifelse(example_df[ , &quot;humans_versus_AI_control&quot;] == 
+           &quot;1. No Awareness&quot;, 1L,
+  ifelse(example_df[ , &quot;humans_versus_AI_control&quot;] == 
+           &quot;2. Awareness&quot;,    2L,
+  ifelse(example_df[ , &quot;humans_versus_AI_control&quot;] == 
+           &quot;3. Aquire&quot;,       3L,
+  ifelse(example_df[ , &quot;humans_versus_AI_control&quot;] == 
+           &quot;4. Deepen&quot;,       4L,
+  ifelse(example_df[ , &quot;humans_versus_AI_control&quot;] == 
+           &quot;5. Create&quot;,       
+         5L, NA_integer_)))))</code></pre>
+<pre class="r"><code># ✅ Verify: 
+example_df[1:6 , c(&quot;id&quot;, &quot;humans_versus_AI_control&quot;, &quot;humans_versus_AI_control_num&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control"],"name":[2],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control_num"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"187150405","2":"3. Aquire","3":"3","_rn_":"1"},{"1":"Su8274642","2":"2. Awareness","3":"2","_rn_":"2"},{"1":"Su6073642","2":"2. Awareness","3":"2","_rn_":"3"},{"1":"046627462","2":"2. Awareness","3":"2","_rn_":"4"},{"1":"Su0435824","2":"2. Awareness","3":"2","_rn_":"5"},{"1":"Su6718158","2":"2. Awareness","3":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 A new column called <code>humans_versus_AI_control_num</code> was
+successfully created.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>🎯 Overwrite the original column to keep only the words.</li>
+</ol>
+<pre class="r"><code># ⚡ Overwrite original column to keep only the words
+example_df[ example_df[ , &quot;humans_versus_AI_control&quot;] == 
+              &quot;1. No Awareness&quot; , &quot;humans_versus_AI_control&quot;] &lt;- &quot;No Awareness&quot;
+example_df[ example_df[ , &quot;humans_versus_AI_control&quot;] == 
+              &quot;2. Awareness&quot;    , &quot;humans_versus_AI_control&quot;] &lt;- &quot;Awareness&quot;
+example_df[ example_df[ , &quot;humans_versus_AI_control&quot;] == 
+              &quot;3. Aquire&quot;       , &quot;humans_versus_AI_control&quot;] &lt;- &quot;Aquire&quot;
+example_df[ example_df[ , &quot;humans_versus_AI_control&quot;] == 
+              &quot;4. Deepen&quot;       , &quot;humans_versus_AI_control&quot;] &lt;- &quot;Deepen&quot;
+example_df[ example_df[ , &quot;humans_versus_AI_control&quot;] == 
+              &quot;5. Create&quot;       , &quot;humans_versus_AI_control&quot;] &lt;- &quot;Create&quot;</code></pre>
+<pre class="r"><code>#✅ Verify: 
+example_df[1:6 , c(&quot;id&quot;, &quot;humans_versus_AI_control&quot;, &quot;humans_versus_AI_control_num&quot;)]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control"],"name":[2],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control_num"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"187150405","2":"Aquire","3":"3","_rn_":"1"},{"1":"Su8274642","2":"Awareness","3":"2","_rn_":"2"},{"1":"Su6073642","2":"Awareness","3":"2","_rn_":"3"},{"1":"046627462","2":"Awareness","3":"2","_rn_":"4"},{"1":"Su0435824","2":"Awareness","3":"2","_rn_":"5"},{"1":"Su6718158","2":"Awareness","3":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>🎯 I select only the columns I want to keep for my final dataset to
+share.</li>
+</ol>
+<pre class="r"><code># ⚡ Select only the columns I want to keep
+example_df_clean &lt;- example_df[ , c(&quot;id&quot;, &quot;humans_versus_AI_control&quot;, &quot;humans_versus_AI_control_num&quot;)]</code></pre>
+<pre class="r"><code># ✅ Verify: 
+example_df_clean[1:6, ]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control"],"name":[2],"type":["chr"],"align":["left"]},{"label":["humans_versus_AI_control_num"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"187150405","2":"Aquire","3":"3","_rn_":"1"},{"1":"Su8274642","2":"Awareness","3":"2","_rn_":"2"},{"1":"Su6073642","2":"Awareness","3":"2","_rn_":"3"},{"1":"046627462","2":"Awareness","3":"2","_rn_":"4"},{"1":"Su0435824","2":"Awareness","3":"2","_rn_":"5"},{"1":"Su6718158","2":"Awareness","3":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+<div id="save-cleaned-data-5-min" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Save cleaned data (5
+min)</h1>
+<p>We’ll save the cleaned object twice: once as .rds (for R pipelines)
+and once as .csv (for sharing).</p>
+<div id="rds" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> RDS</h2>
+<p>🎯 <code>file.path()</code> builds correct paths on Windows/Mac/Linux
+and keeps your code portable inside an RStudio Project.</p>
+<pre class="r"><code># ⚡ Create a file save path
+rds_path &lt;- file.path(&quot;data_clean&quot;, &quot;dataset_clean.rds&quot;)</code></pre>
+<p>This creates a path to save the cleaned dataset as
+<code>dataset_clean.rds</code> in the <code>data_clean</code> folder.
+You can change <code>dataset</code> to something relevant to your
+dataset.</p>
+<pre class="r"><code># ⚡/ ✅   
+saveRDS(mtcars_df, rds_path) # change mtcars_df to the name of your cleaned dataset</code></pre>
+<p>👀 Check your Files pane (RStudio) to verify the folders are
+there.</p>
+</div>
+<div id="csv" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> CSV</h2>
+<pre class="r"><code># ⚡ Create a file save path
+csv_path &lt;- file.path(&quot;data_clean&quot;, &quot;dataset_clean.csv&quot;)</code></pre>
+<pre class="r"><code># ✅ CSV for non-R users
+write.csv(mtcars_df, csv_path)</code></pre>
+</div>
+<div id="submission-2-min" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Submission (2
+min)</h2>
+<p>Upload the folowing files to Module 6 → Class Activity 6.</p>
+<ul>
+<li><p>01_save_data.Rmd (the R Markdown you used for this
+activity)</p></li>
+<li><p>data_clean/dataset_clean.rds</p></li>
+<li><p>data_clean/dataset_clean.csv</p></li>
+</ul>
+</div>
+<div id="today-you-practiced" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Today you
+practiced:</h2>
+<ul>
+<li><p>worked inside an RStudio Project with relative paths,</p></li>
+<li><p>loaded a raw dataset (package or CSV),</p></li>
+<li><p>performed a minimal, documented transform (Lesson 6
+skill),</p></li>
+<li><p>saved a clean dataset for two audiences: .rds for R users and
+.csv for non-R users,</p></li>
+<li><p>verified your results by reloading/checking structure.</p></li>
+</ul>
+<p>This gives you a portable, re-runnable mini-pipeline that your
+collaborator can execute in Part Two.</p>
+<div id="p.s.-how-to-load-rds" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> P.S. How to load
+rds</h3>
+<pre class="r"><code># ✅ 
+cars &lt;- readRDS(&quot;mtcars_clean.rds&quot;)  # adjust file path as needed</code></pre>
+</div>
+</div>
 </div>
 
 <footer>

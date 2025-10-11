@@ -1,0 +1,511 @@
+---
+title: "Lesson_8_grading"
+author: "Lorraine Gaudio"
+format: html
+---
+
+# 📦 Packages
+
+```{r}
+#install.packages("dslabs")
+# install.packages("dplyr")
+```
+(Provided) 
+
+```{r}
+library(dslabs, dplyr)
+```
+
+# The Pipe (%>%)
+
+(Provided) 
+
+```{r}
+# ⚡ Test
+mtcars %>%        # start with data
+  head()          # ▶ shows first six rows
+```
+
+✍️ What other ways have you learned to write code that will view the first six rows of a data frame?
+
+```{r}
+# Learned
+head(mtcars)
+
+mtcars[1:6, ]
+
+# Not learned
+identical(head(mtcars), mtcars[1:6, ])
+
+dplyr::slice_head(mtcars, n = 6)
+
+mtcars %>% slice_head(n = 6)
+```
+
+# Selecting Columns
+
+## Positive Selection
+
+(Provided) 
+
+```{r , eval=FALSE}
+# ⚡ Test
+select(mtcars, mpg, cyl, hp)    # keep three columns
+```
+
+## Negative Selection
+
+(Provided) 
+
+```{r , eval=FALSE}
+select(mtcars, -gear)   # drop one column
+```
+
+## Piping with Select
+
+(Provided) 
+
+```{r , eval=FALSE}
+mtcars %>% 
+  select(mpg, cyl, hp)                  # easier to read
+```
+
+## Subset with Select
+                
+(Provided) 
+
+```{r , eval=FALSE}
+?gapminder
+```
+
+(Provided) 
+
+```{r , eval=FALSE}
+# ⚡ Test:
+I_Demo <- gapminder %>% 
+  select(country, year, infant_mortality, continent)
+```
+(Provided) 
+```{r, eval=FALSE}
+# ✅  Verify
+head(I_Demo)
+```
+
+(Provided) 🗣 Explain: A new dataset called `I_Demo` was created from the `gapminder` dataset that only contains the columns `country`, `year`, `infant_mortality`, and `continent`. 
+
+✍️ Practice: fill in the blank prompt
+
+You try to design your own subsetting operation.
+
+🎯 Goal: Write an example that selects only the columns you choose. 
+
+```{r , eval=FALSE}
+# ⚡ Test: 
+My_demo <- dslabs::gapminder %>% 
+  select(country, year, life_expectancy)
+
+# ✅  Verify
+colnames(My_demo)
+```
+
+🗣 Explain: I chose country, year, life_expectancy to focus on a single outcome over time for each country. Verify: names(My_demo) returns only those three.
+
+# Filtering Rows
+
+## Single Condition
+
+(Provided)
+
+```{r , eval=FALSE}
+# ⚡ Test:
+filter(mtcars, mpg >= 25)               # high‑mileage cars
+```
+
+## Piping with Filter
+
+(Provided)
+
+```{r , eval=FALSE}
+?murders
+```
+
+(Provided)
+
+```{r , eval=FALSE}
+# ⚡ Test:
+nrow(murders)  
+```
+
+(Provided) 🗣 Explain: ... Wait, what? ... ❓ Question: What are these 51 states?
+
+```{r , eval=FALSE}
+#⚡ Test:
+unique(murders$state)  # 51 states
+```
+
+(Provided) 🗣 Explain: Ohhhhh! "District of Columbia" is included in the dataset.
+
+(Provided)
+
+```{r , eval=FALSE}
+# ⚡ Test:
+No_Washington <- murders %>% 
+  filter(state != "Washington")
+```
+(Provided)
+```{r, eval=FALSE}
+# ✅  Verify
+nrow(No_Washington)  # 50 states
+```
+(Provided) 🗣 Explain: A new dataset called `No_Washington` was created from the `murders` dataset that excludes Washington state.
+
+
+🧐 Review: What is the difference between `==` and `!=`?
+
+`==` tests equality; `!=` tests “not equal.”
+
+🛠 Break Things! What happens when you use `=` instead of `==`? or `=!` instead of `!=`? Create a memo note, demonstrate learning skill(s) used.
+
+```{r}
+# ⚡ Test:
+# filter(mtcars, mpg = 25)    # triggers an error
+# filter(mtcars, mpg =! 25)   # triggers an error
+```
+`=` is not a comparison operator in filter conditions; using `mpg = 25` typically triggers an error (e.g., “unused argument” or similar).
+
+`=!` is invalid syntax; use `!=`.
+
+## Multiple Conditions with AND
+
+(Provided)
+
+🎯 Goal: Let's filter with two conditions and while we are at it, let's add a pipe! 
+
+❓ Question: How many cars have *both* mpg ≥ 25 *and* 4 cylinders? 
+
+(Provided)
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars %>%
+  filter(mpg >= 25, cyl == 4)           # two conditions
+```
+
+(NOT Provided)
+✅  Verify: How many cars have *both* mpg ≥ 25 *and* 4 cylinders? What code would you use to verify the success of this filter? 
+
+(NOT Provided)
+
+```{r}
+nrow(mtcars %>%
+  filter(mpg >= 25, cyl == 4))           # two conditions
+```
+
+## Multiple Conditions with OR
+
+### |
+
+(Provided)
+
+🎯 Goal: Let's filter with two conditions using OR (`|`).
+
+❓ Question: How many cars have *either* mpg ≥ 25 *or* 4 cylinders?
+
+(Provided)
+
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars %>%
+  filter(mpg >= 25 | cyl == 4)           # two conditions
+```
+
+(NOT Provided)
+
+✅  Verify: How many cars have *either* mpg ≥ 25 *or* 4 cylinders? What code would you use to verify the success of this filter? 
+
+(NOT Provided)
+```{r}
+nrow(mtcars %>%
+  filter(mpg >= 25 | cyl == 4))           # two conditions
+```
+
+### %in%
+
+(Provided)
+🎯 Goal:  The `%in%` operator is used to check if a value is in a set. It’s like "is this value one of these?"
+
+(Provided)
+```{r , eval=FALSE}
+# ⚡ Test
+filter(mtcars, cyl %in% c(4, 6))        # 4 or 6 cylinders
+```
+# filter() AND select()
+
+(Provided)
+
+🎯 The GOAL of combining `filter()` and `select()` is to **subset** a data frame by both rows and columns.
+
+💪 Best practice: filter rows first, then select columns.
+
+(Provided)
+
+```{r , eval=FALSE}
+?us_contagious_diseases
+```
+(Provided)
+```{r , eval=FALSE} 
+#⚡ Test
+us_contagious_diseases %>% 
+  filter(state == "Alaska", year >= 1980) %>%   # rows
+  select(year, disease, count)                  # columns
+```
+
+🚀 Explore and Play: What are the unique diseases in this Alaska subset? Use skills you developed in previous lessons to explore this data set. Compare filter and select with subsetting with brackets `[ ]`. Create a memo note, demonstrate learning skill(s) used.
+
+(Not Provided)
+```{r}
+# Explore idea: compare with bracket subsetting 
+us_contagious_diseases[us_contagious_diseases$state=="Alaska" & us_contagious_diseases$year>=1980, c("year","disease","count")]
+```
+
+# One Application
+
+🧐 Let's say you have the research question, ❓"Which automatic cars (am == 0) in mtcars have horsepower > 150? 🎯 Goal: Your report should show only hp and mpg.
+
+(Provided)
+```{r , eval=FALSE}
+#⚡ Test
+mtcars %>%
+  filter(am == 0, hp > 150) %>%
+  select(hp, mpg) %>%
+  head()
+```
+(Provided)
+🗣 Explain:
+
+1. `filter()` keeps matching rows.
+
+2. `select()` trims to needed columns.
+
+3. `head()` previews results. Bonus: Add row count for exploration.
+
+# Duplicates & Sampling
+
+Sometimes, you may need to remove duplicate rows or sample a subset of rows. `unique()` removes duplicate rows; `slice_sample()` picks random rows. 
+
+(Not Provided)
+👀 Type `?slice_sample()` to learn more about this `dplyr` function.
+
+🎯 Goal: We'll mix it up by using a different data set, `movielens` from `dslabs`. This data set contains information about movies and ratings.
+
+(Provided)
+
+```{r , eval=FALSE}
+?movielens
+```
+(Provided)
+```{r , eval=FALSE}
+nrow(movielens)   # how many rows at start?
+```
+(Provided)
+```{r , eval=FALSE}
+# ⚡ Test
+Movie_Night <- movielens %>%
+  filter(rating >= 4) %>%        # keep high ratings
+  select(title, rating) %>%      # keep title and rating
+  unique()                       # remove duplicates
+```
+(Provided)
+```{r , eval=FALSE}
+# ✅  Verify
+nrow(Movie_Night)  # how many rows after filter, select, and unique?
+```
+(Provided)
+
+🗣 Explain: Filter kept only the rows with ratings 4 or higher. Select kept only the title and rating columns. Unique removed duplicate rows, so each movie title appears only once.
+
+
+(Not Provided answer)
+❓ Question: What movie should I watch on movie night? 
+
+(Provided)
+🎯 Goal: Let's randomly sample 10 movies with ratings four or higher.
+
+```{r , eval=FALSE}
+set.seed(420)
+# ⚡ Test
+Movie_Night %>%
+  slice_sample(n=10)  # random sample of 10 rows
+```
+(Not Provided answer)
+🗣 Comment: What movie would you choose? Any choice is acceptable if it’s from the sampled output
+
+(Not Provided answer)
+🚀 Explore and Play: What would happen if we didn't use unique()? Why might unique be useful for our question? Create a memo note, demonstrate learning skill(s) used.
+
+(Not Provided answer)
+```{r}
+Movie_Night <- movielens %>%
+  filter(rating >= 4) %>%        # keep high ratings
+  select(title, rating)
+```
+```{r}
+nrow(Movie_Night)  # how many rows after filter and select but without unique?
+```
+
+(Not Provided answer)
+There are more rows without `unique()`, because some movies have multiple ratings of 4 or higher. `unique()` is useful to ensure each movie title appears only once in the final dataset. 
+ 
+# Extra Practice
+
+(Not Provided answer)
+✍️ Practice: Demonstrate learning skill(s) by completing this bonus practice. Fill the blanks. Use the `gapminder` dataset.
+
+```{r , eval=FALSE}
+dslabs::gapminder %>%
+  filter(life_expectancy >= quantile(life_expectancy, 0.95)) %>%
+  select(country, year, life_expectancy) -> Top_LifeExp
+View(Top_LifeExp)
+```
+(Not Provided answer)
+🗣 Explain: What is the `-> Top_LifeExp` do in the code above? Assigns the pipeline result into the object named Top_LifeExp.
+
+❓ Question: What is the highest life expectancy in this subset?
+
+(Not Provided answer)
+```{r}
+max(Top_LifeExp$life_expectancy)    # highest in subset (~84–85 typically)
+```
+
+❓ Question: How many countries are in the `Top_LifeExp` data frame?
+
+(Not Provided answer) HARD
+```{r}
+n_distinct(Top_LifeExp$country)
+```
+
+❓ Question: What is the average life expectancy in this subset?
+
+(Not Provided answer)
+```{r}
+mean(Top_LifeExp$life_expectancy) 
+```
+
+# ➤ Assignment
+
+## Task 0
+
+📦 Make sure `dplyr` and `dslabs` packages are attached so their functions / datasets load.
+
+## Task 1
+
+Column Selection
+
+📝 Create **`C_Overload`** that keeps only year and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` with or without `%>%`.
+
+```{r, eval=FALSE}
+C_Overload <- temp_carbon %>% select(year, carbon_emissions)
+# Verify:
+names(C_Overload)            # "year" "carbon_emissions"
+```
+
+## Task 2
+
+Single-Column Extraction
+
+🌟 Pipe the `stars` dataset in `dslabs` through `select()` to keep only the `star` column. Name the result **`star_names`**.
+
+```{r, eval=FALSE}
+star_names <- stars %>% select(star)
+# Verify:
+ncol(star_names) == 1 && names(star_names) == "star"
+```
+
+## Task 3
+
+Row Filtering
+
+⚠️ From `murders`, remove every row where state equals `"Florida"`. Name the object **`No_Florida`** (any method is fine).
+
+```{r, eval=FALSE}
+No_Florida <- murders %>% filter(state != "Florida")
+# Verify (both should be TRUE):
+sum(No_Florida$state == "Florida") == 0
+nrow(No_Florida) == nrow(murders) - 1 
+```
+
+## Task 4
+
+Multiple Conditions
+
+🚗 From `mtcars`, use `filter()` + `%>%`, pull cars in mtcars that are manual, have 8 cylinders, and have `qsec < 15`. Store as **`Fast_n_Furious`**. 
+
+```{r, eval=FALSE}
+summary(mtcars$qsec)  # check qsec range
+```
+
+Is `qsec < 15` within range? 
+
+```{r, eval=FALSE}
+Fast_n_Furious <- mtcars %>% 
+  filter(am == 1, cyl == 8, qsec < 15)
+
+Fast_n_Furious
+```
+
+## Task 5
+
+OR Logic + Column Slice
+
+In 🚗 `mtcars`, show only rows where `disp > 250` OR `disp < 160` and display just the first three columns.
+
+```{r, eval=FALSE}
+mtcars %>% 
+  filter(disp > 250 | disp < 160) %>% 
+  select(1:3) 
+```
+
+The rows satisfy the OR condition; the displayed columns are the first three in order.
+
+## Task 6
+
+Reflection
+
+📝 Write a few sentences comparing dplyr verbs over base-R brackets (from lesson 6 & 7) for subsetting.
+
+dplyr + %>% reads left-to-right, is clearer than brackets, composes steps safely, and reduces typos when subsetting rows and columns.
+
+# Save and Upload
+
+0. Self-check checklist:
+
+For the assignment protion, your environment should contain the following items:
+
+- `C_Overload` exists and has only `year` and `carbon_emissions`.
+
+- `star_names` exists and has one column named `star`.
+
+- `No_Florida` has 0 rows with `state == 'Florida'`.
+
+- `Fast_n_Furious` with rows that only contain manual, 8 cylinders, and where `qsec < 15`.
+
+- **All code in your Quarto document runs top-to-bottom without errors.**
+
+1. You will be submitting **both** the Quarto document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+
+```{r , eval=FALSE}
+save.image("Assignment8_Workspace.RData")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
