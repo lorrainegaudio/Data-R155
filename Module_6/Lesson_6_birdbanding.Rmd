@@ -381,7 +381,6 @@ unique(reintroduction[ , "Status"])
 
 🗣 Comment: Why is `field_sightings` unchanged while editing `reintroduction`? Why is this good practice? Create a memo note, demonstrate learning skill(s) used.
 
-### Renaming columns 
 
 ```{r}
 # Part 2 — Add a new column pattern

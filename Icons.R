@@ -124,6 +124,8 @@
   
 📝 Practice Space
 
+📎
+
 ✍️ Practice:
 
 💾
@@ -171,6 +173,8 @@
 🚗
 
 🚑
+
+🧯
 
 🚫
 
