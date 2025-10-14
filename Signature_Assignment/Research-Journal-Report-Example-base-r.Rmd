@@ -1,0 +1,336 @@
+---
+title: "Research Journal Report Example"
+author: "Lorraine Gaudio"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Learning R by Doing: A Research-Journal Report
+
+This is the signature assignment for an introductory R course. It is written in research-journal style and documents how I explored, cleaned, and lightly analyzed an open dataset using tools covered this term. Before each code chunk, I'll state the goal, explain my reasoning, show attempts and checks, cite what I used to learn, and reflect on results and next steps. (Goal → Prediction → Code → Check → Reflection)
+
+I use a de-identified pre-course survey dataset drawn from multiple sections and sources between Summer and Fall 2025 to create fabricated rows. It’s a deliberate choice because it has direct relevance to the course learning outcomes, the data is messy enough to practice using without being overwhelming, it contains an analytic range of numeric and categorical fields, and it's small enough to run quickly in RStudio on my laptops. 
+
+This report is an example of a research journal report for students to use as a template. However, having an example is useful for understanding at least one possible way of writing this report. Students should not copy this report, as this does not demonstrate learning skills.
+
+## Dataset Citation & License
+
+De-identified pre-course survey responses collected across multiple undergraduate and graduate sections and sources at Boise State between Summer and Fall 2025. Approximately 50 % of rows are synthetically generated from the empirical distributions of the original pre-survey to protect privacy. Items cover study area (major), R familiarity tasks (file management, scripts, packages, data import, data frames, ggplot2, pipes), seven 0–100 self-regulation sliders, and nine AI-literacy items recorded on a five-level ordered scale (“No awareness” → “Create”).
+
+Gaudio, L. (2025). Boise State Intro to R Pre-Course Survey (demo) [Data set, v1.0]. Boise State University.
+
+```{r load-data, message=FALSE, warning=FALSE}
+# library the required package
+library(readr)
+
+# load the csv file
+example_data <- read_csv("data/signature_assignment_example.csv")
+```
+
+## Data Overview
+
+🎯 Goal: I begin by getting a sense of the data. I want to know how many rows and columns there are, what the column names are, and what the data looks like.
+
+```{r}
+# ⚡Number of rows
+nrow(example_data)
+```
+
+```{r}
+# ⚡Number of columns
+ncol(example_data)  
+```
+
+🗣 This dataset is manageable with 112 rows and 34 columns. 
+
+🪞 Metacognition: If it were much larger, I might need to use different tools or strategies to work with it. In section "Row Number Reduction", I will demonstrate how to reduce the number of rows if needed.
+
+🎯 Goal: There are many ways to get an initial view of a data set without viewing the whole dataset. 
+
+💬 Prediction: Here I use base R brackets for subsetting and  the `head()` function.
+
+```{r}
+#⚡ View the first three rows and first five columns
+example_data[1:3, 1:5]  
+```
+
+```{r}
+#⚡ head (standard)
+head(example_data)
+```
+
+🗣 Head shows the first six rows of the data frame by default. 
+
+💬 Prediction: I can change that by adding a second argument to head().
+
+```{r}
+#⚡ First Three Rows
+head(example_data, 3)
+```
+
+🎯 Goal: Another way to get a quick overview of the data is to count the number of `NA` values in each column. 
+
+🪞 Metacognition: This is useful for understanding how much data cleaning might be needed.
+
+```{r}
+#⚡ Check for the number of NA values in each column
+na_counts <- colSums(is.na(example_data))
+na_counts
+```
+🗣 This shows that some columns have `NA` values, which I'll need to address later.
+
+## Data Transformations
+
+I will use the `dplyr` package for most of my data wrangling, but I want to show that I can do some things in base R as well. I will demonstrate both methods where appropriate.
+
+### Rename a Column
+
+I may want to rename columns to make them easier to work with. To demonstrate this, rename the `familiarity_` columns. I'll start with `base R` and then I'll use `dplyr`. 
+
+#### Base R
+
+🎯 Goal: To keep it simple in `base R`, I'll rename `familiarity_managing_files` column to `fam_files`.
+
+```{r}
+# View current column names
+colnames(example_data)
+```
+
+💬Prediction: If this works, I expect to see `fam_files` instead of `familiarity_managing_files`.
+
+```{r}
+# ⚡ Rename column using colnames()
+colnames(example_data)[ colnames(example_data) == "familiarity_managing_files"] <- "fam_files"
+```
+
+I need to check that this worked.
+
+```{r}
+# ✅ Verify:
+colnames(example_data)
+```
+
+🗣 The column "familiarity_managing_files" is now "fam_files". 
+
+🪞 Metacognition: What I learned is that renaming columns in base R is straightforward but can be tedious if I have many columns to rename.
+
+#### dplyr
+
+What if I wanted to rename all the columns that start with "familiarity_" to start with "fam_" instead? I can use the the `dplyr` package to do this.
+
+I'll come back to this section after I learn more about `dplyr`. 
+
+### Split a Column 
+
+I demonstrate some base R transformations first.
+
+#### Base R
+
+##### Study Area Column
+
+🎯 Goal: The `study_area` column contains values that are very long. I want to simplify the length of the values. 
+
+```{r}
+# What are my options
+unique(example_data$study_area)
+```
+
+💬 Prediction: I'll shorten these values to just the main category. I will use the `ifelse()` function to create a new column called `study_area_short` that contains the shortened values.
+
+```{r}
+# ⚡ Create new column with shortened values
+example_data[ , "study_area_short"] <-
+  ifelse(example_data[ , "study_area"] ==
+           "Natural Sciences (e.g., biology, chemistry, physics, astronomy, environmental science, evolutionary anthropology, neruopsychology)", 
+         "Natural Sciences",
+  ifelse(example_data[ , "study_area"] ==
+           "Social Sciences (e.g., sociology, cultural anthropology, social psychology)", 
+         "Social Sciences",
+  ifelse(example_data[ , "study_area"] ==
+           "Health Sciences (e.g., medicine, nursing, pharmacy, dentistry, veterinary medicine, public health)",
+         "Health Sciences",
+  ifelse(example_data[ , "study_area"] ==
+           "Engineering & Technology (e.g., civil engineering, mechanical engineering, computer engineering, IT, architecture)",
+         "Engineering & Technology",
+  ifelse(example_data[ , "study_area"] ==
+           "Undecided Or I choose not to answer",
+         "Undecided/Prefer Not to Answer", NA_character_)))))
+```
+
+I need to check that this worked.
+
+```{r}
+# ✅ Verify:
+example_data[1:10 , c("id", "study_area", "study_area_short")]
+```
+
+```{r}
+# ✅ Verify:
+unique(example_data$study_area_short)
+```
+
+
+🗣 The new column `study_area_short` has been created with the correct shortened values. 
+
+🪞 Metacognition: What I learned is that the `ifelse()` function can be nested to handle multiple conditions, but it can get unwieldy with many options.
+
+##### AI Competency Columns
+
+🎯 Goal: I want to make two different types of columns for the AI Competency results section. I would like to have the numeric values in one column and the words in another column. This will make it easier to analyze. 
+
+```{r}
+# What are my options
+unique(example_data$humans_versus_AI_control) # An example column
+```
+
+I see that the values are "1. No Awareness", "2. Awareness", "3. Aquire", "4. Deepen", and "5. Create". 
+
+✍️ Record keeping: The "3. Aquire" is misspelled in this an several columns. It should be "3. Acquire". 📍 Troubleshooting: This initially caused an error because I didn't notice this type in the dataset values. When I rename the values in the affected columns, I will need to correct this issue. 
+
+I want to split these into two columns: one for the numeric part and one for the text part.
+
+💬 Prediction: Using lesson 6, I will create a new column called `humans_versus_AI_control_num` that contains numeric values for the `humans_versus_AI_control` column. I will then overwrite the values in the original column so that it only contains the words. 
+
+1)💬Prediction: I'll create a numeric column with `ifelse()` as shown in lesson 6 (👀 see `trial_vec2` and `Band_Color`). 
+
+```{r}
+# ⚡ Create numeric column for humans_versus_AI_control
+example_data[ , "humans_versus_AI_control_num"] <-
+  ifelse(example_data[ , "humans_versus_AI_control"] == 
+           "1. No Awareness", 1L,
+  ifelse(example_data[ , "humans_versus_AI_control"] == 
+           "2. Awareness",    2L,
+  ifelse(example_data[ , "humans_versus_AI_control"] ==  # Use Misspelling "Aquire"
+           "3. Aquire",       3L,
+  ifelse(example_data[ , "humans_versus_AI_control"] == 
+           "4. Deepen",       4L,
+  ifelse(example_data[ , "humans_versus_AI_control"] == 
+           "5. Create",       
+         5L, NA_integer_)))))
+```
+
+I need to check that this worked.
+
+```{r}
+# ✅ Verify: 
+example_data[1:6 , c("id", "humans_versus_AI_control", "humans_versus_AI_control_num")]
+```
+
+🗣 The new column `humans_versus_AI_control_num` has been created with the correct numeric values.
+
+2) 💬 Prediction: I'll overwrite the original column to only contain the words. 
+
+👀 Resource cited: I reviewed the Lesson 6 section called "Overwrite Values" to recall how to write this code.
+
+```{r}
+# ⚡ Overwrite original column to only contain words
+example_data[ example_data[ , "humans_versus_AI_control"] == 
+              "1. No Awareness" , "humans_versus_AI_control"] <- "No Awareness"
+example_data[ example_data[ , "humans_versus_AI_control"] == 
+              "2. Awareness"    , "humans_versus_AI_control"] <- "Awareness"
+example_data[ example_data[ , "humans_versus_AI_control"] == 
+              "3. Aquire"       , "humans_versus_AI_control"] <- "Acquire" # Corrected misspelling  
+example_data[ example_data[ , "humans_versus_AI_control"] == 
+              "4. Deepen"       , "humans_versus_AI_control"] <- "Deepen"
+example_data[ example_data[ , "humans_versus_AI_control"] == 
+              "5. Create"       , "humans_versus_AI_control"] <- "Create"
+```
+
+I need to check that this worked.
+
+```{r}
+#✅ Verify: 
+example_data[1:6 , c("id", "humans_versus_AI_control", "humans_versus_AI_control_num")]
+```
+
+🗣 The original column `humans_versus_AI_control` has been overwritten to only contain the words.
+
+🪞 Metacognition: This may seem a bit tedious but learning base R helps beginners can see each step.
+
+🎯 Goal: The columns I want to transform are the ones associated with AI Competencies.
+
+```{r}
+# List of columns to transform
+colnames(example_data)
+```
+
+
+🗣 The index numbers for the AI Competency columns are 19 to 29. I will use `dplyr` for the rest of the transformations. 
+
+💬 Prediction: I'll create a vector using `colnames()` and indexing. (🎯 Goal: I can use this vector with `dplyr` functions.)
+
+```{r}
+# ⚡ AI Competency columns
+ai_cols <- colnames(example_data)[19:29]
+```
+
+🗣 In the code above, I created a vector called `ai_cols` using the `colnames()` function to get the names of the columns from index 19 to 29. 
+
+🪞 Metacognition: This vector will be useful for applying transformations to all AI Competency columns at once.
+
+
+#### dplyr
+
+Long chain of `ifelse()` statements is tedious and error-prone. I will use `dplyr` to make this easier. I'll come back to this section after we learn more about `dplyr`.
+
+##### AI Competency Numeric Columns
+
+Section plan
+
+##### AI Competency Text Columns
+
+Section plan
+
+### Row Number Reduction
+
+I may want to reduce the number of rows in my dataset to make it easier to work with. Or maybe I am only interested in a subset of the data. There are many ways I could do this. I'll show two methods: base R and `dplyr`. 
+
+#### Base R
+
+🎯 Goal: I'll create a subset of the data using base R and the column `study_area_short`. 
+
+💬 Prediction: The subset will only include rows where `study_area_short` contains "Natural Sciences" and "Social Sciences".
+
+```{r}
+# How many rows are in the original data?
+nrow(example_data)
+```
+
+🗣 I begin with 112 rows.
+
+💬 Prediction: The `%in%` operator checks if each value in `study_area_short` is in the specified vector of values. If it is, the row is included in the subset.
+
+```{r}
+# ⚡ Subset data to only include Natural Sciences and Social Sciences
+subset_data <- example_data[ example_data$study_area_short %in%
+ c("Natural Sciences", "Social Sciences"), ]
+
+```
+I need to check that this worked.
+
+```{r}
+# ✅ Verify: How many rows are in the subset data?
+nrow(subset_data)
+```
+
+🗣 After subsetting using base R, I have 98 rows. 
+
+```{r}
+# ✅ Verify:
+table(subset_data$study_area_short)
+```
+
+🗣 There are now 98 rows in the subset data. The table shows that there are 59 rows for "Natural Sciences" and 39 rows for "Social Sciences".
+
+🪞 Metacognition: I learned that subsetting in base R is straightforward but 
+
+#### dplyr
+
+I'll come back to this section after I learn more about `dplyr`.  (I'll use the `sample()` function to randomly select a subset of rows.)
+
+
+

@@ -32,7 +32,7 @@
 
 🗣 Comment
 
-💬
+💬 Prediction
 
 🪞 Reflect
 
