@@ -124,11 +124,11 @@ library(dplyr)   # Data manipulation package
 
 # Warm‑Up
 
-1. Logical Test Review
+## Logical Test Review
 
 🎯 Goal: To write a simple logical test for numbers one through five showing TRUE for when the numbers are larger than 3.
 
-💬 Prediction: Which numbers do you expect to see `TRUE` for?
+💬 Prediction: I expect 4 and 5 to be `TRUE`.
 
 ```{r , eval=FALSE}
 # ⚡Code: TRUE appears where the test is met.
@@ -137,7 +137,7 @@ c(1, 2, 3, 4, 5) > 3
 
 ✅ Check / 🗣 Comment:  Did the output met your expectation?
 
-2. `sample()` Review
+## `sample()` Review
 
 Recall `sample()` is a `base-R` function that randomly selects elements from a vector.
 
@@ -164,14 +164,14 @@ sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame
 
 ```{r , eval=FALSE}
 # ⚡Code: 
-mtcars %>% sample_n(5)  # Using with pipe
+mtcars2 <- mtcars %>% sample_n(5)  # Using with pipe
 ```
 
 ✅ Check / 🗣 Comment: Confirm the output has 5 rows and all original columns.
 
 🤔 Reflect: Why are the selected row numbers different each time you run the code?
 
-We'll come back to `sample_n()` latter in this lesson. 
+We'll come back to `sample_n()` later in this lesson. 
 
 # `ifelse()` vs `case_when()`
 
@@ -201,12 +201,14 @@ dplyr::case_when() can do exactly what `ifelse()` is doing.
 
 📜 The SYNTAX: `case_when(condition1 ~ value1, condition2 ~ value2, TRUE ~ default_value)`
 
+The `~` symbol means "maps to" or "yields".
+
 🎯 Goal: Label numbers > 3 as "Large" and others as "Small".
 
 💬 Prediction: I expect to see a vector of "Small" and "Large" labels. Specifically, I expect only 4 and 5 to be "Large".
 
 ```{r , eval=FALSE}
-dplyr::case_when(c(1, 2, 3, 4, 5) > 3 ~ "Large", TRUE ~ "Small")
+case_when(c(1, 2, 3, 4, 5) > 3 ~ "Large", TRUE ~ "Small")
 ```
 
 ✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are "Small"  and 4:5 are "Large"
@@ -321,7 +323,7 @@ unique(mtcars$am)
 ```{r , eval=FALSE}
 # ⚡ Code: 
 cars_overwrite <- mtcars %>%
-  mutate(am = ifelse(am == 0, "Automatic", "Manual"))
+  mutate(am = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"))
 ```
 
 ```{r , eval=FALSE}
@@ -336,7 +338,7 @@ unique(cars_overwrite$am)
 ```{r , eval=FALSE}
 # ⚡ Code: 
 cars_keep <- mtcars %>%
-  mutate(transmission = ifelse(am == 0, "Automatic", "Manual"))
+  mutate(transmission = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"))
 ```
 
 ```{r , eval=FALSE}
@@ -348,7 +350,37 @@ cars_keep %>% select(am, transmission)
 
 🪞 Metacognition: Why might you want to create a copy of a column when changing the values?
 
-## Overwrite with Factors
+## Factors and Levels
+
+In Lesson 2, we learned about factors for vectors. A factor is a categorical variable that can take on a limited number of values, called levels. For example, in the vector `tshirt_sizes_data`, the possible values are "S", "M", "L", and "XL".
+
+```{r eval=FALSE}
+# ⚡ Creating a character vector
+tshirt_sizes_data <- c("M", "L", "S", "M", "L", "XL", "S")
+# ⚡ Changing the character vector to a factor class with levels
+tshirt_sizes <- factor(tshirt_sizes_data, levels = c("S", "M", "L", "XL"))
+```
+
+```{r eval=FALSE}
+# ✅ Investigating your factor class with levels
+unique(tshirt_sizes)
+```
+ 
+In the dataset `iris`, the `Species` column is a factor with three levels: "setosa", "versicolor", and "virginica".
+ 
+```{r eval=FALSE}
+data(iris)
+?iris
+```
+
+```{r eval=FALSE}
+# ✅Investigating the Species column
+unique(iris$Species)
+class(iris$Species)
+levels(iris$Species)
+```
+
+### Overwrite with Factors
 
 🎯 Goal: Take a 100-row sample from `movielens`, then overwrite the numeric `rating` column with an ordered factor: "Bad" if `< 4`, "Good" if `>= 4`, using `case_when()` inside `mutate()`.
 
@@ -356,6 +388,8 @@ cars_keep %>% select(am, transmission)
 
 📜 SYNTAX reminder:
 `mutate(data, new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
+
+`name_data <- data %>% mutate(new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
 
 ```{r , eval=FALSE}
 data("movielens")
@@ -389,9 +423,10 @@ movies_overwrite <- smaller_movies %>%
     rating = factor(
       case_when(
         rating >= 4 ~ "Good",
-        TRUE        ~ "Bad"
+        rating < 2 ~ "Bad",
+        TRUE        ~ "Ok"
       ),
-      levels = c("Bad", "Good"),
+      levels = c("Bad", "Ok", "Good"),
       ordered = TRUE
     )
   )
@@ -412,7 +447,7 @@ is.ordered(movies_overwrite$rating)  # expect TRUE
 
 ```{r , eval=FALSE}
 # ✅ Checks (after)
-levels(movies_overwrite$rating)      # expect "Bad", "Good"
+levels(movies_overwrite$rating)      # expect "Bad", "Ok", "Good"
 ```
 
 
@@ -425,7 +460,24 @@ table(movies_overwrite$rating)       # counts in each level
 
 🪞 Metacognition: `case_when()` reads cleaner than nested `ifelse()` for multi-branch recodes and makes me specify a default. In the future, I could keep the original numeric ratings (e.g., `rating_num`) and add a new labeled column instead of overwriting, to preserve provenance.
 
-## Bonus Example
+
+```{r , eval=FALSE}
+# ⚡ Overwrite numeric rating with an ordered factor via case_when()
+movies_rename <- smaller_movies %>%
+  mutate(
+    rating_words = factor(
+      case_when(
+        rating >= 4 ~ "Good",
+        rating < 2 ~ "Bad",
+        TRUE        ~ "Ok"
+      ),
+      levels = c("Bad", "Ok", "Good"),
+      ordered = TRUE
+    )
+  )
+```
+
+### Bonus Example
 
 🎯 Goal: Create a new column rating_label in smaller_movies using `case_when()` that labels ratings `>= 4` as "Good" and the rest as "Bad". Keep the original numeric rating column.
 
@@ -440,8 +492,8 @@ class(smaller_movies$rating)         # expect "numeric"
 ```{r , eval=FALSE}
 # ⚡ Add a NEW column using case_when()
 smaller_movies %>%
-  dplyr::mutate(
-    rating_label = dplyr::case_when(
+  mutate(
+    rating_label = case_when(
       rating >= 4 ~ "Good",
       TRUE        ~ "Bad"
     )
@@ -466,7 +518,7 @@ class(movies_newcol$rating_label)    # expect "character" or "factor"
 
 ## Calculations
 
-🚗 Using `mtcars`, let's use create a column `l_per_100km` that converts from US units (miles per gallon) to metric units (liters per 100km). 235.215 is the conversion factor between these units
+🚗 Using `mtcars`, let's create a column `l_per_100km` that converts from US units (miles per gallon) to metric units (liters per 100km). 235.215 is the conversion factor between these units
 
 🎯 Goal: Identify the most fuel-efficient car in L/100 km terms.
 
@@ -507,7 +559,7 @@ best_value
 
 # 📝 Practice Space
 
-✍️ Practice: Recode the mpg column. Use `mutate()` and `ifelse()`
+✍️ Practice: Recode the mpg column. Use `mutate()` and `case_when()`
 
 Fill in the Blanks. 
 
@@ -517,8 +569,11 @@ Fill in the Blanks.
 ```{r , eval=FALSE}
 # ⚡ Code
 mtcars %>%
-  _____(mpg_class = _____(mpg > 25, "High MPG",
-                            _____(mpg < 15, "Low MPG", "Medium MPG"))) -> mpg_recode
+  ______(mpg_class = _____(
+    ___ > 25 ~ "High MPG",
+    mpg < 15 ~ "_______",
+    TRUE     ~ "Medium MPG"
+  )) -> mpg_recode
 ```
 
 ```{r , eval=FALSE}
@@ -556,7 +611,7 @@ Make sure there is script in your document that loads `dplyr` and `dslabs` packa
 
 📝  Recode ranges (overwrite)
 
-Using `quakes`, recode `mag` into THREE ordered levels of _your choice_ (e.g., "Low", "Mid", "High") **overwriting** the original column. Use `mutate()` and `ifelse()` chain and pipe (`%>%`). Store as **`quake_recode`**.
+Using `quakes`, recode `mag` into THREE ordered levels of _your choice_ (e.g., "Low", "Mid", "High") **overwriting** the original column. Use `mutate()` and `case_when()` chain and pipe (`%>%`). Store as **`quake_recode`**.
 
 ```{r, eval=FALSE}
 data("quakes")
@@ -627,7 +682,7 @@ Or you can click the "Save Workspace" button in the Environment pane.
 
 # Today you practiced:
 
-- Practiced logical tests and the structure of `ifelse()`.
+- Practiced logical tests and the structure of `case_when()`.
 
 - Created binary and multi‑level recodes.
 

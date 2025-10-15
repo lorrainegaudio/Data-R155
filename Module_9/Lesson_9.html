@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 9</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 21, 2025</h4>
+<h4 class="date">Lesson generated on October 15, 2025</h4>
 
 </div>
 
@@ -2863,20 +2863,20 @@ font-size: 0.95em;
 <div id="clean-up-on-aisle-r" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 🧹 Clean up on aisle
 R!</h1>
-<p>In lesson 8, we learned about about subsetting with
-<code>dplyr</code> (<code>select()</code> &amp; <code>filter()</code>).
-This week, we will look at other functions in the <code>dplyr</code>
-package (<code>mutate()</code>and <code>ifelse()</code>) . Real-world
-data often needs <em>new</em> or <em>cleaner</em> variables before
-analysis. The <strong>dplyr</strong> verb <code>mutate()</code> lets you
-create or modify columns, while <code>base‑R</code>
-<code>ifelse()</code> supplies the logic for quick recoding. Together
-they form a duo you will use in nearly every data project.</p>
+<p>In lesson 8, we learned about about subsetting with dplyr
+(<code>select()</code> &amp; <code>filter()</code>). This week, we will
+look at other functions in the dplyr package (<code>mutate()</code> and
+<code>case_when()</code>). Real-world data often needs new or cleaner
+variables before analysis. The dplyr verb <code>mutate()</code> lets you
+create or modify columns, while <code>case_when()</code> supplies the
+logic for quick recoding. Together they form a duo you will use in
+nearly every data project.</p>
 <p>To begin Lesson 9, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new file. From the file types we have used so far, pick
-which file type you want to use. (File &gt; New File &gt; ???).</p></li>
+which file type you want to use. (File &gt; New File &gt; RMarkdown
+(.Rmd) | Quarto Document (.qmd)).</p></li>
 <li><p>Type in the code provided in this document as you follow along
 with the video. Pause the video at anytime to answer assignment
 questions, dig deeper or add memo notes.</p></li>
@@ -2885,13 +2885,13 @@ questions, dig deeper or add memo notes.</p></li>
 <p>By the end of Lesson 9 you will be able to:</p>
 <ol style="list-style-type: decimal">
 <li><p>⚡ Remember – State the purposes of <code>mutate()</code> and
-<code>ifelse()</code>.</p></li>
-<li><p>🔍 Understand – Explain how <code>ifelse()</code> replaces values
-based on a test.</p></li>
+<code>case_when()</code></p></li>
+<li><p>🔍 Understand – Explain how <code>case_when()</code> replaces
+values based on a test.</p></li>
 <li><p>🛠 Apply – Overwrite or add columns using <code>mutate()</code> +
-<code>ifelse()</code></p></li>
+<code>case_when()</code></p></li>
 <li><p>📊 Analyze – Build multi‑level recodes with nested
-<code>ifelse()</code>.</p></li>
+<code>case_when()</code>.</p></li>
 <li><p>🧠️ Evaluate – Choose between overwriting vs. keeping the original
 data.</p></li>
 </ol>
@@ -2907,33 +2907,53 @@ library(dplyr)   # Data manipulation package</code></pre>
 </div>
 <div id="warmup" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Warm‑Up</h1>
-<ol style="list-style-type: decimal">
-<li>Logical Test Review</li>
-</ol>
-<pre class="r"><code># Run and read: TRUE appears where the test is met.
+<div id="logical-test-review" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Logical Test
+Review</h2>
+<p>🎯 Goal: To write a simple logical test for numbers one through five
+showing TRUE for when the numbers are larger than 3.</p>
+<p>💬 Prediction: Which numbers do you expect to see <code>TRUE</code>
+for?</p>
+<pre class="r"><code># ⚡Code: TRUE appears where the test is met.
 c(1, 2, 3, 4, 5) &gt; 3</code></pre>
-<p>🤔 Reflect: How many <code>TRUE</code> values do you expect? Run and
-read: <code>TRUE</code> appears where the test is met.</p>
-<ol start="2" style="list-style-type: decimal">
-<li><code>sample()</code> Review</li>
-</ol>
+<p>✅ Check / 🗣 Comment: Did the output met your expectation?</p>
+</div>
+<div id="sample-review" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> <code>sample()</code>
+Review</h2>
 <p>Recall <code>sample()</code> is a <code>base-R</code> function that
 randomly selects elements from a vector.</p>
-<p>✍️ Practice using <code>sample()</code></p>
+<p>🎯 Goal: Randomly select 5 numbers from 1 to 10.</p>
+<pre class="r"><code># ⚡Code: 
+set.seed(99)  # Ensures reproducibility
+sample(1:10, 5)  # Sample 5 numbers from 1 to</code></pre>
+<p>✅ Check / 🗣 Comment: Confirm the output length is 5 and numbers are
+between 1 and 10.</p>
+</div>
 </div>
 <div id="sample_n" class="section level1" number="4">
 <h1><span class="header-section-number">4</span>
 <code>sample_n()</code></h1>
 <p>📜 The
 SYNTAX:<code>sample_n(data, size, replace = FALSE, weight = NULL)</code></p>
-<pre class="r"><code>sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame
-mtcars %&gt;% sample_n(10)  # Using with pipe</code></pre>
-<p>We’ll come back to <code>sample_n()</code> latter in this lesson.</p>
+<p>🎯 Goal: Randomly select 5 rows from the <code>mtcars</code>
+dataset.</p>
+<pre class="r"><code># ⚡Code: 
+sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame</code></pre>
+<pre class="r"><code># ⚡Code: 
+mtcars %&gt;% sample_n(5)  # Using with pipe</code></pre>
+<p>✅ Check / 🗣 Comment: Confirm the output has 5 rows and all original
+columns.</p>
+<p>🤔 Reflect: Why are the selected row numbers different each time you
+run the code?</p>
+<p>We’ll come back to <code>sample_n()</code> later in this lesson.</p>
 </div>
-<div id="ifelse" class="section level1" number="5">
-<h1><span class="header-section-number">5</span>
-<code>ifelse()</code></h1>
-<p><code>ifelse()</code> tests the data.</p>
+<div id="ifelse-vs-case_when" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> <code>ifelse()</code>
+vs <code>case_when()</code></h1>
+<div id="ifelse-tests" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> <code>ifelse()</code>
+tests</h2>
 <p>📜 The SYNTAX: <code>ifelse(test, yes, no)</code></p>
 <ul>
 <li><p><em>test</em> – logical vector
@@ -2943,65 +2963,171 @@ mtcars %&gt;% sample_n(10)  # Using with pipe</code></pre>
 <li><p><em>no</em> – value to insert where test is <code>FALSE</code> or
 <code>NA</code></p></li>
 </ul>
-<pre class="r"><code>ifelse(test = c(1, 2, 3, 4, 5) &gt; 3, yes = &quot;Big&quot;, no = &quot;Small&quot;)</code></pre>
-<p>👀 Check-in: Which numbers were labeled “Big”?</p>
+<p>🎯 Goal: Label numbers &gt; 3 as “Large” and others as “Small”.</p>
+<p>💬 Prediction: I expect to see a vector of “Small” and “Large”
+labels. Specifically, I expect only 4 and 5 to be “Large”.</p>
+<pre class="r"><code>ifelse(test = c(1, 2, 3, 4, 5) &gt; 3, yes = &quot;Large&quot;, no = &quot;Small&quot;)</code></pre>
+<p>✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are
+“Small” and 4:5 are “Large”.</p>
 </div>
-<div id="simple-recoding" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Simple Recoding</h1>
-<pre class="r"><code>object &lt;- c(&quot;Yellow&quot;, &quot;Jello&quot;, &quot;Gefilte Fish&quot;)
-ifelse(object == &quot;Yellow&quot;, yes = &quot;color&quot;, no = &quot;not a color&quot;)</code></pre>
-<p>🚀 Explore and Play: Try swapping the test to identify food
-words.</p>
+<div id="case_when-tests" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span>
+<code>case_when()</code> tests</h2>
+<p>dplyr::case_when() can do exactly what <code>ifelse()</code> is
+doing.</p>
+<p>📜 The SYNTAX:
+<code>case_when(condition1 ~ value1, condition2 ~ value2, TRUE ~ default_value)</code></p>
+<p>The <code>~</code> symbol means “maps to” or “yields”.</p>
+<p>🎯 Goal: Label numbers &gt; 3 as “Large” and others as “Small”.</p>
+<p>💬 Prediction: I expect to see a vector of “Small” and “Large”
+labels. Specifically, I expect only 4 and 5 to be “Large”.</p>
+<pre class="r"><code>case_when(c(1, 2, 3, 4, 5) &gt; 3 ~ &quot;Large&quot;, TRUE ~ &quot;Small&quot;)</code></pre>
+<p>✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are
+“Small” and 4:5 are “Large”</p>
+<p>So, what’s the point? Why do we need both <code>ifelse()</code> and
+<code>case_when()</code>? <code>case_when()</code> is usually clearer
+once you have 3+ categories.</p>
 </div>
-<div id="multilevel-recoding" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Multi‑Level
-Recoding</h1>
+<div id="multilevel-recoding" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Multi‑Level
+Recoding</h2>
 <p>Nested <code>ifelse()</code></p>
-<pre class="r"><code>object2 &lt;- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
+<p>🎯 Goal: Re-code numbers 1 to 5 as “One”, “Two”, “Three”, “Four”, or
+“Five”.</p>
+<p>💬 Prediction: I expect to see a vector of the words “One” through
+“Five” corresponding to the numbers 1 through 5.</p>
+<pre class="r"><code># ⚡Code: 
+object2 &lt;- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
+length(object2) # Check the length of object2</code></pre>
+<pre class="r"><code># ⚡Code
 ifelse(object2 == 1, &quot;One&quot;,
        ifelse(object2 == 2, &quot;Two&quot;,
               ifelse(object2 == 3, &quot;Three&quot;,
                      ifelse(object2 == 4, &quot;Four&quot;, &quot;Five&quot;))))</code></pre>
-<p>🤔 Reflect: Why didn’t we need an explicit test for 5?</p>
+<p>✅ Check / 🗣 Comment: Confirm the output length is 10 and the labels
+match the numbers.</p>
+<p>Nested <code>case_when()</code></p>
+<p>🎯 Goal: Re-code numbers 1 to 5 as “One”, “Two”, “Three”, “Four”, or
+“Five”.</p>
+<p>💬 Prediction: The <code>case_when()</code> output should be
+identical in length and order to the nested <code>ifelse()</code>
+version.</p>
+<pre class="r"><code># ⚡Code
+case_when(object2 == 1 ~ &quot;One&quot;,
+          object2 == 2 ~ &quot;Two&quot;,
+          object2 == 3 ~ &quot;Three&quot;,
+          object2 == 4 ~ &quot;Four&quot;,
+          object2 == 5 ~ &quot;Five&quot;)</code></pre>
+<p>✅ Check / 🗣 Comment: Confirm the output is identical to the
+<code>ifelse()</code> version.</p>
+<p>🪞 What I learned: <code>case_when()</code> is easier to read because
+the function name is not repeated at each line.</p>
+<p>Apply this nested <code>case_when()</code> in Task 3 of the
+assignment.</p>
 </div>
-<div id="mutate" class="section level1" number="8">
-<h1><span class="header-section-number">8</span>
+</div>
+<div id="mutate" class="section level1" number="6">
+<h1><span class="header-section-number">6</span>
 <code>mutate()</code></h1>
-<div id="overwrite-columns" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Overwrite
-Columns</h2>
 <p><code>mutate()</code> is a function that adds new columns or modifies
 existing ones</p>
 <p>📜 The SYNTAX: <code>mutate(data, new_col = value)</code></p>
-<ol style="list-style-type: decimal">
-<li>Create a copy of a column</li>
-</ol>
-<pre class="r"><code>names(mtcars) # Check the column names</code></pre>
-<pre class="r"><code>mtcars2 &lt;- mtcars %&gt;% 
-  mutate(new_column_copy = mpg)</code></pre>
-<pre class="r"><code>names(mtcars2) # Check the column names again</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Overwriting approach - replaces original column</li>
-</ol>
-<pre class="r"><code>cars_overwrite &lt;- mtcars %&gt;%
+<div id="overwrite-columns" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Overwrite
+Columns</h2>
+<div id="copy-a-column" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Copy A Column</h3>
+<p>🎯 Goal: Create a new column that is a copy of an existing
+column.</p>
+<pre class="r"><code># Preview Column Names
+names(mtcars) # Check the column names</code></pre>
+<p>💬 Prediction: In a new data set called <code>mtcars2</code>, a
+<strong>new</strong> column named <code>new_column_copy</code> is
+created that is identical to the <code>am</code> column.</p>
+<pre class="r"><code># ⚡ Code: 
+mtcars2 &lt;- mtcars %&gt;% 
+  mutate(new_column_copy = am)</code></pre>
+<pre class="r"><code># ✅ Verify:
+names(mtcars2) # Check the column names again</code></pre>
+<p>🗣 Comment: Did you see the new column in the output?</p>
+<pre class="r"><code># ✅ Verify: is am == to n_column_copy?
+mtcars2$am == mtcars2$new_column_copy</code></pre>
+<pre class="r"><code># ✅ Verify: is am identical to new_column_copy?
+identical(mtcars2$am, mtcars2$new_column_copy)</code></pre>
+<p>🗣 Comment: <code>mutate(new_column_copy = am)</code> created an
+identical column of <code>am</code> called
+<code>new_column_copy</code></p>
+</div>
+<div id="overwrite-original-column-values" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Overwrite Original
+Column Values</h3>
+<p>🎯 Goal: Recode the <code>am</code> column in <code>mtcars</code>
+from 0/1 to “Automatic”/“Manual”.</p>
+<pre class="r"><code># Check the unique values in the am column BEFORE
+unique(mtcars$am) </code></pre>
+<p>💬 Prediction: In a new data set called <code>cars_overwrite</code>,
+the <code>am</code> column is changed from 0/1 to “Automatic”/“Manual”.
+In a second new data set called <code>cars_keep</code>, a
+<strong>new</strong> column named <code>transmission</code> is created
+that has “Automatic”/“Manual” values, while the original <code>am</code>
+column remains unchanged.</p>
+<pre class="r"><code># ⚡ Code: 
+cars_overwrite &lt;- mtcars %&gt;%
   mutate(am = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Keeping original approach - creates new column</li>
-</ol>
-<pre class="r"><code>cars_keep &lt;- mtcars %&gt;%
+<pre class="r"><code># ✅ Verify:
+unique(cars_overwrite$am)</code></pre>
+</div>
+<div id="new-column-new-values" class="section level3" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> New Column &amp;
+New Values</h3>
+<p>🎯 Goal: Create a new column <code>transmission</code> that recodes
+<code>am</code> from 0/1 to “Automatic”/“Manual”, while keeping the
+original <code>am</code> column unchanged.</p>
+<pre class="r"><code># ⚡ Code: 
+cars_keep &lt;- mtcars %&gt;%
   mutate(transmission = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))</code></pre>
+<pre class="r"><code># ✅ Verify:
+cars_keep %&gt;% select(am, transmission)</code></pre>
 <p>🗣 Comment: What is the difference between the code that creates
 <code>cars_overwrite</code> and <code>cars_keep</code>?</p>
-<pre class="r"><code>cars_overwrite$am</code></pre>
-<pre class="r"><code>cars_overwrite %&gt;% select(am)</code></pre>
-<pre class="r"><code>cars_keep$transmission</code></pre>
+<p>🪞 Metacognition: Why might you want to create a copy of a column
+when changing the values?</p>
 </div>
-<div id="overwrite-with-factors" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Overwrite with
-Factors</h2>
-<p>Let’s create a sample of the <code>movielens</code> dataset using
-<code>sample_n()</code> in to practice overwriting a column
-variables.</p>
+</div>
+<div id="factors-and-levels" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Factors and
+Levels</h2>
+<p>In Lesson 2, we learned about factors for vectors. A factor is a
+categorical variable that can take on a limited number of values, called
+levels. For example, in the vector <code>tshirt_sizes_data</code>, the
+possible values are “S”, “M”, “L”, and “XL”.</p>
+<pre class="r"><code># ⚡ Creating a character vector
+tshirt_sizes_data &lt;- c(&quot;M&quot;, &quot;L&quot;, &quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;S&quot;)
+# ⚡ Changing the character vector to a factor class with levels
+tshirt_sizes &lt;- factor(tshirt_sizes_data, levels = c(&quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;))</code></pre>
+<pre class="r"><code># ✅ Investigating your factor class with levels
+unique(tshirt_sizes)</code></pre>
+<p>In the dataset <code>iris</code>, the <code>Species</code> column is
+a factor with three levels: “setosa”, “versicolor”, and “virginica”.</p>
+<pre class="r"><code>data(iris)
+?iris</code></pre>
+<pre class="r"><code># ✅Investigating the Species column
+unique(iris$Species)
+class(iris$Species)
+levels(iris$Species)</code></pre>
+<div id="overwrite-with-factors" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Overwrite with
+Factors</h3>
+<p>🎯 Goal: Take a 100-row sample from <code>movielens</code>, then
+overwrite the numeric <code>rating</code> column with an ordered factor:
+“Bad” if <code>&lt; 4</code>, “Good” if <code>&gt;= 4</code>, using
+<code>case_when()</code> inside <code>mutate()</code>.</p>
+<p>💬 Prediction: Before: <code>rating</code> is numeric. After:
+<code>rating</code> is an ordered factor with levels
+<code>Bad &lt; Good</code>. Row count stays 100; no <code>NA</code>s
+created.</p>
+<p>📜 SYNTAX reminder:
+<code>mutate(data, new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))</code></p>
 <pre class="r"><code>data(&quot;movielens&quot;)
 ?movielens</code></pre>
 <pre class="r"><code>set.seed(99)
@@ -3012,105 +3138,194 @@ smaller_movies &lt;- movielens %&gt;%
   select(title, rating)
 
 head(smaller_movies)</code></pre>
-<p>We’ll apply <code>mutate()</code> to <code>smaller_movies</code> to
-recode the rating column to “Good” or “Bad”.</p>
-<p>📜 The SYNTAX:
-<code>mutate(data, new_col = ifelse(test, yes, no))</code></p>
-<pre class="r"><code>names(smaller_movies) # Check the column names)
+<pre class="r"><code># ✅ Checks (before)
+names(smaller_movies)                # expect &quot;title&quot;, &quot;rating&quot;
+class(smaller_movies$rating)         # expect &quot;numeric&quot;
+summary(smaller_movies$rating)       # quick distribution check</code></pre>
+<p>🎯 Goal: We’ll apply <code>mutate()</code> to
+<code>smaller_movies</code> to recode the rating column to “Good” or
+“Bad”.</p>
+<pre class="r"><code># ⚡ Overwrite numeric rating with an ordered factor via case_when()
 movies_overwrite &lt;- smaller_movies %&gt;%
-  mutate(rating = ifelse(rating &gt;= 4, &quot;Good&quot;, &quot;Bad&quot;))
-head(movies_overwrite)</code></pre>
-<p>👉 Overwriting keeps the column name but changes its contents.</p>
+  mutate(
+    rating = factor(
+      case_when(
+        rating &gt;= 4 ~ &quot;Good&quot;,
+        TRUE        ~ &quot;Bad&quot;
+      ),
+      levels = c(&quot;Bad&quot;, &quot;Good&quot;),
+      ordered = TRUE
+    )
+  )</code></pre>
+<pre class="r"><code># ✅ Checks (after)
+names(movies_overwrite)              # still &quot;title&quot;, &quot;rating&quot;</code></pre>
+<pre class="r"><code># ✅ Checks (after)
+is.ordered(movies_overwrite$rating)  # expect TRUE</code></pre>
+<pre class="r"><code># ✅ Checks (after)
+levels(movies_overwrite$rating)      # expect &quot;Bad&quot;, &quot;Good&quot;</code></pre>
+<pre class="r"><code># ✅ Checks (after)
+table(movies_overwrite$rating)       # counts in each level</code></pre>
+<p>🗣 Comment: Overwriting keeps the column name but replaces its
+contents and type (numeric → ordered factor).</p>
+<p>🪞 Metacognition: <code>case_when()</code> reads cleaner than nested
+<code>ifelse()</code> for multi-branch recodes and makes me specify a
+default. In the future, I could keep the original numeric ratings (e.g.,
+<code>rating_num</code>) and add a new labeled column instead of
+overwriting, to preserve provenance.</p>
 </div>
-<div id="bonus-example" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Bonus Example</h2>
-<pre class="r"><code>smaller_movies %&gt;%
-  mutate(rating_label = ifelse(rating &gt;= 4, &quot;Good&quot;, &quot;Bad&quot;))
-head(movies_newcol) -&gt; movies_newcol</code></pre>
+<div id="bonus-example" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Bonus Example</h3>
+<p>🎯 Goal: Create a new column rating_label in smaller_movies using
+<code>case_when()</code> that labels ratings <code>&gt;= 4</code> as
+“Good” and the rest as “Bad”. Keep the original numeric rating
+column.</p>
+<p>💬 Prediction: After running, the data will still have 100 rows, keep
+both <code>title</code> and <code>rating</code>, and add
+<code>rating_label</code> (character or factor). No <code>NA</code>s
+should appear.</p>
+<pre class="r"><code># ✅ Checks (before)
+names(smaller_movies)                # expect &quot;title&quot;, &quot;rating&quot;
+class(smaller_movies$rating)         # expect &quot;numeric&quot;</code></pre>
+<pre class="r"><code># ⚡ Add a NEW column using case_when()
+smaller_movies %&gt;%
+  mutate(
+    rating_label = case_when(
+      rating &gt;= 4 ~ &quot;Good&quot;,
+      TRUE        ~ &quot;Bad&quot;
+    )
+  ) -&gt; movies_newcol</code></pre>
 <p>🧐 NOTICE: What is happening here
 <code>-&gt; movies_newcol</code>?</p>
 <p>🛠Break Things! How can you reorganize this script?</p>
+<pre class="r"><code># ✅ Checks (after)
+names(movies_newcol)                 # expect &quot;title&quot;, &quot;rating&quot;, &quot;rating_label&quot;
+class(movies_newcol$rating)          # expect &quot;numeric&quot;
+class(movies_newcol$rating_label)    # expect &quot;character&quot; or &quot;factor&quot;</code></pre>
+<p>🗣 The code used -&gt; movies_newcol, which assigns right-to-left.</p>
+<p>🛠 Break Things! What happens with
+<code>head(movies_newcol) -&gt; movies_newcol</code>?</p>
+<p>🪞 Metacognition: I’ll stick with the usual <code>&lt;-</code> to
+make my code easier to read</p>
 </div>
-<div id="calculations" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Calculations</h2>
-<p>🚗 Using <code>mtcars</code>, let’s use create a column
+</div>
+<div id="calculations" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Calculations</h2>
+<p>🚗 Using <code>mtcars</code>, let’s create a column
 <code>l_per_100km</code> that converts from US units (miles per gallon)
 to metric units (liters per 100km). 235.215 is the conversion factor
 between these units</p>
-<ul>
-<li><code>round(..., 1)</code> rounds to 1 decimal place</li>
-</ul>
-<pre class="r"><code>mtcars_units &lt;- mtcars %&gt;%
-  mutate(l_per_100km = round(235.215 / mpg, 1))
+<p>🎯 Goal: Identify the most fuel-efficient car in L/100 km terms.</p>
+<p>💬 Prediction: The new column <code>l_per_100km</code> will be added
+to <code>mtcars_units</code>, and the most fuel-efficient car will have
+the lowest value in this column.</p>
+<pre class="r"><code># ⚡ Code
+mtcars_units &lt;- mtcars %&gt;%
+  mutate(l_per_100km = round(235.215 / mpg, 1))</code></pre>
+<pre class="r"><code># ✅ Check
 head(mtcars_units)</code></pre>
 <p>👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?</p>
+<pre class="r"><code># Find the most fuel-efficient (smallest L/100km)
+best_idx &lt;- which.min(mtcars_units$l_per_100km)
+best_car &lt;- rownames(mtcars_units)[best_idx]
+best_value &lt;- mtcars_units$l_per_100km[best_idx]</code></pre>
+<pre class="r"><code>&quot;best car&quot;
+best_car</code></pre>
+<pre class="r"><code>&quot;best value&quot;
+best_value</code></pre>
+<p>🪞 Metacognition: Unit conversions are easy to keep alongside
+original units with <code>mutate()</code> (don’t overwrite).</p>
 </div>
 </div>
-<div id="practice-space" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
+<div id="practice-space" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
 <p>✍️ Practice: Recode the mpg column. Use <code>mutate()</code> and
-<code>ifelse()</code></p>
-<p>Fill in the Blanks</p>
-<pre class="r"><code>mtcars %&gt;%
-  _____(mpg_class = _____(mpg &gt; 25, &quot;High MPG&quot;,
-                            _____(mpg &lt; 15, &quot;Low MPG&quot;, &quot;Medium MPG&quot;))) -&gt; mpg_recode
-View(mpg_recode)</code></pre>
+<code>case_when()</code></p>
+<p>Fill in the Blanks.</p>
+<p>🎯 Goal: Create <code>mpg_class</code> with three labels using
+<code>case_when()</code>: “High MPG” if <code>mpg &gt; 25</code>; “Low
+MPG” if <code>mpg &lt; 15</code>; otherwise “Medium MPG”.</p>
+<pre class="r"><code># ⚡ Code
+mtcars %&gt;%
+  ______(mpg_class = _____(
+    ___ &gt; 25 ~ &quot;High MPG&quot;,
+    mpg &lt; 15 ~ &quot;_______&quot;,
+    TRUE     ~ &quot;Medium MPG&quot;
+  )) -&gt; mpg_recode</code></pre>
+<pre class="r"><code># ✅ Checks
+table(mpg_recode$____)  # expect 3 levels</code></pre>
 </div>
-<div id="assignment" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> ➤ Assignment</h1>
+<div id="assignment" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> ➤ Assignment</h1>
 <p>Replace each ____ placeholder with working code or a short written
 answer. Run each section; be sure the requested objects appear in the
-Environment. When finished, save <strong>BOTH</strong> this script and
-your .RData workspace and upload.</p>
-<div id="task-1" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Task 1</h2>
+Environment. When finished, submit lesson notes with assignment in one
+script (.Rmd / .qmd) along with the <code>.RData</code> workspace.</p>
+<p>Template (use around every code chunk):</p>
+<p>🎯/❓ Goal. One sentence stating the outcome.</p>
+<p>💬 Prediction. (Optional) What you expect to see before you run
+code.</p>
+<pre class="r"><code>#⚡Code attempts.
+
+# your code here</code></pre>
+<p>✅Checks (before/after). Show what you’re verifying (names, head(),
+table(), class(), etc.).</p>
+<p>🗣/🪞What I learned / Next step. 1–2 sentences.</p>
+<div id="task-1" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Task 1</h2>
 <p>📦 Library it up!</p>
-<p>Make sure there is script in your document to load <code>dplyr</code>
-and <code>dslabs</code> packages so their functions / datasets load.</p>
+<p>Make sure there is script in your document that loads
+<code>dplyr</code> and <code>dslabs</code> packages so their functions /
+datasets load.</p>
 </div>
-<div id="task-2" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Task 2</h2>
 <p>📝 Recode ranges (overwrite)</p>
 <p>Using <code>quakes</code>, recode <code>mag</code> into THREE ordered
 levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
 <strong>overwriting</strong> the original column. Use
-<code>mutate()</code> and <code>ifelse()</code> chain and pipe
+<code>mutate()</code> and <code>case_when()</code> chain and pipe
 (<code>%&gt;%</code>). Store as
 <strong><code>quake_recode</code></strong>.</p>
+<pre class="r"><code>data(&quot;quakes&quot;)
+?quakes</code></pre>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 <pre class="r"><code># Quick check
 table(quake_recode$mag)   # should show exactly 3 levels</code></pre>
 </div>
-<div id="task-3" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Task 3</h2>
 <p>Recode categories (new col)</p>
 <p>🌟 With <code>stars</code>, turn the one-letter <em>type</em> into a
-descriptive phrase of your own in a <strong>new</strong> column called
-<code>full_type</code>. Keep the original type. Store as
+descriptive phrase of <em>your own</em> in a <strong>new</strong> column
+called <code>full_type</code>. Keep the original type. Store as
 <strong>stars_recode</strong>.</p>
+<pre class="r"><code>data(&quot;stars&quot;)
+?dslabs::stars</code></pre>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 <pre class="r"><code># Quick check
 head(select(stars_recode, type, full_type))</code></pre>
 </div>
-<div id="task-4" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Task 4</h2>
 <p>Unit conversion</p>
 <p>Create <code>international_friendly_heights</code> by adding a
-<code>height_cm</code> column to heights (inches × 2.54). Leave original
-height.</p>
+<code>height_cm</code> column to <code>heights</code> (inches × 2.54).
+Leave original height.</p>
+<pre class="r"><code>data(&quot;heights&quot;)
+?heights</code></pre>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 <p>🤔 Reflect: Why add—not overwrite—the height column?</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the Quarto Document and
-the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the Quarto Document
-document:</li>
+<li>You will be submitting <strong>both</strong> the R Markdown | Quarto
+Document and the workspace file. The workspace file saves all the
+objects in your environment that you created in this lesson. You can
+save the workspace by running the following command in a code chunk of
+the R Markdown | Quarto Document document:</li>
 </ol>
 <pre class="r"><code>save.image(&quot;Assignment9_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
@@ -3121,12 +3336,12 @@ pane.</p>
 <strong>both</strong> the RMD and the workspace file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Today you
+<div id="today-you-practiced" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Practiced logical tests and the structure of
-<code>ifelse()</code>.</p></li>
+<code>case_when()</code>.</p></li>
 <li><p>Created binary and multi‑level recodes.</p></li>
 <li><p>Used <code>mutate()</code> to overwrite or create
 columns.</p></li>
