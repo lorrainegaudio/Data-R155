@@ -1,0 +1,340 @@
+---
+title: "Explore to Plan"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Explore to Plan"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Explore to Plan"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+## Purpose
+
+In this activity you will closely inspect the columns in your chosen dataset and draft a short, practical plan for how you might cleanly name, type, and present those columns later in the project. This “look first, plan next” habit strengthens CLO2 (confidently problem-solving R tasks by narrating what’s happening, anticipating bugs, and comparing approaches) and advances CLO4 (readiness for the next R course through your Signature Assignment pipeline from raw data to a clear, narrated output).
+
+MLO: Identify and justify specific future wrangling needs for your dataset. This includes naming conventions, data types/levels/units, and a simple table/graph intent. You will use inspection-only techniques and a brief written plan. You will **not** change the data today.
+
+Below, each section has three parts:
+
+1. 🎯 What to look for.
+
+2. ⚡ Suggested functions to explore your data in R.
+
+3. 🗣/🪞 Plan: what you should write for submission.
+
+## Column Names 
+
+In data science, teams usually pick a consistent naming style so columns are easy to read, type, and reuse. 
+
+### Common styles:
+
+snake_case: `survey_date`, `total_amount` (easy to type, common in R)
+
+camelCase: `surveyDate`, `totalAmount` (common in many languages)
+
+PascalCase: `SurveyDate`, `TotalAmount` (seen in some systems)
+
+dot.case: `survey.date` (historical in R; can clash with some tooling)
+
+(Avoid in R) kebab-case: `survey-date` (hyphens are subtraction)
+
+### 🎯 What to look for 
+
+- **Spaces/punctuation** that make names hard to type.
+
+- **Very long names** that slow you down or wrap across lines.
+
+- **Inconsistent case** (mix of `Age`, `age`, `AGE`) across columns.
+
+- **Ambiguous/duplicate** names (e.g., two different value columns).
+
+### ⚡ Suggested functions 
+
+- `names()` or `colnames()` to list all column names.
+
+- `ncol()` to sense how many columns you’re dealing with.
+
+**What to notice in the output**: scan for spaces, unusual symbols, repeated or near-duplicate names, inconsistent capitalization, and names that are much longer than the rest.
+
+### 🗣/🪞 Plan 
+
+List the specific column names you plan to improve. Record the original column name(s) and the proposed name change. State why you will make this change.
+
+Example: I will change "Resp Age" to `age_years` to remove the space, and clarify the units”.
+
+## Column Meanings 
+
+A mini data dictionary is a compact reference that defines what each important column means and how to read it. It’s created as you inspect the data and is formatted as short entries (bullets or a simple 3-5 column table). Each entry typically includes: name, one-sentence description, role (predictor/outcome/ID/other), and unit or allowed values.
+
+### 🎯 What to look for 
+
+- **Unclear purpose** (“What does `val1` store?”).
+
+- **Cryptic abbreviations** that need unpacking later.
+
+- **Catch-all text columns** with mixed content that might need splitting.
+
+### ⚡ Suggested functions: 
+
+- Use `head()` and `str()`to scan types while you think about meaning.
+
+**What to notice in the output**: sample values that reveal what a column really stores, and whether the type matches your intuition about its meaning.
+
+### 🗣/🪞 Plan 
+
+Identify the 1–3 most important columns for your project. For each, record: 
+
+|Name | Role (predictor/outcome/ID/other) | One-sentence description | Unit or allowed values (if known).|
+
+## Data Types 
+
+Getting data types right ensures R behaves as expected (e.g., plotting numbers as numbers, sorting categories in a sensible order). 
+
+**Intended vs. actual**: what you want the type to be for analysis versus what it currently appears to be in your data.
+
+### 🎯 What to look for: 
+
+- **Numbers stored as text** (won’t summarize/plot numerically).
+
+- **IDs stored as numbers** (R may treat them as quantities instead of labels).
+
+- **Dates stored as text** (hard to sort or group by time).
+
+- **Yes/No** as free text with inconsistent capitalization/spelling.
+
+### ⚡ Suggested functions 
+
+- `class()` and `typeof()` to see how R currently treats a column.
+
+- `unique()` to spot unexpected values that hint at the true type.
+
+**What to notice in the output**: mismatches between the values you see and the type R reports (e.g., a “numeric-looking” column that’s actually "character").
+
+### 🗣/🪞 Plan 
+
+In a short paragraph, name 1-2 columns where the type matters for your analysis. For each, state the current type you observe, the intended type you want later (numeric, factor, date, etc.), and why that change will help (e.g., enables numeric summaries, proper date sorting, or category ordering).
+
+## Categorical Variables 
+
+When a column represents **categories** (like region or treatment_group), assigning **levels** (the set of allowed labels) and a **level order** can make tables/plots clear and consistent. Thoughtful labeling avoids typos/synonyms and level ordering controls how categories appear in summaries and graphs.
+
+### 🎯 What to look for
+
+- **Inconsistent spellings** (e.g., `Female`, `female`, `F`).
+
+- **Extra spaces or synonyms** (`NY` vs `New York`).
+
+- **Too many tiny categories** that may need grouping later.
+
+- **Meaningful order** you’ll want to enforce (e.g., `Small < Medium < Large`).
+
+### ⚡ Suggested functions 
+
+- `unique()` to see the set of observed labels.
+
+- `table()` to glimpse how often each label appears.
+
+- `levels()` to check or discuss factor levels (if applicable in your data).
+
+**What to notice in the output**: near-duplicate labels, rare categories that could be combined, and the “natural” order you’d prefer for displays.
+
+### 🗣/🪞 Plan 
+
+Choose one categorical column. Write a brief note that includes: example observed labels, your canonical label set (the exact labels you want to use later), and the planned order (if an ordered category makes sense) with one sentence on why that order helps interpretation.
+
+## Numeric Variables 
+
+For numeric columns, clarity about units and scale prevents confusion (meters vs. feet, seconds vs. minutes). Sometimes it’s helpful to plan a derived measure (like a rate or percentage) that communicates more directly than raw counts.
+
+### 🎯 What to look for
+
+- **Missing or mixed units** (document the current unit).
+
+- **Suspicious magnitudes** that hint at a unit mismatch.
+
+- **Opportunities for a clearer measure**, such as a percent, rate, or difference you might compute later.
+
+### ⚡ Suggested functions
+
+- Use `min()`, `max()`, `range()`, `summary()` to get a quick sense of magnitude and spread.
+
+**What to notice in the output**: whether values align with the unit you think they’re in, and whether a transformed/derived measure would make stories clearer.
+
+### 🗣/🪞 Plan 
+
+Pick **one numeric column**. Record the current unit, the desired unit (if you’d convert later), and one derived field idea (give it a specific name and a plain-English formula, e.g., “conversion_rate_pct = conversions divided by visitors, expressed as a percent”), plus one sentence on why it would clarify your analysis.
+
+## Date/Time Columns 
+
+Dates and times need to be **parsed** into a proper date/time type so you can sort and group by time. It also helps to decide the **granularity** (day, week, month, quarter) you’ll analyze so your tables/plots match the story you want to tell.
+
+### 🎯 What to look for
+
+- **Multiple formats** (e.g., `2024-01-05` vs `01/05/24`).
+
+- **Text dates** that haven’t been parsed yet.
+
+- **Time zones** that might matter for comparisons.
+
+- The **time unit** you’ll likely analyze by (day/week/month).
+
+### ⚡ Suggested functions
+
+`head()` to sample raw date/time strings.
+
+`as.Date()` (referenced for later parsing)
+
+**What to notice in the output**: inconsistencies in how dates are recorded and examples that show what format you’ll want to standardize to.
+
+### 🗣/🪞 Plan
+
+If you have a date/time column, write a short note with raw examples you see, your intended standard format (describe it, e.g., “YYYY-MM-DD”), and the analysis grain you expect to use later (e.g., month-year), with one sentence on why that grain fits your question.
+
+## Data Quality Flags 
+
+Data often contains values you’ll want to flag or define rules for later (you’re not filtering today). Writing these rules now saves time when you clean the data.
+
+### 🎯 What to look for
+
+- **Impossible values** (e.g., negative ages).
+
+- **Sentinel codes** standing in for missing (e.g., -999, 99).
+
+- **Out-of-range** numbers for your context.
+
+- **Duplicates** or near-duplicates.
+
+- **Blank strings** that should be treated as missing.
+
+### ⚡ Suggested functions
+
+- `anyNA()`, `is.na()` to think about missingness.
+
+- `nrow()` for quick comparisons (before/after a check).
+
+- `table()` to surface odd codes or rare values.
+
+**What to notice in the output**: evidence that certain values are actually placeholders or errors you’ll need to handle consistently later.
+
+### 🗣/🪞 Plan 
+
+Write 2–3 future rules you plan to apply, each with a short rationale.
+
+## Structure & Relational Needs 
+
+Sometimes the data’s **shape** (wide vs. long) or **relationships** (needing to join multiple tables) don’t match your question. Noting this now helps you plan future steps.
+
+### 🎯 What to look for
+
+- **Wide vs. long layout** that doesn’t align with how you want to compare or plot.
+
+- **Composite columns** that pack multiple fields into one (e.g., "City, State").
+
+- **Separate files** you’ll likely need to join (e.g., a lookup table of codes → labels).
+
+- **Missing unique keys** needed to join tables reliably.
+
+### ⚡ Suggested functions
+
+- `ncol()` / `nrow()` to sense the table’s shape.
+
+- `head()` to eyeball how columns are arranged.
+
+**What to notice in the output**: repeated patterns across columns (wide form), or single columns carrying multiple pieces of information.
+
+### 🗣/🪞 Plan 
+
+If structure matters for your project, describe one reshape or join you anticipate. Name the columns involved and explain in one sentence why this change will make your eventual table or graph clearer (e.g., “Join codes to human-readable labels for presentation”).
+
+## Display Planning 
+
+Before you ever plot, decide on a minimal, meaningful table and a first graph. This clarifies what needs renaming, leveling, units, or structural changes later.
+
+### 🎯 What to look for
+
+**A minimal, meaningful table**: which columns would you show, in what order, and would you sort or total anything?
+
+**A first graph idea**: which column maps to x, which to y, and whether you need a group/color variable; if categorical, what order should those categories appear in?
+
+### 🗣/🪞 Plan 
+
+Write one table idea and one graph idea for your project. For the table, list the columns to include and any sort/total you want. For the graph, specify x, y, and optional group/color, and (if categorical) the intended category order. Add one sentence on why each display would help your audience understand your question.
+
+## Submission Checklist
+
+✅ Posted HTML (or .Rmd) to Module 8 Class Activity 8 by 11:59 pm. (In-class activities should not become homework. Ideally, you submit your work as far as you get by the end of class.)
+
+✅ Section titled "Data Overview"
+
+✅ At least four subsections (Column Names, Column Meanings, Data Types, Categorical Variables, Numeric Variables, Date/Time Columns, Data Quality Flags, Structure Relational Needs). 
+
+✅ Exploratory Code for each subsection.
+
+✅ Comment on Plan / Metacognition for subsections.
+

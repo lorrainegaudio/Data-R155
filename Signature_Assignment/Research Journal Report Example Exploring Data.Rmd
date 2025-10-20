@@ -120,13 +120,42 @@ str(example_data)
 **What I learned / Next step.**
 I notice there are 112 rows × 29 columns. `id`/`study_area` are character. Many `familiarity_*` items are numeric self-ratings (0–4 with NAs). `slider_*` items are numeric sliders (0–100). Several AI ethics/adoption fields are categorical text with staged labels (e.g., “1. No Awareness” … “5. Create”), with minor inconsistencies (e.g., “Aquire/Acquire”, “create/Create”). Column names look fine for meaning.
 
-| Name | Role (predictor/outcome/ID/other) | One-sentence description | Unit or allowed values (if known) |
-|------|-----------------------------------|-------------------------|-----------------------------------|
-| adopter_group	 | predictor|	Self-reported stance toward AI use/adoption.
-|Text categories like Non-Adopter, Aspiring Adopter, Private Adopter, Observer.|
-|slider_curiosity	 | outcome (or predictor) |	Curiosity self-rating on a 0–100 slider.	|0–100 scale (integer).|
-|familiarity_packages	 | predictor |	Self-rated familiarity with R package concepts.
-|0–4 scale (Likert-style), NA possible.|
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Load packages
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Ensure LaTeX deps are loaded when knitting to PDF
+options(kableExtra.latex.load_packages = TRUE)
+
+# Data dictionary
+dict <- tibble::tribble(
+  ~Name, ~`Role (predictor/outcome/ID/other)`, ~`One-sentence description`, ~`Unit or allowed values (if known)`,
+  "adopter_group",       "predictor",              "Self-reported stance toward AI use/adoption.",         "Text categories like Non-Adopter, Aspiring Adopter, Private Adopter, Observer.",
+  "slider_curiosity",    "outcome (or predictor)", "Curiosity self-rating on a 0–100 slider.",             "0–100 scale (integer).",
+  "familiarity_packages","predictor",              "Self-rated familiarity with R package concepts.",      "0–4 scale (Likert-style), NA possible."
+)
+
+# Table (works for both HTML and PDF knits)
+kbl(
+  dict,
+  caption = "Variable dictionary",
+  booktabs = TRUE,
+  escape  = TRUE
+) |>
+  kable_styling(
+    full_width = FALSE,
+    position = "left",
+    bootstrap_options = c("striped", "condensed", "hover"), # HTML
+    latex_options     = c("hold_position", "striped")       # PDF
+  ) |>
+  column_spec(1, bold = TRUE) |>
+  column_spec(3, width = "22em") |>
+  column_spec(4, width = "24em")
+
+```
+
 
 ### Data Types 
 
