@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 10</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 21, 2025</h4>
+<h4 class="date">Lesson generated on October 26, 2025</h4>
 
 </div>
 
@@ -2864,31 +2864,34 @@ font-size: 0.95em;
 <h1><span class="header-section-number">1</span> 🚦 Ready, Set, R!</h1>
 <p>In lesson 8 and 9, we explored several functions from
 <code>dplyr</code> (<code>select()</code>, <code>filter()</code>,
-<code>mutate()</code>, and <code>ifelse()</code>). This week, we will
+<code>mutate()</code>, and <code>case_when()</code>). This week, we will
 look at other functions in the <code>dplyr</code> package
-(<code>group_by</code> and <code>summarize()</code>) that will speed
-your ability to compare sub-groups and calculate descriptive
-statistics.</p>
+(<code>group_by()</code>, <code>summarize()</code> and
+<code>count()</code>) that will speed your ability to compare sub-groups
+and calculate descriptive statistics.</p>
 <p>To begin Lesson 10, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open your course project for RStudio</p></li>
 <li><p>Create a new file. From the file types we have used so far, pick
-which file type you want to use. (File &gt; New File &gt; ???).</p></li>
+which file type you want to use. (File &gt; New File &gt; ???). Select
+either R Script, R Markdown, or Quarto Document. What file type you
+choose to practice the lesson and complete your assignment in is up to
+you.</p></li>
 <li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
+with the video. Pause the video at any time to answer assignment
 questions, dig deeper or add memo notes.</p></li>
 </ol>
 <p><strong>Lesson Overview</strong></p>
 <p>By the end of Lesson 10 you will be able to:</p>
 <ol style="list-style-type: decimal">
-<li><p>⚡ Remember – List the roles of <code>group_by()</code> and
-<code>summarize()</code>.</p></li>
+<li><p>⚡ Remember – List the roles of <code>group_by()</code>
+<code>count()</code> and <code>summarize()</code>.</p></li>
 <li><p>🔍 Understand – Explain how grouping changes the behavior of
 summary functions.</p></li>
 <li><p>🛠 Apply – Compute mean, standard deviation, and count for each
 group in one call.</p></li>
 <li><p>📊 Analyze – Combine multiple grouping variables.</p></li>
-<li><p>🧠️ Evaluate –Decide when to overwrite vs. keep original
+<li><p>🧠️ Evaluate – Decide when to overwrite vs. keep original
 variables.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
@@ -2901,114 +2904,590 @@ variables.</p></li>
 <pre class="r"><code>library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package</code></pre>
 </div>
-<div id="overall-vs.-grouped-mean" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Overall vs. Grouped
-Mean</h1>
-<p>⚖️ Compare <code>summary()</code> with <code>summarize()</code></p>
+<div id="basic-terminology" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Basic Terminology</h1>
+<p>It occurred to me that we have not yet defined some basic terminology
+that is important to understand before we dive into descriptive
+statistics. So, let’s take a moment to define some key terms. If these
+terms are already familiar to you, feel free to skip ahead to the next
+section.</p>
+<p><strong>Population</strong>: A population is a collection of objects
+or individuals that we want to study. It can be finite or infinite. The
+unknown population number is called a <em>parameter</em>.</p>
+<ul>
+<li><strong>Census</strong>: A census is a complete enumeration of all
+the elements in a population. It is used to collect data from the entire
+population.</li>
+</ul>
+<p><strong>Sample</strong>: A sample is a subset of the population that
+we actually observe or measure. It is used to make inferences about the
+population. We use samples because it is often impractical or impossible
+to collect data from the entire population. The known sample number is
+called a <em>statistic</em>.</p>
+<ul>
+<li><p>Population Size <strong>N</strong>: The number of elements in the
+population.</p></li>
+<li><p>Sample Size <strong>n</strong>: The number of elements in the
+sample.</p></li>
+</ul>
+<p>🧐 Your data set is most likely a sample from a larger population and
+not a census of the entire population.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Unordered Sample</strong>: A sample where the order of the
+elements does not matter. For example, if we have a population of 5
+elements and we take a sample of 3, the sample {1, 2, 3} is the same as
+{3, 2, 1}.</li>
+</ol>
+<p>Example: <span class="math inline">\(5.9ft\)</span>, <span class="math inline">\(6.1ft\)</span>, <span class="math inline">\(5.8ft\)</span>, <span class="math inline">\(6.0ft\)</span>, <span class="math inline">\(5.7ft\)</span> is a sample of heights of 5
+individuals from a population of all individuals in a city.</p>
+<pre class="r"><code>heights_sample &lt;- c(5.9, 6.1, 5.8, 6.0, 5.7) # heights in feet</code></pre>
+<p>The order has no inherent meaning.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Ordered Sample</strong>: A sample where the order of the
+elements does matter. Time series data, growth measurements, finishing
+positions in a race, and data sorted from smallest to largest for
+calculating quantiles or medians are examples of ordered samples.</li>
+</ol>
+<p>Example: If we take 5 samples of the height of one individual by age,
+we have an ordered sample.</p>
+<pre class="r"><code>growth_data &lt;- c(42, 45, 48, 51, 54)  # Heights in inches by age
+race_positions &lt;- c(&quot;Kim&quot;, &quot;Alex&quot;, &quot;Jordan&quot;, &quot;Taylor&quot;)  # Order indicates ranking
+sorted_temps &lt;- c(72.1, 73.4, 75.2, 76.8, 79.3)  # Ordered for statistical analysis</code></pre>
+<p><strong>Ordered sample</strong> is about whether the sequence of
+selection matters in your sampling process. The data can simply be
+ordered by size.</p>
+<p><strong>Ordinal data</strong> is about whether your data values have
+a meaningful natural ranking order, the intervals between categories
+aren’t necessarily equal. Likert scale or types of other hierarchical
+values like academic hierarchies.</p>
+<div id="types-of-sample-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Types of Sample
+data</h2>
+<p><strong>Categorical Data</strong>: Data that can be divided into
+categories or groups. For example, the colors of cars in a parking lot
+(red, blue, green, etc.).</p>
+<p><strong>Numerical Data</strong>: Data that can be measured or
+counted. For example, the heights of individuals in a population (in
+feet or meters).</p>
+<ul>
+<li><p><strong>Discrete Data</strong>: Numerical data that can take on
+only specific values. For example, the number of students in a class (1,
+2, 3, etc.). Cannot take on fractional values.</p></li>
+<li><p><strong>Continuous Data</strong>: Numerical data that can take on
+any value within a range. For example, the height of individuals in a
+population (5.0ft, 5.1ft, 5.2ft, etc.).</p></li>
+</ul>
+<p>🧠 Challenge: What type of data is <code>growth_data</code>,
+<code>race_positions</code>, and <code>sort_temps</code>? Explain your
+answer in a memo to demonstrate learning skills.</p>
+</div>
+</div>
+<div id="choosing-the-right-statistical-method" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Choosing the Right
+Statistical Method</h1>
+<p>When analyzing data, it is important to choose the appropriate
+statistical method based on the type of sample data you have. Here are
+the steps to follow:</p>
+<p><strong>1st Step: Check the type of sample data</strong></p>
+<p><strong>2nd Step: Apply the appropriate statistical
+method</strong></p>
+</div>
+<div id="descriptive-statistics" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Descriptive
+Statistics</h1>
+<p>Descriptive statistics are used to summarize and describe the main
+features of a dataset. They provide a way to understand the
+distribution, central tendency, and variability of the data.</p>
+<div id="addition" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Addition</h2>
+<p>Length, sum, count are all ways to add up values in a dataset. What
+is the difference between them?</p>
+<div id="length" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Length</h3>
+<pre class="r"><code># Count number of values in mpg column
+length(mtcars$mpg)</code></pre>
+<pre><code>## [1] 32</code></pre>
+<p>Length counts the number of values in the set of numbers. In other
+words, it tells us how many observations we have. In a data table, it
+tells us how many rows are in a column.</p>
+</div>
+<div id="sum" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Sum</h3>
+<pre class="r"><code># Sum step 1: Sum the values
+sum_sample &lt;- sum(mtcars$mpg)</code></pre>
+<p>In statistics, summation is represented by the Greek letter sigma
+(Σ). It indicates that we are summing a series of values.</p>
+<p><span class="math display">\[\sum_{i=1}^{n}\]</span></p>
+<p>When you see <span class="math inline">\(\sum_{i=2}^{5} a\)</span>,
+this means:</p>
+<ul>
+<li><p>Start with <span class="math inline">\(i=2\)</span> (the second
+value in the set of numbers)</p></li>
+<li><p>Add the value <span class="math inline">\(a\)</span> to your
+sum</p></li>
+<li><p>Increase <span class="math inline">\(i\)</span> by 1</p></li>
+<li><p>Repeat until you reach <span class="math inline">\(i=5\)</span>
+(the fifth value in the set of numbers)</p></li>
+<li><p>Then stop</p></li>
+</ul>
+<p>This is adding <span class="math inline">\(a\)</span> four times
+(once each for <span class="math inline">\(i=2\)</span>, <span class="math inline">\(i=3\)</span>, <span class="math inline">\(i=4\)</span>, and <span class="math inline">\(i=5\)</span>).</p>
+<p><span class="math display">\[\sum_{i=2}^{5} a =&gt; a_2 + a_3 + a_4 +
+a_5 = 4a = (5-2+1)a\]</span></p>
+<pre class="r"><code># table() function to create a frequency table
+table(mtcars$cyl)</code></pre>
+<pre><code>## 
+##  4  6  8 
+## 11  7 14</code></pre>
+<p>🤔 Reflect: Why did we use the <code>table()</code> function instead
+of <code>sum()</code> to count the number of occurrences of each unique
+value in the <code>cyl</code> column? Why did we <code>sum()</code> the
+values in the <code>mpg</code> column and not use table? In other words,
+would it make sense to <code>sum(mtcars$cyl)</code>? Create a memo to
+demonstrate your learning skills.</p>
+</div>
+<div id="count" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Count</h3>
+<p>The <strong><code>dplyr</code></strong> function <code>count()</code>
+is a convenient way to count the number of occurrences of each unique
+value in a categorical variable.</p>
+<p>Use <code>?count</code> to learn more about the function.</p>
+<pre class="r"><code># Count occurrences of each unique value in the cyl column
+cyl_counts &lt;- mtcars %&gt;%
+  count(cyl)
+cyl_counts</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["cyl"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"4","2":"11"},{"1":"6","2":"7"},{"1":"8","2":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><code>n</code> is the number of times that each unique value appears
+in the <code>cyl</code> column.</p>
+<p>🗣 Comment: What is the difference between <code>length()</code>
+<code>sum()</code> and <code>count()</code>? Explain your answer in a
+memo to demonstrate learning skills.</p>
+</div>
+</div>
+<div id="mode" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Mode</h2>
+<p>The mode is the most frequent value(s) in a dataset. Mode is usually
+used for categorical data or discrete data where we want to find the
+most common category or value. It is not commonly used for continuous
+data.</p>
+<pre class="r"><code># Create a frequency table
+table(mtcars$cyl) </code></pre>
+<pre><code>## 
+##  4  6  8 
+## 11  7 14</code></pre>
+<p>🗣 Comment (example): 8 cylinders occur most frequently (14 times) in
+the <code>cyl</code> column of the <code>mtcars</code> dataset.</p>
+<p>Note: If no value occurs more than once, then all are the mode or no
+mode. You get to pick.</p>
+<p>🪞Metacognition: Which function <code>table()</code> or
+<code>count()</code> do you prefer for finding the mode? Explain your
+answer in a memo to demonstrate learning skills.</p>
+</div>
+<div id="mean" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Mean</h2>
+<p>The mean is the average of a set of numbers. It is calculated by
+summing all the values and dividing by the number of values.</p>
+<p><span class="math display">\[\bar{x} = \frac{1}{n}\sum_{i=1}^{n}
+x_i\]</span></p>
+<p><em>Note: We use <code>sum_sample</code> from above.</em></p>
+<pre class="r"><code># Mean step 2: Divide by the number of values
+mean_sample &lt;- sum_sample / length(mtcars$mpg) 
+mean_sample</code></pre>
+<pre><code>## [1] 20.09062</code></pre>
+<pre class="r"><code># OR use mean() function directly
+mean_value &lt;- mean(mtcars$mpg) 
+mean_value</code></pre>
+<pre><code>## [1] 20.09062</code></pre>
+</div>
+<div id="variance" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Variance</h2>
+<p>The variance is a measure of how spread out the values in a dataset
+are. It is calculated as the average of the squared differences from the
+mean.</p>
+<p>Variance is calculated by first finding the difference between each
+value and the mean, squaring those differences, summing them up, and
+then dividing by the number of values minus one (for a sample
+variance).</p>
+<p><span class="math display">\[s^2 = \frac{\sum_{i=1}^{n} (x_i -
+\bar{x})^2}{(n-1)} \]</span></p>
+<pre class="r"><code># Variance step 3: Calculate the variance
+variance &lt;- sum((mtcars$mpg - mean_value)^2) / (length(mtcars$mpg) - 1)
+variance</code></pre>
+<pre><code>## [1] 36.3241</code></pre>
+<pre class="r"><code># OR use var() function directly
+variance &lt;- var(mtcars$mpg)
+variance</code></pre>
+<pre><code>## [1] 36.3241</code></pre>
+</div>
+<div id="standard-deviation" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Standard
+Deviation</h2>
+<p>The standard deviation is a measure of how spread out the values in a
+dataset are. It is calculated as the square root of the variance.</p>
+<p><span class="math display">\[s = \sqrt{s^2} =
+\sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}\]</span></p>
+<pre class="r"><code># Standard Deviation step 4: Calculate the standard deviation
+std_dev &lt;- sqrt(variance)
+std_dev</code></pre>
+<pre><code>## [1] 6.026948</code></pre>
+<pre class="r"><code># OR use sd() function directly 
+std_dev &lt;- sd(mtcars$mpg)
+std_dev</code></pre>
+<pre><code>## [1] 6.026948</code></pre>
+</div>
+<div id="median" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Median</h2>
+<p>The median is the middle value of a set of numbers when they are
+arranged in order. If there is an even number of values, the median is
+the average of the two middle values.</p>
+<p>Step 1: Sort the data in ascending order.</p>
+<p>Step 2: Check the size of the sample (n):</p>
+<ul>
+<li><p>If n is odd, the median is the middle value: <span class="math display">\[\text{median} =
+x_{(\frac{n+1}{2})}\]</span></p></li>
+<li><p>If n is even, the median is the average of the two middle values:
+<span class="math display">\[\text{median} = \frac{x_{(\frac{n}{2})} +
+x_{(\frac{n}{2}+1)}}{2}\]</span></p></li>
+</ul>
+<p>Where <span class="math inline">\(x_{(i)}\)</span> represents the ith
+ordered value in the sample.</p>
+<pre class="r"><code># Median step 1: Sort the data
+sorted_data &lt;- sort(mtcars$mpg)  
+sorted_data</code></pre>
+<pre><code>##  [1] 10.4 10.4 13.3 14.3 14.7 15.0 15.2 15.2 15.5 15.8 16.4 17.3 17.8 18.1 18.7
+## [16] 19.2 19.2 19.7 21.0 21.0 21.4 21.4 21.5 22.8 22.8 24.4 26.0 27.3 30.4 30.4
+## [31] 32.4 33.9</code></pre>
+<pre class="r"><code># Median step 2: Get the size of the sample
+length(sorted_data)  # Get the size of the sample</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre class="r"><code># Or use the median() function
+median(mtcars$mpg)</code></pre>
+<pre><code>## [1] 19.2</code></pre>
+</div>
+<div id="range" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Range</h2>
+<p>This simplest measure of variability is the range, which is the
+difference between the largest and smallest values in a dataset. <span class="math inline">\(x{(n)}- x{(1)}\)</span></p>
+<p>Sensitive to outliers, or extreme values, which can skew the
+range.</p>
+<div id="interquartile-range-iqr" class="section level3" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> Interquartile Range
+(IQR)</h3>
+<p>The interquartile range (IQR), or the fourth spread, is the range of
+the middle 50% of the data. It is calculated as:</p>
+<p><span class="math display">\[IQR = Q_3 - Q_1\]</span></p>
+<p>IQR is less sensitive to outliers than the range because it focuses
+on the central portion of the data.</p>
+<p>Where <span class="math inline">\(Q_1\)</span> is the first quartile
+(25th percentile) and <span class="math inline">\(Q_3\)</span> is the
+third quartile (75th percentile).</p>
+<p>Remove lower and upper 25% removes extreme values and determine the
+range between the first and third quartiles.</p>
+</div>
+<div id="percentiles" class="section level3" number="5.7.2">
+<h3><span class="header-section-number">5.7.2</span> Percentiles</h3>
+<p>A percentile is a value below which a given percentage of
+observations fall. The 100 × p-th percentile (where p is between 0 and
+1) is the value such that p × 100% of the data falls below that
+value.</p>
+<p>100% of the data are less than or equal to the 100% percentile.
+Divide the data into 100 equal parts.</p>
+<p><strong>Quartile</strong>: divide the whole data range into four
+equal parts.</p>
+<p><span class="math inline">\(Q_1\)</span> is the lower quartile (25th
+percentile), <span class="math inline">\(Q_2\)</span> is the median
+(50th percentile), and <span class="math inline">\(Q_3\)</span> is the
+upper quartile (75th percentile).</p>
+<div id="finding-percentiles-in-ordered-data" class="section level4" number="5.7.2.1">
+<h4><span class="header-section-number">5.7.2.1</span> Finding
+Percentiles in Ordered Data</h4>
+<p>1st: Sort the data from the smallest to the largest</p>
+<pre class="r"><code>print(mtcars$mpg)</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
+## [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+## [31] 15.0 21.4</code></pre>
+<pre class="r"><code># Sort the mpg column in ascending order
+sorted_mpg &lt;- sort(mtcars$mpg)</code></pre>
+<pre class="r"><code>print(sorted_mpg)</code></pre>
+<pre><code>##  [1] 10.4 10.4 13.3 14.3 14.7 15.0 15.2 15.2 15.5 15.8 16.4 17.3 17.8 18.1 18.7
+## [16] 19.2 19.2 19.7 21.0 21.0 21.4 21.4 21.5 22.8 22.8 24.4 26.0 27.3 30.4 30.4
+## [31] 32.4 33.9</code></pre>
+<p>2nd: Find the position value</p>
+<pre class="r"><code># Find minimum value of mpg in mtcars
+min_mpg &lt;- sorted_mpg[1]
+min_mpg</code></pre>
+<pre><code>## [1] 10.4</code></pre>
+<pre class="r"><code># Or simply use min() function
+min_mpg &lt;- min(mtcars$mpg)
+min_mpg</code></pre>
+<pre><code>## [1] 10.4</code></pre>
+<p>🗣 Comment: How is the minimum value found using [1] in the sorted
+data? Explain your answer in a memo to demonstrate learning skills.</p>
+<p><em>Type ?ceiling to learn about the <code>ceiling()</code>
+function.</em></p>
+<pre class="r"><code># Find the 25th percentile (Q1) of mpg in mtcars
+n &lt;- length(mtcars$mpg)
+Q1_position &lt;- 0.25 * (n + 1)
+Q1_value &lt;- sorted_mpg[ceiling(Q1_position)]
+Q1_value</code></pre>
+<pre><code>## [1] 15.5</code></pre>
+<p><em>Type ?quantile to learn about the <code>quantile()</code>
+function.</em></p>
+<pre class="r"><code># Or simply use quantile() function
+Q1_value &lt;- quantile(mtcars$mpg, 0.25)
+Q1_value</code></pre>
+<pre><code>##    25% 
+## 15.425</code></pre>
+<pre class="r"><code># Find the median (50th percentile) of mpg in mtcars
+median_position &lt;- 0.5 * (n + 1)
+median_value &lt;- sorted_mpg[ceiling(median_position)]
+median_value</code></pre>
+<pre><code>## [1] 19.2</code></pre>
+<pre class="r"><code># Or simply use median() function
+median_value &lt;- median(mtcars$mpg)
+median_value</code></pre>
+<pre><code>## [1] 19.2</code></pre>
+<pre class="r"><code># Find the 75th percentile (Q3) of mpg in mtcars
+Q3_position &lt;- 0.75 * (n + 1)
+Q3_value &lt;- sorted_mpg[ceiling(Q3_position)]
+Q3_value</code></pre>
+<pre><code>## [1] 22.8</code></pre>
+<pre class="r"><code># Or simply use quantile() function
+Q3_value &lt;- quantile(mtcars$mpg, 0.75)
+Q3_value</code></pre>
+<pre><code>##  75% 
+## 22.8</code></pre>
+<pre class="r"><code># Find maximum value of mpg in mtcars
+max_mpg &lt;- sorted_mpg[n]
+max_mpg</code></pre>
+<pre><code>## [1] 33.9</code></pre>
+<pre class="r"><code># Or simply use max() function
+max_mpg &lt;- max(mtcars$mpg)
+max_mpg</code></pre>
+<pre><code>## [1] 33.9</code></pre>
+</div>
+</div>
+<div id="review-summary" class="section level3" number="5.7.3">
+<h3><span class="header-section-number">5.7.3</span> Review
+summary()</h3>
+<p>You can use the <code>summary()</code> function to get a quick
+overview of the distribution of a numeric variable, including the
+minimum, 1st quartile, median, mean, 3rd quartile, and maximum
+values.</p>
 <pre class="r"><code>?summary
 data(&quot;mtcars&quot;)
 summary(mtcars)  # Summarizes all columns at once
 summary(mtcars$mpg)  # Summarizes just the mpg column</code></pre>
-<pre class="r"><code>?summarize
-# Overall mean mpg for all cars:
+<hr />
+<p>👇 And now onto the main event: <code>summarize()</code> and
+<code>group_by()</code></p>
+</div>
+</div>
+</div>
+<div id="dplyrs-summarize" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> dplyr’s
+summarize()</h1>
+<p>You can use <code>summarize()</code> to compute summary statistics
+like the mean, median, etc.</p>
+<p><code>?summarize</code></p>
+<p>📜 The SYNTAX <code>data %&gt;%</code>
+<code>summarize(new_column_name = some_operation(column_name))</code></p>
+<p>🎯 The GOAL: Find the overall mean mpg for all cars.</p>
+<pre class="r"><code># ⚡Test: 
 mtcars %&gt;% 
   summarize(mean_mpg = mean(mpg))</code></pre>
-<p>🤔 Reflect: How informative is a single overall mean? When might you
-need more detail? Create a memo note, demonstrate learning skill(s)
-used.</p>
-<pre class="r"><code>mtcars %&gt;% 
+<p>🗣 Comment (example): The code above creates a new column called
+<code>mean_mpg</code> that contains the mean of the <code>mpg</code>
+column from the <code>mtcars</code> dataset.</p>
+<p>🎯 The GOAL: Find several summary statistics for mpg: mean, max, and
+count of cars.</p>
+<pre class="r"><code># ⚡Test: 
+mtcars %&gt;% 
   summarize(mean_mpg = mean(mpg),
             max_mpg = max(mpg),
             count = n())</code></pre>
-<p>🧐 NOTICE: Why is there not piping <code>%&gt;%</code> in the script
-above?⚡ Explain your answer in a memo to demonstrate learning
-skills.</p>
+<p>🧐 NOTICE: In the code chunk above, why is there not piping
+<code>%&gt;%</code> after the calculation of <code>mean()</code>,
+<code>max()</code> and <code>n()</code>? Explain your answer in a memo
+to demonstrate learning skills.</p>
+<p>🪞 Reflect: ⚖️ Compare <code>summary()</code> with
+<code>summarize()</code> Explain your answer and how one or the other
+might be useful in different situations. Compose a short memo to
+demonstrate learning skills.</p>
 </div>
-<div id="the-basics" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> The Basics</h1>
+<div id="dplyrs-group_by" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> dplyr’s group_by()</h1>
 <p><code>group_by()</code> changes the behavior of summary
 functions.</p>
 <p>📜 The SYNTAX</p>
 <p><code>data %&gt;%</code>
 <code>group_by(variable1, variable2, ...) %&gt;%</code>
 <code>some_operation()</code></p>
-<p>🎯 The GOAL: mean mpg for each cylinder count.</p>
-<pre class="r"><code>cyl_means &lt;- mtcars %&gt;%
+<p>🎯 The GOAL: Find the mean mpg for each cylinder count.</p>
+<pre class="r"><code># ⚡Test: 
+cyl_means &lt;- mtcars %&gt;%
   group_by(cyl) %&gt;%
   summarize(mean_mpg = mean(mpg))</code></pre>
-<p>🧩 Explanation: <code>group_by(cyl)</code> tells dplyr to treat each
-unique value of cyl separately and <code>summarize()</code> then runs
-mean(mpg) <em>per group</em>.</p>
-<pre class="r"><code>cyl_means  # print result</code></pre>
-<p>👀 Check‑in: Which cylinder group is most fuel‑efficient?</p>
+<p>🗣 Comment (example): <code>group_by(cyl)</code> treats each unique
+value separately, and <code>summarize()</code> runs
+<code>mean(mpg)</code> <strong>per group</strong>. <code>mean_mpg</code>
+is is the <em>explicit</em> name of the new column.</p>
+<pre class="r"><code># ✅ Verify
+cyl_means  </code></pre>
+<p>🪞 Metacognition: Reflect on why is it useful or why might it make
+sense to group cars by cylinders before summarizing mpg. Then determine
+how might you apply this technique to your signature assignment dataset?
+Type a memo to demonstrate learning skills.</p>
 </div>
-<div id="multiple-statistics" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Multiple
+<div id="explicit-vs.-default" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Explicit
+vs. Default</h1>
+<p>❓Question (example): What is the <em>default</em> name of the
+summary column when you do not name it explicitly?</p>
+<pre class="r"><code># ⚡Test: 
+mtcars %&gt;%
+  group_by(cyl) %&gt;%
+  summarize(mean(mpg))      </code></pre>
+<p>🗣 Comment (example): The default name is the code itself. Default
+names can be confusing when sharing results. Naming columns makes tables
+clearer. Use it whenever you share results.</p>
+<p>🧐 NOTICE: that we chain <code>group_by()</code> and
+<code>summarize()</code> together using the pipe operator
+<code>%&gt;%</code>. This allows us to first group the data by the
+specified variable(s) and then apply the summary function to each
+group.</p>
+</div>
+<div id="multiple-statistics" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Multiple
 Statistics</h1>
-<p>You can create several summary columns in one call, separated by
-commas.</p>
-<pre class="r"><code>unique(mtcars$cyl)
-
+<p>🎯 The GOAL: We can create several summary columns in one call,
+separated by commas.</p>
+<pre class="r"><code># ⚡Test:
 cyl_stats &lt;- mtcars %&gt;%
   group_by(cyl) %&gt;%
   summarize(mean_mpg = mean(mpg),
             sd_mpg   = sd(mpg),
             n        = n())
-
+# ✅ Verify: 
 cyl_stats</code></pre>
-<p>📝 Notes:</p>
-<ul>
-<li><p><code>n()</code> counts rows in each group.</p></li>
-<li><p>You <em>name</em> each new column using
-<code>new_name = calculation</code>.</p></li>
-</ul>
+<p><em><code>?n</code> to learn about the <code>n()</code>
+function.</em></p>
+<p>🗣 Comment (example): <code>n()</code> counts rows in each group. This
+is similar to the function <code>length()</code> which counts the number
+of values in a vector or row in a data set. It is different from length
+because <code>n()</code> works within <code>summarize()</code> and
+counts the number of rows in each group created by
+<code>group_by()</code>. In this way, <code>n()</code> is like
+<code>count()</code>, but it is used within <code>summarize()</code>.
+Using <code>n()</code> is a quick way to see how many observations are
+in each group.</p>
+<p>We <em>name</em> each new column using
+<code>new_name = calculation</code>.</p>
 </div>
-<div id="explicit-vs.-default" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Explicit
-vs. Default</h1>
-<p>Naming columns makes tables clearer—use it whenever you share
-results.</p>
-<pre class="r"><code>mtcars %&gt;%
-  group_by(cyl) %&gt;%
-  summarize(mean(mpg))      # default name is the code itself</code></pre>
-</div>
-<div id="grouping-multiple-variables" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Grouping Multiple
+<div id="multiple-variables" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Multiple
 Variables</h1>
-<ol style="list-style-type: decimal">
-<li><code>group_by</code> one column creates one group for each unique
-value.</li>
-</ol>
-<pre class="r"><code>unique(mtcars$cyl)
-
+<p><code>group_by</code> one column creates one group for each unique
+value. <code>group_by</code> two columns creates one group for each
+unique combination.</p>
+<p>❓Question (example): How many groups will
+<code>group_by(cyl, am)</code> create?</p>
+<pre class="r"><code># Recall that mtcars$cyl has three unique values:
+unique(mtcars$cyl)
+# Recall that mtcars$am has two unique values:  
 unique(mtcars$am)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li><code>group_by</code> two columns creates one group for each unique
-combination.</li>
-</ol>
-<pre class="r"><code>mtcars %&gt;%
+<p>💬 Prediction (example): Two variables with 3 and 2 unique values
+creates 3 x 2 = 6 groups.</p>
+<pre class="r"><code>#⚡Test: 
+mtcars %&gt;%
   group_by(cyl, am) %&gt;%
   summarize(avg_mpg = mean(mpg),
             count = n())</code></pre>
+<p>🗣 Comment (example): - Group 1: cyl = 4, am = 0 (4-cylinder automatic
+cars)</p>
 <ul>
-<li><p>Group 1: cyl = 4, am = 0 (4-cylinder automatic cars)</p></li>
 <li><p>Group 2: cyl = 4, am = 1 (4-cylinder manual cars)</p></li>
 <li><p>Group 3: cyl = 6, am = 0 (6-cylinder automatic cars)</p></li>
 <li><p>Group 4: cyl = 6, am = 1 (6-cylinder manual cars)</p></li>
 <li><p>Group 5: cyl = 8, am = 0 (8-cylinder automatic cars)</p></li>
 <li><p>Group 6: cyl = 8, am = 1 (8-cylinder manual cars)</p></li>
 </ul>
-<p>Let’s do another example using the dataset
-<code>us_contagious_diseases</code>.</p>
-<pre class="r"><code>data(&quot;us_contagious_diseases&quot;)
-?us_contagious_diseases</code></pre>
-<pre class="r"><code>state_disease_mean &lt;- us_contagious_diseases %&gt;%
-  group_by(state, disease) %&gt;%     # two grouping vars
-  summarize(mean_count = mean(count))
-
-head(state_disease_mean)</code></pre>
+<div id="ungroup" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> ungroup()</h2>
+<p>With two grouping vars, the default keeps the earlier group(s). With
+<code>.groups = &quot;drop&quot;</code> (or <code>ungroup()</code>), the result is
+not grouped.</p>
+<ol style="list-style-type: upper-alpha">
+<li>Default behavior: keeps earlier groups</li>
+</ol>
+<p>🎯 Goal: Show that with two groups <code>(cyl, gear)</code>,
+s<code>ummarize()</code>keeps the earlier group <code>(cyl)</code> by
+default.</p>
+<pre class="r"><code># ⚡Test:
+# A) Default behavior: &quot;drop_last&quot; (keeps earlier groups)
+cyl_gear_stats &lt;- mtcars %&gt;%
+  group_by(cyl, gear) %&gt;%
+  summarize(mean_mpg = mean(mpg))   # no .groups set</code></pre>
+<pre class="r"><code># ✅ Verify: 
+group_vars(cyl_gear_stats)  # what groups remain?</code></pre>
+<pre class="r"><code># ✅ Verify: 
+is_grouped_df(cyl_gear_stats) # expect TRUE</code></pre>
+<p>🗣 Comment (example): The <code>Default = drop_last</code> from
+<code>(cyl,gear)</code> down to <code>(cyl)</code>.</p>
+<p>You’ll want to be explicit when you don’t want any grouping left.</p>
+<ol start="2" style="list-style-type: upper-alpha">
+<li>Make it explicit inside <code>summarize()</code></li>
+</ol>
+<p>🎯 Goal: Return a plain, ungrouped table by telling
+<code>summarize()</code> to drop all groups.</p>
+<pre class="r"><code># ⚡Test:
+# B) Make it explicit: drop *all* groups in the result
+cyl_gear_stats_drop &lt;- mtcars %&gt;%
+  group_by(cyl, gear) %&gt;%
+  summarize(mean_mpg = mean(mpg), .groups = &quot;drop&quot;)</code></pre>
+<pre class="r"><code># ✅ Verify: 
+group_vars(cyl_gear_stats_drop)  # expect character(0)</code></pre>
+<pre class="r"><code># ✅ Verify: 
+is_grouped_df(cyl_gear_stats_drop) # expect FALSE</code></pre>
+<p>🗣 Comment (example): Using <code>.groups = &quot;drop&quot;</code> tells
+<code>summarize()</code> to remove all grouping after the summary
+operation, resulting in a plain data frame without any grouping
+structure.</p>
+<ol start="3" style="list-style-type: upper-alpha">
+<li>Alternative: drop groups after summarizing</li>
+</ol>
+<p>Goal: Achieve the same ungrouped result using <code>ungroup()</code>
+after <code>summarize()</code></p>
+<pre class="r"><code># ⚡Test:
+# C) Alternative: drop groups after summarizing
+cyl_gear_stats_ungroup &lt;- mtcars %&gt;%
+  group_by(cyl, gear) %&gt;%
+  summarize(mean_mpg = mean(mpg)) %&gt;%
+  ungroup()</code></pre>
+<pre class="r"><code># ✅ Verify: 
+group_vars(cyl_gear_stats_ungroup)  # expect character(0)</code></pre>
+<pre class="r"><code># ✅ Verify:
+is_grouped_df(cyl_gear_stats_ungroup) # expect FALSE</code></pre>
+<p>🗣 Comment (example): Using <code>ungroup()</code> after
+<code>summarize()</code> removes all grouping from the resulting data
+frame, similar to using <code>.groups = &quot;drop&quot;</code> within
+<code>summarize()</code>. Both methods achieve the same outcome of
+returning an ungrouped data frame.</p>
+<p>Pick either B) or C) based on your coding style preference.</p>
+</div>
+</div>
+<div id="practice-space" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> 📝 Practice Space</h1>
+<p>Below are optional activities you can do to practice the skills in
+this lesson. Pick one or more to complete to earn learning skill
+points!</p>
 <p>🤔 Reflect: How many rows would you expect if each state has 6
-diseases?</p>
+diseases? Make a prediction and test it. Then write a memo 🗣 Commenting
+about the results or 🪞 Explaining why this will be useful.</p>
 <p>✍️ Practice: Pipeline. Fill in the Blanks</p>
 <p>For <code>mtcars</code>, compute minimum and maximum horsepower for
 each transmission type (0 = automatic, 1 = manual). Store as
@@ -3020,12 +3499,8 @@ each transmission type (0 = automatic, 1 = manual). Store as
 
 transmission_hp</code></pre>
 <p>🚀 Explore and Play: Try changing horse power to miles per gallon or
-weight and rerun.</p>
-<p>Create a memo note, demonstrate learning skill(s) used during 🤔
-Reflect, ✍️ Practice, and 🚀 Explore and Play.</p>
-</div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
+weight and rerun. Create a memo note, 🗣 Commenting about the results or
+🪞 Explaining why this will be useful.</p>
 <p>✍️ Practice: Replace the blanks (___) and run.</p>
 <p>You’ll use the <code>heights</code> dataset and use the functions
 <code>group_by</code>, <code>summarize</code>, <code>mean</code>,
@@ -3036,101 +3511,140 @@ Reflect, ✍️ Practice, and 🚀 Explore and Play.</p>
    ___(sex) %&gt;%
    ___(mean_height = ___(height),
              sd_height   = ___(height),
-             n           = ___()) -&gt; height_descriptives
-View(height_descriptives)</code></pre>
+             n           = ___()) -&gt; height_descriptives</code></pre>
 </div>
-<div id="assignment" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> ➤ Assignment</h1>
+<div id="assignment" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> ➤ Assignment</h1>
 <p>Replace each ____ placeholder (and any TODO comments) with working
 code or a short written answer. Run each section; be sure the requested
 objects appear in the Environment. When finished, save
-<strong>BOTH</strong> this script and your .RData workspace and
-upload.</p>
-<div id="task-1" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Task 1</h2>
-<p>📦 Library it up!</p>
+<strong>BOTH</strong> code script and your <code>.RData</code> workspace
+and upload.</p>
+<p>Where appropriate, record: 🎯/❓ Goal → ⚡ Code → ✅ Checks → 🗣/🪞
+Reflection (≤ 50 chars).</p>
+<div id="task-0" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Task 0</h2>
+<p>📦 <strong>Library it up!</strong></p>
 <p>Make sure there is script in your document to load <code>dplyr</code>
-and <code>dslabs</code> packages so their functions / datasets load.</p>
+and <code>dslabs</code> packages so your functions / datasets load.</p>
 </div>
-<div id="task-2" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Task 2</h2>
-<p>Single grouping</p>
+<div id="task-1" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Task 1</h2>
+<p><strong>Single grouping</strong></p>
 <p>🌟 Using <code>stars</code>, compute mean temperature
 <strong>AND</strong> mean magnitude for each type. Name the result
 <strong><code>twinkle_twinkle</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<pre class="r"><code># Quick check
-head(twinkle_twinkle)</code></pre>
+<p>🎯 Restate the Goal</p>
+<pre class="r"><code>#⚡ Code
+____ &lt;- _____</code></pre>
+<pre class="r"><code># ✅ Checks</code></pre>
+<p>🗣 Did it work? What happened?</p>
 </div>
-<div id="task-3" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Task 3</h2>
-<p>Single grouping + three stats</p>
+<div id="task-2" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Task 2</h2>
+<p><strong>Single grouping + three stats</strong></p>
 <p>✔️ Pick ONE numeric variable in <code>olive</code> (not region,
 area), <code>group by region</code>, return <code>mean</code>,
 <code>sd</code>, and <code>n</code>. Store as
 <strong><code>Olive_Garden</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<p>🎯 Restate the Goal</p>
+<pre class="r"><code>#⚡ Code
+____ &lt;- _____</code></pre>
+<pre class="r"><code># ✅ Checks</code></pre>
 <p>In a short comment, note the region with the highest mean value.</p>
 <p>🗣 Comment: “___”</p>
 </div>
-<div id="task-4" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Task 4</h2>
-<p>Reinforce pattern</p>
-<p>⚖️ From <code>heights</code>, <code>group_by</code> <code>sex</code>
-and <code>summarize</code> <code>mean_height</code>,
-<code>sd_height</code>, <code>n</code> . Store as
-<strong><code>height_descriptives</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-</div>
-<div id="task-5" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Task 5</h2>
-<p>Multiple grouping</p>
+<div id="task-3" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Task 3</h2>
+<p><strong>Multiple grouping</strong></p>
 <p>⚠️ From <code>us_contagious_diseases</code>, <code>group_by</code>
 <code>state</code> AND <code>disease</code> then <code>summarize</code>
-the <code>mean</code> count. Keep only the three diseases with the
-highest national mean counts. Store as
+the mean <code>count</code>. Keep only the three diseases with the
+highest national mean <code>counts</code>. Store as
 <strong><code>Infectious_Burden</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<p>⚡ Hint: <strong>National means by disease.</strong> Group the
+dataset by <code>disease</code> and summarize the mean of
+<code>count</code> across all rows. Pick the top 3 diseases. Arrange the
+diseases by their national mean and keep the top three.</p>
+<pre class="r"><code>data(&quot;us_contagious_diseases&quot;)
+# National means per disease
+__________ &lt;- us_contagious_diseases %&gt;%
+  _________(______) %&gt;%
+  _________(national_mean = ____(____), _____ = _______)%&gt;%
+  _________(desc(__________))%&gt;%
+  head(n = __)</code></pre>
+<pre class="r"><code># ✅ Checks</code></pre>
+<p>🗣 Did it work? What happened?</p>
 </div>
-<div id="task-6" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Task 6</h2>
-<p>Create <strong><code>Life_Decade</code></strong>. Make a decade
-column (hint: <code>floor(year/10)*10)</code> and <code>group_by</code>
-<code>continent,</code> and <code>decade</code>. The
-<code>summarize</code>
-<code>avg_lifeExp = mean(life_expectancy)</code>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<p>🤔 Reflect</p>
-<p>📝 Write a short paragraph reflecting why we need to do group_by()
-come BEFORE summarize()?</p>
+<div id="task-4" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> Task 4</h2>
+<p><strong>Putting it all together</strong></p>
+<p>🚀 Using <code>dplyr</code>’s <code>starwars</code> data, create a
+table of <strong>per-group descriptive statistics</strong> by
+<strong>two grouping variables</strong>. Use several statistics and more
+than one numeric variable in a single <code>summarize()</code> call.
+Return an <strong>ungrouped</strong> result. Name it
+<code>starwars_summary</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Inspect: Open the help page and glimpse the data. Identify
+<strong>two categorical</strong> columns you can group by (e.g.,
+<code>species</code> and <code>sex</code>) and <strong>two
+numeric</strong> columns to summarize (e.g., <code>height</code> and
+<code>mass</code>).</li>
+</ol>
+<pre class="r"><code>data(&quot;starwars&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>In one code chunk:</li>
+</ol>
+<ul>
+<li><p>Use <code>filter()</code> to remove rows with missing values so
+your groups are well-defined.</p></li>
+<li><p><code>group_by()</code> your two categorical variables.</p></li>
+<li><p><code>summarize()</code> to compute <em>at least</em> <strong>two
+descriptive statistics</strong> (e.g., mean, sd, n) for <strong>each
+numeric variable</strong>.</p></li>
+<li><p>Drop groups to return an ungrouped result.</p></li>
+<li><p>Name the result
+<strong><code>starwars_summary</code></strong>.</p></li>
+</ul>
+<pre class="r"><code>#⚡ Code
+____ &lt;- _____</code></pre>
+<pre class="r"><code># ✅ Checks</code></pre>
+<p>🗣 Did it work? What happened?</p>
+</div>
+<div id="task-5" class="section level2" number="12.6">
+<h2><span class="header-section-number">12.6</span> Task 5</h2>
+<p>🪞 Reflection</p>
+<p>📝 Write a short paragraph reflecting why we need to do
+<code>group_by()</code> come BEFORE <code>summarize()</code>?</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the Quarto Document and
-the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the Quarto Document
-document:</li>
+<li>You will be submitting <strong>both</strong> the script document of
+your choice and the workspace file. The workspace file saves all the
+objects in your environment that you created in this lesson. You can
+save the workspace by running the following command:</li>
 </ol>
 <pre class="r"><code>save.image(&quot;Assignment10_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
 pane.</p>
-<p>💾 <strong>Always save the R documents before closing.</strong></p>
+<p>💾 <strong>Always save the document before closing.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the RMD and the workspace file.</li>
+<strong>both</strong> the document that contains your code and memos
+(.R, .Rmd, or .qmd) and the workspace file (.RData).</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Today you
+<div id="today-you-practiced" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Compared overall vs. grouped summaries.</p></li>
-<li><p>Used <code>group_by()</code> + <code>summarize()</code> to
-calculate descriptive statistics.</p></li>
+<li><p>Used <code>group_by()</code> <code>count()</code> and
+<code>summarize()</code> to calculate descriptive statistics.</p></li>
 <li><p>Named summary columns for clarity.</p></li>
 <li><p>Counted group sizes with <code>n()</code>.</p></li>
 <li><p>Grouped by multiple variables for richer insights.</p></li>

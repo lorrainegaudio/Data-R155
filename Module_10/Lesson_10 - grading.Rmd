@@ -2,67 +2,6 @@
 title: "Lesson 10"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-output: 
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
-    includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r eval=FALSE, include=FALSE}
-title: "Lesson 10"
-author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-output: 
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
-    includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
- 
-Or
-title: "Lesson 10"
-author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
@@ -80,7 +19,12 @@ output:
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 
 # 🚦 Ready, Set, R! 
@@ -603,94 +547,24 @@ mtcars %>%
 
 - Group 6: cyl = 8, am = 1 (8-cylinder manual cars)
 
-## ungroup()
-
-With two grouping vars, the default keeps the earlier group(s). With `.groups = "drop"` (or `ungroup()`), the result is not grouped.
-
-A) Default behavior: keeps earlier groups
-
-🎯 Goal: Show that with two groups `(cyl, gear)`, s`ummarize() `keeps the earlier group `(cyl)` by default.
+Let's do another example of grouping by more than one variable using the dataset `us_contagious_diseases`.
 
 ```{r , eval=FALSE}
-# ⚡Test:
-# A) Default behavior: "drop_last" (keeps earlier groups)
-cyl_gear_stats <- mtcars %>%
-  group_by(cyl, gear) %>%
-  summarize(mean_mpg = mean(mpg))   # no .groups set
+data("us_contagious_diseases")
+?us_contagious_diseases
 ```
 
+```{r, eval=FALSE}
+state_disease_mean <- us_contagious_diseases %>%
+  group_by(state, disease) %>%     # two grouping vars
+  summarize(mean_count = mean(count))
 
-```{r , eval=FALSE}
-# ✅ Verify: 
-group_vars(cyl_gear_stats)  # what groups remain?
+head(state_disease_mean)
 ```
-
-```{r , eval=FALSE}
-# ✅ Verify: 
-is_grouped_df(cyl_gear_stats) # expect TRUE
-```
-
-🗣 Comment (example): The `Default = drop_last` from `(cyl,gear)` down to `(cyl)`. 
-
-You’ll want to be explicit when you don’t want any grouping left.
-
-B) Make it explicit inside `summarize()`
-
-🎯 Goal: Return a plain, ungrouped table by telling `summarize()` to drop all groups.
-
-```{r , eval=FALSE}
-# ⚡Test:
-# B) Make it explicit: drop *all* groups in the result
-cyl_gear_stats_drop <- mtcars %>%
-  group_by(cyl, gear) %>%
-  summarize(mean_mpg = mean(mpg), .groups = "drop")
-```
-
-
-```{r , eval=FALSE}
-# ✅ Verify: 
-group_vars(cyl_gear_stats_drop)  # expect character(0)
-```
-
-```{r , eval=FALSE}
-# ✅ Verify: 
-is_grouped_df(cyl_gear_stats_drop) # expect FALSE
-```
-
-🗣 Comment (example): Using `.groups = "drop"` tells `summarize()` to remove all grouping after the summary operation, resulting in a plain data frame without any grouping structure.
-
-C) Alternative: drop groups after summarizing
-
- Goal: Achieve the same ungrouped result using `ungroup()` after `summarize()`
-
-```{r , eval=FALSE}
-# ⚡Test:
-# C) Alternative: drop groups after summarizing
-cyl_gear_stats_ungroup <- mtcars %>%
-  group_by(cyl, gear) %>%
-  summarize(mean_mpg = mean(mpg)) %>%
-  ungroup()
-```
-
-
-```{r , eval=FALSE}
-# ✅ Verify: 
-group_vars(cyl_gear_stats_ungroup)  # expect character(0)
-```
-
-```{r , eval=FALSE}
-# ✅ Verify:
-is_grouped_df(cyl_gear_stats_ungroup) # expect FALSE
-```
-
-🗣 Comment (example): Using `ungroup()` after `summarize()` removes all grouping from the resulting data frame, similar to using `.groups = "drop"` within `summarize()`. Both methods achieve the same outcome of returning an ungrouped data frame.
-
-Pick either B) or C) based on your coding style preference.
-
 
 # 📝 Practice Space
 
-Below are optional activities you can do to practice the skills in this lesson. Pick one or more to complete to earn learning skill points! 
+Below are optional activities you can do to practice the skills in this lesson. Pick one or more to complete to earn learning skill points. 
 
 🤔 Reflect: How many rows would you expect if each state has 6 diseases? Make a prediction and test it. Then write a memo 🗣 Commenting about the results or 🪞 Explaining why this will be useful.
 
@@ -723,7 +597,7 @@ heights %>%
    ___(mean_height = ___(height),
              sd_height   = ___(height),
              n           = ___()) -> height_descriptives
-
+View(height_descriptives)
 ```
 
 # ➤ Assignment
@@ -738,114 +612,161 @@ Where appropriate, record: 🎯/❓ Goal → ⚡ Code → ✅ Checks → 🗣/�
 
 Make sure there is script in your document to load `dplyr` and `dslabs` packages so your functions / datasets load.
 
+```{r}
+library(dplyr)
+library(dslabs)
+```
+
 ## Task 1
 
 **Single grouping**
 
-🌟 Using `stars`, compute mean temperature **AND** mean magnitude for each type. Name the result **`twinkle_twinkle`**.
+🎯 Using `stars`, compute mean temperature **AND** mean magnitude for each type. Name the result **`twinkle_twinkle`**.
 
-🎯 Restate the Goal
+```{r}
+data(stars)
+?stars
+```
 
-```{r, eval=FALSE}
+```{r}
 #⚡ Code
-____ <- _____
+twinkle_twinkle <- stars %>%
+  group_by(type) %>%
+  summarize(
+    mean_temperature = mean(temp),
+    mean_magnitude   = mean(magnitude),
+    .groups = "drop"
+  )
 ```
 
 
-```{r, eval=FALSE}
+```{r}
 # ✅ Checks
-
+twinkle_twinkle
+```
+```{r}
+# ✅ Checks
+all(c("mean_temperature","mean_magnitude") %in% names(twinkle_twinkle))
 ```
 
-🗣 Did it work? What happened? 
+
+
+🗣 
 
 ## Task 2
 
 **Single grouping + three stats**
 
-✔️ Pick ONE numeric variable in `olive` (not region, area), `group by region`, return `mean`, `sd`, and `n`.  Store as **`Olive_Garden`**.
+🎯  Pick **ONE*** numeric variable in `olive` (not region, area), `group by region`, return `mean`, `sd`, and `n`.  Store as **`Olive_Garden`**.
 
-🎯 Restate the Goal
-
-```{r, eval=FALSE}
-#⚡ Code
-____ <- _____
+```{r}
+data(olive)
+?olive
 ```
 
-```{r, eval=FALSE}
-# ✅ Checks
+```{r}
+#⚡ Code
+Olive_Garden <- olive %>%
+  group_by(region) %>%
+  summarize(
+    mean_value = mean(palmitic),
+    sd_value   = sd(palmitic),
+    n          = n()
+  )
+```
 
+Options: 
+
+- palmitic. Percent palmitic acid of sample.
+
+- palmitoleic. Percent palmitoleic of sample.
+
+- stearic. Percent stearic acid of sample.
+
+- oleic. Percent oleic acid of sample.
+
+- linoleic. Percent linoleic acid of sample.
+
+- linolenic. Percent linolenic acid of sample.
+
+- arachidic. Percent arachidic acid of sample.
+
+- eicosenoic. Percent eicosenoic acid of sample.
+
+```{r}
+# ✅ Checks
+Olive_Garden
 ```
 
 In a short comment, note the region with the highest mean value.
 
-🗣 Comment: "___"
+🗣 Comment: "Southern Italy" for palmitic.
 
 ## Task 3
 
 **Multiple grouping**
 
-⚠️ From `us_contagious_diseases`, `group_by` `state` AND `disease` then  `summarize` the mean `count`. Keep only the three diseases with the highest national mean `counts`. Store as **`Infectious_Burden`**.
+🎯 From `us_contagious_diseases`, `group_by` `state` AND `disease` then  `summarize` the `mean` count. Keep only the three diseases with the highest national mean counts. Store as **`Infectious_Burden`**.
 
-⚡ Hint: **National means by disease.** Group the dataset by `disease` and summarize the mean of `count` across all rows. Pick the top 3 diseases. Arrange the diseases by their national mean and keep the top three.
-
-
-```{r, eval=FALSE}
+```{r}
 data("us_contagious_diseases")
 # National means per disease
-__________ <- us_contagious_diseases %>%
-  _________(______) %>%
-  _________(national_mean = ____(____), _____ = _______)%>%
-  _________(desc(__________))%>%
-  head(n = __)
+Infectious_Burden <- us_contagious_diseases %>%
+  group_by(disease) %>%
+  summarize(national_mean = mean(count), .groups = "drop")%>%
+  arrange(desc(national_mean))%>%
+  head(n = 3)
 
+Infectious_Burden
 ```
+
+
+```{r}
+Infectious_Burden <- disease_national %>%
+  arrange(desc(national_mean)) %>%
+  head(n = 3)
+
+Infectious_Burden
+```
+
 
 ```{r, eval=FALSE}
 # ✅ Checks
-
+Infectious_Burden
 ```
 
 🗣 Did it work? What happened?
-
 
 ## Task 4
 
 **Putting it all together**
 
-🚀 Using `dplyr`'s `starwars` data, create a table of **per-group descriptive statistics** by **two grouping variables**. Use several statistics and more than one numeric variable in a single `summarize()` call. Return an **ungrouped** result. Name it `starwars_summary`.
 
-1. Inspect: Open the help page and glimpse the data. Identify **two categorical** columns you can group by (e.g., `species` and `sex`) and **two numeric** columns to summarize (e.g., `height` and `mass`).
 
 ```{r}
-data("starwars")
-```
-
-2. In one code chunk: 
-
-- Use `filter()` to remove rows with missing values so your groups are well-defined.
-
-- `group_by()` your two categorical variables.
-
-- `summarize()` to compute *at least* **two descriptive statistics** (e.g., mean, sd, n) for **each numeric variable**.
-
-- Drop groups to return an ungrouped result.
-
-- Name the result **`starwars_summary`**.
-
-```{r, eval=FALSE}
 #⚡ Code
-____ <- _____
+starwars_summary <- starwars %>%
+  filter(!is.na(height) & !is.na(mass)) %>%
+  group_by(species, sex) %>%
+  summarize(
+    mean_height   = mean(height, na.rm = TRUE),
+    sd_height     = sd(height, na.rm = TRUE),
+    median_height = median(height, na.rm = TRUE),
+    mean_mass     = mean(mass,   na.rm = TRUE),
+    sd_mass       = sd(mass,     na.rm = TRUE),
+    median_mass   = median(mass, na.rm = TRUE),
+    n             = dplyr::n(),
+    .groups       = "drop"   # explicit ungrouping, as taught
+  )
+
 ```
 
 ```{r, eval=FALSE}
 # ✅ Checks
-
+starwars_summary
 ```
 
 🗣 Did it work? What happened?
-
-## Task 5
 
 🪞 Reflection
 
