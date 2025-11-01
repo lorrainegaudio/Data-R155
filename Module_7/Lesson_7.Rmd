@@ -234,7 +234,7 @@ This returns a logical vector with `TRUE` where the number of gears is anything 
 sum(mtcars$mpg <= 15)
 ```
 
-📝 Learning Skill Memo: What exactly is sum() counting when given a logical test? Explain your answer.
+📝 Learning Skill Memo 🗣 Comment Example: What exactly is sum() counting when given a logical test? Explain your answer.
 
 a. The rows `<= 15` in `mtcars$mpg`.
 
