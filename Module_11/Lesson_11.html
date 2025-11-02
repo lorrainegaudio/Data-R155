@@ -2855,7 +2855,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Lesson 11</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Lesson generated on August 21, 2025</h4>
+<h4 class="date">Lesson generated on November 01, 2025</h4>
 
 </div>
 
@@ -2865,8 +2865,8 @@ font-size: 0.95em;
 R!</h1>
 <p>In lesson 8, 9, and 10, we explored several functions from
 <code>dplyr</code> (<code>select()</code>, <code>filter()</code>,
-<code>mutate()</code>, <code>ifelse()</code>, <code>group_by</code> and
-<code>summarize()</code>). You now know the key dplyr verbs one at a
+<code>mutate()</code>, <code>case_when()</code>, <code>group_by</code>
+and <code>summarize()</code>). You now know the key dplyr verbs one at a
 time. This week, we’ll be putting <code>dplyr</code> verbs together in
 more complex pipelines. The real power comes from <em>chaining</em> them
 so data flows logically from raw to insight in a single readable
@@ -2906,64 +2906,81 @@ separate objects</p></li>
 <pre class="r"><code>library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package</code></pre>
 </div>
-<div id="warmup" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Warm‑Up</h1>
-<p>📖 Review: The main dplyr verbs (functions) are
-<code>select()</code>, <code>filter()</code>, <code>mutate()</code>,
-<code>group_by()</code>, <code>summarize()</code>,
-<code>arrange()</code>. Type <code>?filter</code> in the Console, then
-<code>?mutate</code>, etc. Skim the usage sections.</p>
-<p>🗣 Comment: Which verb does what? For example, which verb changes
-<em>rows</em> and which changes <em>columns</em>?</p>
-</div>
-<div id="building-a-pipeline" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> 🛠 Building a
+<div id="building-a-pipeline" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 🛠 Building a
 Pipeline</h1>
 <p>🎯 The GOAL: Find the average fuel consumption (liters/100 km) for
 cars in <code>mtcars</code> that use greater than 8 L/100 km, broken
 down by transmission and cylinders.</p>
-<ol style="list-style-type: decimal">
-<li>Start with the data</li>
-</ol>
+<div id="start-with-the-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Start with the
+data</h2>
+<p>We’ll use the built‑in <code>mtcars</code> dataset.</p>
+<p>🎯 Goal. Load mtcars and confirm shape.</p>
 <pre class="r"><code>data(&quot;mtcars&quot;)
-
+# ⚡ Test:
 mtcars %&gt;%                       # rows = 32 cars, many columns
   head(2)                        # preview first two rows
 
 head(mtcars, 2)  # base R version, same output</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Create a new variable with <code>mutate()</code></li>
-</ol>
-<pre class="r"><code>mtcars %&gt;%
+<p>🗣 Data loaded correctly</p>
+</div>
+<div id="create-a-new-variable-with-mutate" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Create a new variable
+with <code>mutate()</code></h2>
+<p>We’ll calculate fuel consumption in liters per 100 kilometers (L/100
+km). The formula is:</p>
+<p><span class="math display">\[\frac{\text{L}}{100\text{ km}} =
+\frac{235.215}{\text{MPG}}\]</span></p>
+<p>🎯 Goal. Add <code>l_100km</code> using the equation
+235.215/<code>mpg</code> and round the value to one digit.</p>
+<p>💬 Prediction. Higher mpg → lower l_100km (inverse).</p>
+<pre class="r"><code># ⚡ Test:
+mtcars %&gt;%
   mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
   head(2)</code></pre>
-<p>👀 Check‑in: Why divide 235.215 by <code>mpg</code>?</p>
-<p>👀 Check‑in: What does <code>round()</code> do here?</p>
-<p>👀 Check‑in: What does <code>mutate()</code> do here?</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Keep only cars using greater than 8 L/100 km</li>
-</ol>
-<p>🧐 NOTICE: Order Matters in dplyr Pipelines. You can’t
-<code>filter</code> by l_100km before you create it with
-<code>mutate()</code>.</p>
-<pre class="r"><code>mtcars %&gt;%
+<pre class="r"><code># ✅ Verify:
+cor(mtcars$mpg, 235.215/mtcars$mpg) &lt; 0</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>🗣 The inverse units are verified.</p>
+</div>
+<div id="keep-only-cars-using-greater-than-8-l100-km" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Keep only cars using
+greater than 8 L/100 km</h2>
+<p>We’ll only keep cars that use <em>at least</em> 8 L/100 km. Use
+<code>filter()</code> to keep those rows.</p>
+<p>🎯 Goal. Keep <code>l_100km &gt;= 8</code>.</p>
+<pre class="r"><code># ⚡ Test:
+mtcars %&gt;%
   mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
   filter(l_100km &gt;= 8) %&gt;%
   head()</code></pre>
-<p>👀 Check‑in: What is the filtering line doing?</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Select relevant columns</li>
-</ol>
-<pre class="r"><code>mtcars %&gt;%
+</div>
+<div id="select-relevant-columns" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Select relevant
+columns</h2>
+<p>🎯 Goal. Keep <code>cyl</code>, <code>am</code>, and
+<code>l_100km</code> columns.</p>
+<pre class="r"><code># ⚡ Test:
+mtcars2 &lt;- mtcars %&gt;%
   mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
   filter(l_100km &gt;= 8) %&gt;%
   select(cyl, am, l_100km) %&gt;%
   head()</code></pre>
-<p>👀 Check‑in: What does <code>select()</code> do here?</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Group and summarize</li>
-</ol>
-<pre class="r"><code>mtcars_summary &lt;- mtcars %&gt;%
+<pre class="r"><code># ✅ Verify:
+setequal(names(mtcars2 %&gt;% select(cyl, am, l_100km)), c(&quot;cyl&quot;,&quot;am&quot;,&quot;l_100km&quot;))</code></pre>
+<p>🗣 Columns trimmed.</p>
+</div>
+<div id="group-and-summarize" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Group and
+summarize</h2>
+<p>Now we can group by <code>am</code> and <code>cyl</code>, then
+summarize to get the mean fuel consumption and count of cars in each
+group.</p>
+<p>🎯 Goal. Mean <code>l_100km</code> and <code>n</code> by
+<code>am</code>, <code>cyl</code>.</p>
+<pre class="r"><code># ⚡ Test:
+mtcars_summary &lt;- mtcars %&gt;%
   mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
   filter(l_100km &gt;= 8) %&gt;%
   select(cyl, am, l_100km) %&gt;%
@@ -2971,7 +2988,7 @@ head(mtcars, 2)  # base R version, same output</code></pre>
   summarize(mean_l_100km = round(mean(l_100km), 2),
             n = n(), .groups = &quot;drop&quot;)
 mtcars_summary</code></pre>
-<p>🧩 Explanation:</p>
+<p>🗣 Explan:</p>
 <p>Order Matters in dplyr Pipelines. You can’t <code>summarize</code>
 groups before you define them with <code>group_by()</code>.</p>
 <ul>
@@ -2987,123 +3004,99 @@ these variables, do the following…”</p></li>
 <li><p><code>.groups = &quot;drop&quot;</code> prevents grouping in the final
 output.</p></li>
 </ul>
-<p>✍️ Practice: How might you check which combination of <code>am</code>
+</div>
+<div id="recode-transmission-for-readability" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Recode transmission
+for readability</h2>
+<p>❓ Question: How might you check which combination of <code>am</code>
 + <code>cyl</code> is least fuel‑efficient?</p>
-<ol start="6" style="list-style-type: decimal">
-<li>Recode transmission for readability</li>
-</ol>
-<p><strong>Method 1</strong>:</p>
-<pre class="r"><code># Recode transmission for readability Method 1
-mtcars_summary %&gt;%
-  mutate(am = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))</code></pre>
-<pre class="r"><code># ✔ Pipeline complete! One readable flow from raw data to insight.
-
+<p>🎯 Goal. Label <code>am</code> as “Automatic/Manual” in a column
+“Transmission” and make it a factor with level order.</p>
+<pre class="r"><code># ⚡ Test: Recode transmission for readability Method 1
+mtcars_summary &lt;- mtcars_summary %&gt;%
+  mutate(Transmission = case_when(am == 0 ~ &quot;Automatic&quot;, TRUE ~ &quot;Manual&quot;),
+    Transmission = factor(Transmission, levels = c(&quot;Automatic&quot;,&quot;Manual&quot;))
+  )</code></pre>
+<pre class="r"><code># ✅ Verify:
+is.factor(mtcars_summary$Transmission)
+identical(levels(mtcars_summary$Transmission), c(&quot;Automatic&quot;,&quot;Manual&quot;))</code></pre>
+<p>🗣 Labels set; order fixed.</p>
+<pre class="r"><code># ⚡ Test:✔ Pipeline complete! One readable flow from raw data to insight.
 mtcars_summary &lt;- mtcars %&gt;%
+  mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
+  filter(l_100km &gt;= 8) %&gt;%
+  select(cyl, am, l_100km) %&gt;%
+  group_by(am, cyl) %&gt;%
+  summarize(mean_l_100km = round(mean(l_100km), 2),  
+            n = n(), .groups = &quot;drop&quot;)%&gt;%
+  mutate(am = case_when(am == 0 ~ &quot;Automatic&quot;, TRUE ~ &quot;Manual&quot;),
+    am = factor(am, levels = c(&quot;Automatic&quot;,&quot;Manual&quot;))
+  )
+mtcars_summary</code></pre>
+<p>🤔 Reflect: Explain why the highest mean_l_100km is the least
+fuel‑efficient combination. Create a memo to earn learning skill
+points.</p>
+</div>
+<div id="readable-result" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Readable Result</h2>
+<p>🎯 Goal. Build one readable pipeline, then sort by the highest Mean
+l/100km (higher = less efficient) and keep the top row.</p>
+<pre class="r"><code>mtcars_summary &lt;- mtcars %&gt;%
   mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
   filter(l_100km &gt;= 8) %&gt;%
   select(cyl, am, l_100km) %&gt;%
   group_by(am, cyl) %&gt;%
   summarize(mean_l_100km = round(mean(l_100km), 2),
             n = n(), .groups = &quot;drop&quot;)%&gt;%
-  mutate(am = ifelse(am == 0, &quot;Automatic&quot;, &quot;Manual&quot;))
+  mutate(am = case_when(am == 0 ~ &quot;Automatic&quot;, TRUE ~ &quot;Manual&quot;),
+    am = factor(am, levels = c(&quot;Automatic&quot;,&quot;Manual&quot;))
+  ) %&gt;%                                       # &lt;-- close mutate() here
+  arrange(desc(mean_l_100km)) %&gt;%             # sort highest (least efficient) first
+  slice(1) %&gt;%                                # keep the single worst combo
+  rename(`Mean l/100km` = mean_l_100km,       # backticks for non-syntactic name
+         Count         = n,
+         Cylinder      = cyl,
+         Transmission  = am)
+
 mtcars_summary</code></pre>
-<p>🤔 Reflect: Which combination of <code>am</code> + <code>cyl</code>
-is least fuel‑efficient?</p>
-<p>🔍 Look deeper: What other methods check which combination of
-<code>am</code> + <code>cyl</code> is least fuel‑efficient?</p>
-<p><strong>Method 2</strong>:</p>
-<pre class="r"><code># Look for the highest mean_l_100km value)
-max(mtcars_summary$mean_l_100km)  # Find the highest mean_l_100km</code></pre>
-<p><strong>Method 3</strong>:</p>
-<p>Pipe in <code>arrange()</code> to sort by <code>mean_l_100km</code>
-descending.</p>
-<pre class="r"><code>mtcars_summary2 &lt;- mtcars %&gt;%
-  mutate(l_100km = round(235.215 / mpg, 1)) %&gt;%
-  filter(l_100km &gt;= 8) %&gt;%
-  select(cyl, am, l_100km) %&gt;%
-  group_by(am, cyl) %&gt;%
-  summarize(mean_l_100km = round(mean(l_100km), 2),
-            n = n(), .groups = &quot;drop&quot;) %&gt;%
-  arrange(desc(mean_l_100km)) %&gt;% # Sort by fuel consumption (highest first)
-  head(1) # The first row will be the least efficient combination</code></pre>
-<p>🧐 NOTICE: We rename to <code>mtcars_summary2</code> instead of
-<code>mtcars_summary</code></p>
-<p>🧩 Explanation: <code>arrange()</code> sorts the data frame by
-<code>mean_l_100km</code> in descending order, so the first row is the
-least fuel-efficient combination of <code>am</code> and
-<code>cyl</code>.</p>
-<p>⚖️ Compare <code>mtcars_summary</code> with
-<code>mtcars_summary2</code>.</p>
-<pre class="r"><code>mtcars_summary2</code></pre>
+<p>🗣 Explain: <code>arrange()</code> sorts the data frame by
+<code>mean_l_100km</code> (aka <code>Mean l/100km</code>) in descending
+order, so the first row is the least fuel-efficient combination of
+<code>am</code> and <code>cyl</code>.</p>
+<p>Answer the ❓ Question: Which combination of <code>am</code> +
+<code>cyl</code> is least fuel‑efficient?</p>
 </div>
-<div id="pipe-with-unique" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Pipe with
-<code>unique()</code></h1>
-<p>👉 Sometimes a base R function (like <code>unique()</code>) is the
-simplest tool. Pipes work with base R funtions.</p>
-<pre class="r"><code>Movie_Night &lt;- movielens %&gt;%
-  filter(rating &gt;= 4.5) %&gt;%
-  select(title) %&gt;%
-  unique()
-head(Movie_Night)</code></pre>
-<p>👀 Check‑in: What does <code>unique()</code> do here?</p>
 </div>
-<div id="multiple-columns-one-mutate" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Multiple Columns, One
-<code>mutate()</code></h1>
-<pre class="r"><code>mtcars %&gt;%
-  mutate(l_100km     = round(235.215 / mpg, 2),
-         l_per_km    = l_100km / 100,
-         l_per_meter = l_per_km / 1000) %&gt;%
-  select(mpg, l_100km:l_per_meter) %&gt;%
-  head()</code></pre>
-<p>💡 Order Matters in dplyr Pipelines: later columns can use ones
-created earlier in the same <code>mutate()</code>.</p>
-</div>
-<div id="practice-space" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
-<p>✍️ Practice: Using the built‑in <code>CO2</code> dataset, calculate
-the mean uptake for each treatment (chilled vs. non‑chilled) within each
-type. Add a <code>mutate()</code> step that labels
-<code>mean_uptake</code> greater than 30 as <code>&quot;High&quot;</code> and less
-then or equal too 30 as <code>&quot;Low&quot;</code>.</p>
-<pre class="r"><code>data(&quot;CO2&quot;)
-?CO2</code></pre>
-<p>Fill in the Blanks</p>
-<pre class="r"><code>CO2 %&gt;%
- ___(Type, Treatment) %&gt;%
- ___(mean_uptake = mean(uptake))
- ___(uptake_level = ifelse(mean_uptake &gt; 30, &quot;High&quot;, &quot;Low&quot;))</code></pre>
-<p>✍️ Practice: Use this sandbox to design your own pipeline.</p>
-<p>💡 Ideas:</p>
-<ul>
-<li><p>Choose a dataset from <code>dslabs</code> (e.g.,
-<code>heights</code>, <code>gapminder</code>,
-<code>murders</code>).</p></li>
-<li><p>Write a pipeline that filters rows, calculates a new metric,
-groups, summarizes, and arranges the result.</p></li>
-<li><p>Add at least one 👀 check‑in comment to predict an outcome before
-you run.</p></li>
-</ul>
-</div>
-<div id="assignment" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> ➤ Assignment</h1>
+<div id="assignment" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> ➤ Assignment</h1>
 <p>Replace each ____ placeholder (and any TODO comments) with working
 code or a short written answer. Run each section; be sure the requested
 objects appear in the Environment. When finished, save
-<strong>BOTH</strong> this script and your .RData workspace and
-upload.</p>
-<p>When you’re done, your workspace should contain FOUR new objects:
-<code>mpg_pipeline</code>, <code>Movie_Facts</code>,
-<code>Tall_Cars</code>, <code>Euro_07</code></p>
-<div id="task-1" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Task 1</h2>
+<strong>BOTH</strong> this script and your .RData workspace and upload
+to Canvas Assignment 11. Create detailed memos for yourself as you work
+through each task.</p>
+<p>Dataset: <code>dslabs::movielens</code></p>
+<p>There are three tasks. <strong>Task 2</strong> is the main coding
+task. Drafting steps are <em>optional</em> but recommended to help you
+build the final pipeline and earn <strong>learning skill</strong> points
+on your process (🎯/❓ Goal → Prediction → ⚡ Code → ✅ Checks → 🗣/🪞
+Reflection). In Task 2, only <code>Movie_Facts</code> is graded for
+<strong>technical points</strong>. Create a memo about any 👀 Resources
+you used. 📝 Format your document with section headings, in line text
+font, and add a date. If you run into issues, ✍️ Keep a record of what
+you tried and portray a 🧠 Growth mindset through tenacity and
+curiosity. Make a 💬Prediction on what you think the results will be.
+All these activites demonstrate learning skills.</p>
+<p>When you’re done, your workspace should contain
+<code>Movie_Facts</code> that is created by one end-to-end pipeline.</p>
+<div id="task-0" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Task 0</h2>
 <p>📦 Library it up!</p>
 <p>Make sure there is script in your document to load <code>dplyr</code>
 and <code>dslabs</code> packages so their functions / datasets load.</p>
 </div>
-<div id="task-2" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 2</h2>
+<div id="task-1" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Task 1</h2>
 <p>🧠 Quick Recall</p>
 <p>Explain how <em>three</em> <code>dplyr</code> verbs from Lessons 7-11
 work.</p>
@@ -3111,92 +3104,197 @@ work.</p>
 <p>✍️ EXPLANATION: “___”</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
-<div id="task-3" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Task 3</h2>
+<div id="task-2" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Task 2</h2>
 <p>🛠 Pipeline</p>
-<p>Build <strong><code>mpg_pipeline</code></strong> from
-<code>mtcars</code>:</p>
+<p><strong>Use a single pipeline.</strong></p>
+<p>Option to draft it in steps outlined below. Only final pipeline is
+evaluated for <strong>technical skills</strong>.</p>
+<p>Drafting steps are for your benefit and give you opportunity to check
+intermediate results, memo notes, and reflect to earn <strong>learning
+skill</strong> points. You choose if and when you record 🎯, ✅ , 🗣/🪞.
+<em>You could pipe head() in for checks instead of having a separate
+code chunk.</em></p>
+<p>What your final table must contain</p>
+<p>A. Filtering (2.1)</p>
+<ol style="list-style-type: decimal">
+<li><p>Restrict to movies with non-missing rating and
+<code>year ≥ 1990</code>.</p></li>
+<li><p>Retain only <code>rating</code> and <code>year</code> columns
+where the row values are non-missing.</p></li>
+</ol>
+<p>B. The Columns:</p>
+<ol style="list-style-type: decimal">
+<li><code>decade</code> (2.2)</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate the <code>year</code> into decades with decimals (e.g.,
+1994 → 199.4). Hint: use the equation <code>year</code>/10.</p></li>
+<li><p>Round down to nearest 10 (e.g., 199.4 → 199). Hint: use
+<code>floor()</code>. Pass (a)’s equation through
+<code>floor()</code>.</p></li>
+<li><p>Convert the count back to decade’s starting year (e.g., (199 →
+1990). Hint: Multiply results by 10.</p></li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li><code>rating_label</code> (2.3)</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use <code>case_when()</code> to create a new column
+<code>rating_label</code> that labels ratings less than 3 as “Bad” and
+ratings 3 or greater as “Good”.</p></li>
+<li><p>Make <code>rating_label</code> a factor with levels ordered so
+“Bad” comes before “Good”.</p></li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li><code>mean_rating</code> (rounded to 2), (2.4)</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Group by <code>decade</code> and
+<code>rating_label</code></p></li>
+<li><p>Summarize to get <strong>mean</strong> of <code>rating</code>
+rounded to 2 decimal places.</p></li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li><code>n</code> (row count) (2.5)</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Count of movies in each group (<code>decade</code> and
+<code>rating_label</code>)</p></li>
+<li><p>then ungrouped in the result.</p></li>
+</ol>
+<p>C. Ordering:</p>
+<ol style="list-style-type: decimal">
+<li>sort by <code>mean_rating</code> (descending) or by <code>n</code>
+(you choose; state which you picked in your memo).</li>
+</ol>
 <ul>
-<li><p>add <code>l_100km</code> (235.215/<code>mpg</code>)</p></li>
-<li><p>retain rows where <code>l_100km</code> is <span class="math inline">\(\geq\)</span> 8</p></li>
-<li><p>create a new data frame that returns one row for each combination
-of grouping by <code>cyl</code> and provides the summary statistic for
-<code>mean_l_100km</code>, rounding to 1 decimal.</p></li>
-<li><p>order the rows of the new data frame by descending
-<code>mean_l_100km</code>.</p></li>
+<li>Store as <code>Movie_Facts</code>.</li>
 </ul>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<pre class="r"><code># Quick check
-glimpse(mpg_pipeline)</code></pre>
+<p>🚀 Explore and Play: add style when you rename the columns in the
+final output to be more readable (e.g., <code>Mean Rating</code>,
+<code>Count</code>). Or add any other enhancements like more levels to
+<code>rating_label</code> such as “Excellent”. Be sure to point it out
+in a memo.</p>
+<div id="task-2.0" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Task 2.0</h3>
+<p>Load packages and confirm <code>movielens</code> has
+<code>rating</code> and <code>year</code>.</p>
+<pre class="r"><code># ⚡ Code
+
+
+# ✅ Verify:</code></pre>
 </div>
-<div id="task-4" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Task 4</h2>
-<p>👀 Intermediate Peek</p>
-<p>Add ONE line of code below that pipes <code>mpg_pipeline</code> into
-<code>head()</code> so you can inspect the first rows</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-2.1" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Task 2.1</h3>
+<p>Keep only rows <code>rating</code> and <code>year</code> columns when
+both are non-missing (Hint: use <code>!is.na()</code> and
+<code>filter()</code>). Restrict to movies with non-missing rating and
+<code>year ≥ 1990</code>.</p>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify: years are 1990 or greater</code></pre>
+<p>🗣/🪞</p>
 </div>
-<div id="task-5" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Task 5</h2>
-<p>💪 Multi-step Challenge</p>
-<p>Using movielens (<code>dslabs</code>) create
-<strong><code>Movie_Facts</code></strong>:</p>
-<ul>
-<li><p>keep title, year, rating</p></li>
-<li><p>mutate decade = floor(year/10)*10</p></li>
-<li><p>create a new data frame that returns one row for each combination
-of grouping by <code>decade</code> and provides the summary statistic
-for <code>avg_rating</code> (<code>mean</code>) and
-<code>n_movies</code> (<code>n</code>)</p></li>
-<li><p>retain rows where <code>n_movies</code> <span class="math inline">\(\geq\)</span> 200</p></li>
-</ul>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-2.2" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Task 2.2</h3>
+<p>Add to the pipeline from Task 2.1, using <code>mutate</code>, use
+create the column <code>decade</code></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate the <code>year</code> into decades with decimals (e.g.,
+1994 → 199.4). Hint: use the equation <code>year</code>/10.</p></li>
+<li><p>Round down to nearest 10 (e.g., 199.4 → 199). Hint: use
+<code>floor()</code>. Pass (a)’s equation through
+<code>floor()</code>.</p></li>
+<li><p>Convert the count back to decade’s starting year (e.g., (199 →
+1990). Hint: Multiply results by 10.</p></li>
+</ol>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify:</code></pre>
+<p>🗣/🪞</p>
 </div>
-<div id="task-6" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Task 6</h2>
-<p>🔗 Logical filter + mutate</p>
-<p>With <code>mtcars</code> again, make
-<strong><code>Tall_Cars</code></strong> that keeps cars with:</p>
-<ul>
-<li><p><code>hp</code> &gt; 150 OR <code>qsec</code> &lt; 16</p></li>
-<li><p>then <code>mutate</code> <code>power_to_weight</code> equal to
-<code>hp</code>/<code>wt</code></p></li>
-<li><p>Keep the model name, <code>hp</code>,
-<code>wt</code>,<code>power_to_weight</code>.</p></li>
-</ul>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-2.3" class="section level3" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Task 2.3</h3>
+<p>Continue the same pipeline from Task 2.2, but now add to
+<code>mutate()</code></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use <code>case_when()</code> to create a new column
+<code>rating_label</code> that labels ratings less than 3 as “Bad” and
+ratings 3 or greater as “Good”.</p></li>
+<li><p>Make <code>rating_label</code> a factor with levels ordered so
+“Bad” comes before “Good”.</p></li>
+</ol>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify:</code></pre>
+<p>🗣/🪞</p>
 </div>
-<div id="task-7" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Task 7</h2>
-<p>Apply on <code>gapminder</code></p>
-<p>Use <code>gapminder</code> (<code>dslabs</code>) to create
-<strong><code>Euro_07</code></strong>:</p>
-<ul>
-<li><p>retain rows where <code>continent == &quot;Europe&quot;</code>,
-<code>year == 2007</code></p></li>
-<li><p>pick columns <code>country</code>, <code>life_expectancy</code>,
-<code>gdp</code></p></li>
-<li><p>create a new column called <code>gdp_billions</code> that rounds
-<code>gdp/1e9</code> to 1.</p></li>
-</ul>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-2.4" class="section level3" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Task 2.4</h3>
+<p>Continue the same pipeline to create<code>mean_rating</code> (rounded
+to 2),</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Group by <code>decade</code> and
+<code>rating_label</code></p></li>
+<li><p>Summarize to get <strong>mean</strong> of <code>rating</code>
+rounded to 2 decimal places. Because <code>NA</code>s are filtered out,
+<code>na.rm=TRUE</code> isn’t needed.</p></li>
+</ol>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify:</code></pre>
+<p>🗣/🪞</p>
 </div>
-<div id="task-8" class="section level2" number="8.8">
-<h2><span class="header-section-number">8.8</span> Task 8</h2>
-<p>🤔 Reflect</p>
+<div id="task-2.5" class="section level3" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> Task 2.5</h3>
+<p>Continue the same pipeline to create <code>n</code> (row count)
+(2.5)</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Count of movies in each group (<code>decade</code> and
+<code>rating_label</code>)</p></li>
+<li><p>then ungroup the result. (<code>groups = &quot;drop&quot;</code>)</p></li>
+</ol>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify:</code></pre>
+<p>🗣/🪞</p>
+</div>
+<div id="task-2.6" class="section level3" number="4.3.7">
+<h3><span class="header-section-number">4.3.7</span> Task 2.6</h3>
+<p>Finish the same pipeline with an arrange() step (choose to sort by
+mean_rating or by n). End by storing the result as Movie_Facts.</p>
+<p>C. Ordering:</p>
+<ol style="list-style-type: decimal">
+<li>sort by <code>mean_rating</code> (descending) or by <code>n</code>
+(you choose; state which you picked in your memo).</li>
+</ol>
+<p>🎯</p>
+<pre class="r"><code># ⚡ Code.</code></pre>
+<pre class="r"><code># ✅ Verify:</code></pre>
+<p>🗣/🪞</p>
+</div>
+</div>
+<div id="task-3" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Task 3</h2>
 <p>📝 Write a short paragraph reflecting on when might <strong>separate
 objects</strong> be clearer than a single long pipeline?</p>
 <p>✍️ EXPLANATION: “___”</p>
+<p><strong>OR</strong></p>
+<p>📝 Write a short paragraph reflecting on what <code>n</code> is
+counting in <code>Movie_Facts</code>. Is it individual movies or
+individual ratings? Explain.</p>
+<p>✍️ EXPLANATION: “___”</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Save and Upload</h1>
 <ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the Quarto Document and
-the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the Quarto Document
-document:</li>
+<li>You will be submitting <strong>both</strong> the “your choice”
+Document and the workspace file. The workspace file saves all the
+objects in your environment that you created in this lesson. You can
+save the workspace by running the following command in a code chunk of
+the script document document:</li>
 </ol>
 <pre class="r"><code>save.image(&quot;Assignment11_Workspace.RData&quot;)</code></pre>
 <p>Or you can click the “Save Workspace” button in the Environment
@@ -3204,21 +3302,19 @@ pane.</p>
 <p>💾 <strong>Always save the R documents before closing.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the RMD and the workspace file.</li>
+<strong>both</strong> the file with your script and the workspace
+file.</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Today you
+<div id="today-you-practiced" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Connected <code>dplyr</code> verbs with the pipe to form readable
 workflows.</p></li>
 <li><p>Built a pipeline that mutated, filtered, selected, grouped,
 summarized, and recoded in one statement.</p></li>
-<li><p>Used a base R function (unique) inside a pipe.</p></li>
-<li><p>Created multiple new variables in a single
-<code>mutate()</code>.</p></li>
-<li><p>Reflected on the order of steps</p></li>
+<li><p>Reflected on the complexity of piping many steps</p></li>
 </ul>
 </div>
 

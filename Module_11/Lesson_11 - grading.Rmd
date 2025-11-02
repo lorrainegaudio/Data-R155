@@ -194,7 +194,7 @@ mtcars2 <- mtcars %>%
   head()
 ```
 
-```{r , eval=FALSE}
+```{r eval=FALSE}
 # ✅ Verify:
 setequal(names(mtcars2 %>% select(cyl, am, l_100km)), c("cyl","am","l_100km"))
 ```
@@ -269,7 +269,7 @@ mtcars_summary
 ```
 
 
-🤔 Reflect: Explain why the highest mean_l_100km is the least fuel‑efficient combination. Create a memo to earn learning skill points. 
+🤔 Reflect: Explain why the highest mean_l_100km is the least fuel‑efficient combination. Create a memo. 
 
 ## Readable Result
 
@@ -299,7 +299,28 @@ mtcars_summary
 
 🗣 Explain: `arrange()` sorts the data frame by `mean_l_100km` (aka `Mean l/100km`) in descending order, so the first row is the least fuel-efficient combination of `am` and `cyl`.
 
+
 Answer the ❓ Question: Which combination of `am` + `cyl` is least fuel‑efficient? 
+
+# 📝 Practice Space
+
+✍️ Practice: Using the built‑in `CO2` dataset, calculate the mean uptake for each treatment (chilled vs. non‑chilled) within each type. Add a `mutate()` step that labels `mean_uptake` greater than 30 as `"High"` and less then or equal too 30 as `"Low"`.
+
+State a 🎯Goal or❓Question
+
+```{r , eval=FALSE}
+data("CO2")
+?CO2
+```
+
+Fill in the Blanks 
+
+```{r , eval=FALSE}
+CO2 %>%
+ ___(Type, Treatment) %>%
+ ___(mean_uptake = mean(uptake))
+ ___(uptake_level = ifelse(mean_uptake > 30, "High", "Low"))
+```
 
 # ➤ Assignment
 
@@ -337,7 +358,7 @@ Explain how *three* `dplyr` verbs from Lessons 7-11 work.
 
 Option to draft it in steps outlined below. Only final pipeline is evaluated for **technical skills**. 
 
-Drafting steps are for your benefit and give you opportunity to check intermediate results, memo notes, and reflect to earn **learning skill** points. You choose if and when you record 🎯, ✅ , 🗣/🪞.  *You could pipe head() in for checks instead of having a separate code chunk.*
+Drafting steps are for your benefit and give you opportunity to check intermediate results, memo notes, and reflect to earn **learning skill** points. You choose if and when you record 🎯, ✅ , 🗣/🪞.  *You could pipe head()/ in for checks instead of having a separate code chunk.*
 
 What your final table must contain 
 
@@ -389,10 +410,14 @@ Load packages and confirm `movielens` has `rating` and `year`.
 
 ```{r}
 # ⚡ Code
+library(dslabs)
+library(dplyr)
 
-
+data("movielens")
 # ✅ Verify:
-
+movielens %>%
+  select(rating, year) %>%
+  head(2)
 ```
 
 ### Task 2.1
@@ -403,11 +428,17 @@ Keep only rows `rating` and `year` columns when both are non-missing (Hint: use 
 
 ```{r}
 # ⚡ Code.
-
+movielens1 <- movielens %>%
+  filter(!is.na(rating) & !is.na(year), year>= 1990) %>%
+  select(rating, year)
 ```
 ```{r}
-# ✅ Verify: years are 1990 or greater
+# ✅ Verify: not missing ratings and years
+is.na(movielens1$rating) %>% any()
+is.na(movielens1$year) %>% any()
 
+# ✅ Verify: years are 1990 or greater
+all(movielens1$year >= 1990)
 ```
 
 🗣/🪞
@@ -426,13 +457,17 @@ Add to the pipeline from Task 2.1, using `mutate`, use create the column `decade
 
 ```{r}
 # ⚡ Code.
-
+movielens2 <- movielens %>%
+  filter(year >= 1990 & !is.na(rating) & !is.na(year)) %>%
+  mutate(
+    decade = floor(year / 10) * 10
+  )
 ```
 
 
 ```{r}
 # ✅ Verify:
-
+movielens2
 ```
 
 🗣/🪞
@@ -452,13 +487,23 @@ Continue the same pipeline from Task 2.2, but now add to `mutate()`
 
 ```{r}
 # ⚡ Code.
-
+movielens3 <- movielens %>%
+  filter(year >= 1990 & !is.na(rating) & !is.na(year)) %>%
+  mutate(
+    decade = floor(year / 10) * 10,
+    rating_label = case_when(
+      rating < 3 ~ "Bad",
+      TRUE ~ "Good"
+    ),
+    rating_label = factor(rating_label, levels = c("Bad", "Good"))
+  )
 ```
 
 
 ```{r}
 # ✅ Verify:
-
+is.factor(movielens3$rating_label)
+identical(levels(movielens3$rating_label), c("Bad", "Good"))
 ```
 
 🗣/🪞
@@ -477,12 +522,27 @@ Continue the same pipeline to create`mean_rating` (rounded to 2),
 
 ```{r}
 # ⚡ Code.
+movielens4 <- movielens %>%
+  filter(year >= 1990 & !is.na(rating) & !is.na(year)) %>%
+  mutate(
+    decade = floor(year / 10) * 10,
+    rating_label = case_when(
+      rating < 3 ~ "Bad",
+      TRUE ~ "Good"
+    ),
+    rating_label = factor(rating_label, levels = c("Bad", "Good"))
+  ) %>%
+  group_by(decade, rating_label) %>%
+  summarize(
+    mean_rating = round(mean(rating), 2)
+  )
+
 
 ```
 
 ```{r}
 # ✅ Verify:
-
+movielens4
 ```
 
 🗣/🪞
@@ -499,11 +559,26 @@ Continue the same pipeline to create `n` (row count) (2.5)
 
 ```{r}
 # ⚡ Code.
-
+movielens5 <- movielens %>%
+  filter(year >= 1990 & !is.na(rating) & !is.na(year)) %>%
+  mutate(
+    decade = floor(year / 10) * 10,
+    rating_label = case_when(
+      rating < 3 ~ "Bad",
+      TRUE ~ "Good"
+    ),
+    rating_label = factor(rating_label, levels = c("Bad", "Good"))
+  ) %>%
+  group_by(decade, rating_label) %>%
+  summarize(
+    mean_rating = round(mean(rating), 2),
+    n = n(),
+    .groups = "drop"
+  )
 ```
 ```{r}
 # ✅ Verify:
-
+movielens5
 ```
 
 🗣/🪞
@@ -521,11 +596,28 @@ C. Ordering:
 
 ```{r}
 # ⚡ Code.
-
+Movie_Facts <- movielens %>%
+  filter(year >= 1990 & !is.na(rating) & !is.na(year)) %>%
+  mutate(
+    decade = floor(year / 10) * 10,
+    rating_label = case_when(
+      rating < 3 ~ "Bad",
+      TRUE ~ "Good"
+    ),
+    rating_label = factor(rating_label, levels = c("Bad", "Good"))
+  ) %>%
+  group_by(decade, rating_label) %>%
+  summarize(
+    mean_rating = round(mean(rating), 2),
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(mean_rating))  # Chose to sort by mean_rating descending
 ```
 ```{r}
 # ✅ Verify:
-
+identical(names(Movie_Facts), c("decade","rating_label","mean_rating","n"))
+!dplyr::is_grouped_df(Movie_Facts)
 ```
 
 🗣/🪞
@@ -542,14 +634,13 @@ C. Ordering:
 **OR** 
 
 
-📝 Write a short paragraph reflecting on what `n` is counting in `Movie_Facts`. Is it individual movies or individual ratings? Explain. 
+📝 Write a short paragraph reflecting on what `n` is counting. Is it individual movies or individual ratings? Explain. 
 
 ✍️ EXPLANATION: "___"
 
-
 # Save and Upload
 
-1. You will be submitting **both** the "your choice" Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the script document document:
+1. You will be submitting **both** the "your choice" Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
 
 ```{r , eval=FALSE}
 save.image("Assignment11_Workspace.RData")
@@ -567,6 +658,6 @@ Or you can click the "Save Workspace" button in the Environment pane.
 
 - Built a pipeline that mutated, filtered, selected, grouped, summarized, and recoded in one statement.
 
-- Reflected on the complexity of piping many steps
+- Reflected on the order of steps
 
 
