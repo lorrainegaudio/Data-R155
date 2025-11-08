@@ -82,9 +82,9 @@ output:
 ```
 
 
-# (maybe a dice icon?) Welcome Back to R! 
+# 🎲 Welcome Back to R! 
 
-We shift (gears) from the `dyplr` functions to using R’s built‑in random‑number tools to make simuations. Simulation lets you create synthetic data, test ideas quickly, and understand probability without a math degree. 
+We shift ⚙️gears from the `dyplr` functions to using R’s built‑in tools to visualize simuations. Simulation lets you create synthetic data, test ideas quickly, and understand probability without a math degree. 
 
 📦 No extra packages are needed today. We'll be using built-in stats functions. 
 
@@ -94,7 +94,7 @@ To begin Lesson 12, follow these steps:
    
 2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
 
-3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes. In the same file, complete the assignment at the end of this document. Use memos in your assignment portion to explain your thinking.
 
 **Lesson Overview**
 
@@ -114,66 +114,102 @@ Keep these goals in mind as you move through each section.
 
 # Warm‑Up
 
-👀 Peek at the help file
+🎯 Peek at the help file
 
 ```{r , eval=FALSE}
-?sample      # skim Usage and Arguments
+# ⚡ Test
+?sample      # 🎯 skim Usage and Arguments
 ```
 
-🧐 NOTICE: Which argument controls replacement (`TRUE`/`FALSE`)?
-
-# Simulating Coin Flips 
-
-🎯 The GOAL: Flip 1,000 fair coins (0 = heads, 1 = tails) and count tails.
+🗣 Comment: Which argument controls replacement (`TRUE`/`FALSE`)?
 
 ```{r , eval=FALSE}
-set.seed(123)  # for reproducibility
+# ⚡ Test
+set.seed(123)  # 🎯 for reproducibility
 ```
 
 🔍 Look deeper: How does `set.seed()` work? Do you need to set seed every time before running a simulation? What happens when you don't set seed? What does it mean to "re-run without set.seed()"?
 
-1. Start with the data
+# Simulating 
+
+## 🪙 Coin Flips 
+
+🎯 The GOAL: Flip 💰 1,000 fair coins (0 = heads, 1 = tails) and count tails.
+
+Terminology: **Sample Space**: "$S$" A collection (or set) of all possible outcomes in a random experiment. 
+
+Set Notation: $S$ = {Head, Tail}
+
+1. 🎯 Create the data through a simulation
 
 ```{r , eval=FALSE}
+# ⚡ Test
 # sample(x, size, replace = FALSE, prob = NULL)
 coins <- sample(x = 0:1, size = 1000, replace = TRUE)
 ```
 
-🧩 Explanation: `replace = TRUE` because we "put the coin back" each flip.
+🗣 Comment (example): `replace = TRUE` because we "put the coin back" each flip.
 
 ```{r , eval=FALSE}
+# ✅  Verify
 head(coins)   # first few flips
 ```
 
-🗣 Comment: What type of object is coins?
+🗣 Comment (your turn): What type of object is coins? 
 
-How many tails are in our data set? We use sum to count the number of tails because 1 = tails
+💬 Prediction: How many tails are in our data set? 
+
+🎯 Use sum to count the number of tails because 1 = tails
 
 ```{r , eval=FALSE}
+# ⚡ Test
 sum(coins)    
 ```
 
-🤔 Reflect: How might we calculate the number of heads using `coins`?
+🗣 Comment: How many tails are in our data set? 
 
 🚀 Explore and Play: Can you make a new data set where heads = 1? 
 
 🛠 Break Things! What happens if replace = FALSE and the size = 1000?
 
-# Dice Rolls and Histograms
+## 🎲 Dice Rolls 
 
 🎯 The GOAL: Simulate 10,000 rolls of a fair 6‑sided die and plot the results.
 
+Set Notation: $S$ = {1, 2, 3, 4, 5, 6}
+
 ```{r , eval=FALSE}
+# ⚡ Test
 dice <- sample(1:6, 10000, replace = TRUE)
 ```
 
-`hist()` creates a histogram of the dice rolls, showing the frequency of each face value.
+💬 Prediction: How many times do you expect each face to appear?
+
+To answer, we visualize the results with a histogram.
+
+## 📊 Histograms
+
+🎯 Use `hist()` to create a histogram of the dice rolls, showing the frequency of each face value.
 
 ```{r , eval=FALSE}
 ?hist
 ```
 
+📜 The SYNTAX: `hist(x, breaks, col, main, xlab, ylab)`
+
+- x is the data to plot
+
+- breaks controls the number of bins (or bars)
+
+- col sets the color of the bars
+
+- main is the title of the plot
+
+- xlab and ylab label the x- and y-axes
+
+
 ```{r , eval=FALSE}
+# ⚡ Test
 hist(dice,                  # The data to plot
      breaks = 6,
      col    = "lightblue",  # Color of the bars
@@ -181,15 +217,16 @@ hist(dice,                  # The data to plot
      xlab   = "Face Value") # Label for the x-axis
 ```
 
-🧩 Explanation:
+The y-axis label is automatically set to "Frequency" by default.
 
-- y-axis label is automatically set to "Frequency" by default.
+🧐 NOTICE:  Bars should be roughly equal height, forming a uniform distribution. That isn't what we see. 
 
-- Bars should be roughly equal height — that’s a uniform distribution.
+When you specify breaks = 6, R doesn't create bins that align perfectly with our integer values 1-6.
 
-- When you specify breaks = 6, R doesn't necessarily create bins that align perfectly with our integer values 1-6.
+🎯 The GOAL: Fix the breaks to align with die face values.
 
 ```{r , eval=FALSE}
+# ⚡ Test
 hist(dice,
      breaks = seq(0.5, 6.5, by = 1),  # Explicit breaks between integers
      col    = "lightblue",
@@ -197,7 +234,9 @@ hist(dice,
      xlab   = "Face Value")
 ```
 
-# Adding Two Dice 
+🗣 Comment: The bars look more even now.
+
+# 🎲🎲 Two Dice 
 
 🔍 Look deeper:  What is the *Central‑Limit Theorem*
 
