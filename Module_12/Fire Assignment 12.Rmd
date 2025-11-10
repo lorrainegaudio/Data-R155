@@ -1,0 +1,530 @@
+---
+title: "Fire Assignment 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+   bookdown::pdf_document2:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Fire Assignment 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+   bookdown::pdf_document2:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Fire Assignment 12"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# ➤ BONUS Assignment
+
+🔥 How far could a new fire run in 8 hours?
+
+Today, you’ll simulate the probability that an ignition's 8-hour straight-line spread distance (km) exceeds a threshold of 20 km.
+
+
+Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Explain. 
+
+When finished, save **BOTH** you R code script file and your .RData workspace and upload to Canvas.
+___
+
+
+## Dataset
+
+Wildfire managers need to know where wildfires are likely to occur and how intense they might be. The U.S. Forest Service (USFS) Wildfire Hazard Potential (WHP) is a raster geospatial product [Dillon, G., Gilbertson-Day, J., 2020)](https://www.fs.usda.gov/rds/archive/products/RDS-2015-0047-3/_metadata_RDS-2015-0047-3.html) paired with Idaho-only subset data provided by Dr. Matt Williamson, an Associate Professor at Boise State University in Human-Environment Systems. Dr. Williamson specializes in spatial analysis using R and teaches the graduate level R course HES 505 each fall. To learn more about Dr. Williamson work, visit his [SPASES Lab Page](https://www.spaseslab.com/). 
+
+Figure 1 shows the raster that was processed in R using packages `terra`, `sf`, `tidyverse`, `tidyterra`, `tigris`. The GeoTIFF is projected in USA_Contiguous_Albers Equal Area Conic (USGS version) (Albers; +proj=aea +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +lat_0=23; meters) with a cell size of 240 × 240 m. Within Idaho, valid raster cells cover 216,315 km² (≈ the state area); cells outside the state footprint within the raster’s bounding box are NoData (≈ 231,477 km²). WHP values in the subset range from 0 to 64,185.656 (mean 1,615.668, SD 4,119.674). Distributional summaries are: P25 = 130.484, median = 397.297, P75 = 1,097.703, P90 = 3,507.469, P95 = 7,753.109, P99 = 22,429.154 (all unitless). WHP’s native grid is 270 m; the Idaho file’s 240 m cell size indicates the subset was resampled prior to delivery. Higher index values indicate greater relative hazard; the layer is continuous. TIGER/Line state cartographic boundary for Idaho (retrieved via the R tigris package and reprojected to the raster CRS).
+
+**Formal dataset citation**
+
+Dillon, Gregory K.; Gilbertson-Day, Julie W. 2020. Wildfire Hazard Potential for the United States (270-m), version 2020. 3rd Edition. Forest Service Research Data Archive. [https://doi.org/10.2737/RDS-2015-0047-3](https://doi.org/10.2737/RDS-2015-0047-3).
+
+Idaho subset (whp_id.tif) prepared and provided by Matt Williamson, SPASES Lab, Boise State University.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide', fig.cap='Figure 1. Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) from the USFS WHP v2020 raster, clipped to the Idaho boundary. Colors use a viridis gradient (dark purple = lower WHP; yellow = higher WHP); values span approximately 0–64,186. Raster resolution is 240 m in an Albers Equal Area projection; NoData cells are transparent. Red outline shows the TIGER/Line state boundary reprojected to the raster CRS. Idaho subset prepared by Matt Williamson (SPASES Lab, Boise State University); original dataset: Dillon & Gilbertson-Day (2020), USFS Research Data Archive (DOI: 10.2737/RDS-2015-0047-3).'}
+## **First Install R Packages: 'terra', 'tidyterra', 'tigris'
+library(terra)
+library(tidyverse)
+library(sf)
+library(tidyterra)
+library(tigris)
+
+terraOptions(progress = 0)           # terra: no text progress
+options(tigris_use_cache = TRUE)     # tigris: avoid re-download chatter
+
+
+whp_idaho <- rast("C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_13/whp_id.tif") 
+
+
+state_bounds <- states() %>% ## download state cartographic boundaries form the TIGER shapefiles
+  filter(STUSPS %in% c("ID")) %>% ##filter for the ID state boundary
+  st_transform(., crs = crs(whp_idaho)) ## reproject to the raster projection
+
+plot_whp <- ggplot() + #open the ggplot environment
+  geom_spatraster(data = whp_idaho, mapping = aes(fill = WHP_ID)) + #use tidyterra to convert the data to an object that can be used in the geom
+  geom_sf(data = state_bounds, fill = "transparent", color = "red", lwd = 0.5) + #add the state boundaries
+  scale_fill_viridis_c(option = "C", na.value = "transparent") + #change the colorramp for the data and plot NA as transparent
+  theme_bw() #use a nicer theme
+plot_whp
+
+# a raster of wildfire hazard potential for Idaho
+
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# --- Assumes the packages in your script are already loaded ---
+# terra, tidyverse, sf, tidyterra, tigris
+
+# Alias for clarity
+whp <- whp_idaho
+
+# 1) BASIC METADATA -----------------------------------------------------------
+meta_tbl <- tibble(
+  name        = names(whp),
+  n_layers    = terra::nlyr(whp),
+  n_cells     = terra::ncell(whp),
+  is_factor   = is.factor(whp),
+  has_levels  = !length(terra::levels(whp)),  # should be FALSE now
+  crs_wkt     = terra::crs(whp, proj = TRUE),
+  is_lonlat   = terra::is.lonlat(whp),
+  res_x_m     = terra::res(whp)[1],          # your file shows 240; units are meters
+  res_y_m     = terra::res(whp)[2],
+  xmin        = terra::ext(whp)[1],
+  xmax        = terra::ext(whp)[2],
+  ymin        = terra::ext(whp)[3],
+  ymax        = terra::ext(whp)[4],
+  value_units = "WHP index (unitless)",
+  description = "Wildfire Hazard Potential (continuous index); Idaho subset"
+)
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 2) SUMMARY STATS & QUANTILES -----------------------------------------------
+basic_stats <- terra::global(whp, fun = c("min","max","mean","sd"), na.rm = TRUE) |>
+  as_tibble() |>
+  mutate(across(everything(), as.numeric))
+
+probs <- c(0, .01, .05, .10, .25, .50, .75, .90, .95, .99, 1)
+
+
+vals <- terra::values(whp, mat = FALSE, na.rm = TRUE)
+quant_tbl <- tibble(
+  prob  = probs,
+  value = as.numeric(stats::quantile(vals, probs = probs, na.rm = TRUE))
+)
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 3) AREA-WEIGHTED DECILES (robust to terra column names) ---------------------
+deciles <- seq(0, 1, 0.1)
+edges   <- as.numeric(stats::quantile(vals, probs = deciles, na.rm = TRUE))
+
+whp_decile <- terra::app(
+  whp,
+  fun = function(v) as.integer(cut(v, breaks = edges, include.lowest = TRUE, labels = FALSE))
+)
+names(whp_decile) <- "decile"
+
+# cell areas in km^2
+area_km2_rast <- terra::cellSize(whp, unit = "km")
+
+# Sum area by decile
+area_by_decile <- terra::zonal(area_km2_rast, whp_decile, fun = "sum", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal")
+names(area_by_decile)[1:2] <- c("decile", "area_km2")  # <— robust renaming
+
+area_by_decile <- area_by_decile |>
+  mutate(area_acres = area_km2 * 247.105381,
+         area_pct   = round(100 * area_km2 / sum(area_km2), 3))
+
+# Add WHP range per decile (robust renaming again)
+min_by_dec <- terra::zonal(whp, whp_decile, fun = "min", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal"); names(min_by_dec)[1:2] <- c("decile","whp_min")
+max_by_dec <- terra::zonal(whp, whp_decile, fun = "max", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal"); names(max_by_dec)[1:2] <- c("decile","whp_max")
+
+decile_table <- area_by_decile |>
+  left_join(min_by_dec, by = "decile") |>
+  left_join(max_by_dec, by = "decile") |>
+  mutate(whp_range = paste0(whp_min, "–", whp_max)) |>
+  select(decile, whp_range, area_km2, area_acres, area_pct) |>
+  arrange(decile)
+
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 4) AREA WITH MISSING DATA (if any) -----------------------------------------
+na_area_km2 <- {
+  na_r <- terra::ifel(is.na(whp), area_km2_rast, NA)
+  as.numeric(terra::global(na_r, "sum", na.rm = TRUE)[1,1])
+}
+na_tbl <- tibble(area_km2 = na_area_km2,
+                 area_acres = na_area_km2 * 247.105381)
+
+# 5) OPTIONAL: COUNTY-LEVEL MEANS (Idaho) ------------------------------------
+id_counties <- tigris::counties(state = "ID", cb = TRUE) |>
+  sf::st_transform(crs = terra::crs(whp))
+county_v <- terra::vect(id_counties)
+
+county_mean <- terra::extract(whp, county_v, fun = mean, na.rm = TRUE) |>
+  as_tibble() |>
+  bind_cols(sf::st_drop_geometry(id_counties) |> select(COUNTYFP, NAME)) |>
+  rename(mean_whp = 2, county_fips = COUNTYFP, county = NAME) |>
+  arrange(desc(mean_whp))
+
+# 6) WRITE TABLES -------------------------------------------------------------
+readr::write_csv(meta_tbl,      "whp_idaho_metadata.csv")
+readr::write_csv(basic_stats,   "whp_idaho_basic_stats.csv")
+readr::write_csv(quant_tbl,     "whp_idaho_quantiles.csv")
+readr::write_csv(decile_table,  "whp_idaho_area_by_decile.csv")
+readr::write_csv(county_mean,   "whp_idaho_county_mean.csv")
+readr::write_csv(na_tbl,        "whp_idaho_missing_area.csv")
+
+```
+
+
+Table 1. summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. Category lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. Probability is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance a random ignition falls in that category. Normal mean (km) and Normal SD (km) are the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. Mean log and SD log are the parameters 𝜇and 𝜎 of a lognormal distance model in which $log(\text{distance in km})∼N(𝜇,𝜎^2)$. Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
+
+Parameters for this assignment were selected from the the following references. According to the Idaho Department of Environmental Quality (DEQ), the 2021 fire season saw 439 individual wildfires. A reasonable single-year ignition count for Idaho is ~450 (rounding the 2021 DEQ total of 439). 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, tab.cap='Table 1. Quantile-based WHP categories for Idaho and 8-hour spread distance parameters. Probability = statewide area share (% of valid raster area); distances in kilometers; WHP is unitless.'}
+library(terra); library(dplyr); library(readr); library(knitr); library(kableExtra)
+
+# Alias for clarity
+whp <- whp_idaho
+
+# whp is your SpatRaster (continuous WHP for Idaho)
+probs <- c(0, .25, .50, .75, .90, .95, .99, 1.00)
+qv <- as.numeric(stats::quantile(values(whp, na.rm = TRUE), probs = probs, na.rm = TRUE))
+
+# Build a categorical raster from those thresholds
+whp_cat <- app(whp, fun = function(v) as.integer(cut(v, breaks = qv, include.lowest = TRUE, labels = FALSE)))
+names(whp_cat) <- "cat"
+
+# Compute area per category (km^2), excluding NA
+area_km2 <- cellSize(whp, unit = "km")
+area_by_cat <- zonal(area_km2, whp_cat, fun = "sum", na.rm = TRUE) |>
+   tibble::as_tibble(.name_repair = "minimal")
+names(area_by_cat)[1:2] <- c("cat", "area_km2")
+area_by_cat <- mutate(area_by_cat, area_pct = area_km2 / sum(area_km2))
+
+# Human labels + WHP bounds
+labels <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)")
+bounds <- tibble(
+  cat = 1:7,
+  whp_lo = qv[1:7],
+  whp_hi = qv[2:8]
+)
+
+# Your distance parameters (update as needed)
+param_tbl <- tibble::tibble(
+  cat = 1:7,
+  Category = labels,
+  normal_mean_km = c(2.0, 3.0, 4.5, 7.0, 12.0, 18.0, 28.0),
+  normal_sd_km   = c(1.0, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0),
+  mu_log  = c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310),
+  sd_log  = c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
+) |>
+  left_join(bounds, by = "cat") |>
+  left_join(area_by_cat, by = "cat") |>
+  transmute(
+    Category,
+    Probability = round(100 * area_pct, 2),  # measured %
+    `Mean (km)` = normal_mean_km,
+    `SD (km)`   = normal_sd_km,
+    `Mean log` = mu_log,
+    `SD log`   = sd_log
+  )
+
+# Render as a real table so LaTeX/HTML uses the chunk caption
+kbl(param_tbl,
+    booktabs = TRUE,
+    align    = c("l","r","r","r","r","r","r","r")) |>
+  kable_styling(full_width = FALSE,
+                latex_options = c("hold_position","scale_down"))
+
+```
+
+## Objective
+
+Objective. Estimate short-term spread risk using simulation. Model each ignition’s 8-hour straight-line distance with a lognormal distribution. Do this two ways:
+
+Statewide mixture: sample a WHP category using the Probability column in Table 1, then draw a distance from that category’s Mean log and SD log. An ignition critical if it distance ≥ 20 km
+
+You will simulate 2,000 seasons, each with 450 ignitions. For each season, count how many ignitions are ≥ 10 km (major runs) and how many are critical under the rule. Summarize both expected counts and the probability the season exceeds a planning threshold (e.g., “> 50 major runs” and “> 10 critical runs”).
+Distance is used here as a proxy for severity; in practice agencies track area. Category probabilities approximate where ignitions occur and are a teaching simplification.
+
+## Lognormal Random Numbers
+
+The lognormal model is used because most fires will move a modest distance, but a small fraction travel much farther. A lognormal model enforces non-negativite distance values and captures that right tail.
+
+Use `rlnorm()` to generate lognormal random numbers.
+
+```{r , eval=FALSE}
+?rlnorm  # Check the help file for rlnorm()
+```
+
+📜 The SYNTAX: `rlnorm(n, meanlog = 0, sdlog = 1)`
+
+- `n` is the number of random numbers to generate. In this scenario, n is the number if ignitions to simulated per Monte Carlo run. 
+
+- `meanlog` is the mean of the logarithm of the distribution with default set to 0.
+
+- `sdlog` is the standard deviation of the logarithm of the distribution with default set to 1.
+
+*Note: You should always use the log-scale parameters of mean and SD in rlnorm().*
+
+## Task 1
+
+🎯 Goal: Start by setting a seed. Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
+
+```{r}
+set.seed(12345)
+# ⚡ Test
+High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
+```
+
+## Task 2
+
+✅ / 🗣 Checks and Comment
+
+Summarize what you just simulated. Report the median, mean, and 90th percentile of `High_Lognorm`, and comment in one sentence on the right-skew you expect for a lognormal.
+
+```{r}
+# ✅  Verify
+median(High_Lognorm)
+mean(High_Lognorm)
+quantile(High_Lognorm, 0.9)
+```
+
+## Task 3
+
+✅ / 🗣 Checks and Comment
+
+Make a histogram of `High_Lognorm`. In one sentence, note how the shape matches your summary in Task 2.
+
+
+```{r}
+# ✅  Verify
+hist(High_Lognorm,
+     col    = "blue",
+     main   = "Simulated 8-Hour Distances for High WHP (Log
+ Normal Model)",
+     xlab   = "Distance (km)")
+```
+
+
+
+## Task 4
+
+🎯 Goal: Copy the code that created `High_Lognorm` and nest it inside of the `mean()` function. Set the `rlnorm()` call to >= 10. This one line will compute the proportion of a single sample that reaches or exceeds a threshold of 10 km spreed in 8-hours. Store this result as `p_high_one`
+
+```{r}
+# ⚡ Test
+p_high_one <-mean(rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) >=10) # one season, 450 ignitions
+``` 
+
+## Task 5
+
+✅ / 🗣 Checks and Comment
+
+Comment about meaning of `p_high_one`. What does this value represent in the context of wildfire spread risk for ignitions in the **High** WHP category?
+
+```{r}
+# ✅  Verify
+p_high_one
+```
+
+
+## Task 6
+
+🎯 Goal: Turn that single-season calculation into many seasons. Use `replicate()` to repeat the same inside expression for 2,000 seasons. Store the resulting vector of proportions as p_high_many, then report its mean and make a small histogram of those season-level proportions.
+
+
+
+```{r}
+# ⚡ Test
+p_high_many <- replicate(                       
+  n = 2000,                                       # 2,000 seasons
+  expr = mean(rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) >=10) # 450 wildfires, 10 km threshold
+)
+```
+
+```{r}
+# ✅  Verify
+mean(p_high_many)
+mean(p_high_many >= 1)    
+```
+
+
+## Task 7
+
+✅ / 🗣 Checks and Comment
+
+
+
+
+```{r}
+# ✅  Verify
+hist(p_high_many, 
+     col    = "orange",
+     main = "Season-level proportions ≥ k (High)", 
+     xlab = "Proportion")
+```
+
+
+## Task 8
+
+🎯 Goal: Create four parallel vectors from Table 1: cats, prob (as proportions that sum to 1), meanlog, and sdlog in matching order. Build the inside expression for a single season of N <- 450 ignitions: first sample a category index for each ignition using sample() with prob, then draw distances with rlnorm() using the matched meanlog and sdlog. Return a count of ignitions ≥ k. Run it once to confirm it works.
+
+
+
+```{r}
+# ⚡ Test
+cats    <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra")
+prob    <- c(0.25, 0.25, 0.25, 0.15, 0.05, 0.04, 0.01)  # proportions sum to 1
+meanlog <- c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310)
+sdlog   <- c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
+N <- 450  # ignitions per season
+one_mixture_count <- {
+  idx <- sample.int(length(cats), size = N, replace = TRUE, prob = prob)
+  d   <- rlnorm(N, meanlog = meanlog[idx], sdlog = sdlog[idx])
+  sum(d >= 10)
+}
+one_mixture_count
+```
+
+## Task 9
+
+🎯 Goal: Wrap the mixture inside code from Task 7 in replicate() for S seasons. Save the season counts as counts_mix. Report the expected number of ≥ k runs and the probability that a season has more than 10 such runs (change the threshold if instructed).
+
+
+```{r}
+# ⚡ Test
+counts_mix <- replicate(
+  n = 2000,                                       # 2,000 seasons
+  expr = {
+    idx <- sample.int(length(cats), size = N, replace = TRUE, prob = prob)
+    d   <- rlnorm(N, meanlog = meanlog[idx], sdlog = sdlog[idx])
+    sum(d >= 10)
+  }
+)
+```
+
+## Task 10
+
+✅ / 🗣 Checks and Comment
+
+```{r}
+# ✅  Verify
+mean(counts_mix)          # expected number of ≥ k runs
+mean(counts_mix > 10)     # probability of > 10 such runs
+```
+
+```{r}
+# ✅  Verify
+hist(counts_mix,
+     col    = "lightgreen",
+     main   = "Season-level counts of ≥ k runs (Mixture Model)",
+     xlab   = "Count of ≥ k runs")
+```
+
+## Reflections
+
+🗣 Comment: In 1-2 sentences, reflect on what you learned from this assignment about using simulation to estimate wildfire spread risk. Mention any challenges you faced and how you overcame them.
+
+# Save and Upload
+
+1. You will be submitting **both** the *Your Pick* Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+
+```{r , eval=FALSE}
+save.image("Assignment12_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save the R documents before closing.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
+
+# Today you practiced:
+
+- Used `sample()` for discrete simulations with or without replacement.
+
+- Visualized uniform and aggregated dice results with histograms.
+
+- Generated normal random numbers with `rnorm()` and plotted the shape.
+
+- Repeated an experiment easily with `replicate()`.
+
+- Compared two simulated distributions to spot bias.
+
+
