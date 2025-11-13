@@ -83,12 +83,15 @@ output:
 
 # ➤ BONUS Assignment
 
-🔥 How far could a new fire run in 8 hours?
+🔥 How far could a new wildfire run in 8 hours?
 
-Today, you’ll simulate the probability that an ignition's 8-hour straight-line spread distance (km) exceeds a threshold of 20 km.
+Today, you’ll simulate the probability that an ignition's 8-hour straight-line spread distance (km) exceeds a threshold of 10 km.
 
+## Assignment Directions
 
-Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Explain. 
+Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Explain. 
+
+You could earn up to 5 points Technical skill and 5 points Learning skill on this optional Point Boost assignment!
 
 When finished, save **BOTH** you R code script file and your .RData workspace and upload to Canvas.
 ___
@@ -96,9 +99,9 @@ ___
 
 ## Dataset
 
-Wildfire managers need to know where wildfires are likely to occur and how intense they might be. The U.S. Forest Service (USFS) Wildfire Hazard Potential (WHP) is a raster geospatial product [Dillon, G., Gilbertson-Day, J., 2020)](https://www.fs.usda.gov/rds/archive/products/RDS-2015-0047-3/_metadata_RDS-2015-0047-3.html) paired with Idaho-only subset data provided by Dr. Matt Williamson, an Associate Professor at Boise State University in Human-Environment Systems. Dr. Williamson specializes in spatial analysis using R and teaches the graduate level R course HES 505 each fall. To learn more about Dr. Williamson work, visit his [SPASES Lab Page](https://www.spaseslab.com/). 
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard). For this activity we use an Idaho-only WHP file prepared by Dr. Matt Williamson [SPASES Lab Page](https://www.spaseslab.com/). 
 
-Figure 1 shows the raster that was processed in R using packages `terra`, `sf`, `tidyverse`, `tidyterra`, `tigris`. The GeoTIFF is projected in USA_Contiguous_Albers Equal Area Conic (USGS version) (Albers; +proj=aea +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +lat_0=23; meters) with a cell size of 240 × 240 m. Within Idaho, valid raster cells cover 216,315 km² (≈ the state area); cells outside the state footprint within the raster’s bounding box are NoData (≈ 231,477 km²). WHP values in the subset range from 0 to 64,185.656 (mean 1,615.668, SD 4,119.674). Distributional summaries are: P25 = 130.484, median = 397.297, P75 = 1,097.703, P90 = 3,507.469, P95 = 7,753.109, P99 = 22,429.154 (all unitless). WHP’s native grid is 270 m; the Idaho file’s 240 m cell size indicates the subset was resampled prior to delivery. Higher index values indicate greater relative hazard; the layer is continuous. TIGER/Line state cartographic boundary for Idaho (retrieved via the R tigris package and reprojected to the raster CRS).
+Figure 1 shows the Idaho WHP raster created in R with the packages `terra` (raster operations), `sf` (vector data), `tidyverse` (data wrangling), `tidyterra` (ggplot helpers for rasters), and `tigris` (state/county boundaries). The GeoTIFF uses an Albers Equal Area projection (units: meters) with 240 × 240 m cells. Within Idaho, valid cells cover about 216,315 km²; cells outside the state within the file’s bounding box are NoData. WHP values in this subset range from 0 to 64,185.656; the median is about 397, and the upper tail is steep (e.g., 95th percentile ≈ 7,753, 99th ≈ 22,429). 
 
 **Formal dataset citation**
 
@@ -249,6 +252,23 @@ readr::write_csv(county_mean,   "whp_idaho_county_mean.csv")
 readr::write_csv(na_tbl,        "whp_idaho_missing_area.csv")
 
 ```
+
+# Assignment Part 1
+
+Loading Data and Using dplyr.
+
+## Task 1
+
+Load `whp_idaho_county_mean.csv` into your environment as `county_mean`.
+
+```{r}
+library(dplyr)
+county_mean <- readr::read_csv("whp_idaho_county_mean.csv")
+```
+
+
+
+
 
 
 Table 1. summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. Category lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. Probability is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance a random ignition falls in that category. Normal mean (km) and Normal SD (km) are the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. Mean log and SD log are the parameters 𝜇and 𝜎 of a lognormal distance model in which $log(\text{distance in km})∼N(𝜇,𝜎^2)$. Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
