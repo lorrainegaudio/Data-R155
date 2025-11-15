@@ -81,19 +81,42 @@ output:
       after_body: ../assets/footer.html
 ```
 
-# ➤ BONUS Assignment
+# ➤ Point-Boost Activity
 
-🔥 How far could a new wildfire run in 8 hours?
-
-Today, you’ll simulate the probability that an ignition's 8-hour straight-line spread distance (km) exceeds a threshold of 10 km.
+🔥 How far could a new wildfire run in 8 hours? This is an optional two-part point-boost activity. You can work in groups but each person submits their own work independently. Please record group members within your document. 
 
 ## Assignment Directions
 
-Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Explain. 
+Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. 
 
-You could earn up to 5 points Technical skill and 5 points Learning skill on this optional Point Boost assignment!
+1. **Technical Skill Points**
 
-When finished, save **BOTH** you R code script file and your .RData workspace and upload to Canvas.
+You could earn *up to* **10** points in Technical skill. This assignment will require code covered in modules 1 through 13. You will load a CSV file, manipulate the data frame with `dplyr` verbs, simulate random numbers and visualize results. Additionally, you will be asked to use functions that were not covered in any modules. You will need to look up the function documentation and figure out how to use them on your own. The submission must include an HTML report and RData of the environment.
+
+2. **Learning Skill Points**
+
+You could earn up to **10** points Learning skill on this optional Point Boost assignment!
+
+- Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment
+
+- 👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste). 
+
+- 🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
+
+- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+
+- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+
+- 🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.  
+
+3. **Signature Assignment Option**
+
+You may choose to direct these points to your Signature Assignment requirement. If you do, you **must** complete all tasks and submit a polished HTML document with clear code, thorough comments, and well-written explanations.
+
+___
+
+When finished, 🧶 Knit or Render your report to HTML, and upload with your RData to Canvas by or before December 12th.
+
 ___
 
 
@@ -251,29 +274,285 @@ readr::write_csv(decile_table,  "whp_idaho_area_by_decile.csv")
 readr::write_csv(county_mean,   "whp_idaho_county_mean.csv")
 readr::write_csv(na_tbl,        "whp_idaho_missing_area.csv")
 
+
+library(terra)
+library(sf)
+library(tigris)
+library(dplyr)
+library(readr)
+
+# --- 1) Sample raw WHP values (random, non-NA) -------------------------------
+set.seed(2025)
+N <- 150000
+
+samp_pts <- terra::spatSample(
+  whp_idaho,
+  size      = N,
+  method    = "random",
+  na.rm     = TRUE,
+  as.points = TRUE,
+  values    = TRUE      # attaches WHP_ID attribute to the points
+)
+
+# --- 2) Add county attributes to each sampled point --------------------------
+id_counties <- tigris::counties(state = "ID", cb = TRUE) |>
+  sf::st_transform(crs = terra::crs(whp_idaho))
+
+# spatial join (point -> county); keep only county name & FIPS
+pts_sf   <- sf::st_as_sf(samp_pts)
+pts_join <- sf::st_join(
+  pts_sf,
+  id_counties[, c("NAME","COUNTYFP")],
+  left     = TRUE,
+  largest  = TRUE
+)
+
+# --- 3) Optional: add per-cell area (km^2) as a weight -----------------------
+# (Equal-area CRS + uniform cell size => constant ~0.0576 km^2, but we compute it explicitly)
+area_km2_rast <- terra::cellSize(whp_idaho, unit = "km")
+cell_area_km2 <- terra::extract(area_km2_rast, samp_pts, ID = FALSE)[,1]
+
+# --- 4) Build the RAW tibble (no bins, no summaries) -------------------------
+whp_raw_labeled <- pts_join |>
+  sf::st_drop_geometry() |>
+  transmute(
+    whp          = WHP_ID,          # unitless WHP index
+    county       = NAME,            # county name
+    county_fips  = COUNTYFP,        # 3-digit county FIPS (Idaho state code = 16)
+    cell_area_km2 = cell_area_km2   # area weight per row (useful for probabilities)
+  )
+
+# Save for students (raw data only)
+write_csv(whp_raw_labeled, "whp_raw_sample.csv")
+
+head(whp_raw_labeled)
 ```
 
-# Assignment Part 1
 
-Loading Data and Using dplyr.
+# Assignment A
+
+Explore and wrangling of the raw WHP sample data. 
 
 ## Task 1
 
-Load `whp_idaho_county_mean.csv` into your environment as `county_mean`.
+🎯 Goal: Read the `whp_raw_sample.csv` using `readr`, storing it in your environment as `county_raw`.
 
-```{r}
-library(dplyr)
-county_mean <- readr::read_csv("whp_idaho_county_mean.csv")
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+⚡ Code
+library(readr)
+county_raw <- readr::read_csv("whp_raw_sample.csv")
 ```
 
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify Ideas
+dplyr::glimpse(county_raw)
+colnames(county_raw)
+summary(county_raw$whp)
+nrow(county_raw)
+```
+
+🗣 Comment: `county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
+
+**whp** – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
+
+**county** – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
+
+**county_fips** – The county’s 3-digit FIPS code from TIGER/Line. *Option: To create the standard 5-digit FIPS for Idaho, prepend the state code 16: e.g., 049 → 16049. Need to use the 5-digit code when joining to external datasets (ACS, MTBS summaries, etc.).*
+
+**cell_area_km2** – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
+
+🎯 Task 2 through 5 Goal: Compute quantile cut-points, label categories, and estimate probability (statewide area share) from this.
+
+## Task 2
+
+🎯 Goal: Use `dplyr::summarize()` to report the following about `county_raw`:
+
+- Number of rows
+- Number of missing values in `whp`
+- Minimum value of `cell_area_km2`
+- Maximum value of `cell_area_km2`
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: for dplyr::summarize
+county_raw %>%
+  summarize(
+    n_rows   = n(),
+    n_na_whp = sum(is.na(whp)),
+    min_area = min(cell_area_km2),
+    max_area = max(cell_area_km2)
+  )
+```
+
+🗣 Comment: 
+
+## Task 3
+
+Compute WHP quantile edges (category cutpoints)
+
+🎯 Goal: Use `quantile()` function from base R's `stats` package to compute the quantiles of the `whp` column in `county_raw`. Store the result as `e` for "edges".
+
+Create the seven category edges using the quantiles (0, .25, .50, .75, .90, .95, .99, 1.00).
+
+📜 The SYNTAX: quantile(x, probs, na.rm)
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: Base R stats::quantile 
+e <- stats::quantile(
+  county_raw$whp,
+  probs = c(0, .25, .50, .75, .90, .95, .99, 1),
+  na.rm = TRUE
+)
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+e
+```
+
+🗣 Comment: The `e` object now contains the cut-points for categorizing WHP into quantile-based bins.
+
+- `e[1]` = minimum WHP (0th percentile)
+
+- `e[2]` = 25th percentile
+
+- `e[3]` = 50th percentile (median)
+
+- `e[4]` = 75th percentile
+
+- `e[5]` = 90th percentile
+
+- `e[6]` = 95th percentile
+
+- `e[7]` = 99th percentile
+
+- `e[8]` = maximum WHP (100th percentile)
+
+## Task 4
+
+Add a Category label
+
+🎯 Goal: Use `dplyr::mutate()` and `dplyr::case_when()` to turn the numeric `whp` values in `county_raw` into an ordered categorical variable called `Category`, using the quantile edges `e` you computed in Task 3. Store the resultant data set as `county_cats`.
+
+1. Start from `county_raw`.
+
+2. Use `mutate()` to add a new variable `Category`.
+
+3. Use `case_when()` to assign a label based on which interval of e each whp value falls into.
+
+4. Convert `Category` to an ordered factor so the levels follow the intended risk order.
+
+Each row will be assigned exactly one of these labels based on its `whp` value:
+
+- If a row’s `whp` value is *at least* the minimum WHP AND *less than* the 25th percentile, label it "Very Low".
+
+- If `whp` is *at least* the 25th percentile AND *less than* the 50th percentile (median), label it "Low".
+
+- If `whp` is *at least* the 50th percentile AND *less than* the 75th percentile, label it "Moderate".
+
+- If `whp` is *at least* the 75th percentile AND *less than* the 90th percentile, label it "High".
+
+- If `whp` is *at least* the 90th percentile AND *less than* the 95th percentile, label it "Very High".
+
+- If `whp` is *at least* the 95th percentile AND *less than* the 99th percentile, label it "Extreme".
+
+- If `whp` is *at least* the 99th percentile AND *less than or equal to* the maximum WHP, label it "Ultra (Top 1%)".
+
+If a value of whp does not fall in any of these ranges (e.g., `NA`), `Category` should be `NA`.
+
+**Hint**: All intervals are closed on the left (`>=`) and open on the right (`<`), except the last one, which is closed on both sides (`>=` and `<=`).
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code:  dplyr::mutate + dplyr::case_when
+county_cats <- county_raw %>%
+  mutate(
+    Category = case_when(
+      whp >= e[1] & whp <  e[2] ~ "Very Low",
+      whp >= e[2] & whp <  e[3] ~ "Low",
+      whp >= e[3] & whp <  e[4] ~ "Moderate",
+      whp >= e[4] & whp <  e[5] ~ "High",
+      whp >= e[5] & whp <  e[6] ~ "Very High",
+      whp >= e[6] & whp <  e[7] ~ "Extreme",
+      whp >= e[7] & whp <= e[8] ~ "Ultra (Top 1%)",
+      TRUE                      ~ NA_character_
+    ),
+    Category = factor(
+      Category,
+      levels = c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)"),
+      ordered = TRUE
+    )
+  )
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+county_cats %>% count(Category)
+```
+
+🗣 Comment: I used `case_when` to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The `cell_area_km2` column lets you compute true area easily.
+
+## Task 5
+
+🎯 Goal: Use `dplyr::group_by()` and `dplyr::summarize()` to aggregate total area by `Category`, then compute `Probability` as each category’s share of the total statewide area. Store the result as `prob_tbl`.
+
+1. Start from `county_cats` (the data set you created in Task 4, which already has `Category` and `cell_area_km2`).
+
+2. Use `group_by()` so that all rows in the same `Category` are treated as a single group.
+
+3. Use `summarize()` to compute, for each `Category`:
+
+- `area_km2`: the total area in square kilometers, as the sum of `cell_area_km2` across all cells in that category.
+
+- `n_cells`: the number of grid cells in that category using `n()`.
+
+- Use `.groups = "drop"` so that the result is no longer grouped after summarizing.
+
+4. Use mutate() to create a new variable called `Probability` that is the `area_km2` divided by `sum(area_km2)`.
+
+This makes `Probability` the fraction of statewide area that falls in each `Category`. The probabilities across all categories should sum to 1 (up to rounding error).
+
+5. Use `select()` to keep only the columns, in this order:
+`Category`, `Probability`, `area_km2`, `n_cells`.
+
+```{r , eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
+prob_tbl <- county_cats %>%
+  group_by(Category) %>%
+  summarize(
+    area_km2 = sum(cell_area_km2),
+    n_cells  = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    Probability = area_km2 / sum(area_km2)
+  ) %>%
+  select(Category, Probability, area_km2, n_cells)
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+prob_tbl
+sum(prob_tbl$Probability)
+```
+
+🗣 Comment: The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
+
+# Assignment B
+
+The table below summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. The **Category** column lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. The **Probability** column is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance that a random ignition falls in that category.
+
+The table also defines a simple fire-spread scenario using "plausible values" derived from ChatGPT for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
+
+The **Normal mean (km)** and **Normal SD (km)** columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The **Mean log** and **SD log** columns give the parameters \( \mu \) and \( \sigma \) of a lognormal distance model in which
+
+\[
+\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
+\]
+
+Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively) and do not correspond to any official USFS WHP class names.
 
 
 
-
-
-Table 1. summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. Category lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. Probability is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance a random ignition falls in that category. Normal mean (km) and Normal SD (km) are the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. Mean log and SD log are the parameters 𝜇and 𝜎 of a lognormal distance model in which $log(\text{distance in km})∼N(𝜇,𝜎^2)$. Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
-
-Parameters for this assignment were selected from the the following references. According to the Idaho Department of Environmental Quality (DEQ), the 2021 fire season saw 439 individual wildfires. A reasonable single-year ignition count for Idaho is ~450 (rounding the 2021 DEQ total of 439). 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, tab.cap='Table 1. Quantile-based WHP categories for Idaho and 8-hour spread distance parameters. Probability = statewide area share (% of valid raster area); distances in kilometers; WHP is unitless.'}
 library(terra); library(dplyr); library(readr); library(knitr); library(kableExtra)
@@ -335,16 +614,68 @@ kbl(param_tbl,
 
 ## Objective
 
-Objective. Estimate short-term spread risk using simulation. Model each ignition’s 8-hour straight-line distance with a lognormal distribution. Do this two ways:
+Objective. Estimate short-term spread risk using simulation. For this assignment you will (a) warm up with a symmetric (Normal) model and (b) use a more realistic right-skewed (Lognormal) model. 
+
+____
+# TO DO: Check this language
+
+Do this two ways:
 
 Statewide mixture: sample a WHP category using the Probability column in Table 1, then draw a distance from that category’s Mean log and SD log. An ignition critical if it distance ≥ 20 km
 
 You will simulate 2,000 seasons, each with 450 ignitions. For each season, count how many ignitions are ≥ 10 km (major runs) and how many are critical under the rule. Summarize both expected counts and the probability the season exceeds a planning threshold (e.g., “> 50 major runs” and “> 10 critical runs”).
 Distance is used here as a proxy for severity; in practice agencies track area. Category probabilities approximate where ignitions occur and are a teaching simplification.
 
+____
+
+## Normal Random Numbers
+
+The normal model is a simple starting point. It is symmetric, so distances below zero are possible. Use `set.seed()` at 2025 as this seed will not produce negative values.
+
+```{r , eval=FALSE}
+set.seed(2025)
+```
+
+### Task 1
+
+We'll simulate distances for the **High** WHP category using a normal distribution. We estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. 
+
+
+🎯 Goal: Use `rnorm()` to generate normal random numbers. Generate `n = 450` simulated distances for the **High** category for **Mean (km)** and **SD (km)** from Table 1. Save the vector with as `High_Norm`. 
+
+```{r}
+# ⚡ Test
+High_Norm <- rnorm(n = 450, mean = 7.0, sd = 2.0)
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+summary(High_Norm)
+sd(High_Norm)
+```
+
+🗣 Comment:
+
+### Task 2
+
+🎯 Goal: Use `hist()` to create a histogram of `High_Norm`. Comment on the shape.
+
+```{r}
+# ⚡ Test
+hist(High_Norm,
+     col    = "green",
+     main   = "Simulated 8-Hour Distances for High WHP (Normal
+ Model)",
+     xlab   = "Distance (km)")
+```
+
+🗣 Comment: 
+
+By looking at the graph, estimate how many new wild fire ignitions spreed more than 10 km in 8-hours?
+
 ## Lognormal Random Numbers
 
-The lognormal model is used because most fires will move a modest distance, but a small fraction travel much farther. A lognormal model enforces non-negativite distance values and captures that right tail.
+The lognormal model is more realistic because most fires will move a modest distance, but a small fraction travel much farther. A lognormal model enforces non-negativite distance values and captures that right tail.
 
 Use `rlnorm()` to generate lognormal random numbers.
 
@@ -362,34 +693,30 @@ Use `rlnorm()` to generate lognormal random numbers.
 
 *Note: You should always use the log-scale parameters of mean and SD in rlnorm().*
 
-## Task 1
+### Task 1
 
-🎯 Goal: Start by setting a seed. Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
+Simulate distances for the **High** WHP category using a lognormal distribution. We'll estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. 
+
+🎯 Goal: Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
+
+✅ / 🗣 Checks and Comment: Use the functions `mean()` and `quantile()` to report the mean, and 90th percentile of distances from the `High_Lognorm` simulation. 
 
 ```{r}
-set.seed(12345)
 # ⚡ Test
 High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
 ```
 
-## Task 2
-
-✅ / 🗣 Checks and Comment
-
-Summarize what you just simulated. Report the median, mean, and 90th percentile of `High_Lognorm`, and comment in one sentence on the right-skew you expect for a lognormal.
-
 ```{r}
 # ✅  Verify
-median(High_Lognorm)
 mean(High_Lognorm)
-quantile(High_Lognorm, 0.9)
+quantile(High_Lognorm, 0.90)
 ```
 
-## Task 3
+ 🗣 Comment
 
-✅ / 🗣 Checks and Comment
+### Task 2
 
-Make a histogram of `High_Lognorm`. In one sentence, note how the shape matches your summary in Task 2.
+🎯 Goal: Use `hist()` to create a histogram of `High_Lognorm`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
 
 
 ```{r}
@@ -401,15 +728,19 @@ hist(High_Lognorm,
      xlab   = "Distance (km)")
 ```
 
+ 🗣 Comment
 
 
-## Task 4
+### Task 3
 
-🎯 Goal: Copy the code that created `High_Lognorm` and nest it inside of the `mean()` function. Set the `rlnorm()` call to >= 10. This one line will compute the proportion of a single sample that reaches or exceeds a threshold of 10 km spreed in 8-hours. Store this result as `p_high_one`
+We'll estimate by simulation the probability that a season will have more than 20 fast traveling. To do this, we'll use replicate the simulate distances 2,000 times for the **High** WHP category using a lognormal distribution. We'll continue to estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. Then, We'll count how many ignitions spread 10 km or more in each season.
+
+
+🎯 Goal: 
 
 ```{r}
 # ⚡ Test
-p_high_one <-mean(rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) >=10) # one season, 450 ignitions
+more_than_20 <-replicate(n = 2000, expr = {d <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) sum(d > 10) > 20})
 ``` 
 
 ## Task 5
