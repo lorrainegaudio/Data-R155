@@ -83,7 +83,12 @@ output:
 
 # ➤ Point-Boost Activity
 
-🔥 How far could a new wildfire run in 8 hours? This is an optional two-part point-boost activity. You can work in groups but each person submits their own work independently. Please record group members within your document. 
+🔥 Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state. For more information this [research at Boise State](https://www.boisestate.edu/coas/2024/12/04/boise-state-experts-provide-perspective-on-idaho-mountain-wildfires/).
+
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours? 
+
+This is an optional two-part point-boost activity. You can work in groups but each person submits their own work independently. Please record group members within your document. 
 
 ## Assignment Directions
 
@@ -329,7 +334,7 @@ head(whp_raw_labeled)
 ```
 
 
-# Assignment A
+# Part A
 
 Explore and wrangling of the raw WHP sample data. 
 
@@ -537,7 +542,7 @@ sum(prob_tbl$Probability)
 
 🗣 Comment: The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
 
-# Assignment B
+# Part B
 
 The table below summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. The **Category** column lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. The **Probability** column is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance that a random ignition falls in that category.
 
@@ -549,9 +554,7 @@ The **Normal mean (km)** and **Normal SD (km)** columns give the mean and standa
 \log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
 \]
 
-Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively) and do not correspond to any official USFS WHP class names.
-
-
+Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, tab.cap='Table 1. Quantile-based WHP categories for Idaho and 8-hour spread distance parameters. Probability = statewide area share (% of valid raster area); distances in kilometers; WHP is unitless.'}
@@ -612,114 +615,213 @@ kbl(param_tbl,
 
 ```
 
-## Objective
+## Statistical Methods
 
-Objective. Estimate short-term spread risk using simulation. For this assignment you will (a) warm up with a symmetric (Normal) model and (b) use a more realistic right-skewed (Lognormal) model. 
+A continuous random variable is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km. 
 
-____
-# TO DO: Check this language
+Throughout the assignment, you will see mathematical notation. You do not need to understand these equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor).
 
-Do this two ways:
+\begin{customtextbox}
 
-Statewide mixture: sample a WHP category using the Probability column in Table 1, then draw a distance from that category’s Mean log and SD log. An ignition critical if it distance ≥ 20 km
+Let $X$ be the continuous random variable of straight-line kilometer distance in an 8-hour period. Then a probability distribution of $X$ is a function $f(x)$ such that for any two numbers $a$ and $b$ with $a \leq b$, 
 
-You will simulate 2,000 seasons, each with 450 ignitions. For each season, count how many ignitions are ≥ 10 km (major runs) and how many are critical under the rule. Summarize both expected counts and the probability the season exceeds a planning threshold (e.g., “> 50 major runs” and “> 10 critical runs”).
-Distance is used here as a proxy for severity; in practice agencies track area. Category probabilities approximate where ignitions occur and are a teaching simplification.
+$$
+P(a \leq X \leq b) =  \int_{a}^{b} f(x) \, dx
+$$
 
-____
+The probability that $X$ takes on a value in the interval $[a, b]$ is given by the area above this interval and under the graph of the density function. 
 
-## Normal Random Numbers
+\end{customtextbox}
 
-The normal model is a simple starting point. It is symmetric, so distances below zero are possible. Use `set.seed()` at 2025 as this seed will not produce negative values.
+## Log Normal Distribution
+
+In this assignment, we will use the lognormal distribution to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:
 
 ```{r , eval=FALSE}
-set.seed(2025)
+?Lognormal
 ```
 
 ### Task 1
 
-We'll simulate distances for the **High** WHP category using a normal distribution. We estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. 
+`plnorm()` computes the cumulative distribution function (CDF) for a lognormal distribution. It gives the probability that a lognormally distributed random variable is less than or equal to a certain value.
 
+❓ Question a: If a new ignition starts in a High-hazard area, what is the probability that its 8-hour straight-line spread is at least 10 km?
 
-🎯 Goal: Use `rnorm()` to generate normal random numbers. Generate `n = 450` simulated distances for the **High** category for **Mean (km)** and **SD (km)** from Table 1. Save the vector with as `High_Norm`. 
+\begin{customtextbox}
 
-```{r}
-# ⚡ Test
-High_Norm <- rnorm(n = 450, mean = 7.0, sd = 2.0)
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$ 
+
+In particular, the probability that the 8-hour straight-line spread is at least 10 km is given by
+
+$$ P(X \leq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, $$ 
+
+and in this problem, $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution. 
+
+\end{customtextbox}
+
+🎯 Goal: Compute the exact probability that a new ignition in a High-hazard area spreads at least 10 km in 8 hours using the `plnorm()` function. Use the **High** row’s **Mean log** and **SD log** in **Table 1**. Set the lower.tail equal to FALSE. Store the result as `p_high_exact`.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: single lognormal, single threshold
+p_high_exact <- plnorm(10, meanlog = 1.907, sdlog = 0.280, lower.tail = FALSE)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ✅  Verify
-summary(High_Norm)
-sd(High_Norm)
+p_high_exact
+p_high_exact * 100  # as a percentage
 ```
 
-🗣 Comment:
+🗣 Comment: The value 0.0788567 indicates a 7.9% chance that a new ignition in a High-hazard area will spread at least 10 km in 8 hours.
 
 ### Task 2
 
-🎯 Goal: Use `hist()` to create a histogram of `High_Norm`. Comment on the shape.
+`qlnorm()` computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.
 
-```{r}
+❓ Question b: We’ll treat distances above the 95th percentile as ‘extreme fast runs’. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 10% of the time? In other words, what is the 95th percentile run length?
+
+\begin{customtextbox}
+  
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. The cumulative distribution function (CDF) of $X$ is given by
+
+$$ F(x) = P(X \leq x) = \int_{0}^{x} \mathcal{f_{high}}(t) dt. $$
+
+We define the 95th percentile of $X$, denoted by $q_{0.95}$ of this distribution to be the value satisfying
+
+$$ P(X \leq q_{0.95}) = F(q_{0.95}) = 0.95. $$
+
+equivalently, 
+
+$$ q_{0.95} = \int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx. $$
+
+In particular, the 95th percentile of the 8-hour straight-line spread distance for new ignitions in High-hazard areas is given by 
+
+$$ q_{0.95} = F^{-1}(0.95), $$ 
+
+and in this problem $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution.
+
+\end{customtextbox}
+
+🎯 Goal: Compute the distance such that there is a 95% chance the 8-hour spread is no more than this value and a 5% chance it exceeds it. Use `qlnorm()`. Set the probability to 0.95 and use the parameters in the **High** row’s **Mean log** and **SD log** in **Table 1**.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test
-hist(High_Norm,
-     col    = "green",
-     main   = "Simulated 8-Hour Distances for High WHP (Normal
- Model)",
-     xlab   = "Distance (km)")
+q90_high <- qlnorm(0.95, meanlog = 1.907, sdlog = 0.280)
 ```
 
-🗣 Comment: 
-
-By looking at the graph, estimate how many new wild fire ignitions spreed more than 10 km in 8-hours?
-
-## Lognormal Random Numbers
-
-The lognormal model is more realistic because most fires will move a modest distance, but a small fraction travel much farther. A lognormal model enforces non-negativite distance values and captures that right tail.
-
-Use `rlnorm()` to generate lognormal random numbers.
-
-```{r , eval=FALSE}
-?rlnorm  # Check the help file for rlnorm()
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+q90_high
 ```
 
-📜 The SYNTAX: `rlnorm(n, meanlog = 0, sdlog = 1)`
+🗣 Comment: Based on this model, about 95% of new ignitions in High-hazard areas are expected to spread no more than roughly 10.7 km in 8 hours, and only about 5% would be expected to spread farther than 10.7 km in that time.
 
-- `n` is the number of random numbers to generate. In this scenario, n is the number if ignitions to simulated per Monte Carlo run. 
+### Task 3
 
-- `meanlog` is the mean of the logarithm of the distribution with default set to 0.
+`dlnorm()` computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
 
-- `sdlog` is the standard deviation of the logarithm of the distribution with default set to 1.
+❓ Question c: Under our High-hazard lognormal model, how concentrated the distribution is locally around the shorter 3 km run verses the longer 10 km distance in 8 hours? *Note: Higher density indicates a more likely value in a small neighborhood around that point.*
 
-*Note: You should always use the log-scale parameters of mean and SD in rlnorm().*
+\begin{customtextbox}
 
-### Task 1
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$
+
+The values $\mathcal{f_{high}}(x)$ are densities, not probabilities. They represent the height of the distribution at the point x. In particular, the density at 3 km and 10 km are given by
+
+$$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
+
+\end{customtextbox}
+
+🎯 Goal: Compute the density at 3 km and 10 km using `dlnorm()`. Use the **High** row’s **Mean log** and **SD log** in **Table 1**.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test
+
+d_3  <- dlnorm(3,  meanlog = 1.907, sdlog = 0.280)
+d_10 <- dlnorm(10, meanlog = 1.907, sdlog = 0.280)
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+d_3; d_10  # compare heights
+```
+
+🗣 Comment: The density at 10 km $\mathcal{f_{high}}(10) \approx 0.0525$) is higher than at 3 km ($\mathcal{f_{high}}(3) \approx 0.00736$), which implies that values in a small neighborhood around 10 km are more likely than values in a small neighborhood around 3 km under the High-hazard lognormal model.
+
+### Task 4
+
+`rlnorm()` generates random numbers from a lognormal distribution. **Note**: This task has three parts.
+
+❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would we expect to classify as ‘fast-growing’ (≥10 km in 8 hours)?
+
+\begin{customtextbox}
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Assume
+
+$$ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ meanlog High}), $$
+
+with density function $\mathcal{f_{high}}(x)$ and CDF $F_{high}(x)$. 
+
+The probability that a single new ignition is 'fast-growing' (i.e., spreads 10 km or more in 8 hours) is given by
+
+$$ P(X \geq 10) = 1 - F_{high}(10)$$
+
+Now suppose we observe (or simulate) $n = 450$ new ignitions in High-hazard areas this season. Let $X_1, X_2, \ldots, X_{450}$ be random variables, each with the same lognormal distribution as $X$. 
+
+Define indicator variables for 'fast-growing' ignitions:
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq 10 \\ 0 & \text{if } X_i < 10 \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions, $S$, is given by
+
+$$ S = \sum_{i=1}^{450} I_i $$
+
+Each $I_i$ is a Bernoulli random variable with success probability $P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),$ so, the expected number of 'fast-growing' ignitions is
+
+$$ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). $$
+
+\end{customtextbox}
 
 Simulate distances for the **High** WHP category using a lognormal distribution. We'll estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. 
 
-🎯 Goal: Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
+1. 🎯 Goal: Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
 
-✅ / 🗣 Checks and Comment: Use the functions `mean()` and `quantile()` to report the mean, and 90th percentile of distances from the `High_Lognorm` simulation. 
-
-```{r}
+```{r , message=FALSE, warning=FALSE}
+set.seed(2025)
 # ⚡ Test
 High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
 ```
 
-```{r}
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ✅  Verify
-mean(High_Lognorm)
-quantile(High_Lognorm, 0.90)
+summary(High_Lognorm)
 ```
 
  🗣 Comment
 
-### Task 2
+2. 🎯 Goal: Use `sum()` to find the count of new ignitions in the simulation where the wildfire is classified as ‘fast-growing’. 
 
-🎯 Goal: Use `hist()` to create a histogram of `High_Lognorm`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
+```{r , message=FALSE, warning=FALSE}
+# ⚡ Test
+fast_growing_count <- sum(High_Lognorm >= 10)
+```
 
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+fast_growing_count
+```
 
-```{r}
+🗣 Comment: Based on the simulation, we would expect approximately `r fast_growing_count` new ignitions in High-hazard areas to be classified as 'fast-growing' (spreading 10 km or more in 8 hours) this season.
+ 
+
+3. 🎯 Goal: Use `hist()` to create a histogram of `High_Lognorm`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
+
+The histogram is a discrete approximation to the empirical density of these 450 values. It counts how many simulated distances fall into each of several bins. In other words, it shows what the simulated sample looks like.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ✅  Verify
 hist(High_Lognorm,
      col    = "blue",
@@ -731,151 +833,294 @@ hist(High_Lognorm,
  🗣 Comment
 
 
-### Task 3
+# Part C
 
-We'll estimate by simulation the probability that a season will have more than 20 fast traveling. To do this, we'll use replicate the simulate distances 2,000 times for the **High** WHP category using a lognormal distribution. We'll continue to estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. Then, We'll count how many ignitions spread 10 km or more in each season.
+`rlnorm` + `replicate()` 
 
+❓ Question e: In a season with 450 new ignitions **statewide**, what is the probability we see at least 50 fast-growing events (≥10 km in 8 hours) when ignitions can occur in any hazard category according to their statewide area weights?
 
-🎯 Goal: 
+\begin{customtextbox}
 
-```{r}
+Let there be $L$ hazard categories indexed by $i = 1, 2, \ldots, L$ with:
+
+- statewide area weights $p_j$ such that $\sum_{j=1}^{L} p_j = 1$.
+
+- lognormal spread model in category $j$: 
+
+$ X | \text{category} = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $
+
+Consider a season with $N = 450$ new ignitions **statewide**. For each ignition $i = 1, 2, \ldots, N$:
+
+1. Draw a hazard category 
+
+$$ C_i \in \{1, 2, \ldots, L\}, \space \space P(C_i = j) = p_j. $$
+
+independently across ignitions.
+
+2. Conditional on $C_i = j$, draw an 8-hour straight-line spread distance $X_i$ as
+
+$$ X_i | C_i = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $$
+
+independently across ignition given their categories.
+
+Define the indicator variable for a 'fast-growing' ignition (≥ $k = 10$ km in 8 hours) as
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq k \\ 0 & \text{if } X_i < k \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions in the season, $S$, is given by
+
+$$ T = \sum_{i=1}^{450} I_i $$
+
+We are interested in the probability that a season has at least 5 fast-growing events:
+
+$$ P(T \geq 50). $$
+
+and is approximated by Monte Carlo simulation.
+
+$$
+\widehat{P(T \ge 50)}
+\;\approx\;
+\frac{1}{S} \sum_{s=1}^{S} \mathbf{1}\{T^{(s)} \ge 50\},
+$$
+
+where $T^{(s)}$ is the simulated count of fast-growing ignitions in season $s$, and $S$ is the total number of simulated seasons.
+
+\end{customtextbox}
+
+## Task 1
+
+🎯 Goal: Create a vector of category `labels` that describe the seven wildfire hazard categories as shown in the Category column of Table 1. 
+
+```{r, eval=FALSE}
 # ⚡ Test
-more_than_20 <-replicate(n = 2000, expr = {d <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) sum(d > 10) > 20})
-``` 
+labels  <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)")
+```
+
+```{r, eval=FALSE}
+# ✅  Verify
+labels
+```
+
+
+## Task 2
+
+🎯 Goal: Create a vector called `prob` with from the Probability column from Table 1. The order must match the order of `labels`.
+
+```{r, eval=FALSE}
+# ⚡ Test
+prob    <- c(0.25, 0.25, 0.25, 0.15, 0.05, 0.04, 0.01)   # from Table 1, as proportions
+```
+
+```{r, eval=FALSE}
+# ✅  Verify
+sum(prob)  # should equal 1
+```
+
+## Task 3
+
+🎯 Goal: Create vectors of `meanlog` and `sdlog` parameters for the lognormal distribution for each category. The order must match the order of `labels`.
+
+```{r, eval=FALSE}
+# ⚡ Test
+meanlog <- c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310)
+sdlog   <- c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
+```
+
+```{r, eval=FALSE}
+# ✅  Verify
+meanlog
+sdlog
+```
+
+## Task 4
+
+🎯 Goal: Set the number of ignitions per season `N` to 450 and the number of simulations `S` to 100000. Also, set the fast threshold `k` to 10 km.
+
+```{r, eval=FALSE}
+# ⚡ Test
+N <- 450
+S <- 100000
+k <- 10 
+```
 
 ## Task 5
 
-✅ / 🗣 Checks and Comment
+🎯 Goal: Sample categories for one season
 
-Comment about meaning of `p_high_one`. What does this value represent in the context of wildfire spread risk for ignitions in the **High** WHP category?
+Simulate one season’s worth of categories, without any distances. Each ignition gets a hazard category chosen at random according to the statewide area weights in `prob`. Use `sample.int()` to sample indices from `1:length(labels)` and store them in a vector named `idx`. Then check the first few values and a frequency table to see how often each category appears.
 
-```{r}
-# ✅  Verify
-p_high_one
+
+```{r, eval=FALSE}
+# ⚡ Test
+idx <- sample.int(length(labels),
+                  size    = N,
+                  replace = TRUE,
+                  prob    = prob)
 ```
 
+```{r, eval=FALSE}
+# ✅  Verify
+table(labels[idx])
+```
+
+🗣 Comment: 
 
 ## Task 6
 
-🎯 Goal: Turn that single-season calculation into many seasons. Use `replicate()` to repeat the same inside expression for 2,000 seasons. Store the resulting vector of proportions as p_high_many, then report its mean and make a small histogram of those season-level proportions.
+🎯 Goal: Draw distances for one season
 
+Next, turn those category indices into distances. For each ignition, use `rlnorm()` with the `meanlog` and `sdlog` for that ignition’s category. You do this by indexing the parameter vectors with `idx`. Store the simulated distances in a vector `d`, then look at the first few values and a summary.
 
-
-```{r}
+```{r, eval=FALSE}
 # ⚡ Test
-p_high_many <- replicate(                       
-  n = 2000,                                       # 2,000 seasons
-  expr = mean(rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280) >=10) # 450 wildfires, 10 km threshold
-)
+d <- rlnorm(N,
+            meanlog = meanlog[idx],
+            sdlog   = sdlog[idx])
 ```
-
-```{r}
+```{r, eval=FALSE}
 # ✅  Verify
-mean(p_high_many)
-mean(p_high_many >= 1)    
+head(d)
+summary(d)
 ```
 
+🗣 Comment: 
 
 ## Task 7
 
-✅ / 🗣 Checks and Comment
+🎯 Goal: Count fast runs for one season
 
+Now that you have one season of distances in `d`, count how many ignitions are “fast” (distance at least `k = 10` km). Use a logical comparison `d >= k` to mark fast runs with TRUE/FALSE, then wrap that in `sum()` to count how many TRUE values there are. Store this in `fast_count_one` and print it.
 
-
-
-```{r}
-# ✅  Verify
-hist(p_high_many, 
-     col    = "orange",
-     main = "Season-level proportions ≥ k (High)", 
-     xlab = "Proportion")
+```{r, eval=FALSE}
+# ⚡ Test
+fast_flags_one  <- d >= k
+fast_count_one  <- sum(fast_flags_one)
 ```
+```{r, eval=FALSE}
+# ✅  Verify
+fast_count_one
+mean(fast_flags_one)
 
+```
 
 ## Task 8
 
-🎯 Goal: Create four parallel vectors from Table 1: cats, prob (as proportions that sum to 1), meanlog, and sdlog in matching order. Build the inside expression for a single season of N <- 450 ignitions: first sample a category index for each ignition using sample() with prob, then draw distances with rlnorm() using the matched meanlog and sdlog. Return a count of ignitions ≥ k. Run it once to confirm it works.
+Braces `{ ... }` group several lines together so they act as one expression and return the final result.
 
+🎯 Goal: Bundle the three steps above into one block of code that represents a single season. (1) sampling `idx`, (2) drawing `d`, and (3) counting fast ignitions. 
+Run it to make sure it still returns a single count.
 
-
-```{r}
+```{r, eval=FALSE}
 # ⚡ Test
-cats    <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra")
-prob    <- c(0.25, 0.25, 0.25, 0.15, 0.05, 0.04, 0.01)  # proportions sum to 1
-meanlog <- c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310)
-sdlog   <- c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
-N <- 450  # ignitions per season
-one_mixture_count <- {
-  idx <- sample.int(length(cats), size = N, replace = TRUE, prob = prob)
-  d   <- rlnorm(N, meanlog = meanlog[idx], sdlog = sdlog[idx])
-  sum(d >= 10)
+fast_count_one <- {
+  idx <- sample.int(length(labels),
+                    size    = N,
+                    replace = TRUE,
+                    prob    = prob)
+  d   <- rlnorm(N,
+                meanlog = meanlog[idx],
+                sdlog   = sdlog[idx])
+  sum(d >= k)
 }
-one_mixture_count
 ```
+```{r, eval=FALSE}
+# ✅  Verify
+fast_count_one
+```
+
+🗣 Comment: 
 
 ## Task 9
 
-🎯 Goal: Wrap the mixture inside code from Task 7 in replicate() for S seasons. Save the season counts as counts_mix. Report the expected number of ≥ k runs and the probability that a season has more than 10 such runs (change the threshold if instructed).
+🎯 Goal: Use `replicate()` to simulate many seasons.
 
+Now that the one season computation works and returns a single count, use `replicate()` to repeat it `S` times. Store the vector of seasonal counts as `counts_fast_mix`. Then compute the expected number of fast runs per season and the probability that a season has at least 5 fast-growing events.
 
-```{r}
-# ⚡ Test
-counts_mix <- replicate(
-  n = 2000,                                       # 2,000 seasons
+```{r, eval=FALSE}
+# ⚡ Test: Final, complete simulation
+set.seed(2025)
+counts_fast_mix <- replicate(
+  n = S,
   expr = {
-    idx <- sample.int(length(cats), size = N, replace = TRUE, prob = prob)
+    idx <- sample.int(length(labels), size = N, replace = TRUE, prob = prob)
     d   <- rlnorm(N, meanlog = meanlog[idx], sdlog = sdlog[idx])
-    sum(d >= 10)
+    sum(d >= k)
   }
 )
 ```
+```{r, eval=FALSE}
+# ⚡ Test:  Answer Question
+prob_at_least_50 <- mean(counts_fast_mix >= 50)    # Monte Carlo estimate of P(T >= 50)  
+```
+
 
 ## Task 10
 
-✅ / 🗣 Checks and Comment
+🎯 Goal: Use `ggplot2::geom_histogram()` to create a histogram of `counts_fast_mix`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
 
-```{r}
-# ✅  Verify
-mean(counts_mix)          # expected number of ≥ k runs
-mean(counts_mix > 10)     # probability of > 10 such runs
-```
+ 
 
-```{r}
-# ✅  Verify
-hist(counts_mix,
-     col    = "lightgreen",
-     main   = "Season-level counts of ≥ k runs (Mixture Model)",
-     xlab   = "Count of ≥ k runs")
-```
+```{r, eval=FALSE}
+# ⚡ Test
+library(ggplot2)
+threshold <- 50  # "at least 5 fast fires"
 
-## Reflections
+counts_df <- data.frame(
+  fast_count = counts_fast_mix
+)
 
-🗣 Comment: In 1-2 sentences, reflect on what you learned from this assignment about using simulation to estimate wildfire spread risk. Mention any challenges you faced and how you overcame them.
+# Pick a reasonable y-position for the annotation (near the top of the tallest bar)
+max_y <- max(table(counts_df$fast_count))
+
+ggplot(counts_df, aes(x = fast_count)) +
+  geom_histogram(
+    binwidth = 1,                # one bin per integer count
+    boundary = -0.5,             # centers bins on 0, 1, 2, ...
+    color    = "white",
+    fill     = "steelblue"
+  ) +
+  geom_vline(
+    xintercept = threshold - 0.5,  # boundary between 4 and 5
+    linetype   = "dashed",
+    linewidth  = 0.8
+  ) +
+  annotate(
+    "text",
+    x      = threshold + 0.2,
+    y      = max_y * 0.9,   # use the precomputed max_y, not ..count..
+    label  = paste0("Seasons with \u2265 ", threshold, " fast fires"),
+    angle  = 90,
+    vjust  = 0.5,
+    hjust  = 0
+  ) +
+  labs(
+    title    = "Simulated number of fast-growing fires per season",
+    subtitle = paste0(
+      "Fast = distance \u2265 10 km in 8 hours; N = 450 ignitions per season\n",
+      "Estimated P(season has \u2265 ", threshold, " fast fires) \u2248 ",
+      sprintf('%.1f%%', 100 * prob_at_least_50)
+    ),
+    x        = "Number of fast-growing fires in a season",
+    y        = "Number of simulated seasons"
+  ) +
+  scale_x_continuous(
+    breaks = 0:max(counts_df$fast_count)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title      = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.text.x     = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  )
+``` 
+
+
 
 # Save and Upload
 
-1. You will be submitting **both** the *Your Pick* Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
 
-```{r , eval=FALSE}
-save.image("Assignment12_Workspace.RData")
-```
-
-Or you can click the "Save Workspace" button in the Environment pane. 
-
-💾 **Always save the R documents before closing.**
-
-2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
 
 # Today you practiced:
 
-- Used `sample()` for discrete simulations with or without replacement.
-
-- Visualized uniform and aggregated dice results with histograms.
-
-- Generated normal random numbers with `rnorm()` and plotted the shape.
-
-- Repeated an experiment easily with `replicate()`.
-
-- Compared two simulated distributions to spot bias.
 
 
