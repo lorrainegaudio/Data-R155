@@ -126,7 +126,9 @@ library(dplyr)   # Data manipulation package
 library(ggplot2) # Data visualization
 ```
 
-# What is ggplot2?
+# Warm‑Up
+
+What is ggplot2?
 
 Open the help file for `ggplot()` to see its formal arguments and description.
 
@@ -134,9 +136,7 @@ Open the help file for `ggplot()` to see its formal arguments and description.
 ?ggplot   # skim the Details section
 ```
 
-📜 The SYNTAX (basic/general): 
-
-`ggplot(data = NULL, mapping = aes(), ..., environment = parent.frame())`
+📜 The SYNTAX (basic/general): `ggplot(data = NULL, mapping = aes(), ..., environment = parent.frame())`
 
 The three core steps of ggplot2 are: (1) supply a data frame, (2) map aesthetics with `aes()`, and (3) add geometric objects (geoms) with `geom_*()` functions.
 
@@ -165,7 +165,7 @@ divorce_margarine %>%
 ggplot(data = divorce_margarine)
 ```
 
-🗣 Comment: The result is an empty canvas. 
+🗣 Comment: The result is empty canvas. 
 
 R does not throw an error. 📝 Note that ggplot needs three main steps (data → `aes()` → `geom_*()`).
 
@@ -192,7 +192,7 @@ divorce_margarine %>%
 
 🗣 Comment: The plot is still blank because we haven't added any geometric objects (geoms) yet. The axes are now labeled by the mapped variables, even if there are no points yet. `aes()` connects data columns to visual positions. The `aes()` step comes before choosing a geom because we are first defining the mapping (what goes on the x- and y-axes, colors, etc.) and then deciding how to draw those mapped variables (points, lines, bars, etc.). 
 
-🪞 Reflection: The aesthetics describe the underlying structure of the plot, and the geoms are just different ways of rendering that structure. By setting `aes()` inside `ggplot()` we create a shared mapping that all later geoms can reuse, instead of repeating ourselves for each layer.
+In other words, the aesthetics describe the underlying structure of the plot, and the geoms are just different ways of rendering that structure. By setting `aes()` inside `ggplot()` we create a shared mapping that all later geoms can reuse, instead of repeating ourselves for each layer.
 
 # Adding Geometric Objects (Geoms)
 
@@ -206,9 +206,7 @@ Geometric objects (geoms) are the actual shapes drawn on the plot: points, lines
 ?geom_point
 ```
 
-📜 The SYNTAX: 
-
-`geom_point(mapping = NULL, data = NULL, ..., na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
+📜 The SYNTAX: `geom_point(mapping = NULL, data = NULL, ..., na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
 
 🧐 Notice that all of the arguments are have default settings because `geom_point()` can inherit the data and aesthetic mappings from the initial `ggplot()` call.
 
@@ -237,7 +235,7 @@ divorce_margarine %>%
    
 ```
 
-🤔 "Wait", you might by thinking, "`aes()` is already defined in `ggplot()`, why are we using it again in `geom_point()`?" The `aes()` in `ggplot()` are global mappings for the entire plot and apply to all layers. When we use `aes()` inside a specific geom like `geom_point()`, we're defining mappings that are specific to that layer. This allows for more granular control over how different layers of the plot behave.
+🤔 Wait, you might by thinking, "`aes()` is already defined in `ggplot()`, why are we using it again in `geom_point()`?" The `aes()` in `ggplot()` are global mappings for the entire plot and apply to all layers. When we use `aes()` inside a specific geom like `geom_point()`, we're defining mappings that are specific to that layer. This allows for more granular control over how different layers of the plot behave.
 
 `geom_point()` understands these aesthetics:
 
@@ -267,9 +265,7 @@ We've seen that `geom_point()` highlights individual data points. `geom_smooth()
 ?geom_smooth
 ```
 
-📜 The SYNTAX: 
-
-`geom_smooth(mapping = NULL, data = NULL, method = NULL, se = TRUE, ...)`
+📜 The SYNTAX: `geom_smooth(mapping = NULL, data = NULL, method = NULL, se = TRUE, ...)`
 
 Look at the argument `method`: This controls the smoothing method used. Common options include:
 
@@ -298,9 +294,7 @@ divorce_margarine %>%
 ?geom_histogram
 ```
 
-📜 The SYNTAX: 
-
-`geom_histogram(mapping = NULL, data = NULL, ..., binwidth = NULL, bins = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
+📜 The SYNTAX: `geom_histogram(mapping = NULL, data = NULL, ..., binwidth = NULL, bins = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
 
 Let's build our own data set to explore histograms.
 
@@ -359,12 +353,12 @@ Tallness %>%
 
 3. 🎯 The GOAL: Customize the histogram by setting `fill`, `color`, and `binwidth`.
 
-```{r}
+```{r , eval=FALSE}
 # ⚡Code Example: Customized Histogram
 Tallness %>%
   ggplot(aes(Height)) +                # only x for histograms
   geom_histogram(fill = "steelblue", 
-                 color = "white",      # white border gives gap between bars
+                 color = "white",      # white boarder gives gap between bars
                  binwidth = 0.5)       # Set bin width to 0.5
 ```
 
@@ -374,63 +368,21 @@ Tallness %>%
 
 🛠 Break Things! Test out your hand at adding aesthetics `geom_histogram()`  understands.
 
-## Density Plot
-
-Now we’ll look at a smooth version of the height distribution using a density curve.
-
-Density plots are smoothed versions of histograms that estimate the probability density function of a continuous variable. They are useful for visualizing the distribution shape without the binning artifacts of histograms.
-
-```{r , eval=FALSE}
-?geom_density
-```
-
-📜 The SYNTAX: 
-
-`geom_density(mapping = NULL, data = NULL, ..., na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
-
-🎯 The GOAL: Make a smooth density plot of heights in the `Tallness` data and emphasize that the vertical axis is density, not counts. Add a density layer that shows a smooth curve for the distribution of heights. Fill the area under the curve, make it partially transparent so the shape is not too heavy.
-
-```{r}
-# ⚡Code Example: Density Plot
-Tallness %>%
-  ggplot(aes(x = Height)) +
-  geom_density(fill     = "purple",
-               alpha    = 0.4,
-               color    = "purple",
-               linewidth = 1)
-```
-
-`geom_density()` uses kernel density estimation to create a smooth curve that represents the distribution of the data.
-
-- `x` is the variable whose distribution you want to smooth and is usually entered in `ggplot(aes())`.
-
-- `geom_density()` computes the vertical axis as density by default; the y-values are not mapped from a column.
-
-- `fill` sets the interior color of the density shape.
-
-- `alpha` controls transparency (0 = fully transparent, 1 = solid).
-
-- `color` sets the outline color.
-
-- `linewidth` controls the thickness of the outline.
-
 ## Overlaid Histograms
 
 Let's compare the two height distributions by overlaying histograms and using `fill = Country` to distinguish groups. 
 
-🎯 The GOAL: Compare height distributions between USA and CAN by overlaying two histograms using `fill = Country`. Let's store the graph as `tall_compared_fig`. Then, we'll print the figure to take a look. 
+🎯 The GOAL: Compare height distributions between USA and CAN by overlaying two histograms using `fill = Country`.  
 
 ```{r message=FALSE, warning=FALSE}
 # ⚡Code Example: Overlaid Histograms
-tall_compared_fig <- Tallness %>%
+Tallness %>%
   ggplot(aes(Height, fill = Country)) +
   geom_histogram(position = "identity", 
                  alpha = 0.6)           # Set transparency to see overlap
-# ✅ Print the figure
-print(tall_compared_fig)
 ```
 
-🗣 Comment: `fill = Country` in the global `aes()` tells `ggplot()` to make a separate histogram for each country with different fill colors, and automatic a legend. By default, `geom_histogram()` stacks groups. The `position = "identity"` instead puts the bars in the same x-scale so they overlap. The `alpha = 06` makes bars transparent (0 = invisible, 1 = solid), so we can see where the two distributions overlap. 
+🗣 Comment: `fill = Country` is mapped in the global `aes()`. That tells `ggplot()` to compute a separate histogram for each country, drawing the bars in different fill colors, and automatically creating a legend keyed to `Country`. By default, `geom_historgram()` uses `position = "stack"` to set groups on top of each other. By setting the `position = "identity"` instead draws the group histograms on the same x-scale, in the same locations, so the bars can overlap rather than stack. The `alpha` controls transparency of all bars to 0.6 (options: 0 == transparent, 1 == opaque). The 0.6 value lets us see where the two distributions overlap. 
 
 ## Boxplot
 
@@ -440,21 +392,17 @@ Boxplots summarize distributions using five statistics: minimum, first quartile 
 ?geom_boxplot
 ```
 
-📜 The SYNTAX: 
-
-`geom_boxplot(mapping = NULL, data = NULL, ..., outlier.color = NULL, outlier.shape = 19, outlier.size = 1.5, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
+📜 The SYNTAX: `geom_boxplot(mapping = NULL, data = NULL, ..., outlier.color = NULL, outlier.shape = 19, outlier.size = 1.5, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)`
 
 We can use boxplots to compare height distributions between USA and CAN.  
 
-🎯 The GOAL: Build side-by-side boxplots of height by country using `geom_boxplot()`. Map `Country` to the x-axis and `Height` to the y-axis. Use `fill = Country` to color the boxes by country and set `show.legend = FALSE` to hide the legend. We'll store the boxplot as `Tall_Box`.
+🎯 The GOAL: Build side-by-side boxplots of height by country using `geom_boxplot()`. Map `Country` to the x-axis and `Height` to the y-axis. Use `fill = Country` to color the boxes by country and set `show.legend = FALSE` to hide the legend.
 
-```{r}
+```{r , eval=FALSE}
 # ⚡Code Example: Boxplot
-Tall_Box <- Tallness %>%
+Tallness %>%
   ggplot(aes(Country, Height, fill = Country)) +
   geom_boxplot(show.legend = FALSE)
-# ✅Print the boxplot
-Tall_Box
 ```
 
 🗣 Comment: There are two boxes, one for each country, with USA maybe a bit higher median and wider spread. The countries appear on the x-axis and that each box shows median, IQR, and dots for each of the outliers.
@@ -463,25 +411,21 @@ Tall_Box
 
 We can enhance our plots by adding axis labels and applying themes for better aesthetics.
 
-`xlab()` and `ylab()` functions set the labels for the x and y axes, respectively. Simply type the desired label text as a string inside the function.
+`x_lab()` and `ylab()` functions set the labels for the x and y axes, respectively. Simply type the desired label text as a string inside the function.
 
-Additionally, `ggtitle()` adds a title to the plot.
-
-Type `?theme_bw` to explore available themes in `ggtheme {ggplot2}`
+Type `?ggtheme ` to explore available themes.
 
 🎯 The GOAL: Add axis labels and a light theme to the boxplot of height by country.
 
 
-```{r}
+```{r , eval=FALSE}
 # ⚡Code Example: Boxplot with labels and theme
-Tall_Box <- Tallness %>%
+Tallness %>%
   ggplot(aes(Country, Height, fill = Country)) +
   geom_boxplot(show.legend = FALSE) +
   xlab("North American Country") +
   ylab("Height (inches)") +
   ggplot2::theme_light()
-# ✅Print the boxplot
-Tall_Box
 ```
 
 🗣 Comment: `xlab()` and `ylab()` set axis labels. `ggplot2::theme_light()` applies light horizontal grid lines. (The `ggplot2::` prefix explicitly specifies that you're using the `theme_light()` function from the `ggplot2` package. This is useful when multiple packages have functions with the same name.)
@@ -490,7 +434,7 @@ Tall_Box
 
 To earn technical skill points, replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section. When you’re done, your workspace should contain FOUR new objects: `Pretty_Flowers`, `Petal_Spread`, `CO2_Graph`, `Tall_Density`. Run each section so that the requested objects appear in your Environment. Save and submit both the "your choice" file with your code (R, Rmd, or Qmd) and the data in your environment (RData). The highest points you can earn in the technical skill practice portion are 3.50. 
 
-For every code chunk you add or edit, use the **🎯/❓ Goal → ⚡Code attempts → ✅Checks (print the figures) → 🗣/🪞 Explain the code, the results or what you learned** structure to earn learning skill points. The highest learning skill points you can earn on this submission is 2.50.  
+For every code chunk you add or edit, use the **🎯/❓ Goal → Prediction → ⚡Code attempts → ✅Checks (print the figures) → 🗣/🪞 Explain the code, the results or what you learned** structure to earn learning skill points. The highest learning skill points you can earn on this submission is 2.50.  
 
 ## Task 0
 
@@ -504,11 +448,11 @@ Make sure your script includes code that attached `ggplot2`, `dplyr`, and `dslab
 
 List the three core `ggplot2` steps and write a short explanation of each step.
 
-✍️ EXPLANATION: "___"
+1. **Data**: 
 
-✍️ EXPLANATION: "___"
+2. **Aesthetics (`aes()`)**: 
 
-✍️ EXPLANATION: "___"
+3. **Geoms (`geom_*()`)**: 
 
 ## Task 2
 
@@ -519,7 +463,11 @@ Create a scatterplot from the built-in `iris` dataset, and save it in an object 
 
 ```{r, eval=FALSE}
 # ⚡Code 
-_____ <- _____
+Pretty_Flowers <- iris %>% 
+  ggplot(aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
+  geom_point(size = 3) + 
+  xlab("Sepal Length (cm)") + 
+  ylab("Petal Length (cm)")
 
 ```
 
@@ -532,29 +480,46 @@ Create a boxplot from the built-in iris dataset and store it in an object called
 
 ```{r, eval=FALSE}
 # ⚡Code 
-_____ <- _____
+Petal_Spread <- iris %>% 
+  ggplot(aes(x = Species, y = Petal.Width, fill = Species)) +
+  geom_boxplot(show.legend = FALSE)
 ```
 
 ## Task 4
 
 **Density plot: split + transparency**
 
-Create a density plot using the built-in `CO2` dataset and store the plot in an object called `CO2_Graph`. Put CO2 uptake on the horizontal axis. Use plant type to define separate smooth curves, so each plant type has its own density curve filled with a different color. Make the filled areas partially transparent so the curves can overlap and still be visible where they intersect. Finally, add the title “CO2 Uptake by Plant Type” (use `ggtitle()`) at the top of the plot.
+Create a density plot using the built-in `CO2` dataset and store the plot in an object called `CO2_Graph`. Put CO₂ uptake on the horizontal axis. Use plant type to define separate smooth curves, so each plant type has its own density curve filled with a different color. Make the filled areas partially transparent so the curves can overlap and still be visible where they intersect. Finally, add the title “CO2 Uptake by Plant Type” at the top of the plot.
 
 ```{r, eval=FALSE}
 # ⚡Code 
-_____ <- _____
+CO2_Graph <- CO2 %>% 
+  ggplot(aes(x = uptake, fill = Type)) + 
+  geom_density(alpha = 0.5) + 
+  ggtitle("CO2 Uptake by Plant Type")
+CO2_Graph
 ```
 
 ## Task 5
 
 ⚖️ Histogram vs. Density 
 
-Create a graph from the `heights` dataset and save it in an object called `Tall_Density`. Put height (in inches) on the horizontal axis. Draw a histogram of heights using bars that are 1 inch wide, filled in blue with white borders. Scale the histogram so that the vertical axis shows density (proportion), not raw counts. On top of this, add a smooth density curve that shows the overall shape of the height distribution, using a dark orange line. Fill the area under that density curve with the same dark orange color, but make it partially transparent so you can still see the blue histogram bars underneath. Label the x-axis “Height (inches)” and the y-axis “Density” (**Hint**: See Layering geoms and use `geom_histogram()` first, then `geom_density()`.)
+Create a graph from the `heights` dataset and save it in an object called `Tall_Density`. Put height (in inches) on the horizontal axis. Draw a histogram of heights using bars that are 1 inch wide, filled in blue with white borders. Scale the histogram so that the vertical axis shows density (proportion), not raw counts. On top of this, add a smooth density curve that shows the overall shape of the height distribution, using a dark orange line. Fill the area under that density curve with the same dark orange color, but make it partially transparent so you can still see the blue histogram bars underneath. Label the x-axis “Height (inches)” and the y-axis “Density”.
 
 ```{r, eval=FALSE}
 # ⚡Code 
-_____ <- _____
+Tall_Density <- heights %>% 
+  ggplot(aes(x = height)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 1,
+                 fill     = "blue",
+                 color    = "white") +
+  geom_density(color    = "darkorange",
+               fill     = "darkorange",
+               alpha    = 0.3,
+               linewidth = 1) +
+  xlab("Height (inches)") +
+  ylab("Density")
 ```
 
 ## Task 6
@@ -563,7 +528,7 @@ _____ <- _____
 
 📝 Write a short paragraph reflecting on when would a density curve be more useful than a histogram?
 
-✍️ EXPLANATION: "___"
+A density curve is more useful than a histogram when I care about seeing the overall shape of a distribution without the result being tied to a particular bin width or bar alignment. With a large sample, the density curve gives a smooth picture of where values are concentrated, which makes it easier to spot features like multiple peaks or skewness. It is also easier to compare two or more groups using density curves, because overlapping smooth curves are simpler to read than multiple sets of bars with different bin choices.
 
 # Save and Upload
 
@@ -579,7 +544,7 @@ _____ <- _____
 
 - Used color / fill to compare groups.
 
-- Applied labels and a light theme for clarity.
+- Applied labels and a minimal theme for clarity.
 
 - Saved plots as objects for submission.
 
