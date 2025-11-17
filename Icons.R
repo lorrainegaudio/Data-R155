@@ -193,6 +193,8 @@
 
 🐈
 
+🦃
+
 🖼Picture
 
 🧰 Tool box
@@ -200,3 +202,4 @@
 🦁
 
 🏈 Football or 🌊 River
+🔥

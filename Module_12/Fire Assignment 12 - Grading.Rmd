@@ -90,65 +90,29 @@ How far could a new wildfire run in 8 hours? How many new wild fire ignitions wi
 
 This is an optional two-part point-boost activity. You can work in groups but each person submits their own work independently. Please record group members within your document. 
 
-**Lesson Overview**
-
-By the end of this Point Boost Fire Activity you will be able to:
-
-1. 🧭 Organize – Set up a reproducible RStudio workflow (project, files, data, RData) that can be re-run on another machine.
-
-2. 🛠 Wrangle – Import the WHP sample data, create quantile-based hazard categories, and summarize areas and probabilities with tidy R code.
-
-3. 📈 Model – Specify and use lognormal models (p/q/d/r *lnorm* functions) to answer distance and tail-probability questions by hazard category.
-
-4. 🎲 Simulate – Build a multi-step Monte Carlo simulation (with `replicate()`) that mixes categories by area weights and estimates the chance of many fast-growing fires in a season.
-
-5. 🗣 Communicate – Knit a clear Rmd/Qmd notebook that explains assumptions, code choices, and results, with appropriate metadata and citations for data and help sources.
-
-6. 🪞 Reflect – Document troubleshooting, AI use, and learning-skill growth (curiosity, courage, tenacity, thoroughness, open-mindedness) through short memos embedded in the workflow.
-
 ## Assignment Directions
 
 Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. 
 
 1. **Technical Skill Points**
 
-You could earn *up to* **10** points in Technical skill. This assignment will require code covered in modules 1 through 13. You will load a CSV file, manipulate the data frame with `dplyr` verbs, simulate random numbers and visualize results. Additionally, you will be asked to use functions that were not covered in any modules. You will need to look up the function documentation and figure out how to use them on your own. The submission must include an Rmd (or Qmd), HTML report, and RData of the environment.
+You could earn *up to* **10** points in Technical skill. This assignment will require code covered in modules 1 through 13. You will load a CSV file, manipulate the data frame with `dplyr` verbs, simulate random numbers and visualize results. Additionally, you will be asked to use functions that were not covered in any modules. You will need to look up the function documentation and figure out how to use them on your own. The submission must include an HTML report and RData of the environment.
 
 2. **Learning Skill Points**
 
 You could earn up to **10** points Learning skill on this optional Point Boost assignment!
 
-**Gate**: R code with memos submitted.
-
-**Critical Checkpoint**: R code with memos submitted that meets all criteria below. ALL must be YES or the score is 0 (per section/part).
-
-Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment to met the Critical Checkpoint. 
-
-1. 🎯 **Goal** – In your own words, one sentence about what you are trying to do.
-
-2. ⚡ **Code** – Code that completes the task (replace each `____` with your own code).
-
-3. ✅ **Checks** – Code that convinces you your solution works (structure, counts, summaries, etc.).
-
-4.  🗣 **Comment** – 1–2 sentences either:
-  - data-focused (what you learned about the wildfire data), **or**
-  - code-focused (what the code does / why it works).
-
-**Supporting**
-
-- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+- Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment
 
 - 👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste). 
 
-- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
-
 - 🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
 
+- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+
+- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+
 - 🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.  
-
-- 💬 Prediction means you make hypotheses about what the code will do or what the data will look like before running it, and then reflect on whether your predictions were correct.
-
-- ✍️ Record what you tried, even if it didn’t work. This is proof of thoroughness and trustworthiness, prevents future duplication of errors, contextualizing successes, and exposes hidden discoveries (unanticipated effect).
 
 3. **Signature Assignment Option**
 
@@ -376,39 +340,23 @@ Explore and wrangling of the raw WHP sample data.
 
 ## Task 1
 
-**Load Data**
-
-Task instructions:
-
-1. Use **`readr`** to read the file `whp_raw_sample.csv` from your working directory.  
-
-2. Store the result in an object named **`county_raw`** in your Environment.  
-
-3. Run at least two **structural checks** to make sure the data imported correctly (for example: number of rows, variable names, a summary of key columns).  
-
-4. Write a short comment describing what kind of dataset `county_raw` is (size, what a row represents, high-level purpose).
-
-🎯 **Goal.**  
-_Write your own one-sentence goal here (e.g., what you want to load and understand)._
+🎯 Goal: Read the `whp_raw_sample.csv` using `readr`, storing it in your environment as `county_raw`.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-#⚡ Code: readr::read_csv
-____ # 1. e.g., load any needed package(s)
-____ # 2. e.g., read the CSV into county_raw
+⚡ Code
+library(readr)
+county_raw <- readr::read_csv("whp_raw_sample.csv")
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Explore Data
-____ # 3. e.g., structure or glimpse of county_raw
-____ # e.g., check column names or a summary of whp / cell_area_km2
+# ✅  Verify Ideas
+dplyr::glimpse(county_raw)
+colnames(county_raw)
+summary(county_raw$whp)
+nrow(county_raw)
 ```
 
-🗣 Comment (TODO).
-_In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful)._
-
-___
-
-### **Column meanings**
+🗣 Comment: `county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
 
 **whp** – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
 
@@ -418,83 +366,56 @@ ___
 
 **cell_area_km2** – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
 
-___
+🎯 Task 2 through 5 Goal: Compute quantile cut-points, label categories, and estimate probability (statewide area share) from this.
 
 ## Task 2
 
-**Basic data audit summaries**
+🎯 Goal: Use `dplyr::summarize()` to report the following about `county_raw`:
 
-Task instructions:
+- Number of rows
+- Number of missing values in `whp`
+- Minimum value of `cell_area_km2`
+- Maximum value of `cell_area_km2`
 
-1. Using `dplyr::summarize()` (or base R equivalents), compute and report the following for county_raw:
-
-- Total number of rows.
-
-- Number of missing values in `whp`.
-
-- Minimum value of `cell_area_km2`.
-
-- Maximum value of `cell_area_km2`.
-
-2. Store the summary tibble (or data frame) in a clearly named object (e.g., `county_summary`).
-
-🎯 Goal.
-_Write your own one-sentence goal about what you are summarizing._
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Code: summarize key audit quantities for county_raw
-____ # 1/2. assign county_summary and use county_raw
-____ # 1. compute n_rows
-____ # 1. compute n_na_whp
-____ # 1. compute min_area
-____ # 1. compute max_area
+# ⚡ Code: for dplyr::summarize
+county_raw %>%
+  summarize(
+    n_rows   = n(),
+    n_na_whp = sum(is.na(whp)),
+    min_area = min(cell_area_km2),
+    max_area = max(cell_area_km2)
+  )
 ```
 
-✅ Checks: print the summary object and confirm the summary makes sense.
-
-🗣 Comment (TODO).
-_In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.)._
+🗣 Comment: 
 
 ## Task 3
 
-**Compute WHP quantile edges** (category cut points)
+Compute WHP quantile edges (category cutpoints)
 
-Task instructions
+🎯 Goal: Use `quantile()` function from base R's `stats` package to compute the quantiles of the `whp` column in `county_raw`. Store the result as `e` for "edges".
 
-1. Use `stats::quantile()` on the `whp` column of `county_raw` to compute the quantiles for `prob` using `0, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99, 1.00`.
-
-2. Store the result in an object named `e` (for “edges”).
-
-3. Use` na.rm = TRUE` so missing values are ignored.
-
-4. Look at `e` and make sure it has 8 ordered values that look reasonable for a right-skewed variable.
+Create the seven category edges using the quantiles (0, .25, .50, .75, .90, .95, .99, 1.00).
 
 📜 The SYNTAX: quantile(x, probs, na.rm)
 
-🎯 Goal.
-_Write your own goal explaining quantiles/edges goal._
-
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: Base R stats::quantile 
-____ # 2. store WHP quantile edges in object e
-____ # 1. call quantile() on county_raw's whp column
-____ # 1. specify the probs vector
-____ # 3. include remove NA from calculation
+e <- stats::quantile(
+  county_raw$whp,
+  probs = c(0, .25, .50, .75, .90, .95, .99, 1),
+  na.rm = TRUE
+)
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ✅  Verify
-____ # print e
+e
 ```
 
-🗣 Comment (TODO).
-_In 1–2 sentences, describe what `e` represents and how these cut points will be used in later tasks._
-
-_Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
-
-___
-
-✅  Verify Option: Each element corresponds to a specific percentile:
+🗣 Comment: The `e` object now contains the cut-points for categorizing WHP into quantile-based bins.
 
 - `e[1]` = minimum WHP (0th percentile)
 
@@ -512,20 +433,21 @@ ___
 
 - `e[8]` = maximum WHP (100th percentile)
 
-
-___
-
 ## Task 4
 
-**Add a categorical WHP risk label**
+Add a Category label
 
-Task instructions:
+🎯 Goal: Use `dplyr::mutate()` and `dplyr::case_when()` to turn the numeric `whp` values in `county_raw` into an ordered categorical variable called `Category`, using the quantile edges `e` you computed in Task 3. Store the resultant data set as `county_cats`.
 
-1. Start from `county_raw`, create a new data frame called `county_cats`.
+1. Start from `county_raw`.
 
-2. Use `dplyr::mutate()` and `dplyr::case_when()` to add a new variable `Category` that assign a label based on `whp` and the edges in `e`.
+2. Use `mutate()` to add a new variable `Category`.
 
-3. Use the following intervals (closed on the left (>=), open on the right (<), except the last, which is closed on both sides (>=; <=)):
+3. Use `case_when()` to assign a label based on which interval of e each whp value falls into.
+
+4. Convert `Category` to an ordered factor so the levels follow the intended risk order.
+
+Each row will be assigned exactly one of these labels based on its `whp` value:
 
 - If a row’s `whp` value is *at least* the minimum WHP AND *less than* the 25th percentile, label it "Very Low".
 
@@ -541,80 +463,99 @@ Task instructions:
 
 - If `whp` is *at least* the 99th percentile AND *less than or equal to* the maximum WHP, label it "Ultra (Top 1%)".
 
-- If a value of `whp` does not fall in any of these ranges (e.g., `NA`), `Category` should be `NA`.
+If a value of whp does not fall in any of these ranges (e.g., `NA`), `Category` should be `NA`.
 
-4. Convert `Category` to an **ordered factor** so the levels follow the intended risk order.
-- `"Very Low"`, `"Low"`, `"Moderate"`, `"High"`, `"Very High"`, `"Extreme"`, `"Ultra (Top 1%)"`.
-
-🎯 Goal.
-_Write your own sentence(s) goal for turning numeric WHP into ordered risk categories._
-
+**Hint**: All intervals are closed on the left (`>=`) and open on the right (`<`), except the last one, which is closed on both sides (`>=` and `<=`).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code:  dplyr::mutate + dplyr::case_when
-____ # 1. assign county_cats and pipe county_raw into it 
-____ # 2. use mutate() to create Category 
-____ # 3. with case_when() and e[ ] bounds
-____ # 4. convert Category to an ordered factor with the specified levels
+county_cats <- county_raw %>%
+  mutate(
+    Category = case_when(
+      whp >= e[1] & whp <  e[2] ~ "Very Low",
+      whp >= e[2] & whp <  e[3] ~ "Low",
+      whp >= e[3] & whp <  e[4] ~ "Moderate",
+      whp >= e[4] & whp <  e[5] ~ "High",
+      whp >= e[5] & whp <  e[6] ~ "Very High",
+      whp >= e[6] & whp <  e[7] ~ "Extreme",
+      whp >= e[7] & whp <= e[8] ~ "Ultra (Top 1%)",
+      TRUE                      ~ NA_character_
+    ),
+    Category = factor(
+      Category,
+      levels = c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)"),
+      ordered = TRUE
+    )
+  )
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: confirm Category looks right
-____ # e.g., count() or table()
-____ # optional: str() or glimpse()
+# ✅  Verify
+county_cats %>% count(Category)
 ```
 
-🗣 Comment (TODO).
-_Either: (a) explain briefly how the `case_when` logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard._
-
-_Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+🗣 Comment: I used `case_when` to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The `cell_area_km2` column lets you compute true area easily.
 
 ## Task 5
 
-**Aggregate area and compute category probabilities**
+🎯 Goal: Use `dplyr::group_by()` and `dplyr::summarize()` to aggregate total area by `Category`, then compute `Probability` as each category’s share of the total statewide area. Store the result as `prob_tbl`.
 
-1. Start from `county_cats`
+1. Start from `county_cats` (the data set you created in Task 4, which already has `Category` and `cell_area_km2`).
 
-2. Use `dplyr::group_by()` with `Category`.
+2. Use `group_by()` so that all rows in the same `Category` are treated as a single group.
 
 3. Use `summarize()` to compute, for each `Category`:
 
-- `area_km2` equals the sum of `cell_area_km2`.
+- `area_km2`: the total area in square kilometers, as the sum of `cell_area_km2` across all cells in that category.
 
-- `n_cells` equals the number of grid cells using `n()`.
+- `n_cells`: the number of grid cells in that category using `n()`.
 
-- Use `.groups = "drop"` so that the result is ungrouped.
+- Use `.groups = "drop"` so that the result is no longer grouped after summarizing.
 
-4. Use `dplyr::mutate()` to create a new variable called `Probability` that is the `area_km2` divided by `sum(area_km2)`.
+4. Use mutate() to create a new variable called `Probability` that is the `area_km2` divided by `sum(area_km2)`.
 
-5. Use `dplyr::select()` to keep only `Category`, `Probability`, `area_km2`, `n_cells` in this order.
+This makes `Probability` the fraction of statewide area that falls in each `Category`. The probabilities across all categories should sum to 1 (up to rounding error).
 
-🎯 Goal.
-_Write your own one-sentence goal for summarizing WHP categories into areas and probabilities._
-
-💬 Prediction.
+5. Use `select()` to keep only the columns, in this order:
+`Category`, `Probability`, `area_km2`, `n_cells`.
 
 ```{r , eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
-____ # 1. store prob_tbl and pipe county_cats into it
-____ # 2. group_by()
-____ # 3. summarize()
-____ # 4. mutate())
-____ # 5. select()
+prob_tbl <- county_cats %>%
+  group_by(Category) %>%
+  summarize(
+    area_km2 = sum(cell_area_km2),
+    n_cells  = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    Probability = area_km2 / sum(area_km2)
+  ) %>%
+  select(Category, Probability, area_km2, n_cells)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: validate prob_tbl
-____ # print prob_tbl
-____ # check that probabilities sum to ~1
+# ✅  Verify
+prob_tbl
+sum(prob_tbl$Probability)
 ```
 
-🗣 Comment (TODO).
-_In 1–2 sentences, describe what `prob_tbl` tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”_
+🗣 Comment: The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
 
 # Part B
 
 The table below summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. The **Category** column lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. The **Probability** column is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance that a random ignition falls in that category.
+
+The table also defines a simple fire-spread scenario using "plausible values" derived from ChatGPT for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
+
+The **Normal mean (km)** and **Normal SD (km)** columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The **Mean log** and **SD log** columns give the parameters \( \mu \) and \( \sigma \) of a lognormal distance model in which
+
+\[
+\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
+\]
+
+Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, tab.cap='Table 1. Quantile-based WHP categories for Idaho and 8-hour spread distance parameters. Probability = statewide area share (% of valid raster area); distances in kilometers; WHP is unitless.'}
 library(terra); library(dplyr); library(readr); library(knitr); library(kableExtra)
@@ -674,25 +615,11 @@ kbl(param_tbl,
 
 ```
 
-The table also defines a simple fire-spread scenario using "plausible values" derived from ChatGPT for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
-
-If you are looking at the PDF, you will see mathematical notation. **You do not need to understand these equations to complete the tasks.** There are there for those who are studying statistics more deeply (e.g., your instructor). I've placed them in custom text boxes to set them apart. If you are looking at the HTML version, the equations will not be shown.
-
-\begin{customtextbox}
-
-The Normal mean (km) and Normal SD (km) columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The Mean log and SD log columns give the parameters \( \mu \) and \( \sigma \) of a lognormal distance model in which
-
-\[
-\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
-\]
-
-Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
-
-\end{customtextbox}
-
 ## Statistical Methods
 
 A continuous random variable is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km. 
+
+Throughout the assignment, you will see mathematical notation. You do not need to understand these equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor).
 
 \begin{customtextbox}
 
@@ -706,21 +633,19 @@ The probability that $X$ takes on a value in the interval $[a, b]$ is given by t
 
 \end{customtextbox}
 
-## Lognormal Distribution
+## Log Normal Distribution
 
-In this assignment, we will use **lognormal distribution** to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:
+In this assignment, we will use the lognormal distribution to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:
 
 ```{r , eval=FALSE}
 ?Lognormal
 ```
 
-## Task 1
-
-**Tail probability with `plnorm()`**
+### Task 1
 
 `plnorm()` computes the cumulative distribution function (CDF) for a lognormal distribution. It gives the probability that a lognormally distributed random variable is less than or equal to a certain value.
 
-❓ Question a: If a new ignition starts in a **High-hazard area**, what is the probability that its 8-hour straight-line spread is at least 10 km?
+❓ Question a: If a new ignition starts in a High-hazard area, what is the probability that its 8-hour straight-line spread is at least 10 km?
 
 \begin{customtextbox}
 
@@ -736,38 +661,22 @@ and in this problem, $\mathcal{f_{high}}(x)$ is the density of a lognormal distr
 
 \end{customtextbox}
 
-Task instructions
-
-1. Treat \(X\) as the 8-hour distance (km) for a new ignition in a High-hazard area.
-
-2. Model \(X\) with a lognormal distribution using the **High** row’s **Mean log** and **SD log** from **Table 1**.
-
-3. Use `plnorm()` with `lower.tail = FALSE` to compute  
-  \( P(X \ge 10) = P(X > 10) \).
-
-4.  Store the result as **`p_high_exact`**.
-
-5.  Check both the raw probability and the corresponding percentage.
-
-🎯 **Goal.**  
-_In your own words, state what you are finding the probability of, including time and distance and model type._
+🎯 Goal: Compute the exact probability that a new ignition in a High-hazard area spreads at least 10 km in 8 hours using the `plnorm()` function. Use the **High** row’s **Mean log** and **SD log** in **Table 1**. Set the lower.tail equal to FALSE. Store the result as `p_high_exact`.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Test: lognormal tail probability for High category
-____  # store p_high_exact, use plnorm(), 10 km threshold, High Mean log, High SD log
-
+# ⚡ Test: single lognormal, single threshold
+p_high_exact <- plnorm(10, meanlog = 1.907, sdlog = 0.280, lower.tail = FALSE)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: eexamine probability and percentage
-____ # display p_high_exact
-____ # convert p_high_exact to a percentage
+# ✅  Verify
+p_high_exact
+p_high_exact * 100  # as a percentage
 ```
 
-🗣 Comment (TODO).
-_Interpret what your probability means for High-hazard ignitions._
+🗣 Comment: The value 0.0788567 indicates a 7.9% chance that a new ignition in a High-hazard area will spread at least 10 km in 8 hours.
 
-## Task 2
+### Task 2
 
 `qlnorm()` computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.
 
@@ -795,35 +704,21 @@ and in this problem $\mathcal{f_{high}}(x)$ is the density of a lognormal distri
 
 \end{customtextbox}
 
-Task instructions
-
-1. Continue modeling the High-hazard 8-hour distance \(X\) with a lognormal distribution.
-
-2. Use `qlnorm()` to find the 95th percentile distance (km) for \(X\).
-
-3. Use the High row’s Mean log and SD log from Table 1.
-
-4. Store the result as `q95_high`.
-
-5. Check that this distance is plausible given the High category’s mean and SD.
-
-🎯 Goal.
-_Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below._
+🎯 Goal: Compute the distance such that there is a 95% chance the 8-hour spread is no more than this value and a 5% chance it exceeds it. Use `qlnorm()`. Set the probability to 0.95 and use the parameters in the **High** row’s **Mean log** and **SD log** in **Table 1**.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Test: 95th percentile distance for High category
-____ # store q95_high, use qlnorm() with p = 0.95, High Mean log, High SD log
+# ⚡ Test
+q90_high <- qlnorm(0.95, meanlog = 1.907, sdlog = 0.280)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: print and sanity-check the 95th percentile
-____ # display q95_high
+# ✅  Verify
+q90_high
 ```
 
-🗣 Comment (TODO).
-_Explain in words what this percentile distance means in the context of High-hazard ignitions._
+🗣 Comment: Based on this model, about 95% of new ignitions in High-hazard areas are expected to spread no more than roughly 10.7 km in 8 hours, and only about 5% would be expected to spread farther than 10.7 km in that time.
 
-## Task 3
+### Task 3
 
 `dlnorm()` computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
 
@@ -841,37 +736,22 @@ $$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
 
 \end{customtextbox}
 
-Task instructions
-
-1. Under the High-hazard lognormal model, use `dlnorm()` to compute the density at 3 km and 10 km.
-
-2. Use the High row’s Mean log and SD log from Table 1.
-
-3. Store the results as `d_3` and `d_10`.
-
-4. Compare `d_3` and `d_10` to decide which distance is more locally likely.
-
-🎯 Goal.
-_Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model._
+🎯 Goal: Compute the density at 3 km and 10 km using `dlnorm()`. Use the **High** row’s **Mean log** and **SD log** in **Table 1**.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Test: compare densities at 3 km and 10 km
-____ # compute d_3 using dlnorm() at 3 km with High Mean log, High SD log
-____ # compute d_10 using dlnorm() at 10 km with High Mean log, High SD log
+# ⚡ Test
 
+d_3  <- dlnorm(3,  meanlog = 1.907, sdlog = 0.280)
+d_10 <- dlnorm(10, meanlog = 1.907, sdlog = 0.280)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ✅ Checks: print and compare heights
-
-____ # display d_3
-____ # display d_10
+d_3; d_10  # compare heights
 ```
 
-🗣 Comment (TODO).
-_Use your two density values to describe which distance is more locally likely and what that implies._
+🗣 Comment: The density at 10 km $\mathcal{f_{high}}(10) \approx 0.0525$) is higher than at 3 km ($\mathcal{f_{high}}(3) \approx 0.00736$), which implies that values in a small neighborhood around 10 km are more likely than values in a small neighborhood around 3 km under the High-hazard lognormal model.
 
-## Task 4
+### Task 4
 
 `rlnorm()` generates random numbers from a lognormal distribution. **Note**: This task has three parts.
 
@@ -905,99 +785,52 @@ $$ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). $$
 
 \end{customtextbox}
 
-### Task 4.1
+Simulate distances for the **High** WHP category using a lognormal distribution. We'll estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours. 
 
-**Simulate High-hazard distances**
+1. 🎯 Goal: Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450. 
 
-Task instructions
-
-1. Use `rlnorm()` to simulate 450 independent 8-hour distances for ignitions in the High category.
-
-2. Use the High row’s Mean log and SD log from Table 1.
-
-3. Set a seed with `set.seed(2025)` for reproducibility.
-
-4. Store the simulated distances in a vector `High_Lognorm`.
-
-5. Summarize the simulated distances to understand their range and typical values.
-
-🎯 Goal.
-_Write your own sentence(s) goal for Task 4.1_.
-
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Test: simulate 8-hour distances for High category
-____ # set a seed for reproducibility
-____ # store High_Lognorm, use rlnorm() to generate 450 values with High Mean log, High SD log
+```{r , message=FALSE, warning=FALSE}
+set.seed(2025)
+# ⚡ Test
+High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: look at basic summaries
-____ # summarize High_Lognorm (e.g., summary())
-____ # confirm the length of High_Lognorm is 450)
+# ✅  Verify
+summary(High_Lognorm)
 ```
 
-🗣 Comment (TODO).
-_Describe briefly how the simulated distances behave (range, skew, center)._
+ 🗣 Comment
 
-### Task 4.2
+2. 🎯 Goal: Use `sum()` to find the count of new ignitions in the simulation where the wildfire is classified as ‘fast-growing’. 
 
-**Count fast-growing ignitions** (≥10 km)
-
-Task instructions:
-
-1. Define a “fast-growing” ignition as one with an 8-hour distance ≥ 10 km.
-
-2. Use a logical condition on `High_Lognorm` to identify fast-growing runs.
-
-3. Use `sum()` on that logical vector to count how many simulated ignitions are fast-growing.
-
-4. Store the count as `fast_growing_count`.
-
-5. Optionally, compute the simulated proportion of fast-growing ignitions and compare it to `p_high_exact` from Task 1.
-
-🎯 Goal.
-_Write your own sentence(s) goal for Task 4.2._
-
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡ Test: count fast-growing ignitions (≥ 10 km)
-____ # store as fast_growing_count,use sum() to count TRUEs of logical vector 
+```{r , message=FALSE, warning=FALSE}
+# ⚡ Test
+fast_growing_count <- sum(High_Lognorm >= 10)
 ```
-
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify: inspect count (and optional proportion)
-
-____ # display fast_growing_count
-____ # optionally compute the proportion fast_growing_count / length(High_Lognorm)
-```
-
-🗣 Comment (TODO).
-_Explain what your simulated count suggests about how many fast-growing events you might see in a season._
-
-### Task 4.3
-
-**Visualize simulated distances**
-
-Task instructions:
-
-1. Use `hist()` to create a histogram of `High_Lognorm`.
-
-2. Choose a reasonable bin setting and axis labels.
-
-3. Use the plot to comment on the distribution shape (e.g., skew, tail length).
-
-4. Connect the shape of the histogram to your numeric summaries from Task 4.1.
-
-🎯 Goal.
-_Write your own sentence(s) goal for visualizing the simulated High-hazard distances._
-
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
-# ⚡/✅ Code histogram of simulated High_Lognorm distances
-____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit
+# ✅  Verify
+fast_growing_count
 ```
 
-🗣 Comment (TODO).
-_In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model._
+🗣 Comment: Based on the simulation, we would expect approximately `r fast_growing_count` new ignitions in High-hazard areas to be classified as 'fast-growing' (spreading 10 km or more in 8 hours) this season.
+ 
+
+3. 🎯 Goal: Use `hist()` to create a histogram of `High_Lognorm`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
+
+The histogram is a discrete approximation to the empirical density of these 450 values. It counts how many simulated distances fall into each of several bins. In other words, it shows what the simulated sample looks like.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+hist(High_Lognorm,
+     col    = "blue",
+     main   = "Simulated 8-Hour Distances for High WHP (Log
+ Normal Model)",
+     xlab   = "Distance (km)")
+```
+
+ 🗣 Comment
 
 
 # Part C
@@ -1056,360 +889,238 @@ where $T^{(s)}$ is the simulated count of fast-growing ignitions in season $s$, 
 
 ## Task 1
 
-**Create category labels**
-**Task instructions**
-
-1. Using **Table 1**, create a character vector named **`labels`** that contains the seven wildfire hazard categories in the same order as the **Category** column.
-
-2. Make sure the spelling and capitalization of each label exactly matches Table 1.
-
-3. Check that the vector prints correctly.
-
-🎯 **Goal.**  
-_Write your own sentence(s) goal for creating a vector of category labels._
+🎯 Goal: Create a vector of category `labels` that describe the seven wildfire hazard categories as shown in the Category column of Table 1. 
 
 ```{r, eval=FALSE}
-# ⚡ Test: vector of category labels
-____  # create vector <- c( ... ) using the Category names from Table 1
+# ⚡ Test
+labels  <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)")
 ```
 
 ```{r, eval=FALSE}
-# ✅  Verify: inspect labels
-
-____ # display labels
-
+# ✅  Verify
+labels
 ```
-
-🗣 Comment (TODO).
-_Explain briefly why matching the order and spelling of these labels will matter later._
 
 
 ## Task 2
 
-**Create category probabilities**
-
-Task instructions
-
-1. Using the Probability column in Table 1 (as proportions that sum to 1), create a numeric vector **`prob`**.
-
-2. The entries of `prob` must be in the same order as `labels`.
-
-3. Check that the probabilities sum to 1 (within rounding error).
-
-🎯 Goal.
-_Write your own sentence(s) goal for building vector._
-
+🎯 Goal: Create a vector called `prob` with from the Probability column from Table 1. The order must match the order of `labels`.
 
 ```{r, eval=FALSE}
-# ⚡ Test: vector of category probabilities
-____ # create vector <- c( ... ) using the Probability column from Table 1
-
+# ⚡ Test
+prob    <- c(0.25, 0.25, 0.25, 0.15, 0.05, 0.04, 0.01)   # from Table 1, as proportions
 ```
 
 ```{r, eval=FALSE}
-# ✅  Verify: : confirm they form a valid distribution
-____ # display vector
-____ # check that sum() is 1
+# ✅  Verify
+sum(prob)  # should equal 1
 ```
-
 
 ## Task 3
 
-**Create lognormal parameter vectors**
-
-Task instructions
-
-1. From Table 1, read off the Mean log values for each category in the same order as `labels` and store them in a vector **`meanlog`**.
-
-2. Similarly, read off the SD log values and store them in a vector **`sdlog`**.
-
-3. Check that both vectors line up with **`labels`** (same length, same order).
-
-🎯 Goal.
-_Write your own sentence(s) goal for vectors._
+🎯 Goal: Create vectors of `meanlog` and `sdlog` parameters for the lognormal distribution for each category. The order must match the order of `labels`.
 
 ```{r, eval=FALSE}
-# ⚡ Test: vectors of lognormal parameters
-____ # create vector 1 <- c( ...) from the Mean log column
-____ # create vector 2 <- c( ...) from the SD log column
+# ⚡ Test
+meanlog <- c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310)
+sdlog   <- c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
 ```
 
 ```{r, eval=FALSE}
-# ✅  Verify: inspect and compare
-____ # display vector 1
-____ # display vector 2
-____ # check length of labels vector, with vector 1 and 2.
+# ✅  Verify
+meanlog
+sdlog
 ```
-
-🗣 Comment (TODO).
-_Describe any pattern you see_
 
 ## Task 4
 
-**Set global simulation constants**
-
-Task instructions
-
-1. Let **`N`** be the number of ignitions per season (use the value given in the problem statement).
-
-2. Choose a large number **`S`** of simulated seasons (as specified in the assignment).
-
-3. Set the “fast-growing” threshold **`k`** in km (use the value given in the problem statement).
-
-4. Store these three values in objects `N`, `S`, and `k`.
-
-🎯 Goal.
-_Write your own sentence(s) goal for setting up the core constants._ 
+🎯 Goal: Set the number of ignitions per season `N` to 450 and the number of simulations `S` to 100000. Also, set the fast threshold `k` to 10 km.
 
 ```{r, eval=FALSE}
-# ⚡ Test: number of ignitions, seasons, and fast threshold
-____ # set N to the number of ignitions per season 
-____ # set S to the number of simulated seasons
-____ # set k to the fast-run distance threshold in km 
+# ⚡ Test
+N <- 450
+S <- 100000
+k <- 10 
 ```
-
-```{r, eval=FALSE}
-# ✅  Verify: inspect constants
-____ # display N
-____ # display S
-____ # display k
-```
-
 
 ## Task 5
 
-**Sample categories for one season**
+🎯 Goal: Sample categories for one season
 
-Task instructions
+Simulate one season’s worth of categories, without any distances. Each ignition gets a hazard category chosen at random according to the statewide area weights in `prob`. Use `sample.int()` to sample indices from `1:length(labels)` and store them in a vector named `idx`. Then check the first few values and a frequency table to see how often each category appears.
 
-1. Simulate one season of ignitions by drawing `N` categories according to their probabilities.
-
-2. Use `sample.int()` (or `sample()`) to draw indices from `1:length(labels)` with replacement and probability vector `prob`.
-
-3. Store the category indices in a vector named **`idx`**.
-
-4. Use `table()` with `labels[idx]` to see how many ignitions fall into each category.
-
-🎯 Goal.
-_Write your own sentence(s) goal for simulating a single season’s mix of categories._
 
 ```{r, eval=FALSE}
-# ⚡ Test: sample category indices for one season
-____ # create idx using sample.int() (or sample()) with size = N, prob = prob
+# ⚡ Test
+idx <- sample.int(length(labels),
+                  size    = N,
+                  replace = TRUE,
+                  prob    = prob)
 ```
 
 ```{r, eval=FALSE}
-# ✅  Verify: examine realized category mix
-
-____ # inspect the first few indices
-____ # use table() to see counts per category
+# ✅  Verify
+table(labels[idx])
 ```
 
-🗣 Comment (TODO).
-_Compare your simulated category counts to the theoretical proportions from prob._
+🗣 Comment: 
 
 ## Task 6
 
-**Draw distances for one season**
+🎯 Goal: Draw distances for one season
 
-Task instructions
-
-1. For the same season, convert each category index in `idx` to an 8-hour distance using a lognormal model.
-
-2. Use `rlnorm()` to draw `N` distances.
-
-3. Use `meanlog[idx]` and `sdlog[idx]` so that each ignition uses the parameters for its own category.
-
-4. Store the distances in a vector **`d`**.
-
-5. Inspect the first few values and a summary of `d`.
-
-🎯 Goal.
-_Write your own sentence(s) goal for turning category indices into distances for one season._
+Next, turn those category indices into distances. For each ignition, use `rlnorm()` with the `meanlog` and `sdlog` for that ignition’s category. You do this by indexing the parameter vectors with `idx`. Store the simulated distances in a vector `d`, then look at the first few values and a summary.
 
 ```{r, eval=FALSE}
-# ⚡ Test: simulate distances for one season
-____ # store d, use rlnorm() with n = N, meanlog = meanlog[idx], sdlog = sdlog[idx]
+# ⚡ Test
+d <- rlnorm(N,
+            meanlog = meanlog[idx],
+            sdlog   = sdlog[idx])
 ```
 ```{r, eval=FALSE}
-# ✅  Verify: examine distances
-
-____ # show head()
-____ # summarize d 
+# ✅  Verify
+head(d)
+summary(d)
 ```
 
-🗣 Comment (TODO).
-_Describe what you notice about the distribution of distances across all categories._
+🗣 Comment: 
 
 ## Task 7
 
-**Count fast runs for one season**
+🎯 Goal: Count fast runs for one season
 
-Task instructions
-
-1. Using the vector `d`, mark which ignitions are “fast-growing” using the condition `d >= k`.
-
-2. Store the logical vector in **`fast_flags_one`**.
-
-3. Use `sum()` on `fast_flags_one` to count fast ignitions and store the result as **`fast_count_one`**.
-
-4. Compute `mean()` of `fast_flags_one` to get the fraction of fast ignitions.
-
-🎯 Goal.
-_Write your own sentence(s) goal for counting fast-growing ignitions._
+Now that you have one season of distances in `d`, count how many ignitions are “fast” (distance at least `k = 10` km). Use a logical comparison `d >= k` to mark fast runs with TRUE/FALSE, then wrap that in `sum()` to count how many TRUE values there are. Store this in `fast_count_one` and print it.
 
 ```{r, eval=FALSE}
-# ⚡ Test: count fast runs in one season
-____ # create fast_flags_one as a logical vector using d >= k
-____ # compute fast_count_one using sum() of fast_flags_one
+# ⚡ Test
+fast_flags_one  <- d >= k
+fast_count_one  <- sum(fast_flags_one)
 ```
 ```{r, eval=FALSE}
-# ✅  Verify: inspect count and proportion
-____ # display fast_count_one
-____ # optionally compute mean() of fast_flags_one to get proportion
+# ✅  Verify
+fast_count_one
+mean(fast_flags_one)
 
 ```
-
-🗣 Comment (TODO).
-Comment on how many fast runs you saw in this particular simulated season.
 
 ## Task 8
 
-**Bundle one-season logic in a single block**
-
 Braces `{ ... }` group several lines together so they act as one expression and return the final result.
 
-Task instructions
-
-1. Combine the one-season computation into a single block that:
-
-- samples `idx` for one season,
-
-- simulates distances `d`,
-
-- returns the count of fast ignitions.
-
-2. Wrap the block in braces `{}` and assign the result to **`fast_count_one`**.
-
-3. Run the block and confirm it returns a single number (the fast count).
-
-🎯 Goal.
-_Write your own sentence(s) goal for packaging the one-season simulation into one code block._
+🎯 Goal: Bundle the three steps above into one block of code that represents a single season. (1) sampling `idx`, (2) drawing `d`, and (3) counting fast ignitions. 
+Run it to make sure it still returns a single count.
 
 ```{r, eval=FALSE}
-# ⚡ Test: bundled one-season simulation returning a single fast count
-____ <- { #store vector and start block
-____ # sample idx for one season
-____ # simulate distances d using meanlog, sdlog with brackets and idx
-____ # return the count of d values that are greater than or equal to k
-} #end block
+# ⚡ Test
+fast_count_one <- {
+  idx <- sample.int(length(labels),
+                    size    = N,
+                    replace = TRUE,
+                    prob    = prob)
+  d   <- rlnorm(N,
+                meanlog = meanlog[idx],
+                sdlog   = sdlog[idx])
+  sum(d >= k)
+}
 ```
 ```{r, eval=FALSE}
-# ✅  Verify: confirm the block works
-____ # display fast_count_one
+# ✅  Verify
+fast_count_one
 ```
 
-🗣 Comment (TODO).
-_Explain why having this one-season block is useful when you move to many seasons._ 
-
-
-_Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+🗣 Comment: 
 
 ## Task 9
 
-**Use `replicate()` to simulate many seasons**
+🎯 Goal: Use `replicate()` to simulate many seasons.
 
-Task instructions
-
-1. Use `replicate()` to repeat your one-season block `S` times.
-
-2. Store the resulting vector of counts in **`counts_fast_mix`**.
-
-3. Compute the expected number of fast runs per season as the mean of `counts_fast_mix`.
-
-4. Estimate the probability that a season has at least 50 fast-growing events by computing the fraction of seasons where the count is ≥ 50.
-
-🎯 Goal.
-_Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires._
+Now that the one season computation works and returns a single count, use `replicate()` to repeat it `S` times. Store the vector of seasonal counts as `counts_fast_mix`. Then compute the expected number of fast runs per season and the probability that a season has at least 5 fast-growing events.
 
 ```{r, eval=FALSE}
-# ⚡ Test: many-season simulation with replicate()
+# ⚡ Test: Final, complete simulation
 set.seed(2025)
-____ # store resulting vector, use replicate() 
-____ # with n = number of seasons
-____ # and expr = { ... one-season block ... } as before
+counts_fast_mix <- replicate(
+  n = S,
+  expr = {
+    idx <- sample.int(length(labels), size = N, replace = TRUE, prob = prob)
+    d   <- rlnorm(N, meanlog = meanlog[idx], sdlog = sdlog[idx])
+    sum(d >= k)
+  }
 )
 ```
 ```{r, eval=FALSE}
 # ⚡ Test:  Answer Question
-# summarize seasonal fast counts and estimate probabilities
-____ # inspect summary() of counts_fast_mix
-____ # compute mean() for expected fast runs
-____ # compute mean() for Monte Carlo estimate of P(T >= 50)  
+prob_at_least_50 <- mean(counts_fast_mix >= 50)    # Monte Carlo estimate of P(T >= 50)  
 ```
 
-🗣 Comment (TODO).
-_Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words._
-
-_Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
 
 ## Task 10
 
-**Visualize the distribution of seasonal fast counts**
+🎯 Goal: Use `ggplot2::geom_histogram()` to create a histogram of `counts_fast_mix`. In one sentence, note how the shape matches your descriptive summaries in Task 1.
 
-Task instructions
-
-1. Use `ggplot2::geom_histogram()` (or base `hist()`) to plot a histogram of `counts_fast_mix`.
-
-2. If you use `ggplot2`, you could first build a small data frame with one column (`fast_count`).
-
-3. Clearly label the axes and choose a reasonable bin width.
-
-4. Draw a vertical line at 50 to mark the threshold and visually highlight seasons with ≥ 50 fast fires.
-
-5. Relate the shape of the histogram to your numeric summaries from Task 9.
-
-🎯 Goal.
-_Write your own sentence(s) goal for plotting the distribution of fast fires per season._
+ 
 
 ```{r, eval=FALSE}
-# ⚡ Test: histogram of seasonal fast counts
+# ⚡ Test
+library(ggplot2)
+threshold <- 50  # "at least 5 fast fires"
 
-____ # load ggplot2 if you choose to use it
-____ # create a data frame with a column fast_count = counts_fast_mix
+counts_df <- data.frame(
+  fast_count = counts_fast_mix
+)
 
-____ # build a histogram of fast_count (e.g., ggplot(...) + geom_histogram(...))
-____ # Add a vertical line at the threshold of 50 fast fires
+# Pick a reasonable y-position for the annotation (near the top of the tallest bar)
+max_y <- max(table(counts_df$fast_count))
+
+ggplot(counts_df, aes(x = fast_count)) +
+  geom_histogram(
+    binwidth = 1,                # one bin per integer count
+    boundary = -0.5,             # centers bins on 0, 1, 2, ...
+    color    = "white",
+    fill     = "steelblue"
+  ) +
+  geom_vline(
+    xintercept = threshold - 0.5,  # boundary between 4 and 5
+    linetype   = "dashed",
+    linewidth  = 0.8
+  ) +
+  annotate(
+    "text",
+    x      = threshold + 0.2,
+    y      = max_y * 0.9,   # use the precomputed max_y, not ..count..
+    label  = paste0("Seasons with \u2265 ", threshold, " fast fires"),
+    angle  = 90,
+    vjust  = 0.5,
+    hjust  = 0
+  ) +
+  labs(
+    title    = "Simulated number of fast-growing fires per season",
+    subtitle = paste0(
+      "Fast = distance \u2265 10 km in 8 hours; N = 450 ignitions per season\n",
+      "Estimated P(season has \u2265 ", threshold, " fast fires) \u2248 ",
+      sprintf('%.1f%%', 100 * prob_at_least_50)
+    ),
+    x        = "Number of fast-growing fires in a season",
+    y        = "Number of simulated seasons"
+  ) +
+  scale_x_continuous(
+    breaks = 0:max(counts_df$fast_count)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title      = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.text.x     = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  )
 ``` 
 
-```{r, eval=FALSE}
-# ✅  Verify: inspect histogram
-____ # display the histogram
-```
-
-🗣 Comment (TODO).
-_In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires._
 
 
 # Save and Upload
 
-Submit your (1) completed assignment notebook (R Markdown/Quarto file) (2) rendered HTML and (3) environment (RData) to Canvas. 
+
 
 # Today you practiced:
 
-- Importing raw data and auditing structure, missingness, and ranges.
 
-- Building quantile-based hazard categories with `mutate()`, `case_when()`, and ordered factors.
-
-- Summarizing area and probabilities by category with `group_by()`, `summarize()`, and inline calculations.
-
-- Working with lognormal models using `plnorm()`, `qlnorm()`, `dlnorm()`, and `rlnorm()` to answer distance and tail-probability questions.
-
-- Designing and running Monte Carlo simulations with `sample.int()`, vectorized parameters, and `replicate()`.
-
-- Visualizing simulated outcomes and checking model behavior with histograms.
-
-- Keeping a reproducible, memo-rich Rmd/Qmd workflow that documents assumptions, troubleshooting, and AI use.
-
-🛠 Keep pushing further. Clean imports, clear summaries, probability models, and simulations are exactly what you’ll need for larger projects and future R courses.
 
