@@ -1,0 +1,28 @@
+---
+title: "Dirty vs Clean Environment"
+author: "Lorraine Gaudio"
+date: "2025-11-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dirty vs clean Environment
+
+In R, the environment can be either "dirty" or "clean" depending on the presence of objects and variables. A dirty environment contains old objects. If you save your workspace when you exit R, these objects will be reloaded the next time you start R, which can lead to a dirty environment. When you share your RData files with your collaborators, these old objects can cause confusion. 
+
+A clean environment, on the other hand, starts fresh without any pre-existing objects. For reproducibility and clarity, ensure that only the code and data explicitly loaded or created during the current session are present.
+
+
+To maintain a clean environment, you can use the following practices:
+
+1. **Clear the workspace**: Use `rm(list = ls())` at the beginning of your script to remove all objects from the environment.
+
+2. **Use R scripts (or RMD/QMD)**: Instead of relying on saved workspaces, use R scripts to document and reproduce your analyses. This ensures that all necessary objects are created from scratch each time the script is run.
+
+By following these practices, you can ensure that your R environment remains clean and free from old objects that could interfere with your analyses.
+
+
+
