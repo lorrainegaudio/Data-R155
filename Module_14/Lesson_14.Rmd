@@ -82,7 +82,7 @@ output:
 ```
 
 
-# (maybe a Winter Icon) Welcome Back to R! 
+# ❄️ Almost done with Intro to R! 
 
 In lesson 14, We explore thematic coding and data filtering. Many datasets include text—movie genres, country names, survey answers. You often need to *find* rows that mention certain words  or exact terms. Today you’ll learn to combine `str_detect()` with `dplyr::filter()` on both **row names** and **character columns**, using word boundaries (`\\b`) and alternation (`|`) so your patterns are precise.
 
@@ -240,7 +240,7 @@ match_counts
 Load the lesson corpus (Resnik & Elliott passages):
 
 ```{r , eval=FALSE}
-load("Lesson_13_Workspace.RData")  # creates Science_Values
+load("Lesson_14_Workspace.RData")  # creates Science_Values
 ```
 
 ```{r , eval=FALSE}
@@ -325,13 +325,13 @@ When you’re done, your workspace should contain SIX new objects: `Merc_cars`, 
 
 📦 Packages
 
-Attach `stringr`, `dplyr`, and `dslabs` and load `Lesson_13_Workspace.RData`
+Attach `stringr`, `dplyr`, and `dslabs` and load `Lesson_14_Workspace.RData`
 
 ```{r, eval=FALSE}
 ____(____) 
 ____(____)
 ____(____)
-load("Lesson_13_Workspace.RData")
+load("Lesson_14_Workspace.RData")
 ```
 
 ## Task 1
