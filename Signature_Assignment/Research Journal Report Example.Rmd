@@ -1010,4 +1010,139 @@ summary_table
 🗣 The summary table is grouped by study area and AI experience. There are 6 types of AI experience and two study areas. This means that there could have been twelve rows. There are only 10 rows because the Social Sciences group does not include an AI experience categories of no answer or advanced adopter. The table shows frequency counts and mean curiosity scores. 
 
 
+### Graphs
+
+```{r}
+# Load packages
+library(ggplot2)
+library(forcats)
+```
+
+
+#### Mean Curiosity by Adopter Group and Study Area
+
+Goal: Compare mean curiosity across adopter groups, separately for each Study Area, and show how many people are in each cell. 
+
+```{r}
+# ⚡ Code
+summary_table_plot <- summary_table |>
+  filter(!is.na(`AI Experience`))
+
+curiosity_summary_plot <- summary_table %>%
+  filter(!is.na(`AI Experience`)) %>%
+  mutate(
+    `AI Experience` = factor(
+      `AI Experience`,
+      levels = c(
+        "Non-Adopter",
+        "Observer",
+        "Private Adopter",
+        "Aspiring Adopter",
+        "Advanced Adopter"
+      )
+    )
+  ) %>%
+  ggplot(
+    aes(x = `AI Experience`,
+        y = `Mean Curiosity Score`,
+        group = `Study Area`,
+        shape = `Study Area`,
+        linetype = `Study Area`)
+  ) +
+  geom_line(linewidth = 1) +
+  geom_point(aes(size = Count)) +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_size_continuous(range = c(2, 6)) +
+  labs(
+    title = "Mean curiosity by AI experience and study area",
+    x = "AI Experience",
+    y = "Mean Curiosity (0–100)",
+    size = "n respondents"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    axis.text.x = element_text(angle = 30, hjust = 1)
+  )
+```
+
+```{r}
+# ✅ Print figure
+curiosity_summary_plot
+```
+
+🗣 The figure compares mean curiosity scores across AI adopter groups for Natural Sciences and Social Sciences, with point size reflecting how many respondents are in each cell. There is likely no significant difference. In the Social Sciences, the mean curiosity rises steadily from Non-Adopters to Aspiring Adopters. In the Natural Sciences, the pattern is less monotonic: curiosity peaks among Observers, dips for Private Adopters, rises again for Aspiring Adopters, and then drops for Advanced Adopters, though these latter groups have relatively small sample sizes. This suggests that AI experience is not generally associated with higher curiosity. The relationship may differ by study area and is more complex than a simple linear increase.
+
+#### Curiosity by Adopter Group
+
+🎯 Goal
+Visualize how curiosity about generative AI (slider_curiosity, 0–100) changes across adoption stages, to see whether more engaged adopters report systematically higher curiosity and where that expected monotonic pattern breaks down.
+
+💬 I expect curiosity to generally increase along this sequence. The plot should make it easy to see where any group deviates from that monotonic pattern (e.g., a surprisingly low or high group).
+
+```{r}
+# Load packages
+library(ggplot2)
+library(forcats)
+
+# ⚡ Code
+curiosity_data <- subset_data %>%
+  filter(!is.na(adopter_group_short),
+         !is.na(slider_curiosity)) %>%
+  mutate(
+    adopter_group_short = fct_relevel(
+      adopter_group_short,
+      "Prefer not to answer",
+      "Non-Adopter",
+      "Observer",
+      "Private",
+      "Aspiring",
+      "Advanced"
+    )
+  )
+
+curiosity_plot <- ggplot(
+  curiosity_data,
+  aes(x = adopter_group_short, y = slider_curiosity)
+) +
+  # raw points
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3, size = 1) +
+  # mean ± SE
+  stat_summary(
+    fun = mean,
+    fun.min = \(x) mean(x) - sd(x)/sqrt(length(x)),
+    fun.max = \(x) mean(x) + sd(x)/sqrt(length(x)),
+    geom = "errorbar",
+    width = 0.15
+  ) +
+  stat_summary(
+    fun = mean,
+    geom = "line",
+    aes(group = 1),
+    linewidth = 1
+  ) +
+  stat_summary(
+    fun = mean,
+    geom = "point",
+    size = 2.5
+  ) +
+  coord_cartesian(ylim = c(0, 100)) +
+  labs(
+    title = "Curiosity by adopter group",
+    x = "Adopter group",
+    y = "Curiosity (0–100)"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    axis.text.x = element_text(angle = 30, hjust = 1)
+  )
+```
+
+```{r}
+# ✅ Print figure
+curiosity_plot
+```
+
+
+🗣 The figure shows individual curiosity scores (gray points) and group means with standard-error bars across adopter groups. Curiosity is generally high overall, but it does not increase monotonically with adoption: Observers and Aspiring Adopters report the highest mean curiosity, while Private and Advanced Adopters are somewhat lower despite their greater use of AI. Non-Adopters fall in the middle of the distribution. This pattern suggests general curiosity rating is not associated with the stages of adoption.
+
 
