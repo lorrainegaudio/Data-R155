@@ -149,7 +149,7 @@ terraOptions(progress = 0)           # terra: no text progress
 options(tigris_use_cache = TRUE)     # tigris: avoid re-download chatter
 
 
-whp_idaho <- rast("C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_13/whp_id.tif") 
+whp_idaho <- rast("whp_id.tif") 
 
 
 state_bounds <- states() %>% ## download state cartographic boundaries form the TIGER shapefiles
@@ -1060,7 +1060,7 @@ prob_at_least_50 <- mean(counts_fast_mix >= 50)    # Monte Carlo estimate of P(T
 
  
 
-```{r, eval=FALSE}
+```{r}
 # ⚡ Test
 library(ggplot2)
 threshold <- 50  # "at least 5 fast fires"
