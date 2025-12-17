@@ -1,6 +1,6 @@
 ✔️ Nice!
   
-✅ 
+✅  Thoroughness
   
 ➡ 
 
@@ -49,7 +49,7 @@
 
 🕓
 
-💡
+💡 **Tip:**
 
 🔗 Link
 
@@ -128,6 +128,8 @@
 📎
 
 ✍️ Practice:
+  
+✍️ Transparency
 
 💾
 
@@ -135,9 +137,9 @@
 
 🧐 NOTICE: 
   
-🤔 Reflect:
+🤔 Open-mindedness
 
-🧭
+🧭 Autonomy
 
 🧩 Explanation: 
   
@@ -145,7 +147,7 @@
 
 🌟
 
-💪
+💪 Tenacity
 
 ⏫  Level UP
 
@@ -187,7 +189,9 @@
 
 🍕
 
-🐱 😻 😿 😽 😸 🐾 🐈 
+🐱 Curiosity
+
+😻 😿 😽 😸 🐾 🐈 
 
 🐈‍⬛
 
@@ -199,7 +203,7 @@
 
 🧰 Tool box
 
-🦁
+🦁 Courage
 
 🏈 Football or 🌊 River
 🔥

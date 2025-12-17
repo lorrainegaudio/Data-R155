@@ -86,17 +86,43 @@ output:
 
 In the next few minutes you will learn how to:
 
+- 🔍 Follow R's object-naming rules.
+
 - 📍 Run code from a script or the console.
-
-- ⚡ Do simple arithmetic in R.
-
-- 🛠 Create and inspect objects with the assignment operator (`<-`).
 
 - 📊 Combine words with the `paste()` function.
 
-- 📦 Save your workspace so nothing is lost.
+- 💪 Practice resiliency through documenting tenacity on memos.
 
-- 🔍 Follow R's object-naming rules.
+# Tenacity
+
+Tenacity is the learning skill of continuing with serious, honest effort when the work gets uncomfortable—without spiraling emotionally or pretending the problem isn’t there. It shows up when you persist through obstacles (confusion, errors, frustration), revise your approach, and know when to seek help after genuine effort rather than quitting too early or grinding aimlessly (King, 2021; Baehr, 2022).
+
+Tenacity is not “never give up.” It’s productive persistence.
+
+## Why R is Challenging
+
+R is not hard because it’s mysterious. It’s hard because it’s precise. Small mistakes (a missing parenthesis, a comma in the wrong place, a misspelled object name) produce errors, and those errors are not personal—they’re information.
+
+Early in Module 1, you may have encounter friction in exactly the places beginners expect to be “simple”:
+
+- Installing or updating R/RStudio
+
+- Saving and submitting scripts and file to Canvas 
+
+- Creating objects and then getting object not found errors
+
+If you treat every error as evidence you “can’t code,” you will stall. Tenacity is what keeps you moving long enough for the patterns to become familiar (King, 2021).
+
+## Two Ways of Getting Stuck
+
+1) Giving up too early (irresolution).
+This looks like skipping checks, continuing “halfway,” or abandoning the task the moment you feel lost (King, 2021). In R, that often becomes: running code you don’t understand, hoping it works, and stacking confusion.
+
+2) Pushing too long (intransigence).
+This looks like repeating the same approach for too long even though it isn’t working, refusing to change strategy, and refusing help (King, 2021). In R, that often becomes: re-running the same broken line 30 times.
+
+Tenacity lives in the middle: persist, then recalibrate.
 
 # Running Code
 

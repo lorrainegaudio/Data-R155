@@ -29,7 +29,25 @@ Over seven weeks, you will learn to use R with the desktop version of RStudio to
 
 The course is not only about code. Each module asks you to document your thinking as you work: stating goals, making predictions, and writing short memos about what you tried, what failed, and what finally worked. You will practice asking questions, persisting through bugs, revisiting your reasoning and examine how and when to use AI tools as part of your workflow. Throughout, you will be expected to type your own code, to disclose when you consult outside resources (including AI), and to treat reproducibility and integrity as central parts of doing data work, not as afterthoughts.
 
-# Required Software
+# Why Learn R?
+
+R is one of the most widely used programming languages for data analysis, statistics, and scientific research. It is popular among statisticians, data scientists, and researchers due to its powerful capabilities for data manipulation, visualization, and statistical modeling. Here are some reasons why learning R is beneficial:
+
+- **Open Source and Free**: R is open-source software, which means it is freely available to anyone. This makes it accessible to students, researchers, and professionals without the need for expensive licenses.
+
+- **Extensive Package Ecosystem**: R has a vast ecosystem of packages (libraries) that extend its functionality. The Comprehensive R Archive Network (CRAN) hosts thousands of packages for various statistical techniques, data visualization, machine learning, and more.
+
+- **Data Visualization**: R has powerful libraries like `ggplot2` that allow users to create high-quality and customizable visualizations. This is essential for effectively communicating data insights.
+
+- **Statistical Analysis**: R is designed for statistical computing and provides a wide range of statistical functions and models. It is widely used in academia and research for statistical analysis.
+
+- **Reproducible Research**: R supports reproducible research practices through tools like R Markdown, which allows users to combine code, text, and visualizations in a single document.
+
+- **Active Community**: R has a large and active community of users and developers who contribute to forums, blogs, and online resources. This makes it easy to find help and support when learning R.
+
+- **Integration with Other Tools**: R can be integrated with other programming languages (like Python and C++) and tools (like databases and web applications), making it versatile for various data workflows.
+
+# Acquiring the Software
 
 Lessons are hands-on. To follow along, you must have both **R** and **RStudio** installed on your own computer. These are two separate pieces of software that work together. They run on Windows, macOS, and Linux.
 
@@ -81,208 +99,6 @@ If you prefer a video walkthrough, you can watch a short tutorial:
 
 **Linux**:
 [How To Install R and RStudio on Ubuntu 24.04 LTS](https://www.youtube.com/watch?v=7RSq4uuS36A)
-
-# RStudio Interface
-
-Open **RStudio Desktop** and follow along by typing in the code examples below. 
-
-![Figure 2. The RStudio icon on Windows.](RStudio_Logo.png)
-
-
-You should see a window with four main panes (sections).
-
-1. **Console** – where R runs commands and shows results  
-2. **Environment** – where you can see the objects (data, vectors, functions) in your current session  
-3. **Script Editor (Source)** – where you write and save your R scripts and notebooks 
-4. **Files and Help** – where you browse files and access plots, packages, and help pages
-
-![Figure 3. The RStudio interface with four panes: Console, Environment, Script Editor, and Files/Help.](r_studio.png)
-
-*Tip.* If your layout looks different, that’s okay—RStudio lets you move panes. Look at the **tab labels** in each pane (for example, *Console*, *Environment*, *Files*, *Help*) to identify them. You can always reset the layout later using **Tools → Global Options → Pane Layout**.
- 
-
-## Console
-
-The Console is where R runs commands. 
-
-🎯 Try a few calculations.
-
-```{r eval=FALSE}
-# ⚡ Type this in the Console and press Enter
-2 + 2
-3 * (5 + 1)
-10 / 4
-sqrt(81)
-```
-
-![Figure 3. The RStudio Console pane running simple calculations.](r_studio_console.png)
-
-🗣 R prints results immediately. 
-
-💡 If you make a typo, use the **Up/Down arrow keys** to go back through previous commands, edit the line, and press Enter to re-run it.
-
-## Global Environment
-
-During a session, R creates **objects** (such as numbers, vectors, data tables, or models) only when you tell it to store a result. The **Environment** pane lists all of the objects that currently exist in your R session and gives a quick preview of their contents.
-
-### Naming and Storing Results
-
-The assignment operator `<-` is used to **store** a result in an object (a named container). This is how you give a result a name so you can reuse it later.
-
-🎯 Use `<-` to store the result of `2 + 2` in an object named `value`.
-
-```{r}
-# ⚡ Type this in the Console and press Enter
-value <- 2 + 2
-```
-
-![Figure 4. The RStudio Environment pane showing an object named "value."](environment.png)
-
-🗣 A new object called `value` appears in the Environment pane, with its stored value. Notice that nothing printed in the Console when you ran the assignment; the result was saved instead of displayed. The Environment pane helps you track which names currently exist.
-
-🎯 Print the stored value by typing the name of the object in the console and pressing Enter.
-
-```{r eval=FALSE}
-# ✅ 
-value
-```
-
-![Figure 5. The RStudio Console pane printing the value of the object "value."](environment_print.png)
-
-### Using Objects in Calculations
-
-Objects behave like reusable building blocks: once you have stored a value in an object, you can use that object inside new calculations.
-
-🎯 Create a new object named `total` that uses the existing `value` object in a calculation.
-
-```{r}
-# ⚡  Type this in the Console and press Enter
-total <- 3 * (5 + value)
-```
-
-![Figure 6. The RStudio Environment pane showing two objects: "value" and "total."](environment_total.png)
-
-🗣 The new object named `total` appears in the Environment pane containing the single value "27". You can now use total in later commands the same way—by typing its name in the Console or inside other expressions.
-
-### Saving Objects
-
-By default, RStudio does not save your workspace (the objects in your Environment) when you close it. To save objects in your Environment for future sessions, you can use the `save()` function or click the floppy disk icon in the environment pane.
-
-Before you save, you will need to know where your working directory is. You can check this with:
-
-```{r eval=FALSE}
-getwd()  # current working directory
-```
-
-
-
-🎯 Save your entire workspace to a file named `workspace.RData` in your working directory.
-
-```{r}
-
-# Save the entire workspace
-save.image(file = "workspace.RData")
-```
-
-
-### Removing Objects
-
-
-You can view or remove items:
-
-```{r}
-# Look at what's in the environment
-ls()
-
-# Remove one object 
-rm(total)
-```
-
-## Script Editor (Source)
-
-To document and track your work, use the Script Editor (Source pane). Here, you can write and save R code in a script file.
-
-
-To create a new script, click the "New File" icon (or use Ctrl+Shift+N). Manually type in the following script.
-
-```{r}
-# install_r_script.R
-# Lines that start with # are comments for humans, not code for R to run.
-
-# 1) Do some math
-a <- 6 * 7
-b <- a + 5
-result <- b / 3
-
-# 2) Check the results
-a
-b
-result
-
-# 3) A tiny vector example
-scores <- c(88, 92, 76, 95)
-mean(scores)   # average
-length(scores) # how many values?
-```
-
-Running code from a script (order matters!)
-
-1. Place your cursor on a line and click Run (or press Ctrl+Enter on Windows/Linux or Cmd+Return on macOS) to send that line to the Console where it executes.
-
-2. Select multiple lines to run them together.
-
-3. Run in order from top to bottom so that objects (like a, b, scores) exist before you use them.
-
-Pro move: You can quickly comment/uncomment selected lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).
-
-## Files
-
-Now save your script it with Ctrl+S. Navigate your folder system to find a good place to save it, like your Documents folder for this course. Name it `firstlastname_install_r_script.R`.
-
-The Files pane shows files in your current working directory. You can navigate folders, open files, and manage your workspace here. 
-
-```{r eval = FALSE}
-getwd()        # current working directory (matches what Files is showing)
-```
-
-```{r}
-# setwd("C:/Users/YourName/Documents/") # change to your desired folder
-```
-
-Note: Students using OneDrive may find issues navigating the folder system. 
-
-## RStudio Projects
-
-RStudio Projects help you organize your work. They create a self-contained environment with its own working directory, making it easier to manage files and settings. It's best practice to use a separate project per course or project. A project keeps all files—scripts, data, outputs—in one self-contained folder, making things organized, reproducible, and shareable. Using an RStudio project eliminates the need for setwd(). Instead, file paths can be relative to the project folder, which makes scripts more portable.
-
-1. Go to File → New Project…
-
-2. In the dialog that appears, choose “New Directory”.
-
-3. Select “Empty Project” (simplest for begginers) 
-
-4. Give your project a meaningful name like "Intro_to_R" and choose where it’ll be on your computer.
-
-5. Click Create Project.
-
-- This makes a new folder at the chosen location.
-
-- Inside this folder, RStudio creates a .Rproj file 
-
-6. RStudio automatically sets your working directory to this new project folder. Everything you read or write in R will happen here. Confirm with:
-
-```{r, eval=FALSE}
-getwd()  # should show your new project folder
-```
-
-Close the project by going to File → Close Project.
-
-Practice opening the project again by 
-
-1. Closing RStudio. Now find your project folder in your file system and double-click the .Rproj file and this will open RStudio.
-
-2. Going to File → Open Project and selecting the .Rproj file you just created.
-
 
 
 
