@@ -1,0 +1,116 @@
+---
+title: "Glossary"
+author: "Lorraine Gaudio"
+date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# A
+
+**Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Assignment Operator**: The symbol `<-` is used to assign values to variables in R. It indicates that the value on the right should be stored in the variable on the left. The less common `->` assigns the value on the left into the name on the right.
+
+# B
+
+# C
+
+**Console Pane**: The pane where R executes commands and prints output. Anything you type and run here is evaluated immediately, and messages, warnings, errors, and results appear here.
+
+# D
+
+# E
+
+**Environment Pane**: The pane that lists the objects currently stored in memory for your session (for example, data frames, vectors, and functions). It helps you check what exists, inspect object names/types, and remove or manage objects.
+
+# F
+
+**Files Pane** and Help – Tabs/panes used to navigate your project folders and view supporting information. Files lets you browse, open, rename, and manage files; Help shows documentation for functions and packages (including searchable help pages).
+
+**Functions**: Reusable blocks of code that perform specific tasks. Functions can take inputs (arguments) and return outputs. R has many built-in functions, and you can also create your own.
+
+
+
+# G
+
+**Global Options**: A settings window that controls how RStudio behaves across projects and sessions. This is where you can set defaults like appearance, saving behavior, code formatting, and how RStudio runs R.
+
+# H
+
+**Help**: Located in the Files/Plots/Packages/Help pane, this tab provides access to R documentation, package vignettes, and search functionality to find help topics related to R functions and packages.
+
+# I
+
+# J
+
+# K
+
+# L
+
+# M
+
+# N
+
+# O
+
+**Objects**: The variables, data frames, functions, and other items that you create and store in your R environment during a session. These objects can be viewed and managed in the Environment pane.
+
+# P
+
+**Panes**: The four main sections of the RStudio interface: Source, Console, Environment/History, and Files/Plots/Packages/Help. Each pane serves a specific purpose for coding, executing commands, managing objects, and accessing resources.
+
+**Pane Layout**: The section in Global Options where you choose which tabs appear in each pane and where panes sit on the screen. These settings that let you reposition items like Console, Source, Environment, Files, Plots, and Help to match your workflow.
+
+# Q
+
+# R
+
+# S
+
+**Script Editor Pane**: Source; The pane where you write, edit, and save code in script files (typically .R) and author documents like R Markdown/Quarto notebooks. Code written here can be run line-by-line or in chunks without retyping it in the Console.
+
+**Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
+
+# T
+
+**Tokens**: The smallest meaningful pieces of code that R reads and interprets when it parses a line. Tokens include things like names (mean), numbers (`3.14`), strings (`"text"`), operators (`<-`, `+`), parentheses (`(`,`)`), commas (`,`), and brackets (`[`, `[[`, `{`). Whitespace usually just separates tokens for readability and is otherwise ignored.
+
+**Tools**: The top-menu item that provides access to settings and helper features in RStudio. It is the place you go to change preferences, install tools, and access developer utilities. This menu that groups commands for customizing the IDE and running support tasks (for example, options, addins, and project tools).
+
+# U
+
+# V
+
+**Variables**: See Objects; data values in R. Variables can hold different types of data, such as numbers, text, or more complex structures like data frames and lists. 
+
+# W
+
+**Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
+
+# X
+
+# Y
+
+# Z
+
+
+

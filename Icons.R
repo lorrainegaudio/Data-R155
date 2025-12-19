@@ -71,6 +71,12 @@
 
 📥 Download
 
+📤 Upload 
+
+📍 getwd()
+
+📌 setwd() 
+
 📂
 
 🗂️ Project Folder 
@@ -84,6 +90,8 @@
 🌐 Public 
 
 📘 
+
+🖥 Open RStudio
 
 📄 Open the PDF
 

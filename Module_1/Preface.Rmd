@@ -87,6 +87,9 @@ c. **Linux**: Select the installer that matches your Linux distribution (for exa
 
 3. After installation, open **RStudio Desktop**. It should automatically detect the version of R you already installed. If RStudio does not start or cannot find R, reinstall R and then reopen RStudio.
 
+
+![Figure 2. The RStudio icon on Windows.](RStudio_Logo.png)
+
 ## Intallation Video Tutorials
 
 If you prefer a video walkthrough, you can watch a short tutorial:

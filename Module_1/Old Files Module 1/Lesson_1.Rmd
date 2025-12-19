@@ -143,24 +143,6 @@ Documenting your work allows you and other to understand how you came to your re
 
 To add comments in an R script, simply use the # symbol at the beginning of a line to indicate that the following text is a comment and should be ignored by the R interpreter.
 
-```{r eval=FALSE}
-# This script performs simple arithmetic operations.
-
-# Addition
-2 + 3  # Adds 2 and 3
-
-# Subtraction
-10 - 4 # Subtracts 4 from 10
-
-# Multiplication
-5 * 6  # Multiplies 5 and 6
-
-# Division
-20 / 4 # Divides 20 by 4
-
-# Exponents
-3^2    # Calculates 3 to the power of 2
-```
 
 You can add a line break to a long comment by using the # symbol on each new line. This is necessary because R interprets everything on a single line after the first # as part of the comment. For example:
 
