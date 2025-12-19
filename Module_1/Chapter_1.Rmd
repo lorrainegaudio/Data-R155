@@ -23,15 +23,25 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Overview
 
-
-In the next few minutes you will learn how to:
+In the Part One you will learn how to:
 
 - ⚡ Do simple arithmetic in R.
 
 - 🛠 Create and inspect objects with the assignment operator (`<-`).
 
+- 🔍 Follow R's object-naming rules.
+
 - 📦 Save your workspace so nothing is lost.
+
+In the Part Two you will learn how to:
+
+- 📍 Run code from a script or the console.
+
+- 💪 Document tenacity in memos.
+
+- 📊 Combine words with the `paste()` function.
 
 
 
