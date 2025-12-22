@@ -89,21 +89,19 @@ To begin Lesson 2, follow these steps:
 
 ## Lesson Overview
 
-In Part One you will learn how to:
+In this lesson you will learn how to:
 
+*- 📝 Write and save R scripts.*
 
+*- 📍 Run code from a script.*
 
-- 📍 Run code from a script.
+*- 💪 Document tenacity in memos.*
 
-- 💪 Document tenacity in memos.
+*- 📊 Combine words with the `paste()` function.*
 
-- 📊 Combine words with the `paste()` function.
+*- 🛠 Build numeric, character, and logical vectors.*
 
-In Part Two you will learn how to:
-
-- 🛠 Build numeric, character, and logical vectors.
-
-- 🔍 Check the structure, length, and data type of any object.
+*- 🔍 Check the structure, length, and data type of any object.*
 
 - ⚡ Explain how R coerces mixed‑type vectors.
 
@@ -111,7 +109,8 @@ In Part Two you will learn how to:
 
 - 📍 Summarize vectors with built‑in, *vectorised* functions.
 
-- 📦 Remove objects you no longer need.
+
+
 
 
 
@@ -144,6 +143,8 @@ This looks like skipping checks, continuing “halfway,” or abandoning the tas
 This looks like repeating the same approach for too long even though it isn’t working, refusing to change strategy, and refusing help (King, 2021). In R, that often becomes: re-running the same broken line 30 times.
 
 Tenacity lives in the middle: persist, then recalibrate.
+
+
 
 
 # Numeric Vectors

@@ -1,6 +1,22 @@
-✔️ Nice!
+🚀 **Explore and Play:**
   
-✅  Thoroughness
+💡 **Tip:**
+  
+🛠 **Break Things!**
+
+🎯 Goal
+
+⚡ Test
+
+✅  Check
+
+🗣 Comment
+
+📖 **Review**
+
+🧩 **Example**
+  
+🧐 **Notice**
   
 ➡ 
 
@@ -8,15 +24,14 @@
   
 👀 Check-in: or What happened?
   
-🚀 Explore and Play:
-  
-🎯 
+
+✔️ Nice! 
 
 💥
 
 ✨ (Sparkles)
 
-⚡ Test
+
 
 🔍 Look deeper: 
   
@@ -31,7 +46,7 @@
 
 🧹
 
-🗣 Comment
+
 
 💬 Prediction
 
@@ -49,7 +64,7 @@
 
 🕓
 
-💡 **Tip:**
+
 
 🔗 Link
 
@@ -107,7 +122,7 @@
 
 🎥 Watch the Lesson Video
 
-🛠 Break Things!
+
   
 🏗️
 
@@ -125,7 +140,7 @@
 
 ▶
 
-📖 Review
+
 
 📚 Resources
 
@@ -143,7 +158,7 @@
 
 📬
 
-🧐 NOTICE: 
+
   
 🤔 Open-mindedness
 
@@ -163,7 +178,7 @@
 
 👋
 
-👉 Tip
+👉 
 
 👇
 
