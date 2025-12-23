@@ -97,7 +97,7 @@ In this lesson you will learn how to:
 
 *- 💪 Document tenacity in memos.*
 
-*- 📊 Combine words with the `paste()` function.*
+- 📊 Combine words with the `paste()` function.
 
 *- 🛠 Build numeric, character, and logical vectors.*
 
@@ -109,7 +109,7 @@ In this lesson you will learn how to:
 
 - 📍 Summarize vectors with built‑in, *vectorised* functions.
 
-
+*- 📊 Create a data frame from vectors.*
 
 
 
@@ -336,6 +336,14 @@ Additionally, if `logical` and `logical2` are logical expressions, then `logical
 ```
 
 # Indexing
+
+# Creating the core principles of AI
+asimov_laws <- c("Protect Humans", "Obey Orders", "Protect Self")
+
+# Accessing the First Law
+asimov_laws[1]
+
+___
 
 Indexing is how you access specific elements in a vector. R uses 1-based indexing, meaning the first element is at position 1. You can use square brackets `[ ]` to index vectors.
 

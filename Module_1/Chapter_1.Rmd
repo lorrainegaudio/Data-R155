@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In Chapter 1, you will learn how to navigate the RStudio interface by identifying the four main panes (Source, Console, Environment, and the Output pane that includes Files/Help), and you will practice running basic calculations and functions in the Console so you can see how R evaluates commands and returns results. You will then learn how to store results as objects using the assignment operator (`<-`), follow R’s object-naming rules, and recognize a few core syntax habits that prevent beginner errors from snowballing into hours of confusion. Finally, you will learn the file-management workflow that makes or breaks this course: organizing a dedicated course folder, explicitly setting and checking your working directory (since that determines where files actually save), saving your workspace as an `.RData` “snapshot,” cleaning your Environment to include only assignment-relevant objects, loading a saved workspace when needed, and uploading the correct `.RData` file to Canvas.
 
-In the Chapter One you will learn how to:
+In Chapter One you will learn how to:
 
 - 🖥 Open RStudio and identify its main panes.
 
@@ -401,7 +401,7 @@ Before beginning any new assignment, start with a clean environment.
 
 Method A. **Environment Pane**
 
-- Click the **broom icon** (Clear All) in the Environment pane to remove all objects.
+- Click the 🧹 **broom icon** (Clear All) in the Environment pane to remove all objects.
 
 ![Figure 9. The RStudio Environment pane with the "Clear All" broom icon circled.](clear_environment.png)
 
@@ -509,3 +509,62 @@ The Files pane helps you navigate folders so you can find course materials and, 
 
 **Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
 
+# 📝 Practice Space
+
+Clear your environment before starting this practice space. When you are done, save your workspace as `chapter1_practice.RData` and upload it to Canvas as directed.
+
+## Task 1
+
+🎯  Store the quantity `62` in an object called `items_sold`
+
+```{r , eval=FALSE}
+# ⚡ Type this in your Console, filling in the blanks
+items_sold <- ___
+```
+
+```{r , eval=FALSE}
+# ✅ Check the stored value
+______
+```
+
+## Task 2
+
+🎯  Store the unit price 100 in an object called `unit_price`
+
+```{r , eval=FALSE}
+# ⚡ Type this in your Console, filling in the blanks
+unit_price <- ___
+```
+
+```{r , eval=FALSE}
+# ✅ Check the stored value
+______
+```
+
+## Task 3
+
+🎯  Calculate `total_revenue` by multiplying the stored objects `items_sold`  and `unit_price`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your Console, filling in the blanks
+total_revenue <- _______ * _______    
+```
+
+## Task 4
+
+Identify the names of the Panes associated with each number in the image below.
+
+![Image shows RStudio window will all four panes. Each pane is numbered](Quiz_Question.png)
+
+**Console**, **Environment**, **Script Editor (Source)**, **Files and Help** 
+
+
+1. ___________
+
+2. ___________
+
+3. ___________
+
+4. ___________
+
+Type your answers in Canvas as directed.

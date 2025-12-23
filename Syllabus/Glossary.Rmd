@@ -34,6 +34,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # C
 
+**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
+
 **Character vector**: A vector that stores text strings, written in quotes, such as `"apple"` or `"ID_001"`.
 
 **Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y))`.
@@ -44,7 +46,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # E
 
+**Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
+
 **Environment Pane**: The pane that lists the objects currently stored in memory for your session (for example, data frames, vectors, and functions). It helps you check what exists, inspect object names/types, and remove or manage objects.
+
+**Error**: A console message indicating that R could not complete a command. Execution stops at that point, no result is produced for that step, and you must fix the problem (for example, a misspelled object name, invalid argument, or syntax issue) before the code can run.
 
 # F
 
@@ -64,6 +70,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Help**: Located in the Files/Plots/Packages/Help pane, this tab provides access to R documentation, package vignettes, and search functionality to find help topics related to R functions and packages.
 
+**Hexadecimal color codes**: A way to specify colors using a `#` followed by hexadecimal digits. In R (and most software), `#RRGGBB` defines the red, green, and blue intensities using two hex digits each (00–FF), for example `#FF0000` (red) or `#1E90FF` (blue). Some codes include transparency as a fourth pair, `#RRGGBBAA`, where `AA` controls alpha (00 = fully transparent, FF = fully opaque).
+
 # I
 
 **Integer vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
@@ -74,7 +82,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # L
 
-**Logical vector**: A vector that stores Boolean values: `TRUE` or `FALSE` (and sometimes `NA` for missing).
+**Length** `length()`: A function that returns the number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
+
+**Logical operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
+
+**Logical vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
 
 # M
 
@@ -96,6 +108,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # R
 
+**Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
+
 **R script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
 
 # S
@@ -116,9 +130,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Variables**: See Objects; data values in R. Variables can hold different types of data, such as numbers, text, or more complex structures like data frames and lists. 
 
-**Vector**: A one-dimensional object that stores an ordered sequence of values of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
+**Vector**: A one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
+
+**Vector arithmetic**: Performing mathematical operations directly on vectors. In R, operations like` +`, `-`, `*`, `/`, and `^` are applied element-by-element, so `c(1, 2, 3) + c(10, 20, 30)` returns `c(11, 22, 33)`.
 
 # W
+
+**Warning**: A console message indicating that R did run the command but detected a potential problem. Execution continues and a result is produced, but the output may be incomplete, unexpected, or based on an assumption (for example, coercing types, removing missing elements, or using a function in a way that may not behave as intended).
 
 **Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
 

@@ -16,7 +16,7 @@
 
 🧩 **Example**
   
-🧐 **Notice**
+🧐 **Notice:**
   
 ➡ 
 

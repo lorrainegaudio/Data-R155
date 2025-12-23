@@ -1,0 +1,26 @@
+---
+title: "Chapter 3"
+author: "Lorraine Gaudio"
+date: "2025-12-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Overview
+
+TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
+
+In Chapter Two you will learn how to:
+
+
+
+
+
+# Summary
+
+# Chapter Terms
+
