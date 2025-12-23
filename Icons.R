@@ -14,7 +14,7 @@
 
 📖 **Review**
 
-🧩 **Example**
+🧩 **Memo Examples**
   
 🧐 **Notice:**
   
@@ -22,7 +22,7 @@
 
 →
   
-👀 Check-in: or What happened?
+👀 Cite
   
 
 ✔️ Nice! 

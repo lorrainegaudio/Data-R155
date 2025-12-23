@@ -74,6 +74,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # I
 
+**Integrated Development Environment** (IDE): A software application that combines the core tools you need to write and run code in one place. RStudio is an IDE because it brings script editing, the R console, environment/object viewing, help/documentation, and file navigation into a single interface.
+
 **Integer vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
 
 # J

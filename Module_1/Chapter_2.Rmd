@@ -44,7 +44,19 @@ In Chapter Two you will learn how to:
 
 # Script Editor (Source)
 
-Documenting your work allows you and others to understand how you came to your results. One way to document your work is to write and save R scripts. An **R script** is a plain text file that contains a series of R commands. You can create, edit, and run R scripts in the Script Editor (also called the Source pane) in RStudio. 
+Documenting your work allows you and others to understand how you came to your results. This course will introduce you to documenting your analysis with **R Script**, R Markdown, and Quarto files. These files preserve your code, comments, so that you (or anyone else) can re-run your analysis and understand *how* and *why* you arrived at your results. You can create, edit, and run these files in the Script Editor (also called the Source pane) in RStudio. 
+
+## Console vs Script Editor
+
+The **Console** is where you can type and run R commands one at a time. It is useful for quick calculations, testing small pieces of code, and exploring data interactively. However, the Console does not save your commands after you close RStudio, so it is not suitable for documenting your work. 
+
+An **R script** is a plain text file that contains a series of R commands. The script acts as a static record of the analysis. If the data or method change later, the original script preserves the logic used for your initial findings. The inclusion of comments (lines that begin with `#`) allows you to explain the *why* behind your code, detailing assumptions, data transformations, and the rationale for specific analytical choices. 
+
+Think of programming like writing a recipe. Using the Console is like throwing ingredients into a pan on the fly. You might make something delicious (a great chart), but you didn't write down how much salt you used or in what order you added the spices. If you close RStudio, your "cooking" session is gone forever. Using an R script is like writing down the recipe step-by-step. You can share it with others, and you (or anyone else) can follow the same steps later to recreate the dish exactly. Comments act as notes in the margins of your recipe card.
+
+## Create a New R Script
+
+There are two primary ways to create a new R script in RStudio. You can use either method.
 
 Method A. **File Menu**
 
@@ -181,7 +193,7 @@ Go back to your script and run ONLY `the_aftermath` line (without running the li
 the_aftermath <- seven.eight - nine
 ```
 
-🗣 Error: object 'seven.eight' not found. This is an error because `seven.eight` has not been created yet in this session.
+✍️  Error: object 'seven.eight' not found. 🗣 This is an error because `seven.eight` has not been created yet in this session.
 
 🚧  **Errors** prevent code from running. 
 
@@ -191,7 +203,34 @@ the_aftermath <- seven.eight - nine
 
 ___
 
-Throughout this course, you will see 🛠 **Break Things!**. This means we will create an error on purpose. In R, an error message is not a judgment. It is the computer telling you exactly what it cannot do *yet*. Learning to read errors calmly and then adjusting your next step is a core part of learning to code. 
+Throughout this course, you will see 🛠 **Break Things!**. This means I will create an error on purpose. In R, an error message is not a judgment. It is the computer telling you exactly what it cannot do *yet*. Learning to read errors calmly and then adjusting your next step is a core part of learning to code. 
+
+# Memoing
+
+## How to Memo in R Scripts
+
+To add comments in an R script, simply use the "#" symbol at the beginning of a line to indicate that the following text is a comment and should be ignored by the R interpreter.
+
+You can add a line break to a long comment by using the # symbol on each new line. This is necessary because R interprets everything on a single line after the first # as part of the comment. For example:
+
+```{r}
+# This is a very long comment that explains something about the code
+# and we can use a new line to keep it readable.
+# It helps to explain complex functions or the purpose of an entire script.
+# Do this to document your learning process!
+```
+
+## Explain Your Thinking
+
+Researchers have found that typing self-explanations of code improves retention and deepens understanding (Rus et. al., 2021). As you work through exercises and assignments, document a running record of insights, hunches, hypotheses, discussions about the applications of the code. 
+
+1. **Forethought** before action. Before running code, write a brief note about the 🎯 Goal of code should accomplish, 💬 Prediction of what you expect to happen, or identify your 🧠 motivational beliefs that support persistence. 
+
+2. **Performance** monitoring during action. ⚡ Compose the code and ✅ Check that the code worked. 🚀 Conduct Code trials, debugging issues, and ✍️ keep a record what you tried, even if it didn't work. 
+
+3. **Self-reflection** after action. After getting the code to work, 🗣 Comment about what you learned, what surprised you, or what questions remain. 🪞 Reflect on learning process and what you will do next time. 
+
+Icons for these strategies are provided in throughout each chapter to model the process. Mirror this process in all work you submit for the course. Each chapter will highlight specific memoing practices to focus on. This chapter focuses on documenting your tenacity.
 
 # Tenacity
 
@@ -225,19 +264,6 @@ Tenacity lives in the middle: persist, then recalibrate.
 
 When you get stuck, document your tenacity on a memo. 
 
-### R Script Memos
-
-To add comments in an R script, simply use the "#" symbol at the beginning of a line to indicate that the following text is a comment and should be ignored by the R interpreter.
-
-You can add a line break to a long comment by using the # symbol on each new line. This is necessary because R interprets everything on a single line after the first # as part of the comment. For example:
-
-```{r}
-# This is a very long comment that explains something about the code
-# and we can use a new line to keep it readable.
-# It helps to explain complex functions or the purpose of an entire script.
-# Do this to document your learning process!
-```
-
 ### ✍️ Record what you tried
 
 Prevent future duplication of errors, contextualizing successes, and exposes hidden discoveries (unanticipated effect) by recording your learning process on a memo in your R script.
@@ -257,13 +283,17 @@ When you encounter an error:
 Below are some common beginner errors along with memos documenting the tenacity process. Use these as examples for your own memos. Create your memos directly in your R script as you work through chapters and assignments exercises.
 
 ```{r eval=FALSE}
+# 🧩 Example 1
 # 3.008+7*24)
 # Error: unexpected ')' in "3.008+7*24)"
 # memo: This error is because the ) is a typo. 
 3.008+7*24
 ```
 
+🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the error, (2) ✍️ copied and pasted the error from the console, (3) 🗣 composed a memo that recognized the unexpected parenthesis as a typo and (4) ⚡ composed new code that removed it to fix the error.
+
 ```{r eval=FALSE}
+# 🧩 Example 2
 result <- 3+4 
 
 # number <,-42
@@ -283,13 +313,35 @@ ratio <- number / result
 print(ratio)
 ```
 
-You might relate to these common beginner errors! These typo errors are appropriate memos for the first several assignments. As you progress through the course, what you document will evolve.
+🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors.
+
+You might relate to these common beginner errors! These typo errors are appropriate memos *for the first several assignments.* As you progress through the course, what you document will evolve.
 
 💡 **Tip:** You can quickly comment/uncomment selected lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).
 
+### Cite Your Resources
+
+👀 R syntax can be challenging, and students often spend hours debugging simple issues. Knowing how R interprets your code helps avoid mistakes. Errors are usually simple but hard to spot alone. If you get stuck, seek help from peers, instructors, online resources, AI tools, or R's help files. In your script, cite all resources and clearly explain who or what assisted you and how. Always write your own code; do not copy and paste.
+
+🧩 **Memo Examples**
+
+```{r eval=FALSE}
+# 🧩 Example 3
+# logicals2 <- c( 1>2, 3<5, 4=4 )
+# error: Error: unexpected '=' in "logicals2 <- c( 1>2, 3<5, 4="
+logicals2 <- c( 1>2, 3<5, 4==4 )
+# memo: I remember the instruction video but wanted to test what kind of error it would show.
+# memo: I noticed that under value "logicals2" in the environment" it has answered whether or not my equations are true or false
+logicals2
+# memo: Here's what came back in the console! [1] FALSE  TRUE  TRUE
+# memo: That means 1>2 is false, 3<5 is true, and 4=4 is true
+```
+
+🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 👀 cites a course video and the intent to 🛠 **Break Things!** to understand errors, (4) ⚡ revised the code to fix the errors, and 🗣 explained the final results.
+
 ___
 
-Practice your memoing skills by documenting errors on the following exercises.
+Practice your memoing skills by documenting errors as you follow along with the following exercises.
 
 # Vectors
 
@@ -404,6 +456,25 @@ print(recycled_result)
 ```
 
 🗣 R recycles the `numbers3` vector (1.5, 2.5, -3.5) to match the length of the `combination` vector (1, 2, 3, 4, 5). The addition is performed element-wise.
+
+___
+
+```{r eval=FALSE}
+# 🧩 Memo Example 4
+long <- c(6, 2, 8, 10, 3, 77)
+short <- c(88, 4, 20)
+difference <- long - short
+difference
+# memo: I asked ChatGPT what the pattern was, and it said
+# memo: the results are [1] -82  -2 -12 -78  -1  57
+# memo: which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
+# memo: when subtracting a vector of unequal lengths, R recycles the shorter 
+# memo: vector to match the length of the longer one
+```
+
+🧐 **Notice:** The student 👀 cites the specific AI tool used to help her deepen her understanding and 🗣 explained the final results.
+
+___
 
 ## Character Vectors
 

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2025-12-22" />
+<meta name="date" content="2025-12-23" />
 
 <title>Chapter 2: Scripts</title>
 
@@ -2768,7 +2768,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Chapter 2: Scripts</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">December 22, 2025</h4>
+<h4 class="date">December 23, 2025</h4>
 
 </div>
 
@@ -2800,10 +2800,41 @@ vectors.</p></li>
 <h1><span class="header-section-number">2</span> Script Editor
 (Source)</h1>
 <p>Documenting your work allows you and others to understand how you
-came to your results. One way to document your work is to write and save
-R scripts. An <strong>R script</strong> is a plain text file that
-contains a series of R commands. You can create, edit, and run R scripts
+came to your results. This course will introduce you to documenting your
+analysis with <strong>R Script</strong>, R Markdown, and Quarto files.
+These files preserve your code, comments, so that you (or anyone else)
+can re-run your analysis and understand <em>how</em> and <em>why</em>
+you arrived at your results. You can create, edit, and run these files
 in the Script Editor (also called the Source pane) in RStudio.</p>
+<div id="console-vs-script-editor" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Console vs Script
+Editor</h2>
+<p>The <strong>Console</strong> is where you can type and run R commands
+one at a time. It is useful for quick calculations, testing small pieces
+of code, and exploring data interactively. However, the Console does not
+save your commands after you close RStudio, so it is not suitable for
+documenting your work.</p>
+<p>An <strong>R script</strong> is a plain text file that contains a
+series of R commands. The script acts as a static record of the
+analysis. If the data or method change later, the original script
+preserves the logic used for your initial findings. The inclusion of
+comments (lines that begin with <code>#</code>) allows you to explain
+the <em>why</em> behind your code, detailing assumptions, data
+transformations, and the rationale for specific analytical choices.</p>
+<p>Think of programming like writing a recipe. Using the Console is like
+throwing ingredients into a pan on the fly. You might make something
+delicious (a great chart), but you didn’t write down how much salt you
+used or in what order you added the spices. If you close RStudio, your
+“cooking” session is gone forever. Using an R script is like writing
+down the recipe step-by-step. You can share it with others, and you (or
+anyone else) can follow the same steps later to recreate the dish
+exactly. Comments act as notes in the margins of your recipe card.</p>
+</div>
+<div id="create-a-new-r-script" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Create a New R
+Script</h2>
+<p>There are two primary ways to create a new R script in RStudio. You
+can use either method.</p>
 <p>Method A. <strong>File Menu</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Go to the File menu at the top left of RStudio.</p></li>
@@ -2828,8 +2859,9 @@ six &lt;- 6
 seven &lt;- 7
 eight &lt;- 8
 nine &lt;- 9</code></pre>
-<div id="run-code" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Run Code</h2>
+</div>
+<div id="run-code" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Run Code</h2>
 <p>🎯 Place your cursor on each line and click Run (or press Ctrl+Enter
 on Windows/Linux or Cmd+Return on macOS) to send that line to the
 Console where it executes.</p>
@@ -2855,8 +2887,8 @@ script open.</div>
 </div>
 <pre class="r"><code># Source the entire script</code></pre>
 </div>
-<div id="save-your-script" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Save Your Script</h2>
+<div id="save-your-script" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Save Your Script</h2>
 <p>Saving your R script preserves the instructions (your code and
 comments), not the objects in your Environment. This matters because
 when you restart R or switch computers your Environment can disappear.
@@ -2925,7 +2957,7 @@ the_aftermath &lt;- seven.eight - nine</code></pre>
 (without running the lines above it).</p>
 <pre class="r"><code># Run only this line
 the_aftermath &lt;- seven.eight - nine</code></pre>
-<p>🗣 Error: object ‘seven.eight’ not found. This is an error because
+<p>✍️ Error: object ‘seven.eight’ not found. 🗣 This is an error because
 <code>seven.eight</code> has not been created yet in this session.</p>
 <p>🚧 <strong>Errors</strong> prevent code from running.</p>
 <p>🤔 No Error? This example may not error if you already ran
@@ -2938,15 +2970,58 @@ from top to bottom without errors. Regularly test your script by
 clicking Source to ensure that all lines run without errors.</p>
 <hr />
 <p>Throughout this course, you will see 🛠 <strong>Break
-Things!</strong>. This means we will create an error on purpose. In R,
-an error message is not a judgment. It is the computer telling you
-exactly what it cannot do <em>yet</em>. Learning to read errors calmly
-and then adjusting your next step is a core part of learning to
+Things!</strong>. This means I will create an error on purpose. In R, an
+error message is not a judgment. It is the computer telling you exactly
+what it cannot do <em>yet</em>. Learning to read errors calmly and then
+adjusting your next step is a core part of learning to code.</p>
+</div>
+</div>
+<div id="memoing" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Memoing</h1>
+<div id="how-to-memo-in-r-scripts" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> How to Memo in R
+Scripts</h2>
+<p>To add comments in an R script, simply use the “#” symbol at the
+beginning of a line to indicate that the following text is a comment and
+should be ignored by the R interpreter.</p>
+<p>You can add a line break to a long comment by using the # symbol on
+each new line. This is necessary because R interprets everything on a
+single line after the first # as part of the comment. For example:</p>
+<pre class="r"><code># This is a very long comment that explains something about the code
+# and we can use a new line to keep it readable.
+# It helps to explain complex functions or the purpose of an entire script.
+# Do this to document your learning process!</code></pre>
+</div>
+<div id="explain-your-thinking" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Explain Your
+Thinking</h2>
+<p>Researchers have found that typing self-explanations of code improves
+retention and deepens understanding (Rus et. al., 2021). As you work
+through exercises and assignments, document a running record of
+insights, hunches, hypotheses, discussions about the applications of the
 code.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Forethought</strong> before action. Before running code,
+write a brief note about the 🎯 Goal of code should accomplish, 💬
+Prediction of what you expect to happen, or identify your 🧠
+motivational beliefs that support persistence.</p></li>
+<li><p><strong>Performance</strong> monitoring during action. ⚡ Compose
+the code and ✅ Check that the code worked. 🚀 Conduct Code trials,
+debugging issues, and ✍️ keep a record what you tried, even if it didn’t
+work.</p></li>
+<li><p><strong>Self-reflection</strong> after action. After getting the
+code to work, 🗣 Comment about what you learned, what surprised you, or
+what questions remain. 🪞 Reflect on learning process and what you will
+do next time.</p></li>
+</ol>
+<p>Icons for these strategies are provided in throughout each chapter to
+model the process. Mirror this process in all work you submit for the
+course. Each chapter will highlight specific memoing practices to focus
+on. This chapter focuses on documenting your tenacity.</p>
 </div>
 </div>
-<div id="tenacity" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Tenacity</h1>
+<div id="tenacity" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Tenacity</h1>
 <p>To successfully learn R programming, you will need to persist through
 difficulties, revise code, and know when to seek help after genuine
 effort. Tenacity is the learning skill that shows up when you persist
@@ -2954,8 +3029,8 @@ through obstacles (confusion, errors, frustration), revise your
 approach, and know when to seek help after genuine effort rather than
 quitting too early or grinding aimlessly (King, 2021; Baehr, 2022).
 Tenacity is not “never give up.” It’s productive persistence.</p>
-<div id="why-r-is-challenging" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Why R is
+<div id="why-r-is-challenging" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Why R is
 Challenging</h2>
 <p>R is not hard because it’s mysterious. It’s hard because it’s
 precise. Small mistakes (a missing parenthesis, a comma in the wrong
@@ -2973,8 +3048,8 @@ errors</p></li>
 stall. Tenacity is what keeps you moving long enough for the patterns to
 become familiar (King, 2021).</p>
 </div>
-<div id="two-ways-of-getting-stuck" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Two Ways of Getting
+<div id="two-ways-of-getting-stuck" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Two Ways of Getting
 Stuck</h2>
 <ol style="list-style-type: decimal">
 <li><p>Giving up too early (irresolution). This looks like skipping
@@ -2988,25 +3063,12 @@ becomes: re-running the same broken line 30 times.</p></li>
 </ol>
 <p>Tenacity lives in the middle: persist, then recalibrate.</p>
 </div>
-<div id="how-to-document-your-tenacity" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> How to Document Your
+<div id="how-to-document-your-tenacity" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> How to Document Your
 Tenacity</h2>
 <p>When you get stuck, document your tenacity on a memo.</p>
-<div id="r-script-memos" class="section level3" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> R Script Memos</h3>
-<p>To add comments in an R script, simply use the “#” symbol at the
-beginning of a line to indicate that the following text is a comment and
-should be ignored by the R interpreter.</p>
-<p>You can add a line break to a long comment by using the # symbol on
-each new line. This is necessary because R interprets everything on a
-single line after the first # as part of the comment. For example:</p>
-<pre class="r"><code># This is a very long comment that explains something about the code
-# and we can use a new line to keep it readable.
-# It helps to explain complex functions or the purpose of an entire script.
-# Do this to document your learning process!</code></pre>
-</div>
-<div id="record-what-you-tried" class="section level3" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> ✍️ Record what you
+<div id="record-what-you-tried" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> ✍️ Record what you
 tried</h3>
 <p>Prevent future duplication of errors, contextualizing successes, and
 exposes hidden discoveries (unanticipated effect) by recording your
@@ -3026,11 +3088,18 @@ how you resolved it.</p></li>
 the tenacity process. Use these as examples for your own memos. Create
 your memos directly in your R script as you work through chapters and
 assignments exercises.</p>
-<pre class="r"><code># 3.008+7*24)
+<pre class="r"><code># 🧩 Example 1
+# 3.008+7*24)
 # Error: unexpected &#39;)&#39; in &quot;3.008+7*24)&quot;
 # memo: This error is because the ) is a typo. 
 3.008+7*24</code></pre>
-<pre class="r"><code>result &lt;- 3+4 
+<p>🧐 <strong>Notice:</strong> The student (1) ✍️ kept but commented out
+(<code>#</code>) the code with the error, (2) ✍️ copied and pasted the
+error from the console, (3) 🗣 composed a memo that recognized the
+unexpected parenthesis as a typo and (4) ⚡ composed new code that
+removed it to fix the error.</p>
+<pre class="r"><code># 🧩 Example 2
+result &lt;- 3+4 
 
 # number &lt;,-42
 # memo: I accidentally had &quot;,&quot; in there which it didn&#39;t recognize
@@ -3047,27 +3116,58 @@ ratio &lt;- number / result
 # Error: object &#39;Ratio&#39; not found
 # memo: cases matter
 print(ratio)</code></pre>
+<p>🧐 <strong>Notice:</strong> The student (1) ✍️ kept but commented out
+(<code>#</code>) the code with the errors, (2) ✍️ copied and pasted the
+error shown in the console, (3) 🗣 composed memos that identified the
+issues (a typo with a comma, using an object before it was created, and
+case sensitivity), and (4) ⚡ revised the code to fix the errors.</p>
 <p>You might relate to these common beginner errors! These typo errors
-are appropriate memos for the first several assignments. As you progress
-through the course, what you document will evolve.</p>
+are appropriate memos <em>for the first several assignments.</em> As you
+progress through the course, what you document will evolve.</p>
 <p>💡 <strong>Tip:</strong> You can quickly comment/uncomment selected
 lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).</p>
+</div>
+<div id="cite-your-resources" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Cite Your
+Resources</h3>
+<p>👀 R syntax can be challenging, and students often spend hours
+debugging simple issues. Knowing how R interprets your code helps avoid
+mistakes. Errors are usually simple but hard to spot alone. If you get
+stuck, seek help from peers, instructors, online resources, AI tools, or
+R’s help files. In your script, cite all resources and clearly explain
+who or what assisted you and how. Always write your own code; do not
+copy and paste.</p>
+<p>🧩 <strong>Memo Examples</strong></p>
+<pre class="r"><code># 🧩 Example 3
+# logicals2 &lt;- c( 1&gt;2, 3&lt;5, 4=4 )
+# error: Error: unexpected &#39;=&#39; in &quot;logicals2 &lt;- c( 1&gt;2, 3&lt;5, 4=&quot;
+logicals2 &lt;- c( 1&gt;2, 3&lt;5, 4==4 )
+# memo: I remember the instruction video but wanted to test what kind of error it would show.
+# memo: I noticed that under value &quot;logicals2&quot; in the environment&quot; it has answered whether or not my equations are true or false
+logicals2
+# memo: Here&#39;s what came back in the console! [1] FALSE  TRUE  TRUE
+# memo: That means 1&gt;2 is false, 3&lt;5 is true, and 4=4 is true</code></pre>
+<p>🧐 <strong>Notice:</strong> The student (1) ✍️ kept but commented out
+(<code>#</code>) the code with the errors, (2) ✍️ copied and pasted the
+error shown in the console, (3) 👀 cites a course video and the intent
+to 🛠 <strong>Break Things!</strong> to understand errors, (4) ⚡ revised
+the code to fix the errors, and 🗣 explained the final results.</p>
 <hr />
-<p>Practice your memoing skills by documenting errors on the following
-exercises.</p>
+<p>Practice your memoing skills by documenting errors as you follow
+along with the following exercises.</p>
 </div>
 </div>
 </div>
-<div id="vectors" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Vectors</h1>
+<div id="vectors" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Vectors</h1>
 <p>A <strong>vector</strong> one-dimensional object that stores an
 ordered collection of values (<strong>elements</strong>), all of the
 same basic type. It is like a row in a spreadsheet: a single dimension
 of related values. But what if we want to store multiple elements
 together? We’ll use <code>c()</code>, <code>:</code>, and
 <code>seq()</code> to create vectors of different types.</p>
-<div id="numeric-vectors" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Numeric Vectors</h2>
+<div id="numeric-vectors" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Numeric Vectors</h2>
 <p><strong>Numeric vectors</strong> are a list of numbers. So far, we
 have only stored single numbers in objects.</p>
 <p>Vector Method A. Use the <code>c()</code> function to combine (or
@@ -3087,8 +3187,8 @@ the Environment pane. The <code>numbers3</code> object shows as “num
 numbers are “numeric” because they include decimal points. The placement
 of the numbers in the list is ordered exactly as you entered them.</p>
 </div>
-<div id="integer-vectors" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Integer Vectors</h2>
+<div id="integer-vectors" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Integer Vectors</h2>
 <p><strong>Integer vectors</strong> are a list of whole numbers. In R,
 integers are typically written with an <code>L</code> suffix.</p>
 <p>🎯 Create a vector named <code>cursed_seq</code> that contains the
@@ -3129,8 +3229,8 @@ print(travel_jumps)</code></pre>
 <code>travel_jumps</code> vector. 🎬 Optional aside: Everything is
 connected. Everything is built on the number 33. It’s Dark.</p>
 </div>
-<div id="vector-arithmetic" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Vector
+<div id="vector-arithmetic" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Vector
 arithmetic</h2>
 <p>You can perform arithmetic operations on vectors. R will apply the
 operation element-wise, meaning it will add, subtract, multiply, or
@@ -3160,9 +3260,24 @@ print(recycled_result)</code></pre>
 <p>🗣 R recycles the <code>numbers3</code> vector (1.5, 2.5, -3.5) to
 match the length of the <code>combination</code> vector (1, 2, 3, 4, 5).
 The addition is performed element-wise.</p>
+<hr />
+<pre class="r"><code># 🧩 Memo Example 4
+long &lt;- c(6, 2, 8, 10, 3, 77)
+short &lt;- c(88, 4, 20)
+difference &lt;- long - short
+difference
+# memo: I asked ChatGPT what the pattern was, and it said
+# memo: the results are [1] -82  -2 -12 -78  -1  57
+# memo: which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
+# memo: when subtracting a vector of unequal lengths, R recycles the shorter 
+# memo: vector to match the length of the longer one</code></pre>
+<p>🧐 <strong>Notice:</strong> The student 👀 cites the specific AI tool
+used to help her deepen her understanding and 🗣 explained the final
+results.</p>
+<hr />
 </div>
-<div id="character-vectors" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Character
+<div id="character-vectors" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Character
 Vectors</h2>
 <p>Character vectors store text strings, which are sequences of
 characters enclosed in quotes. Character vectors can include letters,
@@ -3193,8 +3308,8 @@ print(rainbow)</code></pre>
 <p>🗣 The output shows the color names stored in the <code>rainbow</code>
 character vector.</p>
 </div>
-<div id="logical-vectors." class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Logical Vectors.</h2>
+<div id="logical-vectors." class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Logical Vectors.</h2>
 <p>Logical vectors are used for conditions and comparisons. They contain
 TRUE or FALSE values.</p>
 <p>🎯 Create a logical vector named <code>real</code> that contains the
@@ -3233,11 +3348,11 @@ second value is TRUE because 3 is less than 5. The final value is TRUE
 because 4 is equal to 4.</p>
 </div>
 </div>
-<div id="inspecting-vectors" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Inspecting Vectors</h1>
+<div id="inspecting-vectors" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Inspecting Vectors</h1>
 <p>Before using data, we need to confirm <em>what</em> it is.</p>
-<div id="class-of-a-vector" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Class of a
+<div id="class-of-a-vector" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Class of a
 Vector</h2>
 <p>The <code>class()</code> function tells you the type of data stored
 in an object.</p>
@@ -3253,8 +3368,8 @@ vectors you created, such as <code>numbers3</code>,
 <code>travel_jumps</code>, and <code>logicals</code>.</p>
 <pre class="r"><code># Check the class of other vectors in your R Script</code></pre>
 </div>
-<div id="length-of-a-vector" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Length of a
+<div id="length-of-a-vector" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Length of a
 Vector</h2>
 <p><code>length()</code> counts elements.</p>
 <p>🎯 Use the <code>length()</code> function to find the number of
@@ -3270,8 +3385,8 @@ other vectors you created, such as <code>numbers3</code>,
 <pre class="r"><code># Check the length of other vectors in your R Script</code></pre>
 </div>
 </div>
-<div id="dataframes" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Dataframes</h1>
+<div id="dataframes" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Dataframes</h1>
 <p>A <strong>data frame</strong> is a two-dimensional, tabular data
 structure in R that can store data of different types (numeric,
 character, logical, etc.) in each column. It is similar to a spreadsheet
@@ -3303,8 +3418,8 @@ print(spectrum_shift)</code></pre>
 four columns: Vibe, Shift, Year, and Code. Each column corresponds to
 one of the vectors we combined.</p>
 </div>
-<div id="summary" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Summary</h1>
+<div id="summary" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Summary</h1>
 <p>This chapter taught you how to work in an R script: create a new
 <code>.R</code> file in the Source pane, run code into the Console with
 RStudio’s Run commands/shortcuts, and use comments to document what you
@@ -3318,8 +3433,8 @@ vectors into a data frame using <code>data.frame()</code>, which is the
 standard “table” structure you will use constantly in later
 chapters.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Chapter Terms</h1>
 <p><strong>Character vector</strong>: A vector that stores text strings,
 written in quotes, such as <code>&quot;apple&quot;</code> or
 <code>&quot;ID_001&quot;</code>.</p>
@@ -3415,8 +3530,8 @@ based on an assumption (for example, coercing types, removing missing
 elements, or using a function in a way that may not behave as
 intended).</p>
 </div>
-<div id="practice-space" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
+<div id="practice-space" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
 <p>Create a data frame using several vectors. Fill in the blanks to
 complete the code. Before you begin, make sure you have created a new R
 script in the Source pane and saved it as
@@ -3427,8 +3542,8 @@ running the code. When you finish, be sure to source your entire script
 to ensure it runs without errors from top to bottom. Save and submit
 your R script (<code>.R</code>) and environment (<code>.RData</code>) to
 Canvas as directed.</p>
-<div id="task-1" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Task 1</h2>
+<div id="task-1" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Task 1</h2>
 <p>🎯 Build a numeric vectors named <code>exponents</code> that contains
 the integers from 0 to 10 using the <code>seq()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
@@ -3437,8 +3552,8 @@ exponents &lt;- __(from = _, to = __, by = _)</code></pre>
 print(_______)</code></pre>
 <p>🗣 Add Comment: # The output shows _______________.</p>
 </div>
-<div id="task-2" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Task 2</h2>
 <p>🎯 Create a numeric vector named <code>binary_powers</code> that
 contains the powers of 2 from 2^0 to 2^10 using the <code>^</code>
 operator and the <code>exponents</code> vector created earlier.</p>
@@ -3449,8 +3564,8 @@ _____(binary_powers)</code></pre>
 <p>🗣 Add Comment: # The output shows ___ elements (values) in the
 <code>binary_powers</code></p>
 </div>
-<div id="task-3" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Task 3</h2>
 <p>R can store hexadecimal color codes in character vectors.
 <strong>Hexadecimal color</strong> codes are six-digit codes that
 represent colors in web design and digital graphics.</p>
@@ -3464,8 +3579,8 @@ ______(nerdy_palette)</code></pre>
 <p>🗣 Comment: # The output shows the ten hexadecimal color codes stored
 in the <code>_______</code> character vector.</p>
 </div>
-<div id="task-3-1" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Task 3</h2>
+<div id="task-3-1" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Task 3</h2>
 <p>🎯 Create a vector named <code>color_names</code> that contains the
 following names: “Octarine,” “TARDIS Blue,” “Rebeccapurple,”
 “Hooloovoo,” “Cosmic Latte,” “Vantablack,” “Matrix Green,” “Source
@@ -3476,8 +3591,8 @@ color_names __  __(&quot;Octarine&quot;, &quot;TARDIS Blue&quot;, &quot;Rebeccap
 <p>🗣 Comment: # The output shows the ten color names stored in the
 <code>color_names</code> character vector.</p>
 </div>
-<div id="task-4" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Task 4</h2>
+<div id="task-4" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Task 4</h2>
 <p>🎯 Create a vector named <code>origin</code> that contains
 “Discworld,” “Doctor Who,” “CSS/Web Development,” “Hitchhiker’s Guide to
 the Galaxy,” “Astronomy,” “Material Science,” “The Matrix,” “Video
@@ -3486,14 +3601,14 @@ function.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
 ______ &lt;- c_&quot;Discworld&quot;, &quot;Doctor Who&quot;, &quot;CSS/Web Development&quot;, &quot;Hitchhiker&#39;s Guide to the Galaxy&quot;, &quot;Astronomy&quot;, &quot;Material Science&quot;, &quot;The Matrix&quot;, &quot;Video Gaming&quot;, &quot;Star Trek&quot;, &quot;Visual Perception&quot;_</code></pre>
 </div>
-<div id="task-5" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Task 5</h2>
+<div id="task-5" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Task 5</h2>
 <p>🎯 Use the <code>real</code> vector created earlier</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
 ___ __ _(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</code></pre>
 </div>
-<div id="task-6" class="section level2" number="9.7">
-<h2><span class="header-section-number">9.7</span> Task 6</h2>
+<div id="task-6" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Task 6</h2>
 <p>🎯 Create a data frame named <code>nerdy_df</code> that contains four
 columns: “Origin” (<code>origin</code>), “Color”
 (<code>color_names</code>), “Hex” (<code>nerdy_palette</code>), and
