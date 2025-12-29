@@ -6,7 +6,7 @@ team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
-    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
@@ -35,7 +35,7 @@ In Chapter Two you will learn how to:
 
 - 💪 Practice resiliency through documenting tenacity on memos.
 
-- 🛠 Build numeric, integer, character, and logical vectors.
+- 🛠 Build numeric, integer, and character using `c()` and `seq()`
 
 - 🔍 Check the class and length of any vector object.
 
@@ -54,7 +54,7 @@ An **R script** is a plain text file that contains a series of R commands. The s
 
 Think of programming like writing a recipe. Using the Console is like throwing ingredients into a pan on the fly. You might make something delicious (a great chart), but you didn't write down how much salt you used or in what order you added the spices. If you close RStudio, your "cooking" session is gone forever. Using an R script is like writing down the recipe step-by-step. You can share it with others, and you (or anyone else) can follow the same steps later to recreate the dish exactly. Comments act as notes in the margins of your recipe card.
 
-## Create a New R Script
+## Create an R Script
 
 There are two primary ways to create a new R script in RStudio. You can use either method.
 
@@ -98,7 +98,7 @@ nine <- 9
 
 🎯 Select multiple lines to run them together.
 
-![Figure 2. The RStudio Script Editor pane with a script open. Two lines are highlighted and both were run in the cosole using Ctrl+Enter.](run_script2.png)
+![Figure 2. The RStudio Script Editor pane with a script open. Two lines are highlighted and both were run in the console using Ctrl+Enter.](run_script2.png)
 
 
 ```{r, eval=FALSE}
@@ -205,19 +205,20 @@ ___
 
 Throughout this course, you will see 🛠 **Break Things!**. This means I will create an error on purpose. In R, an error message is not a judgment. It is the computer telling you exactly what it cannot do *yet*. Learning to read errors calmly and then adjusting your next step is a core part of learning to code. 
 
-# Memoing
-
-## How to Memo in R Scripts
+# Memo in R Scripts
 
 To add comments in an R script, simply use the "#" symbol at the beginning of a line to indicate that the following text is a comment and should be ignored by the R interpreter.
 
 You can add a line break to a long comment by using the # symbol on each new line. This is necessary because R interprets everything on a single line after the first # as part of the comment. For example:
 
 ```{r}
-# This is a very long comment that explains something about the code
-# and we can use a new line to keep it readable.
-# It helps to explain complex functions or the purpose of an entire script.
-# Do this to document your learning process!
+# This is a comment. Notice the "#" at the beginning of the line.
+
+# Comments often explain something about the code or your thinking.
+# You will create comments like this in R Script assignments to 
+#  document your process.
+
+# Break the comment into several lines to keep the message readable.
 ```
 
 ## Explain Your Thinking
@@ -250,19 +251,23 @@ You may have already encountered friction in exactly the places beginners expect
 
 If you treat every error as evidence you “can’t code,” you will stall. Tenacity is what keeps you moving long enough for the patterns to become familiar (King, 2021).
 
-## Two Ways of Getting Stuck
+## Getting Stuck
+
+**Two Ways of Getting Stuck**
 
 1) Giving up too early (irresolution).
+
 This looks like skipping checks, continuing “halfway,” or abandoning the task the moment you feel lost (King, 2021). In R, that often becomes: running code you don’t understand, hoping it works, and stacking confusion.
 
 2) Pushing too long (intransigence).
+
 This looks like repeating the same approach for too long even though it isn’t working, refusing to change strategy, and refusing help (King, 2021). In R, that often becomes: re-running the same broken line 30 times.
 
 Tenacity lives in the middle: persist, then recalibrate.
 
-## How to Document Your Tenacity
+## Document Tenacity
 
-When you get stuck, document your tenacity on a memo. 
+When you encounter a challenge, document your tenacity on a memo. Your memo will show a running log of what you tried and how you resolved the issue. 
 
 ### ✍️ Record what you tried
 
@@ -270,17 +275,19 @@ Prevent future duplication of errors, contextualizing successes, and exposes hid
 
 When you encounter an error: 
 
-1. Comment out the line that produced the error by adding a `#` at the beginning of the line.
+1. **Comment out the code line(s) that produced the error** by adding a `#` at the beginning of the line. This is really important. You want to keep the code visible for reference, but your script must not produce an error.
 
-2. Copy and paste the error message below the commented line.
+2. **Copy and paste the error message** below the commented line.
 
-3. Add a brief note explaining what you think caused the error or how you resolved it.
+3. **Comment out the error message** by adding a `#` at the beginning of each line.
 
-4. Revise the code to fix the error on a new line
+4. **Add a brief comment explaining** what you think caused the error or how you will resolve it. This can come from your own reasoning or from external resources you consulted (peers, instructors, online resources, AI tools, etc.). Be sure to cite any resources you used. See the **Cite Your Resources** section below for guidance.
 
-🧩 **Memo Examples**
+5. On a new line, compose the code that you believe will run without error. If the error is not yet resolved, repeat this listed process until you get the code to run without error.
 
-Below are some common beginner errors along with memos documenting the tenacity process. Use these as examples for your own memos. Create your memos directly in your R script as you work through chapters and assignments exercises.
+🧩 **Memo Example**
+
+Below is a common beginner error along with memos documenting the tenacity process.
 
 ```{r eval=FALSE}
 # 🧩 Example 1
@@ -292,41 +299,21 @@ Below are some common beginner errors along with memos documenting the tenacity 
 
 🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the error, (2) ✍️ copied and pasted the error from the console, (3) 🗣 composed a memo that recognized the unexpected parenthesis as a typo and (4) ⚡ composed new code that removed it to fix the error.
 
-```{r eval=FALSE}
-# 🧩 Example 2
-result <- 3+4 
+Memo examples are provided throughout the course. 
 
-# number <,-42
-# memo: I accidentally had "," in there which it didn't recognize
-
-# ratio <- number / result
-# memo: It couldn't run this because it didn't have a value 
-# for "number" yet. 
-
-number <- 42
-
-ratio <- number / result
-
-# print(Ratio)
-# Error: object 'Ratio' not found
-# memo: cases matter
-print(ratio)
-```
-
-🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors.
-
-You might relate to these common beginner errors! These typo errors are appropriate memos *for the first several assignments.* As you progress through the course, what you document will evolve.
 
 💡 **Tip:** You can quickly comment/uncomment selected lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).
 
-### Cite Your Resources
+### 👀 Cite Your Resources
 
-👀 R syntax can be challenging, and students often spend hours debugging simple issues. Knowing how R interprets your code helps avoid mistakes. Errors are usually simple but hard to spot alone. If you get stuck, seek help from peers, instructors, online resources, AI tools, or R's help files. In your script, cite all resources and clearly explain who or what assisted you and how. Always write your own code; do not copy and paste.
+R syntax can be challenging, and students often spend hours debugging simple issues. Knowing how R interprets your code helps avoid mistakes. Errors are usually simple but hard to spot alone. If you get stuck, seek help from peers, instructors, online resources, AI tools, or R's help files. 
+
+In your script, (1) cite all resources and (2) clearly explain who or what assisted you and how. Always write your own code; do not copy and paste from external sources. Use external help to understand and learn, not to complete assignments for you.
 
 🧩 **Memo Examples**
 
 ```{r eval=FALSE}
-# 🧩 Example 3
+# 🧩 Example 2
 # logicals2 <- c( 1>2, 3<5, 4=4 )
 # error: Error: unexpected '=' in "logicals2 <- c( 1>2, 3<5, 4="
 logicals2 <- c( 1>2, 3<5, 4==4 )
@@ -421,60 +408,6 @@ print(travel_jumps)
 
 🗣 The output shows the sequence of numbers stored in the `travel_jumps` vector. 🎬 Optional aside: Everything is connected. Everything is built on the number 33. It's Dark.
 
-## Vector arithmetic
-
-You can perform arithmetic operations on vectors. R will apply the operation element-wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
-
-🎯 Find the anomaly by subtracting the `cursed_seq` vector from the `travel_jumps` vector.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Script
-anomaly <- travel_jumps - cursed_seq
-```
-
-```{r , eval=FALSE}
-# ✅ Check the anomaly vector
-print(anomaly)
-```
-
- 🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
- 
-When you perform arithmetic on two vectors of different lengths, R will "recycle" the shorter one to match the longer one.
-
-🎯 Create a new vector named `recycled_result` by adding the `combination` vector to the `numbers3` vector.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Script
-recycled_result <- numbers3 + combination
-```
-
-⚠️ A **Warning** message may appear indicating that the longer vector length is not a multiple of the shorter vector length. This is expected behavior in R when recycling occurs. Warning messages do not stop code execution but serve as alerts to potential issues.
-
-```{r , eval=FALSE}
-# ✅ Check the recycled_result vector
-print(recycled_result)
-```
-
-🗣 R recycles the `numbers3` vector (1.5, 2.5, -3.5) to match the length of the `combination` vector (1, 2, 3, 4, 5). The addition is performed element-wise.
-
-___
-
-```{r eval=FALSE}
-# 🧩 Memo Example 4
-long <- c(6, 2, 8, 10, 3, 77)
-short <- c(88, 4, 20)
-difference <- long - short
-difference
-# memo: I asked ChatGPT what the pattern was, and it said
-# memo: the results are [1] -82  -2 -12 -78  -1  57
-# memo: which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
-# memo: when subtracting a vector of unequal lengths, R recycles the shorter 
-# memo: vector to match the length of the longer one
-```
-
-🧐 **Notice:** The student 👀 cites the specific AI tool used to help her deepen her understanding and 🗣 explained the final results.
-
-___
 
 ## Character Vectors
 
@@ -494,7 +427,7 @@ activation_code <- c("Longing", "Rusted", "Seventeen", "Daybreak", "Furnace", "N
 print(activation_code)
 ```
 
-🗣 The output shows the ten words stored in the `activation_code` character vector. 🎬 Optional aside: Ready to comply? This a word-list makes the example memorable.
+🗣 The output shows the ten words stored in the `activation_code` character vector. 🎬 Optional aside: Ready to comply? Does this word-list makes the example memorable?
 
 R recognizes colors in character vectors.
 
@@ -509,57 +442,10 @@ rainbow <- c("red", "orange", "yellow", "green", "blue",  "violet")
 print(rainbow)
 ```
 
-
 🗣 The output shows the color names stored in the `rainbow` character vector.
 
 
-## Logical Vectors.
 
-Logical vectors are used for conditions and comparisons. They contain TRUE or FALSE values.
-
-🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
-
-```{r}
-# ⚡ Type this in your R Script
-real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
-```
-```{r}
-# ✅ Check the logicals vector
-print(real)
-```
-
-🗣 The output shows the logical values stored in the `logicals` vector.
-
-Logical vectors can also be created using comparison operators. These operators compare values and return TRUE or FALSE based on the comparison.
-
-The logical operators are:
-
-- `>` greater than
-
-- `<` less than
-
-- `==` equal to
-
-- `>=` greater than or equal to
-
-- `<=` less than or equal to
-
-- `!=` not equal to
-
-🎯 Create a logical vector named `logicals` that contains the results of the following comparisons: `1 > 2`, `3 < 5`, and `4 == 4` using the `c()` function.
-
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Script
-logicals <- c(1 > 2, 3 < 5, 4 == 4) 
-```
-
-```{r , eval=FALSE}
-# ✅ Check the logicals vector
-print(logicals)
-```
-
-🗣 The output shows the results of the comparisons stored in the `logicals` vector. There is one FALSE value and two TRUE values. The first value is FALSE because 1 is not greater than 2. The second value is TRUE because 3 is less than 5. The final value is TRUE because 4 is equal to 4.
 
 # Inspecting Vectors
 
@@ -667,10 +553,6 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 **Length** `length()`: A function that returns the number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
 
-**Logical operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
-
-**Logical vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code
-
 **Numeric vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
 
 **Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
@@ -685,7 +567,7 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 # 📝 Practice Space
 
-Create a data frame using several vectors. Fill in the blanks to complete the code. Before you begin, make sure you have created a new R script in the Source pane and saved it as `chapter2_practice.R` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom. Save and submit your R script (`.R`) and environment (`.RData`) to Canvas as directed.
+Create a data frame using several vectors. Fill in the blanks to complete the code. Before you begin, make sure you have created a new R script in the Source pane and saved it as `chapter2_practice.R` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom. Save and submit your R script (`.R`) and environment (`.RData`) to Canvas, if directed.
 
 ## Task 1
 
@@ -705,19 +587,21 @@ print(_______)
 
 ## Task 2
 
-🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from 2^0 to 2^10 using the `^` operator and the `exponents` vector created earlier.
+🎯 Create a numeric vector using `:` called `nerdy_numbers` that contains the **integer** values from 1 to 10.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Script, Fill in the blanks
-__________ <- 2^exponents
+________ <- _:_
 ```
 
 ```{r , eval=FALSE}
-# ✅ Check the length nerdy_numbers vector
-_____(binary_powers)
+# ✅ Check the class and length of the vector
+
 ```
 
-🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
+🗣 Add Comment:  # The length is ___ elements (values)
+                 # The class is ________.
+                 
 
 ## Task 3
 
@@ -738,7 +622,7 @@ ______(nerdy_palette)
 
 🗣 Comment: # The output shows the ten hexadecimal color codes stored in the `_______` character vector.
 
-## Task 3
+## Task 4
 
 🎯 Create a vector named `color_names` that contains the following names: "Octarine," "TARDIS Blue," "Rebeccapurple," "Hooloovoo," "Cosmic Latte," "Vantablack," "Matrix Green," "Source Engine Magenta," "Command Red," and "Impossible Green." Use the `c()` function.
 
@@ -750,7 +634,7 @@ color_names __  __("Octarine", "TARDIS Blue", "Rebeccapurple", "Hooloovoo", "Cos
 
 🗣 Comment: # The output shows the ten color names stored in the `color_names` character vector.
 
-## Task 4
+## Task 5
 
 🎯 Create a vector named `origin` that contains "Discworld," "Doctor Who," "CSS/Web Development," "Hitchhiker's Guide to the Galaxy," "Astronomy," "Material Science," "The Matrix," "Video Gaming," "Star Trek," and "Visual Perception." Use the `c()` function.
 
@@ -759,31 +643,21 @@ color_names __  __("Octarine", "TARDIS Blue", "Rebeccapurple", "Hooloovoo", "Cos
 ______ <- c_"Discworld", "Doctor Who", "CSS/Web Development", "Hitchhiker's Guide to the Galaxy", "Astronomy", "Material Science", "The Matrix", "Video Gaming", "Star Trek", "Visual Perception"_
 ```
 
-## Task 5
-
-🎯 Use the `real` vector created earlier
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-___ __ _(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
-```
-
 ## Task 6
 
-🎯 Create a data frame named `nerdy_df` that contains four columns: "Origin" (`origin`), "Color" (`color_names`), "Hex" (`nerdy_palette`), and "Real" (`real`). 
+🎯 Create a data frame named `nerdy_df` that contains three columns: "Origin" (`origin`), "Color" (`color_names`), and "Hex" (`nerdy_palette`). 
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Script, Fill in the blanks
 nerdy_df <- ______(
   ______ = color_names,
   ______ = nerdy_palette,
-  Origin = ______,
-  Real = ______
+  Origin = ______
 )
 
 # ⚡ Type this in your R Script, Fill in the blanks
 print(______)
 ```
 
-🗣 Comment: # The output shows the `nerdy_df` data frame with four columns: ______, ______, ______, and ______. 
+🗣 Comment: # The output shows the `nerdy_df` data frame with three columns: ______, ______, and ______. 
 

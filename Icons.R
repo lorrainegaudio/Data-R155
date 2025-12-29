@@ -72,10 +72,6 @@
 
 🎉
 
-📍 Identify
-
-📌
-
 🔹
 
 ▶
@@ -229,4 +225,5 @@
 🦁 Courage
 
 🏈 Football or 🌊 River
+
 🔥

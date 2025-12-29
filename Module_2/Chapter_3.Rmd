@@ -1,8 +1,22 @@
 ---
 title: "Chapter 3"
 author: "Lorraine Gaudio"
-date: "2025-12-23"
-output: html_document
+date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -14,13 +28,515 @@ knitr::opts_chunk$set(echo = TRUE)
 
 TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
-In Chapter Two you will learn how to:
+In Chapter Three you will learn how to:
+
+- 📝 Write and save R Notebooks.
+
+- 📍 Run code from a code chunk.
+
+- 🧮 Perform arithmetic operations on numeric vectors.
+
+- 🔄 Use recycling to perform operations on vectors of different lengths.
+
+- ✍️ Practice transparency in memos
+
+- 🏷️ Identify what kind of data an object is using `class()`
+
+- 📎 Combine strings of words with the `paste()` function.
+
+- 🔗 Add elements to vectors.
+
+- 🛠 Build logical vectors.
+
+- ⚡ Explain how R coerces mixed‑type vectors.
+
+# R Notebooks
+
+An **R Notebook** is an **R Markdown** (.Rmd) document where you can run code in code chunks and immediately see the output *directly below the chunk*. The utility is reproducible thinking: your code, your results, and your memo-style notes live in one place, in order, so someone else (including future-you) can follow what happened.
+
+R Notebooks are similar to R Scripts but offer additional features such as:
+
+- **Interactive Code Execution**: You can run code chunks individually and see the output immediately below the chunk.
+
+- **Rich Text Formatting**: You can use Markdown to format text, add headings, lists, links, and images.
+
+- **Output Display**: The output of code chunks, including plots and tables, is displayed directly in the notebook.
+
+- **Reproducibility**: R Notebooks support reproducible research by allowing you to combine code and narrative in a single document.
+
+## R Script vs R Notebook
+
+In this course, the key advantage of an R Notebook over an R Script is memoing. A script can hold code + `#` comments, but an R Notebook is built for writing full memos (regular text) between code chunks without turning everything into comments. This supports a reproducible workflow (Course Objective CLO1).
+
+
+
+| Feature                     | R Script                          | R Notebook                        |
+|-----------------------------|----------------------------------|-----------------------------------|
+| File Extension              | .R                               | .Rmd                              |
+| Code Execution              | Run entire script or line-by-line| Run individual code chunks        |
+| Output Display              | Console only                     | Output displayed below code chunks|
+| Text Formatting             | Comments only (`#`)              | Full Markdown support             |
+| Memoing                     | Limited to comments              | Full memos with text and code     |
+
+## Open a New R Notebook
+
+To open an R Notebook, you will need to install the `rmarkdown` package and then create a new R Notebook file in RStudio.
+
+### Step 0: Install the rmarkdown package
+
+To use R Notebooks, you need the `rmarkdown` package. A **package** is an installable bundle of tools—functions, documentation, and sometimes data—that extends what R can do. Most packages are downloaded from CRAN (the main public repository for R packages).
+
+Method A. **File Pane**
+
+1. In RStudio, go to the `Packages` tab in the bottom-right `Files` pane.
+
+2. Click on 📥 `Install`.
+
+3. In the dialog box that appears, type `rmarkdown` in the `Packages` field.
+
+4. Make sure Install dependencies is checked.
+
+5. Click `Install`.
+
+🗣 If installation succeeds, you should see messages in the Console showing what was installed.
+
+Method B. **Console Pane**
+
+1. In RStudio, go to the `Console` pane (bottom-left).
+
+2. Type the following command and press Enter:
+
+```{r , eval=FALSE}
+install.packages("rmarkdown")
+```
+
+```{r, eval=FALSE}
+# Using one of the methods above, 
+# install the rmarkdown package
+```
+
+### Step 1: Open an R Notebook
+
+To create an R Notebook in RStudio:
+
+1. Go to `File` > `New File` > `R Notebook`.
+
+2. An .Rmd file opens in the Source pane.
+
+💡 **Tip:** If your RStudio version does not show “R Notebook,” choose R Markdown… and select HTML Notebook as the output format. The end result is still an R Notebook stored as an `.Rmd` file.
+
+📖  For more information on R Notebooks, refer to the [Documentation on R Notebooks](https://bookdown.org/yihui/rmarkdown/notebook.html).
+
+## The YAML Header
+
+At the very top of your notebook you will see a block that looks like this:
+
+```yaml
+---
+title: "Untitled"
+output: html_notebook
+---
+```
+
+This is called the **YAML header** (pronounced “YAM-ul”). It is document metadata—settings that control the notebook’s title and output type. Think of it as the document’s “front label,” not code. 
+
+### Renaming the Notebook
+
+🎯 Edit the title of the notebook to match the assignment
+
+```yaml
+---
+title: "Chapter 3 Practice"
+output: html_notebook
+---
+```
+
+### Saving the Notebook
+
+🎯 To save your R Notebook:
+
+1. Go to `File` > `Save As...`.
+
+2. Choose your course folder (e.g., `Intro_to_R`)
+
+3. Name the file `chapter3_practice`.
+
+4. Note that the file extension is `.Rmd`.
+
+✅ Verify you can see `chapter3_practice.Rmd` in the **Files** pane.
+
+## Code Chunks
+
+A **Code chunk** is a fenced region where R code runs. They start with three backticks followed by `{r}` and end with three backticks.
+
+### Inserting Code Chunks
+
+Method A. **Toolbar Button**
+
+Click the green C button and select R from the drop down list. 
+
+![R Notebook Toolbar with Insert Chunk Button Highlighted](Code_chunk.png)
+
+Method B. **Keyboard Shortcut**
+
+Press `Ctrl + Alt + I` (Windows/Linux) or `Cmd + Option + I` (macOS).
+
+Method C. **Manually Type**
+
+Type the following lines in your R Notebook:
+
+    ```{r}
+    # Your R code goes here
+    ```
+    
+*The "r" should have curly braces `{ }` around it.*  
+
+## Run Code Chunks
+
+Like so many things in R, there are several ways you can run code chunks. 
+
+Method A. **Run Menu**
+
+Click the `Run` menu at the top of RStudio and select `Run Current Chunk` or `Run All Chunks`.
+
+
+![R Notebook Code Chunk with Run Button Highlighted](run_menu.png)
+
+Method B. **Play Button**
+
+Clicking the green play button (▶) at the top-right of the chunk 
+
+![R Notebook Code Chunk play button](play_buton.png)
+
+Method C. **Keyboard Shortcut**
+
+Placing your cursor inside the chunk and pressing `Ctrl + Shift + Enter` (Windows/Linux) or `Cmd + Shift + Enter` (macOS).
+
+### Example: Vector Arithmetic
+
+🎯 Insert a code chunk then type and run the following R code to do vector arithmetic. 
+
+```{r}
+# ⚡ Type this in your R Script
+x <- c(2, 4, 6)
+y <- c(1, 3, 5)
+
+x + y
+```
+
+
+🎯 Click the green play button in the chunk (top-right of the chunk), or use the Run menu to run the current chunk / all chunks.
+
+🗣 There is an output below the code chunk that shows the result of adding the two vectors element-wise: (2 + 1 = 3; 4 + 3 = 7; 6 + 5 = 11).
+
+
+```{r}
+#  ⚡ Type this in your R Script
+x * 2
+x / y
+```
+
+🗣 When including two calculations in the same code chunk, both results are shown in order below the code chunk. 
+
+Let's take a moment and explore vector arithmetic further.
+
+# Vector arithmetic
+
+As you just saw, you can perform arithmetic operations on vectors. R will apply the operation element-wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
+
+🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()
+``` 
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
+```
+
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+anomaly <- travel_jumps - cursed_seq
+```
+
+```{r , eval=FALSE}
+# ✅ Check the anomaly vector
+print(anomaly)
+```
+
+ 🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
+
+
+# Memoing in R Notebooks
+
+The code chunk is like a mini R Script. Inside a code chunk, memo text must start with # or R will try to run it as code (and may error). Treat # like a “do not execute” marker for the computer.
+
+Text outside code chunks is normal writing. It does not need # because it is not code.
+
+That is the main reason we use Markdown in this course is so you can write memos that are readable paragraphs (not a wall of # comments).
+
+🎯 Under a code chunk, click on a blank line outside the chunk and type something like:
+
+🎯 Goal: Practice creating vectors and doing arithmetic.
+
+✅ Verify: I should see three outputs: x + y, x * 2, and x - y.
+
+🗣 Explain: Vector math happens element-by-element, so the first result adds the first elements together, then the second, then the third.
+
+If you accidentally type notes inside a chunk without #, you are asking R to execute your English sentence. R will not guess what you meant; it will throw an error.
+___
+
+🧩 **Memo Example**
+
+```{r eval=FALSE}
+# 🧩 Example 3
+result <- 3+4 
+
+# number <,-42
+# memo: I accidentally had "," in there which it didn't recognize
+
+# ratio <- number / result
+# memo: It couldn't run this because it didn't have a value 
+# for "number" yet. 
+
+number <- 42
+
+ratio <- number / result
+
+# print(Ratio)
+# Error: object 'Ratio' not found
+# memo: cases matter
+print(ratio)
+```
+
+🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors.
+
+You might relate to these common beginner errors! These typo errors are appropriate memos *for the first several assignments.* As you progress through the course, what you document will evolve.
+ 
+___
+
+
+
+### Recycling Vectors
+
+When you perform arithmetic on two vectors of different lengths, R will "recycle" the shorter one to match the longer one.
+
+🎯 Create a new vector named `recycled_result` by adding the `combination` vector to the `numbers3` vector.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script
+recycled_result <- numbers3 + combination
+```
+
+⚠️ A **Warning** message may appear indicating that the longer vector length is not a multiple of the shorter vector length. This is expected behavior in R when recycling occurs. Warning messages do not stop code execution but serve as alerts to potential issues.
+
+```{r , eval=FALSE}
+# ✅ Check the recycled_result vector
+print(recycled_result)
+```
+
+🗣 R recycles the `numbers3` vector (1.5, 2.5, -3.5) to match the length of the `combination` vector (1, 2, 3, 4, 5). The addition is performed element-wise.
+
+___
+
+```{r eval=FALSE}
+# 🧩 Memo Example 4
+long <- c(6, 2, 8, 10, 3, 77)
+short <- c(88, 4, 20)
+difference <- long - short
+print(difference)
+# memo: I asked ChatGPT what the pattern was, and it said
+# memo: the results are [1] -82  -2 -12 -78  -1  57
+# memo: which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
+# memo: when subtracting a vector of unequal lengths, R recycles the shorter 
+# memo: vector to match the length of the longer one
+```
+
+🧐 **Notice:** The student 👀 cited the specific AI tool used to help her deepen her understanding and 🗣 explained the final results in her own words.
+
+___
+
+# Transparency in Memos
+
+Transparency in memos is crucial for documenting your thought process, decisions, and any challenges you encounter while coding. It helps others (and your future self) understand the context of your work and the reasoning behind your choices.
+
+
+# Class
+
+**Some types of classes in R include:**
+
+- **numeric**: numbers (e.g., `1`, `3.14`)
+
+- **integer**: whole numbers (e.g., `1L`, `2L`)
+
+- **character**: text strings (e.g., `"Hello World", "R is fun"`)
+
+- **factor**: categorical data (e.g., `"red"`, `"blue"`) is
+  a special type of character vector used for categorical data.
+  
+- **logical**: `TRUE` or `FALSE` values
+
+- **NULL**: represents an empty object (e.g., `NULL`)
+
+- **complex**: complex numbers (e.g., `1 + 2i`)
+
+- **Index**: a special type of vector used for indexing (e.g., `1:10`)
+
+- **list**: a collection of objects (e.g., `list(a = 1, b = "text")`)
+
+- **matrix**: a two-dimensional array (e.g., `matrix(1:6, nrow = 2)`)
+
+- **array**: a multi-dimensional array (e.g., `array(1:12, dim = c(2, 3, 2))`)
+
+- **data.frame**: a table-like structure (e.g., `data.frame(name = c("Alice", "Bob"), age = c(25, 30))`)
+
+
+# `paste()` Function
+
+The `paste()` function in R is used to concatenate (combine) strings together. It takes multiple string arguments and combines them into a single string, with an optional separator between them.
+
+# Adding Elements to Vectors
+
+You can add to the end of a vector using the `c()` function.
+
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script
+rainbow <- c("red", "orange", "yellow", "green", "blue",  "violet")
+
+rainbow <- c(rainbow, "indigo")
+```
+```{r , eval=FALSE}
+# ✅ Check the rainbow vector
+print(rainbow)
+```
+
+You can name the elements of a vector using the `c()` function. This is useful when you want to create a vector that associates specific names with corresponding values.
 
 
 
 
+
+🎯 Create a character vector named `nerdy_palette` that contains the following color names and their corresponding hexadecimal color codes using the `c()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script, Fill in the blanks
+______ <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
+```
+
+
+
+🎯 Create a vector named `color_names` that contains the following names: "Octarine," "TARDIS Blue," "Rebeccapurple," "Hooloovoo," "Cosmic Latte," "Vantablack," "Matrix Green," "Source Engine Magenta," "Command Red," and "Impossible Green." Use the `c()` function.
+
+
+
+🗣 Comment: # The output shows the ten color names stored in the `color_names` character vector.
+
+# Logical Vectors.
+
+Logical vectors are used for conditions and comparisons. They contain TRUE or FALSE values.
+
+🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script
+real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
+```
+```{r , eval=FALSE}
+# ✅ Check the logicals vector
+print(real)
+```
+
+🗣 The output shows the logical values stored in the `logicals` vector.
+
+Logical vectors can also be created using comparison operators. These operators compare values and return TRUE or FALSE based on the comparison.
+
+The logical operators are:
+
+- `>` greater than
+
+- `<` less than
+
+- `==` equal to
+
+- `>=` greater than or equal to
+
+- `<=` less than or equal to
+
+- `!=` not equal to
+
+🎯 Create a logical vector named `logicals` that contains the results of the following comparisons: `1 > 2`, `3 < 5`, and `4 == 4` using the `c()` function.
+
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script
+logicals <- c(1 > 2, 3 < 5, 4 == 4) 
+```
+
+```{r , eval=FALSE}
+# ✅ Check the logicals vector
+print(logicals)
+```
+
+🗣 The output shows the results of the comparisons stored in the `logicals` vector. There is one FALSE value and two TRUE values. The first value is FALSE because 1 is not greater than 2. The second value is TRUE because 3 is less than 5. The final value is TRUE because 4 is equal to 4.
+
+# Data Coercion
+
+⚠️ **Key Idea**  A vector can only hold *one* type. Mixing types triggers *coercion* to the most flexible type (logical → numeric → character).
+
+What happens if you mix numbers and characters?
+
+```{r , eval=FALSE}
+mixed <- c("candy", 4, "book", 92)
+
+class(mixed)            # character: all elements coerced to character
+```
+
+The `as.numeric()` function tries to convert characters to numbers. If it can't, it returns `NA` (not available).
+
+```{r , eval=FALSE}
+as.numeric(mixed)            # character → numeric: text converts to NA
+
+as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
+```
 
 # Summary
 
 # Chapter Terms
 
+**Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with ```{r}. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
+
+**Logical operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
+
+**Logical vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code
+
+**Package**: An installable collection of R code—functions, documentation, and sometimes datasets—that adds new features beyond base R. Packages are commonly installed from CRAN and then loaded with `library()` so you can use their tools in your session.
+
+**R Markdown**: A document format (`.Rmd`) that mixes plain-text writing (Markdown) with embedded R code chunks, so you can generate reports that combine narrative, code, and computed output. You can render an R Markdown file into finished formats like HTML, PDF, or Word.
+
+**R Notebook**: An `.Rmd` (R Markdown) document that lets you run code in chunks and see the results (output, tables, plots) immediately below each chunk. It’s designed for reproducible work because it keeps your code, results, and explanatory notes together in the same file.
+
+**YAML Header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
+
+# 📝 Practice Space
+
+## Task 1
+
+## Task 2
+
+🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from 2^0 to 2^10 using the `^` operator and the `exponents` vector created earlier.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script, Fill in the blanks
+__________ <- 2^exponents
+```
+
+```{r , eval=FALSE}
+# ✅ Check the length nerdy_numbers vector
+_____(binary_powers)
+```
+
+🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
