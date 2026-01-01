@@ -240,35 +240,6 @@ x / y
 
 Let's take a moment and explore vector arithmetic further.
 
-# Vector arithmetic
-
-As you just saw, you can perform arithmetic operations on vectors. R will apply the operation element-wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
-
-🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
-
-```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
-cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()
-``` 
-
-```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
-travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
-```
-
-
-```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
-anomaly <- travel_jumps - cursed_seq
-```
-
-```{r , eval=FALSE}
-# ✅ Check the anomaly vector
-print(anomaly)
-```
-
- 🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
-
 
 # Memoing in R Notebooks
 
@@ -278,56 +249,70 @@ Text outside code chunks is normal writing. It does not need # because it is not
 
 That is the main reason we use Markdown in this course is so you can write memos that are readable paragraphs (not a wall of # comments).
 
-🎯 Under a code chunk, click on a blank line outside the chunk and type something like:
+🎯 Click on a blank line outside the chunk and type something like:
 
-🎯 Goal: Practice creating vectors and doing arithmetic.
+- 🎯 Goal: Practice creating vectors and doing arithmetic.
 
-✅ Verify: I should see three outputs: x + y, x * 2, and x - y.
+- ✅ Verify: I should see three outputs: x + y, x * 2, and x - y.
 
-🗣 Explain: Vector math happens element-by-element, so the first result adds the first elements together, then the second, then the third.
+- ✍ Memo: Document your learning process. What you discover, your challenges ,etc. 
 
-If you accidentally type notes inside a chunk without #, you are asking R to execute your English sentence. R will not guess what you meant; it will throw an error.
+- 🗣 Explain: Vector math happens element-by-element, so the first result adds the first elements together, then the second, then the third.
+
 ___
 
 🧩 **Memo Example**
 
-```{r eval=FALSE}
-# 🧩 Example 3
+🎯: Practice creating vectors and doing arithmetic. Understand R syntax.
+
+```{r}
+#  ⚡ 
 result <- 3+4 
-
 # number <,-42
-# memo: I accidentally had "," in there which it didn't recognize
-
 # ratio <- number / result
-# memo: It couldn't run this because it didn't have a value 
-# for "number" yet. 
+```
 
+Error: unexpected ',' in "number <,"
+Error: object 'number' not found
+
+✍ Memo: 
+I accidentally had "," in there which it didn't recognize
+Then it couldn't run this because it didn't have a value for "number" yet. 
+
+```{r}
+#  ⚡  
 number <- 42
 
 ratio <- number / result
 
 # print(Ratio)
-# Error: object 'Ratio' not found
-# memo: cases matter
+```
+Error: object 'Ratio' not found
+
+✍ Memo: cases matter
+
+```{r}
+# ✅ Check the ratio value
 print(ratio)
 ```
 
-🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors.
+🗣 R successfully calculated the ratio of `number` to `result`, which is 42 divided by 7, resulting in 6.
 
-You might relate to these common beginner errors! These typo errors are appropriate memos *for the first several assignments.* As you progress through the course, what you document will evolve.
- 
+🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied the error shown in the console and pasted it below the code chunk, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors. 
+
 ___
 
 
-
-### Recycling Vectors
+### Example: Recycling Vectors
 
 When you perform arithmetic on two vectors of different lengths, R will "recycle" the shorter one to match the longer one.
 
 🎯 Create a new vector named `recycled_result` by adding the `combination` vector to the `numbers3` vector.
 
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Script
+numbers3 <- c(1.5, 2.5, -3.5)
+combination <- c(1, 2, 3, 4, 5)
 recycled_result <- numbers3 + combination
 ```
 
@@ -342,27 +327,64 @@ print(recycled_result)
 
 ___
 
+🧩 **Memo Example**
+
+🎯: Create two vectors of different lengths and subtract them to see how recycling works.
+
 ```{r eval=FALSE}
-# 🧩 Memo Example 4
+# ⚡ 
 long <- c(6, 2, 8, 10, 3, 77)
 short <- c(88, 4, 20)
 difference <- long - short
+# ✅ 
 print(difference)
-# memo: I asked ChatGPT what the pattern was, and it said
-# memo: the results are [1] -82  -2 -12 -78  -1  57
-# memo: which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
-# memo: when subtracting a vector of unequal lengths, R recycles the shorter 
-# memo: vector to match the length of the longer one
 ```
+
+✍ Memo: I struggled to understand how R recycles vectors of different lengths during arithmetic operations. I asked ChatGPT what the pattern was, and it said the results are [1] -82  -2 -12 -78  -1  57 which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
+When subtracting a vector of unequal lengths, R recycles the shorter vector to match the length of the longer one. 
 
 🧐 **Notice:** The student 👀 cited the specific AI tool used to help her deepen her understanding and 🗣 explained the final results in her own words.
 
 ___
 
-# Transparency in Memos
+Learning to use an AI tool is part of becoming a modern researcher. However, it is essential to use these tools ethically and transparently, as discussed next.
 
-Transparency in memos is crucial for documenting your thought process, decisions, and any challenges you encounter while coding. It helps others (and your future self) understand the context of your work and the reasoning behind your choices.
+# Transparency
+# Start here
 
+Science isn’t just about numbers; it’s about values that guide how we do our work. **Transparency** is disclosing methods, materials, assumptions, values, and interests (Resnik & Elliott, 2023).
+
+Three values especially matter in this learning skill. 
+
+1. **Explanatory Power** means you can account for results. It means being able to accurately and knowingly explain relationships and mechanisms. It is not enough to have correct code and analysis. It is correctly and knowingly being able to explain why it is correct. If you can’t read the R code that produces the statistical output because you copied what AI produces, you lose the explanatory power of the results. AI is not a researcher. AI is a black box, or algorithmic opacity. An AI system’s internal logic is very complex, hidden, or “proprietary,” making it difficult to inspect. You can’t see how inputs become outputs, which limits auditability, explanation, and reproducibility (Kisselburgh & Beever, 2022). LLMs are not conscious (Shardlow & Przybyła, 2024). We must always keep humans “in the loop” of research processes that utilize AI tools. Ultimately, you, as the researcher, are responsible for your work.
+
+2. **Originality** means having ingenuity and creating new knowledge and a priori truths through cognitive achievement and learning. Being original includes respecting others' intellectual property by giving credit where credit is due and acknowledging prior work. Over-reliance on LLMs can lead to creative fixation, in which researchers may become dependent on the models' suggestions, potentially stifling their independent creative thinking (Kumar et al., 2025; Cheng & Zhang, 2025). In complex tasks, this reliance can diminish the originality of research outputs, as researchers may default to ideas generated by the LLM rather than developing their own (Cheng & Zhang, 2025). There are significant concerns regarding the originality and ownership of ideas generated by LLMs. Researchers must ensure that they properly attribute any contributions made by LLMs to avoid issues of plagiarism and intellectual property infringement (e.g, Thomas, 2023).
+
+3. **Accountability** means taking responsibility for one's research; responding to criticisms of one's research, including allegations of misconduct; self-correction (carefully scrutinizing research during peer review and after publication; retracting or correcting flawed research); and attempting to reproduce results (Resnik & Elliott, 2023).
+
+You demonstrate explanatory power and originality through transparency practices. You make your assumptions, methods, and tools visible. That includes disclosing when and how you discovered your knowledge, such as how you use generative AI. You produce original work when you formulate your work independently. In this class, this means that you type the code yourself. 
+
+💡 **Tip:** If you use generative AI to help you and it provides the answer, close the viewer and type the script yourself. 
+
+Concretely: 
+
+- 🎯 Goal: add comments before or near your code so a collaborator can reproduce your steps. 
+
+- ❓Question / Prediction: state your question or hypothesis.
+
+- ⚡Test: compose the code to achieve the goal, answer the question and test your prediction.
+
+- ✍️ Document: show what you tried, even if it didn't achieve the results you wanted. 
+
+- ✅ Verify: check results are correct. 
+
+- 🗣 Comment: Explain what you learned.
+
+- 🪞 Metacognition: Explain why this will be useful.
+
+- 👀 Resource Cited 
+
+The way you interact with learning resources can either enhance or diminish your explanatory power and originality. Real learning occurs through perseverance, productive struggle, and allowing yourself time to think. 
 
 # Class
 
@@ -519,6 +541,8 @@ as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
 
 **R Notebook**: An `.Rmd` (R Markdown) document that lets you run code in chunks and see the results (output, tables, plots) immediately below each chunk. It’s designed for reproducible work because it keeps your code, results, and explanatory notes together in the same file.
 
+**Transparency**: The practice of clearly disclosing your methods, materials, assumptions, tools, values, and sources so another person can follow your workflow, reproduce your results, and evaluate your claims. In this course, transparency supports explanatory power (you can explain what your code does and why) and originality/accountability (you produce and attribute work honestly, including documenting if and how you used AI).
+
 **YAML Header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
 
 # 📝 Practice Space
@@ -540,3 +564,46 @@ _____(binary_powers)
 ```
 
 🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
+
+# Vector arithmetic
+
+As you just saw, you can perform arithmetic operations on vectors. R will apply the operation element-wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
+
+🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()
+``` 
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
+```
+
+
+```{r , eval=FALSE}
+# ⚡ Type this in a code chunk
+anomaly <- travel_jumps - cursed_seq
+```
+
+```{r , eval=FALSE}
+# ✅ Check the anomaly vector
+print(anomaly)
+```
+
+ 🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
+
+
+# References
+
+Cheng, X., & Zhang, L. (2025). Inspiration booster or creative fixation? The dual mechanisms of LLMs in shaping individual creativity in tasks of different complexity. Humanities and Social Sciences Communications, 12(1), 1-10.
+
+Kisselburgh, L., & Beever, J. (2022). The Ethics of Privacy in Research and Design: Principles, Practices, and Potential. In B. P. Knijnenburg, X. Page, P. Wiseniewski, H. R. Lipford, N. Proferes, & J. Romano (Eds.), Modern Socio-Technical Perspectives on Privacy (pp. 395–426). Springer. https://doi.org/10.1007/978-3-030-82786-1
+
+Kumar, H., Vincentius, J., Jordan, E., & Anderson, A. (2025, April). Human creativity in the age of llms: Randomized experiments on divergent and convergent thinking. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (pp. 1-18).
+
+Shardlow, M., & Przybyła, P. (2024). Deanthropomorphising NLP: can a language model be conscious?. PloS one, 19(12), e0307521.
+
+Thomas, P. A. (2023). Wikipedia and large language models: perfect pairing or perfect storm?. Library Hi Tech News, 40(10), 6-8.
+

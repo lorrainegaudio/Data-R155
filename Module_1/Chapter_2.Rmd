@@ -285,6 +285,8 @@ When you encounter an error:
 
 5. On a new line, compose the code that you believe will run without error. If the error is not yet resolved, repeat this listed process until you get the code to run without error.
 
+___
+
 🧩 **Memo Example**
 
 Below is a common beginner error along with memos documenting the tenacity process.
@@ -299,18 +301,132 @@ Below is a common beginner error along with memos documenting the tenacity proce
 
 🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the error, (2) ✍️ copied and pasted the error from the console, (3) 🗣 composed a memo that recognized the unexpected parenthesis as a typo and (4) ⚡ composed new code that removed it to fix the error.
 
-Memo examples are provided throughout the course. 
+*Memo examples like this one are provided throughout the each chapter.* 
 
+___
 
 💡 **Tip:** You can quickly comment/uncomment selected lines with Ctrl+Shift+C (Windows/Linux) or Cmd+Shift+C (macOS).
 
-### 👀 Cite Your Resources
+## AI, Tenacity, and Human-Centered Learning
 
-R syntax can be challenging, and students often spend hours debugging simple issues. Knowing how R interprets your code helps avoid mistakes. Errors are usually simple but hard to spot alone. If you get stuck, seek help from peers, instructors, online resources, AI tools, or R's help files. 
+In this course, you are the learner and decision-maker. AI is useful, fast, and sometimes wrong. A human-centered approach means:
 
-In your script, (1) cite all resources and (2) clearly explain who or what assisted you and how. Always write your own code; do not copy and paste from external sources. Use external help to understand and learn, not to complete assignments for you.
+- You stay accountable for understanding what the code is doing and for verifying results.
 
-🧩 **Memo Examples**
+- AI supports your thinking instead of replacing it.
+
+- Learning is the product. Getting “working code” is not the same as learning how to produce it.
+
+When students use AI tools, they often engage in cognitive delegation: transferring mental labor (planning, interpreting, writing, debugging) to an artificial system. Delegation is not automatically bad. It becomes a problem when it prevents you from doing the mental work that builds skill.
+
+Tenacity and AI belong together: tenacity tells you when to persist, when to recalibrate, and when to seek help. AI is one possible form of help if you use it in a way that keeps the learning with you.
+
+### Tenacity-First AI rule
+
+Before you ask AI, do enough work to ask a *good* question.
+
+Appropriate to ask AI when you can provide:
+
+1. 🎯 Your goal (what you were trying to do)
+
+2. ⚡ The exact code you ran.
+
+3. ✍ The exact error message/output.
+
+4. ✍ What you understand and do not understand.
+
+If you cannot provide those, you’re not stuck. You’re not engaged yet. Tenacity comes first.
+
+AI use is not appropriate (1) when you are using it to avoid thinking, (2) avoid experimenting, or (3) avoid reading and interpreting the error message.
+
+### AI Help and Harm
+
+**AI is usually helpful when you use it as:**
+
+- A translator (turning an error message into plain English)
+
+- A debugging coach (suggesting systematic checks)
+
+- A concept tutor (explaining why something works)
+
+- A practice generator (creating additional examples for you to try)
+
+- A prompt for reflection (asking you questions that help you reason)
+
+**AI is usually harmful when you use it as:**
+
+- A replacement for your attempt
+
+- A copy-paste generator you run without understanding
+
+- A shortcut around practice
+
+- A confidence crutch (“I can’t do this, let the AI do it”)
+
+### Is AI appropriate here?
+
+#### Vignette 1: 
+
+**“Object not found” after running code out of order**
+
+Maya runs `the_aftermath <- seven_eight - nine` and gets: Error: object 'seven_eight' not found. She feels embarrassed and immediately asks AI: “Fix my code.”
+
+**Is AI appropriate?**
+
+AI is only appropriate after Maya works through the Tenacity-First steps. This error is relatively straightforward. Tenacity-First means she first reads the error and asks: “Did I create seven_eight in this session?” If she doesn’t know, she checks the Environment or runs the earlier lines. If she’s still confused, AI is useful as a translator: “What does ‘object not found’ mean and what should I check first?”
+
+**Good AI use**: coaching her through a checklist.
+**Bad AI use**: having AI rewrite everything without her learning the pattern.
+
+#### Vignette 2:
+
+**“Write my whole script for me”**
+
+Jordan is tired. He asks AI: “Write the entire Module 1 script that creates objects, saves them, and prints results. Make it perfect.”
+
+**Is AI appropriate?**
+
+No. This is cognitive delegation that removes the core learning: typing code, running it, fixing errors, and noticing how objects appear in the Environment. It prevents skill-building and produces fragile learning—you’ll have code you can’t reproduce under pressure. Tenacity means doing the uncomfortable part: building the script yourself, line-by-line, and debugging.
+
+#### Vignette 3:
+
+**Not getting anywhere**
+
+Sam tries to install a package. It fails. He restarts RStudio, tries again, still fails. He’s repeating the same steps and getting the same error.
+
+He asks AI: “Here’s the error message ... and what I tried ... Give me a structured debugging plan.”
+
+**Is AI appropriate?**
+
+Yes. This is exactly what tenacity recommends: persist, then recalibrate. Sam has evidence, not guesses. AI can propose a decision tree (“Check internet permissions → check R version → try installing from a different repo → read the full error → restart session”) and explain the logic. Sam still must test each step and confirm results. AI is acting as a troubleshooting guide, not a replacement brain.
+
+___
+
+Use AI when it keeps you thinking, speeds up understanding, and helps you debug systematically. Avoid AI when it replaces the struggle that produces learning. Tenacity is not “do everything alone.” Tenacity is “do the learning work, then seek the right help in the right way.”
+
+## 👀 Cite Your Resources
+
+R syntax can be challenging, unforgiving even. Students often spend hours debugging simple issues. Knowing how R interprets your code helps avoid mistakes. Errors are usually simple but hard to spot alone. That’s normal.
+
+Before you seek help, document three things in your script memo:
+
+- 🎯 What you what you were trying to do, 
+
+- ⚡ The attempts at writing the code️ even if it didn't achieve the results you wanted. 
+
+- ✍ State what you understand so far, and what you’re confused or curious about.
+
+Once you decide to seek help, choose a resource that fits the problem: a peer, your instructor, R’s help files, reputable online documentation, or an AI tool. No matter what you use, cite it in your memo so your learning is traceable and your work is honest.
+
+In your script, always include:
+
+1. **Who/what helped you** (person, website, help file, AI tool, etc.).
+
+2. **How it helped you** (what you changed, what you learned, what you verified).
+
+Always write your own code; do not copy and paste from external sources. Use external help to understand and learn, not to complete assignments for you.
+
+🧩 **Memo Example**
 
 ```{r eval=FALSE}
 # 🧩 Example 2
@@ -328,7 +444,8 @@ logicals2
 
 ___
 
-Practice your memoing skills by documenting errors as you follow along with the following exercises.
+
+We turn to building basic objects next. As you work through the exercises, practice documenting your tenacity on a memo whenever you encounter an error or do not fully understand.
 
 # Vectors
 
@@ -411,7 +528,7 @@ print(travel_jumps)
 
 ## Character Vectors
 
-Character vectors store text strings, which are sequences of characters enclosed in quotes. Character vectors can include letters, numbers, symbols, and spaces. They are often used to represent names, labels, or any other textual data.
+**Character vectors** store text strings, which are sequences of characters enclosed in quotes. Character vectors can include letters, numbers, symbols, and spaces. They are often used to represent names, labels, or any other textual data.
 
 Quotes are enclosed in either double quotes `"` or single quotes `'`. Both types of quotes function the same way in R, but it's important to be consistent within a single string. The commas separate individual strings within the vector is outside the quotes.
 
@@ -444,9 +561,6 @@ print(rainbow)
 
 🗣 The output shows the color names stored in the `rainbow` character vector.
 
-
-
-
 # Inspecting Vectors
 
 Before using data, we need to confirm *what* it is. 
@@ -469,6 +583,29 @@ class(activation_code)
 ```{r , eval=FALSE}
 # Check the class of other vectors in your R Script
 ```
+
+___
+
+🧩 **Memo Example**
+
+```{r eval=FALSE}
+# 🧩 Example 3
+# How does the paste() function work?
+first_word<-"yellow"
+# I wasn't expecting it to turn yellow!!!
+second_word<-"banana"
+sentence<-paste(first_word,second_word)
+sentence
+#The sentence came out as "yellow banana"...neat!
+
+class(sentence)
+
+#Character...? Uh, what's that referring to??
+```
+
+🧐 **Notice:** The student (1) 🗣 composed a memo expressing confusion about the term "character." This is a great opportunity to research. Being actively engaged with your learning is a human-centered mindset. This student could review the course materials, ask a peer or the instructor.
+
+___
 
 ## Length of a Vector
 
@@ -661,3 +798,42 @@ print(______)
 
 🗣 Comment: # The output shows the `nerdy_df` data frame with three columns: ______, ______, and ______. 
 
+## Task 7
+
+**Vignette 4:**
+
+“Explain what my output means”
+
+Priya runs code that prints a number and she doesn’t understand why it’s that number. She asks AI: “Explain this output step-by-step using my variable names.”
+
+**Is AI appropriate?** Write a couple sentences explaining your answer. 
+
+```{r eval=FALSE, include=FALSE}
+# Yes, with one condition.
+# This is AI as a tutor. It can be useful if Priya actively checks the explanation by re-running smaller “code trials” (printing intermediate objects, confirming each step). If she accepts the explanation without verifying, she’s delegating understanding. Tenacity means: trust, but verify.
+```
+
+## Task 8
+
+**Vignette 5:** 
+
+**"Write my reflection"**
+
+Devin hits three errors in a row and feels discouraged. After using AI to solve the errors, he asks AI: “Write my memo about what I learned and how I showed tenacity.”
+
+**Is AI appropriate?** Write a couple sentences explaining your answer. 
+
+```{r eval=FALSE, include=FALSE}
+# Mostly no.
+# The memo is where your learning becomes visible to you. Outsourcing it removes the reflection that turns confusion into growth. Tenacity includes emotionally appropriate persistence: naming what happened, what you tried, what worked, and what you’ll do next time.
+# What is appropriate: asking AI to generate reflection prompts (questions) you answer yourself, like: “What did the error message literally say? What did you change? What did you learn about object creation and order?”
+
+```
+
+# References
+
+Baehr, Jason. 2022. Deep in Thought: A Practical Guide to Teaching for Intellectual Virtues. Harvard Education Press.
+
+King, N. L. (2021). The excellent mind: Intellectual virtues for everyday life. Oxford University Press.
+
+Rus, V., Akhuseyinoglu, K., Chapagain, J., & Tamang, L. J. (2021). Prompting for Free Self-Explanations Promotes Better Code Comprehension. (CSEDM workshop, EDM 2021).

@@ -114,6 +114,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # R
 
+**R** is a programming language and engine that runs your R code.
+
 **Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
 
 **R Markdown**: A document format (`.Rmd`) that mixes plain-text writing (Markdown) with embedded R code chunks, so you can generate reports that combine narrative, code, and computed output. You can render an R Markdown file into finished formats like HTML, PDF, or Word.
@@ -121,6 +123,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **R Notebook**: An `.Rmd` (R Markdown) document that lets you run code in chunks and see the results (output, tables, plots) immediately below each chunk. It’s designed for reproducible work because it keeps your code, results, and explanatory notes together in the same file.
 
 **R Script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
+
+**RStudio Desktop** is an **integrated development environment** (IDE) that makes writing, running and organizing R code easier.
 
 # S
 
@@ -133,6 +137,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Tokens**: The smallest meaningful pieces of code that R reads and interprets when it parses a line. Tokens include things like names (mean), numbers (`3.14`), strings (`"text"`), operators (`<-`, `+`), parentheses (`(`,`)`), commas (`,`), and brackets (`[`, `[[`, `{`). Whitespace usually just separates tokens for readability and is otherwise ignored.
 
 **Tools**: The top-menu item that provides access to settings and helper features in RStudio. It is the place you go to change preferences, install tools, and access developer utilities. This menu that groups commands for customizing the IDE and running support tasks (for example, options, addins, and project tools).
+
+**Transparency**: The practice of clearly disclosing your methods, materials, assumptions, tools, values, and sources so another person can follow your workflow, reproduce your results, and evaluate your claims. In this course, transparency supports explanatory power (you can explain what your code does and why) and originality/accountability (you produce and attribute work honestly, including documenting if and how you used AI).
 
 # U
 
