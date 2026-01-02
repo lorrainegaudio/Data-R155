@@ -47,6 +47,14 @@ R is one of the most widely used programming languages for data analysis, statis
 
 - **Integration with Other Tools**: R can be integrated with other programming languages (like Python and C++) and tools (like databases and web applications), making it versatile for various data workflows. Version control systems like Git and GitHub can be used to track changes to your files, saving snapshots of your work over time. Shiny apps allow you to turn your analyses into interactive web applications.
 
+**Large Language Models** (LLMs) are AI tools that can predict text and code. They can be used to draft and explain code. Given the transformative potential of AI for human societies, it is crucial to equip you with the values, knowledge and skills needed to navigate the future with AI. Using AI will undoubtedly have an impact on your learning. Using AI tools can either facilitate and prevent learning. It all depends on how it is used, the specific use case. 
+
+If these AI tools are very good at producing code, why should you learn to read and write R code? Here are just a few important reasons:
+
+**Explanatory Power** means you can account for results. It means being able to accurately and knowingly explain relationships and mechanisms. It is not enough to have correct code and analysis. It is correctly and knowingly being able to explain why it is correct. If you can’t read the R code that produces the statistical output because you copied what AI produces, you lose the explanatory power of the results. AI is not a researcher. AI is a black box, or algorithmic opacity. An AI system’s internal logic is very complex, hidden, or “proprietary,” making it difficult to inspect. You can’t see how inputs become outputs, which limits auditability, explanation, and reproducibility (Kisselburgh & Beever, 2022). LLMs are not conscious (Shardlow & Przybyła, 2024). We must always keep humans “in the loop” of research processes that utilize AI tools. Ultimately, you, as the researcher, are responsible for your work.
+
+**Critical Thinking and Problem-Solving Skills**: Learning R helps you develop critical thinking and problem-solving skills. You learn how to break down complex problems into smaller, manageable parts and how to approach data analysis systematically.
+
 While course will focus on the foundations, learning R opens up many possibilities for advanced data analysis, machine learning, and statistical modeling. It is a valuable skill for anyone working with data in various fields, including academia, industry, healthcare, finance, and more.
 
 # Acquiring the Software
@@ -106,4 +114,16 @@ If you prefer a video walkthrough, you can watch a short tutorial:
 [How To Install R and RStudio on Ubuntu 24.04 LTS](https://www.youtube.com/watch?v=7RSq4uuS36A)
 
 
+# Chapter Terms
 
+**Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.
+
+**R** is a programming language and engine that runs your R code.
+
+**RStudio Desktop** is an **integrated development environment** (IDE) that makes writing, running and organizing R code easier.
+
+# References
+
+Kisselburgh, L., & Beever, J. (2022). The Ethics of Privacy in Research and Design: Principles, Practices, and Potential. In B. P. Knijnenburg, X. Page, P. Wiseniewski, H. R. Lipford, N. Proferes, & J. Romano (Eds.), Modern Socio-Technical Perspectives on Privacy (pp. 395–426). Springer. https://doi.org/10.1007/978-3-030-82786-1
+
+Shardlow, M., & Przybyła, P. (2024). Deanthropomorphising NLP: can a language model be conscious?. PloS one, 19(12), e0307521.

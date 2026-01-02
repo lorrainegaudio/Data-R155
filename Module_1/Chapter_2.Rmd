@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-In Chapter 2, you will move from one-off Console commands to scripts, which are the durable record of your work: what you ran, in what order, and why. You will practice writing code in the Source pane and running it into the Console (line-by-line or in blocks) using RStudio’s Run tools and shortcuts. You will also learn how to use comments as memos to document errors and your troubleshooting process (tenacity). You will practice this as you build vectors of several basic types, checks with `class()` and `length()`, and a simple data frame. 
+In Chapter 2, you will move from one-off Console commands to scripts, which are the durable record of your work: what you ran, in what order, and why. You will practice writing code in the Source pane and running it into the Console (line-by-line or in blocks) using RStudio’s Run tools and shortcuts. You will also learn how to use comments as memos to document errors and your troubleshooting process (tenacity). You will practice this as you build vectors of several basic types, checks with `mode()` and `length()`, and a simple data frame. 
 
 In Chapter Two you will learn how to:
 
@@ -37,7 +37,7 @@ In Chapter Two you will learn how to:
 
 - 🛠 Build numeric, integer, and character using `c()` and `seq()`
 
-- 🔍 Check the class and length of any vector object.
+- 🔍 Check the mode and length of any vector object.
 
 - 📊 Create a data frame from vectors.
 
@@ -410,11 +410,11 @@ R syntax can be challenging, unforgiving even. Students often spend hours debugg
 
 Before you seek help, document three things in your script memo:
 
-- 🎯 What you what you were trying to do, 
+1. 🎯 What you what you were trying to do, 
 
-- ⚡ The attempts at writing the code️ even if it didn't achieve the results you wanted. 
+2. ⚡ The attempts at writing the code️ even if it didn't achieve the results you wanted. 
 
-- ✍ State what you understand so far, and what you’re confused or curious about.
+3. ✍ State what you understand so far, and what you’re confused or curious about.
 
 Once you decide to seek help, choose a resource that fits the problem: a peer, your instructor, R’s help files, reputable online documentation, or an AI tool. No matter what you use, cite it in your memo so your learning is traceable and your work is honest.
 
@@ -425,6 +425,8 @@ In your script, always include:
 2. **How it helped you** (what you changed, what you learned, what you verified).
 
 Always write your own code; do not copy and paste from external sources. Use external help to understand and learn, not to complete assignments for you.
+
+💡 **Tip:** If you use generative AI to help you and it provides the answer, close the viewer and type the script yourself. 
 
 🧩 **Memo Example**
 
@@ -449,7 +451,9 @@ We turn to building basic objects next. As you work through the exercises, pract
 
 # Vectors
 
-A **vector** one-dimensional object that stores an ordered collection of values (**elements**), all of the same basic type. It is like a row in a spreadsheet: a single dimension of related values. But what if we want to store multiple elements together? We'll use `c()`, `:`, and `seq()` to create vectors of different types. 
+An **atomic vector** one-dimensional object that stores an ordered collection of values (**elements**), all of the same basic type. For simplicity, I will simply use the word **vector**. A vector is like a row in a spreadsheet: a single dimension of related values.
+
+Let's use `c()`, `:`, and `seq()` to create vectors of different storage types: numeric, integer, and character. 
 
 ## Numeric Vectors
 
@@ -561,51 +565,47 @@ print(rainbow)
 
 🗣 The output shows the color names stored in the `rainbow` character vector.
 
+## Adding Elements to Vectors
+
+You can add to the end of a vector using the `c()` function.
+
+🎯 Add the color "indigo" to the end of the existing `rainbow` vector.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script
+rainbow <- c(rainbow, "indigo")
+```
+```{r , eval=FALSE}
+# ✅ Check the rainbow vector
+print(rainbow)
+```
+
+🗣 The output shows the updated `rainbow` vector with "indigo" added to the end.
+
 # Inspecting Vectors
 
 Before using data, we need to confirm *what* it is. 
 
-## Class of a Vector
+## Mode of a Vector
 
-The `class()` function tells you the type of data stored in an object.
+The storage type of a vector tells R how to interpret the data inside it. The `mode()` function tells you what kind of data the object is fundamentally made of. For typical vectors, the mode could be "numeric," "character," or "logical" to name a few.
 
-🎯 Use the `class()` function to check the data type of the `activation_code` vector.
+*The function* `typeof()` *returns R's internal storage type of an object. For a higher-level understanding of the data type, we use the* `mode()` *function.*
+
+🎯 Use the `mode()` function to check the data type of the `activation_code` vector.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Script
-class(activation_code)
+mode(activation_code)
 ```
 
-🗣 The output shows that the `activation_code` vector is of class "character," indicating it stores text strings.
+🗣 The output shows that the `activation_code` vector is of mode "character," indicating it stores text.
 
-🚀 **Explore and Play:** Try checking the class of other vectors you created, such as `numbers3`, `cursed_seq`, `combination`, `travel_jumps`, and `logicals`.
+🚀 **Explore and Play:** Try checking the mode of other vectors you created, such as `numbers3`, `cursed_seq`, `combination`, `travel_jumps`, and `logicals`.
 
 ```{r , eval=FALSE}
-# Check the class of other vectors in your R Script
+# Check the mode of other vectors in your R Script
 ```
-
-___
-
-🧩 **Memo Example**
-
-```{r eval=FALSE}
-# 🧩 Example 3
-# How does the paste() function work?
-first_word<-"yellow"
-# I wasn't expecting it to turn yellow!!!
-second_word<-"banana"
-sentence<-paste(first_word,second_word)
-sentence
-#The sentence came out as "yellow banana"...neat!
-
-class(sentence)
-
-#Character...? Uh, what's that referring to??
-```
-
-🧐 **Notice:** The student (1) 🗣 composed a memo expressing confusion about the term "character." This is a great opportunity to research. Being actively engaged with your learning is a human-centered mindset. This student could review the course materials, ask a peer or the instructor.
-
-___
 
 ## Length of a Vector
 
@@ -666,17 +666,17 @@ print(spectrum_shift)
 
 # Summary
 
-This chapter taught you how to work in an R script: create a new `.R` file in the Source pane, run code into the Console with RStudio’s Run commands/shortcuts, and use comments to document what you tried when something failed. You built vectors with `c()`, `:` and `seq()`, practiced element-wise vector arithmetic (including R’s recycling behavior and the warnings it can trigger), created character and logical vectors, and then checked objects with `class()` and `length()` to confirm what they are before using them. Finally, you combined same-length vectors into a data frame using `data.frame()`, which is the standard “table” structure you will use constantly in later chapters.
+This chapter taught you how to work in an R script: create a new `.R` file in the Source pane, run code into the Console with RStudio’s Run commands/shortcuts, and use comments to document what you tried when something failed. You built vectors with `c()`, `:` and `seq()`, practiced element-wise vector arithmetic (including R’s recycling behavior and the warnings it can trigger), created character and logical vectors, and then checked objects with `mode()` and `length()` to confirm what they are before using them. Finally, you combined same-length vectors into a data frame using `data.frame()`, which is the standard “table” structure you will use constantly in later chapters.
 
 # Chapter Terms
 
-**Character vector**: A vector that stores text strings, written in quotes, such as `"apple"` or `"ID_001"`.
+**Atomic Vector**: A one-dimensional R vector where all elements must be the same basic type (logical, integer, double/numeric, character, complex, or raw). If you combine different types, R will coerce them to a single type so the vector stays atomic.
 
-**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
+**Character Vector**: A vector that stores text strings, written in quotes, such as `"apple", "banana", "grapes"` or `"ID_001", "ID_002", "ID_003"`.
 
 **Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y))`.
 
-**Data frame**: A rectangular table-like object where each column is a vector (all values in a column share the same type), and all columns have the same number of rows. Data frames are the standard structure for working with datasets in R because they organize variables (columns) and observations (rows) in a consistent format.
+**Data Frame**: A rectangular table-like object where each column is a vector (all values in a column share the same type), and all columns have the same number of rows. Data frames are the standard structure for working with datasets in R because they organize variables (columns) and observations (rows) in a consistent format.
 
 **Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
 
@@ -684,21 +684,23 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 **File Menu**: The top-left menu in RStudio that provides commands for creating, opening, saving, exporting, and printing files and projects. It’s where you start new items (for example, a new R Script), open existing files, manage recent files/projects, and access project-level actions. 
 
-**Hexadecimal color codes**: A way to specify colors using a `#` followed by hexadecimal digits. In R (and most software), `#RRGGBB` defines the red, green, and blue intensities using two hex digits each (00–FF), for example `#FF0000` (red) or `#1E90FF` (blue). Some codes include transparency as a fourth pair, `#RRGGBBAA`, where `AA` controls alpha (00 = fully transparent, FF = fully opaque).
+**Hexadecimal Color Codes**: A way to specify colors using a `#` followed by hexadecimal digits. In R (and most software), `#RRGGBB` defines the red, green, and blue intensities using two hex digits each (00–FF), for example `#FF0000` (red) or `#1E90FF` (blue). Some codes include transparency as a fourth pair, `#RRGGBBAA`, where `AA` controls alpha (00 = fully transparent, FF = fully opaque).
 
-**Integer vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
+**Integer Vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
 
 **Length** `length()`: A function that returns the number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
 
-**Numeric vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
+**Mode**: The underlying storage type of an R object—the low-level kind of data it is fundamentally stored as. `mode(x)` reports this storage mode (often aligning with atomic types like `"numeric"`, `"integer"`, `"logical"`, or `"character"`), which is useful for understanding coercion and how R will treat the object in computations.
+
+**Numeric Vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
 
 **Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
 
-**R script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
+**R Script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
 
 **Vector**: A one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
 
-**Vector arithmetic**: Performing mathematical operations directly on vectors. In R, operations like` +`, `-`, `*`, `/`, and `^` are applied element-by-element, so `c(1, 2, 3) + c(10, 20, 30)` returns `c(11, 22, 33)`.
+**Vector Arithmetic**: Performing mathematical operations directly on vectors. In R, operations like` +`, `-`, `*`, `/`, and `^` are applied element-by-element, so `c(1, 2, 3) + c(10, 20, 30)` returns `c(11, 22, 33)`.
 
 **Warning**: A console message indicating that R did run the command but detected a potential problem. Execution continues and a result is produced, but the output may be incomplete, unexpected, or based on an assumption (for example, coercing types, removing missing elements, or using a function in a way that may not behave as intended).
 
@@ -732,12 +734,12 @@ ________ <- _:_
 ```
 
 ```{r , eval=FALSE}
-# ✅ Check the class and length of the vector
+# ✅ Check the mode and length of the vector
 
 ```
 
 🗣 Add Comment:  # The length is ___ elements (values)
-                 # The class is ________.
+                 # The mode is ________.
                  
 
 ## Task 3
@@ -748,7 +750,7 @@ R can store hexadecimal color codes in character vectors. **Hexadecimal color** 
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Script, Fill in the blanks
-______ <- _("#7F00FF", "#003B6F", "#663399", "#4F97A3", "#FFF8E7", "#000000", "#03A062", "#FF00FF", "#CC0000", "#4D9E68")
+______ <- _("#7F00FF", "#003B6F", "#663399", "#4F97A3", "#FFF8E7", "#000000", "#03A062", "#FF00FF", "#CC0000")
 ```
 
 
@@ -761,12 +763,33 @@ ______(nerdy_palette)
 
 ## Task 4
 
+🎯 Add "4D9E68" to the end of the existing `nerdy_palette` vector.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Script, Fill in the blanks
+nerdy_palette <- c(____, "____")
+```
+
+```{r , eval=FALSE}
+# ✅ Check the nerdy_palette vector
+print(____)
+```
+
+🗣 Comment: # The output shows the updated `nerdy_palette` vector with "#4D9E68" added to the end.
+
+## Task 4
+
 🎯 Create a vector named `color_names` that contains the following names: "Octarine," "TARDIS Blue," "Rebeccapurple," "Hooloovoo," "Cosmic Latte," "Vantablack," "Matrix Green," "Source Engine Magenta," "Command Red," and "Impossible Green." Use the `c()` function.
 
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Script, Fill in the blanks
 color_names __  __("Octarine", "TARDIS Blue", "Rebeccapurple", "Hooloovoo", "Cosmic Latte", "Vantablack", "Matrix Green", "Source Engine Magenta", "Command Red", "Impossible Green")
+```
+
+```{r , eval=FALSE}
+# ✅ Check the color_names vector
+print(________)
 ```
 
 🗣 Comment: # The output shows the ten color names stored in the `color_names` character vector.
