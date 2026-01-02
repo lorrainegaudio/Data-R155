@@ -706,7 +706,7 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 # 📝 Practice Space
 
-Create a data frame using several vectors. Fill in the blanks to complete the code. Before you begin, make sure you have created a new R script in the Source pane and saved it as `chapter2_practice.R` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom. Save and submit your R script (`.R`) and environment (`.RData`) to Canvas, if directed.
+Fill in the blanks to complete the code. Before you begin, make sure you have created a new R script in the Source pane and saved it as `chapter2_practice.R` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom. Save and submit your R script (`.R`) and environment (`.RData`) to Canvas, as directed.
 
 ## Task 1
 

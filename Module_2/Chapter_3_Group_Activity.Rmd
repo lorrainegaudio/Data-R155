@@ -76,7 +76,7 @@ output:
 ```
 
 
-# In-Class Activity: Vector Playlab 🎮
+# Group Activity: Vector Playlab 🎮
 
 Today’s activity is a group challenge to deepen your understanding of vectors in R — and to see what happens when you push them into data frames, matrices, and lists. Work together, write your own code, and discuss your results. By the end of this activity, you will be able to create and inspect vectors of different types, perform vector arithmetic (including recycling), and organize data into data frames, lists, and matrices.
 
@@ -84,13 +84,12 @@ Today’s activity is a group challenge to deepen your understanding of vectors 
 
 In the next few minutes you will learn how to:
 
-🔍 Differentiate between numeric and integer vector types and explain how R treats them.
+🔍 Differentiate between numeric and integer vector types 
 
-⚙️ Perform arithmetic operations with vectors and describe how R handles vectors of unequal length (including recycling rules).
+📝 Explain how R treats vector types
 
-🔨 Construct and manipulate vectors, matrices, data frames, and lists to see how R organizes and stores different types of data.
+🔨 Construct and manipulate vectors
 
-🏆 Recognize how type differences and mismatched lengths affect data structures when combining vectors.
 
 # Activity Prep
 
@@ -124,9 +123,9 @@ Step Two: Assign Roles
 
 - Time Keeper: keeping the project moving. If a task is not finished on time, the team needs to move on.
 
-- Reporter: The R User typing code in a script and submitting the R script to Canvas. 
+- Reporter: The R User typing code in code chunks and submitting the R notebook to Canvas. 
   - Have the activity document open for copy and paste actions
-  - Write everyone's name at the top of the script
+  - Write everyone's name at the top of the notebook
 
 - Activity Leader: facilitating the conversation, follows the activity document
 
@@ -136,63 +135,122 @@ Step Two: Assign Roles
 
 # Vectors
 
-## Create Vectors
+*Rules**: Name your vectors exactly as listed. Follow the rules for each type. Element duplication is permissible. (15 Minutes Maximum)
 
-*Rules**: Name your vectors exactly as listed. Follow the rules for each type. Duplication is permissible. (10 Minutes Maximum)
+## Numeric vector
 
-A. Numeric vector
+🎯  Create a vector called `numeric` → all real numbers (length = 10)
 
-➤  `numeric` → all real numbers (length = 10)
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+numeric <- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )
+```
+```{r eval=FALSE}
+## ✅ Check the length of your vector
+_____(numeric)
+```
 
-B. Integer vector
+🗣 Comment: Describe `numeric` vector type.
 
-➤  `integer` → must use the L suffix (length = 4 or group size)
+## Integer vector
 
-C. Logical vector
+🎯 `integer` → must use the L suffix (length = 4 or group size)
 
-➤  `logical` → build with **logical** operators (length = 4 or group size)
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+integer <- c( __ _ , __ _ , __ _ , __ _ )
+```
+```{r eval=FALSE}
+## ✅ Check the length of your vector
+_____(integer)
+```
+🗣 Comment: Describe `integer` vector type. 
 
-D. Character vectors
+## Logical vector
+
+🎯  Create a vector called `logical` → build with **logical operators** (length = 4 or group size).
+
+The logical operators are:
+
+- `>` greater than
+
+- `<` less than
+
+- `==` equal to
+
+- `>=` greater than or equal to
+
+- `<=` less than or equal to
+
+- `!=` not equal to
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+logical <- c( __ , __ , __ , __ )
+```
+```{r eval=FALSE}
+## ✅ Check the length or class of your vector
+_____(logical)
+```
+
+🗣 Comment: Describe `logical` vector type.
+
+## Character vectors
 
 ➤  Make each character vector with words or phrases of your choice:
 
-- `name` → any person’s name (length = 10)
+- 🎯  Create a vector called `name` → any person’s name (length = 10); Element duplication is recommended.
 
-- `group_name` → name of your group (length = 4 or group size)
+- 🎯  Create a vector called `group_name` → name of your group (length = 4 or group size)
 
-- `at_handle` → any social media handle (length = 4 or group size)
+- 🎯  Create a vector called `at_handle` → any social media handle (length = 4 or group size)
 
-- `item` → any kind of thing (length = 10)
+- 🎯  Create a vector called `item` → any kind of thing (length = 10)
 
-- `activity` → something you do (length = 10)
+- 🎯  Create a vector called `activity` → something you do (length = 10); Element duplication is recommended.
 
-- `location` → any place to go (real or imagined) (length = 4 or group size)
+- 🎯  Create a vector called `location` → any place to go (real or imagined) (length = 4 or group size)
 
-- `call_to_action` → a catch phrase or statement (length = 4 or group size)
+- 🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4 or group size)
 
-- `outcomes` → phrase describing a result (length = 4 or group size)
+- 🎯  Create a vector called `outcomes` → phrase describing a result (length = 4 or group size)
 
-- `emotion` → a mood or feeling (length = 10)
+- 🎯  Create a vector called `emotion` → a mood or feeling (length = 10); Element duplication is recommended.
 
-- `retro_game` → any old-school game title (length = 4 or group size)
+- 🎯  Create a vector called `retro_game` → any old-school game title (length = 4 or group size)
 
 ## Factor class
 
 ### Part 1
 
-Change a change character vector(s) into factor class. (5 minutes)
+🎯 Change a character vector(s) into factor class. (5 minutes)
 
 ➤  Step 1: Check the Class
 
-Select 3 Character vectors and use a function `class()` to check the class of the vector.
+🎯 Select a character vector (e.g., `name`, `activity`, `emotion`) and use a function `class()` to check the class of the vector.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+class( __ )
+```
 
 ➤  Step 2: Change Class to Factor
 
-Use the `as.factor()` function to change *at least one* character vector into factor class.
+🎯 Use the `as.factor()` function to change *at least one* character vector into factor class. Overwrite the original character vector with the factor class vector.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+__ <- _____( __ )
+```
 
 ➤  Step 3: Check the Class
 
-Verify that the class of the vector(s) have changes.
+🎯 Verify that the class of the vector(s) have changes.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+class( __ )
+```
 
 ### Part 2
 
@@ -200,27 +258,35 @@ Verify that the class of the vector(s) have changes.
 
 ➤  Make a Factor Vector
 
-Here is an example to follow: 
+Here is an *example* to follow: 
 
 ```{r eval=FALSE}
-# Creating a character vector
+# ⚡ Creating a character vector
 tshirt_sizes_data <- c("M", "L", "S", "M", "L", "XL", "S")
-# Changing the character vector to a factor class with levels
+# ⚡ Changing the character vector to a factor class with levels
 tshirt_sizes <- factor(tshirt_sizes_data, levels = c("S", "M", "L", "XL"))
-# Investigating your factor class with levels
-unique(tshirt_sizes)
+# ✅ Investigating your factor class with levels
+print(tshirt_sizes)
 ```
 
-🗣 Comment: Describe factor class and how levels works. (5 minutes)
+🎯 Create your own factor vector called `social_media_platform`. Pick at least 4 social media / online networking platforms to create your vector. Element duplication is recommended. Rank the platforms using the `levels`. (5 minutes)
 
-➤  Now, create your own factor vector called `social_media_platform`. Pick at least 4 social media / online networking platforms to create your vector. Duplication is fine. Rank the platforms using the `levels`. (5 minutes)
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+social_media <- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )
+social_media_platform <- factor( __ , levels = c( __ , __ , __ , __ ) )
+# ✅ Investigating your factor class with levels
+print( social_media_platform )
+```
 
 
-## Story
+# Story
 
 ➤  Copy and paste the following code and read your Mad Lib Story!
 
 ```{r , eval=FALSE}
+# ⚡  Copy and paste this code into your R Notebook
+# Function to pick a random element from a vector
 pick <- function(x) sample(x, 1)
 
 # ---------- Story 1 ----------
@@ -259,10 +325,12 @@ print(story2)
 ```
 
 
-# Dataframes
+# Dataframe
+
+🎯 Build a tiny table you can reference as “credits” under the stories.
 
 ```{r eval=FALSE}
-# Build a tiny table you can reference as “credits” under the stories.
+# ⚡  Copy and paste this code into your R Notebook
 
 people <- data.frame(
   name = name,
@@ -271,80 +339,21 @@ people <- data.frame(
   score = numeric,
   ep = integer
 )
-str(people)
-```
-
-(5 minutes)
-
-➤ Task: Build a data frame using several of your vectors using `data.frame()`.
-
-- Combining vectors with the same lengths.
-
-- Try combining vectors with different lengths. What error or warning do you see? What does it mean?
-
-
-# Matrices
-
-Bonus 🧠 Challenge!
-
-You can easily create a matrix from a numeric vector using the `matrix()` function in R. A matrix is a two-dimensional data structure, which means it has both rows and columns.
-
-```{r, eval=FALSE}
-# Create a numeric vector with 9 elements
-my_vector <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
-
-# Create a 3x3 matrix from the vector, filled by rows
-my_matrix <- matrix(my_vector, nrow = 3, ncol = 3, byrow = TRUE)
-
-# Print the matrix to see the result
-print(my_matrix)
-
-# Check the class to confirm it is a matrix
-class(my_matrix)
-```
-
-➤  Now, convert your numeric vector into a matrix.
-
-🗣 Comment: What do you notice about how R arranges the numbers?
-
-
-# Lists
-
-In R, a list is a special type of data structure that can hold elements of different classes. This is a key difference between a list and a vector or a data frame, which can only hold elements of the same class. A list is essentially a collection of items, and each item can be a vector, a matrix, a data frame, or even another list.
-
-```{r}
-# Create a list about Taylor Swift
-taylor_swift_list <- list(
-  name = "Taylor Swift",
-  albums = c("Fearless", "Red", "1989", "folklore", "Midnights"),
-  release_years = c(2008, 2012, 2014, 2020, 2022),
-  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
-  favorite_song = list(
-    title = "All Too Well (10 Minute Version)",
-    album = "Red",
-    length_minutes = 10.13
-  )
-)
-
-# Print the full list
-print(taylor_swift_list)
+print(people)
 ```
 
 
-➤  Bonus 🧠 Challenge! Make a List. Any List.
+
+
 
 # Today you practiced
 
 In this activity, your group practiced:
 
--Creating vectors of different types (numeric, integer, character, and logical).
+- Creating vectors of different types (numeric, integer, character, and logical).
 
--Performing vector arithmetic and observing how recycling works when vector lengths don’t match.
-
--Combining vectors into a data frame and noticing what happens when lengths are unequal.
-
--Exploring lists and matrices as alternative ways of organizing data.
+- Combining vectors into a data frame.
 
 Your work today previewed how R organizes and manages different data structures.
 
-👉 Before leaving, have the person in the Reporter role submit the R script on Canvas. This script should show all of the vectors and data structures you created during the activity.
+👉 Before leaving, have the person in the Reporter role submit the R notebook on Canvas. This notebook should show all of the vectors and data structures you created during the activity.

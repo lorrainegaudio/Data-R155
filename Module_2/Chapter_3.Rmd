@@ -595,6 +595,51 @@ ___
 
 Another type of attribute that vectors can have is names. Let's look at named vectors more closely.
 
+### Data Coercion
+
+A atomic vector means that all elements must be of the same type. If you try to mix types, R will coerce (convert) them to a common type based on a hierarchy of flexibility.
+
+🎯  What happens if you mix numbers and characters?
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+mixed <- c("candy", 4, "book", 92)
+# ✅ Check the mixed vector
+class(mixed)            # character: all elements coerced to character
+```
+
+🗣 A vector can only hold *one* type. Mixing types triggers *coercion* to the most flexible type (logical → numeric → character).
+
+
+#### Converting Between Types
+
+You can explicitly convert between types using functions like `as.numeric()`, `as.character()`, and `as.logical()`. 
+
+The `as.numeric()` function tries to convert characters to numbers. If it can't, it returns `NA` (not available).
+
+📜 The SYNTAX (basic): 
+
+`as.numeric(x)`
+
+
+🎯 Try converting a character vector of numbers to numeric using the `as.numeric()` function.
+
+```{r , eval=FALSE}
+as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
+```
+
+🗣 The output shows the numeric values 1, 2, and 3 successfully converted from character strings.
+
+
+🎯 Try converting the `mixed` vector to numeric using the `as.numeric()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+as.numeric(mixed)            # character → numeric: text converts to NA
+```
+
+🗣 The output shows `NA` for the character elements "candy" and "book" because they cannot be converted to numeric values. The numeric elements 4 and 92 are successfully converted.
+
 
 ## Named Vectors
 
@@ -603,7 +648,7 @@ Vectors that carry a names attribute so each element can be referred to by a lab
 🎯 Create a character vector named `nerdy_palette` that contains the following color names and their corresponding hexadecimal color codes using the `c()` function.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
+# ⚡ Type this in your R Notebook, Fill in the blanks
 nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
 ```
 
@@ -616,6 +661,7 @@ names(nerdy_palette)
 ```
 
 🗣 The nerdy_palette vector acts as a look-up table, allowing you to retrieve color hex codes by their assigned color names.
+
 
 ### Object names vs Element names
 
@@ -670,14 +716,14 @@ nerdy_palette[c(1, 3)]
 
 We will return to indexing in later chapters when we learn about data frames.
 
-# Logical Vectors.
+# Logical Vectors
 
-Logical vectors are used for conditions and comparisons. They contain TRUE or FALSE values.
+**Logical vectors** are used for conditions and comparisons. They contain TRUE or FALSE values.
 
 🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script
+# ⚡ Type this in your R Notebook
 real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
 ```
 ```{r , eval=FALSE}
@@ -687,9 +733,11 @@ print(real)
 
 🗣 The output shows the logical values stored in the `logicals` vector.
 
+## Comparison Operators
+
 Logical vectors can also be created using comparison operators. These operators compare values and return TRUE or FALSE based on the comparison.
 
-The logical operators are:
+**Logical operators** include:
 
 - `>` greater than
 
@@ -705,9 +753,8 @@ The logical operators are:
 
 🎯 Create a logical vector named `logicals` that contains the results of the following comparisons: `1 > 2`, `3 < 5`, and `4 == 4` using the `c()` function.
 
-
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script
+# ⚡ Type this in your R Notebook
 logicals <- c(1 > 2, 3 < 5, 4 == 4) 
 ```
 
@@ -718,29 +765,35 @@ print(logicals)
 
 🗣 The output shows the results of the comparisons stored in the `logicals` vector. There is one FALSE value and two TRUE values. The first value is FALSE because 1 is not greater than 2. The second value is TRUE because 3 is less than 5. The final value is TRUE because 4 is equal to 4.
 
-# Data Coercion
-
-⚠️ **Key Idea**  A vector can only hold *one* type. Mixing types triggers *coercion* to the most flexible type (logical → numeric → character).
-
-What happens if you mix numbers and characters?
-
-```{r , eval=FALSE}
-mixed <- c("candy", 4, "book", 92)
-
-class(mixed)            # character: all elements coerced to character
-```
-
-The `as.numeric()` function tries to convert characters to numbers. If it can't, it returns `NA` (not available).
-
-```{r , eval=FALSE}
-as.numeric(mixed)            # character → numeric: text converts to NA
-
-as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
-```
-
 # Lists
 
+In R, a list is a special type of data structure that can hold elements of different classes. This is a key difference between a list and a vector or a data frame, which can only hold elements of the same class. A list is essentially a collection of items, and each item can be a vector, a matrix, a data frame, or even another list.
+
+🎯  Create a list about Taylor Swift
+
+```{r}
+# Create a list about Taylor Swift
+taylor_swift_list <- list(
+  name = "Taylor Swift",
+  albums = c("Fearless", "Red", "1989", "folklore", "Midnights"),
+  release_years = c(2008, 2012, 2014, 2020, 2022),
+  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
+  favorite_song = list(
+    title = "All Too Well (10 Minute Version)",
+    album = "Red",
+    length_minutes = 10.13
+  )
+)
+
+# Print the full list
+print(taylor_swift_list)
+```
+
+
 # Summary
+
+
+
 
 # Chapter Terms
 
@@ -792,14 +845,37 @@ as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
 
 # 📝 Practice Space
 
+Fill in the blanks to complete the code. Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter2_practice.Rmd` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, sweep your environment then "Run All" to test that your entire notebook  to ensure it runs without errors from top to bottom. Save and submit your R notebook (`.Rmd`) and environment (`.RData`) to Canvas, as directed.
+
 ## Task 1
+
+🎯 Build two numeric vectors where both vectors are the same length.
+
+1.  Create a vector called `sales_q1` with FOUR numbers of your choice.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+sales_q1 <- c(___, ___, ___, ___)
+```
+
+
+2.  Create a vector called `sales_q2` with FOUR numbers of your choice.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+sales_q2 <- c(___, ___, ___, ___)
+```
+
+## Task 2
+
+Using vector arithmetic, create an object named `growth` that stores the difference between `sales_q2` and `sales_q1`.
 
 ## Task 2
 
 🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from 2^0 to 2^10 using the `^` operator and the `exponents` vector created earlier.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
+# ⚡ Type this in your R Notebook, Fill in the blanks
 __________ <- 2^exponents
 ```
 
@@ -810,25 +886,23 @@ _____(binary_powers)
 
 🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
 
-# Vector arithmetic
-
-As you just saw, you can perform arithmetic operations on vectors. R will apply the operation element-wise, meaning it will add, subtract, multiply, or divide corresponding elements in the vectors.
+## Task 3
 
 🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
+# ⚡ Type this in your R Notebook, Fill in the blanks
 cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()
 ``` 
 
 ```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
+# ⚡ Type this in your R Notebook, Fill in the blanks
 travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
 ```
 
 
 ```{r , eval=FALSE}
-# ⚡ Type this in a code chunk
+# ⚡ Type this in your R Notebook, Fill in the blanks
 anomaly <- travel_jumps - cursed_seq
 ```
 
@@ -842,18 +916,18 @@ print(anomaly)
 
 
 
-Task ## Task 3
+## Task 4
 
 Indexing named vectors
 
 🎯 Use character indexing to retrieve the hexadecimal color codes for "Matrix Green" and "Command Red" from the `nerdy_palette` vector.
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script
+# ⚡ Type this in your R Notebook, Fill in the blanks
 nerdy_palette <- c("Octarine" = "#7F00FF", "TARD
 IS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
 ```
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script
+# ⚡ Type this in your R Notebook, Fill in the blanks
 nerdy_palette[c("Matrix Green", "Command Red")]
 ```
 ```{r , eval=FALSE}
@@ -861,18 +935,51 @@ nerdy_palette[c("Matrix Green", "Command Red")]
 print(nerdy_palette[c("Matrix Green", "Command Red")])
 ```
 
+🗣 The output shows the hexadecimal color codes for "Matrix Green" and "Command Red" retrieved from the `nerdy_palette` vector using their names.
+
+## Task 5
+
 Indexing by position
 
 🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color codes from the `nerdy_palette` vector.
-```
+
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script
+# ⚡ Type this in your R Notebook, Fill in the blanks
 nerdy_palette[c(2, 4, 6)]
 ```
 ```{r , eval=FALSE}
 # ✅ Check the output
 print(nerdy_palette[c(2, 4, 6)])
 ```
+
+🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and 6th colors in the `nerdy_palette` vector.
+
+## Task 6
+
+🎯 Using the `growth` vector created in Task 2, complete the following:
+
+1. Create a new vector `positive_growth` that contains only values in `growth` that are greater than zero. (hint: see logical vectors)
+
+2. Create a new vector `last_two` that contains the last TWO elements of `sales_q2` (use numeric positions, not names).
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+positive_growth <- growth[growth > 0]
+last_two <- sales_q2[c(___, ___)]
+```
+```{r , eval=FALSE}
+# ✅ Check the outputs
+print(positive_growth)
+print(last_two)
+```
+
+🗣 The output shows the values in the `growth` vector that are greater than zero in the `positive_growth` vector, and the last two elements of the `sales_q2` vector in the `last_two` vector.
+
+## Task 7 
+
+Reflection
+
+🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
 
 
 # References
