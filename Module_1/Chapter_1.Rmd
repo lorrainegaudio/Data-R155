@@ -485,6 +485,12 @@ The Console is where R runs commands and shows results. You can perform arithmet
 
 The Files pane helps you navigate folders so you can find course materials and, when needed, set your working directory—the default folder where R will look for files and where it will save outputs unless you specify a different path. RStudio shows the current working directory at the top of the Console pane, and you can also print it with `getwd()`; if you “saved it but can’t find it,” the working directory is the first thing to check. For this course, you should create one dedicated course folder (ideally in local, non-synced storage) and then explicitly set it as the working directory using the menu option or the Files pane’s **More → Set As Working Directory** command—browsing folders in the Files pane alone isn’t enough unless you take that explicit “set” action. After your working directory is correct, you can save your entire workspace as `workspace.RData` using either the Environment pane’s save option or `save.image("workspace.RData")`, verify the file exists in your course folder, and keep your workspace clean with `ls()` and `rm()` so it only contains objects relevant to the current assignment. When you load an `.RData` file with `load()`, it adds objects into your current session and can overwrite objects with the same names, so loading into a messy workspace is a common way to create confusion.
 
+## Additional Resources
+
+**Videos**
+
+[R of Ecologists (Lesson 2) start using R and RStudio](https://youtu.be/dPLbyWXEG_E?si=6duJlP39Pt256J7c)
+
 # Chapter Terms
 
 **Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.

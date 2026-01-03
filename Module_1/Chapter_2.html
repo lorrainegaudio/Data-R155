@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2025-12-31" />
+<meta name="date" content="2026-01-02" />
 
 <title>Chapter 2: Scripts</title>
 
@@ -2768,7 +2768,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Chapter 2: Scripts</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">December 31, 2025</h4>
+<h4 class="date">January 02, 2026</h4>
 
 </div>
 
@@ -2782,7 +2782,7 @@ it into the Console (line-by-line or in blocks) using RStudio’s Run
 tools and shortcuts. You will also learn how to use comments as memos to
 document errors and your troubleshooting process (tenacity). You will
 practice this as you build vectors of several basic types, checks with
-<code>class()</code> and <code>length()</code>, and a simple data
+<code>mode()</code> and <code>length()</code>, and a simple data
 frame.</p>
 <p>In Chapter Two you will learn how to:</p>
 <ul>
@@ -2792,7 +2792,7 @@ frame.</p>
 memos.</p></li>
 <li><p>🛠 Build numeric, integer, and character using <code>c()</code>
 and <code>seq()</code></p></li>
-<li><p>🔍 Check the class and length of any vector object.</p></li>
+<li><p>🔍 Check the mode and length of any vector object.</p></li>
 <li><p>📊 Create a data frame from vectors.</p></li>
 </ul>
 </div>
@@ -3245,13 +3245,13 @@ hours debugging simple issues. Knowing how R interprets your code helps
 avoid mistakes. Errors are usually simple but hard to spot alone. That’s
 normal.</p>
 <p>Before you seek help, document three things in your script memo:</p>
-<ul>
+<ol style="list-style-type: decimal">
 <li><p>🎯 What you what you were trying to do,</p></li>
 <li><p>⚡ The attempts at writing the code️ even if it didn’t achieve the
 results you wanted.</p></li>
 <li><p>✍ State what you understand so far, and what you’re confused or
 curious about.</p></li>
-</ul>
+</ol>
 <p>Once you decide to seek help, choose a resource that fits the
 problem: a peer, your instructor, R’s help files, reputable online
 documentation, or an AI tool. No matter what you use, cite it in your
@@ -3266,6 +3266,8 @@ learned, what you verified).</p></li>
 <p>Always write your own code; do not copy and paste from external
 sources. Use external help to understand and learn, not to complete
 assignments for you.</p>
+<p>💡 <strong>Tip:</strong> If you use generative AI to help you and it
+provides the answer, close the viewer and type the script yourself.</p>
 <p>🧩 <strong>Memo Example</strong></p>
 <pre class="r"><code># 🧩 Example 2
 # logicals2 &lt;- c( 1&gt;2, 3&lt;5, 4=4 )
@@ -3289,12 +3291,14 @@ encounter an error or do not fully understand.</p>
 </div>
 <div id="vectors" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Vectors</h1>
-<p>A <strong>vector</strong> one-dimensional object that stores an
-ordered collection of values (<strong>elements</strong>), all of the
-same basic type. It is like a row in a spreadsheet: a single dimension
-of related values. But what if we want to store multiple elements
-together? We’ll use <code>c()</code>, <code>:</code>, and
-<code>seq()</code> to create vectors of different types.</p>
+<p>An <strong>atomic vector</strong> one-dimensional object that stores
+an ordered collection of values (<strong>elements</strong>), all of the
+same basic type. For simplicity, I will simply use the word
+<strong>vector</strong>. A vector is like a row in a spreadsheet: a
+single dimension of related values.</p>
+<p>Let’s use <code>c()</code>, <code>:</code>, and <code>seq()</code> to
+create vectors of different storage types: numeric, integer, and
+character.</p>
 <div id="numeric-vectors" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Numeric Vectors</h2>
 <p><strong>Numeric vectors</strong> are a list of numbers. So far, we
@@ -3390,46 +3394,44 @@ print(rainbow)</code></pre>
 <p>🗣 The output shows the color names stored in the <code>rainbow</code>
 character vector.</p>
 </div>
+<div id="adding-elements-to-vectors" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Adding Elements to
+Vectors</h2>
+<p>You can add to the end of a vector using the <code>c()</code>
+function.</p>
+<p>🎯 Add the color “indigo” to the end of the existing
+<code>rainbow</code> vector.</p>
+<pre class="r"><code># ⚡ Type this in your R Script
+rainbow &lt;- c(rainbow, &quot;indigo&quot;)</code></pre>
+<pre class="r"><code># ✅ Check the rainbow vector
+print(rainbow)</code></pre>
+<p>🗣 The output shows the updated <code>rainbow</code> vector with
+“indigo” added to the end.</p>
+</div>
 </div>
 <div id="inspecting-vectors" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Inspecting Vectors</h1>
 <p>Before using data, we need to confirm <em>what</em> it is.</p>
-<div id="class-of-a-vector" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Class of a
-Vector</h2>
-<p>The <code>class()</code> function tells you the type of data stored
-in an object.</p>
-<p>🎯 Use the <code>class()</code> function to check the data type of
-the <code>activation_code</code> vector.</p>
+<div id="mode-of-a-vector" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Mode of a Vector</h2>
+<p>The storage type of a vector tells R how to interpret the data inside
+it. The <code>mode()</code> function tells you what kind of data the
+object is fundamentally made of. For typical vectors, the mode could be
+“numeric,” “character,” or “logical” to name a few.</p>
+<p><em>The function</em> <code>typeof()</code> <em>returns R’s internal
+storage type of an object. For a higher-level understanding of the data
+type, we use the</em> <code>mode()</code> <em>function.</em></p>
+<p>🎯 Use the <code>mode()</code> function to check the data type of the
+<code>activation_code</code> vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Script
-class(activation_code)</code></pre>
+mode(activation_code)</code></pre>
 <p>🗣 The output shows that the <code>activation_code</code> vector is of
-class “character,” indicating it stores text strings.</p>
-<p>🚀 <strong>Explore and Play:</strong> Try checking the class of other
+mode “character,” indicating it stores text.</p>
+<p>🚀 <strong>Explore and Play:</strong> Try checking the mode of other
 vectors you created, such as <code>numbers3</code>,
 <code>cursed_seq</code>, <code>combination</code>,
 <code>travel_jumps</code>, and <code>logicals</code>.</p>
-<pre class="r"><code># Check the class of other vectors in your R Script</code></pre>
-<hr />
-<p>🧩 <strong>Memo Example</strong></p>
-<pre class="r"><code># 🧩 Example 3
-# How does the paste() function work?
-first_word&lt;-&quot;yellow&quot;
-# I wasn&#39;t expecting it to turn yellow!!!
-second_word&lt;-&quot;banana&quot;
-sentence&lt;-paste(first_word,second_word)
-sentence
-#The sentence came out as &quot;yellow banana&quot;...neat!
-
-class(sentence)
-
-#Character...? Uh, what&#39;s that referring to??</code></pre>
-<p>🧐 <strong>Notice:</strong> The student (1) 🗣 composed a memo
-expressing confusion about the term “character.” This is a great
-opportunity to research. Being actively engaged with your learning is a
-human-centered mindset. This student could review the course materials,
-ask a peer or the instructor.</p>
-<hr />
+<pre class="r"><code># Check the mode of other vectors in your R Script</code></pre>
 </div>
 <div id="length-of-a-vector" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Length of a
@@ -3490,7 +3492,7 @@ tried when something failed. You built vectors with <code>c()</code>,
 <code>:</code> and <code>seq()</code>, practiced element-wise vector
 arithmetic (including R’s recycling behavior and the warnings it can
 trigger), created character and logical vectors, and then checked
-objects with <code>class()</code> and <code>length()</code> to confirm
+objects with <code>mode()</code> and <code>length()</code> to confirm
 what they are before using them. Finally, you combined same-length
 vectors into a data frame using <code>data.frame()</code>, which is the
 standard “table” structure you will use constantly in later
@@ -3498,20 +3500,19 @@ chapters.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Chapter Terms</h1>
-<p><strong>Character vector</strong>: A vector that stores text strings,
-written in quotes, such as <code>&quot;apple&quot;</code> or
-<code>&quot;ID_001&quot;</code>.</p>
-<p><strong>Class</strong> <code>class()</code>: A function that reports
-the object’s class, which tells R how to interpret the object and which
-methods to use when functions are applied to it. For example,
-<code>class(3.14)</code> returns <code>&quot;numeric&quot;</code>, and
-<code>class(mtcars)</code> returns <code>&quot;data.frame&quot;</code>.</p>
+<p><strong>Atomic Vector</strong>: A one-dimensional R vector where all
+elements must be the same basic type (logical, integer, double/numeric,
+character, complex, or raw). If you combine different types, R will
+coerce them to a single type so the vector stays atomic.</p>
+<p><strong>Character Vector</strong>: A vector that stores text strings,
+written in quotes, such as <code>&quot;apple&quot;, &quot;banana&quot;, &quot;grapes&quot;</code> or
+<code>&quot;ID_001&quot;, &quot;ID_002&quot;, &quot;ID_003&quot;</code>.</p>
 <p><strong>Concatenate</strong> <code>c()</code>: A function that
 combines (concatenates) values into a single vector. You use
 <code>c()</code> to create a vector, append items to an existing vector,
 or join multiple vectors together (for example, <code>c(1, 2, 3)</code>
 or <code>c(x, y))</code>.</p>
-<p><strong>Data frame</strong>: A rectangular table-like object where
+<p><strong>Data Frame</strong>: A rectangular table-like object where
 each column is a vector (all values in a column share the same type),
 and all columns have the same number of rows. Data frames are the
 standard structure for working with datasets in R because they organize
@@ -3530,7 +3531,7 @@ provides commands for creating, opening, saving, exporting, and printing
 files and projects. It’s where you start new items (for example, a new R
 Script), open existing files, manage recent files/projects, and access
 project-level actions.</p>
-<p><strong>Hexadecimal color codes</strong>: A way to specify colors
+<p><strong>Hexadecimal Color Codes</strong>: A way to specify colors
 using a <code>#</code> followed by hexadecimal digits. In R (and most
 software), <code>#RRGGBB</code> defines the red, green, and blue
 intensities using two hex digits each (00–FF), for example
@@ -3538,7 +3539,7 @@ intensities using two hex digits each (00–FF), for example
 include transparency as a fourth pair, <code>#RRGGBBAA</code>, where
 <code>AA</code> controls alpha (00 = fully transparent, FF = fully
 opaque).</p>
-<p><strong>Integer vector</strong>: A vector that stores whole numbers.
+<p><strong>Integer Vector</strong>: A vector that stores whole numbers.
 In R, integers are typically written with an <code>L</code> suffix, such
 as <code>1L</code> or <code>42L</code>.</p>
 <p><strong>Length</strong> <code>length()</code>: A function that
@@ -3546,7 +3547,14 @@ returns the number of elements in an object. For a vector,
 <code>length(x)</code> is the count of elements in the vector; for a
 list, it’s the number of list components; for a data frame, it returns
 the number of columns.</p>
-<p><strong>Numeric vector</strong>: A vector that stores real (decimal)
+<p><strong>Mode</strong>: The underlying storage type of an R object—the
+low-level kind of data it is fundamentally stored as.
+<code>mode(x)</code> reports this storage mode (often aligning with
+atomic types like <code>&quot;numeric&quot;</code>, <code>&quot;integer&quot;</code>,
+<code>&quot;logical&quot;</code>, or <code>&quot;character&quot;</code>), which is useful
+for understanding coercion and how R will treat the object in
+computations.</p>
+<p><strong>Numeric Vector</strong>: A vector that stores real (decimal)
 numbers, such as <code>3.14</code>, <code>-2.5</code>, or
 <code>0</code>.</p>
 <p><strong>Recycling</strong>: R’s rule for handling vector operations
@@ -3555,7 +3563,7 @@ when the vectors have different lengths. The shorter vector is repeated
 is performed element-by-element. Recycling is safe only when the longer
 length is an exact multiple of the shorter; otherwise R issues a warning
 and the result may be unreliable.</p>
-<p><strong>R script</strong>: A plain-text file (typically saved with a
+<p><strong>R Script</strong>: A plain-text file (typically saved with a
 <code>.R</code> extension) that contains a sequence of R commands you
 write and save for later use. An R script lets you run code in a
 repeatable, organized way—so you can recreate analyses, clean data,
@@ -3567,7 +3575,7 @@ numeric, all character, or all logical). Vectors are the core building
 block of many R objects, and you create them with functions like
 <code>c()</code>; you can subset them by position or by logical
 conditions.</p>
-<p><strong>Vector arithmetic</strong>: Performing mathematical
+<p><strong>Vector Arithmetic</strong>: Performing mathematical
 operations directly on vectors. In R, operations like<code>+</code>,
 <code>-</code>, <code>*</code>, <code>/</code>, and <code>^</code> are
 applied element-by-element, so <code>c(1, 2, 3) + c(10, 20, 30)</code>
@@ -3581,16 +3589,15 @@ intended).</p>
 </div>
 <div id="practice-space" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
-<p>Create a data frame using several vectors. Fill in the blanks to
-complete the code. Before you begin, make sure you have created a new R
-script in the Source pane and saved it as
+<p>Fill in the blanks to complete the code. Before you begin, make sure
+you have created a new R script in the Source pane and saved it as
 <code>chapter2_practice.R</code> in your course folder. Remember to
 document your tenacity on a memo if you encounter any errors while
 completing the tasks. Additionally, sweeping your environment before
 running the code. When you finish, be sure to source your entire script
 to ensure it runs without errors from top to bottom. Save and submit
 your R script (<code>.R</code>) and environment (<code>.RData</code>) to
-Canvas, if directed.</p>
+Canvas, as directed.</p>
 <div id="task-1" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Task 1</h2>
 <p>🎯 Build a numeric vectors named <code>exponents</code> that contains
@@ -3608,8 +3615,8 @@ print(_______)</code></pre>
 values from 1 to 10.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
 ________ &lt;- _:_</code></pre>
-<pre class="r"><code># ✅ Check the class and length of the vector</code></pre>
-<p>🗣 Add Comment: # The length is ___ elements (values) # The class is
+<pre class="r"><code># ✅ Check the mode and length of the vector</code></pre>
+<p>🗣 Add Comment: # The length is ___ elements (values) # The mode is
 ________.</p>
 </div>
 <div id="task-3" class="section level2" number="10.3">
@@ -3621,7 +3628,7 @@ represent colors in web design and digital graphics.</p>
 contains the following color names and their corresponding hexadecimal
 color codes using the <code>c()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
-______ &lt;- _(&quot;#7F00FF&quot;, &quot;#003B6F&quot;, &quot;#663399&quot;, &quot;#4F97A3&quot;, &quot;#FFF8E7&quot;, &quot;#000000&quot;, &quot;#03A062&quot;, &quot;#FF00FF&quot;, &quot;#CC0000&quot;, &quot;#4D9E68&quot;)</code></pre>
+______ &lt;- _(&quot;#7F00FF&quot;, &quot;#003B6F&quot;, &quot;#663399&quot;, &quot;#4F97A3&quot;, &quot;#FFF8E7&quot;, &quot;#000000&quot;, &quot;#03A062&quot;, &quot;#FF00FF&quot;, &quot;#CC0000&quot;)</code></pre>
 <pre class="r"><code># ✅ Check the nerdy_palette vector
 ______(nerdy_palette)</code></pre>
 <p>🗣 Comment: # The output shows the ten hexadecimal color codes stored
@@ -3629,6 +3636,17 @@ in the <code>_______</code> character vector.</p>
 </div>
 <div id="task-4" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> Task 4</h2>
+<p>🎯 Add “4D9E68” to the end of the existing <code>nerdy_palette</code>
+vector.</p>
+<pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
+nerdy_palette &lt;- c(____, &quot;____&quot;)</code></pre>
+<pre class="r"><code># ✅ Check the nerdy_palette vector
+print(____)</code></pre>
+<p>🗣 Comment: # The output shows the updated <code>nerdy_palette</code>
+vector with “#4D9E68” added to the end.</p>
+</div>
+<div id="task-4-1" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Task 4</h2>
 <p>🎯 Create a vector named <code>color_names</code> that contains the
 following names: “Octarine,” “TARDIS Blue,” “Rebeccapurple,”
 “Hooloovoo,” “Cosmic Latte,” “Vantablack,” “Matrix Green,” “Source
@@ -3636,11 +3654,13 @@ Engine Magenta,” “Command Red,” and “Impossible Green.” Use the
 <code>c()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
 color_names __  __(&quot;Octarine&quot;, &quot;TARDIS Blue&quot;, &quot;Rebeccapurple&quot;, &quot;Hooloovoo&quot;, &quot;Cosmic Latte&quot;, &quot;Vantablack&quot;, &quot;Matrix Green&quot;, &quot;Source Engine Magenta&quot;, &quot;Command Red&quot;, &quot;Impossible Green&quot;)</code></pre>
+<pre class="r"><code># ✅ Check the color_names vector
+print(________)</code></pre>
 <p>🗣 Comment: # The output shows the ten color names stored in the
 <code>color_names</code> character vector.</p>
 </div>
-<div id="task-5" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 5</h2>
+<div id="task-5" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Task 5</h2>
 <p>🎯 Create a vector named <code>origin</code> that contains
 “Discworld,” “Doctor Who,” “CSS/Web Development,” “Hitchhiker’s Guide to
 the Galaxy,” “Astronomy,” “Material Science,” “The Matrix,” “Video
@@ -3649,8 +3669,8 @@ function.</p>
 <pre class="r"><code># ⚡ Type this in your R Script, Fill in the blanks
 ______ &lt;- c_&quot;Discworld&quot;, &quot;Doctor Who&quot;, &quot;CSS/Web Development&quot;, &quot;Hitchhiker&#39;s Guide to the Galaxy&quot;, &quot;Astronomy&quot;, &quot;Material Science&quot;, &quot;The Matrix&quot;, &quot;Video Gaming&quot;, &quot;Star Trek&quot;, &quot;Visual Perception&quot;_</code></pre>
 </div>
-<div id="task-6" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 6</h2>
+<div id="task-6" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Task 6</h2>
 <p>🎯 Create a data frame named <code>nerdy_df</code> that contains
 three columns: “Origin” (<code>origin</code>), “Color”
 (<code>color_names</code>), and “Hex” (<code>nerdy_palette</code>).</p>
@@ -3666,8 +3686,8 @@ print(______)</code></pre>
 <p>🗣 Comment: # The output shows the <code>nerdy_df</code> data frame
 with three columns: ______, ______, and ______.</p>
 </div>
-<div id="task-7" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 7</h2>
+<div id="task-7" class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> Task 7</h2>
 <p><strong>Vignette 4:</strong></p>
 <p>“Explain what my output means”</p>
 <p>Priya runs code that prints a number and she doesn’t understand why
@@ -3676,8 +3696,8 @@ my variable names.”</p>
 <p><strong>Is AI appropriate?</strong> Write a couple sentences
 explaining your answer.</p>
 </div>
-<div id="task-8" class="section level2" number="10.8">
-<h2><span class="header-section-number">10.8</span> Task 8</h2>
+<div id="task-8" class="section level2" number="10.9">
+<h2><span class="header-section-number">10.9</span> Task 8</h2>
 <p><strong>Vignette 5:</strong></p>
 <p><strong>“Write my reflection”</strong></p>
 <p>Devin hits three errors in a row and feels discouraged. After using

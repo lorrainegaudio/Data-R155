@@ -114,6 +114,8 @@ If you prefer a video walkthrough, you can watch a short tutorial:
 [How To Install R and RStudio on Ubuntu 24.04 LTS](https://www.youtube.com/watch?v=7RSq4uuS36A)
 
 
+[R for Ecologists (Lesson 1) Installing R and RStudio](https://youtu.be/YKvkXKeGoa8?si=YAMM-MpMqtQX-6ep)
+
 # Chapter Terms
 
 **Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.

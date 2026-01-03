@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
+In Chapter 3, you will switch from writing in an R Script to working in an R Notebook (`.Rmd`), where your notes, code, and output live together in one document. In this course, the main advantage of an R Notebook is that it makes memoing easier: you can write full paragraphs between code chunks (instead of turning everything into `#` comments). You will learn how to create and save a notebook, edit the YAML header (the document settings), run code chunks, and then practice core vector skills—vector arithmetic, recycling, coercion, indexing, and basic data types—while documenting your process transparently.
 
 In Chapter Three you will learn how to:
 
@@ -113,6 +113,8 @@ install.packages("rmarkdown")
 ```{r, eval=FALSE}
 # Using one of the methods above, 
 # install the rmarkdown package
+#After installation, confirm  
+packageVersion("rmarkdown")
 ```
 
 ### Step 1: Open an R Notebook
@@ -260,6 +262,8 @@ That is the main reason we use Markdown in this course is so you can write memos
 
 - 🗣 Explain: Vector math happens element-by-element, so the first result adds the first elements together, then the second, then the third.
 
+💬 How does this look in a practice?
+
 ___
 
 🧩 **Memo Example**
@@ -289,6 +293,8 @@ ratio <- number / result
 # print(Ratio)
 ```
 
+Error: object 'Ratio' not found
+
 ✍ Memo: cases matter
 
 ```{r}
@@ -302,6 +308,7 @@ print(ratio)
 
 ___
 
+Now that you can write code in code chunks and memos in regular text, practice recycling vectors while keeping a transparent research journal.
 
 ### Example: Recycling Vectors
 
@@ -379,11 +386,19 @@ Three values inside of transparency.
 
 ___
 
-Next, you will learn about data types and how to create different kinds of vectors in R. Write memo as you practice R programming. 
+Next, you will learn about data types and how to create different kinds of vectors in R. Write memos as you practice R programming. 
 
 # Vector Metadata
 
-class, names, and indexing 
+In this section you will learn three related skills that make vectors easier to work with:
+
+1. **Class**: how R interprets an object and decides how it should behave.
+
+2. **Names**: how to attach labels to vector elements so the vector can act like a simple lookup table.
+
+3. **Indexing**: how to retrieve specific elements using either positions (1st, 2nd, 3rd) or names ("Octarine", "Matrix Green").
+
+These ideas work together: you check what an object *is* (`class()`), optionally label its elements (`names()`), and then extract what you need (`[ ]`).
 
 ## Class and behavior
 
@@ -649,7 +664,7 @@ Vectors that carry a names attribute so each element can be referred to by a lab
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
+nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3")
 ```
 
 
@@ -727,11 +742,11 @@ We will return to indexing in later chapters when we learn about data frames.
 real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
 ```
 ```{r , eval=FALSE}
-# ✅ Check the logicals vector
+# ✅ Check the real vector
 print(real)
 ```
 
-🗣 The output shows the logical values stored in the `logicals` vector.
+🗣 The output shows the logical values stored in the `real` vector.
 
 ## Comparison Operators
 
@@ -792,7 +807,7 @@ print(taylor_swift_list)
 
 # Summary
 
-
+In this chapter, you learned to create an R Notebook, rename and save it correctly, and use code chunks to run R code with output shown directly beneath your work. You also practiced essential vector skills: doing arithmetic on numeric vectors (including recycling), checking an object’s class, combining text with `paste()`, creating factors, understanding how mixed-type vectors trigger coercion, creating named vectors, and indexing by position or name. Finally, you connected these technical skills to transparency by writing memos that clearly state your goal, show verification, explain results, and document any outside resources you used.
 
 
 # Chapter Terms
@@ -845,7 +860,15 @@ print(taylor_swift_list)
 
 # 📝 Practice Space
 
-Fill in the blanks to complete the code. Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter2_practice.Rmd` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, sweep your environment then "Run All" to test that your entire notebook  to ensure it runs without errors from top to bottom. Save and submit your R notebook (`.Rmd`) and environment (`.RData`) to Canvas, as directed.
+Fill in the blanks to complete the code. 
+
+Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter3_practice.Rmd` in your course folder. 
+
+Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. 
+
+R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.
+
+
 
 ## Task 1
 
@@ -866,17 +889,39 @@ sales_q1 <- c(___, ___, ___, ___)
 sales_q2 <- c(___, ___, ___, ___)
 ```
 
+```{r , eval=FALSE}
+# ✅ Check the sales_q1 and sales_q2
+print(sales_q1)
+print(sales_q2)
+```
+
+🗣 Add Comment:  # The output shows __________
+
 ## Task 2
 
 Using vector arithmetic, create an object named `growth` that stores the difference between `sales_q2` and `sales_q1`.
 
-## Task 2
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+growth <- ______ _ ______
+```
+
+```{r , eval=FALSE}
+# ✅ Check the growth vector
+print(growth)
+```
+
+🗣 Add Comment:  # The output shows __________
+
+
+## Task 3
 
 🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from 2^0 to 2^10 using the `^` operator and the `exponents` vector created earlier.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-__________ <- 2^exponents
+exponents <- _:__
+__________ <- 2_exponents
 ```
 
 ```{r , eval=FALSE}
@@ -886,7 +931,7 @@ _____(binary_powers)
 
 🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
 
-## Task 3
+## Task 4
 
 🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
 
@@ -913,31 +958,24 @@ print(anomaly)
 
  🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
 
-
-
-
-## Task 4
+## Task 5
 
 Indexing named vectors
 
 🎯 Use character indexing to retrieve the hexadecimal color codes for "Matrix Green" and "Command Red" from the `nerdy_palette` vector.
+
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette <- c("Octarine" = "#7F00FF", "TARD
-IS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
+_________ <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
 ```
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c("Matrix Green", "Command Red")]
-```
-```{r , eval=FALSE}
-# ✅ Check the output
-print(nerdy_palette[c("Matrix Green", "Command Red")])
+nerdy_palette[c(_______, _______)]
 ```
 
 🗣 The output shows the hexadecimal color codes for "Matrix Green" and "Command Red" retrieved from the `nerdy_palette` vector using their names.
 
-## Task 5
+## Task 6
 
 Indexing by position
 
@@ -945,16 +983,12 @@ Indexing by position
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c(2, 4, 6)]
-```
-```{r , eval=FALSE}
-# ✅ Check the output
-print(nerdy_palette[c(2, 4, 6)])
+________[c(_, _, _)]
 ```
 
 🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and 6th colors in the `nerdy_palette` vector.
 
-## Task 6
+## Task 7
 
 🎯 Using the `growth` vector created in Task 2, complete the following:
 
@@ -964,7 +998,7 @@ print(nerdy_palette[c(2, 4, 6)])
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-positive_growth <- growth[growth > 0]
+positive_growth <- growth[growth _ 0]
 last_two <- sales_q2[c(___, ___)]
 ```
 ```{r , eval=FALSE}
@@ -973,14 +1007,25 @@ print(positive_growth)
 print(last_two)
 ```
 
-🗣 The output shows the values in the `growth` vector that are greater than zero in the `positive_growth` vector, and the last two elements of the `sales_q2` vector in the `last_two` vector.
+🗣 The output shows ___________________________.
 
-## Task 7 
+## Task 8 
 
 Reflection
 
 🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
 
+
+## Task 9
+
+🎯 **Step 1: Sweep your Environment (start clean).**  
+Click the **broom icon** in the Environment pane to clear objects.
+
+🎯 **Step 2: Run everything top-to-bottom.**  
+Use **Run → Run All** to execute every chunk in order.
+
+🎯 **Step 3: Save and submit.**  
+After your notebook runs without errors, save your notebook (`.Rmd`) and save your workspace (`.RData`) for submission to Canvas, as directed. 
 
 # References
 

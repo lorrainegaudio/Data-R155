@@ -2775,8 +2775,16 @@ font-size: 0.95em;
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS
-IMPORTANT.</p>
+<p>In Chapter 3, you will switch from writing in an R Script to working
+in an R Notebook (<code>.Rmd</code>), where your notes, code, and output
+live together in one document. In this course, the main advantage of an
+R Notebook is that it makes memoing easier: you can write full
+paragraphs between code chunks (instead of turning everything into
+<code>#</code> comments). You will learn how to create and save a
+notebook, edit the YAML header (the document settings), run code chunks,
+and then practice core vector skills—vector arithmetic, recycling,
+coercion, indexing, and basic data types—while documenting your process
+transparently.</p>
 <p>In Chapter Three you will learn how to:</p>
 <ul>
 <li><p>📝 Write and save R Notebooks.</p></li>
@@ -2901,7 +2909,9 @@ showing what was installed.</p>
 </ol>
 <pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
 <pre class="r"><code># Using one of the methods above, 
-# install the rmarkdown package</code></pre>
+# install the rmarkdown package
+#After installation, confirm  
+packageVersion(&quot;rmarkdown&quot;)</code></pre>
 </div>
 <div id="step-1-open-an-r-notebook" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Step 1: Open an R
@@ -3060,6 +3070,7 @@ challenges ,etc.</p></li>
 result adds the first elements together, then the second, then the
 third.</p></li>
 </ul>
+<p>💬 How does this look in a practice?</p>
 <hr />
 <p>🧩 <strong>Memo Example</strong></p>
 <p>🎯: Practice creating vectors and doing arithmetic. Understand R
@@ -3079,6 +3090,7 @@ number &lt;- 42
 ratio &lt;- number / result
 
 # print(Ratio)</code></pre>
+<p>Error: object ‘Ratio’ not found</p>
 <p>✍ Memo: cases matter</p>
 <pre class="r"><code># ✅ Check the ratio value
 print(ratio)</code></pre>
@@ -3092,6 +3104,9 @@ that identified the issues (a typo with a comma, using an object before
 it was created, and case sensitivity), and (4) ⚡ revised the code to
 fix the errors.</p>
 <hr />
+<p>Now that you can write code in code chunks and memos in regular text,
+practice recycling vectors while keeping a transparent research
+journal.</p>
 <div id="example-recycling-vectors" class="section level3" number="3.0.1">
 <h3><span class="header-section-number">3.0.1</span> Example: Recycling
 Vectors</h3>
@@ -3205,11 +3220,25 @@ learned from that resource.</p></li>
 </ul>
 <hr />
 <p>Next, you will learn about data types and how to create different
-kinds of vectors in R. Write memo as you practice R programming.</p>
+kinds of vectors in R. Write memos as you practice R programming.</p>
 </div>
 <div id="vector-metadata" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Vector Metadata</h1>
-<p>class, names, and indexing</p>
+<p>In this section you will learn three related skills that make vectors
+easier to work with:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Class</strong>: how R interprets an object and decides
+how it should behave.</p></li>
+<li><p><strong>Names</strong>: how to attach labels to vector elements
+so the vector can act like a simple lookup table.</p></li>
+<li><p><strong>Indexing</strong>: how to retrieve specific elements
+using either positions (1st, 2nd, 3rd) or names (“Octarine”, “Matrix
+Green”).</p></li>
+</ol>
+<p>These ideas work together: you check what an object <em>is</em>
+(<code>class()</code>), optionally label its elements
+(<code>names()</code>), and then extract what you need
+(<code>[ ]</code>).</p>
 <div id="class-and-behavior" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Class and
 behavior</h2>
@@ -3462,7 +3491,7 @@ attribute on vectors.</p>
 contains the following color names and their corresponding hexadecimal
 color codes using the <code>c()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette &lt;- c(&quot;Octarine&quot; = &quot;#7F00FF&quot;, &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;, &quot;Rebeccapurple&quot; = &quot;#663399&quot;, &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;, &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;, &quot;Vantablack&quot; = &quot;#000000&quot;, &quot;Matrix Green&quot; = &quot;#03A062&quot;, &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;, &quot;Command Red&quot; = &quot;#CC0000&quot;, &quot;Impossible Green&quot; = &quot;#4D9E68&quot;)</code></pre>
+nerdy_palette &lt;- c(&quot;Octarine&quot; = &quot;#7F00FF&quot;, &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;, &quot;Rebeccapurple&quot; = &quot;#663399&quot;, &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;)</code></pre>
 <pre class="r"><code># ✅ Check the nerdy_palette vector
 print(nerdy_palette)
 names(nerdy_palette)</code></pre>
@@ -3538,10 +3567,10 @@ comparisons. They contain TRUE or FALSE values.</p>
 values TRUE, FALSE, and NA using the <code>c()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 real &lt;- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</code></pre>
-<pre class="r"><code># ✅ Check the logicals vector
+<pre class="r"><code># ✅ Check the real vector
 print(real)</code></pre>
-<p>🗣 The output shows the logical values stored in the
-<code>logicals</code> vector.</p>
+<p>🗣 The output shows the logical values stored in the <code>real</code>
+vector.</p>
 <div id="comparison-operators" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Comparison
 Operators</h2>
@@ -3619,6 +3648,16 @@ print(taylor_swift_list)</code></pre>
 </div>
 <div id="summary" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Summary</h1>
+<p>In this chapter, you learned to create an R Notebook, rename and save
+it correctly, and use code chunks to run R code with output shown
+directly beneath your work. You also practiced essential vector skills:
+doing arithmetic on numeric vectors (including recycling), checking an
+object’s class, combining text with <code>paste()</code>, creating
+factors, understanding how mixed-type vectors trigger coercion, creating
+named vectors, and indexing by position or name. Finally, you connected
+these technical skills to transparency by writing memos that clearly
+state your goal, show verification, explain results, and document any
+outside resources you used.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Chapter Terms</h1>
@@ -3739,15 +3778,15 @@ format (HTML/PDF/Word), and options for rendering.</p>
 </div>
 <div id="practice-space" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
-<p>Fill in the blanks to complete the code. Before you begin, make sure
-you have created a new R Notebook in the Source pane and saved it as
-<code>chapter2_practice.Rmd</code> in your course folder. Remember to
-document your tenacity on a memo if you encounter any errors while
-completing the tasks. Additionally, sweeping your environment before
-running the code. When you finish, sweep your environment then “Run All”
-to test that your entire notebook to ensure it runs without errors from
-top to bottom. Save and submit your R notebook (<code>.Rmd</code>) and
-environment (<code>.RData</code>) to Canvas, as directed.</p>
+<p>Fill in the blanks to complete the code.</p>
+<p>Before you begin, make sure you have created a new R Notebook in the
+Source pane and saved it as <code>chapter3_practice.Rmd</code> in your
+course folder.</p>
+<p>Remember to document your tenacity on a memo if you encounter any
+errors while completing the tasks.</p>
+<p>R Notebooks can look “fine” even when they are not reproducible
+because your Environment may still contain objects from earlier work.
+Start with a clean environment and run everything in order.</p>
 <div id="task-1" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Task 1</h2>
 <p>🎯 Build two numeric vectors where both vectors are the same
@@ -3764,27 +3803,37 @@ your choice.</li>
 </ol>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 sales_q2 &lt;- c(___, ___, ___, ___)</code></pre>
+<pre class="r"><code># ✅ Check the sales_q1 and sales_q2
+print(sales_q1)
+print(sales_q2)</code></pre>
+<p>🗣 Add Comment: # The output shows __________</p>
 </div>
 <div id="task-2" class="section level2" number="10.2">
 <h2><span class="header-section-number">10.2</span> Task 2</h2>
 <p>Using vector arithmetic, create an object named <code>growth</code>
 that stores the difference between <code>sales_q2</code> and
 <code>sales_q1</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+growth &lt;- ______ _ ______</code></pre>
+<pre class="r"><code># ✅ Check the growth vector
+print(growth)</code></pre>
+<p>🗣 Add Comment: # The output shows __________</p>
 </div>
-<div id="task-2-1" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 2</h2>
+<div id="task-3" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Task 3</h2>
 <p>🎯 Create a numeric vector named <code>binary_powers</code> that
 contains the powers of 2 from 2^0 to 2^10 using the <code>^</code>
 operator and the <code>exponents</code> vector created earlier.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-__________ &lt;- 2^exponents</code></pre>
+exponents &lt;- _:__
+__________ &lt;- 2_exponents</code></pre>
 <pre class="r"><code># ✅ Check the length nerdy_numbers vector
 _____(binary_powers)</code></pre>
 <p>🗣 Add Comment: # The output shows ___ elements (values) in the
 <code>binary_powers</code></p>
 </div>
-<div id="task-3" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 3</h2>
+<div id="task-4" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Task 4</h2>
 <p>🎯 Find the <code>anomaly</code> by subtracting the
 <code>cursed_seq</code> vector from the <code>travel_jumps</code>
 vector. We’ll recreate vectors from Chapter 2 and then subtract
@@ -3801,37 +3850,32 @@ print(anomaly)</code></pre>
 in <code>cursed_seq</code> (4) is subtracted from the first number in
 <code>travel_jumps</code> (1887) to result 1883.</p>
 </div>
-<div id="task-4" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 4</h2>
+<div id="task-5" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Task 5</h2>
 <p>Indexing named vectors</p>
 <p>🎯 Use character indexing to retrieve the hexadecimal color codes for
 “Matrix Green” and “Command Red” from the <code>nerdy_palette</code>
 vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette &lt;- c(&quot;Octarine&quot; = &quot;#7F00FF&quot;, &quot;TARD
-IS Blue&quot; = &quot;#003B6F&quot;, &quot;Rebeccapurple&quot; = &quot;#663399&quot;, &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;, &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;, &quot;Vantablack&quot; = &quot;#000000&quot;, &quot;Matrix Green&quot; = &quot;#03A062&quot;, &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;, &quot;Command Red&quot; = &quot;#CC0000&quot;, &quot;Impossible Green&quot; = &quot;#4D9E68&quot;)</code></pre>
+_________ &lt;- c(&quot;Octarine&quot; = &quot;#7F00FF&quot;, &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;, &quot;Rebeccapurple&quot; = &quot;#663399&quot;, &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;, &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;, &quot;Vantablack&quot; = &quot;#000000&quot;, &quot;Matrix Green&quot; = &quot;#03A062&quot;, &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;, &quot;Command Red&quot; = &quot;#CC0000&quot;, &quot;Impossible Green&quot; = &quot;#4D9E68&quot;)</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c(&quot;Matrix Green&quot;, &quot;Command Red&quot;)]</code></pre>
-<pre class="r"><code># ✅ Check the output
-print(nerdy_palette[c(&quot;Matrix Green&quot;, &quot;Command Red&quot;)])</code></pre>
+nerdy_palette[c(_______, _______)]</code></pre>
 <p>🗣 The output shows the hexadecimal color codes for “Matrix Green” and
 “Command Red” retrieved from the <code>nerdy_palette</code> vector using
 their names.</p>
 </div>
-<div id="task-5" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 5</h2>
+<div id="task-6" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Task 6</h2>
 <p>Indexing by position</p>
 <p>🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color
 codes from the <code>nerdy_palette</code> vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c(2, 4, 6)]</code></pre>
-<pre class="r"><code># ✅ Check the output
-print(nerdy_palette[c(2, 4, 6)])</code></pre>
+________[c(_, _, _)]</code></pre>
 <p>🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and
 6th colors in the <code>nerdy_palette</code> vector.</p>
 </div>
-<div id="task-6" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 6</h2>
+<div id="task-7" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Task 7</h2>
 <p>🎯 Using the <code>growth</code> vector created in Task 2, complete
 the following:</p>
 <ol style="list-style-type: decimal">
@@ -3843,21 +3887,31 @@ TWO elements of <code>sales_q2</code> (use numeric positions, not
 names).</p></li>
 </ol>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-positive_growth &lt;- growth[growth &gt; 0]
+positive_growth &lt;- growth[growth _ 0]
 last_two &lt;- sales_q2[c(___, ___)]</code></pre>
 <pre class="r"><code># ✅ Check the outputs
 print(positive_growth)
 print(last_two)</code></pre>
-<p>🗣 The output shows the values in the <code>growth</code> vector that
-are greater than zero in the <code>positive_growth</code> vector, and
-the last two elements of the <code>sales_q2</code> vector in the
-<code>last_two</code> vector.</p>
+<p>🗣 The output shows ___________________________.</p>
 </div>
-<div id="task-7" class="section level2" number="10.8">
-<h2><span class="header-section-number">10.8</span> Task 7</h2>
+<div id="task-8" class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> Task 8</h2>
 <p>Reflection</p>
 <p>🗣 In one sentence, explain why numeric values may be coerced to
 character if you mix them inside a single vector.</p>
+</div>
+<div id="task-9" class="section level2" number="10.9">
+<h2><span class="header-section-number">10.9</span> Task 9</h2>
+<p>🎯 <strong>Step 1: Sweep your Environment (start
+clean).</strong><br />
+Click the <strong>broom icon</strong> in the Environment pane to clear
+objects.</p>
+<p>🎯 <strong>Step 2: Run everything top-to-bottom.</strong><br />
+Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p>🎯 <strong>Step 3: Save and submit.</strong><br />
+After your notebook runs without errors, save your notebook
+(<code>.Rmd</code>) and save your workspace (<code>.RData</code>) for
+submission to Canvas, as directed.</p>
 </div>
 </div>
 <div id="references" class="section level1" number="11">
