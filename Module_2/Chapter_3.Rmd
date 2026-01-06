@@ -26,7 +26,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-In Chapter 3, you will switch from writing in an R Script to working in an R Notebook (`.Rmd`), where your notes, code, and output live together in one document. In this course, the main advantage of an R Notebook is that it makes memoing easier: you can write full paragraphs between code chunks (instead of turning everything into `#` comments). You will learn how to create and save a notebook, edit the YAML header (the document settings), run code chunks, and then practice core vector skills—vector arithmetic, recycling, coercion, indexing, and basic data types—while documenting your process transparently.
+Up to this point, you have been working in the Console and in R Scripts to learn the basics of writing code, creating objects, and building vectors. In Chapter 3, you move into an R Notebook (`.Rmd`): a single document that combines explanatory writing, R code, and the output your code produces. This matters for research because the goal is not just to “get an answer,” but to produce a record that another person (or future-you) can audit, reproduce, and trust. R Notebooks support a reproducible workflow where narrative and computation live together. Code is easily understood when properly annotated.  
+
+This chapter also strengthens the vector skills you need before you touch real datasets. Most data analysis in R is vector-based: columns in a dataset behave like vectors, and common research tasks (computing new variables, filtering cases, labeling categories, and selecting subsets of values) depend on understanding **vector arithmetic, recycling, coercion, class, names, and indexing**. If you misunderstand these fundamentals, R will often still run the code but it may silently give you the wrong result (which is worse than an error). By the end of the chapter, you should be able to (1) work in a notebook that clearly documents your decisions, and (2) predict how R will behave when you combine, label, and subset data. These skills you will rely on heavily once we start working with data frames and analysis workflows.
 
 In Chapter Three you will learn how to:
 

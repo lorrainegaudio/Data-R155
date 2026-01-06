@@ -179,6 +179,9 @@ In many summary functions, any `NA` in the vector causes the result to be `NA` u
 ___
 
 
+# LLM Prompting
+
+There are many different ways you can use AI in your data analysis workflow. One useful way is to prompt LLMs to help you understand function usage and arguments. 
 
 
 
@@ -211,7 +214,7 @@ ___
 
 Fill in the blanks to complete the code. 
 
-Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter3_practice.Rmd` in your course folder. 
+Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter4_practice.Rmd` in your course folder. 
 
 Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. 
 

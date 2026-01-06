@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-01-02" />
+<meta name="date" content="2026-01-06" />
 
 <title>Chapter 3</title>
 
@@ -2768,23 +2768,36 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">January 02, 2026</h4>
+<h4 class="date">January 06, 2026</h4>
 
 </div>
 
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>In Chapter 3, you will switch from writing in an R Script to working
-in an R Notebook (<code>.Rmd</code>), where your notes, code, and output
-live together in one document. In this course, the main advantage of an
-R Notebook is that it makes memoing easier: you can write full
-paragraphs between code chunks (instead of turning everything into
-<code>#</code> comments). You will learn how to create and save a
-notebook, edit the YAML header (the document settings), run code chunks,
-and then practice core vector skills—vector arithmetic, recycling,
-coercion, indexing, and basic data types—while documenting your process
-transparently.</p>
+<p>Up to this point, you have been working in the Console and in R
+Scripts to learn the basics of writing code, creating objects, and
+building vectors. In Chapter 3, you move into an R Notebook
+(<code>.Rmd</code>): a single document that combines explanatory
+writing, R code, and the output your code produces. This matters for
+research because the goal is not just to “get an answer,” but to produce
+a record that another person (or future-you) can audit, reproduce, and
+trust. R Notebooks are designed for this kind of work: they support a
+reproducible workflow where narrative and computation live together—an
+approach closely aligned with the broader idea of writing code for
+humans to understand, not just for computers to execute.</p>
+<p>This chapter also strengthens the vector skills you need before you
+touch real datasets. Most data analysis in R is vector-based: columns in
+a dataset behave like vectors, and common research tasks (computing new
+variables, filtering cases, labeling categories, and selecting subsets
+of values) depend on understanding <strong>vector arithmetic, recycling,
+coercion, class, names, and indexing</strong>. If you misunderstand
+these fundamentals, R will often still run—but it may silently give you
+the wrong result (which is worse than an error). By the end of the
+chapter, you should be able to (1) work in a notebook that clearly
+documents your decisions, and (2) predict how R will behave when you
+combine, label, and subset data. These skills you will rely on heavily
+once we start working with data frames and analysis workflows.</p>
 <p>In Chapter Three you will learn how to:</p>
 <ul>
 <li><p>📝 Write and save R Notebooks.</p></li>
@@ -3039,9 +3052,9 @@ x * 2</code></pre>
 <p>🗣 When including two calculations in the same code chunk, both
 results are shown in order below the code chunk.</p>
 <p><strong>Vectorization</strong> is when R applies an operation to each
-element of a vector without needing an explicit loop. In the example
-above, R adds the corresponding elements of vectors <code>x</code> and
-<code>y</code> together element-by-element.</p>
+element of a vector. In the example above, R adds the corresponding
+elements of vectors <code>x</code> and <code>y</code> together
+element-by-element.</p>
 <p>As you practice R programming in the R Notebook, you will want to
 keep a record of your learning process. Memoing is a lot easier in R
 Notebooks than in R Scripts.</p>

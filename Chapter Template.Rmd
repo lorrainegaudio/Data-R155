@@ -1,0 +1,46 @@
+---
+title: "Chapter Template"
+author: "Lorraine Gaudio"
+date: "2026-01-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT. Why is this useful as a researcher? How does it fit with where we are in the class. 
+
+In Chapter ____ you will learn how to:
+
+- 
+
+
+# Learning Skill
+
+
+# R Programming
+
+
+# AI Competency
+
+
+# Advanced R Programming
+
+
+# Summary
+
+
+# Chapter Terms
+
+
+# 📝 Practice Space
+
+## Task 1
+
+## Task 2
+
+# References
+
