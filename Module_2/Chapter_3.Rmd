@@ -69,7 +69,6 @@ R Notebooks are similar to R Scripts but offer additional features such as:
 In this course, the key advantage of an R Notebook over an R Script is memoing. A script can hold code + `#` comments, but an R Notebook is built for writing full memos (regular text) between code chunks without turning everything into comments. This supports a reproducible workflow (Course Objective CLO1).
 
 
-
 | Feature                     | R Script                          | R Notebook                        |
 |-----------------------------|----------------------------------|-----------------------------------|
 | File Extension              | .R                               | .Rmd                              |
@@ -240,7 +239,7 @@ x / y
 
 🗣 When including two calculations in the same code chunk, both results are shown in order below the code chunk. 
 
-**Vectorization** is when R applies an operation to each element of a vector without needing an explicit loop. In the example above, R adds the corresponding elements of vectors `x` and `y` together element-by-element.
+**Vectorization** is when R applies an operation to each element of a vector. In the example above, R adds the corresponding elements of vectors `x` and `y` together element-by-element.
 
 As you practice R programming in the R Notebook, you will want to keep a record of your learning process. Memoing is a lot easier in R Notebooks than in R Scripts. 
 

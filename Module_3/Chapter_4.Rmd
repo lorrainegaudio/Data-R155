@@ -15,29 +15,170 @@ TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
 In Chapter Four you will learn how to:
 
-
-
-
 - 📍 Summarize vectors with built‑in, *vectorised* functions.
 
+- 📍 Read help files to discover arguments and defaults.
 
-# Vectorized Functions
+- 📦 Nest functions to build compact pipelines.
 
-⚡ **Why it’s cool**  Functions like `sum(),` `mean(),` and `sd()` automatically loop over every element—no for-loop needed. This is called *vectorization*.
+- ⚡ Handle missing values with na.rm.
 
-🔍 Look deeper: What is a for-loop? 
+# Built-in Functions
 
-Recall we created `series <- 1:10`
+Many built-in summary functions take a whole vector as input and return one summary value (or a small set of values). These are summary (reduction) functions that take many values and return one value.
 
-Type the following R code into your script and run. 🗣 Comment about the output.
+Follow along by opening a new R Notebook in your course folder named `chapter4_practice.Rmd`.
+
+## Function Objects vs. Function Calls
+
+A **function object** is the stored code that performs a task. For example, `mean` is a function object that calculates the average of a numeric vector. The stored code sums the values and divides by the number of values.
+
+```{r}
+# ⚡ Type this in your R Notebook
+mean
+```
+
+🗣 Don’t worry if what prints looks cryptic. This is proof that `mean` is stored code you can inspect.
+
+A **function call** runs the stored code. To call a function, you type the function name followed by parentheses `()`. Inside the parentheses, you must provide any **required arguments**. For example, to calculate the mean of a numeric vector, you call the `mean()` function and provide the vector as an argument. The vector is a **required argument** because the function needs it to perform the calculation. 
+
+📜 The SYNTAX (basic): 
+
+`mean(x)`
+
+where `x` is the numeric vector you want to summarize.
+
+🎯 Calculate the mean of the cursed sequence. 
+
+```{r}
+# ⚡ Type this in your R Notebook
+cursed_seq <- c(4, 8, 15, 16, 23, 42)  
+
+mean(cursed_seq)                     
+```
+
+🗣 The `mean()` function calculates the average of the numbers in the `cursed_seq` vector by summing them up and dividing by the count of numbers.
+
+# Help Files
+
+Nobody memorizes every argument. You look them up. `?function_name` opens the help file. The **files pane** (usually bottom-right) contains several tabs, including the **Help tab**, which displays the documentation for R functions.
+
+## No Required Arguments
+
+Some functions do not have a required argument. For example, the `Sys.Date()` function returns the current date without needing any input.
+
+🎯 Call the `Sys.Date()` function to get the current date from your computer's operating system. 
+
+```{r}
+# ⚡ Type this in your R Notebook
+Sys.Date()
+```
+
+🗣 The `Sys.Date()` function retrieves the current date from the system clock and returns it as a Date object.
+
+🎯 Open the help file for the `Sys.Date()` function.
+
+```{r}
+# ⚡ Type this in your R Notebook
+?Sys.Date
+```
+
+🗣 The `Sys.Date` help page opens in the **help tab** in the **files pane**. Note that `Sys.Date()` has no required arguments.
+
+Scroll through the help file to find information about the function's usage, arguments, and examples.
+
+- **Usage**: shows the function signature and defaults.
+
+- **Arguments**: what each argument does.
+
+- **Examples**: copy/run examples to learn patterns.
+
+## Required Arguments
+
+🎯 Open the help file for the `mean()` function. Scroll through the help file to find information about the function's usage, arguments, and examples.
+
+- **Usage**: shows the function signature and defaults.
+
+- **Arguments**: what each argument does.
+
+- **Examples**: copy/run examples to learn patterns.
 
 ```{r, eval=FALSE}
-sum(series)
-
-mean(series)
-
-sd(series) 
+# ⚡ Type this in your R Notebook
+?mean   
+help(mean)
 ```
+
+🗣 The mean **help page** opens in the **help tab** in the **files pane**. `mean.default(x, trim = 0, na.rm = FALSE, …)` shows that `x` is a required argument, while `trim` and `na.rm` have default values.
+
+## Default Arguments
+
+**Default arguments** are inputs that a function uses in situations when you did not provide that argument. For example, the `trim` argument in the `mean()` function allows you to exclude a certain percentage of the lowest and highest values before calculating the mean.
+
+The SYNTAX (with one default argument):
+ 
+ `mean(x, trim = 0)`
+
+🎯 Calculate the trimmed mean of the cursed sequence, removing 20% of the lowest and highest values before computing the mean.
+ 
+```{r}
+# ⚡ Type this in your R Notebook
+mean(cursed_seq, trim = 0.2)  # drop 20% from each end first
+```
+
+🗣 The `mean()` function first removes 20% of the lowest and highest values from the `cursed_seq` vector, then calculates the mean of the remaining values. With 6 values and `trim = 0.2`, R trims 4 and 42, then averages 8, 15, 16, and 23.
+
+*How can you tell which arguments are required?*
+
+The main clue that `x` is required is that it has no `=` sign or default value next to it in the usage section. The other arguments have `=` signs, showing the default values that R will use if you don't provide your own.
+
+Some functions use `...` (dot-dot-dot). That means “additional optional arguments may be allowed,” not required ones. For now, ignore `...` until you are more advanced.
+
+- no `=` → required 
+
+- `=` → default/optional
+
+# Handling Missing Values
+
+The `na.rm` argument in the `mean()` function has a default value of `FALSE`, meaning that if you don't specify it, the function will include `NA` values in its calculation. 
+
+In R, **missing values** are represented by the **special value** symbol `NA` (which stands for "Not Available"). Missing values can occur in datasets for various reasons, such as data entry errors, non-responses in surveys, or data corruption. R *will* do the operation, but the result becomes `NA` because the value is unknown (e.g., `5 + NA` returns `NA`, not an error). This is called **propagation**.
+
+📜 The SYNTAX (with na.rm default argument):
+
+`mean(x, na.rm = FALSE)`
+
+where `na.rm` is a logical argument that tells the function whether to remove `NA` values before calculating the mean.
+
+🎯 Add `NA` value(s) to the cursed sequence and calculate the mean while handling missing values.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+cursed_seq <- c(4, 8, 15, 16, 23, 42, NA)  # includes a missing value
+# cursed_seq <- c(cursed_seq, NA, NA)    # uncomment to add more missing values
+
+mean(cursed_seq)                       # default is na.rm = FALSE → returns NA
+
+mean(cursed_seq, na.rm = TRUE)         # Change default to TRUE to ignore missing values
+```
+
+🗣 The first `mean()` call returns `NA` because the default behavior includes missing values in the calculation. The second call uses `na.rm = TRUE` to ignore the `NA` values, allowing the function to compute the mean of the remaining numbers.
+
+___
+
+In many summary functions, any `NA` in the vector causes the result to be `NA` unless you tell R to remove missing values first.
+
+
+| Function                    | What it does     | Example                    |
+| --------------------------- | ---------------- | -------------------------- |
+| `sum()`, `prod()`           | Sum/product      | `sum(x, na.rm = TRUE)`     |
+| `mean()`, `median()`        | Central tendency | `mean(x, na.rm = TRUE)`    |
+| `min()`, `max()`, `range()` | Extrema/range    | `range(x, na.rm = TRUE)`   |
+| `sd()`, `var()`             | Spread           | `sd(x, na.rm = TRUE)`      |
+
+___
+
+
 
 
 
@@ -45,3 +186,46 @@ sd(series)
 
 # Chapter Terms
 
+**Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
+
+**Function Call**: The act of running a function by writing its name followed by parentheses, optionally supplying arguments inside (e.g., `mean(x)`). 
+
+**Function Object**: A function stored as an R object (functions are “first-class” in R, meaning you can assign them to names, pass them to other functions, and inspect them). 
+
+**Help Page**: Documentation for R functions and packages that provides information on usage, arguments, and examples. Accessed using `?function_name` or `help(function_name)`.
+
+**Help Tab**: Located in the Files/Plots/Packages/Help pane, this tab provides access to R documentation, package vignettes, and search functionality to find help topics related to R functions and packages.
+
+**Missing Values**: Data values that are unknown or not recorded; in R they are represented by `NA` (“Not Available”). `NA` is a special missing-value indicator (with typed versions like `NA_integer_`, `NA_real_`, and `NA_character_`), and many calculations will return `NA` if any missing values are present unless you explicitly remove them (often via `na.rm = TRUE`, which defaults to `FALSE` in functions like `mean()`)
+
+**Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`)
+
+**Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
+
+**Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
+
+
+# 📝 Practice Space
+
+Fill in the blanks to complete the code. 
+
+Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter3_practice.Rmd` in your course folder. 
+
+Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. 
+
+R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.
+
+## Task 1
+
+🎯 Use ?sample to learn about the sample() function. Identify the required and default arguments. Explain
+
+
+## Task 2
+
+🎯 Make x <- c(3, 7, NA, 2, 9, NA). Use ?sum to confirm whether sum() has na.rm and what its default is. Count the missing values in x. Compute sum(x) and explain why it returns what it returns. Compute sum(x, na.rm=TRUE) and mean(x, na.rm=TRUE). 
+
+
+
+# References
