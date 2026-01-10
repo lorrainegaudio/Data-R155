@@ -2,10 +2,10 @@
 title: "Chapter 1: RStudio Interface"
 author: "Lorraine Gaudio"
 date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -574,7 +574,7 @@ total_revenue <- _______ * _______
 
 Identify the names of the Panes associated with each number in the image below.
 
-![Image shows RStudio window will all four panes. Each pane is numbered](Quiz_Question.png)
+![Screenshot of the RStudio interface divided into four panes, each labeled with a large number. (1) Top-left pane is a workspace where you would write and edit code before running it. (2) Top-right pane is used to keep track of items created during your session and review what is currently available to use. (3) Bottom-left pane is where commands are executed and results, messages, and errors appear. (4) Bottom-right pane is used to browse files related to your work and access additional tools such as plots, packages, and help documentation.](Quiz_Question.png)
 
 **Console**, **Environment**, **Script Editor (Source)**, **Files and Help** 
 
@@ -587,4 +587,4 @@ Identify the names of the Panes associated with each number in the image below.
 
 4. ___________
 
-Type your answers in Canvas as directed.
+Select your answers in Canvas as directed.

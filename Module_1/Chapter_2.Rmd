@@ -2,10 +2,10 @@
 title: "Chapter 2: Scripts"
 author: "Lorraine Gaudio"
 date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -35,7 +35,7 @@ In Chapter Two you will learn how to:
 
 - 💪 Practice resiliency through documenting tenacity on memos.
 
-- 🛠 Build numeric, integer, and character using `c()` and `seq()`
+- 🛠 Build numeric, integer, character and logical vectors using `c()` and `seq()`
 
 - 🔍 Check the mode and length of any vector object.
 
@@ -582,6 +582,23 @@ print(rainbow)
 
 🗣 The output shows the updated `rainbow` vector with "indigo" added to the end.
 
+# Logical Vectors
+
+**Logical vectors** are used for conditions and comparisons. They contain TRUE or FALSE values.
+
+🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
+```
+```{r , eval=FALSE}
+# ✅ Check the real vector
+print(real)
+```
+
+🗣 The output shows the logical values stored in the `real` vector.
+
 # Inspecting Vectors
 
 Before using data, we need to confirm *what* it is. 
@@ -706,137 +723,170 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 # 📝 Practice Space
 
-Fill in the blanks to complete the code. Before you begin, make sure you have created a new R script in the Source pane and saved it as `chapter2_practice.R` in your course folder. Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. Additionally, sweeping your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom. Save and submit your R script (`.R`) and environment (`.RData`) to Canvas, as directed.
+**Fill in the blanks to complete the code.** 
+
+In the code blocks below, underscores (_) represent blanks. Do not type underscores. Replace them with the correct code (object names, function names, numbers, commas/quotes, or parentheses).
+
+## Task 0
+
+Before you begin, make sure you have created a new R script in the Source pane. Additionally, sweep your environment before running the code. When you finish, be sure to source your entire script to ensure it runs without errors from top to bottom.
+
+Save your R script (`chapter2_practice.R`) and environment (`chapter2_practice.RData`) in your course folder. 
+
+Remember to document your **tenacity** in a memo if you encounter any errors while completing the tasks. 
+
+Save before closing RStudio. Submit to Canvas modules, as directed.
 
 ## Task 1
 
-🎯 Build a numeric vectors named `exponents` that contains the integers from 0 to 10 using the `seq()` function.
+Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-exponents <- __(from = _, to = __, by = _)
-```
 
-```{r , eval=FALSE}
-# ✅ Check the nerdy_numbers vector
-print(_______)
-```
+# 🎯 Build a numeric vector named `exponents` that contains the integers from 0.5 to 10 using the `seq()` function.
 
-🗣 Add Comment: # The output shows _______________.
+
+# ⚡ 
+exponents <- __(from = _, to = __)
+
+# ✅ Check the exponents vector
+length(_______)
+mode(________)
+
+# 🗣 Add Comment: "# The output shows length _ and mode ____."
+```
 
 ## Task 2
 
-🎯 Create a numeric vector using `:` called `nerdy_numbers` that contains the **integer** values from 1 to 10.
+Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-________ <- _:_
-```
+# 🎯 Create a numeric vector using `:` called `list_numbers` that contains the **integer** values from 1 to 10.
 
-```{r , eval=FALSE}
+
+# ⚡
+________ <- _ _ _
+
 # ✅ Check the mode and length of the vector
+____(list_numbers)
+length(________)
+
+# 🗣 Add Comment:  
+ 
+# The length is ___ elements (values).
+# The mode is ________.
+                 
+# 🗣 Add Comment: How does `mode()` report integers and decimals?
 
 ```
-
-🗣 Add Comment:  # The length is ___ elements (values)
-                 # The mode is ________.
                  
-
 ## Task 3
 
 R can store hexadecimal color codes in character vectors. **Hexadecimal color** codes are six-digit codes that represent colors in web design and digital graphics.
 
-🎯 Create a character vector named `nerdy_palette` that contains the following color names and their corresponding hexadecimal color codes using the `c()` function.
+Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-______ <- _("#7F00FF", "#003B6F", "#663399", "#4F97A3", "#FFF8E7", "#000000", "#03A062", "#FF00FF", "#CC0000")
-```
+# 🎯 Create a character vector named `nerdy_palette` that contains the following hexadecimal color codes using the `c()` function.
 
+# ⚡ 
+______ __ _("#7F00FF", "#003B6F", "#663399", "#4F97A3", "#FFF8E7", "#000000", "#03A062", "#FF00FF", "#CC0000")
 
-```{r , eval=FALSE}
-# ✅ Check the nerdy_palette vector
+# ✅ Count the number of elements in the nerdy_palette vector 
 ______(nerdy_palette)
-```
 
-🗣 Comment: # The output shows the ten hexadecimal color codes stored in the `_______` character vector.
+
+# 🗣 Comment: The output shows there are __ hexadecimal color code elements stored in the `nerdy_palette` vector.
+```
 
 ## Task 4
 
-🎯 Add "4D9E68" to the end of the existing `nerdy_palette` vector.
+Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-nerdy_palette <- c(____, "____")
+# 🎯 Add "#4D9E68" to the end of the existing `nerdy_palette` vector.
+
+
+# ⚡
+nerdy_palette <- c(____, ____)
+
+# ✅ Check the number of elements in the nerdy_palette vector
+length(____)
+
+
+# 🗣 Comment: The output shows the updated `nerdy_palette` vector with __ elements added to the ___(beginning, middle, or end).
 ```
-
-```{r , eval=FALSE}
-# ✅ Check the nerdy_palette vector
-print(____)
-```
-
-🗣 Comment: # The output shows the updated `nerdy_palette` vector with "#4D9E68" added to the end.
-
-## Task 4
-
-🎯 Create a vector named `color_names` that contains the following names: "Octarine," "TARDIS Blue," "Rebeccapurple," "Hooloovoo," "Cosmic Latte," "Vantablack," "Matrix Green," "Source Engine Magenta," "Command Red," and "Impossible Green." Use the `c()` function.
-
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-color_names __  __("Octarine", "TARDIS Blue", "Rebeccapurple", "Hooloovoo", "Cosmic Latte", "Vantablack", "Matrix Green", "Source Engine Magenta", "Command Red", "Impossible Green")
-```
-
-```{r , eval=FALSE}
-# ✅ Check the color_names vector
-print(________)
-```
-
-🗣 Comment: # The output shows the ten color names stored in the `color_names` character vector.
 
 ## Task 5
 
-🎯 Create a vector named `origin` that contains "Discworld," "Doctor Who," "CSS/Web Development," "Hitchhiker's Guide to the Galaxy," "Astronomy," "Material Science," "The Matrix," "Video Gaming," "Star Trek," and "Visual Perception." Use the `c()` function.
+Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Script, Fill in the blanks
-______ <- c_"Discworld", "Doctor Who", "CSS/Web Development", "Hitchhiker's Guide to the Galaxy", "Astronomy", "Material Science", "The Matrix", "Video Gaming", "Star Trek", "Visual Perception"_
+# 🎯 Create a vector named `color_names` that contains the following names: "Octarine," "TARDIS Blue," "Rebeccapurple," "Hooloovoo," "Cosmic Latte," "Vantablack," "Matrix Green," "Source Engine Magenta," "Command Red," and "Impossible Green." Use the `c()` function.
+
+# ⚡ 
+color_names __  __(_______ _______ _______ _______ _______ _______ _______ _______ _______ _______)
+
+# ✅ Check the number of elements in the color_names vector
+length(________)
+
+
+# 🗣 Comment: The output shows the __ color names stored in the `color_names` character vector.
 ```
 
 ## Task 6
 
-🎯 Create a data frame named `nerdy_df` that contains three columns: "Origin" (`origin`), "Color" (`color_names`), and "Hex" (`nerdy_palette`). 
+Type this in your R Script, Fill in the blanks
+
+```{r , eval=FALSE}
+# 🎯 Create a vector named `origin` that contains "Discworld," "Doctor Who," "CSS/Web Development," "Hitchhiker's Guide to the Galaxy," "Astronomy," "Material Science," "The Matrix," "Video Gaming," "Star Trek," and "Visual Perception." Use the `c()` function.
+
+# ⚡ 
+______ __ c_"Discworld", "Doctor Who", "CSS/Web Development", "Hitchhiker's Guide to the Galaxy", "Astronomy", "Material Science", "The Matrix", "Video Gaming", "Star Trek", "Visual Perception"_
+
+# ✅ Check the number of elements in the origin vector
+length(_______)
+
+# 🗣 Comment: The output shows the __ origins stored in the `origin` character vector.
+```
+
+## Task 7
+
+Type this in your R Script, Fill in the blanks
 
 ```{r eval=FALSE}
+# 🎯 Create a data frame using `data.frame()` named `nerdy_df` that contains three columns: "Origin" (`origin`), "Color" (`color_names`), and "Hex" (`nerdy_palette`). 
+
 # ⚡ Type this in your R Script, Fill in the blanks
 nerdy_df <- ______(
   ______ = color_names,
-  ______ = nerdy_palette,
+  Hex _ nerdy_palette,
   Origin = ______
 )
 
 # ⚡ Type this in your R Script, Fill in the blanks
 print(______)
+
+
+# 🗣 Comment: The output shows the `nerdy_df` data frame with three columns: ______, ______, and ______. 
 ```
 
-🗣 Comment: # The output shows the `nerdy_df` data frame with three columns: ______, ______, and ______. 
+## Task 8
 
-## Task 7
+Read the following vignettes. Answer the question. Include one reason and one condition/limit. Paste your answer as 2–3 comment in Module Canvas as directed.
 
 **Vignette 4:**
 
-“Explain what my output means”
+**“Explain what my output means”**
 
-Priya runs code that prints a number and she doesn’t understand why it’s that number. She asks AI: “Explain this output step-by-step using my variable names.”
+Priya runs code that prints a number, and she doesn’t understand why it’s that number. She asks AI: “Explain this output step-by-step using my variable names.”
 
 **Is AI appropriate?** Write a couple sentences explaining your answer. 
 
 ```{r eval=FALSE, include=FALSE}
 # Yes, with one condition.
-# This is AI as a tutor. It can be useful if Priya actively checks the explanation by re-running smaller “code trials” (printing intermediate objects, confirming each step). If she accepts the explanation without verifying, she’s delegating understanding. Tenacity means: trust, but verify.
+# This is AI as a tutor. It can be useful for Priya to actively check the explanation by rerunning smaller “code trials” (printing intermediate objects and confirming each step). If she accepts the explanation without verifying, she’s delegating understanding. Tenacity means "trust, but verify."
 ```
-
-## Task 8
 
 **Vignette 5:** 
 
@@ -850,7 +900,6 @@ Devin hits three errors in a row and feels discouraged. After using AI to solve 
 # Mostly no.
 # The memo is where your learning becomes visible to you. Outsourcing it removes the reflection that turns confusion into growth. Tenacity includes emotionally appropriate persistence: naming what happened, what you tried, what worked, and what you’ll do next time.
 # What is appropriate: asking AI to generate reflection prompts (questions) you answer yourself, like: “What did the error message literally say? What did you change? What did you learn about object creation and order?”
-
 ```
 
 # References

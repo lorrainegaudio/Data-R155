@@ -734,6 +734,9 @@ We will return to indexing in later chapters when we learn about data frames.
 
 # Logical Vectors
 
+___
+**REVIEW**
+
 **Logical vectors** are used for conditions and comparisons. They contain TRUE or FALSE values.
 
 🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
@@ -748,6 +751,7 @@ print(real)
 ```
 
 🗣 The output shows the logical values stored in the `real` vector.
+___
 
 ## Comparison Operators
 
@@ -865,7 +869,7 @@ Fill in the blanks to complete the code.
 
 Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter3_practice.Rmd` in your course folder. 
 
-Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. 
+Remember to document your **tenacity** on a memo if you encounter any errors while completing the tasks. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**).
 
 R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.
 
@@ -934,7 +938,7 @@ _____(binary_powers)
 
 ## Task 4
 
-🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors from Chapter 2 and then subtract them.
+🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors seen in Chapter 2 and then subtract them.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks

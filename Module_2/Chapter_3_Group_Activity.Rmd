@@ -1,11 +1,11 @@
 ---
-title: "Lesson 2 Activity"
+title: "Chapter 3 Activity"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-title: "Lesson 2 Activity"
+title: "Chapter 3 Activity"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -54,7 +54,7 @@ biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
  
 Or
-title: "Lesson 2 Activity"
+title: "Chapter 3 Activity"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
@@ -121,17 +121,18 @@ Step One: Split into groups of approximately 4 people 👨🏻👩🏼👧🏽�
 
 Step Two: Assign Roles
 
-- Time Keeper: keeping the project moving. If a task is not finished on time, the team needs to move on.
+- **Time Keeper**: keeping the project moving. If a task is not finished on time, the team needs to move on.
 
 - Reporter: The R User typing code in code chunks and submitting the R notebook to Canvas. 
+  - **Write everyone's name at the top of the notebook**
+
   - Have the activity document open for copy and paste actions
-  - Write everyone's name at the top of the notebook
 
-- Activity Leader: facilitating the conversation, follows the activity document
+- **Activity Leader**: facilitating the conversation, follows the activity document
 
-- Investigator: Finds answers to questions and solutions to problems. 
+- **Investigator**: Finds answers to questions and solutions to problems. 
 
-- Brainstomer: Comes up with cleaver ideas for the team to use
+- **Brainstomer**: Comes up with cleaver ideas for the team to use
 
 # Vectors
 

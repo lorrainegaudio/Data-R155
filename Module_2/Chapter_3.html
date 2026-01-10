@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-01-06" />
+<meta name="date" content="2026-01-09" />
 
 <title>Chapter 3</title>
 
@@ -2768,7 +2768,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">January 06, 2026</h4>
+<h4 class="date">January 09, 2026</h4>
 
 </div>
 
@@ -2782,19 +2782,18 @@ building vectors. In Chapter 3, you move into an R Notebook
 writing, R code, and the output your code produces. This matters for
 research because the goal is not just to “get an answer,” but to produce
 a record that another person (or future-you) can audit, reproduce, and
-trust. R Notebooks are designed for this kind of work: they support a
-reproducible workflow where narrative and computation live together—an
-approach closely aligned with the broader idea of writing code for
-humans to understand, not just for computers to execute.</p>
+trust. R Notebooks support a reproducible workflow where narrative and
+computation live together. Code is easily understood when properly
+annotated.</p>
 <p>This chapter also strengthens the vector skills you need before you
 touch real datasets. Most data analysis in R is vector-based: columns in
 a dataset behave like vectors, and common research tasks (computing new
 variables, filtering cases, labeling categories, and selecting subsets
 of values) depend on understanding <strong>vector arithmetic, recycling,
 coercion, class, names, and indexing</strong>. If you misunderstand
-these fundamentals, R will often still run—but it may silently give you
-the wrong result (which is worse than an error). By the end of the
-chapter, you should be able to (1) work in a notebook that clearly
+these fundamentals, R will often still run the code but it may silently
+give you the wrong result (which is worse than an error). By the end of
+the chapter, you should be able to (1) work in a notebook that clearly
 documents your decisions, and (2) predict how R will behave when you
 combine, label, and subset data. These skills you will rely on heavily
 once we start working with data frames and analysis workflows.</p>
@@ -3574,6 +3573,8 @@ frames.</p>
 </div>
 <div id="logical-vectors" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Logical Vectors</h1>
+<hr />
+<p><strong>REVIEW</strong></p>
 <p><strong>Logical vectors</strong> are used for conditions and
 comparisons. They contain TRUE or FALSE values.</p>
 <p>🎯 Create a logical vector named <code>real</code> that contains the
@@ -3583,7 +3584,7 @@ real &lt;- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</code><
 <pre class="r"><code># ✅ Check the real vector
 print(real)</code></pre>
 <p>🗣 The output shows the logical values stored in the <code>real</code>
-vector.</p>
+vector. ___</p>
 <div id="comparison-operators" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Comparison
 Operators</h2>
@@ -3795,8 +3796,10 @@ format (HTML/PDF/Word), and options for rendering.</p>
 <p>Before you begin, make sure you have created a new R Notebook in the
 Source pane and saved it as <code>chapter3_practice.Rmd</code> in your
 course folder.</p>
-<p>Remember to document your tenacity on a memo if you encounter any
-errors while completing the tasks.</p>
+<p>Remember to document your <strong>tenacity</strong> on a memo if you
+encounter any errors while completing the tasks. Document how you
+troubleshot the error and what resource(s) you used to help you resolve
+the issue (<strong>transparency</strong>).</p>
 <p>R Notebooks can look “fine” even when they are not reproducible
 because your Environment may still contain objects from earlier work.
 Start with a clean environment and run everything in order.</p>
@@ -3938,7 +3941,7 @@ pairing or perfect storm?. Library Hi Tech News, 40(10), 6-8.</p>
 
 <footer>
   <div class="footer-wrapper">
-    <p>© 2025 Boise State University | All Rights Reserved</p>
+    <p>© 2026 Boise State University | All Rights Reserved</p>
     <p>Contact: lorrainegaudio@boisestate.edu | 123 University Drive, Boise, ID 83725</p>
   </div>
 </footer>
