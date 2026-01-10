@@ -5,7 +5,7 @@ date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -32,7 +32,7 @@ date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Fall 2025"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -77,13 +77,13 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 
 # Welcome to Intro to R Programming!
 
-This course will cover how to use the R software environment for data analysis. R is a powerful tool for statistical computing and graphics, widely used in data science and research. We will use the integrated development environment (IDE), RStudio, to write and execute R code.
-
-We are using a computer lab classroom in Riverfront Hall (RFH), Room 208. Please attend your scheduled session on Monday from 9:00 AM to 9:50 AM or from 10:30 AM to 11:20 AM. In-class activities will be part of your grade, so please attend class. If you are unable to attend class, please contact your instructor by email.
+In this course, you will learn to use the R software environment for data analysis. R is widely used in research and data science for statistical computing and graphics, and we will use RStudio Desktop (not the cloud version) to write, run, and troubleshoot code as part of a reproducible workflow.
 
 ```{r instructor_photo, echo=FALSE, fig.align='center', out.width="25%"}
 knitr::include_graphics("../images/DSC_0624_sqre.jpg")
 ```
+
+## Instructor Information
 
 Email:	**lorrainegaudio@boisestate.edu** (You can call me “Professor Gaudio” or “Lorraine” is fine too!)
 
@@ -91,14 +91,145 @@ Virtual Office Hours:	By appointment; please email to arrange a time.
 
 Office Location: I do not have an office this semester
 
-Contact instructions:	For the quickest response, I prefer that you contact me by email. I respond to emails within 24 hours, except on weekends and holidays (I may respond on weekends and holidays, but there is no guarantee). 
+Contact instructions:	For the quickest response, I prefer that you contact me by email. I usually respond to emails within 24 hours, except on weekends and holidays (I may respond on weekends and holidays, but there is no guarantee). 
 
 
 # Course Informaiton
 
+We are using a computer lab classroom in **Riverfront Hall (RFH)**, **Room 208**. You must attend the Monday section you are enrolled in (**9:30–10:20 AM** or **10:30–11:20 AM**). You may not attend a different section in place of your own. In-class activities can only be completed in person, so attendance matters. 
+
+**Class Meetings (In-Person)**
+
+- Section 002: Monday, 9:30–10:20 AM
+
+- Section 001: Monday, 10:30–11:20 AM
+
+- Location: Riverfront Hall (RFH), Room 208
+
 ## Course Format
 
-We will follow Canvas modules. Video lessons will be available in these modules. You will follow along, completing practice problems in R Studio (less than 1 hr per week). Videos and their accompanying assignments are due before each class. Then, we will meet on Mondays to work through additional practice problems associated with what was covered in the video lessons. You will complete assignments in RStudio and then upload them to Canvas. There will be plenty of time to work on the signature assignment during our in-person class.
+This is a flipped course: you will complete readings/videos and quizzes in Canvas, then use class time for structured coding practice and applied lab activities. Attendance by enrolled section is required. Attend the section you are officially enrolled in to complete in-class activities. 
+
+### Modules and pacing
+
+The course is organized into modules in Canvas. Module lengths vary. There are 8 modules, plus a signature assignment due near the end of the term. The module schedule and due dates are posted in Canvas.
+
+### Canvas Workflow and Deadlines
+
+****Weekly deadlines (Mountain Time)
+
+You should expect three recurring deadlines:
+
+- **Thursday 11:59 PM**: core readings + core content quizzes (most modules)
+
+- **Sunday 11:59 PM**: advanced activities + practice assignments (most modules)
+
+- **Monday (end of class)**: in-class activity only; attendance required for submission
+
+Canvas will display the exact due date/time for every item. If Canvas and the syllabus ever conflict, Canvas is the final authority for due dates.
+
+## Grading Information
+
+This course uses Specifications (Specs) Grading, which means your work is evaluated as **Complete** or **Not Ready**. There are no points or partial credit. Each quiz/activity/assignment comes with clear specifications (what “Complete” requires). 
+
+- If your submission meets every requirement, it is *Complete*. 
+
+- If it misses **any** requirement, it is *Not Ready* and must be revised and resubmitted. 
+This system is designed to be clear, rigorous, and fair: you always know what target you’re aiming for.
+
+Your final course grade is determined by the bundle you complete (A, B, C, or D). In Canvas, every item is labeled Core or Advanced in the assignment title. Core work is the baseline required to pass the course at the C level; Advanced work is optional work that raises your final grade to a B or A. You are responsible for self-monitoring your progress toward the grade you want. 
+
+**Submission standards**: to be marked "*Complete*", submitted the correct files that (1) contain correct code, (2) run top-to-bottom with a clean environment, and (3) include any required memos.
+
+## Final Letter Grades
+
+Final Letter Grades will be based on the following scale:
+
+- **A**: Complete the A Bundle
+
+- **B**: Complete the B Bundle
+
+- **C**: Complete the C Bundle
+
+- **D**: Complete the D Bundle
+
+- **F**: Does not complete the D Bundle
+
+### Bundle requirements
+
+![Image showing the bundle requirements as detailed below.](spec_grading.png)
+
+**D Bundle**:
+
+- Complete one Core Signature Assignment, and
+
+- Complete at least 75% of Core items.
+
+**C Bundle**:
+
+- Complete all Core items, and
+
+- Complete one C-level Core Signature Assignment.
+
+**B Bundle**:
+
+- Complete all Core items, and
+
+- Complete 50% of Advanced items, and
+
+- Complete the Signature requirement for B-level or higher: either the Advanced Signature Assignment or both Core Signature Assignments.
+
+**A Bundle**:
+
+- Complete all Core items, and
+
+- Complete 80% of Advanced items, and
+
+- Complete the Signature requirement for B-level or higher: either the Advanced Signature Assignment or both Core Signature Assignments.
+
+**Graduate student requirement (ANTH580)**: Anthropology graduate students have an additional signature requirement: you must obtain data beyond the course-provided materials (details are provided in Canvas).
+
+This “bundle” structure is intentional: higher course grades require completing more work and/or more challenging work, and you can choose how far you want to go.
+
+## Tokens: Late Work & Not Ready Submissions
+
+You begin the semester with **5 tokens**. Tokens are your built-in safety net: they exist because life happens, and Specs Grading is still meant to be a safe but challenging system. 
+
+### What tokens can be used for
+
+**A token can be used to**:
+
+1. Extend a due date by one week, or
+
+2. Convert late “Not Ready” work into eligible-for-grading work (so it can become Complete after revision/resubmission).
+
+Tokens may be used on Signature Assignments.
+
+### The one week rule (strict)
+
+Tokens only apply within one week after the original deadline. After that 7-day window, late work is **not accepted**.
+
+### Revisions and tokens
+
+If you revise and resubmit **before** the deadline, **no token is required**. Submit assignments early!
+
+If you revise and resubmit after the deadline, **a token is required**.
+
+### Quizzes (retakes + deadlines)
+
+- Quizzes can be retaken unlimited times until the quiz due date.
+
+- Only a **100%** score is *Complete*.
+
+- After the due date, anything below 100% is *Not Ready*, unless you use a token to extend the due date.
+
+### Requested token use
+
+If you need a extension or received a *Not Ready* on a Core assignment, you must submit a Token Request in Canvas. I will manually adjust your token balance and unlock/extend the item for 7 days after the original deadline.
+
+Your current token balance is always visible in Canvas, in the “Tokens Bank” assignment.  
+
+
 
 ## Prerequisites 
 
@@ -106,17 +237,14 @@ None other than a basic understanding of how to operate and navigate a computer 
 
 ## Main Course Learning Objectives
 
-A student successfully completing this course will be able to: 
 
-1. Navigate the R statistical language and programming environment
+By the end of the course, you will be able to:
 
-2. Identify R Studio functions and programming concepts. 
+1. Share a reproducible R code workflow using the desktop RStudio.
 
-3. Discover the packages and code needed to conduct fundamental mathematical and statistical analysis in R
+2. Confidently problem-solve R coding tasks.
 
-4. Write code in R to solve sample problems 
-
-5. Explain the importance of an open-access software environment for accessibility, transparency, and reproducible social science. 
+3. Demonstrate learning skills & AI competencies in workflow.
 
 ## Additional Learning Objectives
 
@@ -182,8 +310,6 @@ tbl <- if (is_html) {
 tbl
 ```
 
-
-
 # Course Requirements
 
 ## Course Materials
@@ -198,125 +324,11 @@ All required materials will be supplied and available to download via Canvas. Th
 
 ## Class Participation
 
-You will be doing coding in class with your peers. You need to be prepared by watching the video(s) and completing the assignment(s) ahead of time. This is because you will apply video content to additional problems and explore beyond what is demonstrated using your selected dataset. The instructor will be there to help you through the material. Learning to code is a trial-and-error process.
+You will be doing coding in class with your peers. You need to be prepared by completing the assignment(s) ahead of time. This is because you will apply content to additional problems and explore beyond what is demonstrated. The instructor will be there to help you through the material. 
 
 ## Study Time Required
 
-Expect to spend approximately one hour outside of class time per week reviewing video(s) and preparing for class. Please be aware that time estimates for each lesson and assignment are estimates only. The actual time you spend completing the course activities will vary depending on how quickly you read and the level of your technology skills. On average, students will need to spend more time preparing for class in the second half of the semester. Organize your time in a way that allows you to thoughtfully and thoroughly complete assignments.
-
-## Grading Information
-
-In this course, your grade starts at zero and grows as you earn points by showing what you can do—not by avoiding mistakes. You will never “lose” points because something went wrong. Instead, every activity is a chance to build your total toward 100 points. On assignment, half of your points will come from solving R problems (technical skills) and half from demonstrating learning skills. These habits, like curiosity, tenacity, and thoroughness, make you a stronger, more independent learner. I will model these skills in lectures and videos, and you will have many ways to show them in your work and class. The goal is for you to leave this course not only knowing R basics, but also knowing how to keep learning R (and other tools) long after the semester ends. Grades in this course are based on a 100-point grading system utilizing the allocation of points shown below.
-
-```{r graded-activity, echo=FALSE, message=FALSE, warning=FALSE}
-library(tibble)
-library(knitr)
-library(kableExtra)
-
-is_html <- knitr::is_html_output()
-
-tbl <- tribble(
-  ~`Graded Activity`, ~Points, ~Description,
-  "Document Technical Skill Practice", 40,
-  "14 self-guided problem-solving tasks linked to the video lectures. Each is worth 2.50 points. Highest points = correct answer with working code. Partial points = partially correct or code with minor errors. Attempted but incorrect = lower partial points. No submission = 0 points. Assignments have multiple opportunities to earn points.",
-  "Document Learning with Memos", 40,
-  "Short written reflections throughout your assignments that document your thought process, problem-solving steps, and use of targeted learning skills (Curiosity, Autonomy, Thoroughness, Open-mindedness, Courage, Tenacity, Transparency). Points are additive—you only gain points here, never lose them. Each memo can earn up to 0.5 points based on evidence of skill use.",
-  "Signature Assignment", 20,
-  "An independent project where you get to select a real dataset to play with. You will apply R packages/functions from the course and produce a reproducible report. Your submission will include: 1) clean, runnable code, 2) explanatory comments, and 3) memos throughout.",
-  "Total", 100, ""
-)
-
-k <- kbl(
-  tbl,
-  format   = if (is_html) "html" else "latex",
-  align    = c("l","c","l"),
-  booktabs = !is_html,
-  escape   = TRUE
-)
-
-k <- if (is_html) {
-  k |>
-    kable_styling(
-      bootstrap_options = c("striped","hover","condensed"),
-      full_width = FALSE, fixed_thead = TRUE, position = "left"
-    ) |>
-    # Use %/em widths for HTML and force wrapping for long text
-    column_spec(1, width = "22%", extra_css = "word-break: break-word;") |>
-    column_spec(2, width = "10%") |>
-    column_spec(3, width = "68%", extra_css = "word-break: break-word;") |>
-    row_spec(0, bold = TRUE) |>
-    row_spec(nrow(tbl), bold = TRUE)
-} else {
-  k |>
-    kable_styling(latex_options = c("hold_position"), font_size = 9) |>
-    column_spec(1, width = "4.2cm") |>
-    column_spec(2, width = "1.2cm") |>
-    column_spec(3, width = "10.5cm") |>
-    row_spec(0, bold = TRUE) |>
-    row_spec(nrow(tbl), bold = TRUE)
-}
-
-k
-```
-
-Tip: Confirm an assignment has been submitted and view all of your scores and accompanying comments on graded assignments by accessing “My Grades” in the Canvas course menu.
-
-## Final Letter Grades
-
-Final Letter Grades will be based on the following scale:
-
-```{r grade-bands, echo=FALSE, message=FALSE, warning=FALSE}
-library(tibble)
-library(knitr)
-library(kableExtra)
-
-is_html <- knitr::is_html_output()
-
-grades <- tribble(
-  ~`Grade band`, ~`Plus`,              ~`Base`,           ~`Minus`,
-  "A grades",     "100–98%: A+",        "97.5–93%: A",     "92.5–90%: A-",
-  "B grades",     "89.5–88%: B+",       "87.5–83%: B",     "82.5–80%: B-",
-  "C grades",     "79.5–78%: C+",       "78–73%: C",       "72–70%: C-",
-  "D grades",     "69.5–68%: D+",       "67.5–63%: D",     "62.5–60%: D-",
-  "F grades",     "59.5–0%: F",         "",                ""
-)
-
-k <- kbl(
-  grades,
-  format   = if (is_html) "html" else "latex",
-  align    = c("l","l","l","l"),
-  booktabs = !is_html,
-  escape   = TRUE
-)
-
-k <- if (is_html) {
-  k |>
-    kable_styling(
-      bootstrap_options = c("striped","hover","condensed"),
-      full_width = FALSE, fixed_thead = TRUE, position = "left"
-    ) |>
-    column_spec(1, width = "20%") |>
-    column_spec(2, width = "26%", extra_css = "word-break: break-word;") |>
-    column_spec(3, width = "26%", extra_css = "word-break: break-word;") |>
-    column_spec(4, width = "26%", extra_css = "word-break: break-word;") |>
-    row_spec(0, bold = TRUE)
-} else {
-  k |>
-    kable_styling(font_size = 9, latex_options = c("hold_position")) |>
-    column_spec(1, width = "3.0cm") |>
-    column_spec(2, width = "3.5cm") |>
-    column_spec(3, width = "3.5cm") |>
-    column_spec(4, width = "3.5cm") |>
-    row_spec(0, bold = TRUE) |>
-    kableExtra::collapse_rows(columns = 1, valign = "top")
-}
-
-k
-```
-
-## Late Work Policy
-
-It is always best to submit work on time, but I understand that sometimes extenuating circumstances make this difficult. My policy on late work is as follows: Everyone takes R at their own pace. The due dates are guidelines more than anything. Unfortunately, it is not possible to consider assignments turned in after **December 12th**.  
+Expect to spend approximately three hours outside of class time per week reviewing video(s) and preparing for class. Please be aware that time estimates for each module and assignment are estimates only. The actual time you spend completing the course activities will vary depending on how quickly you read and the level of your technology skills. On average, students will need to spend more time preparing for class in the second half of the semester. Organize your schedule now in a way that allows you to thoughtfully and thoroughly complete assignments throughout the semester.
 
 # Student Responsibilities
 
