@@ -1,8 +1,8 @@
 ---
-title: "Intro to R  Programming Fall 2025 - Syllabus"
+title: "Intro to R  Programming Spring 2026 - Syllabus"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -26,10 +26,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r eval=FALSE, include=FALSE}
-title: "Intro to R  Programming Fall 2025 - Syllabus"
+title: "Intro to R  Programming Spring 2026 - Syllabus"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -46,7 +46,7 @@ output:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
       
-title: "Intro to R  Programming Fall 2025 - Syllabus"
+title: "Intro to R  Programming Spring 2026 - Syllabus"
 subtitle: "Boise State University, Anthropology Department"
 author: "Professor Lorraine Gaudio"
 date:   "`r paste('Report generated on', format(Sys.Date(), '%B %d, %Y'))`"
@@ -79,12 +79,11 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 
 In this course, you will learn to use the R software environment for data analysis. R is widely used in research and data science for statistical computing and graphics, and we will use RStudio Desktop (not the cloud version) to write, run, and troubleshoot code as part of a reproducible workflow.
 
+## Instructor Information
+
 ```{r instructor_photo, echo=FALSE, fig.align='center', out.width="25%"}
 knitr::include_graphics("../images/DSC_0624_sqre.jpg")
 ```
-
-## Instructor Information
-
 Email:	**lorrainegaudio@boisestate.edu** (You can call me “Professor Gaudio” or “Lorraine” is fine too!)
 
 Virtual Office Hours:	By appointment; please email to arrange a time.
@@ -92,7 +91,6 @@ Virtual Office Hours:	By appointment; please email to arrange a time.
 Office Location: I do not have an office this semester
 
 Contact instructions:	For the quickest response, I prefer that you contact me by email. I usually respond to emails within 24 hours, except on weekends and holidays (I may respond on weekends and holidays, but there is no guarantee). 
-
 
 # Course Informaiton
 
@@ -106,6 +104,42 @@ We are using a computer lab classroom in **Riverfront Hall (RFH)**, **Room 208**
 
 - Location: Riverfront Hall (RFH), Room 208
 
+## Course Learning Objectives
+
+By the end of the course, you will be able to:
+
+1. Share a reproducible R code workflow using the desktop RStudio.
+
+2. Confidently problem-solve R coding tasks.
+
+3. Demonstrate learning skills & AI competencies in workflow.
+
+## Prerequisites 
+
+**None** other than a basic understanding of how to operate and navigate a computer (especially the file system), the ability to download and upload files with Canvas, and a sense of integrity (especially the academic kind).
+
+## Course Materials
+
+All required materials will be supplied and available to download via Canvas. The following FREE resources are recommended but *not required*. They will help you learn R programming and data analysis concepts more effectively:
+
+- **Introduction to Data Science** by Rafael Irizarry [https://rafalab.dfci.harvard.edu/dsbook-part-1/](https://rafalab.dfci.harvard.edu/dsbook-part-1/). This book provides a comprehensive introduction to data science concepts and R programming.
+
+- **R for Data Science** by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/). This book provides a gentle introduction to programming concepts and R.
+
+- **bookdown: Authoring Books and Technical Documents with R Markdown** by Yihui Xie [https://bookdown.org/yihui/bookdown/]https://bookdown.org/yihui/bookdown/). This book provides a comprehensive guide to using R Markdown for technical writing and documentation.
+
+## Study Time Required
+
+Your weekly time outside of class depends on the grade bundle you are aiming for. These estimates assume you attend Monday lab and work steadily during the week.
+
+- **C grade**: plan for ~2 hours/week outside class (Core readings/quizzes + Core practice to Complete).
+
+- **B grade**: plan for ~3 hours/week outside class (Core work + a meaningful portion of Advanced activities).
+
+- **A grade**: plan for ~3.5 hours/week outside class (Core work + a larger portion of Advanced activities and stronger refinement).
+
+If you fall behind, please do not submit *Not Ready* work. Instead, complete a token request to get a due date extension. Your weekly time may increase near major deadlines.
+
 ## Course Format
 
 This is a flipped course: you will complete readings/videos and quizzes in Canvas, then use class time for structured coding practice and applied lab activities. Attendance by enrolled section is required. Attend the section you are officially enrolled in to complete in-class activities. 
@@ -116,7 +150,7 @@ The course is organized into modules in Canvas. Module lengths vary. There are 8
 
 ### Canvas Workflow and Deadlines
 
-****Weekly deadlines (Mountain Time)
+**Weekly deadlines** (Mountain Time)
 
 You should expect three recurring deadlines:
 
@@ -126,13 +160,13 @@ You should expect three recurring deadlines:
 
 - **Monday (end of class)**: in-class activity only; attendance required for submission
 
-Canvas will display the exact due date/time for every item. If Canvas and the syllabus ever conflict, Canvas is the final authority for due dates.
+Canvas will display the exact due date/time for every item. 
 
 ## Grading Information
 
 This course uses Specifications (Specs) Grading, which means your work is evaluated as **Complete** or **Not Ready**. There are no points or partial credit. Each quiz/activity/assignment comes with clear specifications (what “Complete” requires). 
 
-- If your submission meets every requirement, it is *Complete*. 
+- If your submission meets **every** requirement, it is *Complete*. 
 
 - If it misses **any** requirement, it is *Not Ready* and must be revised and resubmitted. 
 This system is designed to be clear, rigorous, and fair: you always know what target you’re aiming for.
@@ -141,7 +175,7 @@ Your final course grade is determined by the bundle you complete (A, B, C, or D)
 
 **Submission standards**: to be marked "*Complete*", submitted the correct files that (1) contain correct code, (2) run top-to-bottom with a clean environment, and (3) include any required memos.
 
-## Final Letter Grades
+### Final Letter Grades
 
 Final Letter Grades will be based on the following scale:
 
@@ -157,7 +191,7 @@ Final Letter Grades will be based on the following scale:
 
 ### Bundle requirements
 
-![Image showing the bundle requirements as detailed below.](spec_grading.png)
+![Figure 1. Image showing the bundle requirements (detailed below).](spec_grading.png)
 
 **D Bundle**:
 
@@ -187,35 +221,33 @@ Final Letter Grades will be based on the following scale:
 
 - Complete the Signature requirement for B-level or higher: either the Advanced Signature Assignment or both Core Signature Assignments.
 
-**Graduate student requirement (ANTH580)**: Anthropology graduate students have an additional signature requirement: you must obtain data beyond the course-provided materials (details are provided in Canvas).
+**Attention ANTH580**: Anthropology graduate students have an additional signature requirement. Details are provided in Canvas.
 
 This “bundle” structure is intentional: higher course grades require completing more work and/or more challenging work, and you can choose how far you want to go.
 
-## Tokens: Late Work & Not Ready Submissions
+### Tokens
+
+**For Late Work & Not Ready Submissions**
 
 You begin the semester with **5 tokens**. Tokens are your built-in safety net: they exist because life happens, and Specs Grading is still meant to be a safe but challenging system. 
-
-### What tokens can be used for
 
 **A token can be used to**:
 
 1. Extend a due date by one week, or
 
-2. Convert late “Not Ready” work into eligible-for-grading work (so it can become Complete after revision/resubmission).
+2. Revision of late “*Not Ready*” work.
 
-Tokens may be used on Signature Assignments.
+3. Tokens may be used on Signature Assignments.
 
-### The one week rule (strict)
+#### The one week rule (strict)
 
 Tokens only apply within one week after the original deadline. After that 7-day window, late work is **not accepted**.
 
-### Revisions and tokens
+- If you revise and resubmit **before** the deadline, **no token is required**. Submit assignments early!
 
-If you revise and resubmit **before** the deadline, **no token is required**. Submit assignments early!
+- If you revise and resubmit after the deadline, **a token is required**.
 
-If you revise and resubmit after the deadline, **a token is required**.
-
-### Quizzes (retakes + deadlines)
+#### Quizzes (retakes + deadlines)
 
 - Quizzes can be retaken unlimited times until the quiz due date.
 
@@ -223,112 +255,11 @@ If you revise and resubmit after the deadline, **a token is required**.
 
 - After the due date, anything below 100% is *Not Ready*, unless you use a token to extend the due date.
 
-### Requested token use
+#### Request token use
 
-If you need a extension or received a *Not Ready* on a Core assignment, you must submit a Token Request in Canvas. I will manually adjust your token balance and unlock/extend the item for 7 days after the original deadline.
+To use a token, submit the **Token Request** form in Canvas. In the request, enter the exact Canvas title of the item. You may also include a brief reason only if you believe the situation should be excused; otherwise, the request is treated as standard token use.
 
-Your current token balance is always visible in Canvas, in the “Tokens Bank” assignment.  
-
-
-
-## Prerequisites 
-
-None other than a basic understanding of how to operate and navigate a computer (especially the file system), the ability to download and upload files with Canvas, and a sense of integrity (especially the academic kind).
-
-## Main Course Learning Objectives
-
-
-By the end of the course, you will be able to:
-
-1. Share a reproducible R code workflow using the desktop RStudio.
-
-2. Confidently problem-solve R coding tasks.
-
-3. Demonstrate learning skills & AI competencies in workflow.
-
-## Additional Learning Objectives
-
-The rapid proliferation of artificial intelligence (AI) across all aspects of life is posing challenges to education systems aimed at preparing students. Given the transformative potential of AI for human societies, it is crucial to equip students with the values, knowledge and skills needed to navigate the future with AI. AI has an impact on student learning. This course is designed to give you the skills and foundation to be successful in an R statistics course, yet AI is highly proficient at producing code. As a researcher, you will not only need to precisely create new knowledge but also be able to explain it. Additionally, using generative AI to produce R code for you will not facilitate your learning. Yet at the same time, using generative AI to explore R code will also accelerate your learning. This course will help students strengthen their epistemic values while also targeting the development of several **AI competencies**, including: 
-
-1. **Human-centered mindset**: The dynamics of humans controlling AI versus AI controlling humans.
-
-2. **AI techniques and applications**: Whether or not to use a specific AI system to achieve a justified aim. Before using AI, ask:
-
--  Should AI be used in a particular situation?
-
--  Which AI tool to select for a given purpose or task?
-
--  What are the boundaries, goals, and constraints of a problem? 
-
-3. **Ethics of AI**: Transparency of use and guidelines for utilizing AI within rules and regulations, and privacy risks of certain AI systems.
-
-\pagebreak
-
-The epistemic values of this course are associated with intellectual virtues or “**learning skills**.”
-
-```{r learning-skills, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-
-learning_skills <- tribble(
-  ~Skill, ~Meaning,
-  "Curiosity",       "Asking new, relevant questions and investigating them beyond what’s assigned.",
-  "Autonomy",        "Taking initiative and making choices about your learning path, rather than waiting for exact instructions.",
-  "Thoroughness",    "Clearly documenting your steps and reasoning so someone else can follow your process.",
-  "Open-mindedness", "Considering and testing alternative methods or perspectives, even if you already have a working answer.",
-  "Courage",         "Speaking up with ideas or questions, especially when you’re unsure, and sharing your work for feedback.",
-  "Tenacity",        "Persisting through difficulties, revising code, and knowing when to seek help after genuine effort.",
-  "Transparency",    "Disclosing methods, materials, assumptions, values, and interests."
-)
-
-is_html <- knitr::is_html_output()
-
-tbl <- kbl(
-  learning_skills,
-  format   = if (is_html) "html" else "latex",
-  align    = c("l","l"),
-  escape   = TRUE,
-  booktabs = !is_html # LaTeX only
-)
-
-tbl <- if (is_html) {
-  tbl |>
-    kable_styling(
-      bootstrap_options = c("striped","hover","condensed"),
-      full_width = FALSE, fixed_thead = TRUE, position = "left"
-    ) |>
-    column_spec(1, width = "18%") |>
-    column_spec(2, width = "82%")
-} else {
-  tbl |>
-    kable_styling(latex_options = c("hold_position"), font_size = 9) |>
-    column_spec(1, width = "3cm") |>
-    column_spec(2, width = "12cm")
-}
-
-tbl
-```
-
-# Course Requirements
-
-## Course Materials
-
-All required materials will be supplied and available to download via Canvas. The following FREE resources are recommended but *not required*. They will help you learn R programming and data analysis concepts more effectively:
-
-- **Introduction to Data Science** by Rafael Irizarry [https://rafalab.dfci.harvard.edu/dsbook-part-1/](https://rafalab.dfci.harvard.edu/dsbook-part-1/). This book provides a comprehensive introduction to data science concepts and R programming.
-
-- **R for Data Science** by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/). This book provides a gentle introduction to programming concepts and R.
-
-- **bookdown: Authoring Books and Technical Documents with R Markdown** by Yihui Xie [https://bookdown.org/yihui/bookdown/]https://bookdown.org/yihui/bookdown/). This book provides a comprehensive guide to using R Markdown for technical writing and documentation.
-
-## Class Participation
-
-You will be doing coding in class with your peers. You need to be prepared by completing the assignment(s) ahead of time. This is because you will apply content to additional problems and explore beyond what is demonstrated. The instructor will be there to help you through the material. 
-
-## Study Time Required
-
-Expect to spend approximately three hours outside of class time per week reviewing video(s) and preparing for class. Please be aware that time estimates for each module and assignment are estimates only. The actual time you spend completing the course activities will vary depending on how quickly you read and the level of your technology skills. On average, students will need to spend more time preparing for class in the second half of the semester. Organize your schedule now in a way that allows you to thoughtfully and thoroughly complete assignments throughout the semester.
+If your request follows the course rules (especially the 7-day window after the original deadline), I will reopen/extend the specific item in Canvas for 7 days after the original due date. By default, I will deduct 1 token by updating your **Token Bank** (Tracking Only). Your Token Bank shows how many tokens you have left (starts at 5) and is the official record of your remaining tokens.
 
 # Student Responsibilities
 
@@ -344,7 +275,7 @@ If you are struggling for any reason (COVID, relationship, family, or life’s s
 
 ## Academic Integrity
 
-Academic Integrity: a set of positive values and an agreement with ethical and professional principles, standards, and practices that involve the whole institution.
+**Academic Integrity**: a set of positive values and an agreement with ethical and professional principles, standards, and practices that involve the whole institution.
 Honesty, trust, fairness, respect, responsibility, and courage (to name a few)
 
 Boise State promotes Academic Excellence as a core Shared Value, upholding the virtue of honesty in the pursuit of knowledge. Behaving with integrity and honesty is a hallmark of a Boise State University graduate. The conferring of a degree represents the University’s indication that the recipient has engaged in academic work that is representative of her/his own efforts and completed with integrity and honesty.
