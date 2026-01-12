@@ -23,6 +23,25 @@ In Chapter Four you will learn how to:
 
 - ⚡ Handle missing values with na.rm.
 
+# NA vs NaN
+
+R has several **special values** that represent non-standard data states. Two of the most common are `NA` and `NaN`.
+
+- **`NA`** ("Not Available") signals *missing* information: the value simply was not recorded.
+
+- **`NaN`** ("Not a Number") signals an *undefined* numeric result, such as 0 divided by 0.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+0 / 0      # Produces NaN – undefined arithmetic
+
+NA         # Built-in constant representing a missing value
+```
+
+🗣 R prints `NA` and `NaN` in the Console so you can spot them quickly. Even though they look similar, treat them differently: `NA` means "value absent"; `NaN` means "math error".
+
+We will mostly focus on `NA` in this chapter, but keep in mind that `NaN` is another special value you may encounter when working with numeric data.
+
 # Built-in Functions
 
 Many built-in summary functions take a whole vector as input and return one summary value (or a small set of values). These are summary (reduction) functions that take many values and return one value.
@@ -78,7 +97,7 @@ Sys.Date()
 
 🎯 Open the help file for the `Sys.Date()` function.
 
-```{r}
+```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
 ?Sys.Date
 ```
@@ -178,6 +197,169 @@ In many summary functions, any `NA` in the vector causes the result to be `NA` u
 
 ___
 
+## Detecting Missing Values
+
+A quick yes/no check prevents surprises later in your workflow.
+
+- `anyNA(x)` returns `TRUE` if *any* element in `x` is `NA` or `NaN`.
+
+📜 The SYNTAX (basic):
+
+`anyNA(x)`
+
+where `x` is the vector you want to check for missing values.
+
+🎯 Use `anyNA()` to check if there are any missing values in a vector.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+Vector_NA <- c(3, 7, NA, 12)  # Our sample data – one value is missing
+
+anyNA(Vector_NA)              # TRUE means “Something is missing!"
+```
+
+🗣  If was my data and I saw `FALSE`, I could relax; the vector has no gaps. Seeing TRUE tells me to investigate further. 
+
+## Locating Missing Values
+
+There are two useful functions to find the exact positions of missing values in a vector:
+
+- `is.na(x)` returns a logical vector: `TRUE` wherever x is `NA` or `NaN`.
+
+- `which(logical_vec)` converts `TRUE` positions into numeric indices (handy for slicing or replacing values).
+
+🎯 Use `is.na()` and `which()` to locate missing values in `Vector_NA`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+is.na(Vector_NA)          # Notice that it is TRUE at position 3
+```
+
+🗣 The `is.na()` function creates a logical vector indicating which elements are missing. The third element is TRUE, indicating that the third element in `Vector_NA` is `NA`.
+
+Vectors can be quite long, so it’s often more useful to get the numeric indices of missing values. Use `which()` to extract those indices.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+logical_NA <- is.na(Vector_NA)
+which(logical_NA)   # Returns index 3 directly
+```
+
+🗣 The `is.na()` function creates a logical vector `logical_NA` indicating which elements are missing, while the `which()` function extracts the *indices* of those missing values (see **Positional Indexing**).
+
+# Nesting Function Calls
+
+**Nesting function calls** is where you put one function call inside another so the output of the inner function becomes an argument to the outer function. This works because functions return values, and R can immediately pass that returned value into the next function call.
+
+Nesting is the simplest form of function composition. Building a multi-step transformation by combining small, single-purpose functions.
+
+🎯 Use `sample()` to randomly select 5 numbers from the vector `travel_jumps`, then calculate the mean of those sampled numbers by nesting the `sample()` function inside the `mean()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+# Non-nesting version
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)   
+travel_jumps_sample <- sample(travel_jumps, size = 5, replace = TRUE)
+mean(travel_jumps_sample)
+
+# Nesting version
+mean(sample(travel_jumps, size = 5, replace = TRUE))  # sample then average
+
+# Nesting version without creating the travel_jumps object
+mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
+
+```
+🗣 The first lines of code show multiple steps, each with a single-purpose: create the sequence, sample the sequence, then find the mean. The Nesting version shows the sequence is first being sampled and then the mean of the sample is calculated. The final Nesting version shows the sequence is first calculated, then it is sampled, then the mean of the sample is calculated. 
+
+Real work is rarely one step. Nesting is the base-R way to express that workflow without writing a ton of intermediate objects. However, nesting creates parentheses-heavy code that’s harder to read and debug. In later chapters, we will learn how to pipe multi-step workflows. 
+
+## Locating Missing Values with Nesting
+
+🎯 Create a large vector with some missing values using `sample()` and `c()`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+set.seed(100)
+LargeVec <- sample(c(1:10, rep(NA, 10)))
+print(LargeVec)
+```
+
+🗣 We used the `c()` function in Chapter 2. Here we have nested `c()` inside of `sample()`.
+
+🎯 Use `which()` and `is.na()` to find the positions of missing values in a large vector by nesting the `is.na()` function inside the `which()` function.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+which(is.na(LargeVec))                    # ▶ Where are the gaps?
+```
+
+🗣 The`is.na()` function creates a *logical* vector indicating which elements are missing, and the `which()` function determines the indices of those `TRUE` values. The numbers are the numeric indices (position) of the `NA` values.
+
+## Summarizing "Missingness"
+
+As a researcher, knowing *how much* data is missing guides your next step. 
+
+- A single `NA` might be harmless.
+
+- 50% missing will bias results and needs attention.
+
+🎯 Use `sum()` and `mean()` with `is.na()` to summarize missing values in a large vector.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+sum(is.na(LargeVec))    
+
+mean(is.na(LargeVec))   
+```
+🗣 The `sum(is.na(LargeVec))` expression counts the total number of missing values in `LargeVec` by summing the `TRUE` values from `is.na()`. The `mean(is.na(LargeVec))` expression calculates the proportion of missing values by taking the mean of the logical vector returned by `is.na()`, where `TRUE` is treated as 1 and `FALSE` as 0. Fifty percent missing values yield a mean of 0.5.
+
+## Handling Missing Values
+
+Now that you can *detect* and *locate* gaps, you have to decide what to do about them. There is no universal “best” choice—each option makes assumptions. If you don’t know why values are missing, be cautious.
+
+- **Option 1**: Remove missing values (complete-case analysis). Simple and common, but you may drop a lot of data (and potentially bias results).
+
+- **Option 2**: Replace missing values with a summary value (simple imputation). Keeps the vector length the same, but it can distort the distribution (especially the variance).
+
+___
+
+**Option 1: Remove missing values**
+
+🎯 Use indexing with !is.na() to keep only the observed (non-missing) values in LargeVec.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+clean_vec <- LargeVec[!is.na(LargeVec)]   # Keeps only observed values
+clean_vec
+```
+
+🗣 `is.na(LargeVec)` returns a logical vector (`TRUE` for missing, `FALSE` for present). The `!` flips it (so `TRUE` means “keep this value”). The brackets `[...]` then use that logical vector to select only the elements you want.
+
+___
+
+**Option 2: Impute missing values (replace NA with the mean)**
+
+🎯 Make a copy of LargeVec, then replace only the missing values with the mean of the observed values.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+imputed <- LargeVec     # Make a copy to preserve original
+
+imputed[is.na(imputed)] <- mean(imputed, na.rm = TRUE)
+imputed
+```
+
+🗣 `is.na(imputed)` identifies exactly where the gaps are, and `imputed[...] <- ...` replaces only those positions. The `na.rm = TRUE` argument is required here. Without it, `mean(imputed)` would return `NA` because the input contains missing values.
+
+🎯 Quick check: Confirm your result by comparing sum(is.na(LargeVec)) versus sum(is.na(imputed)).
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+sum(is.na(LargeVec))      # Original vector – should print number 10
+sum(is.na(imputed))       # Imputed vector – should print 0
+```
+
+🗣 The first `sum(is.na(LargeVec))` call counts the number of missing values in the original vector, which should be greater than 1. The second `sum(is.na(imputed))` call counts the missing values in the imputed vector, which should be 0, confirming that all missing values have been replaced.
 
 # LLM Prompting
 
@@ -203,6 +385,14 @@ There are many different ways you can use AI in your data analysis workflow. One
 
 **Missing Values**: Data values that are unknown or not recorded; in R they are represented by `NA` (“Not Available”). `NA` is a special missing-value indicator (with typed versions like `NA_integer_`, `NA_real_`, and `NA_character_`), and many calculations will return `NA` if any missing values are present unless you explicitly remove them (often via `na.rm = TRUE`, which defaults to `FALSE` in functions like `mean()`)
 
+**NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
+
+**NaN**: A special numeric constant (“Not a Number”) that represents an undefined arithmetic result in floating-point math (for example, `0/0` or other invalid operations). `NaN` is non-finite (not a regular number).
+
+**Nesting Function Calls**: Writing one function call inside another so the inner function runs first and its returned value becomes an argument to the outer function (for example, `mean(sample(x, 5))`). This works because a function call can appear anywhere an expression is allowed, and functions return a value that can be passed directly into the next call.
+
+**Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
+
 **Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`)
 
 **Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
@@ -222,13 +412,219 @@ R Notebooks can look “fine” even when they are not reproducible because your
 
 ## Task 1
 
-🎯 Use ?sample to learn about the sample() function. Identify the required and default arguments. Explain
+🧭 **Help-file scavenger hunt** (required vs default)
+
+1. 🎯 Use `?sample` to learn about the `sample()` function. 
+
+2. In one sentence, explain how you can tell required vs default arguments from the **Usage** line.
+
+3. Write the Usage lines exactly as they appear (copy/paste is fine), then label:
+
+- TWO required arguments 
+
+- TWO default arguments for `sample()` exactly as they appear in the Usage section. How you can tell which arguments are required?
+
+🗣 ___Your explanation here___
+
+## Task 2 
+
+🛠 **Build a random data set**
 
 
-## Task 2
+🎯 Create `scores` as **28 values**. That is **25** random integers from **60–100** + 3 `NA`s. 
 
-🎯 Make x <- c(3, 7, NA, 2, 9, NA). Use ?sum to confirm whether sum() has na.rm and what its default is. Count the missing values in x. Compute sum(x) and explain why it returns what it returns. Compute sum(x, na.rm=TRUE) and mean(x, na.rm=TRUE). 
+1. Use `seq()` to create 60 through 100. Store as `pool`.
 
+2. Use sample() to draw 25 values (*with replacement*)
+
+3. Add three `NA` to the end of `scores_numbers` using `c()`. Store as `scores`.
+
+4. Verify that there are 28 elements in `scores`. 
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+set.seed(1) 
+
+pool <- ____                      # use seq() to create 60 through 100
+scores_numbers <- ____            # use sample() to draw 25 values (with replacement)
+scores <- c(____, NA, NA, NA)     # add 3 `NA` to the end of `scores_numbers` using `c()`
+
+# ✅ Check the length of scores
+_____(scores)                   # should print 28
+
+```
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+## Task 3
+
+⚠️ **Handle missing data**
+
+🎯 Using `scores` from Task 2: 
+
+1. Count missing values. Store as `n_missing`.
+
+2. Compute the mean with defaults. Store as `average_raw`.
+
+3. Compute the mean excluding `NA`s and store it as `average_score`.
+
+4. Explain why `average_raw` behaves the way it does (use the word “default”).
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+n_missing <- ____                 # hint: is.na() + sum()
+```
+```{r , eval=FALSE}
+# ✅ Check the number of missing values
+____        # should print 3
+```
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+average_raw <- mean(____)         # what happens?
+```
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+average_scores <- mean(____, ____)
+# ✅ print the mean
+
+```
+
+In one sentence, explain why average_raw behaves the way it does (use the word “default”). 
+
+🗣 ___Your explanation here___
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+
+## Task 4
+
+🔎 **Locate missing values**
+
+🎯 Using `scores` from Task 2:
+
+1. Use `is.na()` to create a logical vector showing which elements of scores are missing; store it as `scores_is_missing`.
+
+2. Nest `is.na()` inside `which()` to find the positions (indices) of the missing values; store as `missing_positions`.
+
+3. Verify your result
+
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+scores_is_missing <- is.na(____)
+
+missing_positions <- which(____(____))
+```
+```{r , eval=FALSE}
+# ✅ Check
+print(____)        # should print a logical vector
+print(____)        # should print indices of missing values
+length(____)       # should print 3
+```
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+## Task 5
+
+📦 **Nesting functions**
+
+🎯 Compute the mean of 5 random draws from `scores` in one line, and make sure it still works even if the draw includes `NA`. 
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+set.seed(21)
+mean_of_five <- ____   
+# ✅ Check  
+mean_of_five
+```
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+## Task 6
+
+🕰 **Quick time-stamp**
+
+🎯 Use `Sys.Date()` and `Sys.time()` to create two separate objects, `today_date` and `now_time`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+today_date <- ____
+now_time <- ____
+```
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+## Task 7
+
+🧹 **Handling Missing Values**
+
+🎯 Using scores from Task 2, practice two beginner-friendly strategies:
+
+**Part A** — Remove `NA` values (“complete-case” for a vector)
+
+1. Create `scores_clean` by keeping only the observed (non-missing) values in `scores`.
+
+2. Verify that `scores_clean` has 3 fewer values than `scores`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+
+scores_clean <- scores[!______(_________)]
+
+# ✅ Checks
+
+length(scores)          # should print 28
+length(scores_clean)    # should print 25
+```
+
+🗣 In one sentence, explain what the code that creates scores_clean does (mention indexing + `!`).
+
+🗣 ___Your explanation here___
+
+**Part B** — Impute: replace NA with the mean of present values
+
+1. Make a copy of `scores` named `scores_imputed` (so you don’t overwrite the original).
+
+2. Replace the missing values in `scores_imputed` with the mean of the observed values.
+
+3. Verify there are **0** missing values after imputation.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+scores_imputed <- _________
+
+scores_imputed[____(_)] <- mean(_____, na.rm = ______)
+```
+
+```{r , eval=FALSE}
+# ✅ Checks
+
+sum(is.na(scores_imputed))     # should print 0
+mean(scores_imputed)           # should print a number (not NA)
+```
+
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
+## Task 8
+
+🗣 **Reflection**
+
+In one sentence, explain the difference between a *function object* (e.g., mean) and a *function call* (e.g., `mean()`).
+
+🗣 ___Your explanation here___
+
+## Task 9
+
+🎯 **Step 1: Sweep your Environment (start clean).**  
+Click the 🧹 **broom icon** in the Environment pane to clear objects.
+
+🎯 **Step 2: Run everything top-to-bottom.**  
+Use **Run → Run All** to execute every chunk in order.
+
+🎯 **Step 3: Save and submit.**  
+After your notebook runs without errors, save your notebook (`.Rmd`) and save your workspace (`.RData`) for submission to Canvas, as directed. 
 
 
 # References

@@ -582,7 +582,7 @@ print(rainbow)
 
 🗣 The output shows the updated `rainbow` vector with "indigo" added to the end.
 
-# Logical Vectors
+## Logical Vectors
 
 **Logical vectors** are used for conditions and comparisons. They contain TRUE or FALSE values.
 

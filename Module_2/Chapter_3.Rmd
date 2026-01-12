@@ -841,6 +841,8 @@ In this chapter, you learned to create an R Notebook, rename and save it correct
 
 **Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code
 
+**NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
+
 **Named Vectors**: Vectors that have labels attached to their elements via the `names()` attribute, so you can refer to values by name instead of only by position. Named vectors are useful as simple lookup tables (for example, retrieving a hex code by a color name).
 
 **Object Name**: The variable name you assign with `<-` that refers to the entire object in your environment. You use the object name to print, modify, or pass the whole object to functions.
@@ -877,6 +879,8 @@ R Notebooks can look “fine” even when they are not reproducible because your
 
 ## Task 1
 
+🛠 **Build numeric vectors**
+
 🎯 Build two numeric vectors where both vectors are the same length.
 
 1.  Create a vector called `sales_q1` with FOUR numbers of your choice.
@@ -885,7 +889,6 @@ R Notebooks can look “fine” even when they are not reproducible because your
 # ⚡ Type this in your R Notebook, Fill in the blanks
 sales_q1 <- c(___, ___, ___, ___)
 ```
-
 
 2.  Create a vector called `sales_q2` with FOUR numbers of your choice.
 
@@ -896,13 +899,18 @@ sales_q2 <- c(___, ___, ___, ___)
 
 ```{r , eval=FALSE}
 # ✅ Check the sales_q1 and sales_q2
-print(sales_q1)
-print(sales_q2)
+print(___)
+___(sales_q2)
+
+length(___)
+___(sales_q2)
 ```
 
 🗣 Add Comment:  # The output shows __________
 
 ## Task 2
+
+📈 **Vector arithmetic**
 
 Using vector arithmetic, create an object named `growth` that stores the difference between `sales_q2` and `sales_q1`.
 
@@ -921,12 +929,14 @@ print(growth)
 
 ## Task 3
 
-🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from 2^0 to 2^10 using the `^` operator and the `exponents` vector created earlier.
+🔢 **Exponents and vectorized math**
+
+🎯 Create a numeric vector named `binary_powers` that contains the powers of $2$ from $2^0$ to $2^10$ using the `^` operator and the `exponents` vector.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-exponents <- _:__
-__________ <- 2_exponents
+exponents <- __:__
+__________ <- 2__exponents
 ```
 
 ```{r , eval=FALSE}
@@ -937,6 +947,8 @@ _____(binary_powers)
 🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers`
 
 ## Task 4
+
+🧪 **Element-wise subtraction**
 
 🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors seen in Chapter 2 and then subtract them.
 
@@ -953,7 +965,7 @@ travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-anomaly <- travel_jumps - cursed_seq
+anomaly <- __________ - __________
 ```
 
 ```{r , eval=FALSE}
@@ -961,17 +973,28 @@ anomaly <- travel_jumps - cursed_seq
 print(anomaly)
 ```
 
- 🗣 R performs element-wise subtraction. For example, the first number in `cursed_seq` (4) is subtracted from the first number in `travel_jumps` (1887) to result 1883. 
+🗣 Add Comment:  # The output shows __________
 
 ## Task 5
 
-Indexing named vectors
+🎨 **Indexing named vectors**
 
 🎯 Use character indexing to retrieve the hexadecimal color codes for "Matrix Green" and "Command Red" from the `nerdy_palette` vector.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-_________ <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3", "Cosmic Latte" = "#FFF8E7", "Vantablack" = "#000000", "Matrix Green" = "#03A062", "Source Engine Magenta" = "#FF00FF", "Command Red" = "#CC0000", "Impossible Green" = "#4D9E68")
+nerdy_palette <- c(
+  "Octarine" = "#7F00FF",
+  "TARDIS Blue" = "#003B6F",
+  "Rebeccapurple" = "#663399",
+  "Hooloovoo" = "#4F97A3",
+  "Cosmic Latte" = "#FFF8E7",
+  "Vantablack" = "#000000",
+  "Matrix Green" = "#03A062",
+  "Source Engine Magenta" = "#FF00FF",
+  "Command Red" = "#CC0000",
+  "Impossible Green" = "#4D9E68"
+)
 ```
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -980,11 +1003,13 @@ nerdy_palette[c(_______, _______)]
 
 🗣 The output shows the hexadecimal color codes for "Matrix Green" and "Command Red" retrieved from the `nerdy_palette` vector using their names.
 
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
 ## Task 6
 
-Indexing by position
+📌 **Indexing by position**
 
-🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color codes from the `nerdy_palette` vector.
+🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color codes from the `nerdy_palette`.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -993,7 +1018,11 @@ ________[c(_, _, _)]
 
 🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and 6th colors in the `nerdy_palette` vector.
 
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
 ## Task 7
+
+⚠️ **Logical filtering + indexing practice**
 
 🎯 Using the `growth` vector created in Task 2, complete the following:
 
@@ -1014,17 +1043,20 @@ print(last_two)
 
 🗣 The output shows ___________________________.
 
+🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+
 ## Task 8 
 
 Reflection
 
 🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
 
+🗣 # Your explanation here ________
 
 ## Task 9
 
 🎯 **Step 1: Sweep your Environment (start clean).**  
-Click the **broom icon** in the Environment pane to clear objects.
+Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
 🎯 **Step 2: Run everything top-to-bottom.**  
 Use **Run → Run All** to execute every chunk in order.

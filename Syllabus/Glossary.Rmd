@@ -127,7 +127,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # N
 
+**NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
+
 **Named Vectors**: Vectors that have labels attached to their elements via the `names()` attribute, so you can refer to values by name instead of only by position. Named vectors are useful as simple lookup tables (for example, retrieving a hex code by a color name).
+
+**NaN**: A special numeric constant (“Not a Number”) that represents an undefined arithmetic result in floating-point math (for example, `0/0` or other invalid operations). `NaN` is non-finite (not a regular number).
+
+**Nesting Function Calls**: Writing one function call inside another so the inner function runs first and its returned value becomes an argument to the outer function (for example, `mean(sample(x, 5))`). This works because a function call can appear anywhere an expression is allowed, and functions return a value that can be passed directly into the next call.
 
 **Numeric Vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
 

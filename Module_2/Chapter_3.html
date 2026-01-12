@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-01-09" />
+<meta name="date" content="2026-01-11" />
 
 <title>Chapter 3</title>
 
@@ -2768,7 +2768,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">January 09, 2026</h4>
+<h4 class="date">January 11, 2026</h4>
 
 </div>
 
@@ -3733,6 +3733,11 @@ elements: <code>TRUE</code> or <code>FALSE</code> (and sometimes
 <code>NA</code> for missing). Logical vectors are commonly produced by
 comparisons (for example, <code>x &gt; 0</code>) and are heavily used
 for filtering and conditional code</p>
+<p><strong>NA</strong>: A special constant that marks a missing value
+(“Not Available”)—meaning the data point is unknown or not recorded. R
+also provides typed missing values like <code>NA_integer_</code>,
+<code>NA_real_</code>, <code>NA_character_</code>, and
+<code>NA_complex_</code> to match the underlying data type.</p>
 <p><strong>Named Vectors</strong>: Vectors that have labels attached to
 their elements via the <code>names()</code> attribute, so you can refer
 to values by name instead of only by position. Named vectors are useful
@@ -3805,6 +3810,7 @@ because your Environment may still contain objects from earlier work.
 Start with a clean environment and run everything in order.</p>
 <div id="task-1" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Task 1</h2>
+<p>🛠 <strong>Build numeric vectors</strong></p>
 <p>🎯 Build two numeric vectors where both vectors are the same
 length.</p>
 <ol style="list-style-type: decimal">
@@ -3820,12 +3826,16 @@ your choice.</li>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 sales_q2 &lt;- c(___, ___, ___, ___)</code></pre>
 <pre class="r"><code># ✅ Check the sales_q1 and sales_q2
-print(sales_q1)
-print(sales_q2)</code></pre>
+print(___)
+___(sales_q2)
+
+length(___)
+___(sales_q2)</code></pre>
 <p>🗣 Add Comment: # The output shows __________</p>
 </div>
 <div id="task-2" class="section level2" number="10.2">
 <h2><span class="header-section-number">10.2</span> Task 2</h2>
+<p>📈 <strong>Vector arithmetic</strong></p>
 <p>Using vector arithmetic, create an object named <code>growth</code>
 that stores the difference between <code>sales_q2</code> and
 <code>sales_q1</code>.</p>
@@ -3837,12 +3847,13 @@ print(growth)</code></pre>
 </div>
 <div id="task-3" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> Task 3</h2>
+<p>🔢 <strong>Exponents and vectorized math</strong></p>
 <p>🎯 Create a numeric vector named <code>binary_powers</code> that
-contains the powers of 2 from 2^0 to 2^10 using the <code>^</code>
-operator and the <code>exponents</code> vector created earlier.</p>
+contains the powers of <span class="math inline">\(2\)</span> from <span class="math inline">\(2^0\)</span> to <span class="math inline">\(2^10\)</span> using the <code>^</code> operator
+and the <code>exponents</code> vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-exponents &lt;- _:__
-__________ &lt;- 2_exponents</code></pre>
+exponents &lt;- __:__
+__________ &lt;- 2__exponents</code></pre>
 <pre class="r"><code># ✅ Check the length nerdy_numbers vector
 _____(binary_powers)</code></pre>
 <p>🗣 Add Comment: # The output shows ___ elements (values) in the
@@ -3850,48 +3861,63 @@ _____(binary_powers)</code></pre>
 </div>
 <div id="task-4" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> Task 4</h2>
+<p>🧪 <strong>Element-wise subtraction</strong></p>
 <p>🎯 Find the <code>anomaly</code> by subtracting the
 <code>cursed_seq</code> vector from the <code>travel_jumps</code>
-vector. We’ll recreate vectors from Chapter 2 and then subtract
+vector. We’ll recreate vectors seen in Chapter 2 and then subtract
 them.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 cursed_seq &lt;- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 travel_jumps &lt;- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-anomaly &lt;- travel_jumps - cursed_seq</code></pre>
+anomaly &lt;- __________ - __________</code></pre>
 <pre class="r"><code># ✅ Check the anomaly vector
 print(anomaly)</code></pre>
-<p>🗣 R performs element-wise subtraction. For example, the first number
-in <code>cursed_seq</code> (4) is subtracted from the first number in
-<code>travel_jumps</code> (1887) to result 1883.</p>
+<p>🗣 Add Comment: # The output shows __________</p>
 </div>
 <div id="task-5" class="section level2" number="10.5">
 <h2><span class="header-section-number">10.5</span> Task 5</h2>
-<p>Indexing named vectors</p>
+<p>🎨 <strong>Indexing named vectors</strong></p>
 <p>🎯 Use character indexing to retrieve the hexadecimal color codes for
 “Matrix Green” and “Command Red” from the <code>nerdy_palette</code>
 vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-_________ &lt;- c(&quot;Octarine&quot; = &quot;#7F00FF&quot;, &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;, &quot;Rebeccapurple&quot; = &quot;#663399&quot;, &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;, &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;, &quot;Vantablack&quot; = &quot;#000000&quot;, &quot;Matrix Green&quot; = &quot;#03A062&quot;, &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;, &quot;Command Red&quot; = &quot;#CC0000&quot;, &quot;Impossible Green&quot; = &quot;#4D9E68&quot;)</code></pre>
+nerdy_palette &lt;- c(
+  &quot;Octarine&quot; = &quot;#7F00FF&quot;,
+  &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;,
+  &quot;Rebeccapurple&quot; = &quot;#663399&quot;,
+  &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;,
+  &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;,
+  &quot;Vantablack&quot; = &quot;#000000&quot;,
+  &quot;Matrix Green&quot; = &quot;#03A062&quot;,
+  &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;,
+  &quot;Command Red&quot; = &quot;#CC0000&quot;,
+  &quot;Impossible Green&quot; = &quot;#4D9E68&quot;
+)</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 nerdy_palette[c(_______, _______)]</code></pre>
 <p>🗣 The output shows the hexadecimal color codes for “Matrix Green” and
 “Command Red” retrieved from the <code>nerdy_palette</code> vector using
 their names.</p>
+<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
+or discuss challenges.</em></strong></p>
 </div>
 <div id="task-6" class="section level2" number="10.6">
 <h2><span class="header-section-number">10.6</span> Task 6</h2>
-<p>Indexing by position</p>
+<p>📌 <strong>Indexing by position</strong></p>
 <p>🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color
-codes from the <code>nerdy_palette</code> vector.</p>
+codes from the <code>nerdy_palette</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 ________[c(_, _, _)]</code></pre>
 <p>🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and
 6th colors in the <code>nerdy_palette</code> vector.</p>
+<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
+or discuss challenges.</em></strong></p>
 </div>
 <div id="task-7" class="section level2" number="10.7">
 <h2><span class="header-section-number">10.7</span> Task 7</h2>
+<p>⚠️ <strong>Logical filtering + indexing practice</strong></p>
 <p>🎯 Using the <code>growth</code> vector created in Task 2, complete
 the following:</p>
 <ol style="list-style-type: decimal">
@@ -3909,19 +3935,22 @@ last_two &lt;- sales_q2[c(___, ___)]</code></pre>
 print(positive_growth)
 print(last_two)</code></pre>
 <p>🗣 The output shows ___________________________.</p>
+<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
+or discuss challenges.</em></strong></p>
 </div>
 <div id="task-8" class="section level2" number="10.8">
 <h2><span class="header-section-number">10.8</span> Task 8</h2>
 <p>Reflection</p>
 <p>🗣 In one sentence, explain why numeric values may be coerced to
 character if you mix them inside a single vector.</p>
+<p>🗣 <strong><em>Your explanation here</em></strong></p>
 </div>
 <div id="task-9" class="section level2" number="10.9">
 <h2><span class="header-section-number">10.9</span> Task 9</h2>
 <p>🎯 <strong>Step 1: Sweep your Environment (start
 clean).</strong><br />
-Click the <strong>broom icon</strong> in the Environment pane to clear
-objects.</p>
+Click the 🧹 <strong>broom icon</strong> in the Environment pane to
+clear objects.</p>
 <p>🎯 <strong>Step 2: Run everything top-to-bottom.</strong><br />
 Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
 <p>🎯 <strong>Step 3: Save and submit.</strong><br />
