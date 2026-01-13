@@ -1,8 +1,22 @@
 ---
 title: "Chapter 4"
 author: "Lorraine Gaudio"
-date: "2025-12-29"
-output: html_document
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -15,13 +29,201 @@ TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
 In Chapter Four you will learn how to:
 
-- 📍 Summarize vectors with built‑in, *vectorised* functions.
+- #️⃣ Format your R Notebook using markdown
 
-- 📍 Read help files to discover arguments and defaults.
+- 🗜️ Summarize vectors with built‑in, *vectorised* functions.
+
+- 🛟 Read help files to discover arguments and defaults.
 
 - 📦 Nest functions to build compact pipelines.
 
 - ⚡ Handle missing values with na.rm.
+
+# R Notebook Formatting
+
+In the last chapter, you learned how to use an R Notebook (`.Rmd`) as a “reproducible thinking” document: code + output + memo-style writing in one place, in order. 
+
+Here’s what you can do now:
+
+1. **Create and save an R Notebook** (File > New File > R Notebook) and store it in your course folder.
+
+2. **Recognize the YAML header** at the top of the file and edit the title.
+
+3. **Insert code chunks** (Insert button, shortcut, or typing the fences) and understand that R code only runs inside chunks.
+
+4. **Run chunks** using the play button, Run menu, or keyboard shortcuts and see output directly below.
+
+5. **Memo correctly**:
+
+- Inside a code chunk: text must start with # (otherwise R tries to run it).
+
+- Outside a code chunk: you write normal paragraphs (no # needed).
+
+- Use the notebook to document your learning process (goal, verify, memo, explain), including keeping errors visible (commented out) and explaining your fixes.
+
+An R Notebook is only useful if a human can read it. In this chapter, you’ll learn the minimum Markdown skills needed to produce a clean, graded-ready notebook: a date in the **YAML Header**, a clear outline using headings, and a successful knit to HTML.
+
+## YAML Date Field
+
+The YAML header is the metadata “label” for your notebook. It controls document settings like title and output format. A basic YAML header looks like this:
+
+```yaml
+---
+title: "Untitled"
+output: html_notebook
+---
+```
+
+To add a date to your notebook, edit the YAML header to include a `date:` field. 
+
+Method A. **Hard Code**
+
+Manually type the date you created the notebook. Include quotation marks around the date.
+
+```yaml
+---
+title: "Chapter 4 Practice"
+date: "January 13, 2026"
+output: html_notebook
+---
+```
+
+Method B. **Dynamic Date**
+
+Use R code to generate the current date automatically each time you knit the document. The inline R expression <code>&#96;r Sys.Date()&#96;</code> retrieves the current date from your computer’s operating system. This follows the syntax: backtick (<code>&#96;</code>), then <code>r</code>, a space, <code>Sys.Date()</code>, and a closing backtick (<code>&#96;</code>). The backtick is located above the Tab key on most keyboards.
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 4 Practice\"
+date: \"`r Sys.Date()`\"
+output: html_notebook
+---
+```")
+```
+
+The **Inline R** works in YAML when written exactly as above.
+
+🎯 If you have not yet, please open a new R Notebook in your course folder named `chapter4_practice.Rmd` and add a date to the YAML header using either method. Practice this chapter's topics in your notebook. 
+
+## Markdown Headings
+
+Headings are how you create a structured outline. 
+
+### Heading levels
+
+All HTMLs in this course were created using RStudio! You can see how the headings create a structured outline and the font sizes change with heading level.
+
+```{markdown}
+# biggest heading
+
+Type here will be in paragraph font.
+
+## main section heading
+
+Type here will be in paragraph font.
+
+### subsection heading
+
+Type here will be in paragraph font.
+```
+
+![Screenshot of an RStudio R Notebook showing a Markdown section heading (## Task 1) in the editor and the Outline pane on the right listing “Task 1–Task 4,” illustrating that Markdown headings create a structured outline; the orange arrow points to the Outline button used to show/hide that heading-based outline.](Memo_Example_heading.png)
+
+In this example, the `## Task 1` heading creates a main section heading. The Outline pane on the right lists all headings in the document, allowing you to navigate quickly between sections.
+
+### The most common beginner mistake with #
+
+"#" means two totally different things depending on where you type it:
+
+**Outside a code chunk**: # creates a heading (Markdown formatting).
+
+**Inside a code chunk**: # creates a comment (R ignores it).
+
+🎯 Practice creating headings in your R Notebook. 
+
+## Knit to HTML
+
+When you **Knit** to HTML, RStudio creates a shareable, static report that includes your formatted headings and text, your code, and the output produced when the code runs.
+
+This is not the same as “running a chunk”. Running a chunk uses your current R session. It can succeed even if you ran things out of order or if objects already exist in your Environment. Knitting is a full test: it runs the entire notebook top-to-bottom in a fresh session, then builds an HTML report.
+
+📏 **Rule:** Your notebook must create every object it uses in the notebook itself (not in your Environment).
+
+### How to Knit
+
+RStudio UI varies. Some of you will have a **Knit button**, others will use **Preview menu** dropdown.
+
+Option 1: **Knit button**
+
+In the Source pane, click the **Knit button** (it looks like a ball of yarn with a knitting needle 🧶).
+
+![Screenshot of RStudio showing the Knit button on the toolbar (highlighted by an orange arrow), which students can click to knit the R Notebook into an HTML document when they don’t have the Preview dropdown.](Memo_Example_knithtml3.png)
+
+Option 2: **Preview menu**
+
+In the Source pane, click the the **Preview menu** drop down button and select Knit to HTML.
+
+![Screenshot of RStudio with the Preview menu opened; orange arrows highlight the Preview dropdown button and the Knit to HTML option, showing how to knit an R Notebook into a shareable HTML document (not just run a single code chunk).](Memo_Example_knithtml.png)
+
+
+![Screenshot of the knitted HTML output in a web browser showing the notebook title (“Chapter 4 Practice”), the first section heading (“Task 1”), a memo as regular paragraph text, and an R code chunk with its printed error output, demonstrating what you get after you Knit to HTML.](Memo_Example_knithtml2.png)
+
+When you knit, RStudio automatically does three things:
+
+1. Starts a fresh R session (your Environment does not count).
+
+2. Runs your notebook from top to bottom in order.
+
+3. Produces an HTML file you can view and share.
+
+This is why knitting is the real test of “does this notebook work?” If it knits, someone else (including future-you) can see the workflow and results without needing to open RStudio.
+
+### Knit Errors
+
+When you select to knit, the Console pane shows progress messages in the **Render tab** as R runs your notebook from top to bottom. A successful knit has three visible signs:
+
+1. The Render tab shows the process finishing without an error message.
+
+2. A browser window opens (or Viewer in File Pane) showing your notebook as a formatted web page.
+
+3. An `.html` file appears in the same folder as your `.Rmd` file.
+
+If knitting fails, do not guess. Do this in order:
+
+1. Read the last error message in the **Render tab**.
+
+2. Find the chunk that caused it (the error usually names a chunk or shows a line number).
+
+3. Fix the first error you see. (Many later errors are just “domino effects.”)
+
+4. Knit again.
+
+Common reasons knitting fails:
+
+- You wrote the code out of order, so an object exists in your Environment but is not created earlier in the notebook.
+
+- You forgot to include setup code (creating objects, loading packages, setting a working directory, etc.).
+
+- A chunk contains an error you didn’t notice because you never ran that chunk.
+
+💡 **Tip:** When designing your document, knit after any meaningful formatting or code change. It’s the fastest way to catch problems early. It is easier to determine an error when it is caused by your most recent editing.
+
+### Submitting the HTML File
+
+The HTML file is automatically saved in the same folder as your R Notebook, with the same name but an `.html` extension instead of `.Rmd`. If you have not yet saved your R Notebook, RStudio will prompt you to do so before knitting.
+
+Example:
+
+- `chapter4_practice.Rmd`
+
+- `chapter4_practice.html`
+
+💡 **Tip:** the HTML opens in your browser, but the browser address is a local file path on your computer. You cannot submit a browser link.
+
+When you open an HTML, it uses your web browser to display a nicely formatted version of your notebook, including code, output, and memos. You cannot share the HTML by sharing the web address (URL) in your browser because it is a local file on your computer. 
+
+To submit, 📤 upload the `.html` file from your course folder (and follow any Canvas instructions your assignment page provides).
 
 # NA vs NaN
 
@@ -361,17 +563,111 @@ sum(is.na(imputed))       # Imputed vector – should print 0
 
 🗣 The first `sum(is.na(LargeVec))` call counts the number of missing values in the original vector, which should be greater than 1. The second `sum(is.na(imputed))` call counts the missing values in the imputed vector, which should be 0, confirming that all missing values have been replaced.
 
-# LLM Prompting
+# Structuring LLM Prompts
 
-There are many different ways you can use AI in your data analysis workflow. One useful way is to prompt LLMs to help you understand function usage and arguments. 
+The formating of your prompts can greatly influence the quality of responses from LLMs. There are several different ways to structure prompts. The more structured the prompt, the better the response.
 
+Plain Text → Markdown → Delimiters → Encapsulation → PascalCase → XML → YAML → JSON
 
+In this section, we will look at structuring prompts using plain text and **Markdown**. Markdown is the easier and most common way to structure prompts.
+
+## Missing Backtick
+
+Imaging you don't know that there is a missing backtick at the end of a code chunk. You try to knit to HTML, but it fails. You ask an LLM to help you find the error.
+
+Below are three example prompts versions: unstructured (bad), structured plain text (better), and structured Markdown (best).
+
+### Unstructured Prompt
+
+What do I do? I tried knitting my R notebook and it won’t work. 
+
+|...... | 12% [unnamed-chunk-1]
+
+processing file: Chapter_4_practice.Rmd
+
+Error in parse():
+! attempt to use zero-length variable name
+Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
+Execution halted
+
+### Structured Plain Text Prompt
+
+Persona: Act as a R programming tutor.
+
+Task: Help me troubleshoot a knit error in an R Notebook (`.Rmd`). I am a beginner.
+
+What I did: I clicked Preview > Knit to HTML in RStudio.
+
+What happened: Knitting stopped at 12% and failed.
+
+Error message (*copied from Render tab*):
+|...... | 12% [unnamed-chunk-1]
+processing file: Chapter_4_practice.Rmd
+Error in parse():
+! attempt to use zero-length variable name
+Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
+Execution halted
+
+Context: The error says it quit from lines 12–24 in unnamed-chunk-1. I don’t understand what “parse” means.
+
+What I want from you: 1. Explain what this error usually means in beginner-friendly terms. 2. Give me the most likely causes specifically for an R Notebook `.Rmd` file. 3. Give me a checklist of what to look for around lines 12–24 to fix it.
+
+### Structured Prompt:
+
+\# Persona: 
+
+Act as a R programming tutor.
+
+\# Task: 
+
+Help me troubleshoot a knit error in an R Notebook (`.Rmd`). 
+
+\# What I did: 
+
+In RStudio, I clicked Preview → Knit to HTML.
+
+\# What happened: 
+
+Knitting stopped at 12% and failed.
+
+\# Error message (copied exactly):
+
+```{vbnet}
+|......                                              |  12% [unnamed-chunk-1]
+
+processing file: Chapter_4_practice.Rmd
+
+Error in `parse()`:
+! attempt to use zero-length variable name
+Backtrace:
+...
+Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
+Execution halted
+```
+
+\# Context: 
+
+The error says it quit from lines 12–24 in unnamed-chunk-1. I don’t understand what “parse” means.
+
+\# What I want from you:
+
+1. Explain what “Error in parse()” means in plain language.
+
+2. Tell me the top 3 most common causes in an `.Rmd` file.
+
+3. Give me a step-by-step fix plan focused on the section lines 12–24.
+
+___
+
+If you use LLMs to help with R code, always document when and how you used the tool in your R Notebook. Avoid asking LLMs to write code for you. Never copy-paste LLM-generated code unless it is used as a quote in a memo. This maintains academic integrity and helps you understand and maintain your autonomy as a learner.
 
 # Summary
 
 # Chapter Terms
 
 **Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
 **Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
 
@@ -383,6 +679,18 @@ There are many different ways you can use AI in your data analysis workflow. One
 
 **Help Tab**: Located in the Files/Plots/Packages/Help pane, this tab provides access to R documentation, package vignettes, and search functionality to find help topics related to R functions and packages.
 
+**HTML**: A web page file type (`.html`) written in **HyperText Markup Language** that a web browser can open and display as a formatted document. In this course, Preview/Knit/Render can create an HTML file (often `.html` or `.nb.html`) that shows your notebook’s text, code, and output in the browser; because it opens from your computer (a local `file://` path), you can’t submit it by copying the browser address. Upload the HTML file itself.
+
+**Inline R**: A short R expression written inside backticks with the prefix `r` (for example, <code>&#96;r Sys.Date()&#96;</code>) that is evaluated when you knit/render the document and replaced with its result in the output. Inline R is used to insert dynamic values (dates, computed statistics, labels) directly into your narrative text, and it can also be used in YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code> when supported.
+
+**Knit**: In RStudio, the action that renders an `.Rmd` (including an R Notebook) into a finished output file (such as HTML, PDF, or Word) by running the document’s code chunks, inserting their results, and converting the document to the chosen format. Clicking the Knit button typically calls `rmarkdown::render()` in a new, clean R session, so everything needed to reproduce the result must be created or loaded in the document itself, and the output file is saved alongside the `.Rmd`.
+
+**Knit Button**: The toolbar button in RStudio that renders an R Markdown file (`.Rmd`) into a finished output (e.g., HTML, PDF, Word) by calling `rmarkdown::render()` and running the document’s code to generate results. The output file is saved next to the `.Rmd` (same base name), and the button’s drop-down lets you choose among available output formats (shortcut: Ctrl/Cmd + Shift + K).
+
+**Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.
+
+**Markdown**: A lightweight plain-text formatting syntax used to write structured documents (headings, lists, links, emphasis, code) in a way that stays readable as plain text and can be rendered into formats like HTML on many platforms and tools.
+
 **Missing Values**: Data values that are unknown or not recorded; in R they are represented by `NA` (“Not Available”). `NA` is a special missing-value indicator (with typed versions like `NA_integer_`, `NA_real_`, and `NA_character_`), and many calculations will return `NA` if any missing values are present unless you explicitly remove them (often via `na.rm = TRUE`, which defaults to `FALSE` in functions like `mean()`)
 
 **NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
@@ -393,11 +701,17 @@ There are many different ways you can use AI in your data analysis workflow. One
 
 **Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
 
-**Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`)
+**Preview Menu**: The drop-down attached to the Preview button in an R Notebook (`output: html_notebook`) that lets you generate a quick notebook preview and choose other render (“knit”) actions (e.g., HTML/PDF/Word). Preview renders an HTML view using outputs from chunks you’ve already run (it does not re-execute code), while knit options render the full document to the selected output format.
+
+**Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`).
+
+**Render Tab**: A temporary tab that appears in RStudio’s Console pane when you Knit/Render an R Markdown (`.Rmd`) or Quarto (`.qmd`) document. It shows the rendering log—progress messages, warnings, and errors—separately from your interactive Console, and typically includes a Stop control so you can interrupt a failed or long render.
 
 **Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
 
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
+
+**YAML Header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
 
 
 # 📝 Practice Space

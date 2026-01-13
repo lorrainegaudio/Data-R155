@@ -1,11 +1,11 @@
 ---
 title: "Chapter 3"
 author: "Lorraine Gaudio"
-date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -170,7 +170,14 @@ output: html_notebook
 
 ## Code Chunks
 
-A **Code chunk** is a fenced region where R code runs. They start with three backticks followed by `{r}` and end with three backticks.
+A **code chunk** is a fenced block where R code runs. It begins with three backticks plus `{r}` and ends with three backticks: <code>&#96;&#96;&#96;{r}</code> … <code>&#96;&#96;&#96;</code>.
+
+
+<code>&#96;&#96;&#96;{r}</code>
+
+\# your R code
+
+<code>&#96;&#96;&#96;</code>
 
 ### Inserting Code Chunks
 
@@ -245,6 +252,8 @@ x / y
 
 As you practice R programming in the R Notebook, you will want to keep a record of your learning process. Memoing is a lot easier in R Notebooks than in R Scripts. 
 
+For more information on R Markdown code chunks, refer to the [R Notebook documentation](https://bookdown.org/yihui/rmarkdown/notebook.html#using-notebooks).
+
 # Memoing in R Notebooks
 
 The code chunk is like a mini R Script. Inside a code chunk, memo text must start with # or R will try to run it as code (and may error). Treat # like a “do not execute” marker for the computer.
@@ -263,47 +272,13 @@ That is the main reason we use Markdown in this course is so you can write memos
 
 - 🗣 Explain: Vector math happens element-by-element, so the first result adds the first elements together, then the second, then the third.
 
-💬 How does this look in a practice?
-
 ___
+
+💬 How does this look in a practice?
 
 🧩 **Memo Example**
 
-🎯: Practice creating vectors and doing arithmetic. Understand R syntax.
-
-```{r}
-#  ⚡ 
-result <- 3+4 
-# number <,-42
-# ratio <- number / result
-```
-
-Error: unexpected ',' in "number <,"
-Error: object 'number' not found
-
-✍ Memo: 
-I accidentally had "," in there which it didn't recognize
-Then it couldn't run this because it didn't have a value for "number" yet. 
-
-```{r}
-#  ⚡  
-number <- 42
-
-ratio <- number / result
-
-# print(Ratio)
-```
-
-Error: object 'Ratio' not found
-
-✍ Memo: cases matter
-
-```{r}
-# ✅ Check the ratio value
-print(ratio)
-```
-
-🗣 R successfully calculated the ratio of `number` to `result`, which is 42 divided by 7, resulting in 6.
+![R Notebook showing arithmetic code with commented-out error lines, pasted console errors (“unexpected ‘,’” and “object not found”), memos identifying the typo, missing object, and case sensitivity, and corrected code printing the ratio.](Memo_Example.png)
 
 🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied the error shown in the console and pasted it below the code chunk, (3) 🗣 composed memos that identified the issues (a typo with a comma, using an object before it was created, and case sensitivity), and (4) ⚡ revised the code to fix the errors. 
 
@@ -337,19 +312,7 @@ ___
 
 🧩 **Memo Example**
 
-🎯: Create two vectors of different lengths and subtract them to see how recycling works.
-
-```{r eval=FALSE}
-# ⚡ 
-long <- c(6, 2, 8, 10, 3, 77)
-short <- c(88, 4, 20)
-difference <- long - short
-# ✅ 
-print(difference)
-```
-
-✍ Memo: I struggled to understand how R recycles vectors of different lengths during arithmetic operations. I asked ChatGPT what the pattern was, and it said the results are [1] -82  -2 -12 -78  -1  57 which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
-When subtracting a vector of unequal lengths, R recycles the shorter vector to match the length of the longer one. 
+![R Notebook chunk subtracting vectors of different lengths, output showing the recycled subtraction results, and a memo explaining that R repeats the shorter vector to match the longer one (with the AI tool credited).](Memo_Example2.png) 
 
 🧐 **Notice:** The student 👀 cited the specific AI tool used to help her deepen her understanding and 🗣 explained the final results in her own words.
 
@@ -474,24 +437,7 @@ ___
 
 🧩 **Memo Example**
 
-🎯 How does the `paste()` function work?
-
-```{r eval=FALSE}
-# ⚡ 
-first_word<-"yellow"
-
-second_word<-"banana"
-sentence<-paste(first_word,second_word)
-sentence
-```
-
-✍ Memo: I wasn't expecting it to turn yellow!!! The sentence came out as "yellow banana"...neat!
-
-```{r eval=FALSE}
-class(sentence)
-```
-
-✍ Memo: Character...? Uh, what's that referring to??
+![R Notebook using paste() to combine “yellow” and “banana” into “yellow banana,” then class(sentence) returning “character,” followed by a memo noting confusion about what “character” means.](Memo_Example3.png)
 
 🧐 **Notice:** The student (1) 🗣 composed a memo expressing confusion about the term "character." This is a great opportunity to research. Being actively engaged with your learning is a human-centered mindset. This student could review the course materials, ask a peer or the instructor.
 
@@ -574,37 +520,11 @@ ___
 
 **🧩 Memo Example**
 
-🎯 Make a vector of class standings and then convert it to factor class.
+![R Notebook creating a character vector of class standings, converting it to a factor, and showing levels() plus mode()/typeof() outputs; memo questions why the factor prints words but stores integer codes, with a follow-up memo summarizing the explanation (integer codes + levels labels).](Memo_Example4.png)
 
-```{r eval=FALSE}
-# ⚡
-standing<-c("Freshman","Sophomore","Junior","Senior","Freshman","Freshman")
-# ✅ 
-standing
-class(standing)
-```
+🧐 **Notice:** The student (1) ✅ confirmed the original object’s class (character) and then created a factor version, (2) 🔎 checked multiple diagnostics (mode(), typeof(), and levels()) to investigate what changed, (3) ✍️ wrote a memo that pinpointed the exact contradiction (“stored as numbers but prints words”) instead of hand-waving, and (4) 🤖 used an AI tool to research the mechanism and then summarized the explanation accurately in their own words (integer codes + levels labels).
 
-🗣 okay so it prints the words. It says class is character.
-
-```{r eval=FALSE}
-# ⚡
-standing_f<-factor(standing)
-# ✅ 
-standing_f
-```
-
-
-```{r eval=FALSE}
-# ✅
-mode(standing_f)
-typeof(standing_f)
-levels(standing_f)
-```
-
-✍ Memo:  The `mode()` says numeric, `typeof()` says integer?? but it PRINTS WORDS.
-I get that levels shows the categories. How is it storing numbers and then showing character labels?? This is confusing!
-
-👀 Memo:  I asked ChatGPT to explain  why a character vector changed to a factor class is stored as integer type, numeric mode and codes with text labels called levels. It clarified that factors are stored as integer codes with a separate set of text labels called levels, which explains why `typeof()` is "integer" even though printing shows words. It also confirmed that `levels()` displays the labels.
+This is a high-quality memo because it captures confusion, gathers diagnostic evidence, and then resolves the confusion with a correct explanation. 
 
 ___
 
@@ -818,6 +738,8 @@ In this chapter, you learned to create an R Notebook, rename and save it correct
 # Chapter Terms
 
 **Accountability**: Taking responsibility for the results you report by verifying them, responding to questions or critiques, and correcting errors when found. In practice, this means you keep a clear record (e.g., in an R Markdown/Notebook or script) that shows how you checked your work and why you made your choices.
+
+**Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
 **Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 

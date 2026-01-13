@@ -1,0 +1,155 @@
+---
+title: "Example Vector Lab R Notebook"
+output: html_notebook
+---
+
+# Group Members
+
+```{r}
+member_name <- c("Name1", "Name2", "Name3", "Name4")
+role <- c("Student A", "Student B", "Student C", "Reporter")
+```
+
+
+# Numeric vector (length = 10)
+
+```{r}
+numeric <- c(3.14, -2.5, 0, 7.25, 10.01, 4.4, -9.9, 2.0, 6.66, 1.23)
+
+## ✅ Check the length of your vector
+length(numeric)
+```
+
+🗣 Comment: `numeric` is a numeric (double) vector containing real-valued numbers (decimals allowed).
+
+
+
+# Integer vector (length = 4) — must use the L suffix
+
+```{r}
+integer <- c(7L, -2L, 0L, 15L)
+
+## ✅ Check the length of your vector
+length(integer)
+```
+
+🗣 Comment: `integer` is an integer vector; values are whole numbers stored as integer type (with the L suffix).
+
+
+
+# Logical vector (length = 4) — built with logical operators
+```{r}
+logical <- c(5 > 3, 10 <= 4, 7 == 7, 2 != 2)
+
+## ✅ Check the length or class of your vector
+class(logical)
+```
+🗣 Comment: `logical` is a logical vector; it contains TRUE/FALSE values created from comparisons.
+
+
+# Character vectors
+```{r}
+name <- c("Ava", "Ava", "Noah", "Mia", "Ava", "Liam", "Mia", "Noah", "Ava", "Mia")
+group_name <- c("Alpha", "Beta", "Gamma", "Delta")
+at_handle <- c("@data_dan", "@stats_sam", "@viz_vic", "@code_casey")
+item <- c("laptop", "mug", "notebook", "pen", "backpack", "charger", "headphones", "stapler", "water bottle", "sticky notes")
+activity <- c("study", "study", "run", "cook", "read", "study", "code", "read", "code", "study")
+location <- c("library", "coffee shop", "park", "museum")
+call_to_action <- c("Keep going.", "Try again.", "Ask questions.", "Stay curious.")
+emotion <- c("excited", "nervous", "focused", "happy", "happy", "motivated", "tired", "focused", "happy", "excited")
+retro_game <- c("Pac-Man", "Tetris", "Space Invaders", "Donkey Kong")
+```
+
+
+# Factor class
+
+Part 1: convert a character vector to a factor (overwrite original)
+```{r}
+# Step 1: Check the class
+class(emotion)
+
+# Step 2: Change class to factor (overwrite)
+emotion <- as.factor(emotion)
+
+# Step 3: Verify the class changed
+class(emotion)
+```
+
+# Factor class
+
+```{r}
+# Part 2: create your own factor vector with ranked levels
+social_media <- c(
+  "LinkedIn", "Instagram", "X", "TikTok", "LinkedIn",
+  "Instagram", "LinkedIn", "TikTok", "X", "LinkedIn"
+)
+
+social_media_platform <- factor(
+  social_media,
+  levels = c("LinkedIn", "Instagram", "X", "TikTok")
+)
+
+# ✅ Investigating your factor class with levels
+print(social_media_platform)
+```
+
+
+```{r}
+# ⚡  Copy and paste this code into your R Notebook
+# Function to pick a random element from a vector
+pick <- function(x) sample(x, 1)
+
+# ---------- Story 1 ----------
+story1 <- paste(
+  "After a long week,", pick(name), "unplugged by trying", pick(activity),
+  "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
+  "Vibe rating:", paste0(pick(numeric), "."),
+  "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
+  "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
+  "Reminding each other", paste0(pick(call_to_action), "."),
+  "They made a plan for Episode", paste0(pick(integer), ","),
+  "closing with a", paste0(pick(emotion), " mood.")
+)
+
+print(story1)
+# ---------- Story 2 ----------
+# Using Factor Level to pick 
+selected_index <- sample(1:length(social_media_platform), 1)
+selected_platform <- social_media_platform[selected_index]
+
+story2 <- paste(
+  "On a mission for a fashion comeback,", pick(name), "found", pick(item),
+  "at", pick(location), "that screamed Y2K.",
+  "They spent a total of", paste0(pick(numeric), " dollars"),
+  "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
+  "After posting a 'before' shot on", paste0(pick(selected_platform), ","),
+  "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
+  "Their retro level was officially", paste0(pick(retro_game), " status,"),
+  "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars"),  
+  "and sold in", pick(integer), "minutes.", 
+  "The community response was so strong, they had this final message for their followers:", 
+  paste0(pick(call_to_action), ".")
+)
+print(story2)
+```
+
+
+
+# Dataframe
+
+🎯 Build a tiny table you can reference as “credits” under the stories.
+
+```{r}
+# ⚡  Copy and paste this code into your R Notebook
+people <- data.frame(
+  member_name = member_name,
+  role        = role,
+  likes_story    = logical,
+  dice_roll       = integer, 
+  location = location
+)
+
+print(people)
+```
+
+🗣 Comment: `people` is a data frame combining group member names, roles, their likes_it logical values, and scores as integers.

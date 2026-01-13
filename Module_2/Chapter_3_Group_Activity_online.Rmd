@@ -2,7 +2,7 @@
 title: "Chapter 3 Activity (Online)"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -78,7 +78,7 @@ output:
 
 # Group Activity: Vector Playlab 🎮 (Online)
 
-This is a team-based challenge designed to deepen your understanding of vectors in R and to introduce a real research skill: collaborative coding. You will build vectors of different types, convert at least one vector to a factor, generate two MadLib stories, and combine your vectors into a data frame.
+This is a team-based challenge designed to deepen your understanding of vectors in R and to introduce a challenging research skill: collaborative coding. You will build vectors of different types, convert at least one vector to a factor, generate two MadLib stories, and combine your vectors into a data frame.
 
 ## Activity Overview
 
@@ -104,7 +104,7 @@ What you will use
 
 - RStudio
 
-- One shared R Notebook (.Rmd) created by your Reporter
+- One final R Notebook (`.Rmd`) submitted by your "Reporter"
 
 - Canvas Group space for collaboration (Group Discussion and/or Group Messages)
 
@@ -114,7 +114,7 @@ Do not post your code in the whole-class discussion. That space is only for form
 
 ## Step One: Join your Canvas group
 
-Go to People → Vector Playlab Groups and join join any group with fewer than 4 members. Split into groups of approximately 4 people 👨🏻👩🏼👧🏽👦🏾. 
+Go to People → Vector Playlab Groups and join one group with fewer than 4 members. Groups should have approximately 4 people 👨🏻👩🏼👧🏽👦🏾. 
 
 ## Step Two: Assign Roles
 
@@ -128,13 +128,17 @@ Decide roles in your group. Roles can rotate, but one person must be the Reporte
 
 - **Reporter**(required): story + data frame + Run All check + final submission
   
-## Step Three: Studnets A, B, and C
+## Step Three: Students A, B, and C
 
-Each person 
+Each person works locally on their section of the code.
 
-1. Complete your section in your own R Studio so the code runs without error
+1. Complete your section in your own R Studio so the code runs without error. Be creative! You can use any resource you'd like to help you come up with the elements in the vectors (e.g., internet search, brainstorming with AI, etc.).
 
-2. Post your code snippets in your Canvas **Group Discussion** space
+2. Post one reply in your **Group Discussion** with:
+
+(a) Code (your final working chunk) and 
+
+(b) Memo (2–4 sentences: what you tried, what broke, how you verified/fixed it, something you learned and/or resource used).
 
 ## Step Four: Reporter
 
@@ -148,13 +152,6 @@ Save it in your course folder as: `vector_playlab_groupXX.Rmd` *(Replace XX with
 # Vector Playlab Group Members + Roles
 member_name <- c("Name1", "Name2", "Name3", "Name4")
 role <- c("Student A", "Student B", "Student C", "Reporter")
-
-group_members <- data.frame(
-  member_name = member_name,
-  role = role
-)
-
-print(group_members)
 ```
 
 3. Copy and paste code snippets from each group member into the appropriate sections of the R Notebook.
@@ -168,8 +165,6 @@ print(group_members)
 1. Naming rules
 
 - Use the exact object names shown in this handout (for example: `numeric`, `integer`, `logical`, `name`, `group_name`, etc.).
-
-- Do not rename objects once they are used later in the story code. If you rename something, the story code will break.
 
 2. Reproducibility rule
 
@@ -193,7 +188,7 @@ The length of `member_name` and `role` should match and correspond to each other
 
 # Vectors
 
-*Rules**: Name your vectors exactly as listed. Follow the rules for each type. Element duplication is permissible. 
+**Rules**: Name your vectors *exactly* as listed. Follow the rules for each type. Element duplication is permissible. 
 
 ## Numeric vector
 
@@ -216,7 +211,7 @@ _____(numeric)
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-integer <- c( __ _ , __ _ , __ _ , __ _ )
+integer <- c( __ _ , __ _ , __ _ , __ _ ) # length = 4 or group size
 ```
 ```{r eval=FALSE}
 ## ✅ Check the length of your vector
@@ -244,7 +239,7 @@ The logical operators are:
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-logical <- c( __ , __ , __ , __ )
+logical <- c( __ , __ , __ , __ ) # length = 4 or group size
 ```
 ```{r eval=FALSE}
 ## ✅ Check the length or class of your vector
@@ -257,21 +252,48 @@ _____(logical)
 
 ➤  Make each character vector with words or phrases of your choice:
 
-- 🎯  Create a vector called `name` → any person’s name (length = 10); Element duplication is recommended.
+- 🎯  Create a vector called `name` → *any* name (length = 10); Element duplication is recommended.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+name <- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )
+```
 
 - 🎯  Create a vector called `group_name` → name of your group (length = 4 or group size)
 
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+group_name <- c( __ , __ , __ , __ ) # length = 4 or group size
+```
+
 - 🎯  Create a vector called `at_handle` → any social media handle (length = 4 or group size)
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+at_handle <- c( __ , __ , __ , __ ) # length = 4 or group size
+```
 
 - 🎯  Create a vector called `item` → any kind of thing (length = 10)
 
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+item <- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )
+```
+
 - 🎯  Create a vector called `activity` → something you do (length = 10); Element duplication is recommended.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+activity <- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )
+```
 
 - 🎯  Create a vector called `location` → any place to go (real or imagined) (length = 4 or group size)
 
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+location <- c( __ , __ , __ , __ ) # length = 4 or group size
+```
 - 🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4 or group size)
-
-- 🎯  Create a vector called `outcomes` → phrase describing a result (length = 4 or group size)
 
 - 🎯  Create a vector called `emotion` → a mood or feeling (length = 10); Element duplication is recommended.
 
@@ -342,6 +364,8 @@ print( social_media_platform )
 
 ➤  Copy and paste the following code and read your Mad Lib Story!
 
+➤  Before running the story code, confirm these objects exist in your Environment: `numeric`, `integer`, `logical`, `name`, `group_name`, `at_handle`, `item`, `activity`, `location`, `call_to_action`, `emotion`, `retro_game`, `social_media_platform`
+
 ```{r , eval=FALSE}
 # ⚡  Copy and paste this code into your R Notebook
 # Function to pick a random element from a vector
@@ -364,7 +388,6 @@ print(story1)
 # Using Factor Level to pick 
 selected_index <- sample(1:length(social_media_platform), 1)
 selected_platform <- social_media_platform[selected_index]
-outcome <- outcomes[selected_index]
 
 story2 <- paste(
   "On a mission for a fashion comeback,", pick(name), "found", pick(item),
@@ -389,20 +412,32 @@ print(story2)
 
 ```{r eval=FALSE}
 # ⚡  Copy and paste this code into your R Notebook
-
 people <- data.frame(
-  name = name,
-  handle = at_handle,
-  likes_it = logical,
-  score = numeric,
-  ep = integer
+  member_name = member_name,
+  role        = role,
+  likes_story    = logical,
+  points       = integer, 
+  location = location
 )
+
 print(people)
 ```
 
+🧐 **Notice:** how the vectors line up, associating elements in each vector by row position (1st with 1st, 2nd with 2nd, etc.). The values in this table are made up and only for practicing how data frames are built. *They are not tied to grades, performance, or evaluation in any way.*
 
+## Reporter: Final Steps
 
+👉 The Reporter role submit the R notebook on Canvas.
 
+- Sweep environment
+
+- run all code chunks
+
+- save R Notebook `vector_playlab_groupXX.Rmd` *(Replace XX with your group number/name.)*
+
+- save environment `vector_playlab_groupXX.RData`
+
+- upload both`.Rmd` and `.RData` to the assignment page
 
 # Today you practiced
 
@@ -414,4 +449,4 @@ In this activity, your group practiced:
 
 Your work today previewed how R organizes and manages different data structures.
 
-👉 Before leaving, have the person in the Reporter role submit the R notebook on Canvas. This notebook should show all of the vectors and data structures you created during the activity.
+ 

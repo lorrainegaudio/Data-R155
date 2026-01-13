@@ -64,7 +64,9 @@
 
 🕓
 
+🛟 Help
 
+🗜️ Summarize
 
 🔗 Link
 
@@ -123,6 +125,8 @@
 🏗️
 
 🔨  🔧 📏
+
+📏 **Rule:**
   
 📊 Group
 
