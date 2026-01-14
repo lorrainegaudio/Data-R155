@@ -1,0 +1,81 @@
+---
+title: "Chapter Template"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+*This is Module 4*
+
+
+TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT. Why is this useful as a researcher? How does it fit with where we are in the class. 
+
+In Chapter ____ you will learn how to:
+
+- 
+
+
+# Learning Skill
+
+Curiosity
+
+LS
+Core
+Document thinking process
+Advanced
+Curiosity Skill Highlight
+
+
+# R Programming
+
+
+Lesson 6: (Second part)
+Lesson 7?
+
+
+# AI Competency
+
+Core
+Identify the privacy risks of certain AI systems
+Advanced
+Explain the difference between humans controlling AI versus AI controlling humans
+
+
+# Advanced R Programming
+
+
+# Summary
+
+
+# Chapter Terms
+
+
+# 📝 Practice Space
+
+## Task 1
+
+## Task 2
+
+# References
+

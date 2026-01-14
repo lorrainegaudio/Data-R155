@@ -2,10 +2,10 @@
 title: "Glossary"
 author: "Lorraine Gaudio"
 date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
