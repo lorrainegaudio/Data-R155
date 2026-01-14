@@ -1,5 +1,5 @@
 ---
-title: "Chapter Template"
+title: "Chapter 7"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -26,6 +26,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
+*This is Module 5*
+
 TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT. Why is this useful as a researcher? How does it fit with where we are in the class. 
 
 In Chapter ____ you will learn how to:
@@ -36,10 +38,24 @@ In Chapter ____ you will learn how to:
 # Learning Skill
 
 
+
+Courage
+
+LS: 
+Core
+Review course content
+Advanced
+Courage Skill Highlight
+Citing resources
+
+
 # R Programming
 
 
 # AI Competency
+
+AI
+Explain the difference between humans controlling AI versus AI controlling humans
 
 
 # Advanced R Programming
