@@ -1,5 +1,5 @@
 ---
-title: "Chapter Template"
+title: "Chapter 6"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -56,10 +56,15 @@ Lesson 7?
 
 # AI Competency
 
-Core
-Identify the privacy risks of certain AI systems
-Advanced
 Explain the difference between humans controlling AI versus AI controlling humans
+
+The R-G-C framework as the default troubleshooting template:
+
+R — Role (Persona)
+R — Result (Output)
+G — Goal (Purpose)
+C — Context (Who/What/Where/Why)
+C — Constraints (Limitations)
 
 
 # Advanced R Programming
