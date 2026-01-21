@@ -148,7 +148,9 @@ Method B. **File Menu**
 💡 **Tip:** “Working directory” controls where R looks for files when you use relative paths, but you can still accidentally save a script somewhere else if you choose the wrong folder in the Save dialog. For this course, always save scripts into your course folder so your files stay together and you can find them when it’s time to upload.
 
 💡 **Tip:** When your script is unsaved, RStudio typically shows an asterisk (*) in the script tab and the file name is red, which means you have changes that are not saved yet. 
+
 ___ 
+
 📖 **Review**
 
 Recall that objects are names that store elements in R. You can use objects in calculations just like you would use numbers.
@@ -166,6 +168,7 @@ the_aftermath <- seven_eight - nine
 # ✅ What number should be scared?
 print(the_aftermath)
 ```
+
 ___
 
 🎯 Run in order from top to bottom so that objects exist before you use them.

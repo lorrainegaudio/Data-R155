@@ -1,5 +1,5 @@
 ---
-title: "Chapter 5"
+title: "Chapter 7"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -36,7 +36,7 @@ The chapter’s guiding question: “What’s in this file, and can I trust what
 
 Preview the deliverable: one R Notebook that (1) imports CSV + Excel, (2) checks structure, (3) explores with [], and (4) includes memos on privacy, citation, and troubleshooting.
 
-In Chapter Five you will learn how to:
+In Chapter Seven you will learn how to:
 
 - Get the data onto your computer
 
@@ -60,7 +60,7 @@ Covers:
 
 - The file opens in Excel and gets locked or altered
 
-2. Required student habit: rename the file once, early, using a clear convention (e.g., chapter5_survey_raw.csv).
+2. Required student habit: rename the file once, early, using a clear convention (e.g., chapter7_raw.csv).
 
 ## Folder Structure
 
@@ -70,8 +70,8 @@ Covers:
 
 2. Best practice structure: create a `data/` folder and move raw files into it:
 
--`Chapter_5/`
--- `chapter5_import_practice.Rmd`
+-`Intro_to_R/`
+-- `chapter7_notes.Rmd`
 -- `data/`
 --- `myfile.csv`
 --- `myfile.xlsx`
@@ -192,103 +192,6 @@ Covers (brief + practical):
 
 Promise: “You can treat these as the same for now—our exploration tools still work.”
 
-# R Programming: 
-
-Explore with Base R tools and bracket indexing (`[]`) only
-
-## The “inspect first” toolkit (no subsetting yet)
-
-Covers:
-
-dim(), nrow(), ncol(), names(), head(), tail(), str(), summary()
-
-Interpretation prompts that force curiosity:
-
-“Which columns look categorical vs numeric?”
-
-“Are there missing values? Where?”
-
-## Bracket Indexing `[]`
-
-## Sub-setting Vectors
-
-🎯 **Goal**  Pull out the pieces you need.  Use `[ ]` with positions or a logical test. 
-
-🧠 Remember: positions start at 1 in R (not 0).
-
-Type the following into your R script and run each line. 
-
-```{r , eval=FALSE}
-z[1]       # first element by position
-
-z[3]       # third element by position
-
-z[2:4]     # last two elements by position 
-
-z[-c(1, 5)] # all but first and last elements
-```
-
-🛠 Break Things! What happens if you try to index with a number larger than the vector length, like `z[6]`? ⚡ Explain any error message you see.
-
-🧠 Challenge: Extract the last two fruits from *chars*.
-
-### Vector Indexing 
-
-
-
-### Logical Indexing
-
-Type the following into your R script and run.
-
-```{r , eval=FALSE}
-numbers3[numbers3 > 0] # keep only positives
-```
-
-🔍 Look deeper: What happens if you run`y <- z[(!is.na(z))]`?  Hint: The function `is.na()` checks for missing values (NA) in the vector. The `!` operator negates the logical vector. Print `y`. 👀 What happened?⚡ Explain
-
-```{r}
-# Create a memo note in your R script if you did 🛠 Break Things and 🧠 Challenge 
-# Or if you did the 🔍 Look deeper, and 👀 What happened?. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did in Indexing, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
-```
-
-
-Brackets as a coordinate system: `df[rows, cols]`
-
-Covers (teach as a pattern, not a list of tricks):
-
-- Rows and columns are coordinates:
-
-`df[1:5, ]` first five rows
-
-`df[ , 1:3]` first three columns
-
-`df[1, 2]` one cell
-
-- Selecting columns by name without $:
-
-`df[ , c("age", "income")]`
-
-- A short note on why this matters: this is the foundation for everything later (including dplyr and plotting).
-
-(Cite base principles and then demonstrate; the goal here is fluency and precision.)
-
-### Micro-checks that catch bad imports early
-
-Covers:
-
-- Are column names reasonable?
-
-- Are numeric columns actually numeric?
-
-- Do counts make sense (rows/columns)?
-
-
 
 ## AI competency: troubleshoot imports safely
 
@@ -312,28 +215,7 @@ This chapter: Markdown bold/italics with * / ** so you can emphasize constraints
 
 
 
-# Memoing and documentation
-
-Documenting your thinking processes (core)
-
-## Memo template
-
-Memo template: what every import needs
-
-0) Heading structure using Markdown (##, ###, etc.)
-
-1) Forethought (planning + strategic preparation)
-- 🎯 Goal: explicit goal setting (task analysis).
-- 💬 Prediction: anticipatory reasoning (“what do I expect will happen?”), which forces students to activate prior knowledge and commit to a mental model before execution.
-- 🧠 Growth mindset (as you define it): motivational beliefs that support persistence—this sits squarely in Zimmerman’s forethought “self-motivational beliefs” bucket (self-efficacy, task value, outcome expectations).
-2) Performance (strategy use + monitoring while working)
-- ⚡ Code: strategy enactment (writing code to meet the goal).
-- ✅ Checks: self-monitoring and control (debugging, validation, sanity checks).
-- 🚀 Code trials + ✍️ Record what you tried: systematic self-monitoring and iterative control—this is SRL “self-control” and “self-observation” made visible.
-3) Self-reflection (evaluation + adaptation)
-- 🗣 Comment: self-evaluation (“why did this work / what did I learn?”) and causal attribution.
-- 🪞 Reflect on learning process: explicit self-judgment and adaptive inference (“what will I do differently next time?”).
-- 👀 Citing resources and stating how they helped: operationalizes help-seeking and tool-use regulation (key SRL behaviors). 
+ 
 
 
 ## Example memo 
