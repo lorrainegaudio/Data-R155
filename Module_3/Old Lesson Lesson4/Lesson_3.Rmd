@@ -1,0 +1,412 @@
+---
+title: "Lesson 3"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 3"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 3"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# 🎉 Welcome back to R! 
+
+In lesson one and two you learned about objects, vectors, and created a simple dataframe. Now you’ll learn how to *do things* with them using **functions**.
+
+To begin Lesson 3, follow these steps:
+
+1. Open your course project for RStudio 
+   
+2. Create a new R script file (File > New File > R Script).
+
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+
+**Lesson Overview**
+
+In the next few minutes you will learn how to:
+
+- 🔍 Distinguish a function *object* from a *function call*.
+
+- 📍 Read help files to discover arguments and defaults.
+
+- 🛠 Use required vs. default, positional vs. named arguments.
+
+- ⚡ Handle missing values with na.rm.
+
+- 📊 Generate random samples and set a seed for reproducibility.
+
+- 📦 Nest functions to build compact pipelines.
+
+# Functions-Call Basics
+
+🧠 **Concept**  A *function object* is stored code; a *function call* runs it. The parentheses trigger execution. Objects or strings without `()` just print. Type in the following into your R script and run each line. Comment out lines that produce an error. 
+
+```{r , eval=FALSE}
+thing_1             # object? (expect an error‑message: not found)
+
+"thing_1"           # character string — prints literally
+
+3                   # numeric literal
+
+mean                # function *object* → prints the function body
+
+mean()              # function *call*   → error: argument is missing
+```
+
+## Using Help
+
+🔍 **Why use Help**?  Nobody memorizes every argument. `?function_name` opens the help file.  
+
+Type the following R code into your script. Read the help tab for more about the *Usage* section for defaults, and the *Arguments* list for details.
+
+```{r , eval=FALSE}
+?mean               # opens in Help pane (bottom-right)
+
+help(sample)        # alternate syntax works the same
+```
+
+💡 Pro-tip:  `args(mean)`  prints the argument names inline.
+
+## Required vs. Default
+
+⚖️ **Key Idea**  If R supplies a default you can omit that argument; if not, you *must* provide it. Use named arguments for clarity. Type the following into your R script and run each line.
+
+1. Example **Date and Time**
+
+🕰️ R has built-in date and time functions. Type the following into your R script and run each line.  **Utility** Quickly time-stamp results for reports or file names. 
+
+```{r , eval=FALSE}
+Sys.Date()      # current date (yyyy-mm-dd)
+
+Sys.time()      # current date + time
+
+Sys.timezone()  # your local timezone string
+
+# Coerce to Date with as.Date()
+as.Date("2025-09-07")
+```
+
+2. Example **sample**
+
+🎲 Type the following code in your R script and run each line.
+
+```{r , eval=FALSE}
+set.seed(123)          # reproducible randomness
+
+numbers <- 1:10       
+
+sample(numbers, 3)                 # three unique picks
+
+sample(numbers, 10, replace = TRUE)  # allow repeats
+```
+
+**Creation & Basic Manipulation**
+
+| Function       | What it does               | Example                      |
+| -------------- | -------------------------- | ---------------------------- |
+| `c()`          | Combine values             | `c(1, 2, 3)`                 |
+| `seq()`        | Sequences                  | `seq(1, 10, by = 2)`         |
+| `rep()`        | Repeat values              | `rep(1:3, times = 2)`        |
+| `append()`     | Insert/append into vector  | `append(1:3, 99, after = 2)` |
+| `:`(colon)     | Integer sequence shorthand | `1:10`                       |
+| `unique()`     | Keep unique elements       | `unique(c(1,1,2))`           |
+| `duplicated()` | Flags repeated elements    | `duplicated(c(1,1,2))`       |
+| `rev()`        | Reverse order              | `rev(1:5)`                   |
+
+
+3. Example *mean**
+
+⚖️ Type the following code in your R script and run each line.
+
+```{r , eval=FALSE}
+values <- c(1, 2, 3, 4, 5, NA)
+
+mean(values)                       # default na.rm = FALSE → returns NA
+
+mean(values, na.rm = TRUE)         # ignore missing values
+
+mean(values, trim = 0.2, na.rm = TRUE)  # drop 20% from each end first
+```
+
+**Descriptive Statistics & Summaries**
+
+| Function                    | What it does     | Example                    |
+| --------------------------- | ---------------- | -------------------------- |
+| `sum()`, `prod()`           | Sum/product      | `sum(x, na.rm = TRUE)`     |
+| `mean()`, `median()`        | Central tendency | `mean(x, na.rm = TRUE)`    |
+| `min()`, `max()`, `range()` | Extrema/range    | `range(x, na.rm = TRUE)`   |
+| `sd()`, `var()`             | Spread           | `sd(x, na.rm = TRUE)`      |
+| `quantile()`                | Quantiles        | `quantile(x, probs = .25)` |
+
+
+📍 Identify: Try `median(values, na.rm = TRUE)`. Why doesn’t `median() `need trim?
+
+🚀 Explore and Play: What happens if you try  sum vs. sum(1:5)? Try out the descriptive statistics and summaries functions on objects.
+
+
+```{r}
+# Create a memo note in your R script if you did 📍 Identify, and 🚀 Explore and Play. 
+
+## 1. Explain what you did in Required vs. Default, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
+
+# Nesting Functions
+
+💡 **Idea**  Feed the output of one function straight into another. Type the following R script in your document script and run. 
+
+```{r , eval=FALSE}
+mean(sample(numbers, size = 5, replace = TRUE))  # sample then average
+```
+
+🚀 Explore and Play: Run the line above twice. Why does the result change each time even though the code is identical? 
+
+## Other Functions
+
+**Sorting, Ordering, Rounding & Formatting**
+
+| Function  | What it does         | Example                            |
+| --------- | -------------------- | ---------------------------------- |
+| `sort()`  | Sort values          | `sort(x, decreasing = TRUE)`       |
+| `order()` | Order indices        | `x[order(x)]`                      |
+| `rank()`  | Ranks (ties handled) | `rank(x, ties.method = "average")` |
+| `round()` | Round to digits      | `round(runif(5), 2)`               |
+| `format()`| Pretty formatting    | `format(Sys.Date(), "%B %d, %Y")`  |
+| `rev()`   | Reverse order        | `rev(1:5)`                         |
+| `as.numeric()`| Coerce vector    | `as.numeric("1", "2", "3")`        |
+| `as.character()`| Coerce vector  | `as.character(1:3)`                |
+| `length()`| Count elements       | `length(x)`                        |
+| `head()`  | First part           | `head(x, 3)`                       |
+|`tail()`   | Last part            | `tail(x, 3)`                       |
+
+🧠 Challenge: Draw 5 numbers without replacement and sort them ascending.
+
+
+✍️ Practice: From the functions we have learned about, pratice nesting. 
+
+```{r}
+# Create a memo note in your R script if you did 🧠 Challenge and ✍️ Practice.
+
+## 1. Explain what you did in Nesting Functions, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
+
+# ➤ Assignment
+
+Now it's your turn to practice creating and using vector objects. Follow the tasks below to complete part of the **technical skill practice assignment**.
+
+1. Work through each task in order. Replace the TODO with your code.
+
+2. Run each completed line to be sure no errors appear and objects show in the Environment.
+
+3. When finished, save your workspace and submit this script plus the .RData file.
+
+## Task 1 
+
+🛠 Build a random data set
+
+Set a reproducible seed (pick any whole number you like). Use `sample()` and `seq()` together to create a vector called scores that contains 25 random numbers between 60 and 100, inclusive. Include at least 3 NA values in scores (hint: combine vectors with `c()`).
+
+```{r , eval=FALSE}
+TODO
+```
+
+
+## Task 2 
+
+🚀 Explore function arguments
+
+Open the help file for `sample()` **in the console**. In the comment block below, list TWO required arguments and TWO default arguments for `sample()` exactly as they appear in the Usage section.
+
+1. Required arguments: 
+
+```{r , eval=FALSE}
+TODO
+```
+2. Default arguments: 
+
+```{r , eval=FALSE}
+TODO
+```
+
+## Task 3
+
+⚠️ Handle missing data
+
+Calculate the mean of scores and store it in `average_raw`. Calculate the mean of scores again, this time **excluding** `NA` values, and store it in `average_clean`.
+
+```{r , eval=FALSE}
+TODO
+```
+
+## Task 4
+
+⚖️ Practice named vs. positional arguments
+
+Use `sample()` to draw 10 values **with replacement** from scores and store them in `sample_scores_positional` **WITHOUT naming any arguments**. Repeat the same call, but this time **name every argument**; store as `sample_scores_named`.
+
+```{r , eval=FALSE}
+TODO
+```
+
+## Task 5
+
+📦 Nesting functions
+
+Combine `mean()` and `sample()` to calculate the mean of 5 random draws from scores (allow replacement); store the result in `mean_of_five`. Do this in **one** line of code.
+
+```{r , eval=FALSE}
+TODO
+```
+
+## Task 6
+
+🕰 Quick time-stamp
+
+Use `Sys.Date()` and `Sys.time()` to create two separate objects, `today_date` and `now_time`.
+
+```{r , eval=FALSE}
+TODO
+```
+
+## Task 7
+
+🗣 Reflection
+
+In one sentence, explain the difference between a *function object* (e.g., mean) and a *function call* (e.g., `mean()`).
+
+```{r , eval=FALSE}
+# Answer: TODO
+```
+
+_Reminder: Now would be a great time to click save (or press Ctrl + S) to save your script._
+
+# Practice Space 
+
+The following provides you more opportunities to earn points demonstrating **learning skills**
+
+🔗 Link today’s skills with vectors from Lesson 2. Review Lesson 2, create vectors and then apply functions to them.
+
+🛠 Build ONE new object of your choice that demonstrates any two skills from Lesson 3 (e.g., help file reading, required/default arguments, nesting). Name it `my_object` and leave a brief comment describing what it does.
+
+🚀 Explore and Play IDEAS:
+
+1.  Use `runif()` to create 10 random decimals, then `round()` them.
+
+2.  Nest `sample()` inside `paste()` to build a random silly password.
+
+3.  Open `?sd` and compute the standard deviation of values after removing `NA`.
+
+```{r}
+# Create a memo note in your R script if you did the Practice Space.
+
+## 1. Explain what you did, what your observations are, and what you expect 
+# to happen. 
+
+## 2. Demonstrate learning skill(s) in your memo
+```
+ 
+# Save and Upload
+
+1. You will be submitting **both** the R script and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in your R script:
+
+```{r , eval=FALSE}
+save.image("Assignment3_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save your R documents before closing. If you don't, you could lose your work.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the R script and the workspace file.
+
+# Today you practiced:
+
+- Recognizing function objects vs. calls.
+
+- Reading help files and spotting default arguments.
+
+- Controlling `na.rm` and other named parameters.
+
+- Creating reproducible random samples.
+
+- Nesting functions for concise workflows.
+
+🚀 Great progress! 

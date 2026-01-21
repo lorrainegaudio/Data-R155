@@ -26,9 +26,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-Up to this point, you have been working in the Console and in R Scripts to learn the basics of writing code, creating objects, and building vectors. In Chapter 3, you move into an R Notebook (`.Rmd`): a single document that combines explanatory writing, R code, and the output your code produces. This matters for research because the goal is not just to “get an answer,” but to produce a record that another person (or future-you) can audit, reproduce, and trust. R Notebooks support a reproducible workflow where narrative and computation live together. Code is easily understood when properly annotated.  
+Up to this point, you’ve been writing code in the Console and saving your work in R Scripts. In this chapter, you switch into an R Notebook (`.Rmd`): one document that combines your writing, your code, and the output produced by that code. This matters for research because the goal is not just to “get an answer,” but to leave a record that another person (or future-you) can follow, audit, and rerun. In other words, the notebook is your first step toward reproducible work.
 
-This chapter also strengthens the vector skills you need before you touch real datasets. Most data analysis in R is vector-based: columns in a dataset behave like vectors, and common research tasks (computing new variables, filtering cases, labeling categories, and selecting subsets of values) depend on understanding **vector arithmetic, recycling, coercion, class, names, and indexing**. If you misunderstand these fundamentals, R will often still run the code but it may silently give you the wrong result (which is worse than an error). By the end of the chapter, you should be able to (1) work in a notebook that clearly documents your decisions, and (2) predict how R will behave when you combine, label, and subset data. These skills you will rely on heavily once we start working with data frames and analysis workflows.
+You’ll also learn what “good memoing” looks like in a notebook. Instead of burying your thinking in # comments, you can write short paragraphs between chunks that explain what you tried, what happened, and what you changed. That is a research skill: it reduces mistakes, makes debugging faster, and makes your work defensible when someone asks, “How did you get that result?”
+
+Finally, you’ll start building “vector metadata” skills—how to check what R thinks your object is—because R will often run code even when your object is the wrong type. You will practice checking class/type and working with character strings (quotes + paste) so you stop fighting avoidable errors. You’ll close with logical vectors, which are the foundation for filtering and decision-making later (even before you formally learn data frames).
+
+By the end of Chapter 3, you should be able to start a notebook correctly, write clear memos, and diagnose basic object types—skills you will rely on immediately as the course moves toward real data and reproducible analysis.
 
 In Chapter Three you will learn how to:
 
@@ -40,8 +44,6 @@ In Chapter Three you will learn how to:
 
 - 🔄 Use recycling to perform operations on vectors of different lengths.
 
-- ✍️ Practice transparency in memos
-
 - 🏷️ Identify what kind of data an object is using `class()`
 
 - 📎 Combine strings of words with the `paste()` function.
@@ -50,9 +52,7 @@ In Chapter Three you will learn how to:
 
 - 🛠 Build logical vectors.
 
-- ⚡ Explain how R coerces mixed‑type vectors.
-
-# R Notebooks
+# R Notebooks—Part 1
 
 An **R Notebook** is an **R Markdown** (.Rmd) document where you can run code in code chunks and immediately see the output *directly below the chunk*. The utility is reproducible thinking: your code, your results, and your memo-style notes live in one place, in order, so someone else (including future-you) can follow what happened.
 
@@ -162,11 +162,11 @@ output: html_notebook
 
 2. Choose your course folder (e.g., `Intro_to_R`)
 
-3. Name the file `chapter3_practice`.
+3. Name the file `chapter3_notes`.
 
 4. Note that the file extension is `.Rmd`.
 
-✅ Verify you can see `chapter3_practice.Rmd` in the **Files** pane.
+✅ Verify you can see `chapter3_notes.Rmd` in the **Files** pane.
 
 ## Code Chunks
 
@@ -318,51 +318,13 @@ ___
 
 ___
 
-Learning to use an AI tool is part of becoming a modern researcher. However, it is essential to use these tools ethically and transparently, as discussed next.
+Learning to use an AI tool is part of becoming a modern researcher. However, it is essential to use these tools ethically and transparently, as discussed in more detail in the next chapter.
 
-# Transparency
-
-Science isn’t just about numbers; it’s about values that guide how and why we do our work. Researchers , policy makers and the general public must to trust scientific expertise for this work to have meaning (Resnik & Elliott, 2023). Transparency in academic work promotes trust. **Transparency** is disclosing methods, materials, assumptions, values, and interests (Resnik & Elliott, 2023) so another person can understand what you did and reproduce it. 
-
-Three values inside of transparency. 
-
-1. **Honesty** is reporting what actually happened, including shortcuts, mistakes, and unexpected results. You record what you tried even when it failed to produce the results you anticipated. You state what you don't know yet. You do not present outside work as your own. For example, you do not present AI outputs as your own. LLMs produce text; they are not conscious “reasoners” that understand your goal the way you do. Being honest includes respecting others' intellectual property by giving credit where credit is due and acknowledging prior work. Researchers must ensure that they properly attribute any contributions made by LLMs to avoid issues of plagiarism and intellectual property infringement (e.g, Thomas, 2023).
-
-2. **Openness** is making your work inspectable so someone else can see what you used and how you got your result. Reproducibility is a key aspect of openness. Creating reproducible work is a core learning outcome for this course. Share the data source, code, and steps taken so someone else can follow your workflow and reproduce your results.
-
-3. **Accountability** means taking responsibility for one's research; responding to criticisms of one's research, including allegations of misconduct; self-correction (carefully scrutinizing research during peer review and after publication; retracting or correcting flawed research); and attempting to reproduce results (Resnik & Elliott, 2023). Transparency practices provide the documentation that makes your assumptions, methods, and tools visible. Memoing around your code is not “extra writing.” It is part of doing credible work.
-
-**Research journals** are running records of your R analysis process. They are an internal document that are invaluable when preparing publications or other reports. Add comments before or near your code explaining:
-
-- 🎯 Goal: The intent of the code and method used (functions, steps, key decisions).
-
-- ⚡ Materials: Compose the code to achieve the goal, answer the question or test your prediction. Keep a record of the algorithms used in documents such as an R Script or R Markdown files.
-
-- ✍️ Assumptions: Document your research question or make a prediction about what the results will be. Keep a record of what you tried, even if it didn't achieve the results you wanted. 
-
-- ✅ Verify: Show or explain how you checked that your results were correct. 
-
-- 🗣 Comment: Explain the results and what the output means.
-
-- 🪞 Metacognition: Reflect on the knowledge gained and how it might apply to other work. Record challenges you faced and how you overcame them. State the implications of the analysis or the values that motivate your analysis. Identify anything that could be bias choices. 
-
-- 👀 Resource Cited: Document what resource you used and what you learned from that resource. 
-
-___
-
-Next, you will learn about data types and how to create different kinds of vectors in R. Write memos as you practice R programming. 
+Next, let's explore how R uses metadata to determine how to treat different types of vectors.
 
 # Vector Metadata
 
-In this section you will learn three related skills that make vectors easier to work with:
-
-1. **Class**: how R interprets an object and decides how it should behave.
-
-2. **Names**: how to attach labels to vector elements so the vector can act like a simple lookup table.
-
-3. **Indexing**: how to retrieve specific elements using either positions (1st, 2nd, 3rd) or names ("Octarine", "Matrix Green").
-
-These ideas work together: you check what an object *is* (`class()`), optionally label its elements (`names()`), and then extract what you need (`[ ]`).
+In this section you will learn how **class** affects how R interprets an object and decides how it should behave.
 
 ## Class and behavior
 
@@ -577,37 +539,6 @@ as.numeric(mixed)            # character → numeric: text converts to NA
 🗣 The output shows `NA` for the character elements "candy" and "book" because they cannot be converted to numeric values. The numeric elements 4 and 92 are successfully converted.
 
 
-## Named Vectors
-
-Vectors that carry a names attribute so each element can be referred to by a label (a string), not just by position. R implements this via the `names()` accessor/replacement, which sets the "names" attribute on vectors. 
-
-🎯 Create a character vector named `nerdy_palette` that contains the following color names and their corresponding hexadecimal color codes using the `c()` function.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3")
-```
-
-
-
-```{r , eval=FALSE}
-# ✅ Check the nerdy_palette vector
-print(nerdy_palette)
-names(nerdy_palette)
-```
-
-🗣 The nerdy_palette vector acts as a look-up table, allowing you to retrieve color hex codes by their assigned color names.
-
-
-### Object names vs Element names
-
-There are two different naming ideas here. 
-
-1. **Object name** is the variable name `nerdy_palette` that you use to refer to the entire vector.
-
-2. **Element names** are the labels assigned to each element within the vector (e.g., "Octarine", "TARDIS Blue").
-
-Element names can be used in indexing to access specific elements of the vector.
 
 ## Indexing Vectors
 
@@ -705,39 +636,11 @@ print(logicals)
 
 🗣 The output shows the results of the comparisons stored in the `logicals` vector. There is one FALSE value and two TRUE values. The first value is FALSE because 1 is not greater than 2. The second value is TRUE because 3 is less than 5. The final value is TRUE because 4 is equal to 4.
 
-# Lists
-
-In R, a list is a special type of data structure that can hold elements of different classes. This is a key difference between a list and a vector or a data frame, which can only hold elements of the same class. A list is essentially a collection of items, and each item can be a vector, a matrix, a data frame, or even another list.
-
-🎯  Create a list about Taylor Swift
-
-```{r}
-# Create a list about Taylor Swift
-taylor_swift_list <- list(
-  name = "Taylor Swift",
-  albums = c("Fearless", "Red", "1989", "folklore", "Midnights"),
-  release_years = c(2008, 2012, 2014, 2020, 2022),
-  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
-  favorite_song = list(
-    title = "All Too Well (10 Minute Version)",
-    album = "Red",
-    length_minutes = 10.13
-  )
-)
-
-# Print the full list
-print(taylor_swift_list)
-```
-
-
 # Summary
 
-In this chapter, you learned to create an R Notebook, rename and save it correctly, and use code chunks to run R code with output shown directly beneath your work. You also practiced essential vector skills: doing arithmetic on numeric vectors (including recycling), checking an object’s class, combining text with `paste()`, creating factors, understanding how mixed-type vectors trigger coercion, creating named vectors, and indexing by position or name. Finally, you connected these technical skills to transparency by writing memos that clearly state your goal, show verification, explain results, and document any outside resources you used.
-
+In this chapter, you learned to create an R Notebook (`.Rmd`), rename and save it correctly, and use code chunks to run R code with output shown directly beneath your work. You also practiced memoing in a notebook by writing short, clear notes about what you tried, what happened, and what you changed. Finally, you strengthened core “vector metadata” skills by checking what R thinks your objects are (for example, using `class()` and related checks), working with character strings (quotes + `paste()`), and building logical vectors with comparison operators (`>`, `<`, `==`, `!=`) to produce TRUE/FALSE results.
 
 # Chapter Terms
-
-**Accountability**: Taking responsibility for the results you report by verifying them, responding to questions or critiques, and correcting errors when found. In practice, this means you keep a clear record (e.g., in an R Markdown/Notebook or script) that shows how you checked your work and why you made your choices.
 
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
@@ -793,10 +696,9 @@ Fill in the blanks to complete the code.
 
 Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter3_practice.Rmd` in your course folder. 
 
-Remember to document your **tenacity** on a memo if you encounter any errors while completing the tasks. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**).
+Remember to document your **tenacity** on a memo if you encounter any errors while completing the tasks.
 
 R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.
-
 
 
 ## Task 1
@@ -862,7 +764,7 @@ __________ <- 2__exponents
 ```
 
 ```{r , eval=FALSE}
-# ✅ Check the length nerdy_numbers vector
+# ✅ Check the length binary_powers vector
 _____(binary_powers)
 ```
 
@@ -870,17 +772,17 @@ _____(binary_powers)
 
 ## Task 4
 
-🧪 **Element-wise subtraction**
+📈 **Vector arithmetic**
 
 🎯 Find the `anomaly` by subtracting the `cursed_seq` vector from the `travel_jumps` vector. We'll recreate vectors seen in Chapter 2 and then subtract them.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
+# ⚡ Type this in your R Notebook
 cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)          # Integer via c()
 ``` 
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
+# ⚡ Type this in your R Notebook
 travel_jumps <- seq(from = 1887, to = 2052, by = 33)   # numeric via seq()
 ```
 
@@ -899,84 +801,6 @@ print(anomaly)
 
 ## Task 5
 
-🎨 **Indexing named vectors**
-
-🎯 Use character indexing to retrieve the hexadecimal color codes for "Matrix Green" and "Command Red" from the `nerdy_palette` vector.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette <- c(
-  "Octarine" = "#7F00FF",
-  "TARDIS Blue" = "#003B6F",
-  "Rebeccapurple" = "#663399",
-  "Hooloovoo" = "#4F97A3",
-  "Cosmic Latte" = "#FFF8E7",
-  "Vantablack" = "#000000",
-  "Matrix Green" = "#03A062",
-  "Source Engine Magenta" = "#FF00FF",
-  "Command Red" = "#CC0000",
-  "Impossible Green" = "#4D9E68"
-)
-```
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c(_______, _______)]
-```
-
-🗣 The output shows the hexadecimal color codes for "Matrix Green" and "Command Red" retrieved from the `nerdy_palette` vector using their names.
-
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
-
-## Task 6
-
-📌 **Indexing by position**
-
-🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color codes from the `nerdy_palette`.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-________[c(_, _, _)]
-```
-
-🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and 6th colors in the `nerdy_palette` vector.
-
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
-
-## Task 7
-
-⚠️ **Logical filtering + indexing practice**
-
-🎯 Using the `growth` vector created in Task 2, complete the following:
-
-1. Create a new vector `positive_growth` that contains only values in `growth` that are greater than zero. (hint: see logical vectors)
-
-2. Create a new vector `last_two` that contains the last TWO elements of `sales_q2` (use numeric positions, not names).
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-positive_growth <- growth[growth _ 0]
-last_two <- sales_q2[c(___, ___)]
-```
-```{r , eval=FALSE}
-# ✅ Check the outputs
-print(positive_growth)
-print(last_two)
-```
-
-🗣 The output shows ___________________________.
-
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
-
-## Task 8 
-
-Reflection
-
-🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
-
-🗣 # Your explanation here ________
-
-## Task 9
-
 🎯 **Step 1: Sweep your Environment (start clean).**  
 Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
@@ -985,10 +809,3 @@ Use **Run → Run All** to execute every chunk in order.
 
 🎯 **Step 3: Save and submit.**  
 After your notebook runs without errors, save your notebook (`.Rmd`) and save your workspace (`.RData`) for submission to Canvas, as directed. 
-
-# References
-
-Resnik, D. B., & Elliott, K. C. (2023). Science, values, and the new demarcation problem. Journal for General Philosophy of Science, 54(2), 259-286.
-
-Thomas, P. A. (2023). Wikipedia and large language models: perfect pairing or perfect storm?. Library Hi Tech News, 40(10), 6-8.
-
