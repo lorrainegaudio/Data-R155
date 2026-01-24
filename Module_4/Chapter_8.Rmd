@@ -38,7 +38,11 @@ Preview the deliverable: one R Notebook that (1) imports CSV + Excel, (2) checks
 
 In Chapter Eight you will learn how to:
 
-- Curiosity Skill Highlight
+- Courage Skill Highlight
+
+Students can attempt a task first (even imperfectly), then seek help with a clear question and evidence (code + error + what they think is happening).
+
+Students can share imperfect work in a discussion/lab setting and revise based on feedback.
 
 - Git
 

@@ -39,15 +39,33 @@ In Chapter ____ you will learn how to:
 
 
 
-Courage
+
 
 LS: 
 Core
 Review course content
 Advanced
-Courage Skill Highlight
+Curiosity Skill Highlight
+
+
+
 Citing resources
 
+- (Curiosity highlight): “data scavenger hunt” + citation + one curiosity question answered with a quick code experiment (not a paragraph of vibes).
+
+
+- Courage: Students can share imperfect work in a discussion/lab setting and revise based on feedback.
+
+Maybe Module 6: Autonomy: 
+- “trying alternatives” (base R vs dplyr; indexing vs verbs) and documenting what the output shows.
+- Students can manage their workflow independently: organized folders, naming, saving, and submitting correct artifacts without resource rescue.
+- Students can set boundaries on AI use consistent with instructions and explain their choice in a memo (what they delegated vs what they did themselves).
+- Students can select a method and justify it (e.g., base R indexing vs dplyr select/filter) using output evidence. “I chose this approach because…” memo
+
+Maybe Module 7: Open-mindedness
+- Students can implement two approaches to the same task (e.g., base R vs dplyr) and compare outputs and readability.
+- Students can revise their approach when evidence shows a better method (not because it’s trendy).
+- Students can evaluate tool fit (including AI systems) for a specific goal and explain tradeoffs.
 
 # R Programming
 

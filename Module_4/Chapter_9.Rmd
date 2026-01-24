@@ -41,13 +41,16 @@ Frame the Module around one repeatable habit: Ask → Load → Verify → Explor
 
 # Learning Skill
 
-Curiosity
+
 
 LS
 Core
 Document thinking process
 Advanced
-Curiosity Skill Highlight
+
+Thoroughness Skill Highlight
+
+- Verify assumptions with checks (e.g., length/type/missingness) before interpreting output.
 
 
 # R Programming

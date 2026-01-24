@@ -42,7 +42,49 @@ In Chapter Seven you will learn how to:
 
 - Folder structure for reproducibility
 
+<<<<<<< HEAD
 - 📊 Subset vectors by position or logical tests.
+=======
+- Installing and librarying packages
+
+- Loading base R datasets
+
+- Loading datasets from packages
+
+- Imported CSV via `readr::read_csv()` or GUI helper.
+
+- Imported Excel via `readxl::read_xlsx()`.
+
+- Make tenacity visible by keeping a record of a short what you tried anytime code fails.
+
+# Data frames vs. tibbles
+
+## Data Frames
+
+“Data frame” as the chapter’s working object
+
+Covers (minimal, first-year level):
+
+A data frame is a rectangular table: rows = cases, columns = variables.
+
+Reinforce: import functions usually give you a data frame (or something extremely close).
+
+## Tibbles
+
+Tibbles: same idea, different behavior/printing
+
+Covers (brief + practical):
+
+- A tibble is a modern version of a data frame with nicer printing and stricter behavior.
+
+- Show how students might encounter it (Excel import often yields a tibble-like printout; tidyverse later will use tibbles).
+
+- One conversion demo (optional):
+
+`tib <- tibble::as_tibble(df)`
+
+Promise: “You can treat these as the same for now—our exploration tools still work.”
+>>>>>>> 449b537 (MLO for Learning skills)
 
 # Downloading Data
 
