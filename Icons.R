@@ -42,7 +42,10 @@
 🚧
 ❓
 ❓ Question
+
 🆘
+
+🛟 Help
 
 🧹
 
@@ -64,7 +67,7 @@
 
 🕓
 
-🛟 Help
+
 
 🗜️ Summarize
 

@@ -1,11 +1,11 @@
 ---
 title: "Courage Lab"
 author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -14,7 +14,6 @@ output:
     css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
-    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
@@ -74,141 +73,129 @@ output:
       after_body: ../assets/footer.html
 ```
 
-# Introduction
+# 👥 Human-Centered AI
 
-This thirty minute lab activity will turn your questions into next steps with the help of a peer. Before you begin, completely review the Courage Lab document. 
+This course teaches AI competencies: Human-centered mindset, AI techniques and applications, and Ethics of AI. So far, we've focused on AI techniques and applications such and prompt engineering. Today, we take a step back and think about when and how to use AI in a way that centers human relationships and learning.
 
-Points: Earn up to 2 learning skill points for participating in this activity. 
+Help-seeking is a social act. In learning, research, and work settings, asking for help typically does more than solve a problem: it signals vulnerability; it activates reciprocity. it transmits norms; and it builds trust and belonging. When you ask your peer, instructor, or others for help, you are participating in a relational infrastructure. Quick questions before class, brief check-ins during office hours, and small moments of confusion shared with classmates all build a sense of community and shared purpose. If an LLM becomes the easiest, fastest, lowest-friction option, you will experience fewer micro-interactions, have fewer peer modeling opportunities, and fewer moments where norms, strategies, or values are socially transmitted. Using LLM exclusively will reduce the density of casual, learning-oriented contact, which is often where community is actually built. Those “small” interactions are how learning communities form.
+
+An AI can give instrumental help (fast feedback, examples, explanations) without any social risk. That can be especially useful when you feel anxious, behind, or worried about looking foolish. LLMs don't judge, don't get tired, don't keep score, and don't *feel like* you are disclosing private information to others. But it also means AI can quietly replace the low-stakes human interactions that help you feel connected. In other words, LLMs provide private competence-building but may result in feelings of isolation. A shared learning ecology offers connection but requires volubility and time. 
+
+# 🦁 Courage
+
+Fear shows up in predictable ways: fear of struggling, fear of failure, fear of speaking up, fear of being “found out,” and fear of looking foolish in front of other people. The problem is not that fear exists. The problem is what fear does when it drives your behavior. It keeps you on the sidelines, makes you passive, and convinces you to protect your image instead of taking risks. Over time, that disengagement compounds. You miss opportunities to practice, you avoid asking questions, and you may fall behind. That is why fear is the enemy of deep learning.
+
+Courage is not the absence of fear. Courage is the ability to manage fear in service of truth and understanding. In practical terms, courage means you act even when you feel exposed or uncertain. You volunteer an answer attempt, you ask the “dumb” question, you share work-in-progress, you bring an error message to a peer or to office hours, and you let feedback guide your next attempt. Courage also means responding to obstacles with agency: you stay involved, you try new strategies, and you use available resources instead of ruminating on mistakes or interpreting errors as evidence that you “*aren’t good at this.*”
+
+Courage matters because it directly determines whether you will actually use the learning environment you’re in. A student can have access to strong teaching, helpful peers, office hours, and AI tools and still not benefit if fear prevents engagement. Courage is the bridge between resources and results. It is also a relationship skill. When you practice courage, you make help-seeking possible, and help-seeking builds community. That’s why courage sits next to “human-centered AI” in this course. AI can support learning, but courage is what keeps you connected to people and willing to learn in public, which is where much of the growth happens.
+
+# 🛠 Lab Activity
+
+## Purpose
+
+This lab is about practicing courage and human-centered AI use. You will (1) identify what you’re stuck on, (2) name what makes asking hard, and (3) ask a real person for help using a clear, respectful message. AI tools can help you clarify your question, but in this lab a human is the target audience.
+
 
 ⏱️ 30 minute plan at a glance
 
- - 0-7 min — Question Inventory (2–3 items)
+ - 0-5 min — Set up your notebook + 
+ 
+ - 8-18 min — Courage Inventory
 
- - 7-22 min — Partner Work (or solo) on one question
+ - 18-25 min — Reflection + prepare your help request
 
- - 22-30 min — Submission
+ - 25-30 min — Submission + actually send the help request
  
 If you don’t have questions, be a 🚑 helper for someone who does to earn learning skill points.
 
-# 🔎 Quiet review
+## 🖥 Courage Lab Notebook
 
-Please take 7 minutes to review your scores & comments, and create a question inventory:
+Please take 5 minutes to set up your notebook
 
-1. Open RStudio. *Hint*: If you have a course project, open it.
+1. Open RStudio. 
 
-2. Start a new R script named `courage_lab.R`and title it in the file `# Courage Lab`: 
+2. Start a new R Notebook named `courage_lab`
 
+3. In the YAML header, title it "Courage Lab" and include your name + date.
+
+4. Delete the template text.
+
+5. Create a section header: ## Question Inventory
+
+## 🔍 Courage Inventory
+
+Please take 10 minutes to reflect on your recent work and identify a specific question you have right now.
+
+Under ## Question Inventory, respond using markdown sub-headers. Use code chunks for any code or error messages.
+
+1. Briefly review the assignment/activity you are working on or struggled with.
+
+- What’s one moment from the last assignment/activity that you found difficult or that stuck with you? 
+
+- What did you do when you got stuck? For example, did you keep trying, stop, search the web, ask a peer, ask the instructor, use ?help, other?
+
+2. Identify *at least* one question you have right now.
+    - Source: (Assignment __, feedback comment, class activity, etc.)
+    - My question:
+    - My code &/or error:
+    
 ```{r}
-# Courage Lab 
-# Your First and Last Name
-
-# Question Inventory (template)
-
-# 1) Source: ____   My question:
-#    Code or error:
-
-# 2) Source: ____   My question:
-#    Code or error:
+# Include code example
 ```
 
-3. Open Canvas ► Grades 
+3. What is your the main barrier to asking for help? Examples may include fear of *looking dumb*, not sure how to ask, procrastination, overwhelmed, time, “*I should know this.*”
 
-- Look at Assignments 1 & 2 and Class Activity 1 & 2 comments.
+4. Choose your help path (must choose ONE)
+    A) Ask a peer (in class today)
+    B) Ask the instructor (message or office hours request)
 
-```{r}
-# Source: Instructor Comments 
+🆘 For this lab, if you use AI, only use it to improve the question you will ask a person. Please create a transparency memo regarding your AI use in your notebook.
 
-## Do you have questions about the course?
-## Do you have questions about the points you earned?
-## Do you have questions about the instructor comments?
-## Additionally, feel free to provide the instructor feedback about the course in this space. 
-```
+## 📝 Prepare Your Help Request
 
-4. Open your completed assignments in R Studio and review.
+Please take a few minutes to draft your help request message.
 
-⚠️ Common Pain Points:
+Using markdown, draft your help request message.
 
-- Jot anything that’s unclear in your R script.
+    Hi ___, I’m working on ___. I’m stuck on ___. I tried ___. Here is my code/error: ___.
+    My best guess is ___. Could you help me understand what to try next?
 
-- Identify any unanswered questions.
+Including a screenshot of your code/error is optional but can be helpful.
 
-- Identify code that you do not understand.
+## 🪞 Reflect on Your Courage
 
-```{r}
-# Source: Assignment 1 & 2 Questions
+Pleae take a few minutes to reflect on your courage practice. The questions below are prompts to guide your reflection. You can answer all or some of them or write your own.
 
-## Did you ask questions in memos but did not or could not answer them?
-## Did you write code that you do not understand and could not explain?
-## Did you have unresolved errors?
-```
-```{r}
-# Source: Assignment 3 Questions
+What part of this felt uncomfortable or risky?
 
-## Did you ask questions in memos but did not or could not answer them?
-## Did you write code that you do not understand and could not explain?
-## Did you have unresolved errors?
-```
+What is your next step before the next class?
 
-5. No questions yet? Open up the Class Activity 1 & 2 HTML: Vector Playlab 🎮 class activity handout
+Who did you connect with today, and what is one thing you learned about how they think?
 
-```{r}
-# Source: Vector Playlab
+# 🚑 Helper option
 
-## Your question(s) could be to complete the 5 Dataframes, 6 Matrices, and/or 7 Lists
-```
+If you don’t have a question, your job is to help someone else ask a better one.
 
-6. Choose your question
+1. Find a peer who has a question.
 
-- From the list of questions, select *at least* one question you want to answer today. 
+2. Help them clarify their question using the Courage Inventory and Help Request templates.
 
-# 🤝 Partner Work
+3. Record your help-giving in your notebook:
 
-Form 👥 pairs (or work solo if you prefer). Record the name of your partner. Choose **one** R coding question to pursue first.
+I helped: ___
 
-```{r}
-# Partner Name (if any): 
-```
+Their question was about: ___
 
-**Record:**
+What I did: (helped them write the help request / helped reproduce the error / explained a concept)
 
-1. 🧩 **Error** Reproduce the issue. Comment it out.  
+# 📤 Submission
 
-2. 🪞 **Memo** Add a reflection about the discovery and learning process. 
+1. Save your R Notebook.
 
-3. 🔁 **Change one thing**, re-run, and record what happened (try **two** new strategies).  
+2. Knit to HTML.
 
-4. 📚 **Use resources:** `?function` in RStudio Help, textbook, instructor, boisestate.ai, web search (*try Substack*), other peers. Remember to document resources and how you use them.  
+3. Upload the HTML file to the Courage Lab assignment in Canvas.
 
-5. 🗣️ **Explain your code in plain English.** If it’s beyond our current skill level, annotate line-by-line. Rewrite the code within your skill level.
+4. Send your help request. If you opted to message the instructor, please send it within 24 hours of completing this lab.
 
-
-**Helper role template** Log who you helped and what you explained.
-
-```{r}
-# Helper Log
-# I helped: ________   On: ________
-# What I explained / what changed:
-```
-
-**Reflection Prompts** 
-
-```{r}
-# Reflection (3–4 sentences):
-# - What failed or confused me?
-# - What changed after my two tries?
-# - What I learned / my next step:
-```
-
-# ✅ Submit
-
-Each person uploads one R script to Class Activity 3 named `courage_lab.R`
-
-📏 Scoring rubric (Points are additive in this course. There are many ways you can earn points. The *maximum points* for this learning skill activity is **2**)
-
-- 🦁 **Real risk & engagement** (tackled a hard question or many questions) — **up to 1.5 pts**  
-- 🔧 **Process** (two new strategies + resource use documented) — **up to 1 pt**  
-- 🪞 **Memos** (clear, specific, honest) — **up to 1 pt**  
-- 🤝 **Partner bonus** (👥 pairing or 🚑 helper role) — **0 or 0.5 pt**
-
-
-
+5. 🎉 Celebrate your courage. The outcome is not “having the right answer.” The outcome is staying engaged and practicing help-seeking.
