@@ -31,7 +31,7 @@
 
 ✨ (Sparkles)
 
-
+🔄 Re-run
 
 🔍 Look deeper: 
   
@@ -113,7 +113,7 @@
 
 💻 Open HTML
 
-📋	Clipboard	
+📋 Survey
 
 🪄	Magic Wand
 

@@ -30,11 +30,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
-Frame the module around one repeatable habit: Ask → Load → Verify → Explore → Document.
 
-The chapter’s guiding question: “What’s in this file, and can I trust what I just loaded?”
-
-Preview the deliverable: one R Notebook that (1) imports CSV + Excel, (2) checks structure, (3) explores with [], and (4) includes memos on privacy, citation, and troubleshooting.
 
 In Chapter Eight you will learn how to:
 
