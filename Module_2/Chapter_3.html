@@ -1631,7 +1631,7 @@ display: none;
 
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version January 25, 2026</h4>
+<h4 class="date">Version January 29, 2026</h4>
 
 </div>
 
@@ -2263,7 +2263,21 @@ vector. <strong>Character indexing</strong> uses the names of the
 elements to retrieve specific values.</p>
 <p>🎯 Use character indexing to return the hexadecimal color code for
 “Octarine.”</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
+<pre class="r"><code># Create nerdy_palette
+nerdy_palette &lt;- c(
+  &quot;Octarine&quot; = &quot;#7F00FF&quot;,
+  &quot;TARDIS Blue&quot; = &quot;#003B6F&quot;,
+  &quot;Rebeccapurple&quot; = &quot;#663399&quot;,
+  &quot;Hooloovoo&quot; = &quot;#4F97A3&quot;,
+  &quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;,
+  &quot;Vantablack&quot; = &quot;#000000&quot;,
+  &quot;Matrix Green&quot; = &quot;#03A062&quot;,
+  &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;,
+  &quot;Command Red&quot; = &quot;#CC0000&quot;,
+  &quot;Impossible Green&quot; = &quot;#4D9E68&quot;
+)
+
+# Use character indexing to return the hex code for Octarine
 nerdy_palette[&quot;Octarine&quot;]</code></pre>
 <p>🗣 The output shows the hexadecimal color code for “Octarine”
 retrieved from the <code>nerdy_palette</code> vector using its name.</p>

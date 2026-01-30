@@ -551,7 +551,21 @@ When a vector has names, you can use those names to index into the vector. **Cha
 🎯 Use character indexing to return the hexadecimal color code for "Octarine."
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook
+# Create nerdy_palette
+nerdy_palette <- c(
+  "Octarine" = "#7F00FF",
+  "TARDIS Blue" = "#003B6F",
+  "Rebeccapurple" = "#663399",
+  "Hooloovoo" = "#4F97A3",
+  "Cosmic Latte" = "#FFF8E7",
+  "Vantablack" = "#000000",
+  "Matrix Green" = "#03A062",
+  "Source Engine Magenta" = "#FF00FF",
+  "Command Red" = "#CC0000",
+  "Impossible Green" = "#4D9E68"
+)
+
+# Use character indexing to return the hex code for Octarine
 nerdy_palette["Octarine"]
 ```
 
