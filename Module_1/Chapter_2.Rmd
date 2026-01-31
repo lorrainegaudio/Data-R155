@@ -564,7 +564,6 @@ We can create a data frame by combining multiple vectors of the *same length* us
 ```{r , eval=FALSE}
 # ✅  Review Vectors 
 print(cursed_seq)
-print(anomaly)
 print(rainbow)
 print(travel_jumps)
 ```
@@ -574,7 +573,6 @@ print(travel_jumps)
 # Create the Data Frame
 spectrum_shift <- data.frame(
   Vibe = rainbow,
-  Shift = anomaly,
   Year = travel_jumps,
   Code = cursed_seq
 )
