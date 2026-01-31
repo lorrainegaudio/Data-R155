@@ -106,7 +106,13 @@ Type here will be in paragraph font.
 Type here will be in paragraph font.
 ```
 
-![Screenshot of an RStudio R Notebook showing a Markdown section heading (## Task 1) in the editor and the Outline pane on the right listing “Task 1–Task 4,” illustrating that Markdown headings create a structured outline; the orange arrow points to the Outline button used to show/hide that heading-based outline.](Memo_Example_heading.png)
+---
+
+![](Memo_Example_heading.png)
+
+---
+
+This image is a screenshot of an RStudio R Notebook showing a Markdown section heading (## Task 1) in the editor and the Outline pane on the right listing “Task 1–Task 4,” illustrating that Markdown headings create a structured outline; the orange arrow points to the Outline button used to show/hide that heading-based outline.
 
 In this example, the `## Task 1` heading creates a main section heading. The Outline pane on the right lists all headings in the document, allowing you to navigate quickly between sections.
 
@@ -138,19 +144,35 @@ Option 1: **Knit button**
 
 In the Source pane, click the **Knit button** (it looks like a ball of yarn with a knitting needle 🧶).
 
-![Screenshot of RStudio showing the Knit button on the toolbar (highlighted by an orange arrow), which students can click to knit the R Notebook into an HTML document when they don’t have the Preview dropdown.](Memo_Example_knithtml3.png)
+---
+
+![](Memo_Example_knithtml3.png)
+
+---
+
+This image is a screenshot of RStudio showing the Knit button on the toolbar (highlighted by an orange arrow), which students can click to knit the R Notebook into an HTML document when they don’t have the Preview dropdown.
 
 Option 2: **Preview menu**
 
-In the Source pane, click the the **Preview menu** drop down button and select Knit to HTML.
+In the Source pane, click the the **Preview menu** drop down button and select Knit to HTML. 
 
-![Screenshot of RStudio with the Preview menu opened; orange arrows highlight the Preview dropdown button and the Knit to HTML option, showing how to knit an R Notebook into a shareable HTML document (not just run a single code chunk).](Memo_Example_knithtml.png)
+---
 
-___
+![](Memo_Example_knithtml.png)
 
-![Screenshot of the knitted HTML output in a web browser showing the notebook title (“Chapter 4 Practice”), the first section heading (“Task 1”), a memo as regular paragraph text, and an R code chunk with its printed error output, demonstrating what you get after you Knit to HTML.](Memo_Example_knithtml2.png)
+---
 
-___
+This image is a screenshot of RStudio with the Preview menu opened; orange arrows highlight the Preview dropdown button and the Knit to HTML option, showing how to knit an R Notebook into a shareable HTML document (not just run a single code chunk).
+
+Below is the result you get after knitting to HTML
+
+---
+
+![](Memo_Example_knithtml2.png)
+
+---
+
+This image is a screenshot of the knitted HTML output in a web browser showing the notebook title (“Chapter 4 Practice”), the first section heading (“Task 1”), a memo as regular paragraph text, and an R code chunk with its printed error output, demonstrating what you get after you Knit to HTML.
 
 When you knit, RStudio automatically does three things:
 
@@ -224,58 +246,58 @@ Below are three example prompts versions: unstructured (bad), structured plain t
 
 ### Unstructured Prompt
 
-What do I do? I tried knitting my R notebook and it won’t work. 
+    What do I do? I tried knitting my R notebook and it won’t work. 
 
-|...... | 12% [unnamed-chunk-1]
+    |...... | 12% [unnamed-chunk-1]
 
-processing file: Chapter_4_practice.Rmd
+    processing file: Chapter_4_practice.Rmd
 
-Error in parse():
-! attempt to use zero-length variable name
-Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
-Execution halted
+    Error in parse():
+    ! attempt to use zero-length variable name
+    Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
+    Execution halted
 
 ### Structured Plain Text Prompt
 
-Persona: Act as a R programming tutor.
+    Persona: Act as a R programming tutor.
 
-Task: Help me troubleshoot a knit error in an R Notebook (`.Rmd`). I am a beginner.
+    Task: Help me troubleshoot a knit error in an R Notebook     (`.Rmd`). I am a beginner.
 
-What I did: I clicked Preview > Knit to HTML in RStudio.
+    What I did: I clicked Preview > Knit to HTML in RStudio.
 
-What happened: Knitting stopped at 12% and failed.
+    What happened: Knitting stopped at 12% and failed.
 
-Error message (*copied from Render tab*):
-|...... | 12% [unnamed-chunk-1]
-processing file: Chapter_4_practice.Rmd
-Error in parse():
-! attempt to use zero-length variable name
-Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
-Execution halted
+    Error message (*copied from Render tab*):
+    |...... | 12% [unnamed-chunk-1]
+    processing file: Chapter_4_practice.Rmd
+    Error in parse():
+    ! attempt to use zero-length variable name
+    Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
+    Execution halted
 
-Context: The error says it quit from lines 12–24 in unnamed-chunk-1. I don’t understand what “parse” means.
+    Context: The error says it quit from lines 12–24 in     unnamed-chunk-1. I don’t understand what “parse” means.
 
-What I want from you: 1. Explain what this error usually means in beginner-friendly terms. 2. Give me the most likely causes specifically for an R Notebook `.Rmd` file. 3. Give me a checklist of what to look for around lines 12–24 to fix it.
+    What I want from you: 1. Explain what this error usually means in beginner-friendly terms. 2. Give me the most likely causes specifically for an R Notebook `.Rmd` file. 3. Give me a checklist of what to look for around lines 12–24 to fix it.
 
 ### Structured Prompt:
 
-\# Persona: 
+    # Persona: 
 
-Act as a R programming tutor.
+    Act as a R programming tutor.
 
-\# Task: 
+    # Task: 
 
-Help me troubleshoot a knit error in an R Notebook (`.Rmd`). 
+    Help me troubleshoot a knit error in an R Notebook (`.Rmd`). 
 
-\# What I did: 
+    # What I did: 
 
-In RStudio, I clicked Preview → Knit to HTML.
+    In RStudio, I clicked Preview → Knit to HTML.
 
-\# What happened: 
+    # What happened: 
 
-Knitting stopped at 12% and failed.
+    Knitting stopped at 12% and failed.
 
-\# Error message (copied exactly):
+    # Error message (copied exactly):
 
 ```markdown
 |......                                              |  12% [unnamed-chunk-1]
@@ -290,17 +312,17 @@ Quitting from Chapter_4_practice.Rmd:12-24 [unnamed-chunk-1]
 Execution halted
 ```
 
-\# Context: 
+    # Context: 
 
-The error says it quit from lines 12–24 in unnamed-chunk-1. I don’t understand what “parse” means.
+    The error says it quit from lines 12–24 in unnamed-chunk-1. I don’t understand what “parse” means.
 
-\# What I want from you:
+    # What I want from you:
 
-1. Explain what “Error in parse()” means in plain language.
+    1. Explain what “Error in parse()” means in plain language.
 
-2. Tell me the top 3 most common causes in an `.Rmd` file.
+    2. Tell me the top 3 most common causes in an `.Rmd` file.
 
-3. Give me a step-by-step fix plan focused on the section lines 12–24.
+    3. Give me a step-by-step fix plan focused on the section lines 12–24.
 
 ___
 
