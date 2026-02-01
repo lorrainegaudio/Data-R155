@@ -1578,7 +1578,6 @@ window.onload = function() {
 <header>
   <div class="header-wrapper">
     <h1>INTRODUCTION TO R PROGRAMMING</h1>
-        <p>Boise State University</p> 
   </div>
   <div class="orange-rectangle">
     <p>DATA-R155, BIOL155, PSYC155, SOC155, ANTH580</p>    
@@ -1720,7 +1719,7 @@ display: none;
 
 <h1 class="title toc-ignore">Chapter 3 Activity (In-Class)</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version: January 13, 2026</h4>
+<h4 class="date">Version: February 01, 2026</h4>
 
 </div>
 
@@ -1729,19 +1728,25 @@ display: none;
 <h1><span class="header-section-number">1</span> Group Activity: Vector
 Playlab 🎮</h1>
 <p>Today’s activity is a group challenge to deepen your understanding of
-vectors in R — and to see what happens when you push them into data
-frames, matrices, and lists. Work together, write your own code, and
-discuss your results. By the end of this activity, you will be able to
-create and inspect vectors of different types, perform vector arithmetic
-(including recycling), and organize data into data frames, lists, and
-matrices.</p>
+vectors in R and to see what happens when you push them into a functions
+and a data frame. Work together, taking turns typing code on one
+computer, and discuss your results. By the end of this activity, you
+will be able to create and inspect vectors of different types, and
+organize data into a data frame.</p>
+<p>Each member of your group will type different vector types on one
+computer. Together you will create a mini “Mad Lib” story using your
+vectors.</p>
 <div id="activity-overview" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Activity
 Overview</h2>
-<p>In the next few minutes you will learn how to:</p>
-<p>🔍 Differentiate between numeric and integer vector types</p>
-<p>📝 Explain how R treats vector types</p>
-<p>🔨 Construct and manipulate vectors</p>
+<p>In the next thirty minutes you will:</p>
+<ul>
+<li><p>🔍 Differentiate between numeric and integer vector
+types</p></li>
+<li><p>📝 Explain how R treats vector types</p></li>
+<li><p>🔨 Construct and manipulate vectors</p></li>
+<li><p>👥 Collaborate as a team to complete a coding challenge</p></li>
+</ul>
 </div>
 </div>
 <div id="activity-prep" class="section level1" number="2">
@@ -1764,84 +1769,38 @@ after”)</p></li>
 <li><p>Old Game (game title from the past)</p></li>
 </ol>
 </div>
-<div id="find-your-group" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Find Your Group</h1>
-<div id="step-one-join-your-canvas-group" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Step One: Join your
-Canvas group</h2>
-<p>Go to People → Vector Playlab Groups and join one group with fewer
-than 4 members. Groups should have approximately 4 people 👨🏻👩🏼👧🏽👦🏾.</p>
+<div id="research-team-creation" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Research Team
+Creation</h1>
+<p>Turn to your neighbors and negotiate a collaboration agreement
+between 3 other people. There should be four people in each group, each
+with a specific role.</p>
+<div id="form-groups" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Form Groups</h2>
+<p>Groups should have approximately 4 people 👨🏻👩🏼👧🏽👦🏾.</p>
 </div>
-<div id="step-two-assign-roles" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Step Two: Assign
-Roles</h2>
+<div id="assign-roles" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Assign Roles</h2>
 <p>Decide roles in your group. Roles can rotate, but one person must be
 the Reporter.</p>
 <ul>
-<li><p><strong>Student A</strong>: types numeric + integer
+<li><p><strong>Student A</strong>: types <strong>numeric</strong>,
+<strong>integer</strong>, + <strong>logical</strong> vectors</p></li>
+<li><p><strong>Student B</strong>: types <strong>character</strong>
 vectors</p></li>
-<li><p><strong>Student B</strong>: types logical vector + short memo
-explaining each comparison</p></li>
-<li><p><strong>Student C</strong>: types character vectors + factor
+<li><p><strong>Student C</strong>: types <strong>factor</strong>
 conversion</p></li>
 <li><p><strong>Reporter</strong>: types <code>member_name</code> and
-<code>role</code>, copy/paste story + data frame + Run All check + final
-submission</p></li>
+<code>role</code>, copy/paste <strong>story</strong> + <strong>data
+frame</strong> + Run All check + final
+<strong>submission</strong></p></li>
 </ul>
-</div>
-<div id="step-three-reporter" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Step Three:
-Reporter</h2>
-<ol style="list-style-type: decimal">
-<li>In RStudio: File → New File → R Notebook</li>
-</ol>
-<p>Save it in your course folder as:
-<code>vector_playlab_groupXX.Rmd</code> <em>(Replace XX with your group
-number/name.)</em></p>
-<ol start="2" style="list-style-type: decimal">
-<li>At the top of the notebook add:</li>
-</ol>
-<pre class="r"><code># Vector Playlab Group Members + Roles
-member_name &lt;- c(&quot;Name1&quot;, &quot;Name2&quot;, &quot;Name3&quot;, &quot;Name4&quot;)
-role &lt;- c(&quot;Student A&quot;, &quot;Student B&quot;, &quot;Student C&quot;, &quot;Reporter&quot;)</code></pre>
-<p><em>The length of <code>member_name</code> and <code>role</code>
-should match and correspond to each other.</em></p>
-</div>
-<div id="step-four-students-a-b-and-c" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Step Four: Students
-A, B, and C</h2>
-<p>Work together to complete your assigned sections of the activity.
-Pass the keyboard around. Each student should type their code into the R
-Notebook. Be creative! You can use any resource you’d like to help you
-come up with the elements in the vectors (e.g., internet search,
-brainstorming with an AI, etc.). Document tenacity (e.g., discoveries,
-errors) and transparency (e.g., resources used).</p>
-</div>
-<div id="step-four-reporter" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Step Four:
-Reporter</h2>
-<ol style="list-style-type: decimal">
-<li>Copy and paste the following code and read your Mad Lib Story!</li>
-</ol>
-<p>➤ Before running the story code, confirm these objects exist in your
-Environment: <code>numeric</code>, <code>integer</code>,
-<code>logical</code>, <code>name</code>, <code>group_name</code>,
-<code>at_handle</code>, <code>item</code>, <code>activity</code>,
-<code>location</code>, <code>call_to_action</code>,
-<code>emotion</code>, <code>retro_game</code>,
-<code>social_media_platform</code></p>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Build a tiny table you can reference as “credits” under the
-stories.</p></li>
-<li><p>Run All to confirm everything works top-to-bottom</p></li>
-<li><p>Final submission on Canvas.</p></li>
-</ol>
 </div>
 </div>
 <div id="rules" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Rules</h1>
 <ol style="list-style-type: decimal">
-<li>Naming rules</li>
+<li><strong>Naming rules</strong></li>
 </ol>
 <ul>
 <li>Use the exact object names shown in this handout (for example:
@@ -1849,7 +1808,7 @@ stories.</p></li>
 <code>name</code>, <code>group_name</code>, etc.).</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Reproducibility rule</li>
+<li><strong>Reproducibility rule</strong></li>
 </ol>
 <p>Your notebook must run top-to-bottom. That means:</p>
 <ul>
@@ -1858,7 +1817,7 @@ stories.</p></li>
 memo.</p></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
-<li>Memoing rule (transparency)</li>
+<li><strong>Memoing rule</strong> (transparency)</li>
 </ol>
 <p>Add short written notes in your notebook that describe:</p>
 <ul>
@@ -1868,103 +1827,169 @@ memo.</p></li>
 help/resources used).</p></li>
 </ul>
 </div>
-<div id="vectors" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Vectors</h1>
-<p>*Rules**: Name your vectors exactly as listed. Follow the rules for
-each type. Element duplication is permissible. (15 Minutes Maximum)</p>
-<div id="numeric-vector" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Numeric vector</h2>
+<div id="setup" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Setup</h1>
+<div id="reporter" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Reporter</h2>
+<p>➤ Step 1</p>
+<p>In RStudio: File → New File → R Notebook</p>
+<p>➤ Step 2</p>
+<p>Save the R Notebook in your course folder as:
+<code>vector_playlab_groupXX.Rmd</code> <em>(Replace XX with your group
+name.)</em></p>
+<p>➤ Step 3</p>
+<p>At the top of the notebook add a code chunk that creates two vectors:
+<code>member_name</code> and <code>role</code>.</p>
+<pre class="r"><code># Vector Playlab Group Members + Roles
+member_name &lt;- c(&quot;Name1&quot;, &quot;Name2&quot;, &quot;Name3&quot;, &quot;Name4&quot;)
+role &lt;- c(&quot;Student A&quot;, &quot;Student B&quot;, &quot;Student C&quot;, &quot;Reporter&quot;)</code></pre>
+<p>✅ The <em>length</em> of <code>member_name</code> and
+<code>role</code> should match and correspond to each other.</p>
+</div>
+</div>
+<div id="vectors" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Vectors</h1>
+<div id="students-a-b-and-c" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Students A, B, and
+C</h2>
+<p>Work together to complete your assigned sections under the Vectors
+heading.</p>
+<ul>
+<li><p>Pass the keyboard around. Each student should type their code
+into a code chunk the R Notebook.</p></li>
+<li><p>Be creative! Everyone in the group contributes element
+ideas.</p></li>
+<li><p>Document discoveries and transparency (e.g., resources used)
+outside of code chunks.</p></li>
+</ul>
+<p><strong>Rules</strong>: Name each vectors <em>exactly</em> as listed.
+Follow the rules for each type. Element duplication is permissible. (15
+Minutes Maximum)</p>
+</div>
+<div id="student-a-numeric-integer-logical-vectors" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Student A: Numeric,
+Integer, + logical Vectors</h2>
+<div id="numeric-vector" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Numeric vector</h3>
+<p>➤ Step 1</p>
+<p>Make each numeric vector with values of the group’s choice.</p>
 <p>🎯 Create a vector called <code>numeric</code> → all real numbers
-(length = 10)</p>
+(length = 10); Element duplication is welcome.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 numeric &lt;- c( __ , __ , __ , __ , __ , __ , __ , __ , __ , __ )</code></pre>
 <pre class="r"><code>## ✅ Check the length of your vector
 _____(numeric)</code></pre>
 <p>🗣 Comment: Describe <code>numeric</code> vector type.</p>
 </div>
-<div id="integer-vector" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Integer vector</h2>
-<p>🎯 <code>integer</code> → must use the L suffix (length = 4 or group
-size)</p>
+<div id="integer-vector" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Integer vector</h3>
+<p>Make each Integer vector with values of the group’s choice.</p>
+<p>➤ Step 2</p>
+<p>🎯 <code>integer</code> → must use the L suffix (length = 4 <em>or
+group size</em>)</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 integer &lt;- c( __ _ , __ _ , __ _ , __ _ )</code></pre>
 <pre class="r"><code>## ✅ Check the length of your vector
 _____(integer)</code></pre>
 <p>🗣 Comment: Describe <code>integer</code> vector type.</p>
 </div>
-<div id="logical-vector" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Logical vector</h2>
+<div id="logical-vector" class="section level3" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> Logical vector</h3>
+<p>➤ Step 3</p>
 <p>🎯 Create a vector called <code>logical</code> → build with
-<strong>logical operators</strong> (length = 4 or group size).</p>
-<p>The logical operators are:</p>
-<ul>
-<li><p><code>&gt;</code> greater than</p></li>
-<li><p><code>&lt;</code> less than</p></li>
-<li><p><code>==</code> equal to</p></li>
-<li><p><code>&gt;=</code> greater than or equal to</p></li>
-<li><p><code>&lt;=</code> less than or equal to</p></li>
-<li><p><code>!=</code> not equal to</p></li>
-</ul>
+<strong>logical operators</strong> (length = 4 <em>or group
+size</em>).</p>
+<pre><code>The logical operators are:
+
+- `&gt;` greater than
+
+- `&lt;` less than
+
+- `==` equal to
+
+- `&gt;=` greater than or equal to
+
+- `&lt;=` less than or equal to
+
+- `!=` not equal to</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 logical &lt;- c( __ , __ , __ , __ )</code></pre>
 <pre class="r"><code>## ✅ Check the length or class of your vector
 _____(logical)</code></pre>
 <p>🗣 Comment: Describe <code>logical</code> vector type.</p>
 </div>
-<div id="character-vectors" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Character
-vectors</h2>
-<p>➤ Make each character vector with words or phrases of your
-choice:</p>
+</div>
+<div id="student-b-character-vectors" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Student B: Character
+Vectors</h2>
+<div id="character-vectors" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Character
+vectors</h3>
+<p>➤ Step 1</p>
+<p>Make each character vector with words or phrases of the group’s
+choice.</p>
 <ul>
-<li><p>🎯 Create a vector called <code>name</code> → any person’s name
+<li><p>🎯 Create a vector called <code>name</code> → <em>any</em> name
 (length = 10); Element duplication is recommended.</p></li>
 <li><p>🎯 Create a vector called <code>group_name</code> → name of your
-group (length = 4 or group size)</p></li>
+group (length = 4 <em>or group size</em>)</p></li>
 <li><p>🎯 Create a vector called <code>at_handle</code> → any social
-media handle (length = 4 or group size)</p></li>
-<li><p>🎯 Create a vector called <code>item</code> → any kind of thing
-(length = 10)</p></li>
+media handle (length = 4 <em>or group size</em>)</p></li>
+<li><p>🎯 Create a vector called <code>item</code> → <em>any</em> kind
+of thing (length = 10); Element duplication is welcome.</p></li>
 <li><p>🎯 Create a vector called <code>activity</code> → something you
-do (length = 10); Element duplication is recommended.</p></li>
+do (length = 10); Element duplication is welcome.</p></li>
 <li><p>🎯 Create a vector called <code>location</code> → any place to go
-(real or imagined) (length = 4 or group size)</p></li>
+(real or imagined) (length = 4 <em>or group size</em>)</p></li>
 <li><p>🎯 Create a vector called <code>call_to_action</code> → a catch
-phrase or statement (length = 4 or group size)</p></li>
+phrase or statement (length = 4 <em>or group size</em>)</p></li>
 <li><p>🎯 Create a vector called <code>outcomes</code> → phrase
-describing a result (length = 4 or group size)</p></li>
-<li><p>🎯 Create a vector called <code>emotion</code> → a mood or
-feeling (length = 10); Element duplication is recommended.</p></li>
+describing a result (length = 4 <em>or group size</em>)</p></li>
+<li><p>🎯 Create a vector called <code>emotion</code> → a mood, emotion,
+or feeling (length = 10); Element duplication is welcome.</p></li>
 <li><p>🎯 Create a vector called <code>retro_game</code> → any
-old-school game title (length = 4 or group size)</p></li>
+old-school game title (length = 4 <em>or group size</em>)</p></li>
 </ul>
 </div>
-<div id="factor-class" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Factor class</h2>
-<div id="part-1" class="section level3" number="5.5.1">
-<h3><span class="header-section-number">5.5.1</span> Part 1</h3>
-<p>🎯 Change a character vector(s) into factor class. (5 minutes)</p>
-<p>➤ Step 1: Check the Class</p>
+</div>
+<div id="student-c-factor-class" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Student C: Factor
+class</h2>
+<div id="change-to-factor-class" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Change to Factor
+Class</h3>
+<p>Change a character vector(s) into factor class. (5 minutes)</p>
+<p>➤ Step 1</p>
+<p>Check the Class</p>
 <p>🎯 Select a character vector (e.g., <code>name</code>,
-<code>activity</code>, <code>emotion</code>) and use a function
-<code>class()</code> to check the class of the vector.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+<code>activity</code>, <code>emotion</code>)</p>
+<p>🎯 Use a function <code>class()</code> to check the class of the
+vector.</p>
+<pre class="r"><code>## ✅ Check the class of your selected vector
+# ⚡ Type this in your R Notebook, Fill in the blanks
 class( __ )</code></pre>
-<p>➤ Step 2: Change Class to Factor</p>
+<p>➤ Step 2</p>
+<p>Change Class to Factor</p>
 <p>🎯 Use the <code>as.factor()</code> function to change <em>at least
 one</em> character vector into factor class. Overwrite the original
 character vector with the factor class vector.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+<pre class="r"><code>## ↔️ Change the class of your selected vector
+# ⚡ Type this in your R Notebook, Fill in the blanks
 __ &lt;- _____( __ )</code></pre>
-<p>➤ Step 3: Check the Class</p>
+<p>➤ Step 3</p>
+<p>Check the Class</p>
 <p>🎯 Verify that the class of the vector(s) have changes.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+<pre class="r"><code>## ✅ Check the class of your selected vector
+# ⚡ Type this in your R Notebook, Fill in the blanks
 class( __ )</code></pre>
 </div>
-<div id="part-2" class="section level3" number="5.5.2">
-<h3><span class="header-section-number">5.5.2</span> Part 2</h3>
-<p>(5 minutes)</p>
-<p>➤ Make a Factor Vector</p>
+<div id="create-as-factor-class" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Create as Factor
+Class</h3>
+<p>Create a new factor vector from scratch using the
+<code>factor()</code> function. (5 minutes)</p>
+<p>➤ Step 4:</p>
+<p>Make a Factor Vector</p>
 <p>Here is an <em>example</em> to follow:</p>
 <pre class="r"><code># ⚡ Creating a character vector
 tshirt_sizes_data &lt;- c(&quot;M&quot;, &quot;L&quot;, &quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;S&quot;)
@@ -1985,19 +2010,40 @@ print( social_media_platform )</code></pre>
 </div>
 </div>
 </div>
-<div id="story" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Story</h1>
-<p>➤ Copy and paste the following code and read your Mad Lib Story!</p>
+<div id="story" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Story</h1>
+<div id="reporter-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Reporter</h2>
+<div id="confirm-objects" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Confirm
+Objects</h3>
+<p>➤ Step 1</p>
+<p>Confirm these objects exist in your Environment:
+<code>numeric</code>, <code>integer</code>, <code>logical</code>,
+<code>name</code>, <code>group_name</code>, <code>at_handle</code>,
+<code>item</code>, <code>activity</code>, <code>location</code>,
+<code>call_to_action</code>, <code>emotion</code>,
+<code>retro_game</code>, <code>social_media_platform</code>.</p>
+<pre class="r"><code># ⚡  Copy and paste this code into your R Notebook
+ls()</code></pre>
+</div>
+<div id="mad-lib-story" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Mad Lib Story</h3>
+<p>➤ Step 2</p>
+<p>Copy and paste the Mad Lib Story code and read your Mad Lib
+Story!</p>
 <pre class="r"><code># ⚡  Copy and paste this code into your R Notebook
 # Function to pick a random element from a vector
 pick &lt;- function(x) sample(x, 1)
 
 # ---------- Story 1 ----------
+activity_chosen &lt;- pick(activity)
+
 story1 &lt;- paste(
-  &quot;After a long week,&quot;, pick(name), &quot;unplugged by trying&quot;, pick(activity),
+  &quot;After a long week,&quot;, pick(name), &quot;unplugged by trying&quot;, activity_chosen,
   &quot;with&quot;, pick(group_name), &quot;at their favorite spot,&quot;, paste0(pick(location), &quot;.&quot;),
   &quot;Vibe rating:&quot;, paste0(pick(numeric), &quot;.&quot;),
-  &quot;The &quot;, pick(activity), &quot;was going so well, but then a crucial missing&quot;, paste0(pick(item), &quot; was discovered.&quot;),
+  &quot;The&quot;, activity_chosen, &quot;was going so well, but then a crucial missing&quot;, paste0(pick(item), &quot; was discovered.&quot;),
   &quot;Going with the flow was&quot;, ifelse(pick(logical), &quot;reasonable.&quot;, &quot;unreasonable.&quot;),
   &quot;Reminding each other&quot;, paste0(pick(call_to_action), &quot;.&quot;),
   &quot;They made a plan for Episode&quot;, paste0(pick(integer), &quot;,&quot;),
@@ -2026,8 +2072,11 @@ story2 &lt;- paste(
 )
 print(story2)</code></pre>
 </div>
-<div id="dataframe" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Dataframe</h1>
+<div id="dataframe" class="section level3" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Dataframe</h3>
+<p>➤ Step 2</p>
+<p>Build a tiny table you can reference as “credits” under the
+stories.</p>
 <p>🎯 Build a tiny table you can reference as “credits” under the
 stories.</p>
 <pre class="r"><code># ⚡  Copy and paste this code into your R Notebook
@@ -2040,6 +2089,17 @@ people &lt;- data.frame(
 )
 
 print(people)</code></pre>
+<p>🗣 Confirm that all group member’s names and roles are listed
+correctly in the <code>people</code> data frame.</p>
+</div>
+<div id="submission" class="section level3" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> Submission</h3>
+<p>➤ Step 3</p>
+<p>Run All to confirm everything works top-to-bottom</p>
+<p>➤ Step 4</p>
+<p>Upload the R Notebook on Canvas.</p>
+</div>
+</div>
 </div>
 <div id="today-you-practiced" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Today you
@@ -2049,12 +2109,13 @@ practiced</h1>
 <li><p>Creating vectors of different types (numeric, integer, character,
 and logical).</p></li>
 <li><p>Combining vectors into a data frame.</p></li>
+<li><p>Collaborating as a team to complete a coding challenge.</p></li>
 </ul>
 <p>Your work today previewed how R organizes and manages different data
 structures.</p>
-<p>👉 Before leaving, have the person in the Reporter role submit the R
-notebook on Canvas. This notebook should show all of the vectors and
-data structures you created during the activity.</p>
+<p>👉 Before leaving, make sure the reported submitted the R notebook on
+Canvas. This notebook should show all of the vectors and learning memos
+you and your team created during the activity.</p>
 </div>
 
 <footer>

@@ -78,17 +78,21 @@ output:
 
 # Group Activity: Vector Playlab 🎮
 
-Today’s activity is a group challenge to deepen your understanding of vectors in R — and to see what happens when you push them into data frames, matrices, and lists. Work together, write your own code, and discuss your results. By the end of this activity, you will be able to create and inspect vectors of different types, perform vector arithmetic (including recycling), and organize data into data frames, lists, and matrices.
+Today’s activity is a group challenge to deepen your understanding of vectors in R  and to see what happens when you push them into a functions and a data frame. Work together, taking turns typing code on one computer, and discuss your results. By the end of this activity, you will be able to create and inspect vectors of different types, and organize data into a data frame.
+
+Each member of your group will type different vector types on one computer. Together you will create a mini "Mad Lib" story using your vectors.
 
 ## Activity Overview
 
-In the next few minutes you will learn how to:
+In the next thirty minutes you will:
 
-🔍 Differentiate between numeric and integer vector types 
+- 🔍 Differentiate between numeric and integer vector types 
 
-📝 Explain how R treats vector types
+- 📝 Explain how R treats vector types
 
-🔨 Construct and manipulate vectors
+- 🔨 Construct and manipulate vectors
+
+- 👥 Collaborate as a team to complete a coding challenge
 
 
 # Activity Prep
@@ -115,63 +119,33 @@ To prep for our activity today think on how you would answer the following promp
 
 10. Old Game (game title from the past)
 
-# Find Your Group
+# Research Team Creation
 
-## Step One: Join your Canvas group
+Turn to your neighbors and negotiate a collaboration agreement between 3 other people. There should be four people in each group, each with a specific role.
 
-Go to People → Vector Playlab Groups and join one group with fewer than 4 members. Groups should have approximately 4 people 👨🏻👩🏼👧🏽👦🏾. 
+## Form Groups
 
-## Step Two: Assign Roles
+ Groups should have approximately 4 people 👨🏻👩🏼👧🏽👦🏾. 
+
+## Assign Roles
 
 Decide roles in your group. Roles can rotate, but one person must be the Reporter.
 
-- **Student A**: types numeric + integer vectors
+- **Student A**: types **numeric**, **integer**, + **logical** vectors
 
-- **Student B**: types logical vector + short memo explaining each comparison
+- **Student B**: types **character** vectors 
 
-- **Student C**: types character vectors + factor conversion
+- **Student C**: types **factor** conversion
 
-- **Reporter**: types `member_name` and `role`, copy/paste story + data frame + Run All check + final submission
-
-## Step Three: Reporter
-
-1. In RStudio: File → New File → R Notebook
-
-Save it in your course folder as: `vector_playlab_groupXX.Rmd` *(Replace XX with your group number/name.)*
-
-2. At the top of the notebook add:
-
-```{r eval=FALSE}
-# Vector Playlab Group Members + Roles
-member_name <- c("Name1", "Name2", "Name3", "Name4")
-role <- c("Student A", "Student B", "Student C", "Reporter")
-```
-
-*The length of `member_name` and `role` should match and correspond to each other.*
-  
-## Step Four: Students A, B, and C
-
-Work together to complete your assigned sections of the activity. Pass the keyboard around. Each student should type their code into the R Notebook. Be creative! You can use any resource you'd like to help you come up with the elements in the vectors (e.g., internet search, brainstorming with an AI, etc.). Document tenacity (e.g., discoveries, errors) and transparency (e.g., resources used).
-
-## Step Four: Reporter
-
-1. Copy and paste the following code and read your Mad Lib Story!
-
-➤  Before running the story code, confirm these objects exist in your Environment: `numeric`, `integer`, `logical`, `name`, `group_name`, `at_handle`, `item`, `activity`, `location`, `call_to_action`, `emotion`, `retro_game`, `social_media_platform`
-
-2. Build a tiny table you can reference as “credits” under the stories.
-
-3. Run All to confirm everything works top-to-bottom 
-
-5. Final submission on Canvas.
+- **Reporter**: types `member_name` and `role`, copy/paste **story** + **data frame** + Run All check + final **submission**
 
 # Rules
 
-1. Naming rules
+1. **Naming rules**
 
 - Use the exact object names shown in this handout (for example: `numeric`, `integer`, `logical`, `name`, `group_name`, etc.).
 
-2. Reproducibility rule
+2. **Reproducibility rule**
 
 Your notebook must run top-to-bottom. That means:
 
@@ -179,7 +153,7 @@ Your notebook must run top-to-bottom. That means:
 
 - If something errors, fix it and document the fix with a memo.
 
-3. Memoing rule (transparency)
+3. **Memoing rule** (transparency)
 
 Add short written notes in your notebook that describe:
 
@@ -189,14 +163,53 @@ Add short written notes in your notebook that describe:
 
 - and what you changed to fix a problem (including any help/resources used).
 
+# Setup
+
+## Reporter
+
+➤  Step 1
+
+ In RStudio: File → New File → R Notebook
+
+➤  Step 2
+
+Save the R Notebook in your course folder as: `vector_playlab_groupXX.Rmd` *(Replace XX with your group name.)*
+
+➤  Step 3
+
+At the top of the notebook add a code chunk that creates two vectors: `member_name` and `role`.
+
+```{r eval=FALSE}
+# Vector Playlab Group Members + Roles
+member_name <- c("Name1", "Name2", "Name3", "Name4")
+role <- c("Student A", "Student B", "Student C", "Reporter")
+```
+
+✅ The *length* of `member_name` and `role` should match and correspond to each other.
 
 # Vectors
+  
+## Students A, B, and C
 
-*Rules**: Name your vectors exactly as listed. Follow the rules for each type. Element duplication is permissible. (15 Minutes Maximum)
+Work together to complete your assigned sections under the Vectors heading. 
 
-## Numeric vector
+- Pass the keyboard around. Each student should type their code into a code chunk the R Notebook. 
 
-🎯  Create a vector called `numeric` → all real numbers (length = 10)
+- Be creative! Everyone in the group contributes element ideas.
+
+- Document discoveries and transparency (e.g., resources used) outside of code chunks.
+
+**Rules**: Name each vectors *exactly* as listed. Follow the rules for each type. Element duplication is permissible. (15 Minutes Maximum)
+
+## Student A: Numeric, Integer, + logical Vectors
+
+### Numeric vector
+
+➤  Step 1
+
+Make each numeric vector with values of the group's choice.
+
+🎯  Create a vector called `numeric` → all real numbers (length = 10); Element duplication is welcome.
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -209,9 +222,13 @@ _____(numeric)
 
 🗣 Comment: Describe `numeric` vector type.
 
-## Integer vector
+### Integer vector
 
-🎯 `integer` → must use the L suffix (length = 4 or group size)
+Make each Integer vector with values of the group's choice.
+
+➤  Step 2
+
+🎯 `integer` → must use the L suffix (length = 4 *or group size*)
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -221,25 +238,29 @@ integer <- c( __ _ , __ _ , __ _ , __ _ )
 ## ✅ Check the length of your vector
 _____(integer)
 ```
+
 🗣 Comment: Describe `integer` vector type. 
 
-## Logical vector
 
-🎯  Create a vector called `logical` → build with **logical operators** (length = 4 or group size).
+### Logical vector
 
-The logical operators are:
+➤  Step 3
 
-- `>` greater than
+🎯  Create a vector called `logical` → build with **logical operators** (length = 4 *or group size*).
 
-- `<` less than
+    The logical operators are:
 
-- `==` equal to
+    - `>` greater than
 
-- `>=` greater than or equal to
+    - `<` less than
 
-- `<=` less than or equal to
+    - `==` equal to
 
-- `!=` not equal to
+    - `>=` greater than or equal to
+
+    - `<=` less than or equal to
+
+    - `!=` not equal to
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -252,68 +273,85 @@ _____(logical)
 
 🗣 Comment: Describe `logical` vector type.
 
-## Character vectors
+## Student B: Character Vectors
 
-➤  Make each character vector with words or phrases of your choice:
+### Character vectors
 
-- 🎯  Create a vector called `name` → any person’s name (length = 10); Element duplication is recommended.
+➤  Step 1
 
-- 🎯  Create a vector called `group_name` → name of your group (length = 4 or group size)
+Make each character vector with words or phrases of the group's choice.
 
-- 🎯  Create a vector called `at_handle` → any social media handle (length = 4 or group size)
+- 🎯  Create a vector called `name` → *any* name (length = 10); Element duplication is recommended.
 
-- 🎯  Create a vector called `item` → any kind of thing (length = 10)
+- 🎯  Create a vector called `group_name` → name of your group (length = 4 *or group size*)
 
-- 🎯  Create a vector called `activity` → something you do (length = 10); Element duplication is recommended.
+- 🎯  Create a vector called `at_handle` → any social media handle (length = 4 *or group size*)
 
-- 🎯  Create a vector called `location` → any place to go (real or imagined) (length = 4 or group size)
+- 🎯  Create a vector called `item` → *any* kind of thing (length = 10); Element duplication is welcome.
 
-- 🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4 or group size)
+- 🎯  Create a vector called `activity` → something you do (length = 10); Element duplication is welcome.
 
-- 🎯  Create a vector called `outcomes` → phrase describing a result (length = 4 or group size)
+- 🎯  Create a vector called `location` → any place to go (real or imagined) (length = 4 *or group size*)
 
-- 🎯  Create a vector called `emotion` → a mood or feeling (length = 10); Element duplication is recommended.
+- 🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4 *or group size*)
 
-- 🎯  Create a vector called `retro_game` → any old-school game title (length = 4 or group size)
+- 🎯  Create a vector called `outcomes` → phrase describing a result (length = 4 *or group size*)
 
-## Factor class
+- 🎯  Create a vector called `emotion` → a mood, emotion, or feeling (length = 10); Element duplication is welcome.
 
-### Part 1
+- 🎯  Create a vector called `retro_game` → any old-school game title (length = 4 *or group size*)
 
-🎯 Change a character vector(s) into factor class. (5 minutes)
+## Student C: Factor class
 
-➤  Step 1: Check the Class
+### Change to Factor Class
 
-🎯 Select a character vector (e.g., `name`, `activity`, `emotion`) and use a function `class()` to check the class of the vector.
+Change a character vector(s) into factor class. (5 minutes)
+
+➤  Step 1
+
+Check the Class
+
+🎯 Select a character vector (e.g., `name`, `activity`, `emotion`) 
+
+🎯 Use a function `class()` to check the class of the vector.
 
 ```{r eval=FALSE}
+## ✅ Check the class of your selected vector
 # ⚡ Type this in your R Notebook, Fill in the blanks
 class( __ )
 ```
 
-➤  Step 2: Change Class to Factor
+➤  Step 2
+
+Change Class to Factor
 
 🎯 Use the `as.factor()` function to change *at least one* character vector into factor class. Overwrite the original character vector with the factor class vector.
 
 ```{r eval=FALSE}
+## ↔️ Change the class of your selected vector
 # ⚡ Type this in your R Notebook, Fill in the blanks
 __ <- _____( __ )
 ```
 
-➤  Step 3: Check the Class
+➤  Step 3
+
+Check the Class
 
 🎯 Verify that the class of the vector(s) have changes.
 
 ```{r eval=FALSE}
+## ✅ Check the class of your selected vector
 # ⚡ Type this in your R Notebook, Fill in the blanks
 class( __ )
 ```
 
-### Part 2
+### Create as Factor Class
 
-(5 minutes)
+Create a new factor vector from scratch using the `factor()` function. (5 minutes)
 
-➤  Make a Factor Vector
+➤  Step 4:
+
+Make a Factor Vector
 
 Here is an *example* to follow: 
 
@@ -336,10 +374,27 @@ social_media_platform <- factor( __ , levels = c( __ , __ , __ , __ ) )
 print( social_media_platform )
 ```
 
-
 # Story
 
-➤  Copy and paste the following code and read your Mad Lib Story!
+## Reporter
+
+### Confirm Objects
+
+➤  Step 1
+
+Confirm these objects exist in your Environment: `numeric`, `integer`, `logical`, `name`, `group_name`, `at_handle`, `item`, `activity`, `location`, `call_to_action`, `emotion`, `retro_game`, `social_media_platform`.
+
+
+```{r eval=FALSE}
+# ⚡  Copy and paste this code into your R Notebook
+ls()
+```
+
+### Mad Lib Story
+
+➤  Step 2
+
+Copy and paste the Mad Lib Story code and read your Mad Lib Story!
 
 ```{r , eval=FALSE}
 # ⚡  Copy and paste this code into your R Notebook
@@ -347,11 +402,13 @@ print( social_media_platform )
 pick <- function(x) sample(x, 1)
 
 # ---------- Story 1 ----------
+activity_chosen <- pick(activity)
+
 story1 <- paste(
-  "After a long week,", pick(name), "unplugged by trying", pick(activity),
+  "After a long week,", pick(name), "unplugged by trying", activity_chosen,
   "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
   "Vibe rating:", paste0(pick(numeric), "."),
-  "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
+  "The", activity_chosen, "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
   "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
   "Reminding each other", paste0(pick(call_to_action), "."),
   "They made a plan for Episode", paste0(pick(integer), ","),
@@ -382,7 +439,11 @@ print(story2)
 ```
 
 
-# Dataframe
+### Dataframe
+
+➤  Step 2
+
+Build a tiny table you can reference as “credits” under the stories.
 
 🎯 Build a tiny table you can reference as “credits” under the stories.
 
@@ -400,9 +461,17 @@ people <- data.frame(
 print(people)
 ```
 
+🗣 Confirm that all group member's names and roles are listed correctly in the `people` data frame.
 
+### Submission
 
+➤  Step 3
 
+Run All to confirm everything works top-to-bottom 
+
+➤  Step 4
+
+Upload the R Notebook on Canvas.
 
 # Today you practiced
 
@@ -412,6 +481,8 @@ In this activity, your group practiced:
 
 - Combining vectors into a data frame.
 
+- Collaborating as a team to complete a coding challenge.
+
 Your work today previewed how R organizes and manages different data structures.
 
-👉 Before leaving, have the person in the Reporter role submit the R notebook on Canvas. This notebook should show all of the vectors and data structures you created during the activity.
+👉 Before leaving, make sure the reported submitted the R notebook on Canvas. This notebook should show all of the vectors and learning memos you and your team created during the activity.

@@ -33,6 +33,12 @@
 
 🔄 Re-run
 
+↔️ Change
+
+✏️ Edit
+
+🔀 Shuffle
+
 🔍 Look deeper: 
   
   🗣 Comment:
