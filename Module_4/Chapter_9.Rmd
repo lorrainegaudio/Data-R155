@@ -1,5 +1,5 @@
 ---
-title: "Chapter 6"
+title: "Chapter 9"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"

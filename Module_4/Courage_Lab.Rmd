@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r eval=FALSE, include=FALSE}
 title: "Courage Lab"
 author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
   pdf_document:
     toc: true
@@ -54,8 +54,8 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 Or
 title: "Courage Lab"
 author: "by Lorraine Gaudio"
-date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Fall 2025"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
@@ -75,11 +75,11 @@ output:
 
 # 👥 Human-Centered AI
 
-This course teaches AI competencies: Human-centered mindset, AI techniques and applications, and Ethics of AI. So far, we've focused on AI techniques and applications such and prompt engineering. Today, we take a step back and think about when and how to use AI in a way that centers human relationships and learning.
+This course teaches AI competencies: Human-centered mindset, AI techniques and applications, and Ethics of AI. So far, we've focused on AI techniques and applications such as prompt engineering. Today, we take a step back and think about when and how to use AI in a way that centers human relationships and learning.
 
-Help-seeking is a social act. In learning, research, and work settings, asking for help typically does more than solve a problem: it signals vulnerability; it activates reciprocity. it transmits norms; and it builds trust and belonging. When you ask your peer, instructor, or others for help, you are participating in a relational infrastructure. Quick questions before class, brief check-ins during office hours, and small moments of confusion shared with classmates all build a sense of community and shared purpose. If an LLM becomes the easiest, fastest, lowest-friction option, you will experience fewer micro-interactions, have fewer peer modeling opportunities, and fewer moments where norms, strategies, or values are socially transmitted. Using LLM exclusively will reduce the density of casual, learning-oriented contact, which is often where community is actually built. Those “small” interactions are how learning communities form.
+Help-seeking is a social act. In learning, research, and work settings, asking for help typically does more than solve a problem: it signals vulnerability; it activates reciprocity. It transmits norms; and it builds trust and belonging. When you ask your peer, instructor, or others for help, you are participating in a relational infrastructure. Quick questions before class, brief check-ins during office hours, and small moments of confusion shared with classmates all build a sense of community and shared purpose. If an LLM becomes the easiest, fastest, lowest-friction option, you will experience fewer micro-interactions, have fewer peer modeling opportunities, and fewer moments where norms, strategies, or values are socially transmitted. Using LLM exclusively will reduce the density of casual, learning-oriented contact, which is often where community is actually built. Those “small” interactions are how learning communities form.
 
-An AI can give instrumental help (fast feedback, examples, explanations) without any social risk. That can be especially useful when you feel anxious, behind, or worried about looking foolish. LLMs don't judge, don't get tired, don't keep score, and don't *feel like* you are disclosing private information to others. But it also means AI can quietly replace the low-stakes human interactions that help you feel connected. In other words, LLMs provide private competence-building but may result in feelings of isolation. A shared learning ecology offers connection but requires volubility and time. 
+An AI can give instrumental help (fast feedback, examples, explanations) without any social risk. That can be especially useful when you feel anxious, behind, or worried about looking foolish. LLMs don't judge, don't get tired, don't keep score, and don't *feel like* you are disclosing private information to others. But it also means AI can quietly replace the low-stakes human interactions that help you feel connected. In other words, LLMs provide private competence-building but may result in feelings of isolation. A shared learning ecology offers connection but requires vulnerability and time. 
 
 # 🦁 Courage
 
@@ -93,20 +93,15 @@ Courage matters because it directly determines whether you will actually use the
 
 ## Purpose
 
-This lab is about practicing courage and human-centered AI use. You will (1) identify what you’re stuck on, (2) name what makes asking hard, and (3) ask a real person for help using a clear, respectful message. AI tools can help you clarify your question, but in this lab a human is the target audience.
+This lab is about practicing courage and human-centered AI use. You will (1) Identify one real point of confusion from recent course work, (2) Practice naming what makes help-seeking hard, and (3) Ask a real person for help using a clear, respectful message. AI tools may be used only to improve the clarity of your help request (or to suggest a few next steps you can ask a person about). They should not be used to solve the problem today.
 
+⏱️ At a Glance
 
-⏱️ 30 minute plan at a glance
+ - **Time estimate** 30 minutes
 
- - 0-5 min — Set up your notebook + 
- 
- - 8-18 min — Courage Inventory
+ - **Due**: Sunday
 
- - 18-25 min — Reflection + prepare your help request
-
- - 25-30 min — Submission + actually send the help request
- 
-If you don’t have questions, be a 🚑 helper for someone who does to earn learning skill points.
+ - **You will produce**: `HTML` file of your R Notebook with your question inventory, help request, and reflection.
 
 ## 🖥 Courage Lab Notebook
 
@@ -114,79 +109,180 @@ Please take 5 minutes to set up your notebook
 
 1. Open RStudio. 
 
-2. Start a new R Notebook named `courage_lab`
+2. Start a new R Notebook named `courage_lab.Rmd`
 
-3. In the YAML header, title it "Courage Lab" and include your name + date.
+3. In the YAML header, title it **"Courage Lab"** and include your name + date.
 
-4. Delete the template text.
+4. Please delete the Notebook template text.
 
-5. Create a section header: ## Question Inventory
+5. Create the section headers
 
-## 🔍 Courage Inventory
+```markdown
+## Question Inventory
+## Help Request
+## Reflection
+## AI Transparency Memo (if used)
+```
+
+## 🔍 Question Inventory
 
 Please take 10 minutes to reflect on your recent work and identify a specific question you have right now.
 
-Under ## Question Inventory, respond using markdown sub-headers. Use code chunks for any code or error messages.
+### Identify one recent “stuck moment”
 
-1. Briefly review the assignment/activity you are working on or struggled with.
+Under **## Question Inventory**, use the markdown sub-header 
 
-- What’s one moment from the last assignment/activity that you found difficult or that stuck with you? 
+```markdown
+### Stuck moment from recent work
+```
+Answer:
 
-- What did you do when you got stuck? For example, did you keep trying, stop, search the web, ask a peer, ask the instructor, use ?help, other?
+- What assignment/activity was it from?
 
-2. Identify *at least* one question you have right now.
+- What exactly happened when you got stuck?
+
+- What did you do next (keep trying, stop, search web, ask a peer, ask instructor, use ?help, use AI, etc.)?
+
+### Write ONE question you have right now
+
+Under **## Question Inventory**, make your second markdown sub-header 
+
+```markdown
+### My current question
+```
+
+Identify *at least* one question you have right now.
     - Source: (Assignment __, feedback comment, class activity, etc.)
     - My question:
     - My code &/or error:
-    
+
+If you have code or an error, include it in a code chunk:    
 ```{r}
 # Include code example
 ```
 
-3. What is your the main barrier to asking for help? Examples may include fear of *looking dumb*, not sure how to ask, procrastination, overwhelmed, time, “*I should know this.*”
+### Name your main barrier to asking for help
 
-4. Choose your help path (must choose ONE)
-    A) Ask a peer (in class today)
-    B) Ask the instructor (message or office hours request)
+Under **## Question Inventory**, make your third markdown sub-header 
 
-🆘 For this lab, if you use AI, only use it to improve the question you will ask a person. Please create a transparency memo regarding your AI use in your notebook.
+```markdown
+### What makes asking hard for me
+```
+**What is your main barrier to asking for help?**
+
+Choose 1–2 barriers and **explain** briefly:
+
+- fear of looking dumb
+
+- not sure how to ask
+
+- procrastination
+
+- overwhelmed
+
+- time
+
+- “I should know this”
+
+- other (be specific)
 
 ## 📝 Prepare Your Help Request
 
-Please take a few minutes to draft your help request message.
+In this lab, we assume you are stuck. Your job is not to keep troubleshooting. Your job is to document your thinking clearly and ask a real person for help in a way that makes it easy for them to respond. Please take a few minutes to draft a help request message.
 
-Using markdown, draft your help request message.
+### Clarifying the issue
 
-    Hi ___, I’m working on ___. I’m stuck on ___. I tried ___. Here is my code/error: ___.
-    My best guess is ___. Could you help me understand what to try next?
+Under **## Help Request**, use the markdown sub-header 
 
-Including a screenshot of your code/error is optional but can be helpful.
+```markdown
+### Clarifying
+```
+**What is your best guess about what’s going wrong?**
+
+Before you write your message, add a short memo in your notebook under ## Help Request with these three items:
+
+- **Goal** (what you were trying to do):
+
+- **Attempts** (what you tried): 
+
+- **Current understanding**
+
+- **What you’re confused about**:
+
+### Identify who to ask for help
+
+Under **## Help Request**, add a second the markdown sub-header 
+
+```markdown
+### Who to ask
+```
+
+Consider who you will ask for help. Pick one person to contact.
+
+- Message a classmate (Canvas Inbox)
+
+- Message the course instructor "Lorraine" (email: **lorrainegaudio@boisestate.edu**)
+
+- Message adviser, mentor, friend, family member, etc.
+
+### Draft your help request message
+
+Under **## Help Request**, add a third the markdown sub-header 
+
+```markdown
+### Message Draft
+```
+
+Draft your help request message. Here is a template you can use, but please feel free to adapt it to your style and the person you are asking. The most important thing is that it is clear, respectful, and makes it easy for the person to respond.
+
+    Hi [Name],
+    
+    I’m working on [course item + task].
+    I’m stuck on: [1 sentence describing the problem].
+    
+    What I’m trying to do:
+    - [goal]
+    
+    What I tried:
+    - [attempt 1]
+    - [attempt 2]
+    - [attempt 3]
+    
+    What I understand so far:
+    - [1 sentence]
+    
+    What I’m confused about:
+    - [1 question]
+    
+    Code/error (if relevant):
+    [Paste the exact error message OR a small code snippet]
+    
+    Could you recommend the next step I should try (or what to check first)?
+    
+    Thanks,
+    [Your name]
+    
+💡 **Tip:** Including a screenshot of your RStudio code/error can be helpful.
+
+⚠️ If you use AI to improve the message you will send to a person, please create a transparency memo regarding your AI use in your notebook.
+
+## 📬 Send your help request
+
+Send your message to your chosen person.
 
 ## 🪞 Reflect on Your Courage
 
-Pleae take a few minutes to reflect on your courage practice. The questions below are prompts to guide your reflection. You can answer all or some of them or write your own.
+Under **## Reflection**, write 4–6 reflective sentences. 
 
-What part of this felt uncomfortable or risky?
+** Reflection prompts** (Optional, but you can use these to guide your reflection):
 
-What is your next step before the next class?
+- What part of this felt uncomfortable or risky?
 
-Who did you connect with today, and what is one thing you learned about how they think?
+- What did you do anyway (your “courage move”)?
 
-# 🚑 Helper option
+- What is your next step before the next class?
 
-If you don’t have a question, your job is to help someone else ask a better one.
-
-1. Find a peer who has a question.
-
-2. Help them clarify their question using the Courage Inventory and Help Request templates.
-
-3. Record your help-giving in your notebook:
-
-I helped: ___
-
-Their question was about: ___
-
-What I did: (helped them write the help request / helped reproduce the error / explained a concept)
+- Who did you connect with, and what is one thing you learned about how they think?
 
 # 📤 Submission
 
@@ -194,8 +290,6 @@ What I did: (helped them write the help request / helped reproduce the error / e
 
 2. Knit to HTML.
 
-3. Upload the HTML file to the Courage Lab assignment in Canvas.
+3. **Upload the HTML file** to the Courage Lab assignment in Canvas.
 
-4. Send your help request. If you opted to message the instructor, please send it within 24 hours of completing this lab.
-
-5. 🎉 Celebrate your courage. The outcome is not “having the right answer.” The outcome is staying engaged and practicing help-seeking.
+4. 🎉 Celebrate your courage. The outcome is not “having the right answer.” The outcome is staying engaged and practicing help-seeking.
