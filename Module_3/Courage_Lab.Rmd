@@ -99,7 +99,7 @@ This lab is about practicing courage and human-centered AI use. You will (1) Ide
 
  - **Time estimate** 30 minutes
 
- - **Due**: Sunday
+ - **Due**: Monday
 
  - **You will produce**: `HTML` file of your R Notebook with your question inventory, help request, and reflection.
 
