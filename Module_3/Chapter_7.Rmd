@@ -1,5 +1,5 @@
 ---
-title: "Chapter 7 Datasets and Importing Data"
+title: "Chapter 7"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -102,14 +102,17 @@ Covers:
 
 ## Folder Structure
 
-1. Minimum viable structure: keep the data in the same folder as the R Notebook so relative paths are simple.
+Covers:
 
-2. Chapter folder structure: move raw files into your course folder directly next to your Rmd file.
+1.. Minimum viable structure (what you described): keep the data in the same folder as the R Notebook so relative paths are simple.
+
+2. Best practice structure: create a `data/` folder and move raw files into it:
 
 -`Intro_to_R/`
 -- `chapter7_notes.Rmd`
--- `myfile.csv`
--- `myfile.xlsx`
+-- `data/`
+--- `myfile.csv`
+--- `myfile.xlsx`
 
 Introduce RStudio Projects: a way to keep everything together and keep a stable working directory.
 

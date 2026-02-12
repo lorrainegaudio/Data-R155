@@ -1,5 +1,5 @@
 ---
-title: "Chapter 9"
+title: "Chapter 9: Git and GitHub"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -19,152 +19,442 @@ output:
       after_body: ../assets/footer.html
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 # Overview
 
-*This is Module 4*
+*This is both Module 4 and 5*
 
-
-TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT. Why is this useful as a researcher? How does it fit with where we are in the class. 
-
-In Chapter ____ you will learn how to:
-
-- 
-
-Frame the Module around one repeatable habit: Ask → Load → Verify → Explore → Document.
+TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
 
 
-# Learning Skill
+In Chapter 9 you will learn how to:
+
+- Courage Skill Highlight
+
+Students can attempt a task first (even imperfectly), then seek help with a clear question and evidence (code + error + what they think is happening).
+
+Students can share imperfect work in a discussion/lab setting and revise based on feedback.
+
+- Git
+
+- Github
+
+- RStudio Projects
+
+- Workflow
+
+![Happy git with R](https://happygitwithr.com/)
+
+## What is Git?
+
+**Git**: a collection of individual commands you execute in the shell
+
+- Version control system
+
+- Help collaborate in a group
+
+- Tracks changes
+
+Repository: a set of files stored by a provider
+
+- GitHub is a repository hosting service for your Git-based projects online.
+
+- Allows others access to your project in nearly real time
+
+- Remote storage
+
+- Access and edit locally
+
+## Plan
+
+Part 1: Initial Set Up
+
+1.  Install Git
+
+2. Get Git talking to GitHub
+
+3. Make RStudio talk to your local Git
 
 
+💡 **Tip:** Merge conflicts issues happen if you don't *always* "Pull" first.
 
-LS
-Core
-Document thinking process
-Advanced
+Part 2: New Projects Workflow
 
-Thoroughness Skill Highlight
+1. Create a repo folder in GitHub
 
-- Verify assumptions with checks (e.g., length/type/missingness) before interpreting output.
+2. Make RStudio Project
+
+3. Make is a Git repository
+
+4. Pull to access latest version
+
+5. Periodically make a commit
+
+6. Push To GitHub
+
+# Part 1
+
+Account set up and learning Git
+
+1. Register for free GitHub Account
+
+2. Install or update R and Studio
+
+3. Install Git
+
+4. Introduce yourself to Git
+
+5. Configure a SSH keys
+
+## Register for free GitHub Account
+
+The first step is to Register a GitHub Account.
+
+Your username tips:
+
+- short, 
+
+- professional, 
+
+- memorable, 
+
+- timeless, 
+
+- all lower case, 
+
+- separate words with a hyphen “-”
+
+## Install or update R and Studio
+
+Make sure you have the latest versions of R and RStudio installed. This will ensure compatibility with Git and GitHub.
+
+![Download R and RStudio](https://posit.co/download/rstudio-desktop/)
+
+## Install Git
+
+### Windows: Git Bash
+
+![gitforwindows](https://gitforwindows.org/)
+
+1. Accept the defaults
+
+2. RStudio for Windows prefers for Git to be installed below C:/Program Files
+
+    C:/Program Files/Git/bin/git.exe
+
+### macOS: Xcode command line tools
+
+1. Go to the shell and enter one of these commands to elicit an offer to install developer command line tools:
+
+    git --version
+
+    git config
+
+2. Accept the offer, click install
+
+OR
+
+![git scm mac](http://git-scm.com/downloads)
+
+*Dr. John Ziker revised instructions*
+
+1. Download Xcode from the App Store
+
+2. Use “Terminal” app on Mac for next step
+
+### Linux: distro’s package manager
+
+1. Ubuntu or Debian Linux: sudo apt-get install git
+
+2. Fedora or RedHat Linux: sudo yum install git
+
+OR
+
+![git scm (linux)](https://git-scm.com/download/linux)
+
+## Introduce yourself to Git
+
+Introduce yourself to Git in shell
+
+    git config --global user.name "Your Name"
+    git config --global user.email "example@u.boisestate.edu"
+
+*Use the email associated with your GitHub account*
+
+Check Git understood
+
+    git config --global --list
+
+Initial default branch
+
+  git config --global init.defaultBranch main
+
+GitHub has “main” as the default initial branch 
+
+## Configure SSH keys
+
+Connecting Tools
+
+Personal Access Token (PAT)
+
+OR
+
+SSH Keys
+
+PATs are convenient but easily compromised.
+
+SSH Keys never leave your machine, allow for more control and provides better security, but are more challenging to set up. 
+
+![Mac users instructions](https://gist.github.com/brennanMKE/8e09593ca4064deab59da807077d8f53) for creating an SSH key.
+
+### Setup SSH 
+
+**SSH keys**: two long strings of characters used to authenticate a user’s identity when connecting to a remote server. 
+Generate these keys on your local computer using an SSH utility.
+
+1. From the shell: `ssh-keygen -t rsa -b 4096`
+
+2. Follow prompts to create your keys. By default, they’ll be saved in `~/.ssh/id_rsa` (private key) and `~/.ssh/id_rsa.pub` (public key).
+
+3. Add your public key to GitHub
+
+a. Go to settings > SSH and GPG keys
+
+b. Click “New SSH key”
+
+c. Copy public key into key field
+
+d. Give device a title
+
+4. Test Connection
+
+a. From the shell: `ssh -T git@github.com`
+
+1. Randomness and Key Generation:
+
+- The ssh-keygen command generates an RSA key pair (consisting of a private key and a public key).
+
+- The process starts by creating a random seed (using entropy sources like keyboard timings and mouse movements).
+
+- This randomness is essential for security.
+
+2. Mathematical Algorithms:
+
+- The RSA algorithm is used to create the key pair.
+
+3. The **private key** must remain confidential and secure. It is used for authentication.
+
+4. You Never Share Your Private Key
+
+# Part 2
+
+Prove local Git can talk to GitHub
+
+1. Make a Repo on GitHub
+
+2. Clone the Repo in RStudio (Projects)
+
+3. Make a local change
+
+## Make a Repo on GitHub
+
+1. Go to ![GitHub.com](https://github.com) and make sure you are logged in.
+
+2. Near “Repositories”, click the big green “New” button. 
+
+3. Repository template: No template
+
+4. Repository name: myrepo
+
+5. Description: “My first repo”
+
+6. Public
+
+7. Initialize: Add a README file
+
+8. Click green “Create repository”
+
+9. In Local tab, select HTTPS SSH
+
+10. Copy
+
+## Clone Repo in Shell
+
+1. Paste Copied: 
+
+    git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+
+2. Make working directory
+
+    cd myrepo
+    ls
+    head README.md
+    git remote show origin
+
+## Make a local change
+
+1. Add line to README
 
 
-# R Programming
+    echo "A line I wrote on my local computer  " >> README.md
+    git status
 
 
-Lesson 6: (First part), Students load data (don't make the data)
+2. Send to GitHub
 
-# R Programming: 
+    git add README.md
+    git commit -m "A commit from my local computer"
+    git push
+    
+💡 **Tip:**When finished, delete folder corresponding to the local repo
 
-Explore with Base R tools and bracket indexing (`[]`) only
+    cd ..
+    rm -rf myrepo/
 
-## The “inspect first” toolkit (no subsetting yet)
+
+# Part 3
+
+Connecting Tools: Connect RStudio to GitHub
+
+Prove RStudio can talk to GitHub
+
+1. Make a repo on GitHub
+
+2. Clone GitHub via RStudio
+
+3. Make Local changes, save and commit
+
+4. Confirm the local change in GitHub
+
+## Make a repo on GitHub
+
+1. Go to ![GitHub](https://github.com) and make sure you are logged in.
+
+2. Near “Repositories”, click the big green “New” button. 
+
+3. Repository template: No template
+
+4. Repository name: `myrepo`
+
+5. Description: “My second repo”
+
+6. Public
+
+7. Initialize: Add a README file
+
+8. Click green “Create repository”
+
+9. In Local tab, select HTTPS SSH
+
+10. Copy repository URL
+
+## Clone GitHub via RStudio
+
+Start a new project
+
+1. File > New Project > Version Control > Git
+
+2. Paste repository URL
+
+3. Accept the default (project name and GitHub repo name must match)
+
+4. PAY ATTENTION to where you are saving your project locally
+
+5. Open in a new session
+
+6. Create Project
+
+7. Notice the README.md file on your computer
+
+## Local changes
+
+1. Open README.md in RStudio
+
+2. Add line to README
+
+    “A line I wrote in RStudio"
+
+3. Commit
+
+a. Click Git tab
+
+b. Check “Staged” box for README.md
+
+c. Click “Commit”
+
+d. Type message “Commit from R”
+
+e. Click Commit
+
+4. Push
+
+5. Confirm in GitHub
+
+# Part 4
+
+Workflow
+
+## Create a R Markdown Document
+
+File > New File > R Markdown
+
+1. Make sure your project is open
+
+2. Give it an informative title (Spaces and Punctuation)
+
+3. Output format of HTML (Can change later)
+
+4. Save “first.rmd” in RStudio project folder (Do not nest in folder)
+
+No need to set a working directory again!
+
+## Edit the R Markdown Document
+
+1. Add some text and code
+
+2. Save
+
+3. Commit 
+
+4. Push to GitHub
+
+## Data Folder Structure
 
 Covers:
 
-dim(), nrow(), ncol(), names(), head(), tail(), str(), summary()
+1.. Minimum viable structure (what you described): keep the data in the same folder as the R Notebook so relative paths are simple.
 
-Interpretation prompts that force curiosity:
+2. Best practice structure: create a `data/` folder and move raw files into it:
 
-“Which columns look categorical vs numeric?”
+-`Intro_to_R/`
+-- `chapter9_notes.Rmd`
+-- `data/`
+--- `myfile.csv`
+--- `myfile.xlsx`
 
-“Are there missing values? Where?”
+Introduce RStudio Projects: a way to keep everything together and keep a stable working directory.
 
-## Bracket Indexing `[]`
+### Privacy and Github
 
-## Sub-setting Vectors
+Covers (short, concrete):
 
-🎯 **Goal**  Pull out the pieces you need.  Use `[ ]` with positions or a logical test. 
+- Why `data/` exists: so later you can ignore it when you start using GitHub.
 
-🧠 Remember: positions start at 1 in R (not 0).
+- The mechanism they’ll use later: a .gitignore can exclude folders like `data/` from commits.
 
-Type the following into your R script and run each line. 
+- A simple rule of thumb:
 
-```{r , eval=FALSE}
-z[1]       # first element by position
+1. OK to upload: public/open data, de-identified data you’re allowed to share
 
-z[3]       # third element by position
-
-z[2:4]     # last two elements by position 
-
-z[-c(1, 5)] # all but first and last elements
-```
-
-🛠 Break Things! What happens if you try to index with a number larger than the vector length, like `z[6]`? ⚡ Explain any error message you see.
-
-🧠 Challenge: Extract the last two fruits from *chars*.
-
-### Indexing 
+2. Do not upload: human-subjects data, protected/controlled data, anything you promised to keep private
 
 
-
-
-
-Brackets as a coordinate system: `df[rows, cols]`
-
-Covers (teach as a pattern, not a list of tricks):
-
-- Rows and columns are coordinates:
-
-`df[1:5, ]` first five rows
-
-`df[ , 1:3]` first three columns
-
-`df[1, 2]` one cell
-
-- Selecting columns by name without $:
-
-`df[ , c("age", "income")]`
-
-- A short note on why this matters: this is the foundation for everything later (including dplyr and plotting).
-
-(Cite base principles and then demonstrate; the goal here is fluency and precision.)
-
-### Micro-checks that catch bad imports early
-
-Covers:
-
-- Are column names reasonable?
-
-- Are numeric columns actually numeric?
-
-- Do counts make sense (rows/columns)?
-
-
-
-
-
-# Memoing and documentation
-
-Documenting your thinking processes (core)
-
-Curiosity Skill Highlight Continued
-
-## Memo template
-
-Memo template: what every import needs
-
-0) Heading structure using Markdown (##, ###, etc.)
-
-1) Forethought (planning + strategic preparation)
-- 🎯 Goal: explicit goal setting (task analysis).
-- 💬 Prediction: anticipatory reasoning (“what do I expect will happen?”), which forces students to activate prior knowledge and commit to a mental model before execution.
-- 🧠 Growth mindset (as you define it): motivational beliefs that support persistence—this sits squarely in Zimmerman’s forethought “self-motivational beliefs” bucket (self-efficacy, task value, outcome expectations).
-2) Performance (strategy use + monitoring while working)
-- ⚡ Code: strategy enactment (writing code to meet the goal).
-- ✅ Checks: self-monitoring and control (debugging, validation, sanity checks).
-- 🚀 Code trials + ✍️ Record what you tried: systematic self-monitoring and iterative control—this is SRL “self-control” and “self-observation” made visible.
-3) Self-reflection (evaluation + adaptation)
-- 🗣 Comment: self-evaluation (“why did this work / what did I learn?”) and causal attribution.
-- 🪞 Reflect on learning process: explicit self-judgment and adaptive inference (“what will I do differently next time?”).
-- 👀 Citing resources and stating how they helped: operationalizes help-seeking and tool-use regulation (key SRL behaviors).
-
-
-# Advanced R Programming
+gitignore: a file that tells Git which files or folders to ignore when committing changes. This is useful for keeping sensitive data or large files out of your GitHub repository.
 
 
 # Summary
@@ -180,4 +470,5 @@ Memo template: what every import needs
 ## Task 2
 
 # References
+
 
