@@ -70,6 +70,22 @@ Repository: a set of files stored by a provider
 
 - Access and edit locally
 
+### Privacy and Github
+
+Covers (short, concrete):
+
+- Why `data/` exists: so later you can ignore it when you start using GitHub.
+
+- The mechanism they’ll use later: a .gitignore can exclude folders like `data/` from commits.
+
+- A simple rule of thumb:
+
+1. OK to upload: public/open data, de-identified data you’re allowed to share
+
+2. Do not upload: human-subjects data, protected/controlled data, anything you promised to keep private
+
+
+
 ## Plan
 
 Part 1: Initial Set Up

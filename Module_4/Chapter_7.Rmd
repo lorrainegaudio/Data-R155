@@ -26,10 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-*This is Module 4*
-
-TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
-
+In previous chapters, you learned about objects, vectors, functions, and handling missing data in R. This chapter we will learn about data management and how to import external data files (e.g., CSV, XLSX). Almost every research project begins with *bringing external data into R*. Today you will learn four common import workflows. Mastering these steps ensures that you can work with spreadsheets.
 
 
 In Chapter Seven you will learn how to:
@@ -38,9 +35,8 @@ In Chapter Seven you will learn how to:
 
 - Folder structure for reproducibility
 
-<<<<<<< HEAD
 - 📊 Subset vectors by position or logical tests.
-=======
+
 - Installing and librarying packages
 
 - Loading base R datasets
@@ -53,34 +49,17 @@ In Chapter Seven you will learn how to:
 
 - Make tenacity visible by keeping a record of a short what you tried anytime code fails.
 
-# Data frames vs. tibbles
+# Working Directory and Paths
 
-## Data Frames
+In Chapter 1, you learned how to use `getwd()` and `setwd()` to manage your working directory. This is crucial for importing data because R needs to know where to find the files you want to load.
 
-“Data frame” as the chapter’s working object
+It is helpful to have the file to be uploading in your working directory. This is one of the stickiest points to importing data.
 
-Covers (minimal, first-year level):
+```{r , eval=FALSE}
+getwd()  # shows current project folder
+```
+Are your data files located *inside* this folder? If not, move them or `setwd("path/to/folder")`.
 
-A data frame is a rectangular table: rows = cases, columns = variables.
-
-Reinforce: import functions usually give you a data frame (or something extremely close).
-
-## Tibbles
-
-Tibbles: same idea, different behavior/printing
-
-Covers (brief + practical):
-
-- A tibble is a modern version of a data frame with nicer printing and stricter behavior.
-
-- Show how students might encounter it (Excel import often yields a tibble-like printout; tidyverse later will use tibbles).
-
-- One conversion demo (optional):
-
-`tib <- tibble::as_tibble(df)`
-
-Promise: “You can treat these as the same for now—our exploration tools still work.”
->>>>>>> 449b537 (MLO for Learning skills)
 
 # Downloading Data
 
@@ -113,33 +92,73 @@ Covers:
 
 Introduce RStudio Projects: a way to keep everything together and keep a stable working directory.
 
-### Privacy and Github
+# Datasets 101
 
-Covers (short, concrete):
+## Data Frames
 
-- Why `data/` exists: so later you can ignore it when you start using GitHub.
+“Data frame” as the chapter’s working object
 
-- The mechanism they’ll use later: a .gitignore can exclude folders like `data/` from commits.
+Covers (minimal, first-year level):
 
-- A simple rule of thumb:
+A data frame is a rectangular table: rows = cases, columns = variables.
 
-1. OK to upload: public/open data, de-identified data you’re allowed to share
+Reinforce: import functions usually give you a data frame (or something extremely close).
 
-2. Do not upload: human-subjects data, protected/controlled data, anything you promised to keep private
+## Tibbles
 
-## Data source citation
+Tibbles: same idea, different behavior/printing
 
-Open R Notebook and document the data source in a memo.
+Covers (brief + practical):
 
-Covers:
+- A tibble is a modern version of a data frame with nicer printing and stricter behavior.
 
-- What to record in a memo: where it came from, who made it, date accessed, license/terms if available
+- Show how students might encounter it (Excel import often yields a tibble-like printout; tidyverse later will use tibbles).
 
-- Make the point: if you can’t answer “Where did this data come from?” you shouldn’t analyze it yet.
+- One conversion demo (optional):
+
+`tib <- tibble::as_tibble(df)`
+
+Promise: “You can treat these as the same for now—our exploration tools still work.”
+(MLO for Learning skills)
+
+
+
+
 
 # Import in R
 
+## 📦 Packages refresher
+
+In this Chapter, we will use functions from packages. You were first introduced to the concept of packages in chapter 3. A **package** is a collection of functions, data, and documentation that extends the capabilities of R. Packages are used to perform specific tasks or analyses, such as data manipulation, statistical modeling, or visualization.
+
+You need to download the package before you can use it. You only need to install the package once. Packages, will need to be updated from time to time. In the files pane, you will see a tab called "Packages." This is where RStudio lists the packages you have installed. You can install packages by clicking the Install. 
+
+![Click the Install button then type "rmarkdown" in the the Packages box to download from the Package Repository CRAN](Packages.png)
+
+Now you can open the R Notebook. In the main RStudio bar at the top of the screen, click File > New File > R Notebook. Remove the example writing and rename the title of your document "Assignment 5." Save the R Notebook in the correct folder as `Intro_to_R_Assignment_5`. 
+
+Often times, you will use the function `install.packages()` to install a package. In this lesson, you will install the `readr`, `readxl`, `dslabs` package, which provides functions for reading and writing data files. Type the following code in a new code chunk and run.
+
+```{r , eval=FALSE}
+install.packages("dslabs")                # You can install one package at a time
+install.packages(c("readr", "readxl"))    # You use c()
+```
+
+This code installs the `readr` and `readxl` packages. The `c()` function combines the package names into a vector, allowing you to install multiple packages at once. You can also install packages by navigating to the file pane and opening the tab "Packages." Select install and type the package name. Packages, like RStudio will need to be updated from time to time. You can click the update butten to check if you need to update any packages. 
+
+After installing the package, you need to load it into your R session using the `library()` function. This makes the functions in the package available for use. Type the following code in a new code chunk and run.
+
+```{r , eval=FALSE}
+library(dslabs)  # For more datasets
+library(readr)   # For reading CSV files
+library(readxl)  # For reading Excel files
+library(dslabs)  # For more datasets (along side other utilities)
+```
+
+
 ## Package Datasets
+
+curated “package datasets”
 
 mtcars, iris, etc.
 
@@ -255,13 +274,24 @@ This chapter: Markdown bold/italics with * / ** so you can emphasize constraints
 
 ## Example memo 
 
+## Data source citation
 
+Open R Notebook and document the data source in a memo.
+
+Covers:
+
+- What to record in a memo: where it came from, who made it, date accessed, license/terms if available
+
+- Make the point: if you can’t answer “Where did this data come from?” you shouldn’t analyze it yet.
 
 # Summary
 
 
 # Chapter Terms
 
+**Package**: An installable collection of R code—functions, documentation, and sometimes datasets—that adds new features beyond base R. Packages are commonly installed from CRAN and then loaded with `library()` so you can use their tools in your session.
+
+**Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
 
 # 📝 Practice Space
 
