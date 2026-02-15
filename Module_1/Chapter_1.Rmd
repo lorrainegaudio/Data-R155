@@ -131,6 +131,7 @@ The Console is where R runs commands. You can type commands directly into the Co
 ## Basic Calculations
 
 R performs standard operations like addition (`+`), subtraction (`-`), multiplication (`*`), division (`/`), exponentiation (`^` or `**`), and modulo (`%%`) with the correct order of operations (`PEMDAS`). 
+
 🎯 Type mathematical calculations in the Console.
 
 ```{r eval=FALSE}
@@ -589,6 +590,9 @@ The Files pane helps you navigate folders so you can find course materials and, 
 
 Clear your environment before starting this practice space. When you are done, save your workspace as `chapter1_practice.RData` and upload it to Canvas as directed.
 
+🎯 **Step 1: Start clean.**  
+Click the 🧹 **broom icon** in the Environment pane to clear objects. Then complete Tasks 1-5 below.
+
 ## Task 1
 
 🎯  Store the quantity `62` in an object called `items_sold`
@@ -644,3 +648,11 @@ Identify the names of the Panes associated with each number in the image below.
 4. ___________
 
 Select your answers in Canvas as directed.
+
+## Task 5
+
+🎯 **Step 2: Save**  
+Save your workspace (`chapter1_practice.RData`) 
+
+
+

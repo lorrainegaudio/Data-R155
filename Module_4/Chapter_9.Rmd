@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
-
+![](https://intro2r.com/github_r.html)
 
 In Chapter 9 you will learn how to:
 
@@ -472,6 +472,25 @@ Covers (short, concrete):
 
 gitignore: a file that tells Git which files or folders to ignore when committing changes. This is useful for keeping sensitive data or large files out of your GitHub repository.
 
+In Chapter 7, you learned to store data in the same folder as your R Notebook. This is the minimum viable structure for a project, but it can get messy as you add more files. A better practice is to create a `data/` folder and move your raw data files into it. This way, your project folder stays organized, and you can easily manage your data files.
+
+Your structure becomes:
+
+-`Intro_to_R/`
+-- `chapter7_notes.Rmd`
+-- `data/`
+--- `myfile.csv`
+--- `myfile.xlsx`
+
+**🎯 Goal** Store your data in a `data/` folder then check 
+
+```{r}
+# Check your R notebook's working directory files
+list.files()
+list.files("data")
+```
+
+🗣 After moving the files into data/, you must include the `data/` in the file path.
 
 # Summary
 

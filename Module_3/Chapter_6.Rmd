@@ -718,3 +718,5 @@ Use **Run → Run All** to execute every chunk in order.
 
 🎯 **Step 3: Save and submit.**  
 After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
+
+💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. Upload the .html file. You can check which is which because one opens in R and the other usually opens in a web browser.

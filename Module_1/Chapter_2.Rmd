@@ -413,6 +413,13 @@ We turn to building basic objects next. As you work through the exercises, pract
 
 # Vectors
 
+So far, we have only stored single numbers in objects. These single-element numeric objects are often called **scalars**. R can also store collections of values in a single object.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Script
+scalar <- 42
+```
+
 An **atomic vector** one-dimensional object that stores an ordered collection of values (**elements**), all of the same basic type. For simplicity, I will simply use the word **vector**. A vector is like a row in a spreadsheet: a single dimension of related values.
 
 Let's use `c()`, `:`, and `seq()` to create vectors of different storage types: numeric, integer, and character. 
@@ -674,6 +681,8 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 **Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
 
 **R Script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
+
+**Scalars**: Single-value objects (length 1). In R, scalars are not a separate data type—what people call a “scalar” is typically an atomic vector with exactly one element (numeric, character, logical, etc.).
 
 **Vector**: A one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
 

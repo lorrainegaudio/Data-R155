@@ -56,7 +56,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Console Pane**: The pane where R executes commands and prints output. Anything you type and run here is evaluated immediately, and messages, warnings, errors, and results appear here.
 
+**CSV** (Comma-Separated Values): A plain-text file (`.csv`) for rectangular (row-and-column) data where each row is a line and values are separated by commas. Because it’s plain text, CSV is widely compatible across software, but it does not reliably preserve spreadsheet features like formulas, cell formatting, or multiple sheets.
+
 # D
+
+**Data Frame**: A two-dimensional R object for tabular data, organized as rows and columns. Each column is a vector (or factor) with the same number of rows, columns can have different data types, and the object has class "`data.frame`".
 
 **Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
 
@@ -70,6 +74,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Error**: A console message indicating that R could not complete a command. Execution stops at that point, no result is produced for that step, and you must fix the problem (for example, a misspelled object name, invalid argument, or syntax issue) before the code can run.
 
+**Excel** (.xlsx): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
+
 # F
 
 **Factor Class**: An R object class for categorical data, where each value is stored as an integer code that points to a category label. Factors help R handle categories correctly in tables, plots, and statistical models, even though they may print like text.
@@ -80,6 +86,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Files Pane** and Help – Tabs/panes used to navigate your project folders and view supporting information. Files lets you browse, open, rename, and manage files; Help shows documentation for functions and packages (including searchable help pages).
 
+**File Path**: A text “address” that tells the computer (and R) where a file or folder is located. Paths can be absolute (the full location from the start of the file system) or relative (interpreted relative to your current working directory). In R, `getwd()` shows the current working directory that relative paths are based on, and `file.path()` helps build paths in an operating-system-safe way.
+
 **Functions**: Reusable blocks of code that perform specific tasks. Functions can take inputs (arguments) and return outputs. R has many built-in functions, and you can also create your own.
 
 **Function Call**: The act of running a function by writing its name followed by parentheses, optionally supplying arguments inside (e.g., `mean(x)`). 
@@ -89,6 +97,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # G
 
 **Global Options**: A settings window that controls how RStudio behaves across projects and sessions. This is where you can set defaults like appearance, saving behavior, code formatting, and how RStudio runs R.
+
+**Graphical User Interface** (GUI): A point-and-click interface that lets you interact with software using menus, buttons, and file browsers instead of typing commands. In RStudio, the Import Dataset wizard is a GUI tool that helps you select a file and then outputs the R code (including the file path) needed to reproduce the import, so you can copy that code into your R script.
 
 # H
 
@@ -196,6 +206,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # S
 
+**Scalars**: Single-value objects (length 1). In R, scalars are not a separate data type—what people call a “scalar” is typically an atomic vector with exactly one element (numeric, character, logical, etc.).
+
 **Script Editor Pane**: Source; The pane where you write, edit, and save code in script files (typically .R) and author documents like R Markdown/Quarto notebooks. Code written here can be run line-by-line or in chunks without retyping it in the Console.
 
 **Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
@@ -203,6 +215,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
 
 # T
+
+**Tabular Data**: Data arranged in a table (a rectangular structure) where rows represent records/observations and columns represent variables/attributes. This row–column layout is the standard format used by spreadsheets, databases, and data frames.
 
 **Tokens**: The smallest meaningful pieces of code that R reads and interprets when it parses a line. Tokens include things like names (mean), numbers (`3.14`), strings (`"text"`), operators (`<-`, `+`), parentheses (`(`,`)`), commas (`,`), and brackets (`[`, `[[`, `{`). Whitespace usually just separates tokens for readability and is otherwise ignored.
 
