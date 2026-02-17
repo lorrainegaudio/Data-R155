@@ -273,7 +273,7 @@ Prove local Git can talk to GitHub
 
 1. Make a Repo on GitHub
 
-2. Clone the Repo in RStudio (Projects)
+2. Clone the Repo in Shell
 
 3. Make a local change
 
@@ -477,7 +477,7 @@ In Chapter 7, you learned to store data in the same folder as your R Notebook. T
 Your structure becomes:
 
 -`Intro_to_R/`
--- `chapter7_notes.Rmd`
+-- `chapter9_notes.Rmd`
 -- `data/`
 --- `myfile.csv`
 --- `myfile.xlsx`
