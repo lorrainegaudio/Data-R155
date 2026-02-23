@@ -597,7 +597,11 @@ as.numeric(mixed)            # character → numeric: text converts to NA
 
 ## Indexing Vectors
 
-The **bracket operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`.
+The **bracket operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`. 
+
+A position used to identify elements in an object. In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
+
+### Positonal Indexing
 
 🎯 **Goal**  Using `[ ]` with index positions on vectors. 
 
@@ -636,7 +640,7 @@ z[-c(1, 5)]
 🗣 All **except** first and last elements
 
 
-### Indexing by Name
+### Character Indexing
 
 When a vector has names, you can use those names to index into the vector. **Character indexing** uses the names of the elements to retrieve specific values.
 
@@ -674,7 +678,7 @@ nerdy_palette[c("Octarine", "TARDIS Blue", "NotAColor")]
 
 🗣 The output shows the hexadecimal color codes for "Octarine" and "TARDIS Blue," and `NA` for "NotAColor," which does not exist in the `nerdy_palette` vector.
 
-### Indexing by Position
+### More Indexing by Position
 
 **Positional indexing** uses the numeric positions of elements in the vector to retrieve specific values. 
 
