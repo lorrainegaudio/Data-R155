@@ -41,15 +41,74 @@ State R’s basic subsetting template: `x[rows, cols]`.
 
 Explore with Base R tools and bracket indexing (`[]`) only
 
+# Set Up
+
+To begin this guided activity, you'll want to open, format, and save an R Notebook in your course folder. This will be your workspace for practicing the content of Chapter 8. Then, you'll practice loading data. We'll be using the `field_sightings.csv` dataset.
+
+## Open an R Notebook
+
+To follow along Chapter 8, 🎯 please open a new R Notebook in your course folder named `chapter6_notes.Rmd` and add a date to the YAML header. While your here, **include your name as the author**! See the example of a YAML below. Use this document to take notes and practice the chapter content. 
+
+1. Open RStudio → File → New File → R Notebook.
+
+2. Save it in your course folder as: `chapter6_notes.Rmd`.
+
+3. In your YAML header at the top:
+
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 5 Practice\"
+author: \"Your Name Here\"
+date: \"`r Sys.Date()`\"
+output: html_notebook
+---
+```")
+```
+
+4. Remove the default content in the R Notebook and replace it with your notes and code as you work through the chapter.
+
+5. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `# Bracket Indexing`, `# Subsetting`, `# Extraction`, `# Insertion`. This creates a readable outline.
+
+6. Memo as you go.
+
+- Outside chunks: write normal text.
+
+- Inside chunks: use `#` for any code comments (otherwise R tries to run the text).
+
+- If you hit an error: keep the broken line commented out and write a one-sentence note about what you changed to fix it.
+
+## Load Data
+
+The `field_sightings.csv` dataset contains **simulated** (randomly generated) values using functions like `sample()` and `ifelse()`. This dataset theme is based on the idea that field biologists observed and recorded a population of species of birds. The dataset was created so that most birds observed were untagged, but a small number have been previously captured and marked with colored leg bands. 
+
+The simulated dataframe `field_sightings` has two columns:
+
+- `Status` Describes whether the sighted bird is “Untagged” (the common case) or “Tagged” (the rare case).
+
+- `Band_Color` If a bird is untagged, the value is “None.” If it is tagged, the value is one of several possible band colors.
+
+Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
+
+🎯 **Goal** Load `field_sightings.csv` into R using `read.csv()` and assign it to a variable called `sightings`. Recall that you need to library `readr` before you can use `read.csv()`.
+
+```{r message=TRUE, warning=TRUE}
+# ⚡ Type this in your R Notebook
+library(readr) # Load the readr package for reading CSV files
+field_sightings <- read.csv("field_sightings.csv")
+```
+
+🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see *warning* messages with you load packages like `readr()`.
 
 
 ## Bracket Indexing `[]`
 
 Chapter 3 introduced you to the **bracket operator**. You learned that the basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
 
-💡 **Tip:** positions start at 1 in R (not 0 like python).
+💡 **Tip:** Positions start at `1` in R. This is different from other coding languages like python which starts indexing values at `0`.
 
-### Vector Indexing Review
+### Quick Vector Indexing Review
 
 🎯 **Goal**  Practice using `[ ]` with **positional indexing** on vectors. 
 
@@ -85,32 +144,21 @@ z[-c(1, 5)]
 
 🗣 All *except* first and last elements is 20, 30, and 40.
 
-
 ### Data Frame Indexing
 
-The **bracket operator** (`[ ]`) is used to select or replace parts of many kinds of objects including vectors, matrices, and data frames. For data frames, the common form: `df[rows, cols]` or `x[i, j, drop = ]` where `i` is the row index, `j` is the column index, and drop is a logical value that indicates whether to simplify the result to a vector if possible.
+The **bracket operator** (`[ ]`) is used to select or replace parts of many kinds of objects including vectors, matrices, and data frames. For data frames, the common form: `df[rows, cols]` or `x[i, j, drop = ]` where `i` is the **row index**, `j` is the **column index**, and drop is a logical value that indicates whether to simplify the result to a vector if possible.
 
-When you select a smaller part of an object, using indices such as numbers, names, or logical tests, you are **subsetting** the object. Subsetting is a fundamental operation in R that allows you to extract specific elements from a larger data structure.
+When you select a smaller part of an object, using indices such as numbers, names, or logical tests, you are **subsetting** the object. Subsetting is a fundamental operation that allows you to select specific elements from a larger data structure.
 
 - Rows and columns are coordinates:
 
-`df[1:5, ]` first five rows, all columns
+`df[1:5, ]` results in the first five rows, all columns
 
-`df[ , 1:3]` all rows, first three columns
+`df[ , 1:3]` shows all rows, first three columns
 
-`df[1, 2]` one cell: first row, second column
+`df[1, 2]` prints only one cell's value: first row, second column
 
-
-## Load Data
-
-🎯 **Goal** Load `field_sightings.csv` into R using `read.csv()` and assign it to a variable called `sightings`.
-
-```{r}
-# ⚡ Type this in your R Notebook
-field_sightings <- read.csv("field_sightings.csv")
-```
-
-🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. Make sure that the file is in the same folder as your R Notebook.
+Let's see this in practice with our `field_sightings` data frame.
 
 🎯 **Goal** Print the first few rows of the `field_sightings` data frame using brackets to check that it loaded correctly
 
@@ -119,7 +167,9 @@ field_sightings <- read.csv("field_sightings.csv")
 field_sightings[1:3, ]  
 ```
 
-🗣 Shows first three rows, all columns.
+🗣 Shows first three rows, all columns. 
+
+# Start Here
 
 
 
@@ -201,7 +251,17 @@ Memo template: what every import needs
 
 **Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
+**Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
+
+**Extraction**: Pulling values out of an object by subsetting on the right-hand side of an expression (e.g., `x[i]`), which returns the selected elements.
+
+**Insertion**: Putting values into an object by subsetting on the left-hand side of an assignment (e.g., `x[i] <- value`), replacing or updating only the indexed part of the object (also called replacement or subassignment).
+
 **Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
+
+**Row index**: The index used to select rows in a data frame or matrix (the first slot inside brackets: `x[i, ]`)
+
+**Subsetting**: Selecting a smaller part of an R object (for example, specific elements of a vector, rows/columns of a data frame, or components of a list) using R’s subsetting operators like `[`, `[[`, and `$`.
 
 # 📝 Practice Space
 

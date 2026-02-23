@@ -52,6 +52,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with ```{r}. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
 
+**Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
+
 **Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y))`.
 
 **Console Pane**: The pane where R executes commands and prints output. Anything you type and run here is evaluated immediately, and messages, warnings, errors, and results appear here.
@@ -75,6 +77,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Error**: A console message indicating that R could not complete a command. Execution stops at that point, no result is produced for that step, and you must fix the problem (for example, a misspelled object name, invalid argument, or syntax issue) before the code can run.
 
 **Excel** (.xlsx): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
+
+**Extraction**: Pulling values out of an object by subsetting on the right-hand side of an expression (e.g., `x[i]`), which returns the selected elements.
 
 # F
 
@@ -117,6 +121,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Impute**: To replace missing or unusable values (e.g., `NA`) with substituted values—often a plausible estimate based on the observed data (such as mean/median imputation or model-based predictions)—so the dataset can be analyzed without dropping incomplete cases. Because imputed values are estimates, you should document what method you used and why.
 
 **Inline R**: A short R expression written inside backticks with the prefix `r` (for example, <code>&#96;r Sys.Date()&#96;</code>) that is evaluated when you knit/render the document and replaced with its result in the output. Inline R is used to insert dynamic values (dates, computed statistics, labels) directly into your narrative text, and it can also be used in YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code> when supported.
+
+**Insertion**: Putting values into an object by subsetting on the left-hand side of an assignment (e.g., `x[i] <- value`), replacing or updating only the indexed part of the object (also called replacement or subassignment).
 
 **Integrated Development Environment** (IDE): A software application that combines the core tools you need to write and run code in one place. RStudio is an IDE because it brings script editing, the R console, environment/object viewing, help/documentation, and file navigation into a single interface.
 
@@ -202,6 +208,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Research Journal**: A running record of your R analysis process. This inlcudes what question you asked, what code you tried (including failed attempts), what outputs you got, and what decisions you made along the way. In practice, it’s maintained in an R script or R Markdown/Notebook with dated notes, comments, and citations so you (or someone else) can retrace, verify, and reproduce the work.
 
+**Row index**: The index used to select rows in a data frame or matrix (the first slot inside brackets: `x[i, ]`)
+
 **RStudio Desktop** is an **integrated development environment** (IDE) that makes writing, running and organizing R code easier.
 
 # S
@@ -213,6 +221,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
 
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
+
+**Subsetting**: Selecting a smaller part of an R object (for example, specific elements of a vector, rows/columns of a data frame, or components of a list) using R’s subsetting operators like `[`, `[[`, and `$`.
 
 # T
 
