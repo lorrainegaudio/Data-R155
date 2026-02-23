@@ -34,75 +34,58 @@ TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
 
 In Chapter Eight you will learn how to:
 
-- Courage Skill Highlight
-
-Students can attempt a task first (even imperfectly), then seek help with a clear question and evidence (code + error + what they think is happening).
-
 Students can share imperfect work in a discussion/lab setting and revise based on feedback.
 
 
 Explore with Base R tools and bracket indexing (`[]`) only
 
-## The “inspect first” toolkit (no subsetting yet)
-
-Covers:
-
-dim(), nrow(), ncol(), names(), head(), tail(), str(), summary()
-
-Interpretation prompts that force curiosity:
-
-“Which columns look categorical vs numeric?”
-
-“Are there missing values? Where?”
 
 ## Bracket Indexing `[]`
 
-## Sub-setting Vectors
+Chapter 3 introduced you to the **bracket operator**. You learned that the basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. 
 
-🎯 **Goal**  Pull out the pieces you need.  Use `[ ]` with positions or a logical test. 
+💡 **Tip:** positions start at 1 in R (not 0 like python).
 
-🧠 Remember: positions start at 1 in R (not 0).
+### Review Subsetting Vectors
 
-Type the following into your R script and run each line. 
-
-```{r , eval=FALSE}
-z[1]       # first element by position
-
-z[3]       # third element by position
-
-z[2:4]     # last two elements by position 
-
-z[-c(1, 5)] # all but first and last elements
-```
-
-🛠 Break Things! What happens if you try to index with a number larger than the vector length, like `z[6]`? ⚡ Explain any error message you see.
-
-🧠 Challenge: Extract the last two fruits from *chars*.
-
-### Vector Indexing 
-
-
-
-### Logical Indexing
-
-Type the following into your R script and run.
-
-```{r , eval=FALSE}
-numbers3[numbers3 > 0] # keep only positives
-```
-
-🔍 Look deeper: What happens if you run`y <- z[(!is.na(z))]`?  Hint: The function `is.na()` checks for missing values (NA) in the vector. The `!` operator negates the logical vector. Print `y`. 👀 What happened?⚡ Explain
+🎯 **Goal**  Practice using `[ ]` with **Positional Indexing** on vectors. 
 
 ```{r}
-# Create a memo note in your R script if you did 🛠 Break Things and 🧠 Challenge 
-# Or if you did the 🔍 Look deeper, and 👀 What happened?. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did in Indexing, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo
+# ⚡ Type this in your R Notebook
+z <- c(10, 20, 30, 40, 50) # create a vector
 ```
+
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[1]       
+```
+
+🗣 The first element by position is 10.
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[3]      
+```
+
+🗣 The third element by position is 30.
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[2:4]     
+```
+
+🗣 The second, third and fourth elements by position is 20, 30, and 40.
+
+```{r}
+z[-c(1, 5)] 
+```
+
+🗣 All **except** first and last elements is 20, 30, and 40.
+
+
+
+
 
 
 Brackets as a coordinate system: `df[rows, cols]`

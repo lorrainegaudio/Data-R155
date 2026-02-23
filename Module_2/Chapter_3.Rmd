@@ -599,6 +599,43 @@ as.numeric(mixed)            # character → numeric: text converts to NA
 
 The **bracket operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`.
 
+🎯 **Goal**  Using `[ ]` with index positions on vectors. 
+
+```{r}
+# ⚡ Type this in your R Notebook
+z <- c(10, 20, 30, 40, 50) # create a vector
+```
+
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[1]       
+```
+
+🗣 The first element by position
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[3]      
+```
+
+🗣 The third element by position
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[2:4]     
+```
+
+🗣 The second, third and fourth elements by position
+
+```{r}
+# ⚡ Type this in your R Notebook
+z[-c(1, 5)] 
+```
+
+🗣 All **except** first and last elements
+
+
 ### Indexing by Name
 
 When a vector has names, you can use those names to index into the vector. **Character indexing** uses the names of the elements to retrieve specific values.
