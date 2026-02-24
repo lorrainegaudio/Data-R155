@@ -51,7 +51,7 @@ To follow along Chapter 8, 🎯 please open a new R Notebook in your course fold
 
 1. Open RStudio → File → New File → R Notebook.
 
-2. Save it in your course folder as: `chapter6_notes.Rmd`.
+2. Save it in your course folder as: `chapter8_notes.Rmd`.
 
 3. In your YAML header at the top:
 
@@ -69,7 +69,7 @@ output: html_notebook
 
 4. Remove the default content in the R Notebook and replace it with your notes and code as you work through the chapter.
 
-5. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `# Bracket Indexing`, `# Subsetting`, `# Extraction`, `# Insertion`. This creates a readable outline.
+5. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `## Load Data`, `## Bracket Indexing`, `## Subsetting`, `## Extraction`, `## Insertion`. This creates a readable outline.
 
 6. Memo as you go.
 
@@ -91,27 +91,27 @@ The simulated dataframe `field_sightings` has two columns:
 
 🎯 **Goal** Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
 
-🎯 **Goal** Load `field_sightings.csv` into R using `read.csv()` and assign it to a variable called `sightings`. Recall that you need to library `readr` before you can use `read.csv()`.
+🎯 **Goal** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read.csv()`.
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook
 library(readr) # Load the readr package for reading CSV files
-field_sightings <- read.csv("field_sightings.csv")
+field_sightings <- read_csv("field_sightings.csv")
 ```
 
-🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see *warning* messages with you load packages like `readr()`.
+🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see messages with you load packages like `readr()`.
 
-## Bracket Indexing `[ ]`
+# Bracket Indexing `[ ]`
 
-In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
+In R, indices are typically integers (*positions*), names (*characters*), or logical values (`TRUE`/`FALSE`).
 
-### Positional Indexing 
+## Positional Indexing 
 
 Positional indexing is the most basic form of indexing in R, where you use numeric positions to select elements from a vector or data frame.
 
 ---
 
-📖 **Review**: In Chapter 3, you practiced using the **bracket operator** with positional indexing to extract elements from vectors. Let's review that briefly before we move on to data frames. 
+📖 **Review**: In Chapter 3, you practiced using the **indexing operator** with positional indexing to extract elements from vectors. Let's review that briefly before we move on to data frames. 
 
 💡 **Tip:** Positions start at `1` in R. This is different from other coding languages like python which starts indexing values at `0`.
 
@@ -154,9 +154,9 @@ z[-c(1, 5)]
 
 ---
 
-#### Data Frame Positional Indexing
+### Data Frame Positional Indexing
 
-The **bracket operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors, including matrices, and data frames. For data frames, the common form is `df[rows, cols]` or `x[i, j, drop = ]` where `i` is the **row index**, `j` is the **column index**, and drop is a logical value that indicates whether to simplify the result to a vector if possible.
+The **indexing operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors, including matrices, and data frames. For data frames, the common form is `df[rows, cols]` or `x[i, j]` where `i` is the **row index**, `j` is the **column index**.
 
 When you select a smaller part of an object, using indices such as numbers, names, or logical tests, you are **subsetting** the object. Subsetting is a fundamental operation that allows you to select specific elements from a larger data structure.
 
@@ -170,16 +170,16 @@ When you select a smaller part of an object, using indices such as numbers, name
 
 Let's see this in practice with our `field_sightings` data frame.
 
-🎯 **Goal** Print the first six rows of the `field_sightings` data frame using the bracket operator.
+🎯 **Goal** Print the first six rows of the `field_sightings` data frame using the indexing operator.
 
 ```{r}
 # ⚡ Type this in your R Notebook
 field_sightings[1:6, ]  
 ```
 
-🗣 Shows first three rows, all columns. 
+🗣 Shows first six rows, all columns. 
 
-### `head()` function
+## `head()` function
 
 There is a function called `head()` that *basically* does the same thing as `field_sightings[1:6, ]` but is more concise and easier to read. 
 
@@ -192,7 +192,6 @@ If you don't specify `n`, it defaults to 6, which means it will show the first 6
 🎯 **Goal** Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
 
 ```{r}
-
 # ⚡ Type this in your R Notebook
 head(field_sightings, n = 3)
 ```
@@ -203,9 +202,9 @@ head(field_sightings, n = 3)
 
 Bracket indexing allows for flexible and specific subsetting of the data frame based on row *and* column indices.  `[` works on almost everything and supports rich indexing and is commonly used as part of an algorithm. You will use `[` when you need subsetting by columns, conditions, and arbitrary rows when you are writing analysis code.
 
-### Character Indexing
+## Character Indexing
 
-So far, these examples have used **positional indexing**. You can also use **character indexing** to select columns by their names instead of their positions. This is often more readable and less error-prone, especially when the order of columns might change or when you have many columns.
+You can also use **character indexing** to select columns by their names instead of their positions. This is often more readable and less error-prone, especially when the order of columns might change or when you have many columns.
 
 ---
 
@@ -234,92 +233,274 @@ nerdy_palette["Octarine"]
 
 ---
 
-#### Data Frame Character Indexing
+### Data Frame Character Indexing
 
-We can use character indexing to select a column by name. 
+A common use of character indexing is to select a column from a data frame by its name. 
 
-🎯 **Goal** Use character indexing to return the band color in the `field_sightings` data frame. To reduce what prints, select on the the 46th through 55th rows.
+🎯 **Goal** Use character indexing to return the band colors in the `field_sightings` data frame. 
 
-```{r}
+**Method A**
+
+📜 The SYNTAX: `x[i]`
+
+```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
-field_sightings[46:55, "Band_Color"] 
+field_sightings["Band_Color"]         # 1-column data frame
 ```
 
-🗣 A vector is printed showing the element values stored in rows 46 though 55 for the column "Band Color."
+🗣 A 1-column data frame is printed showing all row values in the column `Band Color` the `field_sightings` data frame. It is a subset of one column, keeping that data-frame structure.
 
-### `$` Operator
+**Method B** 
+
+📜 The SYNTAX: `df[rows, cols]`
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+# Example B
+field_sightings[, "Band_Color"]   # usually the column VECTOR 
+```
+
+🗣 A vector is printed showing all values from the column `Band Color` the `field_sightings` data frame. The result is a subset from one column and returns a vector, values only.
+
+**Method C** 
+
+📜 The SYNTAX: `x[i, j, drop = FALSE]` The `drop = TRUE` is the default. 
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+# Example C
+field_sightings[, "Band_Color", drop = FALSE]   # 1-column DATA FRAME
+```
+
+🗣 It is an extraction of one column while keeping that data-frame structure.
+
+This is a simple form of **Extraction**, which means pulling out a specific part of an object.
+
+# `[[` Operator
+
+ As a data analyst you will use extracted objects in a specific part of more complex code that creates a plot or summary.
+
+There is another operator called the **double square bracket operator** (`[[`). The `[` and `[[` are both extraction operators, but they extract different kinds of things. `[` returns a subset of the same type as the original object. `[[` returns a single element inside the object (the “thing itself”), not a same-type subset.
+
+🎯 **Goal** Use the `[[` operator to extract the "Band_Color" column from the `field_sightings` data frame and compare it to using the `[` operator.
+
+
+**Method D**
+
+📜 The SYNTAX: `x[[i]]`
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+# Example D
+field_sightings[["Band_Color"]]   # the column VECTOR
+```
+
+🗣 The result is an extraction from one column and returns a vector, values only.
+
+🗣 In summary, the `[` can select zero, one, or many elements. The `[[` selects exactly one element.
+
+# `$` Operator
 
 There is another operator called the **dollar sign operator** (`$`) that is used to extract columns from a data frame by name. It is a convenient shorthand for selecting a single column or element.
 
-# here
+📜 The SYNTAX (basic):
+
+`dataframe$column_name`
+
+🎯 **Goal** Extract the `Band_Color` column using `$`.
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+field_sightings$Band_Color
+```
+
+🗣 A vector is printed showing all element values from the column `Band_Color` from the `field_sightings` data frame. It is an extraction from one column and returns a vector, values only.
+
+You will likely use the `$` operator often. The `$` operator is more concise and easier to read for common uses cases. However, it only works for selecting one column at a time and does not support more complex subsetting like `[` does. 
+
+For example, if we try to use a variable to specify the column name with the `$` operator, it will not work as expected because `$` does not evaluate the variable name.
+
+🎯 **Goal** Use a stored *object* name to specify the column name and try to extract the column using both `[[` and `$` operators.
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+col_name <- "Band_Color"
+# Example 1
+field_sightings[[col_name]]   # ✅ works
+```
+
+🗣 The `[[` operator allows you to use a variable name from your environment to specify the column name, which is why it works in this case. The result is an extraction from one column and returns a vector, values only.
+
+```{r, eval = FALSE}
+# ⚡ Type this in your R Notebook
+# Example 2
+field_sightings$col_name      # ❌ looks for a column literally named "col_name"
+```
+
+🗣 The `$` operator looks for a column literally named "col_name" and finds none, resulting in and Warning and `NULL`.
+
+
+
+In the remainder of this chapter, we practice using single-bracket indexing and the dollar sign operator.
+
+# Code Chunk Options
+
+You probably noticed that the code chunk examples resulted in long vector outputs. These can become difficult to read and navigate. You might find them particularly annoying when reviewing your HTML report. 
+
+Before moving on to Logical Indexing, let's talk about how to manage long outputs in your R Notebook.
+
+To make your R Notebook more readable, you can use the `results = 'hide'` option in your code chunks to hide the output of certain chunks, especially those that produce long outputs. 
+
+Alternatively, you can use `eval = FALSE` to prevent the code from running at all, which is useful for code that is meant to be illustrative rather than executed, such as when there is an error that you want to discuss without actually running the code.
+
+Below are some examples of how to use these options in your R Notebook. You can copy and paste the code into your notebook to see how it works.
+
+```{r echo=FALSE, results='asis'}
+cat(paste0(
+  "````markdown\n",
+  "```{r, echo=TRUE, results='hide'}\n",
+  "# Show code, hide long output\n",
+  "field_sightings[['Band_Color']]\n",
+  "```\n\n",
+  "```{r, echo=FALSE, message=FALSE, warning=FALSE}\n",
+  "# Run, but don't show code/messages/warnings\n",
+  "field_sightings$col_name \n",
+  "```\n\n",
+  "```{r, eval=FALSE, echo=TRUE}\n",
+  "# Show code, but do not run it\n",
+  "field_sightings$Band_Color\n",
+  "```\n",
+  "````\n"
+))
+```
+
+🎯 Please experiment with these options in your R Notebook to find the best way to manage long outputs above to make your notes more readable. 
+
+## Logical Indexing
+
+**Logical indexing** is a way to select values using a logical vector—a vector of `TRUE`/`FALSE` values. When you index with a logical vector, R returns only the values where the index is `TRUE`.
+
+---
+
+📖 **Review** In Chapter 4, you practiced logical indexing with a vector.
+
+🎯 Create a new vector called `smaller`that contains only values in `number_list` that are less than or equal to 20.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+number_list <- c(10, 25, 5, 30, 15, 40)
+```
+
+🗣 The `number_list` vector contains the values 10, 25, 5, 30, 15, and 40.
+
+```{r , eval=FALSE}
+# Step 1: create the logical "mask"
+number_list <= 20
+```
+
+🗣 This prints a logical vector (`TRUE`/`FALSE`) the same length as `number_list`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+# Step 2: use the logical vector inside [ ]
+smaller <- number_list[number_list <= 20]
+```
+
+🗣 This keeps only the values where the condition is `TRUE` (10, 5, 15).
+
+```{r , eval=FALSE}
+# ✅ Compare the vectors
+print(number_list)
+print(smaller)
+```
+
+🗣 The output shows the values in the `number_list` vector that are less than or equal to 20, which are 10, 5, and 15. 
+
+Key idea here is that the condition (`number_list <= 20`) produces a logical vector; `[ ]` uses it as a filter.
+
+---
+
+### Data Frame Logical Indexing
+
+**Logical indexing** with a data frame most often uses the *rows* position.
+
+**Option A**: Create a logical test using `[ ]`. 
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
+field_sightings[ , "Status"] == "Tagged"
+```
+
+🗣 This creates a logical column vector: one `TRUE`/`FALSE` per row.
+
+**Option B**: Alternatively, you can use the `$` operator to create the logical test.
+ 
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
+field_sightings$Status == "Tagged"
+```
+
+🗣 This creates a logical vector: one `TRUE`/`FALSE` per row. 
+
+# Subsetting
+
+**Subsetting** means returning a smaller part of an object using `[ ]`. Logical subsetting means uses a `TRUE`/`FALSE` “mask” to choose which *rows* to keep.
+
+🎯 **Goal:** Keep only rows where the bird is tagged.
+
+**Option A**: Store subset of `field_sightings` data frame as a new data frame using `[ ]`. 
+
+```{r}
+# ⚡ Type this in your R Notebook
+tagged_only <- field_sightings[ field_sightings[ , "Status"] == "Tagged" , ]
+# ✅  Check
+head(tagged_only)
+```
+
+🗣 This keeps only the rows where the bird is tagged and shows the first few rows of the resulting data frame.
+
+**Option B**: Store the subset of `field_sightings` data frame as a new data frame using `$` and `[]` operators to *build the mask*.
+
+```{r}
+# ⚡ Type this in your R Notebook
+tagged_sightings  <- field_sightings[field_sightings$Status == "Tagged", ]
+# ✅  Check
+head(tagged_sightings)
+```
+
+🗣 This keeps only the rows where the bird is tagged and shows the first few rows of the resulting data frame.
+
+💡 **Tip:** If your condition ever produces `NA` values because your data has missing values, it is because logical indexing can also produce rows you didn’t expect. In the Extraction section, you’ll learn how to handle that using `which()`.
+
+## which()
+
+Using `which()` is a strategy to handle potential `NA` values in your data. When the test could include NA, wrap it in `which()` to drop unknowns.
+
+🎯 **Goal:** Use `which()` to subset the `field_sightings` data frame to keep only rows where the bird is tagged, while safely handling any potential NA values in the "Status" column.
+
+You saw the function `which()` in Chapter 6. This function converts `TRUE` positions into numeric indices. 
+
+```{r}
+# ⚡ Type this in your R Notebook
+# Use which() to get the row indices where Status is "Tagged"
+row_idx_tagged <- which(field_sightings$Status == "Tagged")
+# Use the row indices to subset the data frame by rows that are tagged
+tagged_only <- field_sightings[row_idx_tagged, ]
+# ✅  Check
+head(tagged_only)
+```
+
+🗣 `which()` returns the indices of the `TRUE` elements and omits `NA` values for the `Status` column only. 
+
+
+# Extraction
 
 
 
 
+# Insertion / Overwrite
 
-- A short note on why this matters: this is the foundation for everything later (including dplyr and plotting).
-
-(Cite base principles and then demonstrate; the goal here is fluency and precision.)
-
-### Micro-checks that catch bad imports early
-
-Covers:
-
-- Are column names reasonable?
-
-- Are numeric columns actually numeric?
-
-- Do counts make sense (rows/columns)?
-
-
-
-## AI competency: troubleshoot imports safely
-
-AI can help explain error messages and suggest checks.
-
-Identify the privacy risks of certain AI systems
-
-AI should not receive private data or human-subjects data—ever.
-
-What’s safe to share:
-
-- the exact error message
-
-- your import code
-
-last chapter: Markdown structure # 
-
-This chapter: Markdown bold/italics with * / ** so you can emphasize constraints and context in prompts.
-
-### Example AI prompt for troubleshooting
-
-
-
-# Memoing and documentation
-
-Documenting your thinking processes (core)
-
-## Memo template
-
-Memo template: what every import needs
-
-0) Heading structure using Markdown (##, ###, etc.)
-
-1) Forethought (planning + strategic preparation)
-- 🎯 Goal: explicit goal setting (task analysis).
-- 💬 Prediction: anticipatory reasoning (“what do I expect will happen?”), which forces students to activate prior knowledge and commit to a mental model before execution.
-- 🧠 Growth mindset (as you define it): motivational beliefs that support persistence—this sits squarely in Zimmerman’s forethought “self-motivational beliefs” bucket (self-efficacy, task value, outcome expectations).
-2) Performance (strategy use + monitoring while working)
-- ⚡ Code: strategy enactment (writing code to meet the goal).
-- ✅ Checks: self-monitoring and control (debugging, validation, sanity checks).
-- 🚀 Code trials + ✍️ Record what you tried: systematic self-monitoring and iterative control—this is SRL “self-control” and “self-observation” made visible.
-3) Self-reflection (evaluation + adaptation)
-- 🗣 Comment: self-evaluation (“why did this work / what did I learn?”) and causal attribution.
-- 🪞 Reflect on learning process: explicit self-judgment and adaptive inference (“what will I do differently next time?”).
-- 👀 Citing resources and stating how they helped: operationalizes help-seeking and tool-use regulation (key SRL behaviors). 
-
-
-## Example memo 
+define
 
 
 
@@ -328,21 +509,27 @@ Memo template: what every import needs
 
 # Chapter Terms
 
-**Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
+**Character Indexing**: Indexing a named vector using character strings that match element names (for example, `x[c("Octarine", "TARDIS Blue")]`). With `[`, names are matched exactly; any name that doesn’t exist returns `NA` for that position.
 
 **Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
 
 **Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
 
-**Extraction**: Pulling values out of an object by subsetting on the right-hand side of an expression (e.g., `x[i]`), which returns the selected elements.
+**Double Square Bracket Operator** (`[[`): An extraction operator used to pull out one single element from a list (or one column from a data frame) and return the element itself, not a same-type subset. Unlike `[`, which can return multiple elements and preserves the container type, `[[` is for “give me the one thing inside” (e.g., a vector inside a dataframe).
+
+**Extraction**: Retrieving a single component from an object—such as one list element or one data-frame column—so you get the “thing itself” (often a simplified result like a vector). Extraction is commonly done with `[[ ]]` (extract one element by position or name) or `$` (extract one column by name).
+
+**Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Insertion**: Putting values into an object by subsetting on the left-hand side of an assignment (e.g., `x[i] <- value`), replacing or updating only the indexed part of the object (also called replacement or subassignment).
+
+**Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
 
 **Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
 
 **Row index**: The index used to select rows in a data frame or matrix (the first slot inside brackets: `x[i, ]`)
 
-**Subsetting**: Selecting a smaller part of an R object (for example, specific elements of a vector, rows/columns of a data frame, or components of a list) using R’s subsetting operators like `[`, `[[`, and `$`.
+**Subsetting**: Selecting a smaller piece of an R object using indices (positions, names, or a logical mask). With data frames, subsetting most commonly uses `[` in the form `df[rows, cols]` and typically preserves the object’s structure (e.g., you still get a data frame when you subset rows and columns).
 
 # 📝 Practice Space
 

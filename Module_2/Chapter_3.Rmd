@@ -597,7 +597,7 @@ as.numeric(mixed)            # character → numeric: text converts to NA
 
 ## Indexing Vectors
 
-The **bracket operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`. 
+The **indexing operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`. 
 
 A position used to identify elements in an object. In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
 
@@ -754,8 +754,6 @@ In this chapter, you learned to create an R Notebook (`.Rmd`), rename and save i
 
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
-**Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
-
 **Character Indexing**: Indexing a named vector using element names (character strings) instead of numbers. Names must match exactly; a missing name returns `NA`.
 
 **Character String**: A single piece of text in R, stored as a character value and written in quotes (for example, "My favorite color is yellow!" or "Who stole the cookie from the cookie jar?"). 
@@ -771,6 +769,8 @@ In this chapter, you learned to create an R Notebook (`.Rmd`), rename and save i
 **Factor Levels**: The distinct category labels a factor can take (for example, `"freshman"`, `"sophomore"`, `"junior"`, `"senior"`). Levels define the set and order of categories, and each factor value is internally stored as the index of its level.
 
 **Honesty**: Accurately reporting what you did in R—your actual steps, mistakes, revisions, and uncertainty—without presenting outside work as your own. This includes clearly attributing code, ideas, and any AI assistance, and being able to explain the code you submit.
+
+**Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
 

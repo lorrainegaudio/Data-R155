@@ -344,7 +344,7 @@ Element names can be used in indexing to access specific elements of the vector.
 
 ## Indexing Vectors
 
-The **bracket operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`.
+The **indexing operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`.
 
 ### Indexing by Name
 
@@ -387,9 +387,8 @@ We will return to indexing in later chapters when we learn about data frames.
 
 # Logical Vectors
 
-___
-
-**REVIEW**
+---
+📖 **Review**
 
 **Logical operators** include:
 
@@ -405,16 +404,31 @@ ___
 
 - `!=` not equal to
 
-___
+---
 
 🎯 Create a new vector called `smaller`that contains only values in `number_list` that are less than or equal to 20.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook
 number_list <- c(10, 25, 5, 30, 15, 40)
-smaller <- number_list[number_list <= 20]
-
 ```
+
+🗣 The `number_list` vector contains the values 10, 25, 5, 30, 15, and 40.
+
+```{r , eval=FALSE}
+# Step 1: create the logical "mask"
+number_list <= 20
+```
+
+🗣 This prints a logical vector (`TRUE`/`FALSE`) the same length as `number_list`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+# Step 2: use the logical vector inside [ ]
+smaller <- number_list[number_list <= 20]
+```
+
+🗣 This keeps only the values where the condition is `TRUE` (10, 5, 15).
 
 ```{r , eval=FALSE}
 # ✅ Compare the vectors
@@ -424,7 +438,7 @@ print(smaller)
 
 🗣 The output shows the values in the `number_list` vector that are less than or equal to 20, which are 10, 5, and 15. 
 
-___
+Key idea here is that the condition (`number_list <= 20`) produces a logical vector; `[ ]` uses it as a filter.
 
 # Summary
 
@@ -436,8 +450,6 @@ In this chapter, you learned to create an R Notebook, rename and save it correct
 **Accountability**: Taking responsibility for the results you report by verifying them, responding to questions or critiques, and correcting errors when found. In practice, this means you keep a clear record (e.g., in an R Markdown/Notebook or script) that shows how you checked your work and why you made your choices.
 
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
-
-**Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Character Indexing**: Indexing a named vector using element names (character strings) instead of numbers. Names must match exactly; a missing name returns `NA`.
 
@@ -454,6 +466,8 @@ In this chapter, you learned to create an R Notebook, rename and save it correct
 **Factor Levels**: The distinct category labels a factor can take (for example, `"freshman"`, `"sophomore"`, `"junior"`, `"senior"`). Levels define the set and order of categories, and each factor value is internally stored as the index of its level.
 
 **Honesty**: Accurately reporting what you did in R—your actual steps, mistakes, revisions, and uncertainty—without presenting outside work as your own. This includes clearly attributing code, ideas, and any AI assistance, and being able to explain the code you submit.
+
+**Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
 

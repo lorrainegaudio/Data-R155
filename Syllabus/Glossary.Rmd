@@ -38,15 +38,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
-**Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
-
 # C
 
 **Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
 
 **Character String**: A single piece of text in R, stored as a character value and written in quotes (for example, "My favorite color is yellow!" or "Who stole the cookie from the cookie jar?"). 
 
-**Character Indexing**: Indexing a named vector using element names (character strings) instead of numbers. Names must match exactly; a missing name returns `NA`.
+**Character Indexing**: Indexing a named vector using character strings that match element names (for example, `x[c("Octarine", "TARDIS Blue")]`). With `[`, names are matched exactly; any name that doesn’t exist returns `NA` for that position.
 
 **Character Vector**: A vector that stores text strings, written in quotes, such as `"apple", "banana", "grapes"` or `"ID_001", "ID_002", "ID_003"`.
 
@@ -68,6 +66,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
 
+**Double Square Bracket Operator** (`[[`): An extraction operator used to pull out one single element from a list (or one column from a data frame) and return the element itself, not a same-type subset. Unlike `[`, which can return multiple elements and preserves the container type, `[[` is for “give me the one thing inside” (e.g., a vector inside a dataframe).
+
 # E
 
 **Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
@@ -80,7 +80,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Excel** (.xlsx): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
 
-**Extraction**: Pulling values out of an object by subsetting on the right-hand side of an expression (e.g., `x[i]`), which returns the selected elements.
+**Extraction**: Retrieving a single component from an object—such as one list element or one data-frame column—so you get the “thing itself” (often a simplified result like a vector). Extraction is commonly done with `[[ ]]` (extract one element by position or name) or `$` (extract one column by name).
 
 # F
 
@@ -122,6 +122,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Impute**: To replace missing or unusable values (e.g., `NA`) with substituted values—often a plausible estimate based on the observed data (such as mean/median imputation or model-based predictions)—so the dataset can be analyzed without dropping incomplete cases. Because imputed values are estimates, you should document what method you used and why.
 
+**Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
+
 **Inline R**: A short R expression written inside backticks with the prefix `r` (for example, <code>&#96;r Sys.Date()&#96;</code>) that is evaluated when you knit/render the document and replaced with its result in the output. Inline R is used to insert dynamic values (dates, computed statistics, labels) directly into your narrative text, and it can also be used in YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code> when supported.
 
 **Insertion**: Putting values into an object by subsetting on the left-hand side of an assignment (e.g., `x[i] <- value`), replacing or updating only the indexed part of the object (also called replacement or subassignment).
@@ -143,6 +145,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.
 
 **Length** `length()`: A function that returns the number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
+
+**Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
 
 **Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
 
@@ -224,7 +228,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
 
-**Subsetting**: Selecting a smaller part of an R object (for example, specific elements of a vector, rows/columns of a data frame, or components of a list) using R’s subsetting operators like `[`, `[[`, and `$`.
+**Subsetting**: Selecting a smaller piece of an R object using indices (positions, names, or a logical mask). With data frames, subsetting most commonly uses `[` in the form `df[rows, cols]` and typically preserves the object’s structure (e.g., you still get a data frame when you subset rows and columns).
 
 # T
 
