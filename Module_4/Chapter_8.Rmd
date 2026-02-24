@@ -36,7 +36,7 @@ In Chapter Eight you will learn how to:
 
 State R’s basic subsetting template: `x[rows, cols]`.
 
-
+Read and write the `x[rows, cols]` pattern to pull out what you need and safely overwrite values.
 
 
 Explore with Base R tools and bracket indexing (`[]`) only
@@ -47,7 +47,7 @@ To begin this guided activity, you'll want to open, format, and save an R Notebo
 
 ## Open an R Notebook
 
-To follow along Chapter 8, 🎯 please open a new R Notebook in your course folder named `chapter6_notes.Rmd` and add a date to the YAML header. While your here, **include your name as the author**! See the example of a YAML below. Use this document to take notes and practice the chapter content. 
+To follow along Chapter 8, 🎯 please open a new R Notebook in your course folder named `chapter8_notes.Rmd` and add a date to the YAML header. While your here, **include your name as the author**! See the example of a YAML below. Use this document to take notes and practice the chapter content. 
 
 1. Open RStudio → File → New File → R Notebook.
 
@@ -59,7 +59,7 @@ To follow along Chapter 8, 🎯 please open a new R Notebook in your course fold
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
 ---
-title: \"Chapter 5 Practice\"
+title: \"Chapter 8 Practice: Bracket Indexing\"
 author: \"Your Name Here\"
 date: \"`r Sys.Date()`\"
 output: html_notebook
@@ -81,7 +81,7 @@ output: html_notebook
 
 ## Load Data
 
-The `field_sightings.csv` dataset contains **simulated** (randomly generated) values using functions like `sample()` and `ifelse()`. This dataset theme is based on the idea that field biologists observed and recorded a population of species of birds. The dataset was created so that most birds observed were untagged, but a small number have been previously captured and marked with colored leg bands. 
+The `field_sightings.csv` dataset contains **simulated** (randomly generated) values. The dataset theme is based on the pretend situation where field biologists observed and recorded a population of species of birds. Bird banding is a scientific method used to track and study individual birds, providing valuable data on their movements, behavior, and population dynamics. In our senerio, most birds observed were "Untagged," but a small number have been previously captured and marked with colored leg bands, "Tagged". The color of the bands might provide information about the bird's history, such as where it was banded or its age.
 
 The simulated dataframe `field_sightings` has two columns:
 
@@ -89,7 +89,7 @@ The simulated dataframe `field_sightings` has two columns:
 
 - `Band_Color` If a bird is untagged, the value is “None.” If it is tagged, the value is one of several possible band colors.
 
-Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
+🎯 **Goal** Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
 
 🎯 **Goal** Load `field_sightings.csv` into R using `read.csv()` and assign it to a variable called `sightings`. Recall that you need to library `readr` before you can use `read.csv()`.
 
@@ -101,16 +101,23 @@ field_sightings <- read.csv("field_sightings.csv")
 
 🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see *warning* messages with you load packages like `readr()`.
 
+## Bracket Indexing `[ ]`
 
-## Bracket Indexing `[]`
+In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
 
-Chapter 3 introduced you to the **bracket operator**. You learned that the basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. In R, indices are typically integers (positions), names (characters), or logical values (TRUE/FALSE).
+### Positional Indexing 
+
+Positional indexing is the most basic form of indexing in R, where you use numeric positions to select elements from a vector or data frame.
+
+---
+
+📖 **Review**: In Chapter 3, you practiced using the **bracket operator** with positional indexing to extract elements from vectors. Let's review that briefly before we move on to data frames. 
 
 💡 **Tip:** Positions start at `1` in R. This is different from other coding languages like python which starts indexing values at `0`.
 
-### Quick Vector Indexing Review
+You learned that the basic pattern for **positional indexing** is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. 
 
-🎯 **Goal**  Practice using `[ ]` with **positional indexing** on vectors. 
+🎯 **Goal**  Practice using `[ ]` with positional indexing on vectors. 
 
 ```{r}
 # ⚡ Type this in your R Notebook
@@ -139,14 +146,17 @@ z[2:4]
 🗣 The second, third and fourth elements by position is 20, 30, and 40.
 
 ```{r}
+# ⚡ Type this in your R Notebook
 z[-c(1, 5)] 
 ```
 
 🗣 All *except* first and last elements is 20, 30, and 40.
 
-### Data Frame Indexing
+---
 
-The **bracket operator** (`[ ]`) is used to select or replace parts of many kinds of objects including vectors, matrices, and data frames. For data frames, the common form: `df[rows, cols]` or `x[i, j, drop = ]` where `i` is the **row index**, `j` is the **column index**, and drop is a logical value that indicates whether to simplify the result to a vector if possible.
+#### Data Frame Positional Indexing
+
+The **bracket operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors, including matrices, and data frames. For data frames, the common form is `df[rows, cols]` or `x[i, j, drop = ]` where `i` is the **row index**, `j` is the **column index**, and drop is a logical value that indicates whether to simplify the result to a vector if possible.
 
 When you select a smaller part of an object, using indices such as numbers, names, or logical tests, you are **subsetting** the object. Subsetting is a fundamental operation that allows you to select specific elements from a larger data structure.
 
@@ -160,23 +170,92 @@ When you select a smaller part of an object, using indices such as numbers, name
 
 Let's see this in practice with our `field_sightings` data frame.
 
-🎯 **Goal** Print the first few rows of the `field_sightings` data frame using brackets to check that it loaded correctly
+🎯 **Goal** Print the first six rows of the `field_sightings` data frame using the bracket operator.
 
 ```{r}
-# ✅ 
-field_sightings[1:3, ]  
+# ⚡ Type this in your R Notebook
+field_sightings[1:6, ]  
 ```
 
 🗣 Shows first three rows, all columns. 
 
-# Start Here
+### `head()` function
+
+There is a function called `head()` that *basically* does the same thing as `field_sightings[1:6, ]` but is more concise and easier to read. 
+
+📜 The SYNTAX (basic): 
+
+`head(x, n = 6L)`
+
+If you don't specify `n`, it defaults to 6, which means it will show the first 6 rows of the data frame. You can change this number to show more or fewer rows.
+
+🎯 **Goal** Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
+
+```{r}
+
+# ⚡ Type this in your R Notebook
+head(field_sightings, n = 3)
+```
+
+🗣 `head()` is commonly used to get a quick orientation of the dataset after loading. 
+
+`head()` does not do arbitrary extraction or subsetting. `head()` is a function that provides a convenient way to view the first few rows of a data frame. 
+
+Bracket indexing allows for flexible and specific subsetting of the data frame based on row *and* column indices.  `[` works on almost everything and supports rich indexing and is commonly used as part of an algorithm. You will use `[` when you need subsetting by columns, conditions, and arbitrary rows when you are writing analysis code.
+
+### Character Indexing
+
+So far, these examples have used **positional indexing**. You can also use **character indexing** to select columns by their names instead of their positions. This is often more readable and less error-prone, especially when the order of columns might change or when you have many columns.
+
+---
+
+📖 **Review** In Chapter 3, you created the `nerdy_palette` vector and then used character indexing to return the hexadecimal color code. 
+
+```{r}
+# 📖 Review
+# Create nerdy_palette
+nerdy_palette <- c(
+"Octarine" = "#7F00FF",
+"TARDIS Blue" = "#003B6F",
+"Rebeccapurple" = "#663399",
+"Hooloovoo" = "#4F97A3",
+"Cosmic Latte" = "#FFF8E7",
+"Vantablack" = "#000000",
+"Matrix Green" = "#03A062",
+"Source Engine Magenta" = "#FF00FF",
+"Command Red" = "#CC0000",
+"Impossible Green" = "#4D9E68"
+)
+# Use character indexing to return the hex code for Octarine
+nerdy_palette["Octarine"]
+```
+
+🗣 The output shows the hexadecimal color code for “Octarine” retrieved from the `nerdy_palette` vector using its name.
+
+---
+
+#### Data Frame Character Indexing
+
+We can use character indexing to select a column by name. 
+
+🎯 **Goal** Use character indexing to return the band color in the `field_sightings` data frame. To reduce what prints, select on the the 46th through 55th rows.
+
+```{r}
+# ⚡ Type this in your R Notebook
+field_sightings[46:55, "Band_Color"] 
+```
+
+🗣 A vector is printed showing the element values stored in rows 46 though 55 for the column "Band Color."
+
+### `$` Operator
+
+There is another operator called the **dollar sign operator** (`$`) that is used to extract columns from a data frame by name. It is a convenient shorthand for selecting a single column or element.
+
+# here
 
 
 
 
-- Selecting columns by name without $:
-
-`df[ , c("age", "income")]`
 
 - A short note on why this matters: this is the foundation for everything later (including dplyr and plotting).
 
@@ -252,6 +331,8 @@ Memo template: what every import needs
 **Bracket Operator**: The square-bracket indexing operator `[` used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
+
+**Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
 
 **Extraction**: Pulling values out of an object by subsetting on the right-hand side of an expression (e.g., `x[i]`), which returns the selected elements.
 

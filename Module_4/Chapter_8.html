@@ -1631,7 +1631,7 @@ display: none;
 
 <h1 class="title toc-ignore">Chapter 8: Base R and bracket indexing</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version February 11, 2026</h4>
+<h4 class="date">Version February 23, 2026</h4>
 
 </div>
 
@@ -1643,77 +1643,203 @@ this chapter!</p>
 <p>TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS
 IMPORTANT.</p>
 <p>In Chapter Eight you will learn how to:</p>
-<ul>
-<li>Courage Skill Highlight</li>
-</ul>
-<p>Students can attempt a task first (even imperfectly), then seek help
-with a clear question and evidence (code + error + what they think is
-happening).</p>
-<p>Students can share imperfect work in a discussion/lab setting and
-revise based on feedback.</p>
+<p>State R’s basic subsetting template: <code>x[rows, cols]</code>.</p>
+<p>Read and write the <code>x[rows, cols]</code> pattern to pull out
+what you need and safely overwrite values.</p>
 <p>Explore with Base R tools and bracket indexing (<code>[]</code>)
 only</p>
-<div id="the-inspect-first-toolkit-no-subsetting-yet" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> The “inspect first”
-toolkit (no subsetting yet)</h2>
-<p>Covers:</p>
-<p>dim(), nrow(), ncol(), names(), head(), tail(), str(), summary()</p>
-<p>Interpretation prompts that force curiosity:</p>
-<p>“Which columns look categorical vs numeric?”</p>
-<p>“Are there missing values? Where?”</p>
 </div>
-<div id="bracket-indexing" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Bracket Indexing
-<code>[]</code></h2>
+<div id="set-up" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Set Up</h1>
+<p>To begin this guided activity, you’ll want to open, format, and save
+an R Notebook in your course folder. This will be your workspace for
+practicing the content of Chapter 8. Then, you’ll practice loading data.
+We’ll be using the <code>field_sightings.csv</code> dataset.</p>
+<div id="open-an-r-notebook" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Open an R
+Notebook</h2>
+<p>To follow along Chapter 8, 🎯 please open a new R Notebook in your
+course folder named <code>chapter8_notes.Rmd</code> and add a date to
+the YAML header. While your here, <strong>include your name as the
+author</strong>! See the example of a YAML below. Use this document to
+take notes and practice the chapter content.</p>
+<ol style="list-style-type: decimal">
+<li><p>Open RStudio → File → New File → R Notebook.</p></li>
+<li><p>Save it in your course folder as:
+<code>chapter6_notes.Rmd</code>.</p></li>
+<li><p>In your YAML header at the top:</p></li>
+</ol>
+<pre class="yaml"><code>---
+title: &quot;Chapter 8 Practice: Bracket Indexing&quot;
+author: &quot;Your Name Here&quot;
+date: &quot;`r Sys.Date()`&quot;
+output: html_notebook
+---</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Remove the default content in the R Notebook and replace it with
+your notes and code as you work through the chapter.</p></li>
+<li><p>Use headings as you work. At minimum, create section headings
+that match the chapter structure (e.g., <code># Bracket Indexing</code>,
+<code># Subsetting</code>, <code># Extraction</code>,
+<code># Insertion</code>. This creates a readable outline.</p></li>
+<li><p>Memo as you go.</p></li>
+</ol>
+<ul>
+<li><p>Outside chunks: write normal text.</p></li>
+<li><p>Inside chunks: use <code>#</code> for any code comments
+(otherwise R tries to run the text).</p></li>
+<li><p>If you hit an error: keep the broken line commented out and write
+a one-sentence note about what you changed to fix it.</p></li>
+</ul>
 </div>
-<div id="sub-setting-vectors" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Sub-setting
-Vectors</h2>
-<p>🎯 <strong>Goal</strong> Pull out the pieces you need. Use
-<code>[ ]</code> with positions or a logical test.</p>
-<p>🧠 Remember: positions start at 1 in R (not 0).</p>
-<p>Type the following into your R script and run each line.</p>
-<pre class="r"><code>z[1]       # first element by position
-
-z[3]       # third element by position
-
-z[2:4]     # last two elements by position 
-
-z[-c(1, 5)] # all but first and last elements</code></pre>
-<p>🛠 Break Things! What happens if you try to index with a number larger
-than the vector length, like <code>z[6]</code>? ⚡ Explain any error
-message you see.</p>
-<p>🧠 Challenge: Extract the last two fruits from <em>chars</em>.</p>
-<div id="vector-indexing" class="section level3" number="1.3.1">
-<h3><span class="header-section-number">1.3.1</span> Vector
+<div id="load-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Load Data</h2>
+<p>The <code>field_sightings.csv</code> dataset contains
+<strong>simulated</strong> (randomly generated) values using functions
+like <code>sample()</code> and <code>ifelse()</code>. This dataset theme
+is based on the idea that field biologists observed and recorded a
+population of species of birds. The dataset was created so that most
+birds observed were untagged, but a small number have been previously
+captured and marked with colored leg bands.</p>
+<p>The simulated dataframe <code>field_sightings</code> has two
+columns:</p>
+<ul>
+<li><p><code>Status</code> Describes whether the sighted bird is
+“Untagged” (the common case) or “Tagged” (the rare case).</p></li>
+<li><p><code>Band_Color</code> If a bird is untagged, the value is
+“None.” If it is tagged, the value is one of several possible band
+colors.</p></li>
+</ul>
+<p>Download the <code>field_sightings.csv</code> file from Canvas and
+save it in the <em>same</em> folder as your R Notebook. Then, load the
+data into R.</p>
+<p>🎯 <strong>Goal</strong> Load <code>field_sightings.csv</code> into R
+using <code>read.csv()</code> and assign it to a variable called
+<code>sightings</code>. Recall that you need to library
+<code>readr</code> before you can use <code>read.csv()</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+library(readr) # Load the readr package for reading CSV files</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.5.2</code></pre>
+<pre class="r"><code>field_sightings &lt;- read.csv(&quot;field_sightings.csv&quot;)</code></pre>
+<p>🗣 This code uses the <code>read.csv()</code> function to read the CSV
+file named “field_sightings.csv” and assigns the resulting data frame to
+a variable called <code>field_sightings</code>. It it normal to see
+<em>warning</em> messages with you load packages like
+<code>readr()</code>.</p>
+</div>
+<div id="bracket-indexing" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Bracket Indexing
+<code>[ ]</code></h2>
+<p>Chapter 3 introduced you to the <strong>bracket operator</strong>.
+You learned that the basic pattern is <code>x[i]</code>, where
+<code>x</code> is the vector and <code>i</code> is the index (or
+indices) of the elements you want to extract. A position used to
+identify elements in an object. In R, indices are typically integers
+(positions), names (characters), or logical values (TRUE/FALSE).</p>
+<p>💡 <strong>Tip:</strong> Positions start at <code>1</code> in R. This
+is different from other coding languages like python which starts
+indexing values at <code>0</code>.</p>
+<div id="quick-vector-indexing-review" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Quick Vector
+Indexing Review</h3>
+<p>🎯 <strong>Goal</strong> Practice using <code>[ ]</code> with
+<strong>positional indexing</strong> on vectors.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+z &lt;- c(10, 20, 30, 40, 50) # create a vector</code></pre>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+z[1]       </code></pre>
+<pre><code>## [1] 10</code></pre>
+<p>🗣 The first element by position is 10.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+z[3]      </code></pre>
+<pre><code>## [1] 30</code></pre>
+<p>🗣 The third element by position is 30.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+z[2:4]     </code></pre>
+<pre><code>## [1] 20 30 40</code></pre>
+<p>🗣 The second, third and fourth elements by position is 20, 30, and
+40.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+z[-c(1, 5)] </code></pre>
+<pre><code>## [1] 20 30 40</code></pre>
+<p>🗣 All <em>except</em> first and last elements is 20, 30, and 40.</p>
+</div>
+<div id="data-frame-indexing" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Data Frame
 Indexing</h3>
-</div>
-<div id="logical-indexing" class="section level3" number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Logical
-Indexing</h3>
-<p>Type the following into your R script and run.</p>
-<pre class="r"><code>numbers3[numbers3 &gt; 0] # keep only positives</code></pre>
-<p>🔍 Look deeper: What happens if you
-run<code>y &lt;- z[(!is.na(z))]</code>? Hint: The function
-<code>is.na()</code> checks for missing values (NA) in the vector. The
-<code>!</code> operator negates the logical vector. Print
-<code>y</code>. 👀 What happened?⚡ Explain</p>
-<pre class="r"><code># Create a memo note in your R script if you did 🛠 Break Things and 🧠 Challenge 
-# Or if you did the 🔍 Look deeper, and 👀 What happened?. 
-# This is where you could earn points for demonstrating learning skills.
-
-## 1. Explain what you did in Indexing, what your observations are, and what you expect 
-# to happen. 
-
-## 2. Demonstrate learning skill(s) in your memo</code></pre>
-<p>Brackets as a coordinate system: <code>df[rows, cols]</code></p>
-<p>Covers (teach as a pattern, not a list of tricks):</p>
+<p>The <strong>bracket operator</strong> (<code>[ ]</code>) is used to
+select or replace parts of many kinds of objects including vectors,
+matrices, and data frames. For data frames, the common form:
+<code>df[rows, cols]</code> or <code>x[i, j, drop = ]</code> where
+<code>i</code> is the <strong>row index</strong>, <code>j</code> is the
+<strong>column index</strong>, and drop is a logical value that
+indicates whether to simplify the result to a vector if possible.</p>
+<p>When you select a smaller part of an object, using indices such as
+numbers, names, or logical tests, you are <strong>subsetting</strong>
+the object. Subsetting is a fundamental operation that allows you to
+select specific elements from a larger data structure.</p>
 <ul>
 <li>Rows and columns are coordinates:</li>
 </ul>
-<p><code>df[1:5, ]</code> first five rows</p>
-<p><code>df[ , 1:3]</code> first three columns</p>
-<p><code>df[1, 2]</code> one cell</p>
+<p><code>df[1:5, ]</code> results in the first five rows, all
+columns</p>
+<p><code>df[ , 1:3]</code> shows all rows, first three columns</p>
+<p><code>df[1, 2]</code> prints only one cell’s value: first row, second
+column</p>
+<p>Let’s see this in practice with our <code>field_sightings</code> data
+frame.</p>
+<p>🎯 <strong>Goal</strong> Print the first six rows of the
+<code>field_sightings</code> data frame using the bracket operator.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+field_sightings[1:6, ]  </code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None","_rn_":"1"},{"1":"Untagged","2":"None","_rn_":"2"},{"1":"Untagged","2":"None","_rn_":"3"},{"1":"Untagged","2":"None","_rn_":"4"},{"1":"Untagged","2":"None","_rn_":"5"},{"1":"Untagged","2":"None","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 Shows first three rows, all columns.</p>
+<p>There is a function called <code>head()</code> that
+<em>basically</em> does the same thing as
+<code>field_sightings[1:6, ]</code> but is more concise and easier to
+read.</p>
+<p>📜 The SYNTAX (basic):</p>
+<p><code>head(x, n = 6L)</code></p>
+<p>If you don’t specify <code>n</code>, it defaults to 6, which means it
+will show the first 6 rows of the data frame. You can change this number
+to show more or fewer rows.</p>
+<p>🎯 <strong>Goal</strong> Print the first three rows of the
+<code>field_sightings</code> data frame using the <code>head()</code>
+function to check that the dataset loaded correctly.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+head(field_sightings, n = 3)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None","_rn_":"1"},{"1":"Untagged","2":"None","_rn_":"2"},{"1":"Untagged","2":"None","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 <code>head()</code> is commonly used to get a quick orientation of
+the dataset after loading.</p>
+<p><code>head()</code> does not do arbitrary extraction or subsetting.
+<code>head()</code> is a function that provides a convenient way to view
+the first few rows of a data frame.</p>
+<p>Bracket indexing allows for flexible and specific subsetting of the
+data frame based on row <em>and</em> column indices. <code>[</code>
+works on almost everything and supports rich indexing and is commonly
+used as part of an algorithm. You will use <code>[</code> when you need
+subsetting by columns, conditions, and arbitrary rows when you are
+writing analysis code.</p>
+<p>So far, you’ve see</p>
+</div>
+</div>
+</div>
+<div id="here" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> here</h1>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+field_sightings[46:55, &quot;Band_Color&quot;] </code></pre>
+<pre><code>##  [1] &quot;None&quot;   &quot;None&quot;   &quot;None&quot;   &quot;None&quot;   &quot;Silver&quot; &quot;None&quot;   &quot;None&quot;   &quot;None&quot;  
+##  [9] &quot;None&quot;   &quot;None&quot;</code></pre>
+<p>🗣 Shows first three rows of first and second columns. Our dataset
+only has two columns though.</p>
 <ul>
 <li>Selecting columns by name without $:</li>
 </ul>
@@ -1724,9 +1850,8 @@ everything later (including dplyr and plotting).</li>
 </ul>
 <p>(Cite base principles and then demonstrate; the goal here is fluency
 and precision.)</p>
-</div>
-<div id="micro-checks-that-catch-bad-imports-early" class="section level3" number="1.3.3">
-<h3><span class="header-section-number">1.3.3</span> Micro-checks that
+<div id="micro-checks-that-catch-bad-imports-early" class="section level3" number="3.0.1">
+<h3><span class="header-section-number">3.0.1</span> Micro-checks that
 catch bad imports early</h3>
 <p>Covers:</p>
 <ul>
@@ -1735,9 +1860,8 @@ catch bad imports early</h3>
 <li><p>Do counts make sense (rows/columns)?</p></li>
 </ul>
 </div>
-</div>
-<div id="ai-competency-troubleshoot-imports-safely" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> AI competency:
+<div id="ai-competency-troubleshoot-imports-safely" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> AI competency:
 troubleshoot imports safely</h2>
 <p>AI can help explain error messages and suggest checks.</p>
 <p>Identify the privacy risks of certain AI systems</p>
@@ -1750,18 +1874,18 @@ troubleshoot imports safely</h2>
 <p>last chapter: Markdown structure #</p>
 <p>This chapter: Markdown bold/italics with * / ** so you can emphasize
 constraints and context in prompts.</p>
-<div id="example-ai-prompt-for-troubleshooting" class="section level3" number="1.4.1">
-<h3><span class="header-section-number">1.4.1</span> Example AI prompt
+<div id="example-ai-prompt-for-troubleshooting" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Example AI prompt
 for troubleshooting</h3>
 </div>
 </div>
 </div>
-<div id="memoing-and-documentation" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Memoing and
+<div id="memoing-and-documentation" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Memoing and
 documentation</h1>
 <p>Documenting your thinking processes (core)</p>
-<div id="memo-template" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Memo template</h2>
+<div id="memo-template" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Memo template</h2>
 <p>Memo template: what every import needs</p>
 <ol start="0" style="list-style-type: decimal">
 <li><p>Heading structure using Markdown (##, ###, etc.)</p></li>
@@ -1800,27 +1924,53 @@ inference (“what will I do differently next time?”).</li>
 help-seeking and tool-use regulation (key SRL behaviors).</li>
 </ul>
 </div>
-<div id="example-memo" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Example memo</h2>
+<div id="example-memo" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Example memo</h2>
 </div>
 </div>
-<div id="summary" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Summary</h1>
+<div id="summary" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Summary</h1>
 </div>
-<div id="chapter-terms" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Chapter Terms</h1>
+<p><strong>Bracket Operator</strong>: The square-bracket indexing
+operator <code>[</code> used to extract or replace parts of an object in
+R (for example, <code>x[i]</code>). For vectors, it selects one or more
+elements and returns the same kind of object as <code>x</code> (a
+vector).</p>
+<p><strong>Column index</strong>: The index used to select columns in a
+data frame or matrix (the second slot inside brackets:
+<code>x[, j]</code>).</p>
+<p><strong>Extraction</strong>: Pulling values out of an object by
+subsetting on the right-hand side of an expression (e.g.,
+<code>x[i]</code>), which returns the selected elements.</p>
+<p><strong>Insertion</strong>: Putting values into an object by
+subsetting on the left-hand side of an assignment (e.g.,
+<code>x[i] &lt;- value</code>), replacing or updating only the indexed
+part of the object (also called replacement or subassignment).</p>
+<p><strong>Positional Indexing</strong>: Indexing a vector using numeric
+positions (for example, <code>x[1]</code> for the first element or
+<code>x[c(1, 3)]</code> for the first and third). Positions are based on
+the current order of the vector.</p>
+<p><strong>Row index</strong>: The index used to select rows in a data
+frame or matrix (the first slot inside brackets:
+<code>x[i, ]</code>)</p>
+<p><strong>Subsetting</strong>: Selecting a smaller part of an R object
+(for example, specific elements of a vector, rows/columns of a data
+frame, or components of a list) using R’s subsetting operators like
+<code>[</code>, <code>[[</code>, and <code>$</code>.</p>
 </div>
-<div id="practice-space" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> 📝 Practice Space</h1>
-<div id="task-1" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Task 1</h2>
+<div id="practice-space" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
+<div id="task-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Task 1</h2>
 </div>
-<div id="task-2" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Task 2</h2>
 </div>
 </div>
-<div id="references" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> References</h1>
+<div id="references" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> References</h1>
 </div>
 
 <footer>
