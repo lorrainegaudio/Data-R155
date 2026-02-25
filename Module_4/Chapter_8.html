@@ -12,7 +12,7 @@
 <meta name="author" content="Lorraine Gaudio" />
 
 
-<title>Chapter 8: Base R and bracket indexing</title>
+<title>Chapter 8</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1629,34 +1629,65 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Chapter 8: Base R and bracket indexing</h1>
+<h1 class="title toc-ignore">Chapter 8</h1>
+<h3 class="subtitle">Subsetting, Extraction, and Insertion with Bracket
+Indexing</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version February 23, 2026</h4>
+<h4 class="date">Version February 25, 2026</h4>
 
 </div>
 
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p><em>This is Module 4</em> Review Lesson 6. Lots of editing needed in
-this chapter!</p>
-<p>TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS
-IMPORTANT.</p>
-<p>In Chapter Eight you will learn how to:</p>
-<p>State R’s basic subsetting template: <code>x[rows, cols]</code>.</p>
-<p>Read and write the <code>x[rows, cols]</code> pattern to pull out
-what you need and safely overwrite values.</p>
-<p>Explore with Base R tools and bracket indexing (<code>[]</code>)
-only</p>
+<p>Bracket indexing is one of the main ways you “point R” at the exact
+rows and columns you need. Real analysis rarely uses an entire dataset
+at once. Instead, analysts will select columns, filter rows, recode
+values or create new columns using</p>
+<p>In this chapter’s guided activity you’ll practice those skills using
+the <code>field_sightings</code> dataset, a simulated bird-banding
+dataset where birds are recorded as <strong>Tagged</strong> or
+<strong>Untagged</strong>and tagged birds can have a band color. The
+data frame has two columns: <code>Status</code> and
+<code>Band_Color</code>. Then, you’ll use
+<code>Values_Transport_dplace.csv</code> in Practice Space to generalize
+your understanding, applying your new skills on a different dataset.</p>
+<p>By the end of Chapter 8, you will be able to:</p>
+<ul>
+<li><p>📥 Use a loaded CSV into R as a data frame.</p></li>
+<li><p>🧩 Apply the subsetting template to select data by 📍 positions,
+🏷️ names, and 🔍 logical mask.</p></li>
+<li><p>⚠️ Explain missing value propagation in logical masks.</p></li>
+<li><p>🧪 Extract one column as “the thing itself” using [[ ]] or $ so
+you can pass it into functions like unique() or table().</p></li>
+<li><p>🛠️ Experiment with subassignment methods to overwrite and insert
+values.</p></li>
+<li><p>🎯 Use code chunk options to manage long outputs in your R
+Notebook.</p></li>
+</ul>
 </div>
 <div id="set-up" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Set Up</h1>
-<p>To begin this guided activity, you’ll want to open, format, and save
-an R Notebook in your course folder. This will be your workspace for
-practicing the content of Chapter 8. Then, you’ll practice loading data.
-We’ll be using the <code>field_sightings.csv</code> dataset.</p>
-<div id="open-an-r-notebook" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Open an R
+<p>To begin this guided activity, you’ll want to</p>
+<ol style="list-style-type: decimal">
+<li><p>Download <code>field_sightings.csv</code> and
+<code>Values_Transport_dplace.csv</code> from Canvas and save them in
+the same folder as your course R Notebooks.</p></li>
+<li><p>Open, format, and save an R Notebook in your course
+folder.</p></li>
+</ol>
+<div id="download-and-save" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Download and
+Save</h2>
+<p>The final folder structure for this chapter will look like this:</p>
+<pre><code>  -`Intro_to_R/`
+  -- `chapter8_notes.Rmd`
+  -- `chapter8_practice.Rmd` 
+  -- `Values_Transport_dplace.csv`
+  -- `field_sightings.csv`</code></pre>
+</div>
+<div id="open-an-r-notebook" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Open an R
 Notebook</h2>
 <p>To follow along Chapter 8, 🎯 please open a new R Notebook in your
 course folder named <code>chapter8_notes.Rmd</code> and add a date to
@@ -1693,8 +1724,8 @@ readable outline.</p></li>
 a one-sentence note about what you changed to fix it.</p></li>
 </ul>
 </div>
-<div id="load-data" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Load Data</h2>
+<div id="load-data" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Load Data</h2>
 <p>The <code>field_sightings.csv</code> dataset contains
 <strong>simulated</strong> (randomly generated) values. The dataset
 theme is based on the pretend situation where field biologists observed
@@ -1717,6 +1748,9 @@ colors.</p></li>
 <p>🎯 <strong>Goal</strong> Download the
 <code>field_sightings.csv</code> file from Canvas and save it in the
 <em>same</em> folder as your R Notebook. Then, load the data into R.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# 1) Confirm the CSV is in the same folder as your R Notebook
+list.files()</code></pre>
 <p>🎯 <strong>Goal</strong> Load <code>field_sightings.csv</code> into R
 using <code>read_csv()</code> and assign it to a variable called
 <code>feild_sightings</code>. Recall that you need to library
@@ -1735,78 +1769,80 @@ library(readr) # Load the readr package for reading CSV files</code></pre>
 <p>🗣 This code uses the <code>read.csv()</code> function to read the CSV
 file named “field_sightings.csv” and assigns the resulting data frame to
 a variable called <code>field_sightings</code>. It it normal to see
-messages with you load packages like <code>readr()</code>.</p>
+messages with you load packages.</p>
+<p>Feel free to click <code>field_sightings</code> in your Environment
+pane to view the data frame and get a sense of what it looks like.</p>
 </div>
-<div id="bracket-indexing" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Bracket Indexing
-<code>[ ]</code></h2>
-<p>In R, indices are typically integers (<em>positions</em>), names
-(<em>characters</em>), or logical values
-(<code>TRUE</code>/<code>FALSE</code>).</p>
-<div id="positional-indexing" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Positional
-Indexing</h3>
+</div>
+<div id="subsetting" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Subsetting</h1>
+<p><strong>Subsetting</strong> a smaller part of an object, typically
+using <em>positions</em> (integers), <em>names</em> (characters), or
+<em>logical mask</em> (<code>TRUE</code>/<code>FALSE</code>). In base R,
+this is done using the <strong>single square bracket operator</strong>
+<code>[</code> (<code>[ ]</code>).</p>
+<p>The return output from a single square bracket operator is usually a
+container of the same type as the original object. A subset of a vector
+is still a vector and the subset of a data frame is often still a data
+frame. Data analysts use subsetting when filtering rows, selecting
+columns to keep, slicing a range, or pulling a rectangular block from a
+data frame.</p>
+<div id="positional-indexing" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> 📍 Positional
+Indexing</h2>
 <p>Positional indexing is the most basic form of indexing in R, where
 you use numeric positions to select elements from a vector or data
 frame.</p>
-<hr />
-<p>📖 <strong>Review</strong>: In Chapter 3, you practiced using the
-<strong>indexing operator</strong> with positional indexing to extract
-elements from vectors. Let’s review that briefly before we move on to
-data frames.</p>
 <p>💡 <strong>Tip:</strong> Positions start at <code>1</code> in R. This
 is different from other coding languages like python which starts
 indexing values at <code>0</code>.</p>
+<div id="vector" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Vector</h3>
+<p>In Chapter 3, you practiced using the <strong>indexing
+operator</strong> with positional indexing to extract elements from
+vectors. Let’s review that briefly before we move on to data frames.</p>
 <p>You learned that the basic pattern for <strong>positional
 indexing</strong> is <code>x[i]</code>, where <code>x</code> is the
 vector and <code>i</code> is the index (or indices) of the elements you
 want to extract. A position used to identify elements in an object.</p>
 <p>🎯 <strong>Goal</strong> Practice using <code>[ ]</code> with
 positional indexing on vectors.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
+<pre class="r"><code># 📖 Review
 z &lt;- c(10, 20, 30, 40, 50) # create a vector</code></pre>
-<pre class="r"><code># ⚡ Type this in your R Notebook
+<pre class="r"><code># 📖 Review
 z[1]       </code></pre>
 <pre><code>## [1] 10</code></pre>
 <p>🗣 The first element by position is 10.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
+<pre class="r"><code># 📖 Review
 z[3]      </code></pre>
 <pre><code>## [1] 30</code></pre>
 <p>🗣 The third element by position is 30.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
+<pre class="r"><code># 📖 Review
 z[2:4]     </code></pre>
 <pre><code>## [1] 20 30 40</code></pre>
 <p>🗣 The second, third and fourth elements by position is 20, 30, and
 40.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-z[-c(1, 5)] </code></pre>
-<pre><code>## [1] 20 30 40</code></pre>
-<p>🗣 All <em>except</em> first and last elements is 20, 30, and 40.</p>
-<hr />
-<div id="data-frame-positional-indexing" class="section level4" number="2.3.1.1">
-<h4><span class="header-section-number">2.3.1.1</span> Data Frame
-Positional Indexing</h4>
+</div>
+<div id="data-frame" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Data Frame</h3>
 <p>The <strong>indexing operator</strong> (<code>[ ]</code>) is used to
-select or replace parts of many kinds of objects, not just vectors,
-including matrices, and data frames. For data frames, the common form is
-<code>df[rows, cols]</code> or <code>x[i, j]</code> where <code>i</code>
-is the <strong>row index</strong>, <code>j</code> is the <strong>column
-index</strong>.</p>
-<p>When you select a smaller part of an object, using indices such as
-numbers, names, or logical tests, you are <strong>subsetting</strong>
-the object. Subsetting is a fundamental operation that allows you to
-select specific elements from a larger data structure.</p>
+select or replace parts of many kinds of objects, not just vectors. For
+data frames, the common form is <code>df[rows, cols]</code> or
+<code>x[i, j]</code> where <code>i</code> is the <strong>row
+index</strong>, <code>j</code> is the <strong>column index</strong>. If
+you leave one side blank, the output includes all.</p>
+<p>Rows and columns are coordinates:</p>
 <ul>
-<li>Rows and columns are coordinates:</li>
+<li><p><code>df[1:5, ]</code> results in the first five rows, all
+columns</p></li>
+<li><p><code>df[ , 1:3]</code> shows all rows, first three
+columns</p></li>
+<li><p><code>df[1, 2]</code> prints only one cell’s value: first row,
+second column</p></li>
 </ul>
-<p><code>df[1:5, ]</code> results in the first five rows, all
-columns</p>
-<p><code>df[ , 1:3]</code> shows all rows, first three columns</p>
-<p><code>df[1, 2]</code> prints only one cell’s value: first row, second
-column</p>
 <p>Let’s see this in practice with our <code>field_sightings</code> data
 frame.</p>
-<p>🎯 <strong>Goal</strong> Print the first six rows of the
+<p>🎯 <strong>Goal:</strong> Print the first six rows of the
 <code>field_sightings</code> data frame using the indexing operator.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 field_sightings[1:6, ]  </code></pre>
@@ -1817,15 +1853,14 @@ field_sightings[1:6, ]  </code></pre>
 </div>
 <p>🗣 Shows first six rows, all columns.</p>
 </div>
-</div>
-<div id="head-function" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> <code>head()</code>
-function</h3>
+<div id="head-function-comparison" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> <code>head()</code>
+Function <em>Comparison</em></h3>
 <p>There is a function called <code>head()</code> that
 <em>basically</em> does the same thing as
 <code>field_sightings[1:6, ]</code> but is more concise and easier to
 read.</p>
-<p>📜 The SYNTAX (basic):</p>
+<p>📜 The SYNTAX:</p>
 <p><code>head(x, n = 6L)</code></p>
 <p>If you don’t specify <code>n</code>, it defaults to 6, which means it
 will show the first 6 rows of the data frame. You can change this number
@@ -1852,128 +1887,532 @@ used as part of an algorithm. You will use <code>[</code> when you need
 subsetting by columns, conditions, and arbitrary rows when you are
 writing analysis code.</p>
 </div>
-<div id="character-indexing" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Character
-Indexing</h3>
-<p>You can also use <strong>character indexing</strong> to select
-columns by their names instead of their positions. This is often more
-readable and less error-prone, especially when the order of columns
-might change or when you have many columns.</p>
-<hr />
-<p>📖 <strong>Review</strong> In Chapter 3, you created the
-<code>nerdy_palette</code> vector and then used character indexing to
-return the hexadecimal color code.</p>
+</div>
+<div id="names-indexing" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> 🏷 Names Indexing</h2>
+<p>You can also use <strong>names indexing</strong> (also referred to as
+character indexing) to select columns by their names instead of their
+positions. This is often make more readable code and is less
+error-prone, especially when the order of columns might change or when
+you have many columns.</p>
+<div id="vector-1" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Vector</h3>
+<p>In Chapter 3, you created the <code>nerdy_palette</code> vector and
+then used names indexing to return the hexadecimal color code.</p>
 <pre class="r"><code># 📖 Review
 # Create nerdy_palette
 nerdy_palette &lt;- c(
-&quot;Octarine&quot; = &quot;#7F00FF&quot;,
-&quot;TARDIS Blue&quot; = &quot;#003B6F&quot;,
-&quot;Rebeccapurple&quot; = &quot;#663399&quot;,
-&quot;Hooloovoo&quot; = &quot;#4F97A3&quot;,
-&quot;Cosmic Latte&quot; = &quot;#FFF8E7&quot;,
-&quot;Vantablack&quot; = &quot;#000000&quot;,
-&quot;Matrix Green&quot; = &quot;#03A062&quot;,
-&quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;,
-&quot;Command Red&quot; = &quot;#CC0000&quot;,
-&quot;Impossible Green&quot; = &quot;#4D9E68&quot;
-)
-# Use character indexing to return the hex code for Octarine
+  &quot;Octarine&quot;      = &quot;#7F00FF&quot;,
+  &quot;TARDIS Blue&quot;   = &quot;#003B6F&quot;,
+  &quot;Rebeccapurple&quot; = &quot;#663399&quot;,
+  &quot;Hooloovoo&quot;     = &quot;#4F97A3&quot;,
+  &quot;Cosmic Latte&quot;  = &quot;#FFF8E7&quot;,
+  &quot;Vantablack&quot;    = &quot;#000000&quot;,
+  &quot;Matrix Green&quot;  = &quot;#03A062&quot;,
+  &quot;Source Engine Magenta&quot; = &quot;#FF00FF&quot;,
+  &quot;Command Red&quot;   = &quot;#CC0000&quot;,
+  &quot;Impossible Green&quot; = &quot;#4D9E68&quot;
+  )
+
+# Use names indexing to return the hex code for Octarine
 nerdy_palette[&quot;Octarine&quot;]</code></pre>
 <pre><code>##  Octarine 
 ## &quot;#7F00FF&quot;</code></pre>
 <p>🗣 The output shows the hexadecimal color code for “Octarine”
 retrieved from the <code>nerdy_palette</code> vector using its name.</p>
-<hr />
-<div id="data-frame-character-indexing" class="section level4" number="2.3.3.1">
-<h4><span class="header-section-number">2.3.3.1</span> Data Frame
-Character Indexing</h4>
-<p>We can use character indexing to select a column by name.</p>
-<p>🎯 <strong>Goal</strong> Use character indexing to return the band
-colors in the <code>field_sightings</code> data frame.</p>
+</div>
+<div id="data-frame-1" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Data Frame</h3>
+<p>A common use of names indexing is to select a column from a data
+frame by its name.</p>
+<p>🎯 <strong>Goal</strong> Use names indexing to return the band colors
+in the <code>field_sightings</code> data frame.</p>
+<p>Methods A:C show different ways to subset a column with
+<code>[ ]</code>.</p>
+<p><strong>Method A</strong></p>
+<p>📜 The SYNTAX: <code>x[i]</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-field_sightings[ , &quot;Band_Color&quot;] </code></pre>
-<p>🗣 A vector is printed showing all element values (rows) in the column
-“Band Color” the <code>field_sightings</code> data frame.</p>
+field_sightings[&quot;Band_Color&quot;]         # 1-column data frame</code></pre>
+<p>🗣 A 1-column data frame is printed showing all row values in the
+column <code>Band_Color</code> the <code>field_sightings</code> data
+frame. It is a subset of one column, keeping that data-frame
+structure.</p>
+<p><strong>Method B</strong></p>
+<p>📜 The SYNTAX: <code>df[rows, cols]</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Example B
+field_sightings[, &quot;Band_Color&quot;]   # usually the column VECTOR </code></pre>
+<p>🗣 A vector is printed showing all values from the column
+<code>Band_Color</code> the <code>field_sightings</code> data frame. The
+result is a subset from one column and returns a vector, values
+only.</p>
+<p><strong>Method C</strong></p>
+<p>📜 The SYNTAX: <code>x[i, j, drop = FALSE]</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Example C
+field_sightings[, &quot;Band_Color&quot;, drop = FALSE]    # 1-column data frame</code></pre>
+<p>🗣 A 1-column data frame is printed showing all row values in the
+column <code>Band_Color</code> the <code>field_sightings</code> data
+frame. It is a subset of one column, keeping that data-frame
+structure.</p>
 </div>
 </div>
-<div id="operator" class="section level3" number="2.3.4">
-<h3><span class="header-section-number">2.3.4</span> <code>$</code>
-Operator</h3>
+<div id="logical-mask-indexing" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> 🔍 Logical Mask
+Indexing</h2>
+<p>A <strong>logical mask</strong> is the logical vector you use to
+index.</p>
+<div id="vector-2" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Vector</h3>
+<p>In Chapter 4, you practiced logical indexing with a vector.</p>
+<p>🎯 Create a new vector called <code>smaller</code>that contains only
+values in <code>number_list</code> that are less than or equal to
+20.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Create the sample vector
+number_list &lt;- c(10, 25, 5, 30, 15, 40)
+
+# ✅  Check
+print(number_list)</code></pre>
+<pre><code>## [1] 10 25  5 30 15 40</code></pre>
+<p>🗣 The <code>number_list</code> vector contains the values 10, 25, 5,
+30, 15, and 40.</p>
+<pre class="r"><code># Step 1: create the logical &quot;mask&quot;
+mask &lt;- number_list &lt;= 20
+
+# ✅  Check
+print(mask)</code></pre>
+<pre><code>## [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<p>🗣 This prints the <code>mask</code>. The mask itself is not a subset
+of the original vector. The logical vector indicates which values in
+<code>number_list</code> are less than or equal to 20.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Step 2: use the logical vector inside [ ]
+smaller &lt;- number_list[mask]
+
+# ✅  Check
+print(smaller)</code></pre>
+<pre><code>## [1] 10  5 15</code></pre>
+<p>🗣 This keeps only the values where the condition is <code>TRUE</code>
+(10, 5, 15).</p>
+<p>You can also pass the mask directly into the indexing operator
+without storing it in a variable first.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+smaller &lt;- number_list[number_list &lt;= 20]</code></pre>
+<p>Key idea here is that the condition
+(<code>number_list &lt;= 20</code>) produces a logical mask;
+<code>[ ]</code> uses it as a filter. <strong>Logical mask
+indexing</strong> is a form of indexing in R where you use a logical
+vector (a “mask” of <code>TRUE</code>/<code>FALSE</code> values) to
+select elements from a vector or rows from a data frame. R keeps the
+values where the mask is <code>TRUE</code> and drops the values where
+the mask is <code>FALSE</code>. Let’s see this in action in a
+dataframe.</p>
+</div>
+<div id="data-frame-2" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Data Frame</h3>
+<p>Logical mask indexing works the same way for data frames, except that
+the logical mask <em>usually</em> goes in the <strong>rows</strong>
+position of <code>df[rows, cols]</code>.</p>
+<p>The mask can be <code>TRUE</code>/<code>FALSE</code>/<code>NA</code>
+for each row. When you use the mask in <code>df[mask, ]</code>, R keeps
+only the rows where the mask is <code>TRUE</code>and <code>NA</code> if
+there are missing values.</p>
+<p>🎯 <strong>Goal</strong>: Keep only rows where the bird is tagged
+using <code>[ ]</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Step 1: create the logical mask (one TRUE/FALSE per row)
+mask_tagged &lt;- field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;
+
+# ✅  Check
+head(mask_tagged)</code></pre>
+<pre><code>##      Status
+## [1,]  FALSE
+## [2,]  FALSE
+## [3,]  FALSE
+## [4,]  FALSE
+## [5,]  FALSE
+## [6,]  FALSE</code></pre>
+<p>🗣 This prints a logical mask the same length as the number of rows in
+<code>field_sightings</code>. Each <code>TRUE</code> means this row has
+<code>Status == &#39;Tagged&#39;</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Step 2: use the logical mask inside [ ] to subset rows
+tagged_only &lt;- field_sightings[mask_tagged, ]
+
+# Alternative: pass the logical mask directly into [ ]
+# tagged_only &lt;- field_sightings[field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;, ]  
+
+# ✅  Check
+head(tagged_only)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Orange"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Green"},{"1":"Tagged","2":"Black"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Blue"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 This subsets the data frame by keeping only rows where the mask is
+<code>TRUE</code>.</p>
+<pre class="r"><code># ✅  Check
+nrow(field_sightings)            # how many rows in the original data frame?</code></pre>
+<pre><code>## [1] 4470</code></pre>
+<pre class="r"><code>nrow(tagged_only)                # how many tagged rows?</code></pre>
+<pre><code>## [1] 325</code></pre>
+<pre class="r"><code>sum(mask_tagged, na.rm= TRUE)    # how many TRUE values in the mask?</code></pre>
+<pre><code>## [1] 300</code></pre>
+<p>🗣 The result is a smaller data frame containing only the tagged
+birds. There are <code>NA</code> values, so we needed to use
+<code>na.rm = TRUE</code> to get an accurate count only the
+<code>TRUE</code> values. We can tell the mask contains <code>NA</code>
+values because <code>nrow(tagged_only)</code> (325) is larger than
+<code>sum(mask_tagged, na.rm=TRUE)</code> (300).</p>
+<p>Logical mask indexing is a powerful way to subset data frames based
+on conditions, but missing values can make the results harder to
+interpret. When we compute
+<code>mask_tagged &lt;- field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;</code>,
+any row where <code>Status</code> is <code>NA</code> produces
+<code>NA</code> (because <code>NA == &quot;Tagged&quot;</code> is unknown). That’s
+<strong>missing value propagation</strong>! This is where missing values
+carry through comparisons as <code>NA</code>.</p>
+<p>When we then subset with
+<code>tagged_only &lt;- field_sightings[mask_tagged, ]</code>, R keeps
+rows where the mask is <code>TRUE</code>, but it does not treat
+<code>NA</code> as <code>FALSE</code>. Rows with <code>NA</code> in the
+mask can appear in the subset rows, which is why
+<code>tagged_only</code> has 325 rows even though there are only 300
+<code>TRUE</code> values in the mask.</p>
+</div>
+<div id="which-function-helper" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> which() Function
+<em>Helper</em></h3>
+<p>The function <code>which()</code> is a subsetting helper that turns a
+logical masks into row indices. Using <code>which()</code> is a strategy
+to handle potential <code>NA</code> values in your data. When the test
+could include <code>NA</code>, wrap it in <code>which()</code> to drop
+unknowns.</p>
+<p>🎯 <strong>Goal:</strong> Use <code>which()</code> to subset the
+<code>field_sightings</code> data frame to keep only rows where the bird
+is tagged, while safely handling any potential NA values in the “Status”
+column.</p>
+<p>You saw the function <code>which()</code> in Chapter 6. This function
+converts <code>TRUE</code> positions into numeric indices.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+
+# Pass logic through which() to get the row indices where Status is &quot;Tagged&quot;
+row_idx_tagged &lt;- which(field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;)
+
+## Alternative: Create mask_tagged then pass it to which() to get row indices
+# mask_tagged &lt;- field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;   
+# row_idx_tagged &lt;- which(mask_tagged)
+
+# Use the row indices to subset the data frame by rows that are tagged
+tagged_only &lt;- field_sightings[row_idx_tagged, ]
+
+# ✅  Check
+nrow(tagged_only) </code></pre>
+<pre><code>## [1] 300</code></pre>
+<pre class="r"><code>head(tagged_only, 10)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Orange"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Green"},{"1":"Tagged","2":"Black"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Blue"},{"1":"Tagged","2":"Green"},{"1":"Tagged","2":"Black"},{"1":"Tagged","2":"White"},{"1":"Tagged","2":"Red"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 <code>which()</code> returns the indices of the <code>TRUE</code>
+elements and omits positions where the test result is <code>FALSE</code>
+or <code>NA</code> values for the logical vector passed in. If the
+logical test can produce NA, <code>which()</code> drops unknowns.</p>
+<hr />
+<p>In conclusion, subsetting (<code>[ ]</code>) returns a piece of the
+original object, often preserving structure. When you need a smaller
+data frame, <em>subset</em>. If you need values within another function,
+you’ll need to <em>extract</em>. In the next section, you will learn how
+extraction returns one component’s contents.</p>
+</div>
+</div>
+</div>
+<div id="extraction" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Extraction</h1>
+<p><strong>Extraction</strong> means pulling out a single component.
+When you want the column values themselves as a vector, operators
+<code>[[ ]]</code> and <code>$</code> are the clearest extraction
+approach. Extraction pulls out <em>a single component</em> (one column
+or one list element) so you can use it inside a function or calculation.
+Data analysts use extracted objects in a specific part of more complex
+code that creates a plot or summary.</p>
+<div id="operator" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> <code>[[</code>
+Operator</h2>
+<p>There is another operator called the <strong>double square bracket
+operator</strong> (<code>[[</code>). <code>[</code> is the general
+subsetting operator. <code>[[</code> extracts exactly one component.
+<code>[</code> returns a subset of the same type as the original object.
+<code>[[</code> returns a single element inside the object (the “thing
+itself”), not a same-type subset. <code>[[ ]]</code> is extraction
+because it <em>pulls out</em> one component as the vector.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[ ]</code></td>
+<td>Subsetting operator. Returns a subset of the same type as the
+original object. Can return multiple elements.</td>
+</tr>
+<tr class="even">
+<td><code>[[ ]]</code></td>
+<td>Extraction operator. Returns a <em>single element</em> inside the
+object and <em>passed</em> into functions.</td>
+</tr>
+</tbody>
+</table>
+<p>🎯 <strong>Goal</strong> Use the <code>[[</code> operator to extract
+the “Band_Color” column from the <code>field_sightings</code> data frame
+and then use it inside the function <code>unique()</code></p>
+<p>📜 The SYNTAX: <code>x[[i]]</code></p>
+<p><strong>Step 1</strong></p>
+<p>Extract a column as a vector</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+field_sightings[[&quot;Band_Color&quot;]]   # the column VECTOR</code></pre>
+<p>🗣 The result is an extraction from one column and returns a vector,
+values only.</p>
+<p><strong>Step 2</strong></p>
+<p>Use the extracted vector inside the function
+<code>unique()</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+unique(field_sightings[[&quot;Band_Color&quot;]])</code></pre>
+<pre><code>##  [1] &quot;None&quot;   &quot;Orange&quot; &quot;Silver&quot; &quot;Green&quot;  &quot;Black&quot;  NA       &quot;Blue&quot;   &quot;White&quot; 
+##  [9] &quot;Red&quot;    &quot;Yellow&quot;</code></pre>
+<p>🗣 This shows the unique band colors in the
+<code>field_sightings</code> data frame. The <code>[[</code> operator
+allows you to extract the column as a vector, which is what
+<code>unique()</code> needs to work properly.</p>
+</div>
+<div id="operator-1" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> <code>$</code>
+Operator</h2>
 <p>There is another operator called the <strong>dollar sign
 operator</strong> (<code>$</code>) that is used to extract columns from
 a data frame by name. It is a convenient shorthand for selecting a
-single column or element.</p>
-<p>📜 The SYNTAX (basic):</p>
-<p><code>df$column_name</code></p>
+single column by name when you type the name literally.</p>
+<p>📜 The SYNTAX:</p>
+<p><code>dataframe$column_name</code></p>
 <p>🎯 <strong>Goal</strong> Extract the <code>Band_Color</code> column
 using <code>$</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 field_sightings$Band_Color</code></pre>
-<p>🗣 A vector is printed showing all element values (rows) in the column
+<p>🗣 A vector is printed showing all element values from the column
 <code>Band_Color</code> from the <code>field_sightings</code> data
-frame.</p>
-<p>You will likely use the <code>$</code> operator more often than the
-<code>[</code> operator for character indexing when you want to select a
-single column by name. The <code>$</code> operator is more concise and
-easier to read for this common case. However, it only works for
-selecting one column at a time and does not support more complex
-subsetting like <code>[</code> does.</p>
-<p>For example, if we try to use a variable to specify the column name
-with the <code>$</code> operator, it will not work as expected because
-<code>$</code> does not evaluate the variable name.</p>
-<p>🎯 <strong>Goal</strong> Use a variable to specify the column name
-and try to extract the column using both <code>[[</code> and
-<code>$</code> operators.</p>
+frame. It is an extraction from one column and returns a vector, values
+only.</p>
+<p>You will likely use the <code>$</code> operator often. The
+<code>$</code> operator is more concise and easier to read for common
+uses cases. However, it only works for selecting one column at a time
+and can’t use an assigned variable stored in the environment.</p>
+<p>If we try to use a variable to specify the column name with the
+<code>$</code> operator, it will not work because <code>$</code> does
+not evaluate the variable name. <code>[[ ]]</code> can use a variable
+and is safer in programs.</p>
+<p>🎯 <strong>Goal</strong> Use a stored <em>object</em> name to specify
+the column name and try to extract the column using both <code>[[</code>
+and <code>$</code> operators.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
+# Example 1
 col_name &lt;- &quot;Band_Color&quot;
-# Example 1
 field_sightings[[col_name]]   # ✅ works</code></pre>
-<p>🗣 The <code>[[</code> operator allows you to use a variable to
-specify the column name, which is why it works in this case.</p>
+<p>🗣 The <code>[[</code> operator allows you to use a variable name from
+your environment to specify the column name, which is why it works in
+this case. The result is an extraction from one column and returns a
+vector, values only.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 # Example 2
+col_name &lt;- &quot;Band_Color&quot;
 field_sightings$col_name      # ❌ looks for a column literally named &quot;col_name&quot;</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: `col_name`.</code></pre>
+<pre><code>## NULL</code></pre>
 <p>🗣 The <code>$</code> operator looks for a column literally named
-“col_name” and does not evaluate the variable, resulting in
-<code>NULL</code>.</p>
+“col_name” and finds none, resulting in <code>NULL</code>.</p>
+<p>So far, you’ve learned two different moves:</p>
+<ul>
+<li><p>Subset: <code>field_sightings[&quot;Band_Color&quot;]</code> (data
+frame)</p></li>
+<li><p>Extract: <code>field_sightings[[&quot;Band_Color&quot;]]</code> or
+<code>field_sightings$Band_Color</code> (values)</p></li>
+</ul>
+<p>Next, we’ll learn how to change values inside an existing object
+using replacement methods.</p>
 </div>
-<div id="operator-1" class="section level3" number="2.3.5">
-<h3><span class="header-section-number">2.3.5</span> <code>[[</code>
-Operator</h3>
-<p>🧐 You might notice that we used double brackets <code>[[ ]]</code>
-in Example 1. <code>[</code> and <code>[[</code> are both extraction
-operators, but they extract different kinds of things. <code>[</code>
-returns a subset of the same type as the original object.
-<code>[[</code> returns a single element inside the object (the “thing
-itself”), not a same-type subset.</p>
-<p>🎯 <strong>Goal</strong> Use the <code>[[</code> operator to extract
-the “Band_Color” column from the <code>field_sightings</code> data frame
-and compare it to using the <code>[</code> operator.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-# Example 1
-field_sightings[&quot;Band_Color&quot;]     # 1-column DATA FRAME</code></pre>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-# Example 2
-field_sightings[[&quot;Band_Color&quot;]]   # the column VECTOR</code></pre>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-# Example 3
-field_sightings[, &quot;Band_Color&quot;]   # usually the column VECTOR (because drop = TRUE by default)</code></pre>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-# Example 4
-field_sightings[, &quot;Band_Color&quot;, drop = FALSE]   # 1-column DATA FRAME</code></pre>
-<p>🗣 The <code>[</code> can select zero, one, or many elements. The
-<code>[[</code> selects exactly one element.</p>
-<p>The single-bracket indexing commonly is used in subsetting whereas
-the double-bracket indexing is used in extraction.</p>
 </div>
-<div id="code-chunk-options" class="section level3" number="2.3.6">
-<h3><span class="header-section-number">2.3.6</span> Code Chunk
-Options</h3>
-<p>You probably noticed that the code chunk examples resulted in long
-vector outputs. These can become difficult to read and navigate. You
-might find them particularly difficult when reviewing the HTML.</p>
-<p>Before moving on to Logical Indexing, let’s talk about how to manage
-long outputs in your R Notebook.</p>
+<div id="subassignment-replacement" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Subassignment
+(replacement)</h1>
+<p><strong>Subassignment</strong> means replacing part of an object
+(vector, matrix, data frame, list, etc.) with new values using indexing.
+It is an umbrella term for <em>assigning</em> into part of an object
+using an index on the left of <code>&lt;-</code>.</p>
+<p>In this chapter, you’ll use three core replacement patterns for data
+frames:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>x[i, j] &lt;- value</code> to change specific rows and
+columns.</p></li>
+<li><p>Use <code>x[[...]] &lt;- value</code> to replace/add one column
+(works when the column name is stored in a variable).</p></li>
+<li><p>Use <code>x$name &lt;- value</code> to replace/add one column
+(when the column name is typed literally).</p>
+<p>👉 <strong>Indexing on the left of <code>&lt;-</code> edits the
+object you assign into</strong></p></li>
+</ol>
+<div id="overwrite-with-xi-j---value" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Overwrite with
+<code>x[i, j] &lt;- value</code></h2>
+<p><strong>Overwrite</strong> in an informal type of replacement where
+you change existing values.</p>
+<p>📜 The SYNTAX:</p>
+<p><code>x[i, j] &lt;- value</code></p>
+<p><em>Notice that indexing is located on the left side of an assignment
+operator (<code>&lt;-</code>) to change specific values in a data
+frame.</em></p>
+<p>What if all the tagged birds in the <code>field_sightings</code> data
+frame were raised as part of a breeding program and then reintroduced
+into an area where the species no longer existed. This means all the
+untagged birds were hatched in the wild. Suppose we decide to rename the
+element value <code>&quot;Untagged&quot;</code> to <code>&quot;Wild Hatch&quot;</code> in
+the <code>Status</code> column to communicate this information more
+clearly.</p>
+<p>🎯<strong>Goal</strong>: Replace <code>&quot;Untagged&quot;</code> with
+<code>&quot;Wild Hatch&quot;</code> in <code>Status</code>.</p>
+<p><strong>Step 1</strong></p>
+<p>Make a copy of the data frame.</p>
+<p>💡 <strong>Tip:</strong> Always make a copy of your data frame before
+you overwrite values. This way, if something goes wrong, you still have
+the original data intact.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+reintroduction &lt;- field_sightings          # copy</code></pre>
+<p>🗣 We will overwrite values using the copy dataframe,
+<code>reintroduction</code>.</p>
+<p><strong>Step 2</strong></p>
+<p>Get row indices with <code>which()</code> to identify the rows where
+<code>Status</code> is “Untagged”. <code>which()</code> returns the row
+positions where the test is <code>TRUE</code> and ignores positions
+where the test is <code>FALSE</code> or <code>NA</code>. Use the
+dataframe that you want to overwrite values in, not the original data
+frame.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+indices_untagged &lt;- which(reintroduction[ , &quot;Status&quot;] == &quot;Untagged&quot;)</code></pre>
+<p><strong>Step 3</strong></p>
+<p>Overwrite using <code>df[rows, &quot;col&quot;] &lt;- value</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+reintroduction[indices_untagged, &quot;Status&quot;] &lt;- &quot;Wild Hatch&quot;</code></pre>
+<p><strong>Step 4</strong></p>
+<p>Verify that the values have been changed.</p>
+<pre class="r"><code># ✅  Check
+unique(reintroduction[, &quot;Status&quot;])       # modified data frame</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Wild Hatch"},{"1":"Tagged"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>unique(field_sightings [, &quot;Status&quot;])     # original data frame </code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged"},{"1":"Tagged"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 The <code>Status</code> column in the <code>reintroduction</code>
+data frame has been modified to replace “Untagged” with “Wild
+Hatch”.</p>
+</div>
+<div id="insertion" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Insertion</h2>
+<p><strong>Insertion</strong> is an informal type of replacement where
+you add something new (most commonly a new column).</p>
+<p><code>x[[...]] &lt;- value</code> and <code>x$name &lt;- value</code>
+replace (or create) one component. For data frames, that’s typically a
+single column.</p>
+<p>Suppose we decide to add a new column called <code>Tag_Flag</code>
+that indicates whether the bird is tagged or not. It is common to use
+binary columns to create figures or run analyses. We want to set the
+value to 1 for tagged birds and 0 for untagged birds so we can later
+create a visualization of how many tagged vs. untagged birds we
+have.</p>
+<div id="method" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> <code>[[</code>
+Method</h3>
+<p>🎯<strong>Goal</strong>: Add a new column (a flag) using a column
+name stored in a variable.</p>
+<p><strong>Step 1</strong></p>
+<p>Make a copy of the data frame.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+reintroduction2 &lt;- field_sightings</code></pre>
+<p><strong>Step 2</strong></p>
+<p>Store the new name of your column a variable</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+new_col &lt;- &quot;Tag_Flag&quot;</code></pre>
+<p><strong>Step 3</strong></p>
+<p>Add the new column using <code>[[ ]] &lt;-</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Start everyone as 0
+reintroduction2[[new_col]] &lt;- 0              # &lt;- Uses [[]]
+
+# Change to 1 where Status is Tagged
+idx_tagged &lt;- which(reintroduction2[, &quot;Status&quot;] == &quot;Tagged&quot;)
+reintroduction2[idx_tagged, new_col] &lt;- 1</code></pre>
+<p><strong>Step 4</strong></p>
+<p>Verify that the new column has been added and values are correct.</p>
+<pre class="r"><code># ✅  Check
+head(reintroduction2)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="method-1" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> <code>$</code>
+Method</h3>
+<p>If you are typing the column name directly (not stored in a
+variable), you can use $ to add the column.</p>
+<p><strong>Step 1</strong></p>
+<p>Make a copy of the data frame.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+reintroduction3 &lt;- field_sightings</code></pre>
+<p><strong>Step 2</strong></p>
+<p>Add the new column using <code>$ &lt;-</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+# Start everyone as 0
+reintroduction3$Tag_Flag &lt;- 0                # &lt;- Uses $
+
+# Change to 1 where Status is Tagged
+idx_tagged &lt;- which(reintroduction3[, &quot;Status&quot;] == &quot;Tagged&quot;)
+reintroduction3[idx_tagged, &quot;Tag_Flag&quot;] &lt;- 1</code></pre>
+<p><strong>Step 3</strong></p>
+<p>Verify that the new column has been added and values are correct.</p>
+<pre class="r"><code># ✅  Check
+head(reintroduction3)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 Use <code>[[ ]]</code> when the column name is stored in a variable
+(like new_col). Use <code>$</code> when you are typing the column name
+literally.</p>
+</div>
+</div>
+</div>
+<div id="code-chunk-options" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Code Chunk Options</h1>
+<p>You probably noticed that some code chunk examples in this chapter
+resulted in long vector outputs. These can become difficult to read and
+navigate. You might find them particularly annoying when reviewing your
+HTML report. This final section explains how to manage long outputs in
+your R Notebook.</p>
 <p>To make your R Notebook more readable, you can use the
 <code>results = &#39;hide&#39;</code> option in your code chunks to hide the
 output of certain chunks, especially those that produce long
@@ -1983,8 +2422,8 @@ code from running at all, which is useful for code that is meant to be
 illustrative rather than executed, such as when there is an error that
 you want to discuss without actually running the code.</p>
 <p>Below are some examples of how to use these options in your R
-Notebook. You can copy and paste the code into your notebook to see how
-it works.</p>
+Notebook. Try out the code chunk settings in your notebook to see how
+they work!</p>
 <pre class="markdown"><code>```{r, echo=TRUE, results=&#39;hide&#39;}
 # Show code, hide long output
 field_sightings[[&#39;Band_Color&#39;]]
@@ -1999,120 +2438,47 @@ field_sightings$col_name
 # Show code, but do not run it
 field_sightings$Band_Color
 ```</code></pre>
-<p>Please experiment with these options in your R Notebook to find the
-best way to manage long outputs above to make your notes more
-readable.</p>
+<p>🎯 Experiment with these options in your R Notebook to find the best
+way to manage long outputs above to make your notes and practice reports
+more readable. Knit your notebook to HTML to see how it looks, then
+adjust the options and other formatting and re-knit to make sure your
+report is professional and ready to share with your research
+collaborators.</p>
 </div>
-<div id="logical-indexing" class="section level3" number="2.3.7">
-<h3><span class="header-section-number">2.3.7</span> Logical
-Indexing</h3>
-<p><strong>Logical indexing</strong> is a way to select values using a
-logical vector—a vector of <code>TRUE</code>/<code>FALSE</code> values.
-When you index with a logical vector, R returns only the values where
-the index is <code>TRUE</code>.</p>
-<hr />
-<p>📖 <strong>Review</strong> In Chapter 4, you practiced logical
-indexing with a vector.</p>
-<p>🎯 Create a new vector called <code>smaller</code>that contains only
-values in <code>number_list</code> that are less than or equal to
-20.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-number_list &lt;- c(10, 25, 5, 30, 15, 40)</code></pre>
-<p>🗣 The <code>number_list</code> vector contains the values 10, 25, 5,
-30, 15, and 40.</p>
-<pre class="r"><code># Step 1: create the logical &quot;mask&quot;
-number_list &lt;= 20</code></pre>
-<p>🗣 This prints a logical vector (<code>TRUE</code>/<code>FALSE</code>)
-the same length as <code>number_list</code>.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-# Step 2: use the logical vector inside [ ]
-smaller &lt;- number_list[number_list &lt;= 20]</code></pre>
-<p>🗣 This keeps only the values where the condition is <code>TRUE</code>
-(10, 5, 15).</p>
-<pre class="r"><code># ✅ Compare the vectors
-print(number_list)
-print(smaller)</code></pre>
-<p>🗣 The output shows the values in the <code>number_list</code> vector
-that are less than or equal to 20, which are 10, 5, and 15.</p>
-<p>Key idea here is that the condition
-(<code>number_list &lt;= 20</code>) produces a logical vector;
-<code>[ ]</code> uses it as a filter.</p>
-<hr />
-<div id="data-frame-logical-indexing" class="section level4" number="2.3.7.1">
-<h4><span class="header-section-number">2.3.7.1</span> Data Frame
-Logical Indexing</h4>
-<p>Logical indexing with a data frame most often goes in the rows
-position.</p>
-<p>🎯 Goal Keep only rows where the bird is tagged.</p>
-<p><strong>Option A</strong>: Create a logical test using
-<code>[ ]</code>.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot;</code></pre>
-<p>🗣 This creates a logical column vector: one
-<code>TRUE</code>/<code>FALSE</code> per row.</p>
-<p><strong>Option B</strong>: Alternatively, you can use the
-<code>$</code> operator to create the logical test.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-field_sightings$Status == &quot;Tagged&quot;</code></pre>
-<p>🗣 This creates a logical vector: one
-<code>TRUE</code>/<code>FALSE</code> per row.</p>
-<p>We can use either method to create a logical vector into the row
-index of the <code>[</code> operator to keep only the rows where the
-condition is <code>TRUE</code>.</p>
-<p>We take the logical vector and put it in the row index of the
-<code>[</code> operator to subset the data frame.</p>
-<p><strong>Option A</strong>: Store subset of
-<code>field_sightings</code> data frame as a new data frame using
-<code>[ ]</code>.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-tagged_only &lt;- field_sightings[ field_sightings[ , &quot;Status&quot;] == &quot;Tagged&quot; , ]
-head(tagged_only)</code></pre>
-<p>🗣 This keeps only the rows where the bird is tagged and shows the
-first few rows of the resulting data frame.</p>
-<p><strong>Option B</strong>: Store the subset of
-<code>field_sightings</code> data frame as a new data frame using
-<code>$</code> operator.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-logical_test  &lt;- field_sightings[field_sightings$Status == &quot;Tagged&quot;, ]
-head(logical_test)</code></pre>
-<p>🗣 This keeps only the rows where the bird is tagged and shows the
-first few rows of the resulting data frame.</p>
-<p>Both options are logical indexing, a type of subsetting.
-<strong>Subsetting</strong> means returning a smaller part of an object
-using <code>[ ]</code>. Logical subsetting means using a
-<code>TRUE</code>/<code>FALSE</code> “mask” to choose which
-<em>rows</em> to keep.</p>
-<p>💡 <strong>Tip:</strong> If your condition produces <code>NA</code>
-values (because your data has missing values), logical indexing can also
-produce rows you didn’t expect. In the Subsetting section, you’ll learn
-how to handle that using <code>which()</code>.</p>
+<div id="summary" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Summary</h1>
+<p>In Chapter 8, you learned three core indexing patterns in base R for
+working efficiently with data frames.</p>
+<p>First, you practiced subsetting with <code>[ ]</code> to pull out a
+smaller piece using the <code>df[rows, cols]</code> pattern (for
+example, selecting a range of rows, selecting a single column as a
+vector with <code>df[, &quot;Band_Color&quot;]</code>, or keeping it as a 1-column
+data frame with <code>df[&quot;Band_Color&quot;]</code>).</p>
+<p>Second, you practiced extraction with <code>[[ ]]</code> and
+<code>$</code> to get the column itself as a vector so it can be fed
+directly into functions, and you learned the key practical difference:
+df[[col_name]] works when the column name is stored in a variable, while
+<code>df$ColName</code> only works when you type the column name
+literally (so <code>df$col_name</code> does not mean “use the column
+named in <code>col_name</code>”).</p>
+<p>Third, you practiced subassignment/replacement by putting indexing on
+the left side of <code>&lt;-</code> to overwrite specific cells (e.g.,
+<code>df[rows, &quot;col&quot;] &lt;- value)</code> and to add or replace entire
+columns (e.g., <code>df[[new_col]] &lt;- value</code>, which creates the
+column if it doesn’t exist).</p>
+<p>You also learned why logical filtering can break in subtle ways due
+to <code>NA</code> propagation: comparisons like
+<code>df[, &quot;Status&quot;] == &quot;Tagged&quot;</code> produce <code>NA</code> where
+<code>Status</code> is <code>NA</code>, and subsetting with
+<code>df[mask, ]</code> can behave unexpectedly; a reliable fix is
+<code>which(df[, &quot;Status&quot;] == &quot;Tagged&quot;)</code>, because
+<code>which()</code> keeps only <code>TRUE</code> positions and drops
+<code>FALSE</code> and <code>NA</code>.</p>
+<p>In the next chapter, you’ll extend filtering by combining conditions
+with <code>&amp;</code>, <code>|</code>, and <code>%in%</code>.</p>
 </div>
-</div>
-</div>
-</div>
-<div id="subsetting" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Subsetting</h1>
-<p>define</p>
-</div>
-<div id="extraction" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Extraction</h1>
-<p>define</p>
-</div>
-<div id="insertion-overwrite" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Insertion /
-Overwrite</h1>
-<p>define</p>
-</div>
-<div id="summary" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Summary</h1>
-</div>
-<div id="chapter-terms" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Chapter Terms</h1>
-<p><strong>Character Indexing</strong>: Indexing a named vector using
-character strings that match element names (for example,
-<code>x[c(&quot;Octarine&quot;, &quot;TARDIS Blue&quot;)]</code>). With <code>[</code>,
-names are matched exactly; any name that doesn’t exist returns
-<code>NA</code> for that position.</p>
+<div id="chapter-terms" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Chapter Terms</h1>
 <p><strong>Column index</strong>: The index used to select columns in a
 data frame or matrix (the second slot inside brackets:
 <code>x[, j]</code>).</p>
@@ -2123,47 +2489,248 @@ recursive object. Most commonly a data frame column
 <code>$</code> requires a literal name (not a name stored in a
 variable), returns NULL if the name doesn’t exist, and by default may do
 partial matching (which can surprise you).</p>
-<p><strong>Extraction</strong>: Pulling values out of an object by
-subsetting on the right-hand side of an expression (e.g.,
-<code>x[i]</code>), which returns the selected elements.</p>
+<p><strong>Double Square Bracket Operator</strong> (<code>[[</code>): An
+extraction operator used to pull out one single element from a list (or
+one column from a data frame) and return the element itself, not a
+same-type subset. Unlike <code>[</code>, which can return multiple
+elements and preserves the container type, <code>[[</code> is for “give
+me the one thing inside” (e.g., a vector inside a dataframe).</p>
+<p><strong>Extraction</strong>: Retrieving a single component from an
+object—such as one list element or one data-frame column—so you get the
+“thing itself” (often a simplified result like a vector). Extraction is
+commonly done with <code>[[ ]]</code> (extract one element by position
+or name) or <code>$</code> (extract one column by name).</p>
 <p><strong>Indexing Operator</strong>: The square-bracket indexing
 operator <code>[</code> or <code>[[</code> are used to extract or
 replace parts of an object in R (for example, <code>x[i]</code>). For
 vectors, it selects one or more elements and returns the same kind of
 object as <code>x</code> (a vector).</p>
-<p><strong>Insertion</strong>: Putting values into an object by
-subsetting on the left-hand side of an assignment (e.g.,
-<code>x[i] &lt;- value</code>), replacing or updating only the indexed
-part of the object (also called replacement or subassignment).</p>
+<p><strong>Insertion</strong>: A common type of subassignment where you
+add something new to an object—most often a new column in a data frame.
+Example: <code>df[[&quot;Tag_Flag&quot;]] &lt;- 0</code> (creates the column if it
+doesn’t exist yet).</p>
 <p><strong>Logical Indexing</strong>: Indexing a vector using a logical
 vector of <code>TRUE</code>/<code>FALSE</code> values (for example,
 <code>x[x &gt; 0]</code>) so R keeps the elements where the index is
 <code>TRUE</code> and drops those where it is <code>FALSE</code>. If the
 logical index is a different length, R may recycle it, which can lead to
 surprising results.</p>
+<p><strong>Missing Value Propagation</strong>: R’s behavior where an
+<code>NA</code> (unknown value) “carries through” computations and
+comparisons. If an operation can’t be determined because of missing
+data, the result is often <code>NA</code> (unknown) instead of
+<code>TRUE</code> or <code>FALSE</code>. For example,
+<code>NA == &quot;Tagged&quot;</code> returns <code>NA</code>. If you use a
+logical mask that contains <code>NA</code> values for subsetting (e.g.,
+<code>x[mask]</code> or <code>df[mask, ]</code>), R does not treat
+<code>NA</code> as <code>FALSE</code>, so the subset may include
+<code>NA</code> values (or <code>NA</code> rows), which can change
+counts and results.</p>
+<p><strong>Names Indexing</strong>: Indexing a named vector using
+character strings that match element names (for example,
+<code>x[c(&quot;Octarine&quot;, &quot;TARDIS Blue&quot;)]</code>). With <code>[</code>,
+names are matched exactly; any name that doesn’t exist returns
+<code>NA</code> for that position.</p>
+<p><strong>Overwrite</strong>: A common type of subassignment where you
+change existing values (you replace what is already there).
+Example:<code>df[rows, &quot;Status&quot;] &lt;- &quot;Wild Hatch&quot;</code>.</p>
 <p><strong>Positional Indexing</strong>: Indexing a vector using numeric
 positions (for example, <code>x[1]</code> for the first element or
 <code>x[c(1, 3)]</code> for the first and third). Positions are based on
 the current order of the vector.</p>
 <p><strong>Row index</strong>: The index used to select rows in a data
 frame or matrix (the first slot inside brackets:
-<code>x[i, ]</code>)</p>
-<p><strong>Subsetting</strong>: Selecting a smaller part of an R object
-(for example, specific elements of a vector, rows/columns of a data
-frame, or components of a list) using R’s subsetting operators like
-<code>[</code>, <code>[[</code>, and <code>$</code>.</p>
+<code>x[i, ]</code>).</p>
+<p><strong>Subassignment</strong>: Replacing part of an object by
+putting an index on the left side of <code>&lt;-</code>. R changes only
+the indexed part of the object. Examples: <code>x[i] &lt;- value</code>,
+<code>df[rows, &quot;col&quot;] &lt;- value</code>,
+<code>df[[col]] &lt;- value</code>, <code>df$col &lt;- value</code>.</p>
+<p><strong>Subsetting</strong>: Selecting a smaller piece of an R object
+using indices (positions, names, or a logical mask). With data frames,
+subsetting most commonly uses <code>[</code> in the form
+<code>df[rows, cols]</code> and typically preserves the object’s
+structure (e.g., you still get a data frame when you subset rows and
+columns).</p>
 </div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
-<div id="task-1" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Task 1</h2>
+<div id="practice-space" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
+<p>This Practice Space uses a new dataset to help you generalize your
+learning. While the column names differ, the indexing patterns are the
+same. You will use <code>Values_Transport_dplace.csv</code> using the
+columns <code>id</code>, <code>name</code>, <code>sub_case</code>, and
+<code>year</code>.</p>
+<p>Open a new R Notebook and save it in your course folder as:
+chapter8_practice.Rmd. Edit the YAML so that it includes the title
+“Chapter 8 Practice”, your name as the author, and the date. Remove the
+default content in the R Notebook. Create heading for each task.</p>
+<p>Work through each task, creating learning memos as you go. Outside of
+the code chunks, write a few sentences reflecting on what you learned
+from each task and how it connects to the concepts in this chapter.</p>
+<p>If you use an LLM to help you understand the code, document your use
+transparently. Do not use LLMs to complete the tasks for you. The goal
+is to practice writing the code yourself and to reflect on your learning
+process.</p>
+<div id="task-1" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Task 1</h2>
+<p>Load the CSV with <code>readr::read_csv()</code></p>
+<p>🎯 <strong>Goal:</strong> Load
+<code>Values_Transport_dplace.csv</code> into R using
+<code>read_csv()</code> and assign it to a variable called
+<code>values_transport</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+# 1) Confirm the CSV is in the same folder as your R Notebook
+list.files()
+
+# 2) Load required package, then read the CSV
+library(____)
+
+_____________ &lt;- read_csv(__Values_Transport_dplace.csv__)</code></pre>
 </div>
-<div id="task-2" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Task 2</h2>
+<p>📍 Positional subsetting (rows/cols by index number)</p>
+<p>🎯 <strong>Goal:</strong> Create <code>first_10_basic</code>
+containing the first 10 rows and columns 2 through 5 of
+<code>values_transport</code>. Use <code>df[rows, cols]</code></p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+first_10_basic &lt;- _______[___, ___]</code></pre>
+<p>🗣 How many rows and how many columns does <code>first_10_basic</code>
+have?</p>
 </div>
+<div id="task-3" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Task 3</h2>
+<p>🏷 Names/character subsetting (choose specific columns by name)</p>
+<p>🎯 <strong>Goal:</strong> Create <code>id_name_year</code> containing
+only the columns: <code>id</code>, <code>name</code>, and
+<code>year</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+___________ &lt;- values_transport[, c(___, ___, ___)]</code></pre>
+<pre class="r"><code># ✅  Check
+names(id_name_year)
+head(id_name_year)</code></pre>
+<p>🗣 The <code>id_name_year</code> data frame contains only the columns
+<code>id</code>, <code>name</code>, and <code>year</code> from the
+original <code>values_transport</code> data frame.</p>
 </div>
-<div id="references" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> References</h1>
+<div id="task-4" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Task 4</h2>
+<p>🔍 Logical mask subsetting</p>
+<p>🎯 <strong>Goal:</strong> Subset rows where <code>year</code> greater
+than or equal to 1900 using <code>which()</code> to ensure not
+<code>NA</code> problems.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+idx_1900 &lt;- ____(values_transport[, ____] __ 1900)
+
+values_1900 &lt;- values_transport[_____, ]</code></pre>
+<pre class="r"><code># ✅  Check
+nrow(values_transport)  # original number of rows
+nrow(values_1900)      # number of rows where year &gt;= 1900</code></pre>
+<p>🗣 The <code>values_1900</code> data frame contains only the rows from
+<code>values_transport</code> where the <code>year</code> column is
+greater than or equal to 1900. The number of rows in
+<code>values_1900</code> should be less than or equal to the number of
+rows in the original <code>values_transport</code> data frame.</p>
+<p>🗣 How many entries have a year of 1900 or later?</p>
+</div>
+<div id="task-5" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Task 5</h2>
+<p>⚠️ Explain Missing Value Propagation</p>
+<p>🎯 <strong>Goal:</strong> In 3–5 sentences, explain what
+<strong>Missing Value Propagation</strong> means when you create a
+logical mask like:</p>
+<pre class="r"><code>mask &lt;- values_transport[, &quot;year&quot;] &gt;= 1900</code></pre>
+<p>If there were <code>NA</code> values in the <code>year</code> column.
+What will R return when a comparison involves NA (example:
+<code>NA &gt;= 1900</code>)? Why can <code>NA</code> values in a logical
+mask cause confusing subsetting results with <code>[mask, ]</code>? How
+does <code>which()</code> help to avoid this issue?</p>
+</div>
+<div id="task-6" class="section level2" number="9.6">
+<h2><span class="header-section-number">9.6</span> Task 6</h2>
+<p>🧪 Extraction</p>
+<p>🎯 <strong>Goal:</strong> Extract the <code>year</code> column as a
+vector using <code>[[ ]]</code>, then run <code>table()</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+_____(values_transport__&quot;year&quot;__)</code></pre>
+<p>🗣 Comment on the output of <code>unique(year_vector)</code>. What do
+you notice about possible values in the <code>year</code> column in the
+<code>values_transport</code> data frame?</p>
+</div>
+<div id="task-7" class="section level2" number="9.7">
+<h2><span class="header-section-number">9.7</span> Task 7</h2>
+<p>🛠 Overwrite</p>
+<p><strong>Scenario</strong>: You found four data-entry errors in the
+year column. After reviewing field notes, you confirm these
+corrections:</p>
+<ul>
+<li><p>-621 should be 1821</p></li>
+<li><p>-1750 should be 1750</p></li>
+<li><p>110 should be 1910</p></li>
+<li><p>1292 should be 1892</p></li>
+</ul>
+<p>🎯 <strong>Goal:</strong> Use subassignment with
+<code>df[rows, &quot;col&quot;] &lt;- value</code> to overwrite the incorrect year
+values in the copy of <code>values_transport</code> data frame called
+<code>transport_year_clean</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+# Step 1: Make a copy of the data frame
+____________ &lt;- ___________
+
+# Step 2: Identify row indices for each incorrect value
+idx_621 &lt;- _____(transport_year_clean[, &quot;year&quot;] == -621)
+idx_1750 &lt;- _____(transport_year_clean[, &quot;year&quot;] == -1750)
+idx_110 &lt;- _____(transport_year_clean[, &quot;year&quot;] == 110)
+idx_1292 &lt;- _____(transport_year_clean[, &quot;year&quot;] == 1292)
+
+# Step 3: Overwrite the incorrect values with the correct ones
+transport_year_clean[______, &quot;year&quot;] &lt;- 1821
+transport_year_clean[______, &quot;year&quot;] &lt;- 1750
+transport_year_clean[______, &quot;year&quot;] &lt;- 1910
+transport_year_clean[______, &quot;year&quot;] &lt;- 1892</code></pre>
+<pre class="r"><code># ✅  Check
+unique(transport_year_clean[[&quot;year&quot;]])</code></pre>
+<p>🗣 Explain why we (1) made a copy first and (2) used which() to find
+row indices before overwriting.</p>
+</div>
+<div id="task-8" class="section level2" number="9.8">
+<h2><span class="header-section-number">9.8</span> Task 8</h2>
+<p>🎯 Save your workspace (<code>chapter8_practice.RData</code>) for
+submission. This file should contain:</p>
+<ul>
+<li><p><code>values_transport</code> (original data frame loaded from
+CSV)</p></li>
+<li><p><code>first_10_basic</code> (subset with first 10 rows and
+columns 2-5)</p></li>
+<li><p><code>id_name_year</code> (subset with only id, name, year
+columns)</p></li>
+<li><p><code>values_1900</code> (subset with rows where year &gt;=
+1900)</p></li>
+<li><p><code>transport_year_clean</code> (data frame with corrected year
+values)</p></li>
+<li><p><code>mask</code> (logical vector for year &gt;= 1900)</p></li>
+</ul>
+</div>
+<div id="task-9" class="section level2" number="9.9">
+<h2><span class="header-section-number">9.9</span> Task 9</h2>
+<p>🎯 <strong>Goal:</strong> Create a well-formated HTML report for
+submission.</p>
+<p><strong>Step 1: Sweep your Environment (start clean).</strong><br />
+Click the 🧹 <strong>broom icon</strong> in the Environment pane to
+clear objects.</p>
+<p><strong>Step 2: Run everything top-to-bottom.</strong><br />
+Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p><strong>Step 3: Save and submit.</strong><br />
+After your notebook runs without errors, save your notebook
+(<code>.Rmd</code>) and knit to HTML (<code>.HTML</code>) for submission
+to Canvas, as directed.</p>
+<p>💡 <strong>Tip:</strong> After you knit, look in your course folder
+for two files with the same name. One file ends in .Rmd and one ends in
+.html. The HTML usually has a internet browser icon. You can check which
+is which by double clicking to open them. One opens in R and the other
+usually opens in a web browser. Upload the .html file. Before
+submission, check that the uploaded file ends in .html.</p>
+</div>
 </div>
 
 <footer>

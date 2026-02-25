@@ -408,29 +408,29 @@ We will return to indexing in later chapters when we learn about data frames.
 
 🎯 Create a new vector called `smaller`that contains only values in `number_list` that are less than or equal to 20.
 
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
 number_list <- c(10, 25, 5, 30, 15, 40)
 ```
 
 🗣 The `number_list` vector contains the values 10, 25, 5, 30, 15, and 40.
 
-```{r , eval=FALSE}
+```{r}
 # Step 1: create the logical "mask"
-number_list <= 20
+mask <- number_list <= 20
 ```
 
 🗣 This prints a logical vector (`TRUE`/`FALSE`) the same length as `number_list`.
 
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
 # Step 2: use the logical vector inside [ ]
-smaller <- number_list[number_list <= 20]
+smaller <- number_list[mask]
 ```
 
 🗣 This keeps only the values where the condition is `TRUE` (10, 5, 15).
 
-```{r , eval=FALSE}
+```{r}
 # ✅ Compare the vectors
 print(number_list)
 print(smaller)
