@@ -115,7 +115,7 @@ The simulated dataframe `field_sightings` has two columns:
 list.files()
 ```
 
-🎯 **Goal** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read.csv()`.
+🎯 **Goal** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook
@@ -536,7 +536,7 @@ In this chapter, you’ll use three core replacement patterns for data frames:
 
 *Notice that indexing is located on the left side of an assignment operator (`<-`) to change specific values in a data frame.*
 
-What if all the tagged birds in the `field_sightings` data frame were raised as part of a breeding program and then reintroduced into an area where the species no longer existed. This means all the untagged birds were hatched in the wild. Suppose we decide to rename the element value `"Untagged"` to `"Wild Hatch"` in the `Status` column to communicate this information more clearly.
+What if all the tagged birds in the `field_sightings` data frame were raised as part of a breeding program and then reintroduced into an area where the species no longer existed? This means all the untagged birds were hatched in the wild. Suppose we decide to rename the element value `"Untagged"` to `"Wild Hatch"` in the `Status` column to communicate this information more clearly.
 
 🎯**Goal**: Replace `"Untagged"` with `"Wild Hatch"` in `Status`.
 

@@ -60,6 +60,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # D
 
+**Data Dictionary**: A companion document (often a table) that defines each variable in a dataset—its name, meaning/description, data type, allowable values or coding scheme, missing-value codes, and any notes needed to interpret the data correctly and reuse it later.
+
 **Data Frame**: A two-dimensional R object for tabular data, organized as rows and columns. Each column is a vector (or factor) with the same number of rows, columns can have different data types, and the object has class "`data.frame`".
 
 **Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
