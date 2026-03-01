@@ -25,13 +25,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-Spreadsheets are easy to analyze but hard to self-document. A separate data dictionary file makes the data interpretable later.
+Spreadsheets are easy to analyze in the moment but notoriously hard to interpret later—especially when column names are abbreviated, values are coded (e.g., 1/2), or missingness has meaning. In this chapter, you learn what a data dictionary is and why it is a core part of reproducible analysis. You will practice locating existing dataset documentation and then create your own documentation for the `field_sightings` (expanded) dataset by building a data-dictionary template and filling it in using subassignment, so you can update specific cells precisely instead of rewriting the entire table. 
 
 By the end of Chapter 9, you will be able to:
 
-- explain how documentation supports analysis
+- 📖 Describe what a data dictionary is and why it matters for reproducible analysis.
 
-- understanding subassignment
+- 🖋️ Draft a data dictionary entry.
+
+- 💉 Explain how subassignment updates specific cells in a data frame.
 
 
 # Data Dictionary
@@ -47,15 +49,15 @@ In RStudio, the help pane is your first stop for built-in datasets. The `?` oper
 ?mtcars
 ```
 
-The help page lists the dataset context (1974 Motor Trend road tests) and provides variable descriptions, units, and several coded values (e.g., `am` is 0/1 for automatic/manual).
+🗣 The help page lists the dataset context (1974 Motor Trend road tests) and provides variable descriptions, units, and several coded values (e.g., `am` is 0/1 for automatic/manual).
 
 # Create a report
 
-Please open a new R Notebook in your course folder named `chapter9_notes.Rmd` and edit the YAML. Use this document to take notes and practice the chapter content. 
+🎯  Please open a new R Notebook in your course folder named `data_dictionary.Rmd` and edit the YAML. Use this document to take notes and practice the chapter content. **You will submit this knitted report for peer review.**
 
 1. Open RStudio → File → New File → R Notebook.
 
-2. Save it in your course folder as: `chapter9_notes.Rmd`.
+2. Save it in your course folder as: `data_dictionary.Rmd`.
 
 3. In your YAML header at the top:
 
@@ -77,7 +79,9 @@ output: html_notebook
 
 6. Memo as you go.
 
-# Data Collection Story
+# Data
+
+## Data Collection Story
 
 Read the story provided below. It describes the context of the dataset and how the data were collected. This information is crucial for understanding the meaning of each variable and how to interpret the data correctly. You will use this story to create a data dictionary for the `field_sightings_expanded.csv` dataset.
 
@@ -225,8 +229,6 @@ write.csv(field_sightings_expanded, "field_sightings_expanded.csv", row.names = 
 
 ---
 
-# Load the dataset
-
 ## Load Data
 
 The `field_sightings_expanded.csv` dataset contains **simulated** (randomly generated) values. 
@@ -239,7 +241,7 @@ The `field_sightings_expanded.csv` dataset contains **simulated** (randomly gene
 list.files()
 ```
 
-🎯 **Goal** Load `field_sightings_expanded.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
+🎯 **Goal** Load `field_sightings_expanded.csv` into R using `read_csv()` and assign it to a variable name `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
 
 ```{r message=FALSE, warning=FALSE}
 # ⚡ Type this in your R Notebook
@@ -247,32 +249,94 @@ library(readr) # Load the readr package for reading CSV files
 field_sightings <- read_csv("field_sightings_expanded.csv")
 ```
 
-## Inspect the dataset
 
-### Basic inspection
+## Basic data inspection
 
-🎯 **Goal** Do a first pass inspection to know what columns exist and what kinds of values they contain.
+It is standard practice to do a first pass inspection of a dataset after loading it to verify that it loaded correctly and to get a sense of the data structure. 
+
+🎯 **Goal** Use `head()` and `colnames()`.
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
-head(field_sightings) # View the first few rows of the dataset
-colnames(field_sightings)  # Get the structure of the dataset (variable names, types
+head(field_sightings)      # View the first few rows of the dataset
+str(field_sightings)       # Get the structure of the dataset
 ```
 
 🗣 The column names are "Sighting_ID", "Observer_ID", "Date", "Time", "Site_Code", "Latitude", "Longitude", "Species_Common", "Species_Code", "Status", "Band_Color", "Tag_Flag", "Bird_ID", "Distance_m", "Age_Class", "Age_Code", "Sex", "Sex_Code",  "Release_Year", and "Release_Cohort".
 
+# Create your data dictionary
 
-### Detailed Checks
+To create a data dictionary, we will start by creating a template that includes the variable names and their data types. Then, we will fill in the meanings, units, codes/values, missing values, valid values, and any notes or relationships for each variable.
 
-🎯 **Goal** Identify (1) coded values, (2) missing values, and (3) relationships between fields.
+## Create a template
 
-We'll use the base R function `table()`
+The a documentation table (`data_dictionary`) will have a row for every a column in the `field_sightings` dataset. 
+
+The first column of the `data_dictionary` will be `Field_Name`. This is the variable name (column name) from the `field_sightings` dataset. The second column will be `Meaning`, which is a brief description of what the variable represents. The third column will be `Type`, which indicates the data type of the variable (e.g., character, numeric). The fourth column will be `Units`, which specifies the units of measurement if applicable. The fifth column will be `Codes_Values`, which describes any coded values used in the variable. The sixth column will be `Missing_Values`, which indicates how missing values are represented. The seventh column will be `Valid_Values`, which lists any specific valid values for the variable. The eighth column will be `Notes_Relationships`, which includes any additional notes or relationships to other variables.
+
+> **One row in your data dictionary corresponds to one column in your dataset.**
+
+🎯 **Goal** Create a blank data dictionary template. 
+
+There should be one row per field in the dataset, with an empty place to write meanings later, units, codes, missingness, and notes.
+
+*You do not need to be able to type the following code from scratch. You should be able to generally understand what what is happening.*
+
+```{r, eval=FALSE}
+# ⚡ Copy and Paste this in your R Notebook
+
+ # Create a new data frame for the data dictionary
+data_dictionary <- data.frame(    
+  
+# Get the column names from the dataset, store in column 1 named "Field_Name"
+  Field_Name = names(field_sightings),  
+  
+# Initialize the "Meaning" column with empty strings
+  Meaning = rep("", ncol(field_sightings)),  
+
+# Get the data class type of each column using class() and store in column 3 named "Type"
+  Type = vapply(field_sightings, function(x) 
+    paste(class(x), collapse = ", "), character(1)),    
+ 
+# Initialize the "Units" column with empty strings 
+  Units = rep("", ncol(field_sightings)),              
+
+# Initialize the "Codes_Values" column with empty strings
+  Codes_Values = rep("", ncol(field_sightings)), 
+
+# Initialize the "Missing_Values" column with empty strings 
+  Missing_Values = rep("", ncol(field_sightings)), 
+
+# Initialize the "Valid_Values" column with empty strings
+  Valid_Values = rep("", ncol(field_sightings)),    
+
+# Initialize the "Notes_Relationships" column with empty strings
+  Notes_Relationships = rep("", ncol(field_sightings)),
+
+# Do not convert strings to factors (keep them as character vectors)
+  stringsAsFactors = FALSE
+)
+# ✅  Check
+head(data_dictionary)
+```
+
+🗣 A dataframe is created with the column names "Field_name," "Meaning," "Type," "Units," "Codes_Values," "Valid_Values," and "Notes_Relationships." There are two columns automatically completed. The `names(field_sightings)` grabs the dataset’s column names. Those values populate the first column of the dictionary. 
+
+The column `Type` is filled in by checking the `class()` of the field name. All other the documentation columns start as `""` (blank strings). 
+
+These blank strings will be replaced with **character strings** in during the next step using subassignment.
+
+## Explore the field
+
+Before filling in the data dictionary, we need to explore the dataset to understand what values are for each variable. This will help us accurately document the meanings, codes, and missing values in the data dictionary. We'll start by exploring the **Sex_Code** field.
+
+We'll use the base R function `table()` to view the frequency of each value in the `Sex_Code` column, including any missing values. 
 
 📜 The SYNTAX: 
 
-table(x, y, useNA = "ifany")
+`table(x, y, useNA = "ifany")`
 
-#### Sex_Code
+The `useNA = "ifany"` argument tells R to include a count of `NA` values if there are any in the dataset.
 
 🎯 **Goal** What values are used for sex codes (including missing)?
 
@@ -281,194 +345,263 @@ table(x, y, useNA = "ifany")
 table(field_sightings$Sex_Code, useNA = "ifany")
 ```
 
-🗣 `Sex_Code` is 1 (n = 1985) for female, 2 (n = 1891) for male, and `NA` (n = 684) for missing values.
+## Comment
 
-
-#### Age_Code
-
-🎯 **Goal** What values are used for age codes?
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-
-table(field_sightings$Age_Code, useNA = "ifany")
-```
-
-🗣 `Age_Code` is 1 (n = 1238) for hatch-year, 2 (n = 1094) for second-year, 3 (n = 1742) for adult, and 99 (n = 396) for unknown. 
-
-#### Band_Color and Status relationship
-
-🎯 **Goal** Check the story claim: wild hatch birds have no band, reintroduced birds do.
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-table(field_sightings$Status, field_sightings$Band_Color, useNA = "ifany")
-```
-
-🗣 "Wild hatch" only appears with band `color = None` and "Reintroduced" appears with Silver / Blue / Green.
-
-#### Latitude & Longitude
-
-🎯 **Goal** Range check for coordinates and distance
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-range(field_sightings$Latitude, na.rm = TRUE)
-range(field_sightings$Longitude, na.rm = TRUE)
-range(field_sightings$Distance_m, na.rm = TRUE)
-```
-
-
-🗣 Latitude is around 43.53 to 43.69; Longitude is around -116.27 to -116.14; Distance is 5 to 120 meters
-
-# Create your data dictionary
-
-To create a data dictionary, we will start by creating a template that includes the variable names and their data types. Then, we will fill in the meanings, units, codes/values, missing values, valid values, and any notes or relationships for each variable.
-
-## Create a template
-
-🎯 **Goal** Create a blank data dictionary template. 
-
-There should be one row per field in the dataset, with an empty place to write meanings later, units, codes, missingness, and notes.
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-data_dictionary <- data.frame(
-  Field_Name = names(field_sightings),
-  Meaning = "",
-  Type = sapply(field_sightings, class),
-  Units = "",
-  Codes_Values = "",
-  Missing_Values = "",
-  Valid_Values = "",
-  Notes_Relationships = "",
-  stringsAsFactors = FALSE
-)
-
-print(data_dictionary)
-```
-
-🗣 `names(field_sightings)` grabs the dataset’s column names. Those become the first column of the dictionary.
-
-🗣 `sapply(field_sightings, class)` finds the data type of each column (character, numeric, etc.) so I don’t have to guess.
-
-🗣 All the documentation columns start as `""` (blank strings) because I will fill them in later.
-
-🗣 `print(data_dictionary)` shows the template so I can verify it has one row per dataset field.
+🗣 From the table, we learned that `Sex_Code` is 1 (n = 1985) for female, 2 (n = 1891) for male, and `NA` (n = 684) for missing values. This tracks from the data collection story which said, "Sex was recorded when it could be determined visually; sex uses numeric codes where **1** indicates **female** and **2** indicates **male**. When sex could not be determined it was left missing."
 
 ## Subassignment
 
-**Subassignment** is when you replace part of an object by putting an index on the left-hand side of `<-`. R updates only the indexed piece, not the whole object.
+From the data collection story and the `table()` output, we have enough information to fill in the data dictionary for the `Sex_Code` field
+
+Recall from Chapter 8 that **Subassignment** is when you replace part of an object by putting an index on the left-hand side of `<-`. R updates only the indexed piece, not the whole object. We will use this overwrite method to change existing values: `x[i, j] <- value`.
 
 🎯 **Goal** Fill in **one row** of the dictionary (the row for sex code) using subassignment. This will updating only specific cells instead of rewriting the entire table.
+
+**Step 1** Use `which()` to find the row number where the field name is `Sex_Code`.
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
 row <- which(data_dictionary$Field_Name == "Sex_Code")
-
-data_dictionary[row, "Meaning"] <- "Sex of the bird when it could be determined visually."
-data_dictionary[row, "Units"] <- "N/A"
-data_dictionary[row, "Codes_Values"] <- "1 = female, 2 = male"
-data_dictionary[row, "Missing_Values"] <- "NA means sex could not be determined"
-data_dictionary[row, "Valid_Values"] <- "1, 2, or NA"
-data_dictionary[row, "Notes_Relationships"] <- "Matches Sex (F/M); more NA for wild hatch hatch-year birds."
-print(data_dictionary)
+row
 ```
 
-🗣 `which(...)` finds the row number where the field name is `Sex_Code`.
+🗣 `which(...)` finds the row index position where the element value `Sex_Code` in located in the column `Field_Name` in the `data_dictionary` dataframe. `Sex_Code` is the 18th row in the dataset.
 
-Each line like `data_dictionary[row, "Meaning"] <- ...` is subassignment: it changes one cell inside the data frame.
 
-## Store and share your data dictionary
-
-Save your data dictionary as a CSV file in your course folder. This will allow you to share it with others and use it for future reference.
+🎯 **Goal** Use the object `row` containing the row index value `Sex_Code` and the column `Meaning` to identify the cell in the table to be "overwritten." Assign a character string and accurately describes the meaning of `Sex_Code`.
 
 ```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
+data_dictionary[row, "Meaning"] <- "Sex of the bird when it could be determined visually."
+tail(data_dictionary)
+```
+
+🗣 The function `tail()` is like `head()`, except that it gives the last six rows instead of the first six rows. 
+
+🗣 The `Meaning` column now contains "Sex of the bird when it could be determined visually." in the row `Sex_Code`.
+
+🎯 **Goal** Fill in the rest of the cells for the `Sex_Code` row using subassignment. Use the data collection story and the `table()` output to inform your entries.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
+data_dictionary[row, "Units"] <- "N/A"
+
+data_dictionary[row, "Codes_Values"] <- "1 = female, 2 = male"
+
+data_dictionary[row, "Missing_Values"] <- "NA means sex could not be determined"
+
+data_dictionary[row, "Valid_Values"] <- "1, 2, or NA"
+
+data_dictionary[row, "Notes_Relationships"] <- "Matches Sex (F/M); more NA for wild hatch hatch-year birds."
+
+tail(data_dictionary)
+```
+
+
+🗣 Each line of `data_dictionary[row, "Meaning"] <- ...` is subassignment. It changes one cell inside the data frame. All columns for the row `Sex_Code` are completed.
+
+# Store and share your data dictionary
+
+After completing your data dictionary, it's important to save it for future reference and to share it with others who may use the dataset. 
+
+🎯 **Goal**  Save your data dictionary as a CSV file in your course folder.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
 write.csv(data_dictionary, "field_sightings_dictionary.csv", row.names = FALSE)
 ```
 
+🗣 Observe that `field_sightings_dictionary.csv` is now stored in your course folder.
+
 # Chapter Terms
+
+**Character String**: A single piece of text in R, stored as a character value and written in quotes (for example, "My favorite color is yellow!" or "Who stole the cookie from the cookie jar?"). 
 
 **Data Dictionary**: A companion document (often a table) that defines each variable in a dataset—its name, meaning/description, data type, allowable values or coding scheme, missing-value codes, and any notes needed to interpret the data correctly and reuse it later.
 
 **Subassignment**: Replacing or updating part of an existing object by putting an index on the left-hand side of `<-` (e.g., `x[i] <- value` or `df[rows, "col"] <- value`). R changes only the indexed elements by using a replacement function (like `[<-`, `[[<-`, or `$<-`) and then stores the updated object back into the same name.
 
+# Summary
+
+In the guided activity, you first saw that basic documentation includes variable descriptions and coded values by opening an example dataset help page for `mtcars`. Next, you set up an R Notebook (data_dictionary.Rmd) to keep notes and code, loaded the `field_sightings` data, and did a basic inspection (e.g., `head()` and `colnames()`) to confirm the dataset structure. You then generated a   data_dictionary  table that lists each field name and its data type, leaving documentation columns blank to be filled in later. Using table(..., useNA = "ifany") plus the data collection story, you explored what values actually appear in a field, and then use `which()` + `data_dictionary[row, "Column"] <- "text"` to fill in documentation cells for a the demonstrated variable `Sex_Code`. 
 
 # 📝 Practice Space
 
-Use the data dictionary template you created to fill in the meanings, units, codes/values, missing values, valid values, and any notes or relationships for the fields specified in the tasks below. Save your completed data dictionary as a CSV file in your course folder.
+Use the data dictionary template we created to fill in the meanings, units, codes/values, missing values, valid values, and any notes or relationships for the fields specified in the tasks below. Save your completed data dictionary as a CSV file in your course folder. Upload your knitted R Notebook with the data dictionary CSV to your Canvas Discussion group for peer review.
 
 **Steps**
 
-1. Identify the 
+1. Explore the field you are documenting by reviewing (1) the data collection story (see Section 4 of this document) and (2) the in R output (`table()`).
 
-2. Review the code provided in the section **Subassignment**. 
+2. Comment about what you plan to write in relevant columns of the `data_dictionary` (what you added and why). For example, what evidence in the `table()` output and data collection story supports your entry?
+
+3. Add the dictionary entry using the overwrite method: `x[i, j] <- value`
 
 
-## Task 1
+## Task 1: Age_Code
+
+Task 1 asks you to **fill in the blanks for Step 3**. You will need to explore the field first (Step 1) and review the comments (Step 2) to fill in the blanks in Step 3.
+
+### Step 1: Explore the field
+
+**Age_Code**
+
+🎯 **Goal** Review what values are used for age codes.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook
+table(field_sightings$Age_Code, useNA = "ifany")
+```
+
+### Step 2: Comment
+
+🗣 `Age_Code` is 1 (n = 1238) for hatch-year, 2 (n = 1094) for second-year, 3 (n = 1742) for adult, and 99 (n = 396) for unknown. 
+
+🗣  The data collection story says, "Age class was recorded using four categories—**hatch-year**, **second-year**, **adult**, or **unknown**—with numeric codes **1**, **2**, **3**, and **99** respectively. For reintroduced birds, **age class** is derived from the known hatch year. For wild hatch birds, age class is estimated visually and is sometimes marked unknown."
+
+### Step 3: Subassignment
+
+🎯 **Goal** Add the field name "Age_Code"'s details to the code book.
 
 Fill in the blanks to document the `Age_Code` field in your data dictionary. Use the information from the dataset and the data collection story to complete each section.
 
-🎯 **Goal** "Age_Code"
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 
+# Type the field name in the blank
+row <- which(data_dictionary$Field_Name == ________)    
+
+# Write a brief description about the field name
+data_dictionary[row, "Meaning"] <- "_______________________" 
+
+# If the field has units, write them here; if not,  "NA"
+data_dictionary[row, "Units"] <- "_________________________" 
+
+# If the field uses coded values, write the coding scheme here; if not, "NA" 
+data_dictionary[row, "Codes_Values"] <- "__________________" 
+
+# If the field has missing values, write the missing value code here; if not, "NA"
+data_dictionary[row, "Missing_Values"] <- "________________" 
+
+# If the field has specific valid values, write them here; if not, "NA"
+data_dictionary[row, "Valid_Values"] <- "__________________" 
+
+# Write any additional notes or relationships to other fields here; if not, "NA"
+data_dictionary[row, "Notes_Relationships"] <- "___________" 
+
+# ✅  Check
+print(data_dictionary)
+```
+
+🗣 Comment about how this code changed the dataframe `data_dictionary`.
+
+
+## Task 2: Band_Color
+
+Tasks 2 ask you to **fill in the blanks in each of the steps** for the `Band_Color` field.
+
+### Step 1: Explore the field
+
+🎯 **Goal** Use `table()` to check what values are used for `Band_Color` in `data_dictionary`(including missing).
 
 ```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-row <- which(data_dictionary$Field_Name == ________)
+# ⚡ Type this in your R Notebook, fill in the blanks
+________(_______________$_________, useNA = "ifany")
+```
 
-data_dictionary[row, "Meaning"] <- "_______________________"
-data_dictionary[row, "Units"] <- "_________________________"
-data_dictionary[row, "Codes_Values"] <- "__________________"
-data_dictionary[row, "Missing_Values"] <- "________________"
-data_dictionary[row, "Valid_Values"] <- "__________________"
-data_dictionary[row, "Notes_Relationships"] <- "___________"
+
+### Step 2: Comment
+
+🗣 Explain what values are in band color and how they relate to the data collection story. _______
+
+### Step 3: Subassignment
+
+🎯 **Goal** Add details for `Band_Color` in `data_dictionary`.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+
+# Type the field name in the blank
+row <- which(data_dictionary$Field_Name == ________)    
+
+# Write a brief description about the field name
+data_dictionary[row, "Meaning"] <- "_______________________" 
+
+# If the field has units, write them here; if not,  "NA"
+data_dictionary[row, "Units"] <- "_________________________" 
+
+# If the field uses coded values, write the coding scheme here; if not, "NA" 
+data_dictionary[row, "Codes_Values"] <- "__________________" 
+
+# If the field has missing values, write the missing value code here; if not, "NA"
+data_dictionary[row, "Missing_Values"] <- "________________" 
+
+# If the field has specific valid values, write them here; if not, "NA"
+data_dictionary[row, "Valid_Values"] <- "__________________" 
+
+# Write any additional notes or relationships to other fields here; if not, "NA"
+data_dictionary[row, "Notes_Relationships"] <- "___________" 
+
+# ✅  Check
 print(data_dictionary)
 ```
 
 🗣 Comment about how this code changed `data_dictionary`
 
+## Task 3: You Pick
 
-## Task 2
+This task asks you to **fill in the blanks for Step 3** for the a field of your choice!
 
-🎯 **Goal** "Band_Color"
+### Step 1: Explore the field
 
+
+🎯 **Goal** Select any field and use `table()` to explore the possible values. 
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
-row <- which(data_dictionary$Field_Name == ________)
+table(field_sightings$_____, useNA = _____)
+```
 
-data_dictionary[row, "Meaning"] <- "_______________________"
-data_dictionary[row, "Units"] <- "_________________________"
-data_dictionary[row, "Codes_Values"] <- "__________________"
-data_dictionary[row, "Missing_Values"] <- "________________"
-data_dictionary[row, "Valid_Values"] <- "__________________"
-data_dictionary[row, "Notes_Relationships"] <- "___________"
-print(data_dictionary)
+### Step 2: Comment
+
+🗣 Explain what values are in the field you chose and how they relate to the data collection story.
+
+### Step 3: Subassignment
+
+🎯 **Goal** 
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+
+# Type the field name in the blank
+row <- which(data_dictionary$Field_Name == ________)    
+
+# Repeat this code for each empty column in the data dictionary
+data_dictionary[row, _____] <- "_______________________" 
+
 ```
 
 🗣 Comment about how this code changed `data_dictionary`
 
-## Task 3
+## Task 4: Save CSV
 
-🎯 **Goal** "Status"
+🎯 **Goal** Save your data dictionary as a CSV file in your course folder. You will upload this to Canvas as directed.
 
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-row <- which(data_dictionary$Field_Name == ________)
+1. Check that your data dictionary is complete for at least these fields: `Sex_Code`, `Age_Code`, `Band_Color`, and one additional field of your choice.
 
-data_dictionary[row, "Meaning"] <- "_______________________"
-data_dictionary[row, "Units"] <- "_________________________"
-data_dictionary[row, "Codes_Values"] <- "__________________"
-data_dictionary[row, "Missing_Values"] <- "________________"
-data_dictionary[row, "Valid_Values"] <- "__________________"
-data_dictionary[row, "Notes_Relationships"] <- "___________"
-print(data_dictionary)
-```
+2. Save your data dictionary as a CSV file in your course folder.
 
-🗣 Comment about how this code changed `data_dictionary`
+## Task 5: Knit Notebook
 
-## Task 4
+🎯 **Goal** Create a well-formatted HTML report for submission. Knit your R Notebook with your memo notes and code as data_dictionary.Rmd. Check that the report is formatted professionally.
 
-🎯 **Goal**
+**Step 1: Sweep your Environment (start clean).**  
+Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
-Save your completed data dictionary as a CSV file in your course folder. This will allow you to share it with others and use it for future reference.
+**Step 2: Run everything top-to-bottom.**  
+Use **Run → Run All** to execute every chunk in order.
+
+**Step 3: Save and submit.**  
+After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
+
+💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. The HTML usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the .html file. Before submission, check that the uploaded file ends in .html.

@@ -1638,12 +1638,23 @@ display: none;
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>Spreadsheets are easy to analyze but hard to self-document. A
-separate data dictionary file makes the data interpretable later.</p>
+<p>Spreadsheets are easy to analyze in the moment but notoriously hard
+to interpret later—especially when column names are abbreviated, values
+are coded (e.g., 1/2), or missingness has meaning. In this chapter, you
+learn what a data dictionary is and why it is a core part of
+reproducible analysis. You will practice locating existing dataset
+documentation and then create your own documentation for the
+<code>field_sightings</code> (expanded) dataset by building a
+data-dictionary template and filling it in using subassignment, so you
+can update specific cells precisely instead of rewriting the entire
+table.</p>
 <p>By the end of Chapter 9, you will be able to:</p>
 <ul>
-<li><p>explain how documentation supports analysis</p></li>
-<li><p>understanding subassignment</p></li>
+<li><p>📖 Describe what a data dictionary is and why it matters for
+reproducible analysis.</p></li>
+<li><p>🖋️ Draft a data dictionary entry.</p></li>
+<li><p>💉 Explain how subassignment updates specific cells in a data
+frame.</p></li>
 </ul>
 </div>
 <div id="data-dictionary" class="section level1" number="2">
@@ -1663,20 +1674,21 @@ you the data dictionary for the <code>mtcars</code> dataset, which
 includes variable names, descriptions, and data types.</p>
 <pre class="r"><code># ⚡ Type this in your R Studio Console
 ?mtcars</code></pre>
-<p>The help page lists the dataset context (1974 Motor Trend road tests)
-and provides variable descriptions, units, and several coded values
-(e.g., <code>am</code> is 0/1 for automatic/manual).</p>
+<p>🗣 The help page lists the dataset context (1974 Motor Trend road
+tests) and provides variable descriptions, units, and several coded
+values (e.g., <code>am</code> is 0/1 for automatic/manual).</p>
 </div>
 </div>
 <div id="create-a-report" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Create a report</h1>
-<p>Please open a new R Notebook in your course folder named
-<code>chapter9_notes.Rmd</code> and edit the YAML. Use this document to
-take notes and practice the chapter content.</p>
+<p>🎯 Please open a new R Notebook in your course folder named
+<code>data_dictionary.Rmd</code> and edit the YAML. Use this document to
+take notes and practice the chapter content. <strong>You will submit
+this knitted report for peer review.</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Open RStudio → File → New File → R Notebook.</p></li>
 <li><p>Save it in your course folder as:
-<code>chapter9_notes.Rmd</code>.</p></li>
+<code>data_dictionary.Rmd</code>.</p></li>
 <li><p>In your YAML header at the top:</p></li>
 </ol>
 <pre class="yaml"><code>---
@@ -1692,9 +1704,11 @@ your notes and code as you work through the chapter.</p></li>
 <li><p>Memo as you go.</p></li>
 </ol>
 </div>
-<div id="data-collection-story" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Data Collection
-Story</h1>
+<div id="data" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Data</h1>
+<div id="data-collection-story" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Data Collection
+Story</h2>
 <p>Read the story provided below. It describes the context of the
 dataset and how the data were collected. This information is crucial for
 understanding the meaning of each variable and how to interpret the data
@@ -1766,10 +1780,8 @@ of unbanded, wild hatch birds are becoming common enough to indicate the
 population may be moving toward a self-sustaining recovery.</p>
 <hr />
 </div>
-<div id="load-the-dataset" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Load the dataset</h1>
-<div id="load-data" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Load Data</h2>
+<div id="load-data" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Load Data</h2>
 <p>The <code>field_sightings_expanded.csv</code> dataset contains
 <strong>simulated</strong> (randomly generated) values.</p>
 <p>🎯 <strong>Goal</strong> Download the
@@ -1781,151 +1793,218 @@ R.</p>
 list.files()</code></pre>
 <p>🎯 <strong>Goal</strong> Load
 <code>field_sightings_expanded.csv</code> into R using
-<code>read_csv()</code> and assign it to a variable called
+<code>read_csv()</code> and assign it to a variable name
 <code>feild_sightings</code>. Recall that you need to library
 <code>readr</code> before you can use <code>read_csv()</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 library(readr) # Load the readr package for reading CSV files
 field_sightings &lt;- read_csv(&quot;field_sightings_expanded.csv&quot;)</code></pre>
 </div>
-<div id="inspect-the-dataset" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Inspect the
-dataset</h2>
-<div id="basic-inspection" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> Basic
-inspection</h3>
-<p>🎯 <strong>Goal</strong> Do a first pass inspection to know what
-columns exist and what kinds of values they contain.</p>
+<div id="basic-data-inspection" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Basic data
+inspection</h2>
+<p>It is standard practice to do a first pass inspection of a dataset
+after loading it to verify that it loaded correctly and to get a sense
+of the data structure.</p>
+<p>🎯 <strong>Goal</strong> Use <code>head()</code> and
+<code>colnames()</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-head(field_sightings) # View the first few rows of the dataset
-colnames(field_sightings)  # Get the structure of the dataset (variable names, types</code></pre>
+head(field_sightings)      # View the first few rows of the dataset
+str(field_sightings)       # Get the structure of the dataset</code></pre>
 <p>🗣 The column names are “Sighting_ID”, “Observer_ID”, “Date”, “Time”,
 “Site_Code”, “Latitude”, “Longitude”, “Species_Common”, “Species_Code”,
 “Status”, “Band_Color”, “Tag_Flag”, “Bird_ID”, “Distance_m”,
 “Age_Class”, “Age_Code”, “Sex”, “Sex_Code”, “Release_Year”, and
 “Release_Cohort”.</p>
 </div>
-<div id="detailed-checks" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> Detailed
-Checks</h3>
-<p>🎯 <strong>Goal</strong> Identify (1) coded values, (2) missing
-values, and (3) relationships between fields.</p>
-<p>We’ll use the base R function <code>table()</code></p>
-<p>📜 The SYNTAX:</p>
-<p>table(x, y, useNA = “ifany”)</p>
-<div id="sex_code" class="section level4" number="5.2.2.1">
-<h4><span class="header-section-number">5.2.2.1</span> Sex_Code</h4>
-<p>🎯 <strong>Goal</strong> What values are used for sex codes
-(including missing)?</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-table(field_sightings$Sex_Code, useNA = &quot;ifany&quot;)</code></pre>
-<p>🗣 <code>Sex_Code</code> is 1 (n = 1985) for female, 2 (n = 1891) for
-male, and <code>NA</code> (n = 684) for missing values.</p>
 </div>
-<div id="age_code" class="section level4" number="5.2.2.2">
-<h4><span class="header-section-number">5.2.2.2</span> Age_Code</h4>
-<p>🎯 <strong>Goal</strong> What values are used for age codes?</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-
-table(field_sightings$Age_Code, useNA = &quot;ifany&quot;)</code></pre>
-<p>🗣 <code>Age_Code</code> is 1 (n = 1238) for hatch-year, 2 (n = 1094)
-for second-year, 3 (n = 1742) for adult, and 99 (n = 396) for
-unknown.</p>
-</div>
-<div id="band_color-and-status-relationship" class="section level4" number="5.2.2.3">
-<h4><span class="header-section-number">5.2.2.3</span> Band_Color and
-Status relationship</h4>
-<p>🎯 <strong>Goal</strong> Check the story claim: wild hatch birds have
-no band, reintroduced birds do.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-table(field_sightings$Status, field_sightings$Band_Color, useNA = &quot;ifany&quot;)</code></pre>
-<p>🗣 “Wild hatch” only appears with band <code>color = None</code> and
-“Reintroduced” appears with Silver / Blue / Green.</p>
-</div>
-<div id="latitude-longitude" class="section level4" number="5.2.2.4">
-<h4><span class="header-section-number">5.2.2.4</span> Latitude &amp;
-Longitude</h4>
-<p>🎯 <strong>Goal</strong> Range check for coordinates and distance</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-range(field_sightings$Latitude, na.rm = TRUE)
-range(field_sightings$Longitude, na.rm = TRUE)
-range(field_sightings$Distance_m, na.rm = TRUE)</code></pre>
-<p>🗣 Latitude is around 43.53 to 43.69; Longitude is around -116.27 to
--116.14; Distance is 5 to 120 meters</p>
-</div>
-</div>
-</div>
-</div>
-<div id="create-your-data-dictionary" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Create your data
+<div id="create-your-data-dictionary" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Create your data
 dictionary</h1>
 <p>To create a data dictionary, we will start by creating a template
 that includes the variable names and their data types. Then, we will
 fill in the meanings, units, codes/values, missing values, valid values,
 and any notes or relationships for each variable.</p>
-<div id="create-a-template" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Create a
+<div id="create-a-template" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Create a
 template</h2>
+<p>The a documentation table (<code>data_dictionary</code>) will have a
+row for every a column in the <code>field_sightings</code> dataset.</p>
+<p>The first column of the <code>data_dictionary</code> will be
+<code>Field_Name</code>. This is the variable name (column name) from
+the <code>field_sightings</code> dataset. The second column will be
+<code>Meaning</code>, which is a brief description of what the variable
+represents. The third column will be <code>Type</code>, which indicates
+the data type of the variable (e.g., character, numeric). The fourth
+column will be <code>Units</code>, which specifies the units of
+measurement if applicable. The fifth column will be
+<code>Codes_Values</code>, which describes any coded values used in the
+variable. The sixth column will be <code>Missing_Values</code>, which
+indicates how missing values are represented. The seventh column will be
+<code>Valid_Values</code>, which lists any specific valid values for the
+variable. The eighth column will be <code>Notes_Relationships</code>,
+which includes any additional notes or relationships to other
+variables.</p>
+<blockquote>
+<p><strong>One row in your data dictionary corresponds to one column in
+your dataset.</strong></p>
+</blockquote>
 <p>🎯 <strong>Goal</strong> Create a blank data dictionary template.</p>
 <p>There should be one row per field in the dataset, with an empty place
 to write meanings later, units, codes, missingness, and notes.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-data_dictionary &lt;- data.frame(
-  Field_Name = names(field_sightings),
-  Meaning = &quot;&quot;,
-  Type = sapply(field_sightings, class),
-  Units = &quot;&quot;,
-  Codes_Values = &quot;&quot;,
-  Missing_Values = &quot;&quot;,
-  Valid_Values = &quot;&quot;,
-  Notes_Relationships = &quot;&quot;,
+<p><em>You do not need to be able to type the following code from
+scratch. You should be able to generally understand what what is
+happening.</em></p>
+<pre class="r"><code># ⚡ Copy and Paste this in your R Notebook
+
+ # Create a new data frame for the data dictionary
+data_dictionary &lt;- data.frame(    
+  
+# Get the column names from the dataset, store in column 1 named &quot;Field_Name&quot;
+  Field_Name = names(field_sightings),  
+  
+# Initialize the &quot;Meaning&quot; column with empty strings
+  Meaning = rep(&quot;&quot;, ncol(field_sightings)),  
+
+# Get the data class type of each column using class() and store in column 3 named &quot;Type&quot;
+  Type = vapply(field_sightings, function(x) 
+    paste(class(x), collapse = &quot;, &quot;), character(1)),    
+ 
+# Initialize the &quot;Units&quot; column with empty strings 
+  Units = rep(&quot;&quot;, ncol(field_sightings)),              
+
+# Initialize the &quot;Codes_Values&quot; column with empty strings
+  Codes_Values = rep(&quot;&quot;, ncol(field_sightings)), 
+
+# Initialize the &quot;Missing_Values&quot; column with empty strings 
+  Missing_Values = rep(&quot;&quot;, ncol(field_sightings)), 
+
+# Initialize the &quot;Valid_Values&quot; column with empty strings
+  Valid_Values = rep(&quot;&quot;, ncol(field_sightings)),    
+
+# Initialize the &quot;Notes_Relationships&quot; column with empty strings
+  Notes_Relationships = rep(&quot;&quot;, ncol(field_sightings)),
+
+# Do not convert strings to factors (keep them as character vectors)
   stringsAsFactors = FALSE
 )
-
-print(data_dictionary)</code></pre>
-<p>🗣 <code>names(field_sightings)</code> grabs the dataset’s column
-names. Those become the first column of the dictionary.</p>
-<p>🗣 <code>sapply(field_sightings, class)</code> finds the data type of
-each column (character, numeric, etc.) so I don’t have to guess.</p>
-<p>🗣 All the documentation columns start as <code>&quot;&quot;</code> (blank
-strings) because I will fill them in later.</p>
-<p>🗣 <code>print(data_dictionary)</code> shows the template so I can
-verify it has one row per dataset field.</p>
+# ✅  Check
+head(data_dictionary)</code></pre>
+<p>🗣 A dataframe is created with the column names “Field_name,”
+“Meaning,” “Type,” “Units,” “Codes_Values,” “Valid_Values,” and
+“Notes_Relationships.” There are two columns automatically completed.
+The <code>names(field_sightings)</code> grabs the dataset’s column
+names. Those values populate the first column of the dictionary.</p>
+<p>The column <code>Type</code> is filled in by checking the
+<code>class()</code> of the field name. All other the documentation
+columns start as <code>&quot;&quot;</code> (blank strings).</p>
+<p>These blank strings will be replaced with <strong>character
+strings</strong> in during the next step using subassignment.</p>
 </div>
-<div id="subassignment" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Subassignment</h2>
-<p><strong>Subassignment</strong> is when you replace part of an object
-by putting an index on the left-hand side of <code>&lt;-</code>. R
-updates only the indexed piece, not the whole object.</p>
+<div id="explore-the-field" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Explore the
+field</h2>
+<p>Before filling in the data dictionary, we need to explore the dataset
+to understand what values are for each variable. This will help us
+accurately document the meanings, codes, and missing values in the data
+dictionary. We’ll start by exploring the <strong>Sex_Code</strong>
+field.</p>
+<p>We’ll use the base R function <code>table()</code> to view the
+frequency of each value in the <code>Sex_Code</code> column, including
+any missing values.</p>
+<p>📜 The SYNTAX:</p>
+<p><code>table(x, y, useNA = &quot;ifany&quot;)</code></p>
+<p>The <code>useNA = &quot;ifany&quot;</code> argument tells R to include a count
+of <code>NA</code> values if there are any in the dataset.</p>
+<p>🎯 <strong>Goal</strong> What values are used for sex codes
+(including missing)?</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+table(field_sightings$Sex_Code, useNA = &quot;ifany&quot;)</code></pre>
+</div>
+<div id="comment" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Comment</h2>
+<p>🗣 From the table, we learned that <code>Sex_Code</code> is 1 (n =
+1985) for female, 2 (n = 1891) for male, and <code>NA</code> (n = 684)
+for missing values. This tracks from the data collection story which
+said, “Sex was recorded when it could be determined visually; sex uses
+numeric codes where <strong>1</strong> indicates <strong>female</strong>
+and <strong>2</strong> indicates <strong>male</strong>. When sex could
+not be determined it was left missing.”</p>
+</div>
+<div id="subassignment" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Subassignment</h2>
+<p>From the data collection story and the <code>table()</code> output,
+we have enough information to fill in the data dictionary for the
+<code>Sex_Code</code> field</p>
+<p>Recall from Chapter 8 that <strong>Subassignment</strong> is when you
+replace part of an object by putting an index on the left-hand side of
+<code>&lt;-</code>. R updates only the indexed piece, not the whole
+object. We will use this overwrite method to change existing values:
+<code>x[i, j] &lt;- value</code>.</p>
 <p>🎯 <strong>Goal</strong> Fill in <strong>one row</strong> of the
 dictionary (the row for sex code) using subassignment. This will
 updating only specific cells instead of rewriting the entire table.</p>
+<p><strong>Step 1</strong> Use <code>which()</code> to find the row
+number where the field name is <code>Sex_Code</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 row &lt;- which(data_dictionary$Field_Name == &quot;Sex_Code&quot;)
-
+row</code></pre>
+<p>🗣 <code>which(...)</code> finds the row index position where the
+element value <code>Sex_Code</code> in located in the column
+<code>Field_Name</code> in the <code>data_dictionary</code> dataframe.
+<code>Sex_Code</code> is the 18th row in the dataset.</p>
+<p>🎯 <strong>Goal</strong> Use the object <code>row</code> containing
+the row index value <code>Sex_Code</code> and the column
+<code>Meaning</code> to identify the cell in the table to be
+“overwritten.” Assign a character string and accurately describes the
+meaning of <code>Sex_Code</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
 data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;Sex of the bird when it could be determined visually.&quot;
+tail(data_dictionary)</code></pre>
+<p>🗣 The function <code>tail()</code> is like <code>head()</code>,
+except that it gives the last six rows instead of the first six
+rows.</p>
+<p>🗣 The <code>Meaning</code> column now contains “Sex of the bird when
+it could be determined visually.” in the row <code>Sex_Code</code>.</p>
+<p>🎯 <strong>Goal</strong> Fill in the rest of the cells for the
+<code>Sex_Code</code> row using subassignment. Use the data collection
+story and the <code>table()</code> output to inform your entries.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
 data_dictionary[row, &quot;Units&quot;] &lt;- &quot;N/A&quot;
+
 data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;1 = female, 2 = male&quot;
+
 data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;NA means sex could not be determined&quot;
+
 data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;1, 2, or NA&quot;
+
 data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;Matches Sex (F/M); more NA for wild hatch hatch-year birds.&quot;
-print(data_dictionary)</code></pre>
-<p>🗣 <code>which(...)</code> finds the row number where the field name
-is <code>Sex_Code</code>.</p>
-<p>Each line like <code>data_dictionary[row, &quot;Meaning&quot;] &lt;- ...</code>
-is subassignment: it changes one cell inside the data frame.</p>
+
+tail(data_dictionary)</code></pre>
+<p>🗣 Each line of <code>data_dictionary[row, &quot;Meaning&quot;] &lt;- ...</code>
+is subassignment. It changes one cell inside the data frame. All columns
+for the row <code>Sex_Code</code> are completed.</p>
 </div>
-<div id="store-and-share-your-data-dictionary" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Store and share your
-data dictionary</h2>
-<p>Save your data dictionary as a CSV file in your course folder. This
-will allow you to share it with others and use it for future
-reference.</p>
-<pre class="r"><code>write.csv(data_dictionary, &quot;field_sightings_dictionary.csv&quot;, row.names = FALSE)</code></pre>
 </div>
+<div id="store-and-share-your-data-dictionary" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Store and share your
+data dictionary</h1>
+<p>After completing your data dictionary, it’s important to save it for
+future reference and to share it with others who may use the
+dataset.</p>
+<p>🎯 <strong>Goal</strong> Save your data dictionary as a CSV file in
+your course folder.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+write.csv(data_dictionary, &quot;field_sightings_dictionary.csv&quot;, row.names = FALSE)</code></pre>
+<p>🗣 Observe that <code>field_sightings_dictionary.csv</code> is now
+stored in your course folder.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Chapter Terms</h1>
+<p><strong>Character String</strong>: A single piece of text in R,
+stored as a character value and written in quotes (for example, “My
+favorite color is yellow!” or “Who stole the cookie from the cookie
+jar?”).</p>
 <p><strong>Data Dictionary</strong>: A companion document (often a
 table) that defines each variable in a dataset—its name,
 meaning/description, data type, allowable values or coding scheme,
@@ -1939,75 +2018,231 @@ elements by using a replacement function (like <code>[&lt;-</code>,
 <code>[[&lt;-</code>, or <code>$&lt;-</code>) and then stores the
 updated object back into the same name.</p>
 </div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
-<p>Use the data dictionary template you created to fill in the meanings,
+<div id="summary" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Summary</h1>
+<p>In the guided activity, you first saw that basic documentation
+includes variable descriptions and coded values by opening an example
+dataset help page for <code>mtcars</code>. Next, you set up an R
+Notebook (data_dictionary.Rmd) to keep notes and code, loaded the
+<code>field_sightings</code> data, and did a basic inspection (e.g.,
+<code>head()</code> and <code>colnames()</code>) to confirm the dataset
+structure. You then generated a data_dictionary table that lists each
+field name and its data type, leaving documentation columns blank to be
+filled in later. Using table(…, useNA = “ifany”) plus the data
+collection story, you explored what values actually appear in a field,
+and then use <code>which()</code> +
+<code>data_dictionary[row, &quot;Column&quot;] &lt;- &quot;text&quot;</code> to fill in
+documentation cells for a the demonstrated variable
+<code>Sex_Code</code>.</p>
+</div>
+<div id="practice-space" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
+<p>Use the data dictionary template we created to fill in the meanings,
 units, codes/values, missing values, valid values, and any notes or
 relationships for the fields specified in the tasks below. Save your
-completed data dictionary as a CSV file in your course folder.</p>
+completed data dictionary as a CSV file in your course folder. Upload
+your knitted R Notebook with the data dictionary CSV to your Canvas
+Discussion group for peer review.</p>
 <p><strong>Steps</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Identify the</p></li>
-<li><p>Review the code provided in the section
-<strong>Subassignment</strong>.</p></li>
+<li><p>Explore the field you are documenting by reviewing (1) the data
+collection story (see Section 4 of this document) and (2) the in R
+output (<code>table()</code>).</p></li>
+<li><p>Comment about what you plan to write in relevant columns of the
+<code>data_dictionary</code> (what you added and why). For example, what
+evidence in the <code>table()</code> output and data collection story
+supports your entry?</p></li>
+<li><p>Add the dictionary entry using the overwrite method:
+<code>x[i, j] &lt;- value</code></p></li>
 </ol>
-<div id="task-1" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Task 1</h2>
+<div id="task-1-age_code" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Task 1: Age_Code</h2>
+<p>Task 1 asks you to <strong>fill in the blanks for Step 3</strong>.
+You will need to explore the field first (Step 1) and review the
+comments (Step 2) to fill in the blanks in Step 3.</p>
+<div id="step-1-explore-the-field" class="section level3" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Step 1: Explore the
+field</h3>
+<p><strong>Age_Code</strong></p>
+<p>🎯 <strong>Goal</strong> Review what values are used for age
+codes.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+table(field_sightings$Age_Code, useNA = &quot;ifany&quot;)</code></pre>
+</div>
+<div id="step-2-comment" class="section level3" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Step 2:
+Comment</h3>
+<p>🗣 <code>Age_Code</code> is 1 (n = 1238) for hatch-year, 2 (n = 1094)
+for second-year, 3 (n = 1742) for adult, and 99 (n = 396) for
+unknown.</p>
+<p>🗣 The data collection story says, “Age class was recorded using four
+categories—<strong>hatch-year</strong>, <strong>second-year</strong>,
+<strong>adult</strong>, or <strong>unknown</strong>—with numeric codes
+<strong>1</strong>, <strong>2</strong>, <strong>3</strong>, and
+<strong>99</strong> respectively. For reintroduced birds, <strong>age
+class</strong> is derived from the known hatch year. For wild hatch
+birds, age class is estimated visually and is sometimes marked
+unknown.”</p>
+</div>
+<div id="step-3-subassignment" class="section level3" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Step 3:
+Subassignment</h3>
+<p>🎯 <strong>Goal</strong> Add the field name “Age_Code”’s details to
+the code book.</p>
 <p>Fill in the blanks to document the <code>Age_Code</code> field in
 your data dictionary. Use the information from the dataset and the data
 collection story to complete each section.</p>
-<p>🎯 <strong>Goal</strong> “Age_Code”</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-row &lt;- which(data_dictionary$Field_Name == ________)
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 
-data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;_______________________&quot;
-data_dictionary[row, &quot;Units&quot;] &lt;- &quot;_________________________&quot;
-data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;________________&quot;
-data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;___________&quot;
+# Type the field name in the blank
+row &lt;- which(data_dictionary$Field_Name == ________)    
+
+# Write a brief description about the field name
+data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;_______________________&quot; 
+
+# If the field has units, write them here; if not,  &quot;NA&quot;
+data_dictionary[row, &quot;Units&quot;] &lt;- &quot;_________________________&quot; 
+
+# If the field uses coded values, write the coding scheme here; if not, &quot;NA&quot; 
+data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;__________________&quot; 
+
+# If the field has missing values, write the missing value code here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;________________&quot; 
+
+# If the field has specific valid values, write them here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;__________________&quot; 
+
+# Write any additional notes or relationships to other fields here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;___________&quot; 
+
+# ✅  Check
+print(data_dictionary)</code></pre>
+<p>🗣 Comment about how this code changed the dataframe
+<code>data_dictionary</code>.</p>
+</div>
+</div>
+<div id="task-2-band_color" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Task 2:
+Band_Color</h2>
+<p>Tasks 2 ask you to <strong>fill in the blanks in each of the
+steps</strong> for the <code>Band_Color</code> field.</p>
+<div id="step-1-explore-the-field-1" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Step 1: Explore the
+field</h3>
+<p>🎯 <strong>Goal</strong> Use <code>table()</code> to check what
+values are used for <code>Band_Color</code> in
+<code>data_dictionary</code>(including missing).</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, fill in the blanks
+________(_______________$_________, useNA = &quot;ifany&quot;)</code></pre>
+</div>
+<div id="step-2-comment-1" class="section level3" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Step 2:
+Comment</h3>
+<p>🗣 Explain what values are in band color and how they relate to the
+data collection story. _______</p>
+</div>
+<div id="step-3-subassignment-1" class="section level3" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Step 3:
+Subassignment</h3>
+<p>🎯 <strong>Goal</strong> Add details for <code>Band_Color</code> in
+<code>data_dictionary</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+
+# Type the field name in the blank
+row &lt;- which(data_dictionary$Field_Name == ________)    
+
+# Write a brief description about the field name
+data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;_______________________&quot; 
+
+# If the field has units, write them here; if not,  &quot;NA&quot;
+data_dictionary[row, &quot;Units&quot;] &lt;- &quot;_________________________&quot; 
+
+# If the field uses coded values, write the coding scheme here; if not, &quot;NA&quot; 
+data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;__________________&quot; 
+
+# If the field has missing values, write the missing value code here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;________________&quot; 
+
+# If the field has specific valid values, write them here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;__________________&quot; 
+
+# Write any additional notes or relationships to other fields here; if not, &quot;NA&quot;
+data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;___________&quot; 
+
+# ✅  Check
 print(data_dictionary)</code></pre>
 <p>🗣 Comment about how this code changed
 <code>data_dictionary</code></p>
 </div>
-<div id="task-2" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 2</h2>
-<p>🎯 <strong>Goal</strong> “Band_Color”</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-row &lt;- which(data_dictionary$Field_Name == ________)
-
-data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;_______________________&quot;
-data_dictionary[row, &quot;Units&quot;] &lt;- &quot;_________________________&quot;
-data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;________________&quot;
-data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;___________&quot;
-print(data_dictionary)</code></pre>
-<p>🗣 Comment about how this code changed
-<code>data_dictionary</code></p>
 </div>
-<div id="task-3" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Task 3</h2>
-<p>🎯 <strong>Goal</strong> “Status”</p>
+<div id="task-3-you-pick" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Task 3: You Pick</h2>
+<p>This task asks you to <strong>fill in the blanks for Step 3</strong>
+for the a field of your choice!</p>
+<div id="step-1-explore-the-field-2" class="section level3" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Step 1: Explore the
+field</h3>
+<p>🎯 <strong>Goal</strong> Select any field and use
+<code>table()</code> to explore the possible values.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-row &lt;- which(data_dictionary$Field_Name == ________)
-
-data_dictionary[row, &quot;Meaning&quot;] &lt;- &quot;_______________________&quot;
-data_dictionary[row, &quot;Units&quot;] &lt;- &quot;_________________________&quot;
-data_dictionary[row, &quot;Codes_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Missing_Values&quot;] &lt;- &quot;________________&quot;
-data_dictionary[row, &quot;Valid_Values&quot;] &lt;- &quot;__________________&quot;
-data_dictionary[row, &quot;Notes_Relationships&quot;] &lt;- &quot;___________&quot;
-print(data_dictionary)</code></pre>
-<p>🗣 Comment about how this code changed
-<code>data_dictionary</code></p>
+table(field_sightings$_____, useNA = _____)</code></pre>
 </div>
-<div id="task-4" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Task 4</h2>
+<div id="step-2-comment-2" class="section level3" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Step 2:
+Comment</h3>
+<p>🗣 Explain what values are in the field you chose and how they relate
+to the data collection story.</p>
+</div>
+<div id="step-3-subassignment-2" class="section level3" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> Step 3:
+Subassignment</h3>
 <p>🎯 <strong>Goal</strong></p>
-<p>Save your completed data dictionary as a CSV file in your course
-folder. This will allow you to share it with others and use it for
-future reference.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+
+# Type the field name in the blank
+row &lt;- which(data_dictionary$Field_Name == ________)    
+
+# Repeat this code for each empty column in the data dictionary
+data_dictionary[row, _____] &lt;- &quot;_______________________&quot; </code></pre>
+<p>🗣 Comment about how this code changed
+<code>data_dictionary</code></p>
+</div>
+</div>
+<div id="task-4-save-csv" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Task 4: Save CSV</h2>
+<p>🎯 <strong>Goal</strong> Save your data dictionary as a CSV file in
+your course folder. You will upload this to Canvas as directed.</p>
+<ol style="list-style-type: decimal">
+<li><p>Check that your data dictionary is complete for at least these
+fields: <code>Sex_Code</code>, <code>Age_Code</code>,
+<code>Band_Color</code>, and one additional field of your
+choice.</p></li>
+<li><p>Save your data dictionary as a CSV file in your course
+folder.</p></li>
+</ol>
+</div>
+<div id="task-5-knit-notebook" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Task 5: Knit
+Notebook</h2>
+<p>🎯 <strong>Goal</strong> Create a well-formatted HTML report for
+submission. Knit your R Notebook with your memo notes and code as
+data_dictionary.Rmd. Check that the report is formatted
+professionally.</p>
+<p><strong>Step 1: Sweep your Environment (start clean).</strong><br />
+Click the 🧹 <strong>broom icon</strong> in the Environment pane to
+clear objects.</p>
+<p><strong>Step 2: Run everything top-to-bottom.</strong><br />
+Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p><strong>Step 3: Save and submit.</strong><br />
+After your notebook runs without errors, save your notebook
+(<code>.Rmd</code>) and knit to HTML (<code>.HTML</code>) for submission
+to Canvas, as directed.</p>
+<p>💡 <strong>Tip:</strong> After you knit, look in your course folder
+for two files with the same name. One file ends in .Rmd and one ends in
+.html. The HTML usually has a internet browser icon. You can check which
+is which by double clicking to open them. One opens in R and the other
+usually opens in a web browser. Upload the .html file. Before
+submission, check that the uploaded file ends in .html.</p>
 </div>
 </div>
 
