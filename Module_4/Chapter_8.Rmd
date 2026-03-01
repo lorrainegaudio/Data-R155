@@ -107,7 +107,7 @@ The simulated dataframe `field_sightings` has two columns:
 
 - `Band_Color` If a bird is untagged, the value is “None.” If it is tagged, the value is one of several possible band colors.
 
-🎯 **Goal** Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
+🎯 **Goal:** Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
@@ -115,7 +115,7 @@ The simulated dataframe `field_sightings` has two columns:
 list.files()
 ```
 
-🎯 **Goal** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
+🎯 **Goal:** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook
@@ -145,7 +145,7 @@ In Chapter 3, you practiced using the **indexing operator** with positional inde
 
 You learned that the basic pattern for **positional indexing** is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. 
 
-🎯 **Goal**  Practice using `[ ]` with positional indexing on vectors. 
+🎯 **Goal:**  Practice using `[ ]` with positional indexing on vectors. 
 
 ```{r}
 # 📖 Review
@@ -208,7 +208,7 @@ There is a function called `head()` that *basically* does the same thing as `fie
 
 If you don't specify `n`, it defaults to 6, which means it will show the first 6 rows of the data frame. You can change this number to show more or fewer rows.
 
-🎯 **Goal** Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
+🎯 **Goal:** Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
 
 ```{r}
 # ⚡ Type this in your R Notebook
@@ -223,7 +223,7 @@ Bracket indexing allows for flexible and specific subsetting of the data frame b
 
 ## 🏷 Names Indexing
 
-You can also use **names indexing** (also referred to as character indexing) to select columns by their names instead of their positions. This is often make more readable code and is less error-prone, especially when the order of columns might change or when you have many columns.
+You can also use **names indexing** (also referred to as character indexing) to select columns by their names instead of their positions. This often makes more readable code and is less error-prone, especially when the order of columns might change or when you have many columns.
 
 ### Vector
 
@@ -255,9 +255,9 @@ nerdy_palette["Octarine"]
 
 A common use of names indexing is to select a column from a data frame by its name. 
 
-🎯 **Goal** Use names indexing to return the band colors in the `field_sightings` data frame. 
+🎯 **Goal:** Use names indexing to return the band colors in the `field_sightings` data frame. 
 
-Methods A:C show different ways to subset a column with `[ ]`.
+**Methods A:C** show different ways to subset a column with `[ ]`.
 
 **Method A**
 
@@ -316,6 +316,8 @@ print(number_list)
 🗣 The `number_list` vector contains the values 10, 25, 5, 30, 15, and 40.
 
 ```{r}
+# ⚡ Type this in your R Notebook
+# Example 1
 # Step 1: create the logical "mask"
 mask <- number_list <= 20
 
@@ -327,6 +329,7 @@ print(mask)
 
 ```{r}
 # ⚡ Type this in your R Notebook
+# Example 1
 # Step 2: use the logical vector inside [ ]
 smaller <- number_list[mask]
 
@@ -340,10 +343,35 @@ You can also pass the mask directly into the indexing operator without storing i
 
 ```{r}
 # ⚡ Type this in your R Notebook
+# Example 2
 smaller <- number_list[number_list <= 20]
 ```
 
-Key idea here is that the condition (`number_list <= 20`) produces a logical mask; `[ ]` uses it as a filter. **Logical mask indexing** is a form of indexing in R where you use a logical vector (a “mask” of `TRUE`/`FALSE` values) to select elements from a vector or rows from a data frame. R keeps the values where the mask is `TRUE` and drops the values where the mask is `FALSE`. Let's see this in action in a dataframe.
+🗣 Both example 1 and example 2 are **conditional subsetting** or filtering by using a logical condition. These examples uses the **less than or equal to (`<=`) relational operator**. The **logical mask** is the result of the comparison (`number_list <= 20`). 
+
+`[ ]` uses it as a filter. **Logical mask indexing** is a form of indexing in R where you use a logical vector (a “mask” of `TRUE`/`FALSE` values) to select elements from a vector or rows from a data frame. 
+
+R keeps the values where the mask is `TRUE` and drops the values where the mask is `FALSE`. 
+
+Whether you create an object to store the logical mask (example 1) or pass the logical condition directly into the indexing operator (example 2), the result is the same: you get a subset of the original vector that meets the specified condition.
+
+Let's see this in action in a dataframe.
+
+---
+
+📖 **Review:** Chapter 3 introduced comparison operators.
+
+| Operator | Meaning | Example  |
+| -------- | ------- | ------------|
+| `>`      |greater than| mpg **`>`** 20|
+| `<`      |less than| mpg **`<`** 15|
+| `==`     | equal to | am **`==`** 1|
+| `>=`     |greater *or* equal|mpg **`>=`** 25|
+| `<=`     |less *or* equal   |mpg **`<=`** 15|
+| `!`      | not     | **`!`**(gear %in% c(3,4))  |
+| `!=`     | not equal to| gear **`!=`** 4|
+
+---
 
 ### Data Frame
 
@@ -351,13 +379,17 @@ Logical mask indexing works the same way for data frames, except that the logica
 
 The mask can be `TRUE`/`FALSE`/`NA` for each row. When you use the mask in `df[mask, ]`, R keeps only the rows where the mask is `TRUE`and `NA` if there are missing values.
 
-🎯 **Goal**: Keep only rows where the bird is tagged using `[ ]`.
+🎯 **Goal:**: Keep only rows where the bird is tagged using `[ ]`.
 
 ```{r}
 # ⚡ Type this in your R Notebook
 # Step 1: create the logical mask (one TRUE/FALSE per row)
 mask_tagged <- field_sightings[, "Status"] == "Tagged"
+```
 
+🗣 The `==` is a comparison operator that checks if the value in the `Status` column is equal to "Tagged". A single `=` is used for assigning values inside some function calls (like `na.rm = TRUE`) and naming arguments. It is not used to test equality. 
+
+```{r}
 # ✅  Check
 head(mask_tagged)
 ```
@@ -437,7 +469,7 @@ There is another operator called the **double square bracket operator** (`[[`). 
 | `[ ]` | Subsetting operator. Returns a subset of the same type as the original object. Can return multiple elements. |
 | `[[ ]]` | Extraction operator. Returns a *single element* inside the object and *passed* into functions. |  
 
-🎯 **Goal** Use the `[[` operator to extract the "Band_Color" column from the `field_sightings` data frame and then use it inside the function `unique()`
+🎯 **Goal:** Use the `[[` operator to extract the "Band_Color" column from the `field_sightings` data frame and then use it inside the function `unique()`
 
 📜 The SYNTAX: `x[[i]]`
 
@@ -471,7 +503,7 @@ There is another operator called the **dollar sign operator** (`$`) that is used
 
 `dataframe$column_name`
 
-🎯 **Goal** Extract the `Band_Color` column using `$`.
+🎯 **Goal:** Extract the `Band_Color` column using `$`.
 
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
@@ -484,7 +516,7 @@ You will likely use the `$` operator often. The `$` operator is more concise and
 
 If we try to use a variable to specify the column name with the `$` operator, it will not work because `$` does not evaluate the variable name. `[[ ]]` can use a variable and is safer in programs.
 
-🎯 **Goal** Use a stored *object* name to specify the column name and try to extract the column using both `[[` and `$` operators.
+🎯 **Goal:** Use a stored *object* name to specify the column name and try to extract the column using both `[[` and `$` operators.
 
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
@@ -724,15 +756,21 @@ In the next chapter, you’ll extend filtering by combining conditions with `&`,
 
 **Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
 
+**Conditional Subsetting** (Logical Subsetting): Filtering an object by using a logical condition inside [ (e.g., `df[df$cyl != 4, ]`), where `TRUE` keeps an element/row and `FALSE` drops it. This contrasts with negative indexing, which excludes by position rather than by a condition.
+
 **Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
 
 **Double Square Bracket Operator** (`[[`): An extraction operator used to pull out one single element from a list (or one column from a data frame) and return the element itself, not a same-type subset. Unlike `[`, which can return multiple elements and preserves the container type, `[[` is for “give me the one thing inside” (e.g., a vector inside a dataframe).
+
+**Equal To** (`==`): A relational operator that tests equality and returns `TRUE` where values are equal and `FALSE` where they are not (element-by-element for vectors).
 
 **Extraction**: Retrieving a single component from an object—such as one list element or one data-frame column—so you get the “thing itself” (often a simplified result like a vector). Extraction is commonly done with `[[ ]]` (extract one element by position or name) or `$` (extract one column by name).
 
 **Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
 **Insertion**: A common type of subassignment where you add something new to an object—most often a new column in a data frame. Example: `df[["Tag_Flag"]] <- 0` (creates the column if it doesn’t exist yet).
+
+**Less Than or Equal To** (`<=`): A relational operator that returns `TRUE` where the left side is less than or equal to the right side, and `FALSE` otherwise.
 
 **Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
 
