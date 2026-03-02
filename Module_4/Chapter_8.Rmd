@@ -294,6 +294,8 @@ field_sightings[, "Band_Color", drop = FALSE]    # 1-column data frame
 
 🗣 A 1-column data frame is printed showing all row values in the column `Band_Color` the `field_sightings` data frame. It is a subset of one column, keeping that data-frame structure.
 
+💡 **Tip:** Students often forget to put the column name in quotes when using names indexing. If you forget the quotes, R will look for an object named `Band_Color` in your environment and return an error if it doesn't find one. Always remember to put column names in quotes when using **names indexing** with `[ ]`.
+
 ## 🔍 Logical Mask Indexing
 
 A **logical mask** is the logical vector you use to index.

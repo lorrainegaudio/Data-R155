@@ -172,7 +172,17 @@ unique(gapminder$region)
 
 ```{r}
 # TODO 2-B: Create focus_pool using year AND region membership
-focus_pool <- gapminder[gapminder$year == target_year & gapminder$region %in% c("Eastern Asia", "Southern Asia"),]
+region_1 <- "Eastern Asia"
+region_2 <- "Southern Asia"
+
+is_year   <- gapminder$year == target_year            # Fill in: year column, target year object
+is_region <- gapminder$region %in% c(region_1, region_2)  # Fill in: region column, region 1, region 2
+
+# TODO 3-B: combine
+keep <- is_year & is_region            # combine with AND
+
+# TODO 3-C: subset 
+focus_pool <- gapminder[keep, ]
 ```
 
 

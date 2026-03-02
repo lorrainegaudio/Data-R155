@@ -1955,6 +1955,12 @@ field_sightings[, &quot;Band_Color&quot;, drop = FALSE]    # 1-column data frame
 column <code>Band_Color</code> the <code>field_sightings</code> data
 frame. It is a subset of one column, keeping that data-frame
 structure.</p>
+<p>💡 <strong>Tip:</strong> Students often forget to put the column name
+in quotes when using names indexing. If you forget the quotes, R will
+look for an object named <code>Band_Color</code> in your environment and
+return an error if it doesn’t find one. Always remember to put column
+names in quotes when using <strong>names indexing</strong> with
+<code>[ ]</code>.</p>
 </div>
 </div>
 <div id="logical-mask-indexing" class="section level2" number="3.3">
@@ -2566,6 +2572,10 @@ one column from a data frame) and return the element itself, not a
 same-type subset. Unlike <code>[</code>, which can return multiple
 elements and preserves the container type, <code>[[</code> is for “give
 me the one thing inside” (e.g., a vector inside a dataframe).</p>
+<p><strong>Equal To</strong> (<code>==</code>): A relational operator
+that tests equality and returns <code>TRUE</code> where values are equal
+and <code>FALSE</code> where they are not (element-by-element for
+vectors).</p>
 <p><strong>Extraction</strong>: Retrieving a single component from an
 object—such as one list element or one data-frame column—so you get the
 “thing itself” (often a simplified result like a vector). Extraction is
@@ -2580,6 +2590,10 @@ object as <code>x</code> (a vector).</p>
 add something new to an object—most often a new column in a data frame.
 Example: <code>df[[&quot;Tag_Flag&quot;]] &lt;- 0</code> (creates the column if it
 doesn’t exist yet).</p>
+<p><strong>Less Than or Equal To</strong> (<code>&lt;=</code>): A
+relational operator that returns <code>TRUE</code> where the left side
+is less than or equal to the right side, and <code>FALSE</code>
+otherwise.</p>
 <p><strong>Logical Indexing</strong>: Indexing a vector using a logical
 vector of <code>TRUE</code>/<code>FALSE</code> values (for example,
 <code>x[x &gt; 0]</code>) so R keeps the elements where the index is

@@ -118,6 +118,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Greater Than or Equal To** (`>=`): A relational operator that returns `TRUE` where the left side is greater than or equal to the right side, and `FALSE` otherwise.
 
+**Grouping Parentheses**: Parentheses `(` `)` used to explicitly group parts of an expression so R evaluates them together, in the order you intend, rather than relying on operator precedence and associativity rules. This is especially important when mixing logical operators like `&` and `|`, where missing parentheses can change the meaning of your filter.
+
 # H
 
 **Help Page**: Documentation for R functions and packages that provides information on usage, arguments, and examples. Accessed using `?function_name` or `help(function_name)`.
@@ -221,6 +223,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Pane Layout**: The section in Global Options where you choose which tabs appear in each pane and where panes sit on the screen. These settings that let you reposition items like Console, Source, Environment, Files, Plots, and Help to match your workflow.
 
 **Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
+
+**Precedence Bug**: An error where a mixed-operator expression is grouped and evaluated differently than intended because R applies operator precedence rules when parentheses are missing. In R, & binds more tightly than |, so `a & b | c` is interpreted as `(a & b) | c` unless you add parentheses to force `a & (b | c)`.
 
 **Preview Menu**: The drop-down attached to the Preview button in an R Notebook (`output: html_notebook`) that lets you generate a quick notebook preview and choose other render (“knit”) actions (e.g., HTML/PDF/Word). Preview renders an HTML view using outputs from chunks you’ve already run (it does not re-execute code), while knit options render the full document to the selected output format.
 

@@ -24,28 +24,32 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# 🛠 More Subsetting in R! 
+# Overview
 
-In Chapter 8, you learned about subsetting, extraction, and insertion in data frames. In this chapter, we add three new operators to your R toolkit: `&` (and), `|` (or), and `%in%` (in set). Analysis starts with pulling out the exact rows and columns you need. R’s logical operators (`>`, `<`, `==`, `!=`, `&` , `|`, `%in%`) power precise subsetting with brackets `df[rows, cols]`.
+In Chapter 8, you learned how bracket subsetting works: `df[rows, cols]` lets you extract and modify exactly the pieces of a data frame you need. This chapter strengthens that skill by adding three essential logical operators to your toolkit: `&` (AND), `|` (OR), and `%in%` (in set). Most real analysis questions require more than one condition—“keep rows where X is true and Y is true,” or “keep rows where A or B is true,” or “keep rows where a value is one of several allowed options.” You will practice translating those English rules into correct R code using logical tests (`>`, `<`, `==`, `!=`) combined with `&`, `|`, and `%in%`, then verify your results so you catch silent errors early—especially precedence bugs that happen when mixed operators are missing parentheses.
 
 
 By the end of Chapter 10, you will be able to:
 
-1. ⚡ Remember – List R’s primary logical operators and their purpose.
+- ✂️ Apply bracket subsetting x[i, j] to select or exclude rows and columns by position.
 
-2. 🔍 Understand – Describe how logical tests return `TRUE`/`FALSE`/`NA`.
+- ⚖️ Generate and interpret logical vectors using relational operators (`>`, `<`, `<=`, `>=`, `==`, `!=`) on data-frame columns accessed with `$`. 
 
-3. 📍 Apply – Use logical conditions inside `[ ]` and `which()` to subset
+- 🔍 Use logical vectors inside `[ ]` to filter rows based on conditions. 
 
-4. 📊 Analyze – Compare results from different operators or thresholds.
+- 🔄 Explain and use logical negation with `!` to invert tests.
 
-5. 🛠️ Evaluate –Choose operators and subsetting strategy for a goal.
+- 🧺 Combine multiple filtering conditions using `&` (AND), `|` (OR), and `%in%` (membership) to construct multi-criteria subsets.
+
+- 🩹 Diagnose and correct a precedence bug by adding grouping parentheses.
+
+- 🚜 Construct readable, reproducible multi-condition filters with clear comments.
 
 Keep these goals in mind as you move through each section.
 
 # Set Up
 
-To begin this guided activity, you'll want to open a new R Notebook in your course folder named `chapte10_notes.Rmd`. Update the YAML header with the title, author, and date. You can copy the YAML header from this document, and fill in your name. 
+To begin this guided activity, you'll want to open a new R Notebook in your course folder named `chapter10_notes.Rmd`. Update the YAML header with the title, author, and date. You can copy the YAML header from this document, and fill in your name. 
 
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
@@ -69,7 +73,7 @@ data("mtcars")
 
 🗣 The `data()` function loads built-in datasets into the environment. 
 
-## Basic data inspection
+## Basic Data Inspection
 
 After loading data, it's good practice to inspect it.
 
@@ -238,6 +242,12 @@ head(selection)
 
 🗣 `mtcars$hp >= 100` keeps only rows where horsepower is at least 100. The `-c(3, 5, 8:9)` part drops columns 3, 5, 8, and 9 from the result (i.e., it removes those column positions).
 
+💡 **Tip:** A common mistake is to forget which side the `>`, `<` goes to the `=`. Remember that the `=` is always on the *right side* of the operator. 
+
+✔️ **`>=`** 
+
+🚫 **`=>`** 
+
 ### Example 3
 
 We can also verify that we got the expected number of columns in our subset by passing the stored object names through functions (like `ncol()` counts columns) and then compare the results with `==`.
@@ -263,38 +273,7 @@ If it returns `TRUE`, we removed the right columns (7 remaining); if it returns 
 
 💡 **Tip:** For a data analyst, doing quick verification steps to prevent silent errors before modeling or reporting. We need to ensure our dataset structure matches our assumptions so downstream results aren’t based on the wrong variables.
 
-## `which()` Review
 
-Recall from Chapter 8 that `which()` converts `TRUE` positions to row indices (numbers). This avoids errors when `NA` is present and is handy for re‑use. 
-
-🎯 **Goal:** Build an index for fast cars (quarter-mile time `< 16 sec`) then use the index to view these rows and only the `mpg` and `qsec` columns.
-
-```{r , eval=FALSE}
-# 📖 Review
-rows_fast <- which(mtcars$qsec < 16)  # quarter‑mile < 16 sec
-# ✅  Verify
-rows_fast  # inspect the row positions
-```
-
-🗣 There are 5 cars with quarter-mile time under 16 seconds.
-
-```{r , eval=FALSE}
-# 📖 Review
-fast_cars <- mtcars[rows_fast, c("mpg", "qsec")]  # inspect subset
-```
-
-🗣 `fast_cars` is a subset data frame of `mtcars` with 5 rows and 2 columns (`mpg` and `qsec`).
-
-```{r , eval=FALSE}
-# 📖 Review
-# ✅  Verify
-rownames(fast_cars) 
-range(fast_cars$mpg)
-```
-
-🗣 These cars are fast (`qsec < 16`) and have mpg ranging from 13.3 to 19.7.
-
----
 
 The next section introduces three new logical operators that help with more complex conditions: `&` (and), `|` (or), and `%in%` (in set).
 
@@ -418,7 +397,7 @@ Suppose we have two events: A and B. The **Or** logical operator `|` returns `TR
 knitr::include_graphics("Or.png")
 ```
 
-Use `|` when you want rows that satisfy at least one requirement.
+Use `|` when you want rows that satisfy at least one requirement. The `|` is located above the Enter key on your keyboard. It is the vertical bar and shares the key with the backslash `\`. Click and hold the Shift key to type `|`.
 
 🎯 **Goal:** keep rows (cars) that with either 4 *or* 8 cylinders.
 
@@ -451,42 +430,78 @@ unique(four_or_eight$cyl)
 
 The `%in%` in `x %in% c(a, b, c)` means "For each value in `x`, is it one of these allowed values?" It returns a logical vector (`TRUE`/`FALSE`) the same length as `x`. 
 
-🎯 **Goal:** Same task as the `|` example above but this time with `%in%`. 
+🎯 **Goal:** Same task as the `|` example but this time with `%in%`. 
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook in a code chunk
 four_or_eight_2 <- mtcars[mtcars$cyl %in% c(4, 8), ]
 ```
 
-⚖️ Compare `nrow(four_or_eight)` to `nrow(four_or_eight_2)`.
-
 ```{r , eval=FALSE}
 # ✅ Verify: same number of rows as the | version
 nrow(four_or_eight) == nrow(four_or_eight_2) 
 ```
 
-🗣 When matching many categories, `%in%` is easier than chaining many `|`statements.
+🗣 When matching many categories, `%in%` is easier than chaining many `|`statements. `%in% prevents repetitive OR chains. The `%in%` stays readable when the list is long. 
 
 
-# Work Here
-
-## Putting It All Together
-
-In this section, we'll combine multiple conditions with `&` and `|` or `%in%`. 
-
-1. 👉 Pro Tip: Use parentheses when mixing `&` and `|` to make intent explicit.
-
-🎯 **Goal:** Pick automatic transmission cars and either are very efficient (`mpg ≥ 25`) or very light (`wt < 2.5`, i.e., < 2500 lb).
-
-💬 Prediction: The parentheses will change which rows are selected. Type the following code in a new code chunk and run.
+🎯 **Goal:** Use `%in%` to filter `mtcars` for cars with 4, 6, or 8 carburetors.
 
 ```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook in a code chunk
-## write with and without parentheses
-maybe_wrong <- mtcars[ mtcars$am == 1 & mtcars$mpg >= 25 | mtcars$wt < 2.5 , ]
-
-intended <- mtcars[ mtcars$am == 1 & (mtcars$mpg >= 25 | mtcars$wt < 2.5) , ]
+# ⚡ Tesype this in your R Notebook in a code chunk
+carb_4_6_8 <- mtcars[mtcars$carb %in% c(3, 4, 6, 8), ]
 ```
+
+```{r , eval=FALSE}
+# ✅ Verify
+head(carb_4_6_8)
+```
+
+🗣 If we had used `|` instead of `%in%`, we would have had to write `mtcars$carb == 3 | mtcars$carb == 4 | mtcars$carb == 6 | mtcars$carb == 8`, which is much more verbose and harder to read.
+
+💡 **Tip:** A common mistake with `%in%` is mixing the order. 
+
+- `c(4, 8) %in% mtcars$cyl` is ⚠️ invalid code, wrong meaning for filtering rows
+
+- use the `x %in% c(a, b, c)` format for subsetting rows. The left side is the column you are testing, and the right side is the set of allowed values.
+
+---
+
+Now that we have these three tools for building row filters, we can combine them to create more complex conditions.
+
+# Putting `&`, `|`, `%in%` Together
+
+In this section, you’ll practice combining `&`, `|`, `%in%` into realistic filters. The hard part is not typing the operators—it’s making sure your code matches the sentence you think you wrote.
+
+## Grouping Parentheses
+
+When we combine multiple conditions with `&` and `|` or `%in%`, we need to make sure the code matches the sentence we think it does. Use **grouping parentheses** when mixing `&` and `|` to make intent explicit. Without grouping parentheses, we can trigger a **precedence bug**, where R groups a mixed `&`/`|` filter by its precedence rules (treating `a & b | c` as `(a & b) | c`) instead of the logic we intended (`a & (b | c)`). The **grouping parentheses** overrides the operator precedence.
+
+> **Add parentheses to show what the OR part is.**
+
+Let's see how the parentheses changes which rows are selected. 
+
+🎯 **Goal:** Keep automatic transmission cars (0 = automatic) and either are very efficient (`mpg ≥ 25`) or very light (`wt < 2.5`, i.e., < 2500 lb).
+
+We'll write this with and without parentheses to see the difference.
+
+```{r}
+# ⚡ Type this in your R Notebook in a code chunk
+maybe_wrong <- mtcars[ mtcars$am == 0 & mtcars$mpg >= 25 | mtcars$wt < 2.5 , ]
+head(maybe_wrong)
+```
+
+🗣 The statement was evaluated like this: (`mtcars$am == 0 & mtcars$mpg >= 25`) OR `mtcars$wt < 2.5`. This means that we kept cars that are both automatic and very efficient, or we kept cars that are very light. This is not our defined goal.
+
+```{r}
+# ⚡ Type this in your R Notebook in a code chunk
+intended <- mtcars[ mtcars$am == 0 & (mtcars$mpg >= 25 | mtcars$wt < 2.5) , ]
+head(intended)
+```
+
+🗣 The statement was evaluated like this: `mtcars$am == 0` AND (`mtcars$mpg >= 25 | mtcars$wt < 2.5`). This means that we kept cars that were automatic and either are very efficient or very light. That's our goal! 
+
+
 ⚖️ Compare the number of rows in `maybe_wrong` to `intended`.
 
 ```{r , eval=FALSE}
@@ -496,74 +511,64 @@ nrow(maybe_wrong) == nrow(intended)
 
 🗣 The parentheses matter when mixing `&` and `|` because parentheses clarify the order of operations. Without parentheses, the expression is evaluated left to right, which can lead to unintended results. With parentheses, we ensure that the conditions within them are evaluated first.
 
-2. 
+### Muli-Conditon Filter
+
+The previous example was about controlling meaning. Now you’ll apply that idea to a filter that looks like something you’d actually do in analysis: restrict the dataset using several criteria at once.
 
 🎯 **Goal:** Pick cars that weigh < 3,000 lb, have horse power between 110 and 180, and cylinders {4,6}.
 
-```{r , eval=FALSE}
+*In `mtcars`, weight is in units of 1000 lbs, so we want `wt < 3`.* 
+
+💡 **Tip:** Before coding, translate the goal into a single sentence that matches the logic you want. "I want cars that are light (wt < 3) **AND** have mid-range horsepower (110 ≤ hp ≤ 180) **AND** have either 4 OR 6 cylinders."
+
+```{r}
 # ⚡ Type this in your R Notebook in a code chunk
-light_midpower <- mtcars[mtcars$wt < 3 &           
-                           mtcars$hp >= 110 & mtcars$hp <= 180 &
-                           mtcars$cyl %in% c(4, 6), ]
+light_midpower <- mtcars[
+    mtcars$wt < 3 &           
+    mtcars$hp >= 110 & mtcars$hp <= 180 &
+    mtcars$cyl %in% c(4, 6), ]
 ```
 
+🗣 We wrote each condition on a separate line for readability, but they are combined into a single filter. By having one condition per line, we can visually identify the logical arguments. When you click "Enter" (Return), R automatically indents. 
 
-```{r , eval=FALSE}
+
+```{r}
 # ✅ Verify
 head(light_midpower)
 ```
 
 
-```{r , eval=FALSE}
+```{r}
 # ✅ Verify
 range(light_midpower$hp)
 ```
 
 The code selected rows with horsepower between 110 and 180.
 
-```{r , eval=FALSE}
+```{r}
 # ✅ Verify
 unique(light_midpower$cyl)
 ```
 
 The code selected rows with 4 or 6 cylinders.
 
-```{r , eval=FALSE}
+```{r}
 # ✅ Verify
 all(light_midpower$wt < 3)
 ```
 The code selected rows with weight under 3 (i.e., under 3000 lbs).
 
-# 📝 Practice Space
+---
 
-Optional fill in the blank prompts to earn learning skill points. (This is a good choice if you have not done much memoing in this assignment thus far.)
+By this point, you should be able to translate a real-world rule into a logical filter, use parentheses to prevent a precedence bug, and confirm that your subset matches your intent with quick verification checks. Next, we’ll step back and summarize the core subsetting and logic skills you practiced in this chapter and why they matter for reliable analysis.
 
-🎯 **Goal:** Pick the transmission: `am ==` ___ (recall that 0 = automatic, 1 = manual) and pick a threshold for `qsec` (smaller = faster), e.g., < 17
 
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook in a code chunk
-## Replace the blanks and run:
-sporty <- mtcars[mtcars$am == __ & mtcars$qsec < __ , ]
-# ✅ Verify  (write your own check)
-____
-```
 
-🗣 Explain (1–2 sentences): 
 
-🚀 Explore and Play: Create your own goal based on the available data in `mtcars` *then* write the script to answer that question. Create a memo note, demonstrate learning skill(s) used.
-
-🎯 **Goal:**
-
-```{r}
-# ⚡ Test
-
-# ✅ Verify  
-
-```
-🗣 Explain (1–2 sentences): 
 
 # Summary
 
+You learned how to subset data frames more precisely by building logical tests and using them inside `df[rows, cols]`. You practiced excluding columns with negative indexing, filtering rows with relational operators like `!=`, and negating logical tests with `!`. You then added three high-impact operators: `&` to require multiple conditions at the same time, `|` to accept at least one condition, and `%in%` to match values that belong to a set without writing long OR chains. Most importantly, you learned to prevent a precedence bug by using grouping parentheses whenever you mix `&` and `|`, so the code matches the sentence you intended. If you can state your rule clearly, write the logical filter cleanly, and verify the output with quick checks (`nrow()`, `unique()`, `range()`, `all()`), you can trust that the subset you pass into later analysis is the right one.
 
 # Chapter Terms
 
@@ -576,6 +581,8 @@ ____
 **Greater Than** (`>`): A relational operator that compares two values (or vectors) and returns a logical vector that is `TRUE` where the left side is greater than the right side, and `FALSE` otherwise (with `NA` if the comparison is unknown).
 
 **Greater Than or Equal To** (`>=`): A relational operator that returns `TRUE` where the left side is greater than or equal to the right side, and `FALSE` otherwise.
+
+**Grouping Parentheses**: Parentheses `(` `)` used to explicitly group parts of an expression so R evaluates them together, in the order you intend, rather than relying on operator precedence and associativity rules. This is especially important when mixing logical operators like `&` and `|`, where missing parentheses can change the meaning of your filter.
 
 **In Set** (`%in%`): A membership operator that returns a logical vector indicating whether each element on the left appears anywhere in the vector on the right (e.g., `region %in% c("West","South")`)
 
@@ -593,301 +600,393 @@ ____
 
 **Or** (`|`): An element-by-element logical operator that returns `TRUE` where either condition is `TRUE`; otherwise it returns `FALSE` (or `NA` when the result is ambiguous due to missing values).
 
+**Precedence Bug**: An error where a mixed-operator expression is grouped and evaluated differently than intended because R applies operator precedence rules when parentheses are missing. In R, & binds more tightly than |, so `a & b | c` is interpreted as `(a & b) | c` unless you add parentheses to force `a & (b | c)`.
+
 # 📝 Practice Space
 
-Now it's your turn to practice creating and using vector objects. Follow the tasks below to complete part of the **technical skill practice assignment**.
+In this Practice Space, you will practice writing logical filters for data frames using bracket subsetting (`df[rows, cols]`) and the operators you learned in this chapter:
 
-1. Work through each task in order. Replace the ___ placeholder with your code or short written answer.
+- relational operators (`<`, `<=`, `>=`, `==`, `!=`)
 
-2. Run each completed line to be sure no errors appear and objects show in the Environment.
+- logical operators (`&`, `|`)
 
-3. When finished, save your workspace and submit this R Markdown file (RMD) plus the .RData file.
+- membership (`%in%`)
+
+- indexing with `which()`
+
+You’ll apply these skills to an **NGO health pilot** scenario using the `gapminder` dataset to narrow thousands of rows down to a short, defensible shortlist.
+
+**How to complete and submit**
+
+1. Open a new R Notebook and save it in your course folder as: chapter10_practice.Rmd. Edit the YAML so that it includes the title "Chapter 10 Practice", your name as the author, and the date. Remove the default content in the R Notebook. Create heading for each task. 
+
+2. Work through each task in order. Replace every ___ with code or a short written answer.
+
+3. Run each completed chunk as you go. After each task, check that new objects (like `focus_pool`, `brief_sheet`, `needs_screen`) appear in the Environment.
+
+4. Knit your R Notebook to HTML. Submit the HTML file (not the .Rmd).
 
 **NGO Health Pilot** 🌍💉
 
 Imagine your nonprofit received 100 vaccine coolers and one charter flight. You must assemble a shortlist of countries for a health-equity pilot within the next few weeks. Use dslabs::gapminder to (a) focus on specific regions, (b) filter by need indicators, and (c) apply a simple feasibility window based on population size.
 
-## Task 0
+
 
 🚀 Setup & Orientation
 
-Load the data, read the help page, and become familiar with the `gapminder` dataset.
+🎯 **Goal:** Load the data, read the help page, and become familiar with the `gapminder` dataset.
 
-```{r ,eval=FALSE}
-# install.packages("dslabs")  # uncomment if first time
+We installed the package `dslabs` in Chapter 7. `dslabs` has curated datasets from Harvard/X data-science labs for data science education. 
 
-# TODO 0-A: Load the package and data
-___   # use library() to load the package
-___   # use data() to load the dataset "gapminder"
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook in a code chunk
 
-___   # pull up gapminder in the help window
+# install.packages("dslabs")  # uncomment if you have not yet installed dslabs
+
+# Load the package and data
+library(dslabs)  # use library() to load the package
+
+gapminder <- dslabs::gapminder  # load the dataset "gapminder"
+
+?gapminder   # pull up gapminder in the help window
 ```
 
 
 ```{r ,eval=FALSE}
-___(___)       # use colnames() to list names of the columns in gapminder
+colnames(gapminder)   # use colnames() to list names of the columns in gapminder
 ```
 
+🗣  How many rows are in gapminder?
 
-TODO 2-C: How many rows are in gapminder?
-__
-
-
-## Task 1 
+## Task 1 🌱
 
 📅 Pick a Year
 
-Choose ONE specific year present in the data and store it:
+🎯 Identify the years present in the data, store the 2010 as `target_year`.
 
-1. Use unique() to print the available `years` in `gapminder`.
+**Step 1** Use `unique()` to print the available `year` in `gapminder`.
 
 ```{r ,eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 1‑A: list years
-unique(___$___)   # see unique `years` in `gapminder`
+unique(gapminder$___)   # see unique `year` in `gapminder`
 ```
 
+**Step 2** Store 2010 as `target_year`.
+
 ```{r , eval=FALSE}
-# TODO 1‑A: Select ONE year
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 1‑B: Select the 2010 year
 target_year <- ___   # must be a single year of gapminder
 ```
 
-✍️ MEMO (1–2 sentences): “I chose target_year = ___ because ___.”
+🗣 *We use 2010 because it has the most complete data*
 
-## Task 2 
+## Task 2 🌱
 
-🎯 Focus the Pool (`year` `&` `region` with `%in%`)
+🧭 Pick your regions
 
-First, find the exact region names; then keep only rows from your chosen year and your two target regions.
+🎯 Identify the exact region names; then pick (your choice) your two target regions.
 
-1. Identify the `unique` `region` options in `gapminder`.
+**Step 1** Identify the `unique` `region` options in `gapminder`.
 
 ```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 2-A: Show all region options
-___(___$___)     
+___(___$___)    # Fill in: function, dataset, and column name  
 ```
 
-*Use this to select two regions. Copy exact names.*
+*Use this output to select two regions. Copy exact names.*
 
-2. Create `focus_pool` that keeps rows from your `target_year` AND restricts to two regions you want to prioritize. Use unique(`gapminder$region`) above to copy region names exactly.
-
-```{r , eval=FALSE}
-# TODO 2-B: Create focus_pool using year AND region membership
-focus_pool <- gapminder[ ___ == ___ & ___ %in% c("___","___") , ]
-```
+**Step 2** 
 
 
 ```{r , eval=FALSE}
-# TODO 2-C: How many rows are in focus_pool?
-___
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 2-B: store two regions EXACTLY as shown above
+region_1 <- "___"
+region_2 <- "___"
 ```
+
+🗣 I selected ___ and ___ as my target regions because _____.
+
+## Task 3 🌱
+
+🔍 Focus the Pool
+
+🎯 Create `focus_pool` that keeps rows from the `target_year` AND restricts to two regions you want to prioritize. 
+
+**Step 1** Build the logical tests for year and region separately.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 3-A: build the logical tests (two separate vectors)
+
+is_year   <- gapminder$year __ target_year               # test for equality
+
+is_region <- _________$region ___ c(region_1, region_2)  # test for membership in the set
+```
+
+**Step 2** Combine the two logical vectors with `&` to create a single filter.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 3-B: combine
+keep <- _______ _ _______            # is_year and is_region with AND
+
+```
+
+**Step 3** Use the combined logical vector to subset `gapminder` and create `focus_pool`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 3-C: subset 
+focus_pool <- gapminder[____, ____] # subset rows with keep, keep all columns
+```
+
+🗣 Describe what `%in%` and `&` are doing here, and why you used `$` with column names.
+
+EXPLANATION: "___"
 
 Compare the number of rows in `gapminder` with the number of rows in `focus_pool`
 
 ```{r , eval=FALSE}
-# TODO 2-D: Preview a few informative columns
-___       # Hint: head(focus_pool[, c("country", ...)])
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 2-D: Compare number of rows in focus_pool with the original dataset
+____(focus_pool) __ ____(gapminder)     
 ```
 
-✍️ MEMO (1–2 sentences): Describe what `%in%` and `&` are doing here, and why you used `$` with column names.
+🗣 How do the number of rows in `focus_pool` compare to `gapminder`?
 
-EXPLANATION: "___"
+## Task 4 🌱
 
-## Task 3
+🗂 Negative Indices
 
-🗂 Negative Column Indices (Drop Columns by Position)
+Create a simpler briefing table `brief_sheet` by dropping exactly columns by position (not by name). 
 
-Create a simpler briefing table `brief_sheet` by dropping exactly two columns by position (not by name). Choose any two you don’t need to discuss need.
+Use negative indexing to drop the columns 6, 7, 8, and 9 from `focus_pool`. 
 
 ```{r , eval=FALSE}
-brief_sheet <- focus_pool[ , -c(___, ___) ]
-head(brief_sheet)
+# ⚡ Type this in your R Notebook, Fill in the blanks
+brief_sheet <- focus_pool[ , -c(___, ___, ... ___) ]    # use c() or :
+# ✅ Verify
+names(______)
 ```
 
-✍️ MEMO: Explain how negative indices work for column selection.
+🗣 Explain how negative indices work for column selection.
 
 EXPLANATION: “___”
 
-## Task 4
+*The `brief_sheet` is a simpler table with only the columns that have data. This makes it easier to inspect the indicators we care about in the next task.*
 
-🔢 Quick Check with Inequality
+## Task 5 🌱
 
-How many countries in `focus_pool` have `life_expectancy` >= 70? 60?
+🎯 In task 6, you will identify countries that need the health pilot the most. You will use three indicators as filters: `life_expectancy`, `infant_mortality`, and `fertility`. Before you set thresholds for these indicators, you should inspect the range of values to make informed decisions.
 
-```{r , eval=FALSE}
-sum(___$___ >= ___)
+🔢 Inspect before choosing thresholds
+
+### Life Expectancy (a)
+
+**Step 1** Use `range()` to inspect the range of values in `life_expectancy`
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `a` in Task 6 will be based on this range and count.
+range(brief_sheet$life_expectancy, na.rm = ____)
 ```
 
-✍️ MEMO (1 sentence): What value is `sum()` counting in this context?
+🗣 The range of life expectancy in `brief_sheet` is from ___ to ___ years.
 
-EXPLANATION: “___”
-
-## Task 5
-
-🧪 Need Screen (Combine Conditions with `&`)
-
-1. Build `needs_screen` (keep all columns) using these **AND** conditions:
-
-`life_expectancy <= a` where `a` is an appropriate number for your data set. (a = 70 worked for me)
-
-`infant_mortality >= b` where `b` is an appropriate number for your data set. (b = 35 worked for me)
-
-`fertility >= c` where `c` is an appropriate number for your data set. (c = 2 worked for me)
+**Step 2** Use `sum()` to count how many countries have life expectancy above a certain threshold (e.g., 70 years). Select a value within the range you found in Step 1.
 
 ```{r , eval=FALSE}
-# TODO 5-A: Create needs_screen using three AND-ed conditions
-needs_screen <- focus_pool[ ___ <= ___ & ___ >= ___ & ___ >= ___ , ]
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `a` in Task 6 will be based on this range and count.
+sum(brief_sheet$life_expectancy <= ___)  
 ```
 
-🛠 Break Things! Learning Skills challenge: What would happen if you used `|` instead of `&` here?
+🗣 There are ___ countries with life expectancy above ___ years.
 
-2. Print the number of rows and show a view of only key columns
+### Infant Mortality (b)
+
+**Step 3** Use `range()` to inspect the range of values in `infant_mortality`
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `b` in Task 6 will be based on this range and count.
+range(brief_sheet$__________, na.rm = TRUE)
+```
+
+🗣 The range of infant mortality in `brief_sheet` is from ___ to ___ deaths per 1000 live births.
+
+**Step 4** Use `sum()` to count how many countries have infant mortality above a certain threshold (e.g., 35 deaths per 1000 live births). Select a value within the range you found in Step 3.
 
 ```{r , eval=FALSE}
-# TODO 5-B: How many rows survived? Show a compact view of key columns.
-___
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `b` in Task 6 will be based on this range and count.
+sum(brief_sheet$infant_mortality >= ___)
 ```
+
+🗣 There are ___ countries with infant mortality above ___ deaths per 1000 live births.
+
+### Fertility (c)
+
+**Step 5** Use `range()` to inspect the range of values in `fertility`
+
+```{r, eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `c` in Task 6 will be based on this range and count.
+range(_________$fertility, na.rm = TRUE)
+```
+
+🗣 The range of fertility in `brief_sheet` is from ___ to ___
+
+**Step 6** Use `sum()` to count how many countries have fertility above a certain threshold (e.g., 2 children per woman). Select a value within the range you found in Step 5.
 
 ```{r , eval=FALSE}
-# TODO 5-B: Show a compact view of key columns.
-___     # Hint needs_screen[ , c("country", ...)] 
-          # or needs_screen[ , -c("population", ...)]
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# The value `c` in Task 6 will be based on this range and count.
+sum(brief_sheet$fertility >= ___)
 ```
 
-## Task 6
+🗣 There are ___ countries with fertility above ___ children per woman.
+
+## Task 6 🌱
+
+🎯 Now that you have inspected the ranges and counts for each indicator, you can set thresholds for each one to identify countries that need the health pilot the most. Use what you learned from Task 5 to determine appropriate cutoff values for `life_expectancy` (a), `infant_mortality` (b), and `fertility` (c).
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+a <- ___  # life expectancy cutoff (<= a) 
+b <- ___  # infant mortality cutoff (>= b) 
+c <- ___  # fertility cutoff (>= c) 
+```
+
+🎯 Combine these conditions with `&` to create a filter that selects countries that meet all three criteria.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+needs_screen <- brief_sheet[
+  brief_sheet$life_expectancy __ a &  # keep low values with which relational operator
+  brief_sheet$infant_mortality __ b & # keep high values with which relational operator
+  brief_sheet$fertility __ c,         # keep high values with which relational operator
+]
+
+# ✅ Verify
+nrow(needs_screen)
+```
+
+If `nrow(needs_screen) == 0`, adjust the values in a, b, and/or c. 
+
+🗣 Explain how `range()` and `sum()`  (Task 5) helped you pick cutoffs ( a, b, and c) that are reasonable for this dataset.
+
+🗣 Explain how the three conditions are combined to filter the data.
+
+
+## Task 7 🌳
 
 🔁 `|` vs `%in%` (Same Result, Different Syntax)
 
-1. Show that filtering the same two regions with `|` is equivalent to using `%in%`.
+🎯  Show that filtering the same two regions with `|` is equivalent to using `%in%`.
+
+**Step 1** Use `|` to filter for the same two regions you used in Task 3.
 
 ```{r , eval=FALSE}
-# TODO 6-A: 
-## Recreate the two-region filter using | (OR)
-A_or_B <- gapminder[ ___ == ___ & (___ == "___" | ___ == "___") , ]
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# Use stored region_1 and region_2
+# TODO 6-A:
+A_or_B <- gapminder[
+  gapminder$year == target_year &
+    (gapminder$region == region_1 ___ gapminder$region == region_2), # Which operator goes here?
+]
+```
+ **Step 2** Use `%in%` to filter for the same two regions.
 
-## Recreate the two-region filter using %in%
-in_set <- gapminder[ ___ == ___ & ___ %in% c("___","___") , ]
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# Use the SAME year and regions you used earlier
+in_set <- gapminder[
+  gapminder$year == target_year &
+    gapminder$region ___ c(region_1, region_2), # Which operator goes here?
+]
 ```
 
-2. Do both approaches return the same number of rows?
+**Step 3** Compare the number of rows in `A_or_B` and `in_set`.
 
 ```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 6-B:
-nrow(____) == nrow(____)
+nrow(____) ___ nrow(____)
 ```
  
-✍️ MEMO (1–2 sentences): Briefly compare `|` and `%in%`. When is `%in%` preferable?
+🗣 Briefly compare `|` and `%in%`. When is `%in%` preferable?
 
-EXPLANATION: "___"
+## Task 8 🌳
 
-## Task 6
+Recall from Chapter 8 that `which()` converts `TRUE` positions to row indices (numbers). This avoids errors when `NA` is present and is handy for re‑use. 
 
 📍 Feasibility with `which()` (Population Window)
 
-From `needs_screen`, keep countries with population between 2 million and 50 million (inclusive). Use `which()` to convert the logical test to row positions, then subset. (TIP: If these values (2e6 and 5e7) return nothing, you can tweak them to find a solution.)
+🎯 From `needs_screen`, keep countries with population between 2 million and 50 million (inclusive) using `which()`.
+
+We'll use `e` to represent "times 10 to the power of" in R, so `2e6` means 2 million (2 × 10^6) and `5e7` means 50 million (5 × 10^7). *If these values (2e6 and 5e7) return nothing, you can tweak them to find a solution.*
+
+**Step 1** Inspect population values first
 
 ```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
+range(needs_screen$population, na.rm = TRUE)
+```
+
+💡 **Tip:** If your range is outside `2e6` to `5e7`, you will need to adjust the window.
+
+**Step 2** Use `which()` to build an index of matching rows, then subset with that index to create `shortlist`.
+
+```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 7-A: Build an index of matching rows with which()
-idx <- which( ___$population >= 2e6 & ___$population <= 5e7 )
+idx <- which(needs_screen$population >= 2e6 __ needs_screen$population <= 5e7) # what operators go here?  
+
+# ✅ Verify: how many rows matched?
+length(idx)
 ```
 
+🗣 If `length(idx) == 0`, widen the window (change 2e6 and/or 5e7) and re-run Step 1.
+
+**Step 3** Use the index `idx` to subset `needs_screen` and create `shortlist`.
 
 ```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 7-B: Subset rows using idx to create shortlist
-shortlist <- ___[ ___ , ]
+shortlist <- needs_screen[___ , ____] # subset rows with idx, keep all columns
 ```
 
-How many countries are in shortlist? Which regions appear in shortlist?
+**Step 4** Display a compact table of the shortlist (choose a few columns to show).
 
 ```{r , eval=FALSE}
+# ⚡ Type this in your R Notebook
 # TODO 7-C: Display a compact table of shortlist (choose a few columns)
-___
+shortlist[ , c("country", "population", "life_expectancy", "infant_mortality", "fertility")]
 
 ```
 
-✍️ MEMO  (1–2 sentences): What does `which()` return, and why might it be useful to store these positions?
+🗣 Explain what `which()` returns, and why might it be useful to store these positions?
+
+## Task 9  🌳
+
+🗣  Explain the difference between `-`, `!` and `!=`.
  
-EXPLANATION: "___"
+# Task 10 🌱
 
+🎯 **Goal:** Create a well-formated HTML report for submission.
 
-## Task 7 
+**Step 1: Sweep your Environment (start clean).**  
+Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
-Explain the difference between `-`, `!` and `!=`
- 
-# Save and Upload
+**Step 2: Run everything top-to-bottom.**  
+Use **Run → Run All** to execute every chunk in order.
 
-0. Make sure your script runs from top to bottom without errors.
+**Step 3: Save and submit.**  
+After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
 
-1. You will be submitting **both** the R Markdown and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Markdown document:
-
-```{r , eval=FALSE}
-save.image("Assignment7_Workspace.RData")
-```
-
-Or you can click the "Save Workspace" button in the Environment pane. 
-
-💾 **Always save the R documents before closing.**
-
-2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
-
-3. Learning Skill Option: save and submit a .rds file of your final shortlist object. This is a common way to save R objects for sharing or future use.
-
-```{r , eval=FALSE}
-saveRDS(shortlist, file = "shortlist.rds")
-```
-
-# Today you practiced:
-
-- Learned R’s logical operators and how they create `TRUE`/`FALSE` vectors.
-
-- Practiced negative indices to drop columns.
-
-- Used `which()` to convert logical results into row positions.
-
-- Combined conditions with `&`, `|`, and `%in%` for flexible subsetting.
-
-- Built step‑by‑step filters to answer targeted questions about `mtcars` and `gapminder`.
-
-🚀 Keep experimenting! Logic is the engine behind every data filter you will ever write in R. In our next lesson, we explore subsetting with the with `dplyr` package. 
-
-
-# Notes
-
-## Learning Skill
-
-
-
-
-
-LS: 
-Core
-Review course content
-Advanced
-Curiosity Skill Highlight
-
-
-
-Citing resources
-
-- (Curiosity highlight): “data scavenger hunt” + citation + one curiosity question answered with a quick code experiment (not a paragraph of vibes).
-
-
-- Courage: Students can share imperfect work in a discussion/lab setting and revise based on feedback.
-
-Maybe Module 6: Autonomy: 
-- “trying alternatives” (base R vs dplyr; indexing vs verbs) and documenting what the output shows.
-- Students can manage their workflow independently: organized folders, naming, saving, and submitting correct artifacts without resource rescue.
-- Students can set boundaries on AI use consistent with instructions and explain their choice in a memo (what they delegated vs what they did themselves).
-- Students can select a method and justify it (e.g., base R indexing vs dplyr select/filter) using output evidence. “I chose this approach because…” memo
-
-Maybe Module 7: Open-mindedness
-- Students can implement two approaches to the same task (e.g., base R vs dplyr) and compare outputs and readability.
-- Students can revise their approach when evidence shows a better method (not because it’s trendy).
-- Students can evaluate tool fit (including AI systems) for a specific goal and explain tradeoffs.
-
-
-# AI Competency
-
-AI
-Explain the difference between humans controlling AI versus AI controlling humans
-
-
+💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. The HTML usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the .html file. Before submission, check that the uploaded file ends in .html.
