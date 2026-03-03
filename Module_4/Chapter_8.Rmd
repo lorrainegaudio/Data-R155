@@ -26,9 +26,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-Bracket indexing is one of the main ways you “point R” at the exact rows and columns you need. Real analysis rarely uses an entire dataset at once. Instead, analysts will select columns, filter rows, recode values or create new columns using 
+Bracket indexing is one of the main ways you “point R” at the exact rows and columns you need. Real analysis rarely uses an entire dataset at once. Instead, analysts will select columns, filter rows, recode values or create new columns using subsetting, extraction, and insertion. 
 
-In this chapter's guided activity you’ll practice those skills using the `field_sightings` dataset, a simulated bird-banding dataset where birds are recorded as **Tagged** or **Untagged**and tagged birds can have a band color. The data frame has two columns: `Status` and `Band_Color`. Then, you'll use `Values_Transport_dplace.csv` in Practice Space to generalize your understanding, applying your new skills on a different dataset.
+In this chapter's guided activity you’ll practice those skills using the `field_sightings` dataset, a simulated bird-banding dataset where birds are recorded as **Tagged** or **Untagged** and tagged birds can have a band color. The data frame has two columns: `Status` and `Band_Color`. Then, you'll use `Values_Transport_dplace.csv` in Practice Space to generalize your understanding, applying your new skills on a different dataset.
 
 By the end of Chapter 8, you will be able to:
 

@@ -5,6 +5,11 @@
 #   gapminder <- dslabs::gapminder
 ############################################################
 
+# Load the package and data
+library(dslabs)  # use library() to load the package
+
+gapminder <- dslabs::gapminder
+
 ########################
 # Task 1 — Pick a Year
 ########################

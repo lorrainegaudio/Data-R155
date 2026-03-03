@@ -24,7 +24,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In Chapter 10, you learned about subsetting, extraction, and insertion in data frames using base R functions. Today, you will learn easier subsetting with `dplyr` (`select()` & `filter()`). The `dplyr` package simplifies column and row extraction, making code shorter and easier to read than base-R brackets. Mastering `select()`, `filter()`, and the pipe `%>%` will speed up every day tasks.
+In Chapter 10, you learned about subsetting, extraction, and insertion in data frames using base R functions. This Chapter, you will learn easier subsetting with `dplyr` (`select()` & `filter()`). The `dplyr` package simplifies column and row extraction, making code shorter and easier to read than base-R brackets. Mastering `select()`, `filter()`, and the pipe `%>%` will speed up every day tasks.
 
 To begin Chapter 11, follow these steps:
 
