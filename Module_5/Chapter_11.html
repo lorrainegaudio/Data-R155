@@ -12,7 +12,7 @@
 <meta name="author" content="Lorraine Gaudio" />
 
 
-<title>Chapter 11: dplyr subsetting</title>
+<title>Chapter 11</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1629,30 +1629,23 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Chapter 11: dplyr subsetting</h1>
+<h1 class="title toc-ignore">Chapter 11</h1>
+<h3 class="subtitle">dplyr Subsetting</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version February 11, 2026</h4>
+<h4 class="date">Version March 11, 2026</h4>
 
 </div>
 
 
+<div id="overview" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Overview</h1>
 <p>In Chapter 10, you learned about subsetting, extraction, and
-insertion in data frames using base R functions. Today, you will learn
-easier subsetting with <code>dplyr</code> (<code>select()</code> &amp;
-<code>filter()</code>). The <code>dplyr</code> package simplifies column
-and row extraction, making code shorter and easier to read than base-R
-brackets. Mastering <code>select()</code>, <code>filter()</code>, and
-the pipe <code>%&gt;%</code> will speed up every day tasks.</p>
-<p>To begin Chapter 11, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. Today, let’s try 📝 “Quarto Document” (File
-&gt; New File &gt; Quarto Document).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
-<p><strong>Lesson Overview</strong></p>
+insertion in data frames using base R functions. This Chapter, you will
+learn easier subsetting with <code>dplyr</code> (<code>select()</code>
+&amp; <code>filter()</code>). The <code>dplyr</code> package simplifies
+column and row extraction, making code shorter and easier to read than
+base-R brackets. Mastering <code>select()</code>, <code>filter()</code>,
+and the pipe <code>%&gt;%</code> will speed up every day tasks.</p>
 <p>By the end of Chapter 11 you will be able to:</p>
 <ol style="list-style-type: decimal">
 <li><p>⚡ Remember – List what <code>select()</code>,
@@ -1667,205 +1660,679 @@ answer a real question.</p></li>
 <code>base-R</code> brackets.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
-<div id="packages" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 📦 Packages</h1>
+</div>
+<div id="quarto" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Quarto</h1>
+<p>In earlier chapters, you used an R Notebook as a reproducible
+thinking document: code, output, and memo-style writing in one place.
+<strong>Quarto</strong> keeps that same basic workflow, but the file is
+usually a <code>.qmd</code> file instead of an <code>.Rmd</code> file,
+and chunk controls are written in YAML-style lines that begin with
+<code>#|</code> inside the code chunk. Quarto is the next-generation
+version of R Markdown, and RStudio supports creating Quarto documents
+from <code>File &gt; New File &gt; Quarto Document…</code> and rendering
+them with the Render button.</p>
+<p><strong>What are the benefits of Quarto over the R
+Notebook?</strong></p>
+<ul>
+<li>Quarto supports multiple languages (R, Python, Julia, Observable
+JavaScript) in the same document. R Notebooks only support R.</li>
+</ul>
+<p>To learn more about Quarto, check out the <a href="https://quarto.org/">Quarto website</a>. You can also find a
+helpful <a href="https://rstudio.github.io/cheatsheets/quarto.pdf">Quarto Cheat
+Sheet</a>.</p>
+<div id="r-notebook-quarto" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> R Notebook →
+Quarto</h2>
+<p>Quarto will be <strong>similar</strong> to an R Notebook in several
+ways. You still write normal paragraphs outside code chunks. You still
+run R code inside chunks. You still use Markdown headings to create an
+outline. You still render the document to create a readable report.</p>
+<p>What changes is the file extension is <code>.qmd</code>, the YAML
+uses <code>format:</code> instead of the old <code>output:</code> style
+from R Markdown and the chunk controls are written with <code>#|</code>
+lines at the top of the chunk.</p>
+<p>🎯 Create a Quarto File</p>
+<ol style="list-style-type: decimal">
+<li><p>For those of you who <strong>have GitHub</strong> and a course
+project, navigate to your course folder and open your course project.
+This will open RStudio. Click “Pull” in the Git pane to get the latest
+version of the course materials. If you <strong>don’t have
+GitHub</strong> or a course project, just open RStudio and set your
+working directory to your course folder.</p></li>
+<li><p>Open a new Quarto document in your course folder and save it as:
+<code>chapter11_notes.qmd</code>
+(<code>File &gt; New File &gt; Quarto Document</code>).</p></li>
+</ol>
+<p>Just like an R Notebook template, a new Quarto file will open with
+sample text. Start fresh:</p>
+<ul>
+<li><p>Keep the YAML header at the top.</p></li>
+<li><p>Delete the example body text below it.</p></li>
+<li><p>Replace that content with your own notes, code, and
+memos.</p></li>
+</ul>
+</div>
+<div id="the-yaml-header" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> The YAML Header</h2>
+<p>At the top of the document is the <strong>YAML header</strong>. This
+is document metadata, not R code. In Quarto, the header is still
+surrounded by three dashes (<code>---</code>) and uses
+<code>key: value</code> pairs. Quarto uses fields such as
+<code>title</code>, <code>author</code>, <code>date</code>, and
+<code>format</code>.</p>
+<pre class="yaml"><code>---
+title: &quot;Chapter 11 Notes&quot;
+subtitle: &quot;dplyr Subsetting&quot;
+author: &quot;YOUR NAME&quot;
+date: today
+format:
+  html:
+    code-fold: true
+execute:
+  warning: true
+  message: true
+---</code></pre>
+<div id="what-each-part-does" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> What each part
+does:</h3>
+<ul>
+<li><p><code>title:</code> gives your document a title.</p></li>
+<li><p><code>subtitle:</code> gives your document a subtitle
+(optional).</p></li>
+<li><p><code>author:</code> puts your name on the document.</p></li>
+<li><p><code>date:</code> today inserts the current local date
+automatically. <a href="https://quarto.org/docs/reference/dates.html">Quarto Dates and
+Date Formatting</a> has more options for date formatting and dynamic
+date keywords.</p></li>
+<li><p><code>format:</code> html tells Quarto to render HTML
+output.</p></li>
+<li><p><code>code-fold:</code> true lets readers collapse code in the
+HTML. You can change this to <code>false</code> if you want code to
+always show. Notice that the <code>true</code> and <code>false</code>
+values are not capitalized. This is a YAML convention and different from
+R’s <code>TRUE</code> and <code>FALSE</code>.</p></li>
+<li><p><code>execute:</code> sets default chunk behavior for the whole
+document. In this case, <code>warning: true</code> and
+<code>message: true</code> means that if any code chunks produce
+warnings or messages, they will be included in the output. You can
+override these defaults in individual chunks with chunk options or you
+can set them to <code>false</code> if you want to hide warnings and
+messages in your final HTML.</p></li>
+</ul>
+</div>
+</div>
+<div id="markdown-headings" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Markdown
+Headings</h2>
+<p>Quarto uses Markdown for normal text, just like your notebook work.
+Headings are created with <code>#</code>, <code>##</code>,
+<code>###</code>, and so on. Those headings create the structure of your
+document.</p>
+<p>Use this outline in your notes file:</p>
+<pre class="markdown"><code>
+# Overview
+
+# Quarto
+</code></pre>
+</div>
+<div id="memoing-in-quarto" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Memoing in
+Quarto</h2>
+<p>Quarto is not just for tracking your statistical code. It is also
+where you document your thinking, reasoning, and understanding. That
+means your memos should be written as normal text outside the chunk, not
+jammed into code chunk comments unless the note is specifically about
+the code line itself. This part should feel familiar.</p>
+<p>Outside a code chunk write normal sentences and paragraphs. This is
+where your memoing goes. Inside a code chunk, write R code. If you want
+to leave yourself <em>about the code</em> inside the code chunk, use #
+so R treats it as a comment.</p>
+<p>A Quarto R code chunk still uses fenced backticks with
+<code>{r}</code>. The difference is that chunk options are written as
+YAML-style lines beginning with <code>#|</code> at the top of the chunk.
+Quarto supports chunk options such as <code>eval</code>,
+<code>echo</code>, <code>output</code>, <code>warning</code>,
+<code>error</code>, and <code>include</code>, and those can be set
+globally in the YAML header or locally in one chunk.</p>
+<p>The <code>#</code> means different things depending on where you type
+it. Outside a code chunk, <code>#</code> creates a heading. Inside a
+code chunk, the <code>#</code> creates an R comment. At the top of a
+Quarto chunk, <code>#|</code> sets a chunk option.</p>
+<p><code>```{r}</code></p>
+<p>#| eval=FALSE</p>
+<p># your R code</p>
+<p>x &lt;- 1:5</p>
+<p>mean(x)</p>
+<p><code>```</code></p>
+<p>🗣 The “eval=FALSE” chunk option means the code will not run when you
+render the document. This is useful for code that is just an example or
+when you want to keep code with an error. You can also use it on code
+chunks that <code>install.packages()</code>.</p>
+</div>
+</div>
+<div id="packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 📦 Packages</h1>
+<p>Speaking of installing packages, you will need to have the
+<code>dplyr</code> and <code>dslabs</code> packages installed and loaded
+to follow along with the code examples in this chapter.</p>
+<p><code>dplyr</code> is part of the <strong>tidyverse</strong>, a
+collection of R packages designed for data science. It provides a set of
+functions (called “verbs”) that make it easy to manipulate and analyze
+data frames. The main verbs in <code>dplyr</code> are
+<code>select()</code>, <code>filter()</code>, <code>mutate()</code>,
+<code>summarize()</code>, and <code>arrange()</code>. In this chapter,
+we will focus on <code>select()</code> and <code>filter()</code> for
+subsetting data.</p>
 <p>🧠 Recall that we need to download packages <strong>once</strong>. If
 needed, install the required packages we will use in this lesson. After
 installation, comment <code>#</code> out the
 <code>install.packages</code> code.</p>
-<pre class="r"><code>#install.packages(&quot;dslabs&quot;)
-install.packages(&quot;dplyr&quot;)</code></pre>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+# You should already have dslabs from previous chapters, but if not, install it now.
+install.packages(&quot;dslabs&quot;)
+
+install.packages(&quot;dplyr&quot;)
+## Or install the whole tidyverse, which *includes* dplyr and other useful packages:
+install.packages(&quot;tidyverse&quot;)</code></pre>
+<p>In Quarto, you can set <code>eval=FALSE</code> in the chunk option
+when you want to keep code (like <code>install.packages()</code>)
+without breaking your render.</p>
 <p>After installing the package, you need to load it into your R session
 using the <code>library()</code> function. Each time you open R, you
 will need to “library” the packages. This makes the functions in the
-package available for use. Type the following code in a new code chunk
-and run.</p>
-<p>💡 Pro tip: You can load multiple packages in one
-<code>library()</code> call by separating package names with commas.</p>
-<pre class="r"><code>library(dslabs, dplyr)</code></pre>
+package available for use.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+library(dslabs)</code></pre>
+<pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.5.2</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<p>🗣 You can turn off the warning messages by using the Quarto chunk
+option <code>warning=FALSE</code> in the YAML header or in individual
+chunks (<code>#| warning=FALSE</code>). This is useful for suppressing
+messages from loading packages.</p>
 </div>
-<div id="the-pipe" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> The Pipe (%&gt;%)</h1>
-<p>🎯 The pipe operator passes the result of the left side into the
-first argument of the right side, reading like “and then”. It cuts
-repetition and keeps code in logical order.</p>
-<pre class="r"><code># ⚡ Test
+<div id="the-pipe" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> The Pipe (%&gt;%)</h1>
+<p>The <code>dplyr</code> package for data manipulation. It will help
+you with filtering rows, selecting columns, creating variables,
+summarizing data. It uses a special operator called the
+<strong>pipe</strong> (<code>%&gt;%</code> or <code>|&gt;</code>) to
+chain together multiple operations in a clear and readable way. The pipe
+chains steps into a readable workflow from left to right. The pipe can
+be read as “and then” or “goes into”. It takes the output of the
+left-hand side and feeds it as the first argument to the function on the
+right-hand side.</p>
+<p>In tidyverse code, the pipe is <code>%&gt;%</code>, so
+<code>x %&gt;% f()</code> means “take <code>x</code>, then apply
+<code>f()</code>. You can also choose to use the alternative built-in
+pipe <code>|&gt;</code> from base R.</p>
+<p>🎯 <strong>Goal</strong>: Let’s see how the pipe works with a simple
+<code>head()</code> example. We will use the 🚗 <code>mtcars</code>
+dataset.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+mtcars %&gt;% head()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 This is equivalent to <code>head(mtcars)</code>, but the pipe
+version reads more like a sequence of actions: “Start with mtcars, and
+then show the head.” The pipe helps avoid nested functions and keeps
+code in a logical order.</p>
+<p>It is common to break lines after the pipe for readability,
+especially when chaining multiple operations. Each step is on its own
+line, making it easier to read and understand the flow of data
+manipulation.</p>
+<p>🎯 <strong>Goal</strong>: Use the pipe and break the lines. Show the
+first six rows of the <code>mtcars</code> dataset.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 mtcars %&gt;%        # start with data
   head()          # ▶ shows first six rows</code></pre>
-<p>🔗 Link Concepts: What other ways have you learned to write code that
-will view the first six rows of a data frame? Write this code and a memo
-to demonstrate learning skills.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="selecting-columns" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Selecting Columns</h1>
-<p>🎯 The GOAL of <code>select()</code> is to keep or drop specific
-<strong>columns</strong>.</p>
-<p>📜 The SYNTAX is <code>select(data, col1, col2, …)</code></p>
-<div id="positive-selection" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Positive
+<hr />
+<p>To gain a deeper understanding of how to apply the pipe, we need to
+learn the basics of at least one <code>dplyr</code> verb. Let’s start
+with <code>select()</code> for column selection.</p>
+</div>
+<div id="selecting-columns" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Selecting Columns</h1>
+<p>In chapter 8, you learned that you can select columns with base R
+brackets by name, like <code>data[c(&quot;col1&quot;, &quot;col2&quot;)]</code>. With
+<code>dplyr::select()</code>, you can do the same thing but with a more
+concise syntax.</p>
+<p>The <code>dplyr</code> verb <code>select()</code> returns the same
+type of data object, keeps the rows, and changes which columns are
+shown. It can select columns by name, by ranges such as
+<code>x:y</code>, and by helper patterns.</p>
+<p>You can use R operators <code>:</code>, <code>!</code>,
+<code>&amp;</code> and <code>|</code>, <code>c()</code>, and
+<code>%in%</code> to select columns. You can also use helper functions
+like <code>starts_with()</code>, <code>ends_with()</code>,
+<code>contains()</code>, and <code>matches()</code> to select columns
+based on patterns in their names. For this chapter, we will focus on
+selecting columns by name and by negative selection with
+<code>-</code>.</p>
+<p>📜 The SYNTAX: <code>select(data, col1, col2, …)</code></p>
+<div id="positive-selection" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Positive
 Selection</h2>
 <p>🎯 Goal: keep specific columns by name.</p>
-<pre class="r"><code># ⚡ Test
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 select(mtcars, mpg, cyl, hp)    # keep three columns</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"93","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"110","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"175","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"105","_rn_":"Valiant"},{"1":"14.3","2":"8","3":"245","_rn_":"Duster 360"},{"1":"24.4","2":"4","3":"62","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"95","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"123","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"123","_rn_":"Merc 280C"},{"1":"16.4","2":"8","3":"180","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","3":"180","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","3":"180","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","3":"205","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","3":"215","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","3":"230","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","3":"66","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"52","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"65","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"97","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","3":"150","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","3":"150","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","3":"245","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","3":"175","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","3":"66","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"91","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"113","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","3":"264","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","3":"175","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","3":"335","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","3":"109","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="negative-selection" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Negative
+<p>🗣 The <code>select()</code> function is used to keep only the
+<code>mpg</code>, <code>cyl</code>, and <code>hp</code> columns from the
+<code>mtcars</code> dataset. The resulting data frame will contain all
+rows but only those three columns.</p>
+</div>
+<div id="negative-selection" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Negative
 Selection</h2>
+<p>In chapter 10 you learned <code>x[-i, -j]</code> drops the i-th row
+and j-th column. In <code>dplyr::select()</code>, you can use a leading
+<code>-</code> to drop columns by name.</p>
 <p>🎯 Goal: remove columns with a leading <code>-</code>.</p>
-<pre class="r"><code>select(mtcars, -gear)   # drop one column</code></pre>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+select(mtcars, -gear)   # drop one column</code></pre>
+<p>🗣 The <code>select()</code> function is used to drop the
+<code>gear</code> column from the <code>mtcars</code> dataset. The
+resulting data frame will contain all rows and all columns except for
+<code>gear</code>.</p>
+<hr />
+<p>Now that you know how to select columns, let’s see how to use the
+pipe to chain operations together.</p>
 </div>
-<div id="piping-with-select" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Piping with
+<div id="piping-with-select" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Piping with
 Select</h2>
 <p>🎯 Goal: Let’s add a pipe!</p>
-<pre class="r"><code>mtcars %&gt;% 
-  select(mpg, cyl, hp)                  # easier to read</code></pre>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+mtcars %&gt;% 
+  select(mpg, cyl, hp)   # easier to read?</code></pre>
+<p>🗣 The pipe <code>%&gt;%</code> takes the <code>mtcars</code> dataset
+and feeds it into the <code>select()</code> function, which keeps only
+the <code>mpg</code>, <code>cyl</code>, and <code>hp</code> columns.
+This version reads more like a sequence of actions: “Start with mtcars,
+and then select these columns.”</p>
+<hr />
+<p>Now that you see how to select columns and use the pipe, let’s
+practice storing a subset of a dataset in the environment.</p>
 </div>
-<div id="subset-with-select" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Subset with
+<div id="subset-with-select" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Subset with
 Select</h2>
-<p>We’ll mix it up by using a different data set, <code>gapminder</code>
-from <code>dslabs</code>. This data set contains information about
-countries over time.</p>
+<p>We’ll mix it up by using a different data set, 🌐
+<code>gapminder</code> from <code>dslabs</code>. This data set contains
+information about countries over time.</p>
 <pre class="r"><code>?gapminder</code></pre>
-<p>🎯 Goal: Create a copy of the <code>gapminder</code> dataset that
-contains only specific columns!</p>
-<pre class="r"><code># ⚡ Test:
+<p>🎯 <strong>Goal</strong>: Create a copy of the <code>gapminder</code>
+dataset that contains only specific columns: country, year,
+infant_mortality, and continent. Name the subset
+<code>I_Demo</code>.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 I_Demo &lt;- gapminder %&gt;% 
   select(country, year, infant_mortality, continent)</code></pre>
 <pre class="r"><code># ✅  Verify
 head(I_Demo)</code></pre>
-<p>🗣 Explain: A new dataset called <code>I_Demo</code> was created from
-the <code>gapminder</code> dataset that only contains the columns
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country"],"name":[1],"type":["fct"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["infant_mortality"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["continent"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"Albania","2":"1960","3":"115.40","4":"Europe","_rn_":"1"},{"1":"Algeria","2":"1960","3":"148.20","4":"Africa","_rn_":"2"},{"1":"Angola","2":"1960","3":"208.00","4":"Africa","_rn_":"3"},{"1":"Antigua and Barbuda","2":"1960","3":"NA","4":"Americas","_rn_":"4"},{"1":"Argentina","2":"1960","3":"59.87","4":"Americas","_rn_":"5"},{"1":"Armenia","2":"1960","3":"NA","4":"Asia","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 A new dataset called <code>I_Demo</code> was created from the
+<code>gapminder</code> dataset that only contains the columns
 <code>country</code>, <code>year</code>, <code>infant_mortality</code>,
 and <code>continent</code>.</p>
+<hr />
 <p>✍️ Practice: fill in the blank prompt</p>
 <p>You try to design your own subsetting operation.</p>
-<p>🎯 Goal: Write an example that selects only the columns you
-choose.</p>
-<pre class="r"><code># ⚡ Test: 
+<p>🎯 <strong>Goal</strong>: Write an example that selects only the
+columns you choose.</p>
+<p><strong>Step 1</strong> Identify the column options.</p>
+<pre class="r"><code># ✅  Pre-check
+colnames(gapminder)</code></pre>
+<pre><code>## [1] &quot;country&quot;          &quot;year&quot;             &quot;infant_mortality&quot; &quot;life_expectancy&quot; 
+## [5] &quot;fertility&quot;        &quot;population&quot;       &quot;gdp&quot;              &quot;continent&quot;       
+## [9] &quot;region&quot;</code></pre>
+<p><strong>Step 2</strong> Choose which columns to keep and write the
+code to create a new dataset with only those columns. Use the exact
+names of the columns.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk: 
 Your_Choice &lt;- gapminder %&gt;%
   select(____, ____, ____)   # choose columns
 
-# ✅  Verify</code></pre>
-<p>🗣 Explain: What columns did you choose and why? Create a memo note,
-demonstrate learning skill(s) used.</p>
+# ✅  Verify
+head(Your_Choice)</code></pre>
+<hr />
+<p>Now that you know how to store a subset when selecting columns and
+use the pipe, let’s see how to filter rows with
+<code>filter()</code>.</p>
 </div>
 </div>
-<div id="filtering-rows" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Filtering Rows</h1>
-<p>🎯 The GOAL of <code>filter()</code> is to keep or drop specific
-<strong>rows</strong> based on conditions.</p>
-<p>📜 The SYNTAX is
+<div id="filtering-rows" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Filtering Rows</h1>
+<p>In chapter 8 and 10, you learned that you can filter rows with base R
+brackets by name, like <code>data[data$col1 &gt; 10, ]</code>. With
+<code>dplyr::filter()</code>, you can do the same thing but with a more
+concise syntax.</p>
+<p><code>filter()</code> keeps only rows for which the condition is
+<code>TRUE</code>. This means that <code>filter()</code> treats
+<code>NA</code> values as <code>FALSE</code> and drops them. If you want
+to keep rows with <code>NA</code>, you can use the <code>is.na()</code>
+function in your filter condition.</p>
+<p>📜 The SYNTAX:
 <code>filter(data, condition1, condition2, …)</code></p>
-<div id="single-condition" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Single Condition</h2>
+<p>You’ll often use <strong>logical operators</strong> with
+<code>filter()</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&gt;</code></td>
+<td>greater than</td>
+<td>mpg <strong><code>&gt;</code></strong> 20</td>
+</tr>
+<tr class="even">
+<td><code>&lt;</code></td>
+<td>less than</td>
+<td>mpg <strong><code>&lt;</code></strong> 15</td>
+</tr>
+<tr class="odd">
+<td><code>==</code></td>
+<td>equal to</td>
+<td>am <strong><code>==</code></strong> 1</td>
+</tr>
+<tr class="even">
+<td><code>&gt;=</code></td>
+<td>greater <em>or</em> equal</td>
+<td>mpg <strong><code>&gt;=</code></strong> 25</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;=</code></td>
+<td>less <em>or</em> equal</td>
+<td>mpg <strong><code>&lt;=</code></strong> 15</td>
+</tr>
+<tr class="even">
+<td><code>!</code></td>
+<td>not</td>
+<td><strong><code>!</code></strong>(gear %in% c(3,4))</td>
+</tr>
+<tr class="odd">
+<td><code>!=</code></td>
+<td>not equal to</td>
+<td>gear <strong><code>!=</code></strong> 4</td>
+</tr>
+<tr class="even">
+<td><code>&amp;</code></td>
+<td>and</td>
+<td>x &gt; 2 <strong><code>&amp;</code></strong> y == “a”</td>
+</tr>
+<tr class="odd">
+<td><code>|</code></td>
+<td>or</td>
+<td>cyl == 4 <strong><code>|</code></strong> cyl == 8</td>
+</tr>
+<tr class="even">
+<td><code>%in%</code></td>
+<td>in set</td>
+<td>region <strong><code>%in%</code></strong> c(“West”, “South”)</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s start with a simple example of filtering rows with a single
+condition.</p>
+<div id="single-condition" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Single Condition</h2>
 <p>🎯 <code>filter()</code> uses logical operators!</p>
-<pre class="r"><code># ⚡ Test:
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 filter(mtcars, mpg &gt;= 25)               # high‑mileage cars</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="piping-with-filter" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Piping with
+</div>
+<div id="piping-with-filter" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Piping with
 Filter</h2>
-<p>We’ll mix it up by using a different data set, <code>murders</code>
+<p>We’ll mix it up by using a different data set, 🔫️<code>murders</code>
 from <code>dslabs</code>. This data set contains information about gun
 murders in the US.</p>
 <pre class="r"><code>?murders</code></pre>
-<p>🎯 Goal: Create a copy of the <code>murders</code> dataset that
-excludes Washington state.</p>
-<p>💬 Prediction: 50 states</p>
-<pre class="r"><code># ⚡ Test:
+<p>💬 Prediction: There are 50 states in the US, so there should be 50
+rows.</p>
+<pre class="r"><code># ✅  Pre-check
 nrow(murders)  </code></pre>
-<p>🗣 Explain: … Wait, what? … ❓ Question: What are these 51 states?</p>
+<pre><code>## [1] 51</code></pre>
+<p>🗣 … Wait, what? … ❓ Question: What are these 51 states?</p>
 <pre class="r"><code>#⚡ Test:
 unique(murders$state)  # 51 states</code></pre>
-<p>🗣 Explain: Ohhhhh! “District of Columbia” is included in the
-dataset.</p>
-<p>Back to the 🎯 Goal: Create a copy of the <code>murders</code>
-dataset that excludes Washington state.</p>
-<pre class="r"><code># ⚡ Test:
+<pre><code>##  [1] &quot;Alabama&quot;              &quot;Alaska&quot;               &quot;Arizona&quot;             
+##  [4] &quot;Arkansas&quot;             &quot;California&quot;           &quot;Colorado&quot;            
+##  [7] &quot;Connecticut&quot;          &quot;Delaware&quot;             &quot;District of Columbia&quot;
+## [10] &quot;Florida&quot;              &quot;Georgia&quot;              &quot;Hawaii&quot;              
+## [13] &quot;Idaho&quot;                &quot;Illinois&quot;             &quot;Indiana&quot;             
+## [16] &quot;Iowa&quot;                 &quot;Kansas&quot;               &quot;Kentucky&quot;            
+## [19] &quot;Louisiana&quot;            &quot;Maine&quot;                &quot;Maryland&quot;            
+## [22] &quot;Massachusetts&quot;        &quot;Michigan&quot;             &quot;Minnesota&quot;           
+## [25] &quot;Mississippi&quot;          &quot;Missouri&quot;             &quot;Montana&quot;             
+## [28] &quot;Nebraska&quot;             &quot;Nevada&quot;               &quot;New Hampshire&quot;       
+## [31] &quot;New Jersey&quot;           &quot;New Mexico&quot;           &quot;New York&quot;            
+## [34] &quot;North Carolina&quot;       &quot;North Dakota&quot;         &quot;Ohio&quot;                
+## [37] &quot;Oklahoma&quot;             &quot;Oregon&quot;               &quot;Pennsylvania&quot;        
+## [40] &quot;Rhode Island&quot;         &quot;South Carolina&quot;       &quot;South Dakota&quot;        
+## [43] &quot;Tennessee&quot;            &quot;Texas&quot;                &quot;Utah&quot;                
+## [46] &quot;Vermont&quot;              &quot;Virginia&quot;             &quot;Washington&quot;          
+## [49] &quot;West Virginia&quot;        &quot;Wisconsin&quot;            &quot;Wyoming&quot;</code></pre>
+<p>🗣 Ohhhhh! “District of Columbia” is included in the dataset.</p>
+<p>🎯 <strong>Goal</strong>: Create a copy of the <code>murders</code>
+dataset that excludes the District of Columbia.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 No_Washington &lt;- murders %&gt;% 
-  filter(state != &quot;Washington&quot;)</code></pre>
+  filter(state != &quot;District of Columbia&quot;)</code></pre>
 <pre class="r"><code># ✅  Verify
 nrow(No_Washington)  # 50 states</code></pre>
-<p>🗣 Explain: A new dataset called <code>No_Washington</code> was
-created from the <code>murders</code> dataset that excludes Washington
-state.</p>
-<p>🧐 Review: What is the difference between <code>==</code> and
-<code>!=</code>?</p>
-<p>🛠 Break Things! What happens when you use <code>=</code> instead of
-<code>==</code>? or <code>=!</code> instead of <code>!=</code>? Create a
-memo note, demonstrate learning skill(s) used.</p>
+<p>🗣 A new dataset called <code>No_Washington</code> was created from
+the <code>murders</code> dataset that excludes Washington DC.</p>
 </div>
-<div id="multiple-conditions-with-and" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Multiple Conditions
+<div id="multiple-conditions-with-and" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Multiple Conditions
 with AND</h2>
-<p>📌 In <code>filter()</code>, commas = AND (<code>&amp;</code>).</p>
-<p>🎯 Goal: Let’s filter with two conditions and while we are at it,
-let’s add a pipe!</p>
+<p>We learned in chapter 8 and 10 that we can filter with multiple
+conditions using <code>&amp;</code> for AND. In
+<code>dplyr::filter()</code>, commas (<code>,</code>) equal AND
+(<code>&amp;</code>).</p>
+<div id="and-and" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> And <code>,</code>
+and <code>&amp;</code></h3>
+<p>Let’s filter with two conditions! In filter(), multiple conditions
+separated by commas are combined with &amp;. So these two calls mean the
+same thing:</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+filter(mtcars, mpg &gt;= 25, cyl == 4)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+filter(mtcars, mpg &gt;= 25 &amp; cyl == 4)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 Both of these code chunks will return the same result: a subset of
+the <code>mtcars</code> dataset that includes only rows where
+<code>mpg</code> is greater than or equal to 25 and <code>cyl</code> is
+equal to 4. The first chunk uses commas to separate conditions, while
+the second chunk uses the <code>&amp;</code> operator to combine them.
+Both are valid ways to specify multiple conditions in
+<code>filter()</code>.</p>
+<p>The catch is that comma is only a shortcut inside
+<code>filter()</code> for separating multiple conditions. It is not a
+general replacement for <code>&amp;</code> in R, and it does not help
+when you need more complex grouping with <code>|</code>.</p>
+</div>
+<div id="with-the-pipe" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> With the pipe</h3>
+<p>🎯 <strong>Goal</strong>: Let’s filter with two conditions with a
+pipe and store it as <code>efficient</code></p>
 <p>❓ Question: How many cars have <em>both</em> mpg ≥ 25 <em>and</em> 4
 cylinders?</p>
-<pre class="r"><code># ⚡ Test:
-mtcars %&gt;%
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+efficient &lt;- mtcars %&gt;%
   filter(mpg &gt;= 25, cyl == 4)           # two conditions</code></pre>
-<p>✅ Verify: How many cars have <em>both</em> mpg ≥ 25 <em>and</em> 4
-cylinders? What code would you use to verify the success of this filter?
-Create a memo note, demonstrate learning skill(s) used by writing and
-running the code.</p>
+<pre class="r"><code># ✅  Verify
+nrow(efficient)  # how many cars are efficient?</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>🗣 A new dataset called <code>efficient</code> was created from the
+<code>mtcars</code> dataset that includes only rows where
+<code>mpg</code> is greater than or equal to 25 <em>and</em>
+<code>cyl</code> is equal to 4. The number of rows in the
+<code>efficient</code> dataset indicates how many cars in the dataset
+meet <strong>both</strong> conditions (n = 6).</p>
 </div>
-<div id="multiple-conditions-with-or" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Multiple Conditions
+</div>
+<div id="multiple-conditions-with-or" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Multiple Conditions
 with OR</h2>
-<p>📌 In <code>dplyr::filter()</code>, the OR operator is the same as
-base R <code>|</code> or <code>%in%</code>.</p>
-<div id="section" class="section level3" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> |</h3>
-<p>🎯 Goal: Let’s filter with two conditions using OR
-(<code>|</code>).</p>
+<p>In <code>dplyr::filter()</code>, multiple conditions separated by
+commas are combined with AND, not OR. So when you want OR logic, you
+must write <code>|</code> explicitly inside the condition. In base R,
+<code>|</code> is the elementwise OR operator, and <code>%in%</code>
+returns <code>TRUE</code> when a value appears in a set of values.</p>
+<div id="or-and-in" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Or <code>|</code>
+and <code>%in%</code></h3>
+<p>🎯 <strong>Goal</strong>: Let’s filter with OR! When you want rows
+that match either one condition or another, use <code>|</code>.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+filter(mtcars, cyl == 4 | cyl == 6)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1","_rn_":"Toyota Corona"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+filter(mtcars, cyl %in% c(4, 6))</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1","_rn_":"Toyota Corona"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 Both of these code chunks return the same result: a subset of the
+<code>mtcars</code> dataset that includes only rows where
+<code>cyl</code> is equal to 4 or 6. The first chunk uses the
+<code>|</code> operator to say “4 cylinders or 6 cylinders.” The second
+chunk uses <code>%in%</code> to check whether <code>cyl</code> is one of
+the values in <code>c(4, 6)</code>. Both are valid, but %in% is often
+easier to read when you are checking one variable against several
+possible values.</p>
+<p>The catch is that <code>%in%</code> is only a shortcut when you are
+comparing one variable to multiple values. It is not a general
+replacement for <code>|</code>. For example, if you want cars with 4
+cylinders or cars with <code>mpg &gt;= 30</code>, you must use
+<code>|</code> because those are two different conditions on different
+variables.</p>
+<p>🎯 <strong>Goal</strong>: Let’s filter with OR on different
+variables.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+filter(mtcars, cyl == 4 | mpg &gt;= 30)  # different variables</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 230"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1","_rn_":"Toyota Corona"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣 This code chunk returns a subset of the <code>mtcars</code> dataset
+that includes rows where either <code>cyl</code> is equal to 4 or
+<code>mpg</code> is greater than or equal to 30. Since these conditions
+involve different variables, you cannot use <code>%in%</code> and must
+use the <code>|</code> operator to combine them.</p>
+</div>
+<div id="with-the-pipe-1" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> With the pipe</h3>
+<p>🎯 Goal: Let’s filter with two conditions using OR (<code>|</code>),
+piping, and storing the subset to the environment.</p>
 <p>❓ Question: How many cars have <em>either</em> mpg ≥ 25 <em>or</em>
 4 cylinders?</p>
-<pre class="r"><code># ⚡ Test:
-mtcars %&gt;%
-  filter(mpg &gt;= 25 | cyl == 4)           # two conditions</code></pre>
-<p>✅ Verify: How many cars have <em>either</em> mpg ≥ 25 <em>or</em> 4
-cylinders? What code would you use to verify the success of this filter?
-Create a memo note, demonstrate learning skill(s) used by writing and
-running the code.</p>
-</div>
-<div id="in" class="section level3" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> %in%</h3>
-<p>🎯 Goal: The <code>%in%</code> operator is used to check if a value
-is in a set. It’s like “is this value one of these?”</p>
-<pre class="r"><code># ⚡ Test
-filter(mtcars, cyl %in% c(4, 6))        # 4 or 6 cylinders</code></pre>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+efficient_ish &lt;- mtcars %&gt;%
+  filter(mpg &gt;= 25 | cyl == 4)    # two conditions</code></pre>
+<pre class="r"><code># ✅  Verify
+nrow(efficient_ish)  # how many cars are efficient_ish?</code></pre>
+<pre><code>## [1] 11</code></pre>
+<p>🗣 A new dataset called <code>efficient_ish</code> was created from
+the <code>mtcars</code> dataset that includes rows where either
+<code>mpg</code> is greater than or equal to 25 or <code>cyl</code> is
+equal to 4. The number of rows in the <code>efficient_ish</code> dataset
+indicates how many cars meet <em>at least one</em> of those conditions.
+(n = 11)</p>
 </div>
 </div>
 </div>
-<div id="filter-and-select" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> filter() AND
+<div id="filter-and-select" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> filter() AND
 select()</h1>
-<p>🎯 The GOAL of combining <code>filter()</code> and
-<code>select()</code> is to <strong>subset</strong> a data frame by both
-rows and columns.</p>
-<p>💪 Best practice: filter rows first, then select columns.</p>
-<p>📜 The SYNTAX is
-<code>data %&gt;% filter(condition) %&gt;% select(col1, col2, …)</code></p>
+<p>So far, we’ve used <code>select()</code> to changes which columns we
+keep and <code>filter()</code> to change which rows we keep. Now let’s
+combine them together.</p>
+<p>📖 <strong>Review</strong></p>
+<ul>
+<li><p><code>filter()</code> looks at the values in a data frame and
+keeps only rows where the condition is <code>TRUE</code>.</p></li>
+<li><p><code>select()</code> looks at column names and keeps only the
+variables you ask for.</p></li>
+</ul>
+<p>Combining them lets you subset a data frame by both rows and
+columns.</p>
+<p>📜 The SYNTAX:</p>
+<p><code>data %&gt;% filter(condition) %&gt;% select(col1, col2, …)</code></p>
+<p>A safe beginner workflow habit is to <code>filter()</code> first and
+<code>select()</code> second. That way, all columns are still available
+when you write your filtering conditions. If you <code>select()</code>
+first and accidentally remove a column needed by <code>filter()</code>,
+your code will fail.</p>
 <p>🎯 We’ll mix it up by using a different data set,
-<code>us_contagious_diseases</code> from <code>dslabs</code>. This data
-set contains information about contagious diseases in the US.</p>
+☣️<code>us_contagious_diseases</code> from <code>dslabs</code>. This
+data set contains information about contagious diseases in the US.</p>
 <pre class="r"><code>?us_contagious_diseases</code></pre>
-<pre class="r"><code>#⚡ Test
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 us_contagious_diseases %&gt;% 
   filter(state == &quot;Alaska&quot;, year &gt;= 1980) %&gt;%   # rows
   select(year, disease, count)                  # columns</code></pre>
-<p>🚀 Explore and Play: What are the unique diseases in this Alaska
-subset? Use skills you developed in previous lessons to explore this
-data set. Compare filter and select with subsetting with brackets
-<code>[ ]</code>. Create a memo note, demonstrate learning skill(s)
-used.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["disease"],"name":[2],"type":["fct"],"align":["left"]},{"label":["count"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1980","2":"Hepatitis A","3":"18"},{"1":"1981","2":"Hepatitis A","3":"45"},{"1":"1982","2":"Hepatitis A","3":"17"},{"1":"1983","2":"Hepatitis A","3":"43"},{"1":"1984","2":"Hepatitis A","3":"14"},{"1":"1985","2":"Hepatitis A","3":"18"},{"1":"1986","2":"Hepatitis A","3":"66"},{"1":"1987","2":"Hepatitis A","3":"240"},{"1":"1988","2":"Hepatitis A","3":"268"},{"1":"1989","2":"Hepatitis A","3":"494"},{"1":"1990","2":"Hepatitis A","3":"167"},{"1":"1991","2":"Hepatitis A","3":"80"},{"1":"1992","2":"Hepatitis A","3":"65"},{"1":"1993","2":"Hepatitis A","3":"374"},{"1":"1994","2":"Hepatitis A","3":"163"},{"1":"1995","2":"Hepatitis A","3":"38"},{"1":"1996","2":"Hepatitis A","3":"46"},{"1":"1997","2":"Hepatitis A","3":"20"},{"1":"1998","2":"Hepatitis A","3":"6"},{"1":"1999","2":"Hepatitis A","3":"7"},{"1":"2000","2":"Hepatitis A","3":"8"},{"1":"2001","2":"Hepatitis A","3":"10"},{"1":"2002","2":"Hepatitis A","3":"11"},{"1":"2003","2":"Hepatitis A","3":"8"},{"1":"2004","2":"Hepatitis A","3":"4"},{"1":"2005","2":"Hepatitis A","3":"3"},{"1":"2006","2":"Hepatitis A","3":"0"},{"1":"2007","2":"Hepatitis A","3":"3"},{"1":"2008","2":"Hepatitis A","3":"3"},{"1":"2009","2":"Hepatitis A","3":"6"},{"1":"2010","2":"Hepatitis A","3":"4"},{"1":"2011","2":"Hepatitis A","3":"1"},{"1":"1980","2":"Measles","3":"6"},{"1":"1981","2":"Measles","3":"0"},{"1":"1982","2":"Measles","3":"1"},{"1":"1983","2":"Measles","3":"0"},{"1":"1984","2":"Measles","3":"0"},{"1":"1985","2":"Measles","3":"0"},{"1":"1986","2":"Measles","3":"0"},{"1":"1987","2":"Measles","3":"0"},{"1":"1988","2":"Measles","3":"1"},{"1":"1989","2":"Measles","3":"0"},{"1":"1990","2":"Measles","3":"27"},{"1":"1991","2":"Measles","3":"1"},{"1":"1992","2":"Measles","3":"4"},{"1":"1993","2":"Measles","3":"0"},{"1":"1994","2":"Measles","3":"16"},{"1":"1995","2":"Measles","3":"0"},{"1":"1996","2":"Measles","3":"68"},{"1":"1997","2":"Measles","3":"1"},{"1":"1998","2":"Measles","3":"16"},{"1":"1999","2":"Measles","3":"0"},{"1":"2000","2":"Measles","3":"1"},{"1":"2001","2":"Measles","3":"0"},{"1":"2002","2":"Measles","3":"0"},{"1":"1980","2":"Mumps","3":"16"},{"1":"1981","2":"Mumps","3":"19"},{"1":"1982","2":"Mumps","3":"18"},{"1":"1983","2":"Mumps","3":"16"},{"1":"1984","2":"Mumps","3":"17"},{"1":"1985","2":"Mumps","3":"10"},{"1":"1986","2":"Mumps","3":"10"},{"1":"1987","2":"Mumps","3":"8"},{"1":"1988","2":"Mumps","3":"14"},{"1":"1989","2":"Mumps","3":"1"},{"1":"1990","2":"Mumps","3":"4"},{"1":"1991","2":"Mumps","3":"15"},{"1":"1992","2":"Mumps","3":"3"},{"1":"1993","2":"Mumps","3":"11"},{"1":"1994","2":"Mumps","3":"4"},{"1":"1995","2":"Mumps","3":"12"},{"1":"1996","2":"Mumps","3":"3"},{"1":"1997","2":"Mumps","3":"4"},{"1":"1998","2":"Mumps","3":"2"},{"1":"1999","2":"Mumps","3":"3"},{"1":"2000","2":"Mumps","3":"8"},{"1":"2001","2":"Mumps","3":"1"},{"1":"2002","2":"Mumps","3":"0"},{"1":"1980","2":"Pertussis","3":"5"},{"1":"1981","2":"Pertussis","3":"0"},{"1":"1982","2":"Pertussis","3":"0"},{"1":"1983","2":"Pertussis","3":"5"},{"1":"1984","2":"Pertussis","3":"0"},{"1":"1985","2":"Pertussis","3":"31"},{"1":"1986","2":"Pertussis","3":"5"},{"1":"1987","2":"Pertussis","3":"9"},{"1":"1988","2":"Pertussis","3":"7"},{"1":"1989","2":"Pertussis","3":"3"},{"1":"1990","2":"Pertussis","3":"15"},{"1":"1991","2":"Pertussis","3":"9"},{"1":"1992","2":"Pertussis","3":"13"},{"1":"1993","2":"Pertussis","3":"3"},{"1":"1994","2":"Pertussis","3":"2"},{"1":"1995","2":"Pertussis","3":"0"},{"1":"1996","2":"Pertussis","3":"3"},{"1":"1997","2":"Pertussis","3":"12"},{"1":"1998","2":"Pertussis","3":"13"},{"1":"1999","2":"Pertussis","3":"5"},{"1":"2000","2":"Pertussis","3":"19"},{"1":"2001","2":"Pertussis","3":"10"},{"1":"2002","2":"Pertussis","3":"5"},{"1":"2003","2":"Pertussis","3":"6"},{"1":"2004","2":"Pertussis","3":"11"},{"1":"2005","2":"Pertussis","3":"123"},{"1":"2006","2":"Pertussis","3":"53"},{"1":"2007","2":"Pertussis","3":"37"},{"1":"2008","2":"Pertussis","3":"191"},{"1":"2009","2":"Pertussis","3":"70"},{"1":"2010","2":"Pertussis","3":"42"},{"1":"2011","2":"Pertussis","3":"27"},{"1":"1980","2":"Rubella","3":"12"},{"1":"1981","2":"Rubella","3":"1"},{"1":"1982","2":"Rubella","3":"5"},{"1":"1983","2":"Rubella","3":"1"},{"1":"1984","2":"Rubella","3":"1"},{"1":"1985","2":"Rubella","3":"1"},{"1":"1986","2":"Rubella","3":"0"},{"1":"1987","2":"Rubella","3":"2"},{"1":"1988","2":"Rubella","3":"0"},{"1":"1989","2":"Rubella","3":"0"},{"1":"1990","2":"Rubella","3":"0"},{"1":"1991","2":"Rubella","3":"3"},{"1":"1992","2":"Rubella","3":"0"},{"1":"1993","2":"Rubella","3":"0"},{"1":"1994","2":"Rubella","3":"1"},{"1":"1995","2":"Rubella","3":"0"},{"1":"1996","2":"Rubella","3":"0"},{"1":"1997","2":"Rubella","3":"0"},{"1":"1998","2":"Rubella","3":"0"},{"1":"1999","2":"Rubella","3":"0"},{"1":"2000","2":"Rubella","3":"0"},{"1":"2001","2":"Rubella","3":"0"},{"1":"2002","2":"Rubella","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="one-application" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> One Application</h1>
+</div>
+<div id="one-application" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> One Application</h1>
 <p>🧐 Let’s say you have the research question, ❓“Which automatic cars
 (am == 0) in mtcars have horsepower &gt; 150? 🎯 Goal: Your report
 should show only hp and mpg.</p>
@@ -1874,7 +2341,12 @@ mtcars %&gt;%
   filter(am == 0, hp &gt; 150) %&gt;%
   select(hp, mpg) %&gt;%
   head()</code></pre>
-<p>🗣 Explain:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["hp"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["mpg"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"175","2":"18.7","_rn_":"Hornet Sportabout"},{"1":"245","2":"14.3","_rn_":"Duster 360"},{"1":"180","2":"16.4","_rn_":"Merc 450SE"},{"1":"180","2":"17.3","_rn_":"Merc 450SL"},{"1":"180","2":"15.2","_rn_":"Merc 450SLC"},{"1":"205","2":"10.4","_rn_":"Cadillac Fleetwood"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🗣</p>
 <ol style="list-style-type: decimal">
 <li><p><code>filter()</code> keeps matching rows.</p></li>
 <li><p><code>select()</code> trims to needed columns.</p></li>
@@ -1882,8 +2354,8 @@ mtcars %&gt;%
 exploration.</p></li>
 </ol>
 </div>
-<div id="duplicates-sampling" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Duplicates &amp;
+<div id="duplicates-sampling" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Duplicates &amp;
 Sampling</h1>
 <p>Sometimes, you may need to remove duplicate rows or sample a subset
 of rows. <code>unique()</code> removes duplicate rows;
@@ -1895,64 +2367,104 @@ function.</p>
 information about movies and ratings.</p>
 <pre class="r"><code>?movielens</code></pre>
 <pre class="r"><code>nrow(movielens)   # how many rows at start?</code></pre>
-<pre class="r"><code># ⚡ Test
+<pre><code>## [1] 100004</code></pre>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 Movie_Night &lt;- movielens %&gt;%
   filter(rating &gt;= 4) %&gt;%        # keep high ratings
   select(title, rating) %&gt;%      # keep title and rating
   unique()                       # remove duplicates</code></pre>
 <pre class="r"><code># ✅  Verify
 nrow(Movie_Night)  # how many rows after filter, select, and unique?</code></pre>
-<p>🗣 Explain: Filter kept only the rows with ratings 4 or higher. Select
-kept only the title and rating columns. Unique removed duplicate rows,
-so each movie title appears only once.</p>
+<pre><code>## [1] 10562</code></pre>
+<p>🗣 Filter kept only the rows with ratings 4 or higher. Select kept
+only the title and rating columns. Unique removed duplicate rows, so
+each movie title appears only once.</p>
 <p>❓ Question: What movie should I watch on movie night?</p>
 <p>🎯 Goal: Let’s randomly sample 10 movies with ratings four or
 higher.</p>
 <pre class="r"><code>set.seed(420)
-# ⚡ Test
+# ⚡ Type this in a Quarto code chunk
 Movie_Night %&gt;%
   slice_sample(n=10)  # random sample of 10 rows</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["title"],"name":[1],"type":["chr"],"align":["left"]},{"label":["rating"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Haxan: Witchcraft Through the Ages (a.k.a. The Witches)","2":"4.5"},{"1":"Return of the Secaucus 7","2":"4.5"},{"1":"Bank Dick, The","2":"4.5"},{"1":"Face to Face (Ansikte mot ansikte)","2":"4.0"},{"1":"Fireworks (Hana-bi)","2":"5.0"},{"1":"My Blue Heaven","2":"4.0"},{"1":"Monty Python's The Meaning of Life","2":"4.0"},{"1":"Multiplicity","2":"4.0"},{"1":"Exorcist, The","2":"4.5"},{"1":"Bob le Flambeur","2":"4.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>🗣 Comment: What movie would you choose?</p>
 <p>🚀 Explore and Play: What would happen if we didn’t use unique()? Why
 might unique be useful for our question? Create a memo note, demonstrate
 learning skill(s) used.</p>
 </div>
-<div id="extra-practice" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Extra Practice</h1>
+<div id="extra-practice" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Extra Practice</h1>
 <p>✍️ Practice: Demonstrate learning skill(s) by completing this bonus
 practice. Fill the blanks. Use the <code>gapminder</code> dataset.</p>
 <pre class="r"><code>___ %&gt;%
    filter(life_expectancy &gt;= quantile(life_expectancy, ___)) %&gt;%
    select(country, ___, life_expectancy) -&gt; Top_LifeExp
 View(Top_LifeExp)</code></pre>
-<p>🗣 Explain: What is the <code>-&gt; Top_LifeExp</code> do in the code
-above?</p>
+<p>🗣What is the <code>-&gt; Top_LifeExp</code> do in the code above?</p>
 <p>❓ Question: What is the highest life expectancy in this subset?</p>
 <p>❓ Question: How many countries are in the <code>Top_LifeExp</code>
 data frame?</p>
 <p>❓ Question: What is the average life expectancy in this subset?</p>
 </div>
-<div id="summary" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Summary</h1>
+<div id="summary" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Summary</h1>
+<p>In dplyr, <code>filter()</code> keeps rows based on values, while
+<code>select()</code> keeps columns based on names or selection
+helpers.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Chapter Terms</h1>
+<p><strong>Logical Operators</strong>: Operators that create or combine
+logical elements. The most common are comparison
+operators—<code>==</code>, <code>!=</code>, <code>&lt;</code>,
+<code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>—which return
+<code>TRUE</code>/<code>FALSE</code>, and Boolean
+operators—<code>!</code> (NOT), <code>&amp;</code> / <code>|</code>
+(AND/OR applied element-by-element), and <code>&amp;&amp;</code> /
+<code>||</code> (AND/OR that evaluate only the first element, mainly for
+if conditions).</p>
+<p><strong>Pipe</strong>: An operator that passes the result of one step
+directly into the next step, letting you write code as a readable
+sequence of actions instead of nesting functions inside each other. In
+tidyverse code, the pipe is usually <code>%&gt;%</code>, so
+<code>x %&gt;% f()</code> means “take <code>x</code>, then apply
+<code>f()</code>”; in newer base R, a similar built-in pipe is
+<code>|&gt;</code>.</p>
+<p><strong>Tidyverse</strong>: An opinionated collection of R packages
+designed to work together for data science. The packages share a common
+design philosophy, data structures, and coding style, which makes it
+easier to import, clean, reshape, visualize, and analyze data within a
+consistent workflow.</p>
+<p><strong>Quarto</strong>: An open-source scientific and technical
+publishing system that uses Quarto Markdown files (<code>.qmd</code>) to
+combine Markdown text with executable code (including R) and render
+reproducible outputs like HTML, PDF, Word, slides, and websites. It’s
+the language-agnostic successor to R Markdown, designed for reports
+where code, results, and writing stay tied together.</p>
+<p><strong>YAML Header</strong>: The metadata section at the top of an R
+Markdown or Quarto document, written between <code>---</code> lines,
+that controls document settings like the title, author, date, output
+format (HTML/PDF/Word), and options for rendering.</p>
 </div>
-<div id="practice-space" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> 📝 Practice Space</h1>
+<div id="practice-space" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> 📝 Practice Space</h1>
 <p>Replace each ____ placeholder (and any TODO comments) with working
 code or a short written answer. Run each section; be sure the requested
 objects appear in the Environment. When finished, save
 <strong>BOTH</strong> your script (which should include your lesson
 notes and completed assignment) and your <code>.RData</code> workspace
 and upload to Canvas Assignment 8 in Module 8.</p>
-<div id="task-0" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Task 0</h2>
+<div id="task-0" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Task 0</h2>
 <p>📦 Make sure <code>dplyr</code> and <code>dslabs</code> packages are
 attached so their functions / datasets load.</p>
 </div>
-<div id="task-1" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Task 1</h2>
+<div id="task-1" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Task 1</h2>
 <p>Column Selection</p>
 <p>📝 Create <strong><code>C_Overload</code></strong> that keeps only
 year and <code>carbon_emissions</code> from the <code>temp_carbon</code>
@@ -1960,24 +2472,24 @@ data frame. Use <code>select()</code> with or without
 <code>%&gt;%</code>.</p>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 </div>
-<div id="task-2" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Task 2</h2>
+<div id="task-2" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Task 2</h2>
 <p>Single-Column Extraction</p>
 <p>🌟 Pipe the <code>stars</code> dataset in <code>dslabs</code> through
 <code>select()</code> to keep only the <code>star</code> column. Name
 the result <strong><code>star_names</code></strong>.</p>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 </div>
-<div id="task-3" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Task 3</h2>
+<div id="task-3" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Task 3</h2>
 <p>Row Filtering</p>
 <p>⚠️ From <code>murders</code>, remove every row where state equals
 <code>&quot;Florida&quot;</code>. Name the object
 <strong><code>No_Florida</code></strong> (any method is fine).</p>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 </div>
-<div id="task-4" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> Task 4</h2>
+<div id="task-4" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Task 4</h2>
 <p>Multiple Conditions</p>
 <p>🚗 From <code>mtcars</code>, use <code>filter()</code> +
 <code>%&gt;%</code>, pull cars in mtcars that are manual, have 8
@@ -1987,23 +2499,23 @@ cylinders, and have <code>qsec &lt; 15</code>. Store as
 <p>Is <code>qsec &lt; 15</code> within range?</p>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 </div>
-<div id="task-6" class="section level2" number="11.6">
-<h2><span class="header-section-number">11.6</span> Task 6</h2>
+<div id="task-6" class="section level2" number="13.6">
+<h2><span class="header-section-number">13.6</span> Task 6</h2>
 <p>OR Logic + Column Slice</p>
 <p>In 🚗 <code>mtcars</code>, show only rows where
 <code>disp &gt; 250</code> OR <code>disp &lt; 160</code> and display
 just the first three columns.</p>
 <pre class="r"><code>____ &lt;- _____</code></pre>
 </div>
-<div id="task-7" class="section level2" number="11.7">
-<h2><span class="header-section-number">11.7</span> Task 7</h2>
+<div id="task-7" class="section level2" number="13.7">
+<h2><span class="header-section-number">13.7</span> Task 7</h2>
 <p>Reflection</p>
 <p>📝 Write a few sentences comparing dplyr verbs over base-R brackets
 (from lesson 6 &amp; 7) for subsetting.</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Save and Upload</h1>
 <ol start="0" style="list-style-type: decimal">
 <li>Self-check checklist:</li>
 </ol>
@@ -2038,8 +2550,8 @@ pane.</p>
 (<code>RData</code>).</li>
 </ol>
 </div>
-<div id="today-you-practiced" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Today you
+<div id="today-you-practiced" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Today you
 practiced:</h1>
 <ul>
 <li><p>Installed / loaded packages for extra tools.</p></li>
@@ -2054,10 +2566,10 @@ selection).</p></li>
 <p>🎯 Great job! Keep practicing piping and you’ll soon write clear,
 readable R code!</p>
 </div>
-<div id="notes" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Notes</h1>
-<div id="learning-skill" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Learning Skill</h2>
+<div id="notes" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Notes</h1>
+<div id="learning-skill" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Learning Skill</h2>
 <p>LS: Core Review course content Advanced Curiosity Skill Highlight</p>
 <p>Citing resources</p>
 <ul>

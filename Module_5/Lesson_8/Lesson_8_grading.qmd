@@ -396,21 +396,28 @@ mean(Top_LifeExp$life_expectancy)
 
 📦 Make sure `dplyr` and `dslabs` packages are attached so their functions / datasets load.
 
+```{r}
+# Task 0 answer key
+library(dplyr)
+library(dslabs)
+```
+
+
 ## Task 1
 
 Column Selection
 
-📝 Create **`C_Overload`** that keeps only year and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` with or without `%>%`.
+📝 Create **`C_Overload`** that keeps only year and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` without `%>%`.
 
 ```{r, eval=FALSE}
-C_Overload <- temp_carbon %>% select(year, carbon_emissions)
+C_Overload <- select(temp_carbon, year, carbon_emissions)
 # Verify:
 names(C_Overload)            # "year" "carbon_emissions"
 ```
 
 ## Task 2
 
-Single-Column Extraction
+Single-Column dataframe 
 
 🌟 Pipe the `stars` dataset in `dslabs` through `select()` to keep only the `star` column. Name the result **`star_names`**.
 
