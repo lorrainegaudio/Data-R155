@@ -2495,6 +2495,7 @@ labs for data science education.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook in a code chunk
 
 # install.packages(&quot;dslabs&quot;)  # uncomment if you have not yet installed dslabs
+## NOTE: Please comment out the install.packages() line after you run it once. Your report will not knit with install.packages() in it.  You only need to install the package once per computer.
 
 # Load the package and data
 library(dslabs)  # use library() to load the package
@@ -2523,40 +2524,43 @@ target_year &lt;- ___   # must be a single year of gapminder</code></pre>
 <div id="task-2" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Task 2 🌱</h2>
 <p>🧭 Pick your regions</p>
-<p>🎯 Identify the exact region names; then pick (your choice) your two
-target regions.</p>
+<p>🎯 Identify the exact region names; then pick (your choice) your
+three target regions.</p>
 <p><strong>Step 1</strong> Identify the <code>unique</code>
 <code>region</code> options in <code>gapminder</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 2-A: Show all region options
 ___(___$___)    # Fill in: function, dataset, and column name  </code></pre>
-<p><em>Use this output to select two regions. Copy exact names.</em></p>
+<p><em>Use this output to select three regions. Copy exact
+names.</em></p>
 <p><strong>Step 2</strong></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-# TODO 2-B: store two regions EXACTLY as shown above
+# TODO 2-B: store three regions EXACTLY as shown above
 region_1 &lt;- &quot;___&quot;
-region_2 &lt;- &quot;___&quot;</code></pre>
-<p>🗣 I selected ___ and ___ as my target regions because _____.</p>
+region_2 &lt;- &quot;___&quot;
+region_3 &lt;- &quot;___&quot;</code></pre>
+<p>🗣 I selected ____, ____, and ____ as my target regions because
+_____.</p>
 </div>
 <div id="task-3" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Task 3 🌱</h2>
 <p>🔍 Focus the Pool</p>
 <p>🎯 Create <code>focus_pool</code> that keeps rows from the
-<code>target_year</code> AND restricts to two regions you want to
+<code>target_year</code> AND restricts to three regions you want to
 prioritize.</p>
 <p><strong>Step 1</strong> Build the logical tests for year and region
 separately.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 3-A: build the logical tests (two separate vectors)
 
-is_year   &lt;- gapminder$year __ target_year               # test for equality
+is_year   &lt;- gapminder$year __ target_year  # test for equality
 
-is_region &lt;- _________$region ___ c(region_1, region_2)  # test for membership in the set</code></pre>
+is_region &lt;- _________$region ___ c(region_1, region_2, region_3)  # test for membership in the set</code></pre>
 <p><strong>Step 2</strong> Combine the two logical vectors with
 <code>&amp;</code> to create a single filter.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 3-B: combine
-keep &lt;- _______ _ _______            # is_year and is_region with AND</code></pre>
+keep &lt;- _______ _ _______           # is_year and is_region with AND</code></pre>
 <p><strong>Step 3</strong> Use the combined logical vector to subset
 <code>gapminder</code> and create <code>focus_pool</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
@@ -2578,10 +2582,10 @@ ____(focus_pool) __ ____(gapminder)     </code></pre>
 <p>🗂 Negative Indices</p>
 <p>Create a simpler briefing table <code>brief_sheet</code> by dropping
 exactly columns by position (not by name).</p>
-<p>Use negative indexing to drop the columns 6, 7, 8, and 9 from
+<p>Use negative indexing to drop the columns 7, 8, and 9 from
 <code>focus_pool</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-brief_sheet &lt;- focus_pool[ , ___(6, 7, 8, 9) ]    # use negative c() 
+brief_sheet &lt;- focus_pool[ , ___(7, 8, 9) ]    # use negative c() 
 # ✅ Verify
 names(______)</code></pre>
 <p>🗣 Explain how negative indices work for column selection.</p>
@@ -2669,14 +2673,16 @@ More developed countries tend to have lower fertility rates.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 a &lt;- ___  # life expectancy cutoff (&lt;= a) 
 b &lt;- ___  # infant mortality cutoff (&gt;= b) 
-c &lt;- ___  # fertility cutoff (&gt;= c) </code></pre>
+c &lt;- ___  # fertility cutoff (&gt;= c) 
+
+# Hint: The values should be within the range you found in Task 5.</code></pre>
 <p>🎯 Combine these conditions with <code>&amp;</code> to create a
 filter that selects countries that meet all three criteria.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 needs_screen &lt;- brief_sheet[
   brief_sheet$life_expectancy __ a &amp;  # keep low values with which relational operator
   brief_sheet$infant_mortality __ b &amp; # keep high values with which relational operator
-  brief_sheet$fertility __ c,         # keep high values with which relational operator
+  brief_sheet$fertility __ c          # keep high values with which relational operator
 ]
 
 # ✅ Verify
@@ -2693,24 +2699,24 @@ data.</p>
 <h2><span class="header-section-number">9.7</span> Task 7 🌳</h2>
 <p>🔁 <code>|</code> vs <code>%in%</code> (Same Result, Different
 Syntax)</p>
-<p>🎯 Show that filtering the same two regions with <code>|</code> is
+<p>🎯 Show that filtering the same three regions with <code>|</code> is
 equivalent to using <code>%in%</code>.</p>
-<p><strong>Step 1</strong> Use <code>|</code> to filter for the same two
-regions you used in Task 3.</p>
+<p><strong>Step 1</strong> Use <code>|</code> to filter for the regions
+you used in Task 3.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # Use stored region_1 and region_2
 # TODO 6-A:
 A_or_B &lt;- gapminder[
   gapminder$year == target_year &amp;
-    (gapminder$region == region_1 ___ gapminder$region == region_2), # Which operator goes here?
+    (gapminder$region == region_1 ___ gapminder$region == region_2 ___ gapminder$region == region_3), 
 ]</code></pre>
 <p><strong>Step 2</strong> Use <code>%in%</code> to filter for the same
-two regions.</p>
+regions.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # Use the SAME year and regions you used earlier
 in_set &lt;- gapminder[
   gapminder$year == target_year &amp;
-    gapminder$region ___ c(region_1, region_2), # Which operator goes here?
+    gapminder$region ___ c(region_1, region_2, region_3),
 ]</code></pre>
 <p><strong>Step 3</strong> Compare the number of rows in
 <code>A_or_B</code> and <code>in_set</code>.</p>
@@ -2769,7 +2775,7 @@ useful to store these positions?</p>
 </div>
 <div id="task-10" class="section level2" number="9.10">
 <h2><span class="header-section-number">9.10</span> Task 10 🌱</h2>
-<p>🎯 <strong>Goal:</strong> Create a well-formated HTML report for
+<p>🎯 <strong>Goal:</strong> Create a well-formatted HTML report for
 submission.</p>
 <p><strong>Step 1: Sweep your Environment (start clean).</strong><br />
 Click the 🧹 <strong>broom icon</strong> in the Environment pane to

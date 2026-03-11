@@ -4,28 +4,19 @@ subtitle: "And, Or, and Membership"
 author: "Lorraine Gaudio"
 #date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
     includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 
@@ -689,8 +680,6 @@ You’ll apply these skills to an **NGO health pilot** scenario using the `gapmi
 
 Imagine your nonprofit received 100 vaccine coolers and one charter flight. You must assemble a shortlist of countries for a health-equity pilot within the next few weeks. Use dslabs::gapminder to (a) focus on specific regions, (b) filter by need indicators, and (c) apply a simple feasibility window based on population size.
 
-
-
 🚀 Setup & Orientation
 
 🎯 **Goal:** Load the data, read the help page, and become familiar with the `gapminder` dataset.
@@ -701,6 +690,7 @@ We installed the package `dslabs` in Chapter 7. `dslabs` has curated datasets fr
 # ⚡ Type this in your R Notebook in a code chunk
 
 # install.packages("dslabs")  # uncomment if you have not yet installed dslabs
+## NOTE: Please comment out the install.packages() line after you run it once. Your report will not knit with install.packages() in it.  You only need to install the package once per computer.
 
 # Load the package and data
 library(dslabs)  # use library() to load the package
@@ -745,7 +735,7 @@ target_year <- ___   # must be a single year of gapminder
 
 🧭 Pick your regions
 
-🎯 Identify the exact region names; then pick (your choice) your two target regions.
+🎯 Identify the exact region names; then pick (your choice) your three target regions.
 
 **Step 1** Identify the `unique` `region` options in `gapminder`.
 
@@ -755,25 +745,26 @@ target_year <- ___   # must be a single year of gapminder
 ___(___$___)    # Fill in: function, dataset, and column name  
 ```
 
-*Use this output to select two regions. Copy exact names.*
+*Use this output to select three regions. Copy exact names.*
 
 **Step 2** 
 
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-# TODO 2-B: store two regions EXACTLY as shown above
+# TODO 2-B: store three regions EXACTLY as shown above
 region_1 <- "___"
 region_2 <- "___"
+region_3 <- "___"
 ```
 
-🗣 I selected ___ and ___ as my target regions because _____.
+🗣 I selected ____, ____, and ____ as my target regions because _____.
 
 ## Task 3 🌱
 
 🔍 Focus the Pool
 
-🎯 Create `focus_pool` that keeps rows from the `target_year` AND restricts to two regions you want to prioritize. 
+🎯 Create `focus_pool` that keeps rows from the `target_year` AND restricts to three regions you want to prioritize. 
 
 **Step 1** Build the logical tests for year and region separately.
 
@@ -781,9 +772,9 @@ region_2 <- "___"
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 3-A: build the logical tests (two separate vectors)
 
-is_year   <- gapminder$year __ target_year               # test for equality
+is_year   <- gapminder$year __ target_year  # test for equality
 
-is_region <- _________$region ___ c(region_1, region_2)  # test for membership in the set
+is_region <- _________$region ___ c(region_1, region_2, region_3)  # test for membership in the set
 ```
 
 **Step 2** Combine the two logical vectors with `&` to create a single filter.
@@ -791,7 +782,7 @@ is_region <- _________$region ___ c(region_1, region_2)  # test for membership i
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 3-B: combine
-keep <- _______ _ _______            # is_year and is_region with AND
+keep <- _______ _ _______           # is_year and is_region with AND
 
 ```
 
@@ -823,11 +814,11 @@ ____(focus_pool) __ ____(gapminder)
 
 Create a simpler briefing table `brief_sheet` by dropping exactly columns by position (not by name). 
 
-Use negative indexing to drop the columns 6, 7, 8, and 9 from `focus_pool`. 
+Use negative indexing to drop the columns 7, 8, and 9 from `focus_pool`. 
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-brief_sheet <- focus_pool[ , ___(6, 7, 8, 9) ]    # use negative c() 
+brief_sheet <- focus_pool[ , ___(7, 8, 9) ]    # use negative c() 
 # ✅ Verify
 names(______)
 ```
@@ -923,6 +914,8 @@ sum(brief_sheet$fertility >= ___)
 a <- ___  # life expectancy cutoff (<= a) 
 b <- ___  # infant mortality cutoff (>= b) 
 c <- ___  # fertility cutoff (>= c) 
+
+# Hint: The values should be within the range you found in Task 5.
 ```
 
 🎯 Combine these conditions with `&` to create a filter that selects countries that meet all three criteria.
@@ -932,7 +925,7 @@ c <- ___  # fertility cutoff (>= c)
 needs_screen <- brief_sheet[
   brief_sheet$life_expectancy __ a &  # keep low values with which relational operator
   brief_sheet$infant_mortality __ b & # keep high values with which relational operator
-  brief_sheet$fertility __ c,         # keep high values with which relational operator
+  brief_sheet$fertility __ c          # keep high values with which relational operator
 ]
 
 # ✅ Verify
@@ -950,9 +943,9 @@ If `nrow(needs_screen) == 0`, adjust the values in a, b, and/or c.
 
 🔁 `|` vs `%in%` (Same Result, Different Syntax)
 
-🎯  Show that filtering the same two regions with `|` is equivalent to using `%in%`.
+🎯  Show that filtering the same three regions with `|` is equivalent to using `%in%`.
 
-**Step 1** Use `|` to filter for the same two regions you used in Task 3.
+**Step 1** Use `|` to filter for the regions you used in Task 3.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -960,17 +953,17 @@ If `nrow(needs_screen) == 0`, adjust the values in a, b, and/or c.
 # TODO 6-A:
 A_or_B <- gapminder[
   gapminder$year == target_year &
-    (gapminder$region == region_1 ___ gapminder$region == region_2), # Which operator goes here?
+    (gapminder$region == region_1 ___ gapminder$region == region_2 ___ gapminder$region == region_3), 
 ]
 ```
- **Step 2** Use `%in%` to filter for the same two regions.
+ **Step 2** Use `%in%` to filter for the same regions.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # Use the SAME year and regions you used earlier
 in_set <- gapminder[
   gapminder$year == target_year &
-    gapminder$region ___ c(region_1, region_2), # Which operator goes here?
+    gapminder$region ___ c(region_1, region_2, region_3),
 ]
 ```
 
@@ -1041,7 +1034,7 @@ shortlist[ , c("country", "population", "life_expectancy", "infant_mortality", "
  
 ## Task 10 🌱
 
-🎯 **Goal:** Create a well-formated HTML report for submission.
+🎯 **Goal:** Create a well-formatted HTML report for submission.
 
 **Step 1: Sweep your Environment (start clean).**  
 Click the 🧹 **broom icon** in the Environment pane to clear objects.
