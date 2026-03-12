@@ -425,7 +425,6 @@ In this Practice Space, you will write a **Markdown prompt** that instructs a La
 **Before you begin**
 
 1. Created a R Notebook in the Source pane and saved it as `chapter5_practice.Rmd` in your course folder. 
-
 2. Start clean: Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
 3. Write short memos documenting problems, fixes, and any help you used (**tenacity** + **transparency**).

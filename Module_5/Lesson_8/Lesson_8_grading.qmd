@@ -407,7 +407,7 @@ library(dslabs)
 
 Column Selection
 
-📝 Create **`C_Overload`** that keeps only year and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` without `%>%`.
+📝 Create **`C_Overload`** that keeps only `year` and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` without `%>%`.
 
 ```{r, eval=FALSE}
 C_Overload <- select(temp_carbon, year, carbon_emissions)
@@ -426,6 +426,8 @@ star_names <- stars %>% select(star)
 # Verify:
 ncol(star_names) == 1 && names(star_names) == "star"
 ```
+
+🗣 Does this return a vector or keep a one-column data frame?
 
 ## Task 3
 

@@ -79,19 +79,31 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 
 # Overview
 
-In Chapter 10, you learned about subsetting, extraction, and insertion in data frames using base R functions. This Chapter, you will learn easier subsetting with `dplyr` (`select()` & `filter()`). The `dplyr` package simplifies column and row extraction, making code shorter and easier to read than base-R brackets. Mastering `select()`, `filter()`, and the pipe `%>%` will speed up every day tasks.
+In this chapter, you will learn how to subset data efficiently with dplyr by combining the pipe `%>%` with two core verbs: `select()` for choosing columns and `filter()` for keeping rows that meet specific conditions. You will also continue working in Quarto, which is the course’s reproducible workflow for combining code, results, and written interpretation in one document. Together, these tools help you move from “writing R commands” to building a clear, repeatable analysis process. The chapter closes with applied practice using datasets such as 🚗 `mtcars`, 🌐`gapminder`, and ☣️`us_contagious_diseases`.
+
+This chapter matters because subsetting is one of the most common tasks in data analysis. Before you can graph, summarize, model, or answer a research question, you usually need to isolate the relevant cases and variables. In later coursework, you will rely on these skills to prepare datasets for visualization, descriptive statistics, hypothesis testing, and project-based analysis. In professional data work, analysts constantly filter records, choose relevant fields, remove duplicates, and create smaller, targeted datasets for reporting and decision-making. Learning to do this with readable `dplyr` code will make your work faster, easier to check, and easier for other people to follow.
 
 By the end of Chapter 11 you will be able to:
 
-1. ⚡ Remember – List what `select()`, `filter()`, and `%>%` do.
+- 🔗 Use the pipe `%>%` to connect multiple data-wrangling steps into a readable workflow.
 
-2. 🔍 Understand – Explain how `select()` (columns) differs from `filter()` (rows).
+- 🧱 Distinguish between `select()` for choosing columns and `filter()` for keeping rows.
 
-3. 🛠 Apply – Use `select()` and `filter()` to subset a data frame.
+- 🎯 Apply `select()` to keep, reorder, or exclude variables from a data frame.
 
-4. 📊 Analyze – Chain multiple verbs with `%>%` to answer a real question.
+- 🕵️ Apply `filter(`) to keep rows that meet one or more logical conditions.
 
-5. 🧠️ Evaluate – Decide when `dplyr` is preferable to `base-R` brackets.
+- ⚖️ Construct filtering conditions with relational operators such as `>`, `<`, `==`, `!=`, `<=`, and `>=`.
+
+- 🧺 Combine conditions with `&`, `|`, and `%in%` to create multi-criteria subsets.
+
+- 🧠 Interpret how Boolean logic affects which observations are kept in a dataset.
+
+- 🔄 Build pipelines that combine `filter()` and `select()` to create focused, analysis-ready data subsets.
+
+- 📋 Produce smaller, relevant datasets that are ready for later visualization, summarization, and modeling.
+
+- 📝 Use Quarto to organize code, output, and written interpretation in a reproducible analysis document.
 
 Keep these goals in mind as you move through each section.
 
@@ -113,7 +125,9 @@ What changes is the file extension is `.qmd`, the YAML uses `format:` instead of
 
 🎯 Create a Quarto File
 
-1. For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+1. For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push. 
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
 
 2. Open a new Quarto document in your course folder and save it as: `chapter11_notes.qmd` (`File > New File > Quarto Document`).
 
@@ -599,7 +613,9 @@ nrow(powerful_auto)
 
 # Summary
 
-In dplyr, `filter()` keeps rows based on values, while `select()` keeps columns based on names or selection helpers.
+In Chapter 11, you learned how to use `dplyr` to create smaller, analysis-ready datasets in a clear and reproducible way. You practiced `select()` to keep or drop columns, `filter()` to keep rows based on logical conditions, and `%>%` to connect multiple steps into a readable workflow. You also worked in Quarto so that your code, output, and written notes stay together in one document.
+
+You applied comparison operators and Boolean logic to ask more precise questions of data, including single-condition filters, multiple-condition filters with AND/OR logic, and workflows that combine `filter()` and `select()` in the same pipeline. The chapter also extended subsetting into practical tasks such as, previewing results, and creating focused subsets from real datasets for exploration and reporting.
 
 # Chapter Terms
 
@@ -616,14 +632,58 @@ In dplyr, `filter()` keeps rows based on values, while `select()` keeps columns 
 
 # 📝 Practice Space
 
+In this Practice Space, you will practice using a Quarto document as a reproducible workspace while learning two core `dplyr` verbs:
 
-Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, save **BOTH** your script (which should include your lesson notes and completed assignment) and your `.RData` workspace and upload to Canvas Assignment 8 in Module 8.
+- `select()` to keep specific columns
+
+- `filter()` to keep specific rows
+
+You will also practice basic Quarto habits from this chapter:
+
+- saving your work as a `.qmd` file
+
+- writing memo responses as normal text outside code chunks
+
+- using Quarto chunk controls with `#|` as you choose to show or hide code, messages, and warnings
+
+For this Practice Space, create a new Quarto document and save it in your course folder as:
+
+`chapter11_practice.qmd`
+
+Use headings as you work so your file is organized and readable.
+
+*You won't "render" this file.* For the file submission assignment, you will submit the `.qmd` file.
+
+Suggested Headings
+
+```markdown
+# Chapter 11 Practice
 
 ## Task 0
 
-📦 Make sure `dplyr` and `dslabs` packages are library'd so their functions / datasets load.
+## Task 1
+
+## Task 2
+
+## Task 3
+
+## Task 4
+
+## Task 5
+
+## Task 6
+
+## Task 7
+```
+
+## Task 0
+
+📦 Load the packages needed for this Practice Space: `dplyr` and `dslabs`. This setup chunk is also as great place to practice Quarto chunk controls like `#| message: false` and `#| warning: false`
+
+🎯 Write the goal of this task in your own words. 
 
 ```{r, eval=FALSE}
+# ⚡ Type this in Quarto code chunk, fill in the blanks
 _______(dslabs)
 _______(dplyr)
 ```
@@ -632,70 +692,132 @@ _______(dplyr)
 
 **Column Selection**
 
-📝 Create **`C_Overload`** that keeps only year and `carbon_emissions` from the `temp_carbon` data frame. Use `select()` without `%>%`.
+📝 Create **`C_Overload`** that keeps only `year` and `carbon_emissions` from the 🌡️`temp_carbon` data frame. Use `select()` without `%>%`.
+
+🎯 Write the goal of this task in your own words. 
 
 ```{r, eval=FALSE}
-____ <- _____
+# ⚡ Type this in Quarto code chunk, fill in the blanks
+C_Overload <- _____
 ```
+
+```{r, eval=FALSE}
+# ✅  Verify
+head(C_Overload)
+```
+
+🗣 Explain what `select()` did in this task. How does head help you check that it worked? 
 
 ## Task 2
 
 **Single-Column Dataframe**
 
-🌟 Pipe the `stars` dataset in `dslabs` through `select()` to keep only the `star` column. Name the result **`star_names`**.
+Pipe the 🌟 `stars` dataset in `dslabs` through `select()` to keep only the `star` column. Name the result **`star_names`**.
+
+🎯 Write the goal of this task in your own words. 
 
 ```{r, eval=FALSE}
-____ <- _____
+# ⚡ Type this in Quarto code chunk, fill in the blanks
+star_names <- _____
 ```
+
+```{r, eval=FALSE}
+# ✅  Verify
+head(star_names)
+```
+
+🗣 Does this return a vector or keep a one-column data frame?
 
 ## Task 3
 
-Row Filtering
+**Row Filtering**
 
-⚠️ From `murders`, remove every row where state equals `"Florida"`. Name the object **`No_Florida`** (any method is fine).
+From 🔫`murders`, remove every row where state equals `"Florida"` using `!=`. Name the object **`No_Florida`**.
+
+🎯 Write the goal of this task in your own words. 
 
 ```{r, eval=FALSE}
-____ <- _____
+# ✅  Pre-test
+unique(murders$state)
 ```
+
+```{r, eval=FALSE}
+# ⚡ Type this in Quarto code chunk, fill in the blanks
+No_Florida <- _____
+```
+
+```{r, eval=FALSE}
+# ✅  Verify
+unique(No_Florida$state)
+```
+
+🗣 Why might pre-checking the unique values of `state` in the data frame `murders` useful? What change are you expecting to see in the ✅  Verify step? Explain what rows are removed. 
 
 ## Task 4
 
-Multiple Conditions
+**Multiple Conditions**
 
-🚗 From `mtcars`, use `filter()` + `%>%`, pull cars in mtcars that are manual, have 8 cylinders, and have `qsec < 15`. Store as **`Fast_n_Furious`**. 
+🚗 From `mtcars`, using `filter()` and piping,  pull cars in `mtcars` that are **manual**, have `8` **cylinders**, and have **1/4 mile time** *less than* `15`. Store as **`Fast_n_Furious`**. 
+
+*Hint: use `?mtcars` to identify the relevant variables for each condition.*
+
+🎯 Write the goal of this task in your own words. 
 
 ```{r, eval=FALSE}
 summary(mtcars$qsec)  # check qsec range
 ```
 
-Is `qsec < 15` within range? 
+```{r, eval=FALSE}
+# ⚡ Type this in Quarto code chunk, fill in the blanks
+Fast_n_Furious <- _____
+```
 
 ```{r, eval=FALSE}
-____ <- _____
+# ✅  Verify
+head(Fast_n_Furious)
+nrow(Fast_n_Furious)
 ```
+
+🗣 Explain the conditions you used to filter the rows. What does each condition mean in terms of the characteristics of the cars? How many cars meet all three conditions?
+
+## Task 5
+
+**OR Logic + Column Slice**
+
+From 🚗 `mtcars`, keep only the cars whose displacement is either **under 160** or **over 250**, and then show only the first three columns of those rows.(Hint: `:`). Store as `filtered_cars`
+
+🎯 Write the goal of this task in your own words. 
+
+```{r, eval=FALSE}
+# ✅  Pre-check
+range(mtcars$disp)  # check disp 
+```
+
+🗣 This tells the spread of `disp` in `mtcars` so you can see whether the cutoffs `160` and `250` make sense.
+
+```{r, eval=FALSE}
+# ⚡ Type this in Quarto code chunk, fill in the blanks
+filtered_cars <- _____
+```
+
+```{r, eval=FALSE}
+# ✅  Verify
+all(filtered_cars$disp > 250 | filtered_cars$disp < 160) # check disp 
+```
+
+🗣 The function `all()` to test whether every kept row satisfies the condition
 
 ## Task 6
 
-OR Logic + Column Slice
+**Reflection**
 
-In 🚗 `mtcars`, show only rows where `disp > 250` OR `disp < 160` and display just the first three columns.
-
-```{r, eval=FALSE}
-____ <- _____
-```
-
+📝 Write a few sentences comparing the utility of `dplyr` verbs `select()` and `filter()` as it compares to base-R brackets `[ ]` for subsetting.
 
 ## Task 7
 
-Reflection
+**Self-check checklist**
 
-📝 Write a few sentences comparing dplyr verbs over base-R brackets (from lesson 6 & 7) for subsetting.
-
-# Save and Upload
-
-0. Self-check checklist:
-
-For the assignment protion, your environment should contain the following items:
+For the file submission, make sure your qmd creates runs from top to bottom without errors and that the following objects are created in your environment with the expected content:
 
 - `C_Overload` exists and has only `year` and `carbon_emissions`.
 
@@ -705,70 +827,17 @@ For the assignment protion, your environment should contain the following items:
 
 - `Fast_n_Furious` with rows that only contain manual, 8 cylinders, and where `qsec < 15`.
 
+- `filtered_cars` with rows where `disp > 250` OR `disp < 160` and only the first three columns.
+
 - **All code in your Quarto document runs top-to-bottom without errors.**
 
-1. You will be submitting **both** the Quarto document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+🎯 **Goal:** Check `.qmd` for submission quality.
 
-```{r}
-save.image("Assignment8_Workspace.RData")
-```
+**Step 1: Sweep your Environment (start clean).**  
+Click the 🧹 **broom icon** in the Environment pane to clear objects.
 
-Or you can click the "Save Workspace" button in the Environment pane. 
+**Step 2: Run everything top-to-bottom.**  
+Use **Run → Run All** to execute every chunk in order.
 
-💾 **Always save the R documents before closing.**
-
-
-2. Find the assignment in this week's module in Canvas and upload **both** the `.qmd` and the workspace file (`RData`).
-
-# Today you practiced:
-
-- Installed / loaded packages for extra tools.
-
-- Used the pipe `%>%` to chain steps left-to-right.
-
-- Selected columns with `select()` (including negative selection).
-
-- Filtered rows with `filter()` using logical tests and `%in%`.
-
-- Combined verbs to answer data questions concisely.
-
-🎯 Great job! Keep practicing piping and you’ll soon write clear, readable R code!
-
-
-
-
-# Notes
-
-## Learning Skill
-
-
-LS: 
-Core
-Review course content
-Advanced
-Curiosity Skill Highlight
-
-
-
-Citing resources
-
-- (Curiosity highlight): “data scavenger hunt” + citation + one curiosity question answered with a quick code experiment (not a paragraph of vibes).
-
-
-- Courage: Students can share imperfect work in a discussion/lab setting and revise based on feedback.
-
-Maybe Module 6: Autonomy: 
-- “trying alternatives” (base R vs dplyr; indexing vs verbs) and documenting what the output shows.
-- Students can manage their workflow independently: organized folders, naming, saving, and submitting correct artifacts without resource rescue.
-- Students can set boundaries on AI use consistent with instructions and explain their choice in a memo (what they delegated vs what they did themselves).
-- Students can select a method and justify it (e.g., base R indexing vs dplyr select/filter) using output evidence. “I chose this approach because…” memo
-
-Maybe Module 7: Open-mindedness
-- Students can implement two approaches to the same task (e.g., base R vs dplyr) and compare outputs and readability.
-- Students can revise their approach when evidence shows a better method (not because it’s trendy).
-- Students can evaluate tool fit (including AI systems) for a specific goal and explain tradeoffs.
-
-
-
-
-
+**Step 3: Save and submit.**  
+After your notebook runs without errors, make sure the latest edits are save your file (`.qmd`) 

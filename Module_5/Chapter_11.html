@@ -1639,26 +1639,52 @@ display: none;
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>In Chapter 10, you learned about subsetting, extraction, and
-insertion in data frames using base R functions. This Chapter, you will
-learn easier subsetting with <code>dplyr</code> (<code>select()</code>
-&amp; <code>filter()</code>). The <code>dplyr</code> package simplifies
-column and row extraction, making code shorter and easier to read than
-base-R brackets. Mastering <code>select()</code>, <code>filter()</code>,
-and the pipe <code>%&gt;%</code> will speed up every day tasks.</p>
+<p>In this chapter, you will learn how to subset data efficiently with
+dplyr by combining the pipe <code>%&gt;%</code> with two core verbs:
+<code>select()</code> for choosing columns and <code>filter()</code> for
+keeping rows that meet specific conditions. You will also continue
+working in Quarto, which is the course’s reproducible workflow for
+combining code, results, and written interpretation in one document.
+Together, these tools help you move from “writing R commands” to
+building a clear, repeatable analysis process. The chapter closes with
+applied practice using datasets such as 🚗 <code>mtcars</code>,
+🌐<code>gapminder</code>, and ☣️<code>us_contagious_diseases</code>.</p>
+<p>This chapter matters because subsetting is one of the most common
+tasks in data analysis. Before you can graph, summarize, model, or
+answer a research question, you usually need to isolate the relevant
+cases and variables. In later coursework, you will rely on these skills
+to prepare datasets for visualization, descriptive statistics,
+hypothesis testing, and project-based analysis. In professional data
+work, analysts constantly filter records, choose relevant fields, remove
+duplicates, and create smaller, targeted datasets for reporting and
+decision-making. Learning to do this with readable <code>dplyr</code>
+code will make your work faster, easier to check, and easier for other
+people to follow.</p>
 <p>By the end of Chapter 11 you will be able to:</p>
-<ol style="list-style-type: decimal">
-<li><p>⚡ Remember – List what <code>select()</code>,
-<code>filter()</code>, and <code>%&gt;%</code> do.</p></li>
-<li><p>🔍 Understand – Explain how <code>select()</code> (columns)
-differs from <code>filter()</code> (rows).</p></li>
-<li><p>🛠 Apply – Use <code>select()</code> and <code>filter()</code> to
-subset a data frame.</p></li>
-<li><p>📊 Analyze – Chain multiple verbs with <code>%&gt;%</code> to
-answer a real question.</p></li>
-<li><p>🧠️ Evaluate – Decide when <code>dplyr</code> is preferable to
-<code>base-R</code> brackets.</p></li>
-</ol>
+<ul>
+<li><p>🔗 Use the pipe <code>%&gt;%</code> to connect multiple
+data-wrangling steps into a readable workflow.</p></li>
+<li><p>🧱 Distinguish between <code>select()</code> for choosing columns
+and <code>filter()</code> for keeping rows.</p></li>
+<li><p>🎯 Apply <code>select()</code> to keep, reorder, or exclude
+variables from a data frame.</p></li>
+<li><p>🕵️ Apply <code>filter(</code>) to keep rows that meet one or more
+logical conditions.</p></li>
+<li><p>⚖️ Construct filtering conditions with relational operators such
+as <code>&gt;</code>, <code>&lt;</code>, <code>==</code>,
+<code>!=</code>, <code>&lt;=</code>, and <code>&gt;=</code>.</p></li>
+<li><p>🧺 Combine conditions with <code>&amp;</code>, <code>|</code>,
+and <code>%in%</code> to create multi-criteria subsets.</p></li>
+<li><p>🧠 Interpret how Boolean logic affects which observations are
+kept in a dataset.</p></li>
+<li><p>🔄 Build pipelines that combine <code>filter()</code> and
+<code>select()</code> to create focused, analysis-ready data
+subsets.</p></li>
+<li><p>📋 Produce smaller, relevant datasets that are ready for later
+visualization, summarization, and modeling.</p></li>
+<li><p>📝 Use Quarto to organize code, output, and written
+interpretation in a reproducible analysis document.</p></li>
+</ul>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
 <div id="quarto" class="section level1" number="2">
@@ -1694,15 +1720,18 @@ from R Markdown and the chunk controls are written with <code>#|</code>
 lines at the top of the chunk.</p>
 <p>🎯 Create a Quarto File</p>
 <ol style="list-style-type: decimal">
-<li><p>For those of you who <strong>have GitHub</strong> and a course
+<li>For those of you who <strong>have GitHub</strong> and a course
 project, navigate to your course folder and open your course project.
 This will open RStudio. Click “Pull” in the Git pane to get the latest
-version of the course materials. If you <strong>don’t have
-GitHub</strong> or a course project, just open RStudio and set your
-working directory to your course folder.</p></li>
-<li><p>Open a new Quarto document in your course folder and save it as:
+version of the course materials. After completing work, save, stage,
+commit, and push.</li>
+</ol>
+<p>If you <strong>don’t have GitHub</strong> or a course project, just
+open RStudio and set your working directory to your course folder.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Open a new Quarto document in your course folder and save it as:
 <code>chapter11_notes.qmd</code>
-(<code>File &gt; New File &gt; Quarto Document</code>).</p></li>
+(<code>File &gt; New File &gt; Quarto Document</code>).</li>
 </ol>
 <p>Just like an R Notebook template, a new Quarto file will open with
 sample text. Start fresh:</p>
@@ -2317,107 +2346,88 @@ columns.</p>
 when you write your filtering conditions. If you <code>select()</code>
 first and accidentally remove a column needed by <code>filter()</code>,
 your code will fail.</p>
-<p>🎯 We’ll mix it up by using a different data set,
+<p>We’ll mix it up by using a different data set,
 ☣️<code>us_contagious_diseases</code> from <code>dslabs</code>. This
 data set contains information about contagious diseases in the US.</p>
 <pre class="r"><code>?us_contagious_diseases</code></pre>
+<p>🎯 Goal: Using <code>us_contagious_diseases</code> from
+<code>dslabs</code>, keep only rows for <code>Alaska</code> from
+<code>1980</code> and later, then keep only the columns
+<code>year</code>, <code>disease</code>, and <code>count</code>. Store
+as <code>alaska_disease</code>.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
-us_contagious_diseases %&gt;% 
+alaska_disease &lt;- us_contagious_diseases %&gt;% 
   filter(state == &quot;Alaska&quot;, year &gt;= 1980) %&gt;%   # rows
   select(year, disease, count)                  # columns</code></pre>
+<p>🗣 This pipeline says: start with <code>us_contagious_diseases</code>,
+keep only the rows for Alaska in 1980 or later, and then trim the result
+down to just three columns. <code>filter()</code> changes the number of
+rows. <code>select()</code> changes the number of columns. That is the
+key difference between the two verbs.</p>
+<pre class="r"><code># ✅  Verify
+head(alaska_disease)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["disease"],"name":[2],"type":["fct"],"align":["left"]},{"label":["count"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1980","2":"Hepatitis A","3":"18"},{"1":"1981","2":"Hepatitis A","3":"45"},{"1":"1982","2":"Hepatitis A","3":"17"},{"1":"1983","2":"Hepatitis A","3":"43"},{"1":"1984","2":"Hepatitis A","3":"14"},{"1":"1985","2":"Hepatitis A","3":"18"},{"1":"1986","2":"Hepatitis A","3":"66"},{"1":"1987","2":"Hepatitis A","3":"240"},{"1":"1988","2":"Hepatitis A","3":"268"},{"1":"1989","2":"Hepatitis A","3":"494"},{"1":"1990","2":"Hepatitis A","3":"167"},{"1":"1991","2":"Hepatitis A","3":"80"},{"1":"1992","2":"Hepatitis A","3":"65"},{"1":"1993","2":"Hepatitis A","3":"374"},{"1":"1994","2":"Hepatitis A","3":"163"},{"1":"1995","2":"Hepatitis A","3":"38"},{"1":"1996","2":"Hepatitis A","3":"46"},{"1":"1997","2":"Hepatitis A","3":"20"},{"1":"1998","2":"Hepatitis A","3":"6"},{"1":"1999","2":"Hepatitis A","3":"7"},{"1":"2000","2":"Hepatitis A","3":"8"},{"1":"2001","2":"Hepatitis A","3":"10"},{"1":"2002","2":"Hepatitis A","3":"11"},{"1":"2003","2":"Hepatitis A","3":"8"},{"1":"2004","2":"Hepatitis A","3":"4"},{"1":"2005","2":"Hepatitis A","3":"3"},{"1":"2006","2":"Hepatitis A","3":"0"},{"1":"2007","2":"Hepatitis A","3":"3"},{"1":"2008","2":"Hepatitis A","3":"3"},{"1":"2009","2":"Hepatitis A","3":"6"},{"1":"2010","2":"Hepatitis A","3":"4"},{"1":"2011","2":"Hepatitis A","3":"1"},{"1":"1980","2":"Measles","3":"6"},{"1":"1981","2":"Measles","3":"0"},{"1":"1982","2":"Measles","3":"1"},{"1":"1983","2":"Measles","3":"0"},{"1":"1984","2":"Measles","3":"0"},{"1":"1985","2":"Measles","3":"0"},{"1":"1986","2":"Measles","3":"0"},{"1":"1987","2":"Measles","3":"0"},{"1":"1988","2":"Measles","3":"1"},{"1":"1989","2":"Measles","3":"0"},{"1":"1990","2":"Measles","3":"27"},{"1":"1991","2":"Measles","3":"1"},{"1":"1992","2":"Measles","3":"4"},{"1":"1993","2":"Measles","3":"0"},{"1":"1994","2":"Measles","3":"16"},{"1":"1995","2":"Measles","3":"0"},{"1":"1996","2":"Measles","3":"68"},{"1":"1997","2":"Measles","3":"1"},{"1":"1998","2":"Measles","3":"16"},{"1":"1999","2":"Measles","3":"0"},{"1":"2000","2":"Measles","3":"1"},{"1":"2001","2":"Measles","3":"0"},{"1":"2002","2":"Measles","3":"0"},{"1":"1980","2":"Mumps","3":"16"},{"1":"1981","2":"Mumps","3":"19"},{"1":"1982","2":"Mumps","3":"18"},{"1":"1983","2":"Mumps","3":"16"},{"1":"1984","2":"Mumps","3":"17"},{"1":"1985","2":"Mumps","3":"10"},{"1":"1986","2":"Mumps","3":"10"},{"1":"1987","2":"Mumps","3":"8"},{"1":"1988","2":"Mumps","3":"14"},{"1":"1989","2":"Mumps","3":"1"},{"1":"1990","2":"Mumps","3":"4"},{"1":"1991","2":"Mumps","3":"15"},{"1":"1992","2":"Mumps","3":"3"},{"1":"1993","2":"Mumps","3":"11"},{"1":"1994","2":"Mumps","3":"4"},{"1":"1995","2":"Mumps","3":"12"},{"1":"1996","2":"Mumps","3":"3"},{"1":"1997","2":"Mumps","3":"4"},{"1":"1998","2":"Mumps","3":"2"},{"1":"1999","2":"Mumps","3":"3"},{"1":"2000","2":"Mumps","3":"8"},{"1":"2001","2":"Mumps","3":"1"},{"1":"2002","2":"Mumps","3":"0"},{"1":"1980","2":"Pertussis","3":"5"},{"1":"1981","2":"Pertussis","3":"0"},{"1":"1982","2":"Pertussis","3":"0"},{"1":"1983","2":"Pertussis","3":"5"},{"1":"1984","2":"Pertussis","3":"0"},{"1":"1985","2":"Pertussis","3":"31"},{"1":"1986","2":"Pertussis","3":"5"},{"1":"1987","2":"Pertussis","3":"9"},{"1":"1988","2":"Pertussis","3":"7"},{"1":"1989","2":"Pertussis","3":"3"},{"1":"1990","2":"Pertussis","3":"15"},{"1":"1991","2":"Pertussis","3":"9"},{"1":"1992","2":"Pertussis","3":"13"},{"1":"1993","2":"Pertussis","3":"3"},{"1":"1994","2":"Pertussis","3":"2"},{"1":"1995","2":"Pertussis","3":"0"},{"1":"1996","2":"Pertussis","3":"3"},{"1":"1997","2":"Pertussis","3":"12"},{"1":"1998","2":"Pertussis","3":"13"},{"1":"1999","2":"Pertussis","3":"5"},{"1":"2000","2":"Pertussis","3":"19"},{"1":"2001","2":"Pertussis","3":"10"},{"1":"2002","2":"Pertussis","3":"5"},{"1":"2003","2":"Pertussis","3":"6"},{"1":"2004","2":"Pertussis","3":"11"},{"1":"2005","2":"Pertussis","3":"123"},{"1":"2006","2":"Pertussis","3":"53"},{"1":"2007","2":"Pertussis","3":"37"},{"1":"2008","2":"Pertussis","3":"191"},{"1":"2009","2":"Pertussis","3":"70"},{"1":"2010","2":"Pertussis","3":"42"},{"1":"2011","2":"Pertussis","3":"27"},{"1":"1980","2":"Rubella","3":"12"},{"1":"1981","2":"Rubella","3":"1"},{"1":"1982","2":"Rubella","3":"5"},{"1":"1983","2":"Rubella","3":"1"},{"1":"1984","2":"Rubella","3":"1"},{"1":"1985","2":"Rubella","3":"1"},{"1":"1986","2":"Rubella","3":"0"},{"1":"1987","2":"Rubella","3":"2"},{"1":"1988","2":"Rubella","3":"0"},{"1":"1989","2":"Rubella","3":"0"},{"1":"1990","2":"Rubella","3":"0"},{"1":"1991","2":"Rubella","3":"3"},{"1":"1992","2":"Rubella","3":"0"},{"1":"1993","2":"Rubella","3":"0"},{"1":"1994","2":"Rubella","3":"1"},{"1":"1995","2":"Rubella","3":"0"},{"1":"1996","2":"Rubella","3":"0"},{"1":"1997","2":"Rubella","3":"0"},{"1":"1998","2":"Rubella","3":"0"},{"1":"1999","2":"Rubella","3":"0"},{"1":"2000","2":"Rubella","3":"0"},{"1":"2001","2":"Rubella","3":"0"},{"1":"2002","2":"Rubella","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["disease"],"name":[2],"type":["fct"],"align":["left"]},{"label":["count"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1980","2":"Hepatitis A","3":"18","_rn_":"1"},{"1":"1981","2":"Hepatitis A","3":"45","_rn_":"2"},{"1":"1982","2":"Hepatitis A","3":"17","_rn_":"3"},{"1":"1983","2":"Hepatitis A","3":"43","_rn_":"4"},{"1":"1984","2":"Hepatitis A","3":"14","_rn_":"5"},{"1":"1985","2":"Hepatitis A","3":"18","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>🗣 A new dataset called <code>alaska_disease</code> was created from
+<code>us_contagious_diseases</code>. First, <code>filter()</code> kept
+only rows where <code>state</code> is <code>&quot;Alaska&quot;</code> and year is
+greater than or equal to <code>1980</code>. Then, <code>select()</code>
+kept only the columns <code>year</code>, <code>disease</code>, and
+<code>count</code>. Notice that state was used in the filtering step,
+but it does not appear in the final result because <code>select()</code>
+removed it afterward.</p>
 </div>
 <div id="one-application" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> One Application</h1>
-<p>🧐 Let’s say you have the research question, ❓“Which automatic cars
-(am == 0) in mtcars have horsepower &gt; 150? 🎯 Goal: Your report
-should show only hp and mpg.</p>
+<p>❓“Which automatic cars (<code>am == 0)</code> in <code>mtcars</code>
+have horsepower &gt; 150?</p>
+<p>🎯 <strong>Goal</strong>: Answer the question. Show only
+<code>hp</code> and <code>mpg</code>.</p>
+<p>In <code>mtcars</code>, <code>am</code> is coded as
+<code>0 = automatic</code> and <code>1 = manual</code> horsepower is
+<code>hp</code> and miles per gallon is <code>mpg</code>.</p>
 <pre class="r"><code>#⚡ Test
-mtcars %&gt;%
+powerful_auto &lt;- mtcars %&gt;%
   filter(am == 0, hp &gt; 150) %&gt;%
-  select(hp, mpg) %&gt;%
-  head()</code></pre>
+  select(hp, mpg)</code></pre>
+<pre class="r"><code># ✅  Verify
+head(powerful_auto)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["hp"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["mpg"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"175","2":"18.7","_rn_":"Hornet Sportabout"},{"1":"245","2":"14.3","_rn_":"Duster 360"},{"1":"180","2":"16.4","_rn_":"Merc 450SE"},{"1":"180","2":"17.3","_rn_":"Merc 450SL"},{"1":"180","2":"15.2","_rn_":"Merc 450SLC"},{"1":"205","2":"10.4","_rn_":"Cadillac Fleetwood"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🗣</p>
-<ol style="list-style-type: decimal">
-<li><p><code>filter()</code> keeps matching rows.</p></li>
-<li><p><code>select()</code> trims to needed columns.</p></li>
-<li><p><code>head()</code> previews results. Bonus: Add row count for
-exploration.</p></li>
-</ol>
+<pre class="r"><code>nrow(powerful_auto)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<p>🗣 A new dataset called <code>powerful_auto</code> was created from
+<code>mtcars</code>. The <code>filter()</code> step kept only cars that
+are automatic (<code>am == 0</code>) and have more than 150 horsepower.
+The <code>select()</code> step then kept only the <code>hp</code> and
+<code>mpg</code> columns, because those are the variables needed for the
+report. The result contains 10 cars.</p>
 </div>
-<div id="duplicates-sampling" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Duplicates &amp;
-Sampling</h1>
-<p>Sometimes, you may need to remove duplicate rows or sample a subset
-of rows. <code>unique()</code> removes duplicate rows;
-<code>slice_sample()</code> picks random rows. 👀 Type
-<code>?slice_sample()</code> to learn more about this <code>dplyr</code>
-function.</p>
-<p>🎯 Goal: We’ll mix it up by using a different data set,
-<code>movielens</code> from <code>dslabs</code>. This data set contains
-information about movies and ratings.</p>
-<pre class="r"><code>?movielens</code></pre>
-<pre class="r"><code>nrow(movielens)   # how many rows at start?</code></pre>
-<pre><code>## [1] 100004</code></pre>
-<pre class="r"><code># ⚡ Type this in a Quarto code chunk
-Movie_Night &lt;- movielens %&gt;%
-  filter(rating &gt;= 4) %&gt;%        # keep high ratings
-  select(title, rating) %&gt;%      # keep title and rating
-  unique()                       # remove duplicates</code></pre>
-<pre class="r"><code># ✅  Verify
-nrow(Movie_Night)  # how many rows after filter, select, and unique?</code></pre>
-<pre><code>## [1] 10562</code></pre>
-<p>🗣 Filter kept only the rows with ratings 4 or higher. Select kept
-only the title and rating columns. Unique removed duplicate rows, so
-each movie title appears only once.</p>
-<p>❓ Question: What movie should I watch on movie night?</p>
-<p>🎯 Goal: Let’s randomly sample 10 movies with ratings four or
-higher.</p>
-<pre class="r"><code>set.seed(420)
-# ⚡ Type this in a Quarto code chunk
-Movie_Night %&gt;%
-  slice_sample(n=10)  # random sample of 10 rows</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["title"],"name":[1],"type":["chr"],"align":["left"]},{"label":["rating"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Haxan: Witchcraft Through the Ages (a.k.a. The Witches)","2":"4.5"},{"1":"Return of the Secaucus 7","2":"4.5"},{"1":"Bank Dick, The","2":"4.5"},{"1":"Face to Face (Ansikte mot ansikte)","2":"4.0"},{"1":"Fireworks (Hana-bi)","2":"5.0"},{"1":"My Blue Heaven","2":"4.0"},{"1":"Monty Python's The Meaning of Life","2":"4.0"},{"1":"Multiplicity","2":"4.0"},{"1":"Exorcist, The","2":"4.5"},{"1":"Bob le Flambeur","2":"4.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div id="summary" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Summary</h1>
+<p>In Chapter 11, you learned how to use <code>dplyr</code> to create
+smaller, analysis-ready datasets in a clear and reproducible way. You
+practiced <code>select()</code> to keep or drop columns,
+<code>filter()</code> to keep rows based on logical conditions, and
+<code>%&gt;%</code> to connect multiple steps into a readable workflow.
+You also worked in Quarto so that your code, output, and written notes
+stay together in one document.</p>
+<p>You applied comparison operators and Boolean logic to ask more
+precise questions of data, including single-condition filters,
+multiple-condition filters with AND/OR logic, and workflows that combine
+<code>filter()</code> and <code>select()</code> in the same pipeline.
+The chapter also extended subsetting into practical tasks such as,
+previewing results, and creating focused subsets from real datasets for
+exploration and reporting.</p>
 </div>
-<p>🗣 Comment: What movie would you choose?</p>
-<p>🚀 Explore and Play: What would happen if we didn’t use unique()? Why
-might unique be useful for our question? Create a memo note, demonstrate
-learning skill(s) used.</p>
-</div>
-<div id="extra-practice" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Extra Practice</h1>
-<p>✍️ Practice: Demonstrate learning skill(s) by completing this bonus
-practice. Fill the blanks. Use the <code>gapminder</code> dataset.</p>
-<pre class="r"><code>___ %&gt;%
-   filter(life_expectancy &gt;= quantile(life_expectancy, ___)) %&gt;%
-   select(country, ___, life_expectancy) -&gt; Top_LifeExp
-View(Top_LifeExp)</code></pre>
-<p>🗣What is the <code>-&gt; Top_LifeExp</code> do in the code above?</p>
-<p>❓ Question: What is the highest life expectancy in this subset?</p>
-<p>❓ Question: How many countries are in the <code>Top_LifeExp</code>
-data frame?</p>
-<p>❓ Question: What is the average life expectancy in this subset?</p>
-</div>
-<div id="summary" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Summary</h1>
-<p>In dplyr, <code>filter()</code> keeps rows based on values, while
-<code>select()</code> keeps columns based on names or selection
-helpers.</p>
-</div>
-<div id="chapter-terms" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Chapter Terms</h1>
 <p><strong>Logical Operators</strong>: Operators that create or combine
 logical elements. The most common are comparison
 operators—<code>==</code>, <code>!=</code>, <code>&lt;</code>,
@@ -2450,77 +2460,158 @@ Markdown or Quarto document, written between <code>---</code> lines,
 that controls document settings like the title, author, date, output
 format (HTML/PDF/Word), and options for rendering.</p>
 </div>
-<div id="practice-space" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> 📝 Practice Space</h1>
-<p>Replace each ____ placeholder (and any TODO comments) with working
-code or a short written answer. Run each section; be sure the requested
-objects appear in the Environment. When finished, save
-<strong>BOTH</strong> your script (which should include your lesson
-notes and completed assignment) and your <code>.RData</code> workspace
-and upload to Canvas Assignment 8 in Module 8.</p>
-<div id="task-0" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Task 0</h2>
-<p>📦 Make sure <code>dplyr</code> and <code>dslabs</code> packages are
-attached so their functions / datasets load.</p>
+<div id="practice-space" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> 📝 Practice Space</h1>
+<p>In this Practice Space, you will practice using a Quarto document as
+a reproducible workspace while learning two core <code>dplyr</code>
+verbs:</p>
+<ul>
+<li><p><code>select()</code> to keep specific columns</p></li>
+<li><p><code>filter()</code> to keep specific rows</p></li>
+</ul>
+<p>You will also practice basic Quarto habits from this chapter:</p>
+<ul>
+<li><p>saving your work as a <code>.qmd</code> file</p></li>
+<li><p>writing memo responses as normal text outside code
+chunks</p></li>
+<li><p>using Quarto chunk controls with <code>#|</code> as you choose to
+show or hide code, messages, and warnings</p></li>
+</ul>
+<p>For this Practice Space, create a new Quarto document and save it in
+your course folder as:</p>
+<p><code>chapter11_practice.qmd</code></p>
+<p>Use headings as you work so your file is organized and readable.</p>
+<p><em>You won’t “render” this file.</em> For the file submission
+assignment, you will submit the <code>.qmd</code> file.</p>
+<p>Suggested Headings</p>
+<pre class="markdown"><code># Chapter 11 Practice
+
+## Task 0
+
+## Task 1
+
+## Task 2
+
+## Task 3
+
+## Task 4
+
+## Task 5
+
+## Task 6
+
+## Task 7</code></pre>
+<div id="task-0" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Task 0</h2>
+<p>📦 Load the packages needed for this Practice Space:
+<code>dplyr</code> and <code>dslabs</code>. This setup chunk is also as
+great place to practice Quarto chunk controls like
+<code>#| message: false</code> and <code>#| warning: false</code></p>
+<p>🎯 Write the goal of this task in your own words.</p>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+_______(dslabs)
+_______(dplyr)</code></pre>
 </div>
-<div id="task-1" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Task 1</h2>
-<p>Column Selection</p>
+<div id="task-1" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Task 1</h2>
+<p><strong>Column Selection</strong></p>
 <p>📝 Create <strong><code>C_Overload</code></strong> that keeps only
-year and <code>carbon_emissions</code> from the <code>temp_carbon</code>
-data frame. Use <code>select()</code> with or without
+<code>year</code> and <code>carbon_emissions</code> from the
+🌡️<code>temp_carbon</code> data frame. Use <code>select()</code> without
 <code>%&gt;%</code>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<p>🎯 Write the goal of this task in your own words.</p>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+C_Overload &lt;- _____</code></pre>
+<pre class="r"><code># ✅  Verify
+head(C_Overload)</code></pre>
+<p>🗣 Explain what <code>select()</code> did in this task. How does head
+help you check that it worked?</p>
 </div>
-<div id="task-2" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Task 2</h2>
-<p>Single-Column Extraction</p>
-<p>🌟 Pipe the <code>stars</code> dataset in <code>dslabs</code> through
+<div id="task-2" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Task 2</h2>
+<p><strong>Single-Column Dataframe</strong></p>
+<p>Pipe the 🌟 <code>stars</code> dataset in <code>dslabs</code> through
 <code>select()</code> to keep only the <code>star</code> column. Name
 the result <strong><code>star_names</code></strong>.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<p>🎯 Write the goal of this task in your own words.</p>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+star_names &lt;- _____</code></pre>
+<pre class="r"><code># ✅  Verify
+head(star_names)</code></pre>
+<p>🗣 Does this return a vector or keep a one-column data frame?</p>
 </div>
-<div id="task-3" class="section level2" number="13.4">
-<h2><span class="header-section-number">13.4</span> Task 3</h2>
-<p>Row Filtering</p>
-<p>⚠️ From <code>murders</code>, remove every row where state equals
-<code>&quot;Florida&quot;</code>. Name the object
-<strong><code>No_Florida</code></strong> (any method is fine).</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-3" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Task 3</h2>
+<p><strong>Row Filtering</strong></p>
+<p>From 🔫<code>murders</code>, remove every row where state equals
+<code>&quot;Florida&quot;</code> using <code>!=</code>. Name the object
+<strong><code>No_Florida</code></strong>.</p>
+<p>🎯 Write the goal of this task in your own words.</p>
+<pre class="r"><code># ✅  Pre-test
+unique(murders$state)</code></pre>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+No_Florida &lt;- _____</code></pre>
+<pre class="r"><code># ✅  Verify
+unique(No_Florida$state)</code></pre>
+<p>🗣 Why might pre-checking the unique values of <code>state</code> in
+the data frame <code>murders</code> useful? What change are you
+expecting to see in the ✅ Verify step? Explain what rows are
+removed.</p>
 </div>
-<div id="task-4" class="section level2" number="13.5">
-<h2><span class="header-section-number">13.5</span> Task 4</h2>
-<p>Multiple Conditions</p>
-<p>🚗 From <code>mtcars</code>, use <code>filter()</code> +
-<code>%&gt;%</code>, pull cars in mtcars that are manual, have 8
-cylinders, and have <code>qsec &lt; 15</code>. Store as
+<div id="task-4" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Task 4</h2>
+<p><strong>Multiple Conditions</strong></p>
+<p>🚗 From <code>mtcars</code>, using <code>filter()</code> and piping,
+pull cars in <code>mtcars</code> that are <strong>manual</strong>, have
+<code>8</code> <strong>cylinders</strong>, and have <strong>1/4 mile
+time</strong> <em>less than</em> <code>15</code>. Store as
 <strong><code>Fast_n_Furious</code></strong>.</p>
+<p><em>Hint: use <code>?mtcars</code> to identify the relevant variables
+for each condition.</em></p>
+<p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code>summary(mtcars$qsec)  # check qsec range</code></pre>
-<p>Is <code>qsec &lt; 15</code> within range?</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+Fast_n_Furious &lt;- _____</code></pre>
+<pre class="r"><code># ✅  Verify
+head(Fast_n_Furious)
+nrow(Fast_n_Furious)</code></pre>
+<p>🗣 Explain the conditions you used to filter the rows. What does each
+condition mean in terms of the characteristics of the cars? How many
+cars meet all three conditions?</p>
 </div>
-<div id="task-6" class="section level2" number="13.6">
-<h2><span class="header-section-number">13.6</span> Task 6</h2>
-<p>OR Logic + Column Slice</p>
-<p>In 🚗 <code>mtcars</code>, show only rows where
-<code>disp &gt; 250</code> OR <code>disp &lt; 160</code> and display
-just the first three columns.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
+<div id="task-5" class="section level2" number="11.6">
+<h2><span class="header-section-number">11.6</span> Task 5</h2>
+<p><strong>OR Logic + Column Slice</strong></p>
+<p>From 🚗 <code>mtcars</code>, keep only the cars whose displacement is
+either <strong>under 160</strong> or <strong>over 250</strong>, and then
+show only the first three columns of those rows.(Hint: <code>:</code>).
+Store as <code>filtered_cars</code></p>
+<p>🎯 Write the goal of this task in your own words.</p>
+<pre class="r"><code># ✅  Pre-check
+range(mtcars$disp)  # check disp </code></pre>
+<p>🗣 This tells the spread of <code>disp</code> in <code>mtcars</code>
+so you can see whether the cutoffs <code>160</code> and <code>250</code>
+make sense.</p>
+<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+filtered_cars &lt;- _____</code></pre>
+<pre class="r"><code># ✅  Verify
+all(filtered_cars$disp &gt; 250 | filtered_cars$disp &lt; 160) # check disp </code></pre>
+<p>🗣 The function <code>all()</code> to test whether every kept row
+satisfies the condition</p>
 </div>
-<div id="task-7" class="section level2" number="13.7">
-<h2><span class="header-section-number">13.7</span> Task 7</h2>
-<p>Reflection</p>
-<p>📝 Write a few sentences comparing dplyr verbs over base-R brackets
-(from lesson 6 &amp; 7) for subsetting.</p>
+<div id="task-6" class="section level2" number="11.7">
+<h2><span class="header-section-number">11.7</span> Task 6</h2>
+<p><strong>Reflection</strong></p>
+<p>📝 Write a few sentences comparing the utility of <code>dplyr</code>
+verbs <code>select()</code> and <code>filter()</code> as it compares to
+base-R brackets <code>[ ]</code> for subsetting.</p>
 </div>
-</div>
-<div id="save-and-upload" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Save and Upload</h1>
-<ol start="0" style="list-style-type: decimal">
-<li>Self-check checklist:</li>
-</ol>
-<p>For the assignment protion, your environment should contain the
-following items:</p>
+<div id="task-7" class="section level2" number="11.8">
+<h2><span class="header-section-number">11.8</span> Task 7</h2>
+<p><strong>Self-check checklist</strong></p>
+<p>For the file submission, make sure your qmd creates runs from top to
+bottom without errors and that the following objects are created in your
+environment with the expected content:</p>
 <ul>
 <li><p><code>C_Overload</code> exists and has only <code>year</code> and
 <code>carbon_emissions</code>.</p></li>
@@ -2530,70 +2621,22 @@ following items:</p>
 <code>state == &#39;Florida&#39;</code>.</p></li>
 <li><p><code>Fast_n_Furious</code> with rows that only contain manual, 8
 cylinders, and where <code>qsec &lt; 15</code>.</p></li>
+<li><p><code>filtered_cars</code> with rows where
+<code>disp &gt; 250</code> OR <code>disp &lt; 160</code> and only the
+first three columns.</p></li>
 <li><p><strong>All code in your Quarto document runs top-to-bottom
 without errors.</strong></p></li>
 </ul>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the Quarto document and
-the workspace file. The workspace file saves all the objects in your
-environment that you created in this lesson. You can save the workspace
-by running the following command in a code chunk of the Quarto Document
-document:</li>
-</ol>
-<pre class="r"><code>save.image(&quot;Assignment8_Workspace.RData&quot;)</code></pre>
-<p>Or you can click the “Save Workspace” button in the Environment
-pane.</p>
-<p>💾 <strong>Always save the R documents before closing.</strong></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Find the assignment in this week’s module in Canvas and upload
-<strong>both</strong> the <code>.qmd</code> and the workspace file
-(<code>RData</code>).</li>
-</ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="15">
-<h1><span class="header-section-number">15</span> Today you
-practiced:</h1>
-<ul>
-<li><p>Installed / loaded packages for extra tools.</p></li>
-<li><p>Used the pipe <code>%&gt;%</code> to chain steps
-left-to-right.</p></li>
-<li><p>Selected columns with <code>select()</code> (including negative
-selection).</p></li>
-<li><p>Filtered rows with <code>filter()</code> using logical tests and
-<code>%in%</code>.</p></li>
-<li><p>Combined verbs to answer data questions concisely.</p></li>
-</ul>
-<p>🎯 Great job! Keep practicing piping and you’ll soon write clear,
-readable R code!</p>
-</div>
-<div id="notes" class="section level1" number="16">
-<h1><span class="header-section-number">16</span> Notes</h1>
-<div id="learning-skill" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> Learning Skill</h2>
-<p>LS: Core Review course content Advanced Curiosity Skill Highlight</p>
-<p>Citing resources</p>
-<ul>
-<li><p>(Curiosity highlight): “data scavenger hunt” + citation + one
-curiosity question answered with a quick code experiment (not a
-paragraph of vibes).</p></li>
-<li><p>Courage: Students can share imperfect work in a discussion/lab
-setting and revise based on feedback.</p></li>
-</ul>
-<p>Maybe Module 6: Autonomy: - “trying alternatives” (base R vs dplyr;
-indexing vs verbs) and documenting what the output shows. - Students can
-manage their workflow independently: organized folders, naming, saving,
-and submitting correct artifacts without resource rescue. - Students can
-set boundaries on AI use consistent with instructions and explain their
-choice in a memo (what they delegated vs what they did themselves). -
-Students can select a method and justify it (e.g., base R indexing vs
-dplyr select/filter) using output evidence. “I chose this approach
-because…” memo</p>
-<p>Maybe Module 7: Open-mindedness - Students can implement two
-approaches to the same task (e.g., base R vs dplyr) and compare outputs
-and readability. - Students can revise their approach when evidence
-shows a better method (not because it’s trendy). - Students can evaluate
-tool fit (including AI systems) for a specific goal and explain
-tradeoffs.</p>
+<p>🎯 <strong>Goal:</strong> Check <code>.qmd</code> for submission
+quality.</p>
+<p><strong>Step 1: Sweep your Environment (start clean).</strong><br />
+Click the 🧹 <strong>broom icon</strong> in the Environment pane to
+clear objects.</p>
+<p><strong>Step 2: Run everything top-to-bottom.</strong><br />
+Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p><strong>Step 3: Save and submit.</strong><br />
+After your notebook runs without errors, make sure the latest edits are
+save your file (<code>.qmd</code>)</p>
 </div>
 </div>
 
