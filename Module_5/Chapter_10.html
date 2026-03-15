@@ -2617,7 +2617,7 @@ countries have life expectancy above a certain threshold (e.g., 70
 years). Select a value within the range you found in Step 1.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `a` in Task 6 will be based on this range and count.
-sum(brief_sheet$life_expectancy &lt;= ___)  </code></pre>
+sum(brief_sheet$life_expectancy &lt;= ___, na.rm = TRUE)  </code></pre>
 <p>🗣 There are ___ countries with life expectancy above ___ years.</p>
 </div>
 <div id="infant-mortality-b" class="section level3" number="9.5.2">
@@ -2636,7 +2636,7 @@ deaths per 1000 live births). Select a value within the range you found
 in Step 3.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `b` in Task 6 will be based on this range and count.
-sum(brief_sheet$infant_mortality &gt;= ___)</code></pre>
+sum(brief_sheet$infant_mortality &gt;= ___, na.rm = TRUE)</code></pre>
 <p>🗣 There are ___ countries with infant mortality above ___ deaths per
 1000 live births.</p>
 </div>
@@ -2654,7 +2654,7 @@ countries have fertility above a certain threshold (e.g., 2 children per
 woman). Select a value within the range you found in Step 5.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `c` in Task 6 will be based on this range and count.
-sum(brief_sheet$fertility &gt;= ___)</code></pre>
+sum(brief_sheet$fertility &gt;= ___, na.rm = TRUE)</code></pre>
 <p>🗣 There are ___ countries with fertility above ___ children per
 woman.</p>
 </div>

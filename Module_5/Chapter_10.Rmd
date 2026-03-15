@@ -852,7 +852,7 @@ range(brief_sheet$life_expectancy, na.rm = ____)
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `a` in Task 6 will be based on this range and count.
-sum(brief_sheet$life_expectancy <= ___)  
+sum(brief_sheet$life_expectancy <= ___, na.rm = TRUE)  
 ```
 
 🗣 There are ___ countries with life expectancy above ___ years.
@@ -874,7 +874,7 @@ range(brief_sheet$__________, na.rm = TRUE)
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `b` in Task 6 will be based on this range and count.
-sum(brief_sheet$infant_mortality >= ___)
+sum(brief_sheet$infant_mortality >= ___, na.rm = TRUE)
 ```
 
 🗣 There are ___ countries with infant mortality above ___ deaths per 1000 live births.
@@ -896,7 +896,7 @@ range(_________$fertility, na.rm = TRUE)
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `c` in Task 6 will be based on this range and count.
-sum(brief_sheet$fertility >= ___)
+sum(brief_sheet$fertility >= ___, na.rm = TRUE)
 ```
 
 🗣 There are ___ countries with fertility above ___ children per woman.
