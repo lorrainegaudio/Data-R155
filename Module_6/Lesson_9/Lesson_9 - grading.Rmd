@@ -572,23 +572,17 @@ Deduct if: created a new column instead of overwriting; not ordered; not 3 level
 
 ### Task 3 — Recode categories (new column) (0.5)
 
-Goal: Keep original type; add full_type with a descriptive phrase.
+Goal: Keep original temp; add temp_group based on temperature ranges.
 
-Reference code (example mapping; any clear, consistent mapping earns credit)
 ```{r}
 data(stars)  # dslabs
 
 stars_recode <- stars %>%
   dplyr::mutate(
-    full_type = dplyr::case_when(
-      type == "O" ~ "O-type (blue)",
-      type == "B" ~ "B-type (blue-white)",
-      type == "A" ~ "A-type (white)",
-      type == "F" ~ "F-type (yellow-white)",
-      type == "G" ~ "G-type (yellow)",
-      type == "K" ~ "K-type (orange)",
-      type == "M" ~ "M-type (red)",
-      TRUE        ~ "Other"
+    temp_group = dplyr::case_when(
+      temp < 4000 ~ "Cool",
+      temp < 7500 ~ "Warm",
+      TRUE        ~ "Hot"
     )
   )
 ```
@@ -596,12 +590,12 @@ stars_recode <- stars %>%
 Checks
 ```{r}
 exists("stars_recode")
-all(c("type","full_type") %in% names(stars_recode))
-head(dplyr::select(stars_recode, type, full_type))
+all(c("temp","temp_group") %in% names(stars_recode))
+head(dplyr::select(stars_recode, temp, temp_group))
 ```
 
-Acceptable variants: any readable phrase per code; a default TRUE ~ "Other" is fine.
-Deduct if: overwrote type; full_type missing or meaningless (e.g., just copies type with no description).
+Acceptable variants: different clear range labels such as "Low", "Medium", and "High".
+Deduct if: overwrote temp; did not create a new column; used direct value-to-label matching instead of range-based conditions; omitted the default rule.
 
 ### Task 4 — Unit conversion (0.5)
 

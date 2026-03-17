@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Chapter 12"
-subtitle: "mutate and casewhen"
+subtitle: "Coding"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -77,22 +77,31 @@ output:
 
 # Overview
 
+In this chapter, you will learn how to use **vectorized conditional functions** to return a result for every element in a vector. You will compare `ifelse()` and `case_when()`, learn when each is most useful, and see how conditional rules can be used inside `mutate()` to create or overwrite columns in a data frame. You will also continue practicing in Quarto, the course’s reproducible workflow (🎯 ⚡ ✅ 🗣) for planning and writing code, checking output, and written interpretation in one document. You move from simply selecting data to actively transforming it into more useful variables. `ifelse()` returns values based on a logical test, `case_when()` applies rules in order using the first match, and `mutate()` creates new columns from existing variables or modifies existing ones.
 
-In Chapter 11, you learned about about subsetting with dplyr (`select()` & `filter()`). This week, we will look at other functions in the dplyr package (`mutate()` and `case_when()`). Real-world data often needs new or cleaner variables before analysis. The dplyr verb `mutate()` lets you create or modify columns, while `case_when()` supplies the logic for quick recoding. Together they form a duo you will use in nearly every data project.
+This chapter matters because data analysts rarely work only with raw variables. In real analysis, you often need to recode categories, group values into meaningful labels, convert units, and create cleaner columns from existing data before you can summarize, visualize, or model it. Learning to do this with readable R code will help you build data sets that are easier to interpret, easier to check, and easier for other people to follow. `dplyr` describes these kinds of recoding and column-building tasks as common data manipulation work, especially when creating entirely new columns from existing ones
 
 **Lesson Overview**
 
 By the end of Chapter 12 you will be able to:
 
-1. ⚡ Remember – State the purposes of `mutate()` and `case_when()`
+- 🔀 Distinguish between logical subsetting, subassignment, and vectorized conditionals.
 
-2. 🔍 Understand – Explain how `case_when()` replaces values based on a test.
+- 🧠 Use `ifelse()` to make simple two-way decisions across a vector.
 
-3. 🛠 Apply – Overwrite or add columns using `mutate()` + `case_when()`
+- 🧱 Use `case_when()` to apply multiple conditional rules in a clear order.
 
-4. 📊 Analyze – Build multi‑level recodes with nested `case_when()`.
+- ⚠️ Explain why the order of rules matters in `case_when()`.
 
-5. 🧠️ Evaluate – Choose between overwriting vs. keeping the original data.
+- 🏷️ Recode numeric values into meaningful label".
+
+- ➕ Use `mutate() `to create new columns from existing columns.
+
+- ♻️ Overwrite an existing column by reusing its name inside `mutate()`.
+
+- 📏 Use `mutate()` with arithmetic expressions to create transformed variables such as unit conversions.
+
+- 📝 Continue using Quarto to organize code, output, and written interpretation in a reproducible analysis document.
 
 Keep these goals in mind as you move through each section.
 
@@ -148,6 +157,18 @@ execute:
 
 The `toc-depth: 2` is a good default. It keeps your notes organized without making the table of contents too crowded.
 
+## Headings
+
+Create a simple outline for Chapter 12 using headings. Use the following structure:
+
+```markdown
+
+# Load Data
+
+# 
+
+```
+
 ## Dynamic memoing (🌳)
 
 So far, you have used code chunks to run R code. Quarto also lets you place small pieces of R code directly inside normal sentences. This is called inline code. Inline code is useful when you want your written memo to automatically include a value computed by your R code. Quarto evaluates inline code during rendering, so the sentence stays up to date with your analysis.
@@ -198,23 +219,8 @@ For this chapter, set up your notes file so that:
 
 ___
 
-Now that you have created (*and saved*) your quarto file, ... [finish this]
+Now that you have created (*and saved*) your quarto file, follow along this guided practice and taking notes.
 
-# Set up 
-
-To get started, 
-
-## Headings
-
-A simple outline for Chapter 12
-
-```markdown
-
-# Load Data
-
-# 
-
-```
 
 ## 📦 Packages
 
@@ -224,16 +230,24 @@ Remember that you only need to install once `install.packages("dplyr")`; `instal
 
 🎯 Load the required packages at the beginning of your QMD.
 
-```{r , eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package
 ```
 
-[transition statement]
+# Vectorized Conditional Functions
 
-# Vectorized Conditional functions
+In previous chapters, you used logical conditions to keep some values and drop others, or to replace selected values in place. In this chapter, you will use logical conditions in a third way: to return a result for every element. That is what functions like `ifelse()` and `case_when()` do.
 
-In earlier chapters, you learned how to use bracket indexing to subset, extract, and insert values. With **logical indexing**, you built a **logical vector** of `TRUE` and `FALSE` values and then used that pattern to keep or modify selected positions. For example, `x[x > 3]` extracts only the values greater than `3`, and `x[x > 3] <- "Large"` would replace matching positions for the word "Large". 
+Logical conditions in R can do more than *select* values. They can also be used to return a new vector by assigning an output to each element based on one or more rules. Functions such as `ifelse()` and `case_when()` are called **vectorized conditional** functions because they evaluate conditions element-by-element across a vector and return a new vector of the same length.
+
+This section builds on ideas you already know. In earlier chapters, you used conditions to keep values or rows with logical subsetting, and to replace selected values with subassignment. Now you will use conditions in a new way: not to drop or replace selected cases, but to return a result for every position. Those results are often used inside `mutate()` to create or modify columns.
+
+Subsetting keeps some values and drops others. Vectorized conditionals, by contrast, keep all positions and assign each one a result. In other words, subsetting answers “What do I keep?” while vectorized conditionals answer “What value should I return for each element?”
+
+## Review Subsetting with Conditions
+
+**Subsetting** answers the question, “Which values *or rows* do I keep?” With a vector, **logical indexing** uses a pattern of `TRUE` and `FALSE` values to keep or modify selected positions. 
 
 ```{r}
 # 📖 Review
@@ -244,431 +258,362 @@ x > 3
 ```
 ```{r}
 # 📖 Review
-## extract values
+## logical subsetting
 x[x > 3]
 ```
+
+🗣 `x[x > 3]` subsets `x` to keep only values greater than `3`.
+
+🧐 **Notice:** You used the same idea with data frames in Chapter 11. The `filter()` function also applies a logical condition, but at the row level, keeping rows that satisfy the condition and dropping the rest.
+
+## Review Subassignment
+
+Subsetting is used to *replace* values, called **subassignment**. When you assign a value to a subset of an object, you are replacing the values in those positions.
+
 ```{r}
 # 📖 Review
-## insert values
-x[x > 3] <- "Large"
+## replaces values
+x[x > 3] <- 99
 ## ✅  print result
 x
 ```
-      
-In Chapter 11, you used `filter()` for the same basic idea at the data-frame level: it keeps the rows that satisfy a condition and drops the rest. 
 
+🗣 `x[x > 3]` subsets `x` to keep only the values greater than `3`, and `x[x > 3] <- 99` uses logical indexing to replace those matching values with `99`.
 
+___
 
+This review example uses a condition to identify matching cases. The difference is what happens next:
 
-Subsetting answers the question, “Which values or rows do I keep?”
+- Subsetting keeps only matching values or rows.
 
-This chapter introduces two new vectorized conditional functions: `ifelse()` and `case_when()`. They still rely on logical conditions checked element-by-element across a vector, but they do something different from subsetting. Instead of keeping only the matching values, they return a new vector the same length as the input, filling each position according to a rule. 
+- Subassignment changes only matching values.
 
-Base R describes `ifelse()` as returning a value with the same shape as the test, filled from `yes` or `no`, and `dplyr` describes `case_when()` as a general vectorized if-else that evaluates cases in order and uses the first match for each element.
+- Vectorized conditionals return a result for every position.
 
+That is the key new idea in this section. Vectorized conditional functions such as `ifelse()` and `case_when()` still test conditions element-by-element, but they do not drop nonmatching cases.
+Instead, they evaluate a condition for each element and return a *new vector* with one result for every position. 
 
+When this new vector is used inside `mutate()`, a function shown at the end of this chapter, it becomes a new column rather than a subset of the old one.
 
-[Write an intro]
+## Simple `ifelse()`
 
-
-
-## `ifelse()` tests 
-
-Conditonal element selection
+Base R describes `ifelse()` as returning a value with the same shape as the test, filled from `yes` or `no`.
 
 📜 The SYNTAX: `ifelse(test, yes, no)`
 
-- *test*  – logical vector (`TRUE`/`FALSE`/`NA`)
+- **test**  – logical vector (`TRUE`/`FALSE`/`NA`)
 
-- *yes*   – value to insert where test is `TRUE`
+- **yes**   – value to insert where test is `TRUE`
 
-- *no*    – value to insert where test is `FALSE` or `NA`
+- **no**    – value to insert where test is `FALSE`. 
 
-🎯 Goal: Label numbers > 3 as "Large" and others as "Small".
+- **NA**    – if `NA`, the result is `NA` at that position.
 
-💬 Prediction: I expect to see a vector of "Small" and "Large" labels. Specifically, I expect only 4 and 5 to be "Large".
+🎯 Label the vector of numbers greater than 3 as "Large" and others as "Small".
 
-```{r , eval=FALSE}
-ifelse(test = c(1, 2, 3, 4, 5) > 3, yes = "Large", no = "Small")
+```{r}
+# ⚡ Type this in a Quarto code chunk: 
+x <- c(3, 2, 3, 6, 5)
 ```
 
-✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are "Small"  and 4:5 are "Large".
+```{r}
+# ✅  Pre-check
+length(x)
+```
 
-## `case_when()` tests
+🗣 `x` is a vector with the length of `5` and values `3`, `2`, `3`, `6`, and `5`.
 
-dplyr::case_when() can do exactly what `ifelse()` is doing. 
+```{r}
+# ⚡ Type this in a Quarto code chunk: 
+ifelse(test = x > 3, yes = "Large", no = "Small")
+```
 
-📜 The SYNTAX: `case_when(condition1 ~ value1, condition2 ~ value2, TRUE ~ default_value)`
+🗣 The output positions for `3` and under are "Small" and numbers higher than `3` are "Large". 
+
+```{r}
+# ✅  Verify
+length(ifelse(x > 3, "Large", "Small"))
+```
+
+🗣 The result has the same length as x. Nothing was dropped. Each position got a label.
+
+🧐 *Note: Arguments, such as `test`, `yes`, and `no` in `ifelse()`, are often not required to be named inside of functions.* 
+
+💡 **Tip:** Read this `ifelse()` statement like 'If the vector is greater than 3, then return "Large", otherwise return "Small".'
+
+- 📖 `x[x > 3]` logical subsetting keeps only matches
+
+- 📖 `x[x > 3] <- 99` subassignment replaces only matches
+
+- ⚡ `ifelse(x > 3, "Large", "Small")` returns a new vector with a value for every position based on the condition.
+
+## Simple `case_when()`
+
+`dplyr` describes `case_when()` as a general vectorized if-else that evaluates rules in order and uses the first match for each element. This makes it especially useful when you have several categories to assign.
+
+
+`dplyr::case_when()` can do exactly what `ifelse()` is doing. 
+
+📜 The SYNTAX: `case_when(condition1 ~ value1, condition2 ~ value2, .default = default_value)`
 
 The `~` symbol means "maps to" or "yields".
 
-🎯 Goal: Label numbers > 3 as "Large" and others as "Small".
+The `.default` argument specifies the value to return when no conditions are `TRUE`. If you omit `.default` and no conditions match, `case_when()` will return `NA` for those positions.
 
-💬 Prediction: I expect to see a vector of "Small" and "Large" labels. Specifically, I expect only 4 and 5 to be "Large".
+🎯 Label the vector of numbers greater than 3 as "Large" and others as "Small".
 
-```{r , eval=FALSE}
-case_when(c(1, 2, 3, 4, 5) > 3 ~ "Large", TRUE ~ "Small")
+```{r}
+# ⚡ Type this in a Quarto code chunk: 
+case_when(c(3, 2, 3, 6, 5) > 3 ~ "Large", .default = "Small")
 ```
 
-✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are "Small"  and 4:5 are "Large"
+🗣 The output positions for `3` and under are "Small" and numbers higher than `3` are "Large". 
 
-So, what's the point? Why do we need both `ifelse()` and `case_when()`? `case_when()` is usually clearer once you have 3+ categories.
+- ⚡ `case_when(c(3, 2, 3, 6, 5) > 3 ~ "Large", .default = "Small")` returns a new vector with a value for every position based on the condition.
 
+---
 
-## Multi‑Level Recoding 
+Why do we need both `ifelse()` and `case_when()`? `case_when()` is usually clearer once you have 3+ categories.
 
-Nested `ifelse()`
+## More Than Two Categories
 
-🎯 Goal: Re-code numbers 1 to 5 as "One", "Two", "Three", "Four", or "Five".
+`ifelse()` is designed for two categories. If you have more than two, you can nest `ifelse()` statements inside each other, but this quickly becomes hard to read. `case_when()` is designed for multiple categories and is much easier to read when you have more than two conditions.
 
-💬 Prediction: I expect to see a vector of the words "One" through "Five" corresponding to the numbers 1 through 5.
-
-```{r , eval=FALSE}
-# ⚡Code: 
-object2 <- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
-length(object2) # Check the length of object2
+```{r}
+# ✅  Setup
+# ⚡ Type this in a Quarto code chunk: 
+scores <- c(55, 65, 75, 85, 95)
 ```
 
+🎯 Re-code scores less than 60 as "Low", scores less than 80 as "Medium", and all others as "High".
 
-```{r , eval=FALSE}
-# ⚡Code
-ifelse(object2 == 1, "One",
-       ifelse(object2 == 2, "Two",
-              ifelse(object2 == 3, "Three",
-                     ifelse(object2 == 4, "Four", "Five"))))
+### Nested `ifelse()`
+
+🎯 Re-code scores less than 60 as "Low", scores less than 80 as "Medium", and all others as "High" using nested `ifelse()`.
+
+```{r}
+# ⚡ Type this in a Quarto code chunk: 
+ifelse(scores < 60, "Low",
+       ifelse(scores < 80, "Medium", "High"))
 ```
 
+🗣 This works, but the logic is nested inside the no argument of the first `ifelse()`, which becomes harder to read as the number of categories grows.
 
-✅ Check / 🗣 Comment:  Confirm the output length is 10 and the labels match the numbers.
+### Multiple Rule `case_when()` 
 
-Nested `case_when()`
+`case_when()` avoids the ugly nesting that happens with repeated `ifelse()` calls. It is a general vectorized if-else: R checks the rules from top to bottom and uses the first rule that matches each element. That is why the order of the rules matters.
 
-🎯 Goal: Re-code numbers 1 to 5 as "One", "Two", "Three", "Four", or "Five".
+🎯 Code scores less than `60` as `"Low"`, scores less than `80` as `"Medium"`, and all others as `"High"` using `case_when()`.
 
-💬 Prediction: The `case_when()` output should be identical in length and order to the nested `ifelse()` version.
-
-```{r , eval=FALSE}
-# ⚡Code
-case_when(object2 == 1 ~ "One",
-          object2 == 2 ~ "Two",
-          object2 == 3 ~ "Three",
-          object2 == 4 ~ "Four",
-          object2 == 5 ~ "Five")
+```{r}
+# ⚡ Type this in a Quarto code chunk:
+case_when(scores < 60 ~ "Low",
+          scores < 80 ~ "Medium",
+          TRUE        ~ "High")
 ```
 
-✅ Check / 🗣 Comment:  Confirm the output is identical to the `ifelse()` version.
+🗣 This reads more like a set of classification rules: first check for `"Low"`, then check for `"Medium"`, and assign `"High"` to everything else.
 
-🪞 What I learned: `case_when()` is easier to read because the function name is not repeated at each line.
+___
 
-Apply this nested `case_when()` in Task 3 of the assignment.
+⚠️ The order of the rules matters because `case_when()` uses the first condition that matches.
+
+```{r}
+# ⚡ Type this in a Quarto code chunk:
+case_when(
+  scores < 80 ~ "Medium",
+  scores < 60 ~ "Low",
+  TRUE       ~ "High"
+)
+```
+
+🗣 This does **not** work as intended. Any score less than `60` also satisfies `score < 80`, so those values are labeled `"Medium"` before R ever checks the `"Low"` rule.
+
+💡 **Tip:** write rules from most specific to more general, and end with a default rule such as `TRUE ~ "High"`.
+
+___
 
 # `mutate()`
 
-`mutate()` is a function that adds new columns or modifies existing ones
+So far, `case_when()` has returned a new vector of labels. In real data analysis, you usually want to store that result in a data frame as a new column. That is what `mutate()` does.
 
-📜 The SYNTAX: `mutate(data, new_col = value)`
+`mutate()` creates new columns that are functions of existing columns. It can also modify an existing column if you reuse the same column name. In this course, the main idea is simple: `mutate()` lets you add a new variable to your data without changing the number of rows. 
 
-## Overwrite Columns
+📜 The SYNTAX: 
 
-### Copy A Column
+`mutate(data, new_col = expression)`
 
-🎯 Goal: Create a new column that is a copy of an existing column.
+Or with piping
 
-```{r , eval=FALSE}
-# Preview Column Names
+`name_data <- data %>% mutate(new_col = expression)`
+
+- `data` is the data frame you are working with.
+
+- `new_col` is the name of the new column you want to create.
+
+- `expression` is the vector or calculation you want to store in that column.
+
+You can think of `mutate()` as saying: “Take this data frame, and add a new column based on these existing columns.”
+
+**The key idea is this:**
+
+- A new name on the left side of `=` adds a new column.
+
+- An existing name on the left side of `=` overwrites that column.
+
+- The right side of `=` tells R what values to put there.
+
+## Column Copy 
+
+🎯 Create a new column that is a copy of `am` in `mtcars`.
+
+```{r}
+# ✅  Pre-Check
 names(mtcars) # Check the column names
 ```
 
-
-💬 Prediction: In a new data set called `mtcars2`, a **new** column named `new_column_copy` is created that is identical to the `am` column.
-
-```{r , eval=FALSE}
-# ⚡ Code: 
+```{r}
+# ⚡ Type this in a Quarto code chunk:
 mtcars2 <- mtcars %>% 
   mutate(new_column_copy = am)
 ```
 
-```{r , eval=FALSE}
-# ✅ Verify:
+🗣 In a new data set called `mtcars2`, a **new** column named `new_column_copy` is created that is identical to the `am` column.
+
+```{r}
+# ✅ Verify
 names(mtcars2) # Check the column names again
 ```
 
-🗣 Comment: Did you see the new column in the output?
+This simple example shows that `mutate()` can create a new column from an existing one. The right side of `mutate()` is for calculations or rule-based expressions on existing columns. We'll start by using calculations inside `mutate()` to create a new column.
 
-```{r , eval=FALSE}
-# ✅ Verify: is am == to n_column_copy?
-mtcars2$am == mtcars2$new_column_copy
+### `mutate()` with Arithmetic
+
+Doing unit conversions is a common data analyst task. Here it is in action.
+
+```{r}
+# ✅  Setup
+measurements <- data.frame(height_in = c(60, 65, 70))
+measurements
 ```
 
+🗣 The `measurements` data frame has one column called `height_in`.
 
-```{r , eval=FALSE}
-# ✅ Verify: is am identical to new_column_copy?
-identical(mtcars2$am, mtcars2$new_column_copy)
+🎯 Create a new column called `height_cm` that converts inches to centimeters (1 inch = 2.54 cm).
+
+```{r}
+# ⚡ Type this in a Quarto code chunk:
+measurements %>%
+  mutate(height_cm = height_in * 2.54)
 ```
 
-🗣 Comment: `mutate(new_column_copy = am)` created an identical column of `am` called `new_column_copy`
+🗣 `mutate(height_cm = height_in * 2.54)` creates a new column called `height_cm`. Each value in `height_cm` is calculated from the matching value in `height_in`. 
 
-### Overwrite Original Column Values
+### `case_when()` inside `mutate()`
 
-🎯 Goal: Recode the `am` column in `mtcars` from 0/1 to "Automatic"/"Manual".
+The right side of `mutate()` can also be a rule-based expression. One common example is `case_when()` which lets you build a new categorical variable from an existing numeric variable. 
 
-```{r , eval=FALSE}
-# Check the unique values in the am column BEFORE
+```{r}
+# ✅  Setup
+student_scores <- data.frame(scores = c(55, 68, 72, 83, 91))
+```
+
+🎯 Create a new column called `score_level` that labels each score from `scores` as `"Low"`, `"Medium"`, or `"High"`.
+
+```{r}
+# ⚡ Type this in a Quarto code chunk:
+student_scores %>%
+  mutate(
+    score_level = case_when(
+      scores < 60 ~ "Low",
+      scores < 80 ~ "Medium",
+      TRUE        ~ "High"
+    )
+  )
+```
+
+🗣 `mutate()` adds a new column called `score_level`. The values in that column come from the rules inside `case_when()`. 
+
+- `student_scores` is the data frame.
+
+- `mutate(...)` adds a new column.
+
+- `score_level =` names that new column.
+
+- `case_when(...)` decides what label to return for each row based on the value in `scores`.
+
+`mutate()` + `case_when()` is a powerful way to create new variables based on complex rules. You can have as many conditions as you need, and you can use any existing columns in your data frame to build those rules
+
+In some situations, you may want to overwrite an existing column instead of creating a new one. That is also possible with `mutate()`, as the next section shows.
+
+## Overwrite Column Values
+
+`mutate()` will overwrite an existing column by reusing the same column name on the left as the right of `=`. We'll use `case_when()` to recode the values in the `am` column of `mtcars` from numeric to categorical labels. 
+
+🎯 Recode the `am` column in `mtcars` from 0/1 to "Automatic"/"Manual".
+
+```{r}
+# ✅  Pre-check
 unique(mtcars$am) 
 ```
 
-💬 Prediction: In a new data set called `cars_overwrite`, the `am` column is changed from 0/1 to "Automatic"/"Manual". In a second new data set called `cars_keep`, a **new** column named `transmission` is created that has "Automatic"/"Manual" values, while the original `am` column remains unchanged.
+🗣 `am` is a numeric column with two unique values: `0` and `1`.
 
-```{r , eval=FALSE}
-# ⚡ Code: 
+```{r}
+# ⚡ Type this in a Quarto code chunk:
 cars_overwrite <- mtcars %>%
-  mutate(am = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"))
+  mutate(
+    am = case_when(
+      am == 0 ~ "Automatic", 
+      TRUE ~ "Manual")
+    )
 ```
 
-```{r , eval=FALSE}
+```{r}
 # ✅ Verify:
 unique(cars_overwrite$am)
 ```
 
-### New Column & New Values
+🗣 In `cars_overwrite`, the `am` column has been *changed* from `0`/`1` to `"Automatic"`/`"Manual"`. 
 
-🎯 Goal: Create a new column `transmission` that recodes `am` from 0/1 to "Automatic"/"Manual", while keeping the original `am` column unchanged.
+---
 
-```{r , eval=FALSE}
-# ⚡ Code: 
-cars_keep <- mtcars %>%
-  mutate(transmission = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"))
-```
+**Key takeaway** 
 
-```{r , eval=FALSE}
-# ✅ Verify:
-cars_keep %>% select(am, transmission)
-```
+In every example above, `mutate()` followed the same pattern:
 
-🗣 Comment: What is the difference between the code that creates `cars_overwrite` and `cars_keep`?
+- the left side of `=` named the output column
 
-🪞 Metacognition: Why might you want to create a copy of a column when changing the values?
+- the right side of `=` created its values
 
-## Factors and Levels
+When the left side used a new name, R added a new column. When the left side reused an existing name, R overwrote that column.
 
-In Lesson 2, we learned about factors for vectors. A factor is a categorical variable that can take on a limited number of values, called levels. For example, in the vector `tshirt_sizes_data`, the possible values are "S", "M", "L", and "XL".
-
-```{r eval=FALSE}
-# ⚡ Creating a character vector
-tshirt_sizes_data <- c("M", "L", "S", "M", "L", "XL", "S")
-# ⚡ Changing the character vector to a factor class with levels
-tshirt_sizes <- factor(tshirt_sizes_data, levels = c("S", "M", "L", "XL"))
-```
-
-```{r eval=FALSE}
-# ✅ Investigating your factor class with levels
-unique(tshirt_sizes)
-```
- 
-In the dataset `iris`, the `Species` column is a factor with three levels: "setosa", "versicolor", and "virginica".
- 
-```{r eval=FALSE}
-data(iris)
-?iris
-```
-
-```{r eval=FALSE}
-# ✅Investigating the Species column
-unique(iris$Species)
-class(iris$Species)
-levels(iris$Species)
-```
-
-### Overwrite with Factors
-
-🎯 Goal: Take a 100-row sample from `movielens`, then overwrite the numeric `rating` column with an ordered factor: "Bad" if `< 4`, "Good" if `>= 4`, using `case_when()` inside `mutate()`.
-
-💬 Prediction: Before: `rating` is numeric. After: `rating` is an ordered factor with levels `Bad < Good`. Row count stays 100; no `NA`s created.
-
-📜 SYNTAX reminder:
-`mutate(data, new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
-
-`name_data <- data %>% mutate(new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
-
-```{r , eval=FALSE}
-data("movielens")
-?movielens
-```
-
-```{r , eval=FALSE}
-set.seed(99)
-
-# Sample 100 movies from the movielens dataset
-smaller_movies <- movielens %>% 
-  sample_n(100) %>% 
-  select(title, rating)
-
-head(smaller_movies)
-```
-
-```{r , eval=FALSE}
-# ✅ Checks (before)
-names(smaller_movies)                # expect "title", "rating"
-class(smaller_movies$rating)         # expect "numeric"
-summary(smaller_movies$rating)       # quick distribution check
-```
-
-🎯 Goal: We'll apply `mutate()` to `smaller_movies` to recode the rating column to "Good" or "Bad".
-
-```{r , eval=FALSE}
-# ⚡ Overwrite numeric rating with an ordered factor via case_when()
-movies_overwrite <- smaller_movies %>%
-  mutate(
-    rating = factor(
-      case_when(
-        rating >= 4 ~ "Good",
-        rating < 2 ~ "Bad",
-        TRUE        ~ "Ok"
-      ),
-      levels = c("Bad", "Ok", "Good"),
-      ordered = TRUE
-    )
-  )
-```
-
-
-```{r , eval=FALSE}
-# ✅ Checks (after)
-names(movies_overwrite)              # still "title", "rating"
-```
-
-
-```{r , eval=FALSE}
-# ✅ Checks (after)
-is.ordered(movies_overwrite$rating)  # expect TRUE
-```
-
-
-```{r , eval=FALSE}
-# ✅ Checks (after)
-levels(movies_overwrite$rating)      # expect "Bad", "Ok", "Good"
-```
-
-
-```{r , eval=FALSE}
-# ✅ Checks (after)
-table(movies_overwrite$rating)       # counts in each level
-```
-
-🗣 Comment: Overwriting keeps the column name but replaces its contents and type (numeric → ordered factor). 
-
-🪞 Metacognition: `case_when()` reads cleaner than nested `ifelse()` for multi-branch recodes and makes me specify a default. In the future, I could keep the original numeric ratings (e.g., `rating_num`) and add a new labeled column instead of overwriting, to preserve provenance.
-
-
-```{r , eval=FALSE}
-# ⚡ Overwrite numeric rating with an ordered factor via case_when()
-movies_rename <- smaller_movies %>%
-  mutate(
-    rating_words = factor(
-      case_when(
-        rating >= 4 ~ "Good",
-        rating < 2 ~ "Bad",
-        TRUE        ~ "Ok"
-      ),
-      levels = c("Bad", "Ok", "Good"),
-      ordered = TRUE
-    )
-  )
-```
-
-### Bonus Example
-
-🎯 Goal: Create a new column rating_label in smaller_movies using `case_when()` that labels ratings `>= 4` as "Good" and the rest as "Bad". Keep the original numeric rating column.
-
-💬 Prediction: After running, the data will still have 100 rows, keep both `title` and `rating`, and add `rating_label` (character or factor). No `NA`s should appear.
-
-```{r , eval=FALSE}
-# ✅ Checks (before)
-names(smaller_movies)                # expect "title", "rating"
-class(smaller_movies$rating)         # expect "numeric"
-```
-
-```{r , eval=FALSE}
-# ⚡ Add a NEW column using case_when()
-smaller_movies %>%
-  mutate(
-    rating_label = case_when(
-      rating >= 4 ~ "Good",
-      TRUE        ~ "Bad"
-    )
-  ) -> movies_newcol
-```
-
-🧐 NOTICE: What is happening here `-> movies_newcol`?
-
-🛠Break Things! How can you reorganize this script? 
-
-```{r , eval=FALSE}
-# ✅ Checks (after)
-names(movies_newcol)                 # expect "title", "rating", "rating_label"
-class(movies_newcol$rating)          # expect "numeric"
-class(movies_newcol$rating_label)    # expect "character" or "factor"
-```
-🗣 The code used -> movies_newcol, which assigns right-to-left.
-
-🛠 Break Things! What happens with `head(movies_newcol) -> movies_newcol`?
-
-🪞 Metacognition: I’ll stick with the usual `<-` to make my code easier to read
-
-## Calculations
-
-🚗 Using `mtcars`, let's create a column `l_per_100km` that converts from US units (miles per gallon) to metric units (liters per 100km). 235.215 is the conversion factor between these units
-
-🎯 Goal: Identify the most fuel-efficient car in L/100 km terms.
-
-💬 Prediction: The new column `l_per_100km` will be added to `mtcars_units`, and the most fuel-efficient car will have the lowest value in this column.
-
-
-```{r , eval=FALSE}
-# ⚡ Code
-mtcars_units <- mtcars %>%
-  mutate(l_per_100km = round(235.215 / mpg, 1))
-```
-
-```{r , eval=FALSE}
-# ✅ Check
-head(mtcars_units)
-```
-
-👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?
-
-```{r , eval=FALSE}
-# Find the most fuel-efficient (smallest L/100km)
-best_idx <- which.min(mtcars_units$l_per_100km)
-best_car <- rownames(mtcars_units)[best_idx]
-best_value <- mtcars_units$l_per_100km[best_idx]
-```
-
-```{r , eval=FALSE}
-"best car"
-best_car
-```
-
-```{r , eval=FALSE}
-"best value"
-best_value
-```
-
-🪞 Metacognition: Unit conversions are easy to keep alongside original units with `mutate()` (don’t overwrite).
 
 # Summary
 
 # Chapter Terms
 
+**Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Extraction**: Retrieving a single component from an object—such as one list element or one data-frame column—so you get the “thing itself” (often a simplified result like a vector). Extraction is commonly done with `[[ ]]` (extract one element by position or name) or `$` (extract one column by name).
+
 **Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
 
 **Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
 
+**Overwrite**: A common type of subassignment where you change existing values (you replace what is already there). 
+
 **Subsetting**: Selecting a smaller piece of an R object using indices (positions, names, or a logical mask). With data frames, subsetting most commonly uses `[` in the form `df[rows, cols]` and typically preserves the object’s structure (e.g., you still get a data frame when you subset rows and columns).
+
+**Vectorized conditional**: A function or expression that evaluates a condition element-by-element across a vector and returns an output for every element, producing a new vector of the same length. Unlike subsetting, which keeps some values and drops others, vectorized conditionals such as `ifelse()` and `case_when()` keep all positions and assign each one a result based on the condition.
 
 # 📝 Practice Space
 
 Replace each ____ placeholder with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, submit practice as `chapter12_practice.qmd` along with the `chapter12_practice.RData` workspace.
+
+📦 Library it up!
+
+Make sure there is script in your document that loads `dplyr` and `dslabs` packages so their functions / datasets load.
 
 Template (use around every code chunk):
 
@@ -686,7 +631,7 @@ Template (use around every code chunk):
 
 🗣/🪞What I learned / Next step. 1–2 sentences.
 
-## Task 0
+## Task 1
 
 ✍️ Practice: Recode the mpg column. Use `mutate()` and `case_when()`
 
@@ -711,20 +656,11 @@ table(mpg_recode$____)  # expect 3 levels
 ```
 
 
-
-
-
-## Task 1
-
-📦 Library it up!
-
-Make sure there is script in your document that loads `dplyr` and `dslabs` packages so their functions / datasets load.
-
 ## Task 2
 
-📝  Recode ranges (overwrite)
+📝  **Recode ranges**
 
-Using `quakes`, recode `mag` into THREE ordered levels of _your choice_ (e.g., "Low", "Mid", "High") **overwriting** the original column. Use `mutate()` and `case_when()` chain and pipe (`%>%`). Store as **`quake_recode`**.
+Using `quakes`, recode `mag` into THREE ordered levels of _your choice_ (e.g., "Low", "Mid", "High"). Use `mutate()` and `case_when()` chain and pipe (`%>%`). Store as **`quake_recode`**.
 
 ```{r, eval=FALSE}
 data("quakes")
@@ -742,14 +678,19 @@ table(quake_recode$mag)   # should show exactly 3 levels
 
 ## Task 3
 
-Recode categories (new col)
-
-🌟 With `stars`, turn the one-letter *type* into a descriptive phrase of *your own* in a **new** column called `full_type`.  Keep the original type. Store as **stars_recode**.
+**Recode categories** 
 
 ```{r, eval=FALSE}
-data("stars")
 ?dslabs::stars
+stars <- dslabs::stars
+# View(stars)
+colnames(stars)
+summary(stars$temp)
 ```
+
+With 🌟`stars`, classify each `star` by temperature range in a new column called `temp_group`. Keep the original `temp` column. Store the result as `stars_recode`. Temperatures less than 4,000 are "Cool", between 4,000 and 7,500 are "Warm" and all stars more than 7,500 are "Hot".
+
+
 
 ```{r, eval=FALSE}
 ____ <- _____
@@ -762,7 +703,7 @@ head(select(stars_recode, type, full_type))
 
 ## Task 4
 
-Unit conversion
+**Unit conversion**
 
 Create `international_friendly_heights` by adding a `height_cm` column to `heights` (inches × 2.54). Leave original height.
 
@@ -779,28 +720,4 @@ ____ <- _____
 
 ✍️ EXPLANATION: "___"
 
-# Save and Upload
-
-1. You will be submitting **both** the R Markdown | Quarto Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the R Markdown | Quarto Document document:
-
-```{r , eval=FALSE}
-save.image("Assignment9_Workspace.RData")
-```
-
-Or you can click the "Save Workspace" button in the Environment pane. 
-
-💾 **Always save the R documents before closing.**
-
-2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
-
-# Today you practiced:
-
-- Practiced logical tests and the structure of `case_when()`.
-
-- Created binary and multi‑level recodes.
-
-- Used `mutate()` to overwrite or create columns.
-
-- Performed inline calculations for unit conversion.
-
-🛠 Continue experimenting. Recoding and mutation are the building blocks of clean, analysis‑ready data!
+# 
