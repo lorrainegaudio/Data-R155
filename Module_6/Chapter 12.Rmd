@@ -1,5 +1,6 @@
 ---
-title: "Chapter 12: Select & Filter"
+title: "Chapter 12"
+subtitle: "Select & Filter"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -24,12 +25,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-title: "Chapter 12: Select & Filter"
+title: "Chapter 12"
+subtitle: "mutate and casewhen"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
   pdf_document:
-    toc: true
+    toc: false
     toc_depth: 2
     number_sections: true
     citation_package: natbib
@@ -51,7 +53,8 @@ bibliography: references.bib # Bibliography file
 biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 # ---
-title: "Chapter 12: Select & Filter"
+title: "Chapter 12"
+subtitle: "Select & Filter"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -72,18 +75,10 @@ output:
 ```
 
 
-# 🧹 Clean up on aisle R! 
+# Overview
 
 
-In Chapter 11 we learned about about subsetting with dplyr (`select()` & `filter()`). This week, we will look at other functions in the dplyr package (`mutate()` and `case_when()`). Real-world data often needs new or cleaner variables before analysis. The dplyr verb `mutate()` lets you create or modify columns, while `case_when()` supplies the logic for quick recoding. Together they form a duo you will use in nearly every data project.
-
-To begin Chapter 12, follow these steps:
-
-1. Open your course project for RStudio 
-   
-2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > RMarkdown (.Rmd) | Quarto Document (.qmd)).
-
-3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+In Chapter 11, you learned about about subsetting with dplyr (`select()` & `filter()`). This week, we will look at other functions in the dplyr package (`mutate()` and `case_when()`). Real-world data often needs new or cleaner variables before analysis. The dplyr verb `mutate()` lets you create or modify columns, while `case_when()` supplies the logic for quick recoding. Together they form a duo you will use in nearly every data project.
 
 **Lesson Overview**
 
@@ -101,71 +96,185 @@ By the end of Chapter 12 you will be able to:
 
 Keep these goals in mind as you move through each section.
 
-# 📦 Packages
+# Quarto: Part 2
 
-Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`
+In Chapter 11, you learned how to create a Quarto file, keep the YAML header, use Markdown headings, write memos outside code chunks, and control chunks with #| options. In this chapter, you will build two more Quarto skills that make your notes more readable and more reproducible:
 
-Load the packages at the start of every session:
+1. add a table of contents and section numbering
+
+2. use inline R code inside your sentences
+
+🎯 Create a Quarto File (🌱)
+
+1. For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push. 
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+2. Open a new Quarto document in your course folder and save it as: `chapter12_notes.qmd` (`File > New File > Quarto Document`).
+
+## toc: true (🌳)
+
+As your notes get longer, it becomes harder to scroll and find what you need. Quarto can automatically build a table of contents from your headings, and it can also number your sections for you. The main YAML options for this are `toc: true`, `toc-depth:`, and `number-sections: true`. These options are commonly placed in the document options near the top of the YAML.
+
+Use this updated YAML header for Chapter 12:
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 12 Notes\"
+subtitle: \"mutate() and case_when()\"
+author: \"YOUR NAME\"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: true
+execute:
+  warning: true
+  message: true
+---
+```")
+```
+
+### What each part does:
+
+- `toc:` true adds a table of contents automatically.
+
+- `toc-depth:` 2 tells Quarto to include level 1 and level 2 headings in that table of contents.
+
+- `number-sections: true` adds section numbers to your headings in the rendered document.
+
+The `toc-depth: 2` is a good default. It keeps your notes organized without making the table of contents too crowded.
+
+## Dynamic memoing (🌳)
+
+So far, you have used code chunks to run R code. Quarto also lets you place small pieces of R code directly inside normal sentences. This is called inline code. Inline code is useful when you want your written memo to automatically include a value computed by your R code. Quarto evaluates inline code during rendering, so the sentence stays up to date with your analysis.
+
+In Quarto, inline code uses one pair of backticks and the engine name inside the backticks. For R, the pattern is:
+
+```markdown
+
+`{r} expression`
+
+```
+
+Using inline R code helps ensure that your report always shows the exact values used to in calculations. 
+
+### Inline R code
+
+🎯 Imagine you want to write a sentence that says how many rows are in the filtered `mtcars` dataset. Instead of hardcoding the number, you can use inline code to compute it. 
+
+```{r message=FALSE, warning=FALSE}
+# ⚡ Type this in a Quarto code chunk
+library(dplyr)
+num_rows <- mtcars %>% 
+  filter(cyl == 6) %>% 
+  nrow()
+```
+
+Then, in your written memo, you can write the expression: 
+
+```markdown
+🗣 The filtered dataset has `{r} num_rows` rows.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The filtered dataset has `r num_rows`  rows.
+
+💡 **Tip:** Keep inline code simple. Use it to display values that you already created in a regular code chunk. Do not try to do lots of work inside the sentence itself. 
+
+For this chapter, set up your notes file so that:
+
+1. the YAML includes a table of contents and section numbering
+
+2. your headings organize the chapter clearly
+
+3. your code chunks do the main work
+
+4. your memos use inline R code whenever you want to report a value from your analysis
+
+___
+
+Now that you have created (*and saved*) your quarto file, ... [finish this]
+
+# Set up 
+
+To get started, 
+
+## Headings
+
+A simple outline for Chapter 12
+
+```markdown
+
+# Load Data
+
+# 
+
+```
+
+## 📦 Packages
+
+In this chapter, you will use `dplyr` verbs and `dslabs` datasets.
+
+Remember that you only need to install once `install.packages("dplyr")`; `install.packages("dslabs")`.
+
+🎯 Load the required packages at the beginning of your QMD.
 
 ```{r , eval=FALSE}
 library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package
 ```
 
-# Warm‑Up
+[transition statement]
 
-## Logical Test Review
+# Vectorized Conditional functions
 
-🎯 Goal: To write a simple logical test for numbers one through five showing TRUE for when the numbers are larger than 3.
+In earlier chapters, you learned how to use bracket indexing to subset, extract, and insert values. With **logical indexing**, you built a **logical vector** of `TRUE` and `FALSE` values and then used that pattern to keep or modify selected positions. For example, `x[x > 3]` extracts only the values greater than `3`, and `x[x > 3] <- "Large"` would replace matching positions for the word "Large". 
 
-💬 Prediction: I expect 4 and 5 to be `TRUE`.
-
-```{r , eval=FALSE}
-# ⚡Code: TRUE appears where the test is met.
-c(1, 2, 3, 4, 5) > 3
+```{r}
+# 📖 Review
+## Create vector x
+x <- 1:6
+## logical vector
+x > 3
 ```
-
-✅ Check / 🗣 Comment:  Did the output met your expectation?
-
-## `sample()` Review
-
-Recall `sample()` is a `base-R` function that randomly selects elements from a vector.
-
-🎯 Goal: Randomly select 5 numbers from 1 to 10.
-
-```{r , eval=FALSE}
-# ⚡Code: 
-set.seed(99)  # Ensures reproducibility
-sample(1:10, 5)  # Sample 5 numbers from 1 to
+```{r}
+# 📖 Review
+## extract values
+x[x > 3]
 ```
-
-✅ Check / 🗣 Comment: Confirm the output length is 5 and numbers are between 1 and 10.
-
-# `sample_n()` 
-
-📜 The SYNTAX:`sample_n(data, size, replace = FALSE, weight = NULL)`
-
-🎯 Goal: Randomly select 5 rows from the `mtcars` dataset.
-
-```{r , eval=FALSE}
-# ⚡Code: 
-sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame
+```{r}
+# 📖 Review
+## insert values
+x[x > 3] <- "Large"
+## ✅  print result
+x
 ```
+      
+In Chapter 11, you used `filter()` for the same basic idea at the data-frame level: it keeps the rows that satisfy a condition and drops the rest. 
 
-```{r , eval=FALSE}
-# ⚡Code: 
-mtcars2 <- mtcars %>% sample_n(5)  # Using with pipe
-```
 
-✅ Check / 🗣 Comment: Confirm the output has 5 rows and all original columns.
 
-🤔 Reflect: Why are the selected row numbers different each time you run the code?
 
-We'll come back to `sample_n()` later in this lesson. 
+Subsetting answers the question, “Which values or rows do I keep?”
 
-# `ifelse()` vs `case_when()`
+This chapter introduces two new vectorized conditional functions: `ifelse()` and `case_when()`. They still rely on logical conditions checked element-by-element across a vector, but they do something different from subsetting. Instead of keeping only the matching values, they return a new vector the same length as the input, filling each position according to a rule. 
+
+Base R describes `ifelse()` as returning a value with the same shape as the test, filled from `yes` or `no`, and `dplyr` describes `case_when()` as a general vectorized if-else that evaluates cases in order and uses the first match for each element.
+
+
+
+[Write an intro]
+
+
 
 ## `ifelse()` tests 
+
+Conditonal element selection
 
 📜 The SYNTAX: `ifelse(test, yes, no)`
 
@@ -547,7 +656,37 @@ best_value
 
 🪞 Metacognition: Unit conversions are easy to keep alongside original units with `mutate()` (don’t overwrite).
 
+# Summary
+
+# Chapter Terms
+
+**Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
+
+**Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
+
+**Subsetting**: Selecting a smaller piece of an R object using indices (positions, names, or a logical mask). With data frames, subsetting most commonly uses `[` in the form `df[rows, cols]` and typically preserves the object’s structure (e.g., you still get a data frame when you subset rows and columns).
+
 # 📝 Practice Space
+
+Replace each ____ placeholder with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, submit practice as `chapter12_practice.qmd` along with the `chapter12_practice.RData` workspace.
+
+Template (use around every code chunk):
+
+🎯/❓ Goal. One sentence stating the outcome.
+
+💬 Prediction. (Optional) What you expect to see before you run code.
+
+```{r}
+#⚡Code attempts.
+
+# your code here
+```
+
+✅Checks (before/after). Show what you’re verifying (names, head(), table(), class(), etc.).
+
+🗣/🪞What I learned / Next step. 1–2 sentences.
+
+## Task 0
 
 ✍️ Practice: Recode the mpg column. Use `mutate()` and `case_when()`
 
@@ -571,25 +710,9 @@ mtcars %>%
 table(mpg_recode$____)  # expect 3 levels
 ```
 
-# ➤ Assignment
 
-Replace each ____ placeholder with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, submit lesson notes with assignment in one script (.Rmd / .qmd) along with the `.RData` workspace.
 
-Template (use around every code chunk):
 
-🎯/❓ Goal. One sentence stating the outcome.
-
-💬 Prediction. (Optional) What you expect to see before you run code.
-
-```{r}
-#⚡Code attempts.
-
-# your code here
-```
-
-✅Checks (before/after). Show what you’re verifying (names, head(), table(), class(), etc.).
-
-🗣/🪞What I learned / Next step. 1–2 sentences.
 
 ## Task 1
 

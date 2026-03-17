@@ -12,7 +12,7 @@
 <meta name="author" content="Lorraine Gaudio" />
 
 
-<title>Chapter 12: Select &amp; Filter</title>
+<title>Chapter 12</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1629,17 +1629,17 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Chapter 12: Select &amp; Filter</h1>
+<h1 class="title toc-ignore">Chapter 12</h1>
+<h3 class="subtitle">Select &amp; Filter</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version February 11, 2026</h4>
+<h4 class="date">Version March 17, 2026</h4>
 
 </div>
 
 
-<div id="clean-up-on-aisle-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 🧹 Clean up on aisle
-R!</h1>
-<p>In Chapter 11 we learned about about subsetting with dplyr
+<div id="overview" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Overview</h1>
+<p>In Chapter 11, you learned about about subsetting with dplyr
 (<code>select()</code> &amp; <code>filter()</code>). This week, we will
 look at other functions in the dplyr package (<code>mutate()</code> and
 <code>case_when()</code>). Real-world data often needs new or cleaner
@@ -1647,16 +1647,6 @@ variables before analysis. The dplyr verb <code>mutate()</code> lets you
 create or modify columns, while <code>case_when()</code> supplies the
 logic for quick recoding. Together they form a duo you will use in
 nearly every data project.</p>
-<p>To begin Chapter 12, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. From the file types we have used so far, pick
-which file type you want to use. (File &gt; New File &gt; RMarkdown
-(.Rmd) | Quarto Document (.qmd)).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
 <p><strong>Lesson Overview</strong></p>
 <p>By the end of Chapter 12 you will be able to:</p>
 <ol style="list-style-type: decimal">
@@ -1673,62 +1663,191 @@ data.</p></li>
 </ol>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="packages" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> 📦 Packages</h1>
-<p>Install once (if needed): <code>install.packages(&quot;dplyr&quot;)</code>;
-<code>install.packages(&quot;dslabs&quot;)</code></p>
-<p>Load the packages at the start of every session:</p>
+<div id="quarto-part-2" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Quarto: Part 2</h1>
+<p>In Chapter 11, you learned how to create a Quarto file, keep the YAML
+header, use Markdown headings, write memos outside code chunks, and
+control chunks with #| options. In this chapter, you will build two more
+Quarto skills that make your notes more readable and more
+reproducible:</p>
+<ol style="list-style-type: decimal">
+<li><p>add a table of contents and section numbering</p></li>
+<li><p>use inline R code inside your sentences</p></li>
+</ol>
+<p>🎯 Create a Quarto File (🌱)</p>
+<ol style="list-style-type: decimal">
+<li>For those of you who <strong>have GitHub</strong> and a course
+project, navigate to your course folder and open your course project.
+This will open RStudio. Click “Pull” in the Git pane to get the latest
+version of the course materials. After completing work, save, stage,
+commit, and push.</li>
+</ol>
+<p>If you <strong>don’t have GitHub</strong> or a course project, just
+open RStudio and set your working directory to your course folder.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Open a new Quarto document in your course folder and save it as:
+<code>chapter12_notes.qmd</code>
+(<code>File &gt; New File &gt; Quarto Document</code>).</li>
+</ol>
+<div id="toc-true" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> toc: true (🌳)</h2>
+<p>As your notes get longer, it becomes harder to scroll and find what
+you need. Quarto can automatically build a table of contents from your
+headings, and it can also number your sections for you. The main YAML
+options for this are <code>toc: true</code>, <code>toc-depth:</code>,
+and <code>number-sections: true</code>. These options are commonly
+placed in the document options near the top of the YAML.</p>
+<p>Use this updated YAML header for Chapter 12:</p>
+<pre class="yaml"><code>---
+title: &quot;Chapter 12 Notes&quot;
+subtitle: &quot;mutate() and case_when()&quot;
+author: &quot;YOUR NAME&quot;
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: true
+execute:
+  warning: true
+  message: true
+---</code></pre>
+<div id="what-each-part-does" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> What each part
+does:</h3>
+<ul>
+<li><p><code>toc:</code> true adds a table of contents
+automatically.</p></li>
+<li><p><code>toc-depth:</code> 2 tells Quarto to include level 1 and
+level 2 headings in that table of contents.</p></li>
+<li><p><code>number-sections: true</code> adds section numbers to your
+headings in the rendered document.</p></li>
+</ul>
+<p>The <code>toc-depth: 2</code> is a good default. It keeps your notes
+organized without making the table of contents too crowded.</p>
+</div>
+</div>
+<div id="dynamic-memoing" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Dynamic memoing
+(🌳)</h2>
+<p>So far, you have used code chunks to run R code. Quarto also lets you
+place small pieces of R code directly inside normal sentences. This is
+called inline code. Inline code is useful when you want your written
+memo to automatically include a value computed by your R code. Quarto
+evaluates inline code during rendering, so the sentence stays up to date
+with your analysis.</p>
+<p>In Quarto, inline code uses one pair of backticks and the engine name
+inside the backticks. For R, the pattern is:</p>
+<pre class="markdown"><code>
+`{r} expression`
+</code></pre>
+<p>Using inline R code helps ensure that your report always shows the
+exact values used to in calculations.</p>
+<div id="inline-r-code" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Inline R code</h3>
+<p>🎯 Imagine you want to write a sentence that says how many rows are
+in the filtered <code>mtcars</code> dataset. Instead of hardcoding the
+number, you can use inline code to compute it.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+library(dplyr)
+num_rows &lt;- mtcars %&gt;% 
+  filter(cyl == 6) %&gt;% 
+  nrow()</code></pre>
+<p>Then, in your written memo, you can write the expression:</p>
+<pre class="markdown"><code>🗣 The filtered dataset has `{r} num_rows` rows.</code></pre>
+<p>When rendered to HTML, this will show as:</p>
+<p>🗣 The filtered dataset has 7 rows.</p>
+<p>💡 <strong>Tip:</strong> Keep inline code simple. Use it to display
+values that you already created in a regular code chunk. Do not try to
+do lots of work inside the sentence itself.</p>
+<p>For this chapter, set up your notes file so that:</p>
+<ol style="list-style-type: decimal">
+<li><p>the YAML includes a table of contents and section
+numbering</p></li>
+<li><p>your headings organize the chapter clearly</p></li>
+<li><p>your code chunks do the main work</p></li>
+<li><p>your memos use inline R code whenever you want to report a value
+from your analysis</p></li>
+</ol>
+<hr />
+<p>Now that you have created (<em>and saved</em>) your quarto file, …
+[finish this]</p>
+</div>
+</div>
+</div>
+<div id="set-up" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Set up</h1>
+<p>To get started,</p>
+<div id="headings" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Headings</h2>
+<p>A simple outline for Chapter 12</p>
+<pre class="markdown"><code>
+# Load Data
+
+# 
+</code></pre>
+</div>
+<div id="packages" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> 📦 Packages</h2>
+<p>In this chapter, you will use <code>dplyr</code> verbs and
+<code>dslabs</code> datasets.</p>
+<p>Remember that you only need to install once
+<code>install.packages(&quot;dplyr&quot;)</code>;
+<code>install.packages(&quot;dslabs&quot;)</code>.</p>
+<p>🎯 Load the required packages at the beginning of your QMD.</p>
 <pre class="r"><code>library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package</code></pre>
-</div>
-<div id="warmup" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Warm‑Up</h1>
-<div id="logical-test-review" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Logical Test
-Review</h2>
-<p>🎯 Goal: To write a simple logical test for numbers one through five
-showing TRUE for when the numbers are larger than 3.</p>
-<p>💬 Prediction: I expect 4 and 5 to be <code>TRUE</code>.</p>
-<pre class="r"><code># ⚡Code: TRUE appears where the test is met.
-c(1, 2, 3, 4, 5) &gt; 3</code></pre>
-<p>✅ Check / 🗣 Comment: Did the output met your expectation?</p>
-</div>
-<div id="sample-review" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> <code>sample()</code>
-Review</h2>
-<p>Recall <code>sample()</code> is a <code>base-R</code> function that
-randomly selects elements from a vector.</p>
-<p>🎯 Goal: Randomly select 5 numbers from 1 to 10.</p>
-<pre class="r"><code># ⚡Code: 
-set.seed(99)  # Ensures reproducibility
-sample(1:10, 5)  # Sample 5 numbers from 1 to</code></pre>
-<p>✅ Check / 🗣 Comment: Confirm the output length is 5 and numbers are
-between 1 and 10.</p>
+<p>[transition statement]</p>
 </div>
 </div>
-<div id="sample_n" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
-<code>sample_n()</code></h1>
-<p>📜 The
-SYNTAX:<code>sample_n(data, size, replace = FALSE, weight = NULL)</code></p>
-<p>🎯 Goal: Randomly select 5 rows from the <code>mtcars</code>
-dataset.</p>
-<pre class="r"><code># ⚡Code: 
-sample_n(mtcars, 5)  # Sample 5 rows from mtcars data frame</code></pre>
-<pre class="r"><code># ⚡Code: 
-mtcars2 &lt;- mtcars %&gt;% sample_n(5)  # Using with pipe</code></pre>
-<p>✅ Check / 🗣 Comment: Confirm the output has 5 rows and all original
-columns.</p>
-<p>🤔 Reflect: Why are the selected row numbers different each time you
-run the code?</p>
-<p>We’ll come back to <code>sample_n()</code> later in this lesson.</p>
-</div>
-<div id="ifelse-vs-case_when" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> <code>ifelse()</code>
-vs <code>case_when()</code></h1>
-<div id="ifelse-tests" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> <code>ifelse()</code>
+<div id="vectorized-conditional-functions" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Vectorized Conditional
+functions</h1>
+<p>In earlier chapters, you learned how to use bracket indexing to
+subset, extract, and insert values. With <strong>logical
+indexing</strong>, you built a <strong>logical vector</strong> of
+<code>TRUE</code> and <code>FALSE</code> values and then used that
+pattern to keep or modify selected positions. For example,
+<code>x[x &gt; 3]</code> extracts only the values greater than
+<code>3</code>, and <code>x[x &gt; 3] &lt;- &quot;Large&quot;</code> would replace
+matching positions for the word “Large”.</p>
+<pre class="r"><code># 📖 Review
+## Create x
+x &lt;- 1:6
+## logical vector
+x &gt; 3</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code># 📖 Review
+## extract values
+x[x &gt; 3]</code></pre>
+<pre><code>## [1] 4 5 6</code></pre>
+<pre class="r"><code># 📖 Review
+## insert values
+x[x &gt; 3] &lt;- &quot;Large&quot;
+## ✅  print result
+x</code></pre>
+<pre><code>## [1] &quot;1&quot;     &quot;2&quot;     &quot;3&quot;     &quot;Large&quot; &quot;Large&quot; &quot;Large&quot;</code></pre>
+<p>In Chapter 11, you used <code>filter()</code> for the same basic idea
+at the data-frame level: it keeps the rows that satisfy a condition and
+drops the rest. In other words, subsetting answers the question, “Which
+values or rows do I keep?”</p>
+<p>This chapter introduces two new vectorized conditional functions:
+<code>ifelse()</code> and <code>case_when()</code>. They still rely on
+logical conditions checked element-by-element across a vector, but they
+do something different from subsetting. Instead of keeping only the
+matching values, they return a new vector the same length as the input,
+filling each position according to a rule.</p>
+<p>Base R describes <code>ifelse()</code> as returning a value with the
+same shape as the test, filled from <code>yes</code> or <code>no</code>,
+and <code>dplyr</code> describes <code>case_when()</code> as a general
+vectorized if-else that evaluates cases in order and uses the first
+match for each element.</p>
+<p>[Write an intro]</p>
+<div id="ifelse-tests" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> <code>ifelse()</code>
 tests</h2>
+<p>Conditonal element selection</p>
 <p>📜 The SYNTAX: <code>ifelse(test, yes, no)</code></p>
 <ul>
 <li><p><em>test</em> – logical vector
@@ -1745,8 +1864,8 @@ labels. Specifically, I expect only 4 and 5 to be “Large”.</p>
 <p>✅ Check / 🗣 Comment: Confirm the output positions for 1:3 are
 “Small” and 4:5 are “Large”.</p>
 </div>
-<div id="case_when-tests" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span>
+<div id="case_when-tests" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span>
 <code>case_when()</code> tests</h2>
 <p>dplyr::case_when() can do exactly what <code>ifelse()</code> is
 doing.</p>
@@ -1763,8 +1882,8 @@ labels. Specifically, I expect only 4 and 5 to be “Large”.</p>
 <code>case_when()</code>? <code>case_when()</code> is usually clearer
 once you have 3+ categories.</p>
 </div>
-<div id="multilevel-recoding" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Multi‑Level
+<div id="multilevel-recoding" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Multi‑Level
 Recoding</h2>
 <p>Nested <code>ifelse()</code></p>
 <p>🎯 Goal: Re-code numbers 1 to 5 as “One”, “Two”, “Three”, “Four”, or
@@ -1801,17 +1920,17 @@ the function name is not repeated at each line.</p>
 assignment.</p>
 </div>
 </div>
-<div id="mutate" class="section level1" number="6">
-<h1><span class="header-section-number">6</span>
+<div id="mutate" class="section level1" number="5">
+<h1><span class="header-section-number">5</span>
 <code>mutate()</code></h1>
 <p><code>mutate()</code> is a function that adds new columns or modifies
 existing ones</p>
 <p>📜 The SYNTAX: <code>mutate(data, new_col = value)</code></p>
-<div id="overwrite-columns" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Overwrite
+<div id="overwrite-columns" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Overwrite
 Columns</h2>
-<div id="copy-a-column" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Copy A Column</h3>
+<div id="copy-a-column" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Copy A Column</h3>
 <p>🎯 Goal: Create a new column that is a copy of an existing
 column.</p>
 <pre class="r"><code># Preview Column Names
@@ -1833,8 +1952,8 @@ identical(mtcars2$am, mtcars2$new_column_copy)</code></pre>
 identical column of <code>am</code> called
 <code>new_column_copy</code></p>
 </div>
-<div id="overwrite-original-column-values" class="section level3" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> Overwrite Original
+<div id="overwrite-original-column-values" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Overwrite Original
 Column Values</h3>
 <p>🎯 Goal: Recode the <code>am</code> column in <code>mtcars</code>
 from 0/1 to “Automatic”/“Manual”.</p>
@@ -1852,8 +1971,8 @@ cars_overwrite &lt;- mtcars %&gt;%
 <pre class="r"><code># ✅ Verify:
 unique(cars_overwrite$am)</code></pre>
 </div>
-<div id="new-column-new-values" class="section level3" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> New Column &amp;
+<div id="new-column-new-values" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> New Column &amp;
 New Values</h3>
 <p>🎯 Goal: Create a new column <code>transmission</code> that recodes
 <code>am</code> from 0/1 to “Automatic”/“Manual”, while keeping the
@@ -1869,8 +1988,8 @@ cars_keep %&gt;% select(am, transmission)</code></pre>
 when changing the values?</p>
 </div>
 </div>
-<div id="factors-and-levels" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Factors and
+<div id="factors-and-levels" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Factors and
 Levels</h2>
 <p>In Lesson 2, we learned about factors for vectors. A factor is a
 categorical variable that can take on a limited number of values, called
@@ -1890,8 +2009,8 @@ a factor with three levels: “setosa”, “versicolor”, and “virginica”.
 unique(iris$Species)
 class(iris$Species)
 levels(iris$Species)</code></pre>
-<div id="overwrite-with-factors" class="section level3" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> Overwrite with
+<div id="overwrite-with-factors" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Overwrite with
 Factors</h3>
 <p>🎯 Goal: Take a 100-row sample from <code>movielens</code>, then
 overwrite the numeric <code>rating</code> column with an ordered factor:
@@ -1963,8 +2082,8 @@ movies_rename &lt;- smaller_movies %&gt;%
     )
   )</code></pre>
 </div>
-<div id="bonus-example" class="section level3" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> Bonus Example</h3>
+<div id="bonus-example" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Bonus Example</h3>
 <p>🎯 Goal: Create a new column rating_label in smaller_movies using
 <code>case_when()</code> that labels ratings <code>&gt;= 4</code> as
 “Good” and the rest as “Bad”. Keep the original numeric rating
@@ -1998,8 +2117,8 @@ class(movies_newcol$rating_label)    # expect &quot;character&quot; or &quot;fac
 make my code easier to read</p>
 </div>
 </div>
-<div id="calculations" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Calculations</h2>
+<div id="calculations" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Calculations</h2>
 <p>🚗 Using <code>mtcars</code>, let’s create a column
 <code>l_per_100km</code> that converts from US units (miles per gallon)
 to metric units (liters per 100km). 235.215 is the conversion factor
@@ -2026,8 +2145,42 @@ best_value</code></pre>
 original units with <code>mutate()</code> (don’t overwrite).</p>
 </div>
 </div>
-<div id="practice-space" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
+<div id="summary" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Summary</h1>
+</div>
+<div id="chapter-terms" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Chapter Terms</h1>
+<p><strong>Logical Indexing</strong>: Indexing a vector using a logical
+vector of <code>TRUE</code>/<code>FALSE</code> values (for example,
+<code>x[x &gt; 0]</code>) so R keeps the elements where the index is
+<code>TRUE</code> and drops those where it is <code>FALSE</code>. If the
+logical index is a different length, R may recycle it, which can lead to
+surprising results.</p>
+<p><strong>Logical Vector</strong>: A vector that stores Boolean
+elements: <code>TRUE</code> or <code>FALSE</code> (and sometimes
+<code>NA</code> for missing). Logical vectors are commonly produced by
+comparisons (for example, <code>x &gt; 0</code>) and are heavily used
+for filtering and conditional code.</p>
+</div>
+<div id="practice-space" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
+<p>Replace each ____ placeholder with working code or a short written
+answer. Run each section; be sure the requested objects appear in the
+Environment. When finished, submit practice as
+<code>chapter12_practice.qmd</code> along with the
+<code>chapter12_practice.RData</code> workspace.</p>
+<p>Template (use around every code chunk):</p>
+<p>🎯/❓ Goal. One sentence stating the outcome.</p>
+<p>💬 Prediction. (Optional) What you expect to see before you run
+code.</p>
+<pre class="r"><code>#⚡Code attempts.
+
+# your code here</code></pre>
+<p>✅Checks (before/after). Show what you’re verifying (names, head(),
+table(), class(), etc.).</p>
+<p>🗣/🪞What I learned / Next step. 1–2 sentences.</p>
+<div id="task-0" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Task 0</h2>
 <p>✍️ Practice: Recode the mpg column. Use <code>mutate()</code> and
 <code>case_when()</code></p>
 <p>Fill in the Blanks.</p>
@@ -2044,31 +2197,15 @@ mtcars %&gt;%
 <pre class="r"><code># ✅ Checks
 table(mpg_recode$____)  # expect 3 levels</code></pre>
 </div>
-<div id="assignment" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> ➤ Assignment</h1>
-<p>Replace each ____ placeholder with working code or a short written
-answer. Run each section; be sure the requested objects appear in the
-Environment. When finished, submit lesson notes with assignment in one
-script (.Rmd / .qmd) along with the <code>.RData</code> workspace.</p>
-<p>Template (use around every code chunk):</p>
-<p>🎯/❓ Goal. One sentence stating the outcome.</p>
-<p>💬 Prediction. (Optional) What you expect to see before you run
-code.</p>
-<pre class="r"><code>#⚡Code attempts.
-
-# your code here</code></pre>
-<p>✅Checks (before/after). Show what you’re verifying (names, head(),
-table(), class(), etc.).</p>
-<p>🗣/🪞What I learned / Next step. 1–2 sentences.</p>
-<div id="task-1" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Task 1</h2>
+<div id="task-1" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Task 1</h2>
 <p>📦 Library it up!</p>
 <p>Make sure there is script in your document that loads
 <code>dplyr</code> and <code>dslabs</code> packages so their functions /
 datasets load.</p>
 </div>
-<div id="task-2" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Task 2</h2>
 <p>📝 Recode ranges (overwrite)</p>
 <p>Using <code>quakes</code>, recode <code>mag</code> into THREE ordered
 levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
@@ -2082,8 +2219,8 @@ levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”)
 <pre class="r"><code># Quick check
 table(quake_recode$mag)   # should show exactly 3 levels</code></pre>
 </div>
-<div id="task-3" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Task 3</h2>
 <p>Recode categories (new col)</p>
 <p>🌟 With <code>stars</code>, turn the one-letter <em>type</em> into a
 descriptive phrase of <em>your own</em> in a <strong>new</strong> column
@@ -2095,8 +2232,8 @@ called <code>full_type</code>. Keep the original type. Store as
 <pre class="r"><code># Quick check
 head(select(stars_recode, type, full_type))</code></pre>
 </div>
-<div id="task-4" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Task 4</h2>
 <p>Unit conversion</p>
 <p>Create <code>international_friendly_heights</code> by adding a
 <code>height_cm</code> column to <code>heights</code> (inches × 2.54).
