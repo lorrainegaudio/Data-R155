@@ -1630,37 +1630,58 @@ display: none;
 
 
 <h1 class="title toc-ignore">Chapter 12</h1>
-<h3 class="subtitle">Select &amp; Filter</h3>
+<h3 class="subtitle">Vectorized Conditionals and mutate()</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version March 17, 2026</h4>
+<h4 class="date">Version March 18, 2026</h4>
 
 </div>
 
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>In Chapter 11, you learned about about subsetting with dplyr
-(<code>select()</code> &amp; <code>filter()</code>). This week, we will
-look at other functions in the dplyr package (<code>mutate()</code> and
-<code>case_when()</code>). Real-world data often needs new or cleaner
-variables before analysis. The dplyr verb <code>mutate()</code> lets you
-create or modify columns, while <code>case_when()</code> supplies the
-logic for quick recoding. Together they form a duo you will use in
-nearly every data project.</p>
+<p>In this chapter, you will learn how to use <strong>vectorized
+conditional functions</strong> to return a result for every element in a
+vector. You will compare <code>ifelse()</code> and
+<code>case_when()</code>, learn when each is most useful, and see how
+conditional rules can be used inside <code>mutate()</code> to create or
+overwrite columns in a data frame. You will also continue practicing in
+Quarto, the course’s reproducible workflow (🎯 ⚡ ✅ 🗣) for planning and
+writing code, checking output, and written interpretation in one
+document. You move from simply selecting data to actively transforming
+it into more useful variables. <code>ifelse()</code> returns values
+based on a logical test, <code>case_when()</code> applies rules in order
+using the first match, and <code>mutate()</code> creates new columns
+from existing variables or modifies existing ones.</p>
+<p>This chapter matters because data analysts rarely work only with raw
+variables. In real analysis, you often need to recode categories, group
+values into meaningful labels, convert units, and create cleaner columns
+from existing data before you can summarize, visualize, or model it.
+Learning to do this with readable R code will help you build data sets
+that are easier to interpret, easier to check, and easier for other
+people to follow. <code>dplyr</code> describes these kinds of recoding
+and column-building tasks as common data manipulation work, especially
+when creating entirely new columns from existing ones</p>
 <p><strong>Lesson Overview</strong></p>
 <p>By the end of Chapter 12 you will be able to:</p>
-<ol style="list-style-type: decimal">
-<li><p>⚡ Remember – State the purposes of <code>mutate()</code> and
-<code>case_when()</code></p></li>
-<li><p>🔍 Understand – Explain how <code>case_when()</code> replaces
-values based on a test.</p></li>
-<li><p>🛠 Apply – Overwrite or add columns using <code>mutate()</code> +
-<code>case_when()</code></p></li>
-<li><p>📊 Analyze – Build multi‑level recodes with nested
+<ul>
+<li><p>🔀 Distinguish between logical subsetting, subassignment, and
+vectorized conditionals.</p></li>
+<li><p>🧠 Use <code>ifelse()</code> to make simple two-way decisions
+across a vector.</p></li>
+<li><p>🧱 Use <code>case_when()</code> to apply multiple conditional
+rules in a clear order.</p></li>
+<li><p>⚠️ Explain why the order of rules matters in
 <code>case_when()</code>.</p></li>
-<li><p>🧠️ Evaluate – Choose between overwriting vs. keeping the original
-data.</p></li>
-</ol>
+<li><p>🏷️ Recode numeric values into meaningful label”.</p></li>
+<li><p>➕ Use <code>mutate()</code>to create new columns from existing
+columns.</p></li>
+<li><p>♻️ Overwrite an existing column by reusing its name inside
+<code>mutate()</code>.</p></li>
+<li><p>📏 Use <code>mutate()</code> with arithmetic expressions to
+create transformed variables such as unit conversions.</p></li>
+<li><p>📝 Continue using Quarto to organize code, output, and written
+interpretation in a reproducible analysis document.</p></li>
+</ul>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
 <div id="quarto-part-2" class="section level1" number="2">
@@ -1729,13 +1750,36 @@ organized without making the table of contents too crowded.</p>
 </div>
 </div>
 <div id="headings" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Headings</h2>
-<p>Create a simple outline for Chapter 12 using headings. Use the
+<h2><span class="header-section-number">2.2</span> Headings (🌱)</h2>
+<p>You will want to use headings to see how the table of contents work.
+Create a simple outline for Chapter 12 using headings. Try using the
 following structure:</p>
 <pre class="markdown"><code>
-# Load Data
+# Quarto Notes
 
-# 
+# Load Packages
+
+# Vectorized Conditionals
+
+## ifelse()
+
+## case_when()
+
+## More than Two Categories
+
+### Nested ifelse()
+
+### Multiple Rule case_when()
+
+# mutate()
+
+## Column Copy
+
+### mutate() with Arithmetic
+
+### case_when() inside mutate()
+
+## Overwrite Column Values
 </code></pre>
 </div>
 <div id="dynamic-memoing" class="section level2" number="2.3">
@@ -1754,8 +1798,8 @@ inside the backticks. For R, the pattern is:</p>
 </code></pre>
 <p>Using inline R code helps ensure that your report always shows the
 exact values used to in calculations.</p>
-<div id="inline-r-code" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Inline R code</h3>
+<div id="inline-example" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Inline Example</h3>
 <p>🎯 Imagine you want to write a sentence that says how many rows are
 in the filtered <code>mtcars</code> dataset. Instead of hardcoding the
 number, you can use inline code to compute it.</p>
@@ -1768,10 +1812,11 @@ num_rows &lt;- mtcars %&gt;%
 <pre class="markdown"><code>🗣 The filtered dataset has `{r} num_rows` rows.</code></pre>
 <p>When rendered to HTML, this will show as:</p>
 <p>🗣 The filtered dataset has 7 rows.</p>
-<p>💡 <strong>Tip:</strong> Keep inline code simple. Use it to display
-values that you already created in a regular code chunk. Do not try to
-do lots of work inside the sentence itself.</p>
-<p>For this chapter, set up your notes file so that:</p>
+<p>In this chapter, use inline R code when you want your memo to report
+a computed value such as a vector length, category count, or converted
+measurement.</p>
+<hr />
+<p>🎯 For this chapter, practice setting up your notes file so that:</p>
 <ol style="list-style-type: decimal">
 <li><p>the YAML includes a table of contents and section
 numbering</p></li>
@@ -1780,13 +1825,16 @@ numbering</p></li>
 <li><p>your memos use inline R code whenever you want to report a value
 from your analysis</p></li>
 </ol>
-<hr />
 <p>Now that you have created (<em>and saved</em>) your quarto file,
-follow along this guided practice and taking notes.</p>
+follow along this guided practice and taking notes. Fill in each section
+under the headings.</p>
+<p>💡 <strong>Tip:</strong> Test Render your document often to see how
+your notes are coming together.</p>
 </div>
 </div>
-<div id="packages" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> 📦 Packages</h2>
+</div>
+<div id="packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 📦 Packages</h1>
 <p>In this chapter, you will use <code>dplyr</code> verbs and
 <code>dslabs</code> datasets.</p>
 <p>Remember that you only need to install once
@@ -1796,9 +1844,8 @@ follow along this guided practice and taking notes.</p>
 <pre class="r"><code>library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package</code></pre>
 </div>
-</div>
-<div id="vectorized-conditional-functions" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Vectorized Conditional
+<div id="vectorized-conditional-functions" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Vectorized Conditional
 Functions</h1>
 <p>In previous chapters, you used logical conditions to keep some values
 and drop others, or to replace selected values in place. In this
@@ -1823,8 +1870,8 @@ conditionals, by contrast, keep all positions and assign each one a
 result. In other words, subsetting answers “What do I keep?” while
 vectorized conditionals answer “What value should I return for each
 element?”</p>
-<div id="review-subsetting-with-conditions" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Review Subsetting
+<div id="review-subsetting-with-conditions" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Review Subsetting
 with Conditions</h2>
 <p><strong>Subsetting</strong> answers the question, “Which values
 <em>or rows</em> do I keep?” With a vector, <strong>logical
@@ -1847,8 +1894,8 @@ in Chapter 11. The <code>filter()</code> function also applies a logical
 condition, but at the row level, keeping rows that satisfy the condition
 and dropping the rest.</p>
 </div>
-<div id="review-subassignment" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Review
+<div id="review-subassignment" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Review
 Subassignment</h2>
 <p>Subsetting is used to <em>replace</em> values, called
 <strong>subassignment</strong>. When you assign a value to a subset of
@@ -1881,8 +1928,8 @@ and return a <em>new vector</em> with one result for every position.</p>
 shown at the end of this chapter, it becomes a new column rather than a
 subset of the old one.</p>
 </div>
-<div id="simple-ifelse" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Simple
+<div id="simple-ifelse" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Simple
 <code>ifelse()</code></h2>
 <p>Base R describes <code>ifelse()</code> as returning a value with the
 same shape as the test, filled from <code>yes</code> or
@@ -1905,9 +1952,13 @@ x &lt;- c(3, 2, 3, 6, 5)</code></pre>
 <pre class="r"><code># ✅  Pre-check
 length(x)</code></pre>
 <pre><code>## [1] 5</code></pre>
-<p>🗣 <code>x</code> is a vector with the length of <code>5</code> and
-values <code>3</code>, <code>2</code>, <code>3</code>, <code>6</code>,
-and <code>5</code>.</p>
+<hr />
+<p>🌳 Use this inline code to dynamically report the length of
+<code>x</code> within your memo:</p>
+<pre class="markdown"><code>🗣 `x` is a vector with the length of `{r} length(x)` rows.</code></pre>
+<p>When rendered to HTML, this should read:</p>
+<p>🗣 <code>x</code> is a vector with the length of 5</p>
+<hr />
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk: 
 ifelse(test = x &gt; 3, yes = &quot;Large&quot;, no = &quot;Small&quot;)</code></pre>
 <pre><code>## [1] &quot;Small&quot; &quot;Small&quot; &quot;Small&quot; &quot;Large&quot; &quot;Large&quot;</code></pre>
@@ -1933,8 +1984,8 @@ matches</p></li>
 vector with a value for every position based on the condition.</p></li>
 </ul>
 </div>
-<div id="simple-case_when" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Simple
+<div id="simple-case_when" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Simple
 <code>case_when()</code></h2>
 <p><code>dplyr</code> describes <code>case_when()</code> as a general
 vectorized if-else that evaluates rules in order and uses the first
@@ -1967,8 +2018,8 @@ condition.</li>
 <code>case_when()</code>? <code>case_when()</code> is usually clearer
 once you have 3+ categories.</p>
 </div>
-<div id="more-than-two-categories" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> More Than Two
+<div id="more-than-two-categories" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> More Than Two
 Categories</h2>
 <p><code>ifelse()</code> is designed for two categories. If you have
 more than two, you can nest <code>ifelse()</code> statements inside each
@@ -1980,8 +2031,8 @@ have more than two conditions.</p>
 scores &lt;- c(55, 65, 75, 85, 95)</code></pre>
 <p>🎯 Re-code scores less than 60 as “Low”, scores less than 80 as
 “Medium”, and all others as “High”.</p>
-<div id="nested-ifelse" class="section level3" number="3.5.1">
-<h3><span class="header-section-number">3.5.1</span> Nested
+<div id="nested-ifelse" class="section level3" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Nested
 <code>ifelse()</code></h3>
 <p>🎯 Re-code scores less than 60 as “Low”, scores less than 80 as
 “Medium”, and all others as “High” using nested
@@ -1994,8 +2045,8 @@ ifelse(scores &lt; 60, &quot;Low&quot;,
 first <code>ifelse()</code>, which becomes harder to read as the number
 of categories grows.</p>
 </div>
-<div id="multiple-rule-case_when" class="section level3" number="3.5.2">
-<h3><span class="header-section-number">3.5.2</span> Multiple Rule
+<div id="multiple-rule-case_when" class="section level3" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Multiple Rule
 <code>case_when()</code></h3>
 <p><code>case_when()</code> avoids the ugly nesting that happens with
 repeated <code>ifelse()</code> calls. It is a general vectorized
@@ -2034,17 +2085,15 @@ general, and end with a default rule such as
 </div>
 </div>
 </div>
-<div id="mutate" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
+<div id="mutate" class="section level1" number="5">
+<h1><span class="header-section-number">5</span>
 <code>mutate()</code></h1>
 <p>So far, <code>case_when()</code> has returned a new vector of labels.
 In real data analysis, you usually want to store that result in a data
 frame as a new column. That is what <code>mutate()</code> does.</p>
 <p><code>mutate()</code> creates new columns that are functions of
 existing columns. It can also modify an existing column if you reuse the
-same column name. In this course, the main idea is simple:
-<code>mutate()</code> lets you add a new variable to your data without
-changing the number of rows.</p>
+same column name.</p>
 <p>📜 The SYNTAX:</p>
 <p><code>mutate(data, new_col = expression)</code></p>
 <p>Or with piping</p>
@@ -2068,8 +2117,8 @@ that column.</p></li>
 <li><p>The right side of <code>=</code> tells R what values to put
 there.</p></li>
 </ul>
-<div id="column-copy" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Column Copy</h2>
+<div id="column-copy" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Column Copy</h2>
 <p>🎯 Create a new column that is a copy of <code>am</code> in
 <code>mtcars</code>.</p>
 <pre class="r"><code># ✅  Pre-Check
@@ -2092,8 +2141,8 @@ column from an existing one. The right side of <code>mutate()</code> is
 for calculations or rule-based expressions on existing columns. We’ll
 start by using calculations inside <code>mutate()</code> to create a new
 column.</p>
-<div id="mutate-with-arithmetic" class="section level3" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span>
+<div id="mutate-with-arithmetic" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span>
 <code>mutate()</code> with Arithmetic</h3>
 <p>Doing unit conversions is a common data analyst task. Here it is in
 action.</p>
@@ -2105,8 +2154,13 @@ measurements</code></pre>
 {"columns":[{"label":["height_in"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"60"},{"1":"65"},{"1":"70"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<hr />
+<p>🌳 Use this inline code to dynamically report within your memo:</p>
+<pre class="markdown"><code>🗣 The `measurements` data frame has one column called `{r} colnames(measurements)`.</code></pre>
+<p>When rendered to HTML, this should read:</p>
 <p>🗣 The <code>measurements</code> data frame has one column called
-<code>height_in</code>.</p>
+height_in</p>
+<hr />
 <p>🎯 Create a new column called <code>height_cm</code> that converts
 inches to centimeters (1 inch = 2.54 cm).</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
@@ -2122,8 +2176,8 @@ column called <code>height_cm</code>. Each value in
 <code>height_cm</code> is calculated from the matching value in
 <code>height_in</code>.</p>
 </div>
-<div id="case_when-inside-mutate" class="section level3" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span>
+<div id="case_when-inside-mutate" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span>
 <code>case_when()</code> inside <code>mutate()</code></h3>
 <p>The right side of <code>mutate()</code> can also be a rule-based
 expression. One common example is <code>case_when()</code> which lets
@@ -2135,7 +2189,7 @@ student_scores &lt;- data.frame(scores = c(55, 68, 72, 83, 91))</code></pre>
 each score from <code>scores</code> as <code>&quot;Low&quot;</code>,
 <code>&quot;Medium&quot;</code>, or <code>&quot;High&quot;</code>.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
-student_scores %&gt;%
+student_scores &lt;- student_scores %&gt;%
   mutate(
     score_level = case_when(
       scores &lt; 60 ~ &quot;Low&quot;,
@@ -2143,11 +2197,6 @@ student_scores %&gt;%
       TRUE        ~ &quot;High&quot;
     )
   )</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scores"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score_level"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"55","2":"Low"},{"1":"68","2":"Medium"},{"1":"72","2":"Medium"},{"1":"83","2":"High"},{"1":"91","2":"High"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 <p>🗣 <code>mutate()</code> adds a new column called
 <code>score_level</code>. The values in that column come from the rules
 inside <code>case_when()</code>.</p>
@@ -2158,17 +2207,37 @@ inside <code>case_when()</code>.</p>
 <li><p><code>case_when(...)</code> decides what label to return for each
 row based on the value in <code>scores</code>.</p></li>
 </ul>
-<p><code>mutate()</code> + <code>case_when()</code> is a powerful way to
-create new variables based on complex rules. You can have as many
-conditions as you need, and you can use any existing columns in your
-data frame to build those rules</p>
+<pre class="r"><code># ✅ Verify
+head(student_scores)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["scores"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score_level"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"55","2":"Low","_rn_":"1"},{"1":"68","2":"Medium","_rn_":"2"},{"1":"72","2":"Medium","_rn_":"3"},{"1":"83","2":"High","_rn_":"4"},{"1":"91","2":"High","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<hr />
+<p>🌳 Use this inline code to dynamically report within your memo:</p>
+<pre class="markdown"><code>🗣 `student_scores` is a dataframe with columns names: `{r} names(student_scores)`.</code></pre>
+<p>When rendered to HTML, this should read:</p>
+<p>🗣 <code>student_scores</code> is a dataframe with columns names:
+scores, score_level</p>
+<p>🌳🌳 Or, you can get fancy with inline code and write and “and”
+between the column names:</p>
+<pre class="markdown"><code>🗣 `student_scores` has the columns `{r} paste(names(student_scores_labeled), collapse = &quot; and &quot;)`.</code></pre>
+<p>When rendered to HTML, this should read:</p>
+<p>🗣 <code>student_scores</code> has the columns scores and
+score_level.</p>
+<hr />
+<p>The <code>mutate()</code> + <code>case_when()</code> duo is a
+powerful way to create new variables based on complex rules. You can
+have as many conditions as you need, and you can use any existing
+columns in your data frame to build those rules</p>
 <p>In some situations, you may want to overwrite an existing column
 instead of creating a new one. That is also possible with
 <code>mutate()</code>, as the next section shows.</p>
 </div>
 </div>
-<div id="overwrite-column-values" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Overwrite Column
+<div id="overwrite-column-values" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Overwrite Column
 Values</h2>
 <p><code>mutate()</code> will overwrite an existing column by reusing
 the same column name on the left as the right of <code>=</code>. We’ll
@@ -2191,26 +2260,41 @@ cars_overwrite &lt;- mtcars %&gt;%
 <pre class="r"><code># ✅ Verify:
 unique(cars_overwrite$am)</code></pre>
 <pre><code>## [1] &quot;Manual&quot;    &quot;Automatic&quot;</code></pre>
-<p>🗣 In <code>cars_overwrite</code>, the <code>am</code> column has been
-<em>changed</em> from <code>0</code>/<code>1</code> to
+<hr />
+<p>🌳 Use this inline code to dynamically report within your memo:</p>
+<pre class="markdown"><code>🗣 The `am` column in `cars_overwrite` has the unique values: `{r} unique(cars_overwrite$am)`.</code></pre>
+<p>When rendered to HTML, this should read:</p>
+<p>🗣 The <code>am</code> column in <code>cars_overwrite</code> has the
+unique values: Manual, Automatic.</p>
+<p>🗣 The <code>am</code> column has been <em>changed</em> from
+<code>0</code>/<code>1</code> to
 <code>&quot;Automatic&quot;</code>/<code>&quot;Manual&quot;</code>.</p>
 <hr />
-<p><strong>Key takeaway</strong></p>
+<p><strong>Overwrite Key Takeaway</strong></p>
 <p>In every example above, <code>mutate()</code> followed the same
 pattern:</p>
 <ul>
 <li><p>the left side of <code>=</code> named the output column</p></li>
 <li><p>the right side of <code>=</code> created its values</p></li>
 </ul>
-<p>When the left side used a new name, R added a new column. When the
-left side reused an existing name, R overwrote that column.</p>
+<p>When the left side is a new name, R adds a new column. When the left
+side reused an existing name, R overwrites that column.</p>
 </div>
 </div>
-<div id="summary" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Summary</h1>
+<div id="summary" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Summary</h1>
+<p>In this chapter, you learned that logical conditions in R can do more
+than keep or replace values: they can also return a new result for every
+element. You practiced this with <code>ifelse()</code> for simple
+two-way decisions and <code>case_when()</code> for multi-rule
+classification, then used <code>mutate()</code> to store those results
+as new or overwritten columns in a data frame. You also continued
+building your Quarto workflow by adding a table of contents, section
+numbering, and inline R code so your notes can report values dynamically
+and stay reproducible.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Chapter Terms</h1>
 <p><strong>Arguments</strong>: Inputs that you provide to functions to
 customize their behavior. Arguments are specified within the parentheses
 of a function call and can modify how the function operates or what data
@@ -2247,95 +2331,207 @@ vectorized conditionals such as <code>ifelse()</code> and
 <code>case_when()</code> keep all positions and assign each one a result
 based on the condition.</p>
 </div>
-<div id="practice-space" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
-<p>Replace each ____ placeholder with working code or a short written
-answer. Run each section; be sure the requested objects appear in the
-Environment. When finished, submit practice as
-<code>chapter12_practice.qmd</code> along with the
-<code>chapter12_practice.RData</code> workspace.</p>
-<p>Template (use around every code chunk):</p>
-<p>🎯/❓ Goal. One sentence stating the outcome.</p>
-<p>💬 Prediction. (Optional) What you expect to see before you run
-code.</p>
-<pre class="r"><code>#⚡Code attempts.
-
-# your code here</code></pre>
-<p>✅Checks (before/after). Show what you’re verifying (names, head(),
-table(), class(), etc.).</p>
-<p>🗣/🪞What I learned / Next step. 1–2 sentences.</p>
-<div id="task-0" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Task 0</h2>
-<p>✍️ Practice: Recode the mpg column. Use <code>mutate()</code> and
-<code>case_when()</code></p>
-<p>Fill in the Blanks.</p>
-<p>🎯 Goal: Create <code>mpg_class</code> with three labels using
-<code>case_when()</code>: “High MPG” if <code>mpg &gt; 25</code>; “Low
-MPG” if <code>mpg &lt; 15</code>; otherwise “Medium MPG”.</p>
+<div id="practice-space" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
+<p>This Practice Space helps you turn Chapter 12 concepts into a
+reproducible analysis workflow. In this chapter, you practiced using
+vectorized conditionals to return a result for every position, using
+<code>case_when()</code> in the correct order, and using
+<code>mutate()</code> to create new columns or overwrite existing ones.
+You also continued building your Quarto workflow by using headings,
+memoing, inline R code, and frequent rendering to HTML.</p>
+<p>This work matters in this course because you are not only learning to
+write R code. You are learning to document your reasoning, check your
+results, and produce work that can be re-run and understood later. That
+connects directly to learning outcomes skills: reproducible workflow,
+problem-solving with code, and memo-based learning with brief AI
+disclosure when used.</p>
+<p>These tasks give you practice with the main skills from Chapter 12.
+These are common data-analysis tasks. Analysts often need to recode
+values into clearer labels, convert units, and build cleaner variables
+before they can summarize, graph, or model data.</p>
+<div id="setup" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Setup</h2>
+<ol style="list-style-type: decimal">
+<li>Create a new Quarto file in your course folder and save it as:</li>
+</ol>
+<ul>
+<li><p><code>chapter12_practice.qmd</code></p></li>
+<li><p>Test Render your document often to see how your Practice Space
+report is coming together.</p></li>
+<li><p>Submit <code>chapter12_practice.html</code></p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Use the heading structure taught earlier in the chapter. Your
+Quarto setup for Chapter 12 should include headings, section numbering,
+and a table of contents, and you should render often to check both
+formatting and errors.</p></li>
+<li><p>📦 Library it up!</p></li>
+</ol>
+<ul>
+<li>Make sure there is script in your document that loads
+<code>dplyr</code> and <code>dslabs</code> packages so their functions /
+datasets load.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Memo your work with the 🎯/⚡/✅ /🗣</li>
+</ol>
+<ul>
+<li><p>a memo before the code chunk that states the goal of the code and
+what you are trying to learn or understand</p></li>
+<li><p>the code chunk itself</p></li>
+<li><p>any needed checks after the code</p></li>
+<li><p>a memo after the code chunk that explains what you learned,
+discovered, or confirmed</p></li>
+<li><p>answers to all comment questions included in the task</p></li>
+</ul>
+<p>If you used help while working, document it in a memo. For example,
+if you used an LLM or another outside resource to understand an error or
+concept, briefly disclose that use and explain what help you received.
+Type all code yourself. This is part of the course expectation for
+AI-supported learning and memo-based workflow.</p>
+<hr />
+<p>Follow this template for each coding task.</p>
+<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+demonstrate?</p>
+<pre class="r"><code>#⚡Code 
+your_code &lt;- &quot;here&quot;</code></pre>
+<pre class="r"><code># ✅ Include Checks after and pre-checks as needed
+colnames(your_code)
+head(your_code)
+table(your_code)
+class(your_code)
+unique(your_code)</code></pre>
+<p>🗣/🪞 What I learned / Next step. 1–2 sentences.</p>
+<hr />
+</div>
+<div id="task-1" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Task 1</h2>
+<p>🧠 <strong>Concept Check</strong></p>
+<p>Which method returns a new vector with one result for every
+position?</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Vectorized conditional functions such as <code>ifelse()</code>
+and <code>case_when()</code></p></li>
+<li><p>Logical subsetting using <code>[ ]</code></p></li>
+<li><p>Subassignment using <code>[ ] &lt;-</code></p></li>
+<li><p><code>filter()</code></p></li>
+</ol>
+</div>
+<div id="task-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Task 2</h2>
+<p>🔀 <strong>Simple <code>ifelse()</code></strong></p>
+<p>Use <code>ifelse()</code> to label each <code>height</code> in the
+dataset <code>heights</code> as <code>&quot;Tall&quot;</code> if
+<code>height</code> greater than <code>68</code> and
+<code>&quot;Not Tall&quot;</code> otherwise. Store the result as
+<code>height_label</code>.</p>
+<pre class="r"><code># ✅ pre-check
+?dslabs::heights
+heights &lt;- dslabs::heights
+names(heights)</code></pre>
+<p>🗣 Which column contains height values in the dataframe
+<code>heights</code>? Should “Tall” be assigned to the yes or no
+argument in the ifelse statement? Why?</p>
+<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+demonstrate?</p>
 <pre class="r"><code># ⚡ Code
-mtcars %&gt;%
+height_label &lt;- _____(
+  test = _____$_____ &gt; 68, 
+  yes = ______, 
+  no = ______)</code></pre>
+<pre class="r"><code># ✅ Check
+table(height_label)  # expect &quot;Tall&quot; and &quot;Not Tall&quot;</code></pre>
+<p>🗣 Comment on the output. Do you see the expected labels? How many
+“Tall” and “Not Tall” are there? / 🪞 What did I learn or notice from
+the output? Did the code work as expected? If I needed help, what kind
+of help did I use?</p>
+</div>
+<div id="task-3" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Task 3</h2>
+<p>📊 <strong>Recode with <code>mutate()</code> and
+<code>case_when()</code></strong></p>
+<p>Create <code>mpg_class</code> with three labels using
+<code>case_when()</code>: “High MPG” if <code>mpg</code> greater than
+<code>25</code>; “Low MPG” if <code>mpg</code> less than
+<code>15</code>; otherwise “Medium MPG”.</p>
+<p>🎯 What is the goal of this code? What am I trying to learn, check,
+or demonstrate?</p>
+<pre class="r"><code># ⚡ Code
+mpg_recode &lt;- mtcars %&gt;%
   ______(mpg_class = _____(
-    ___ &gt; 25 ~ &quot;High MPG&quot;,
+    mpg &gt; 25 ~ &quot;_______&quot;,
     mpg &lt; 15 ~ &quot;_______&quot;,
-    TRUE     ~ &quot;Medium MPG&quot;
-  )) -&gt; mpg_recode</code></pre>
+    TRUE     ~ &quot;_______&quot;
+  ))</code></pre>
 <pre class="r"><code># ✅ Checks
 table(mpg_recode$____)  # expect 3 levels</code></pre>
+<p>🗣 Comment on the output. Do you see the expected labels? How many
+“High MPG”, “Medium MPG”, and “Low MPG” are there? 🪞 What did I learn
+or notice from the output? Did the code work as expected? If I needed
+help, what kind of help did I use?</p>
 </div>
-<div id="task-1" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Task 1</h2>
-<p>📦 Library it up!</p>
-<p>Make sure there is script in your document that loads
-<code>dplyr</code> and <code>dslabs</code> packages so their functions /
-datasets load.</p>
-</div>
-<div id="task-2" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Task 2</h2>
-<p>📝 <strong>Recode ranges</strong></p>
-<p>Using <code>quakes</code>, recode <code>mag</code> into THREE ordered
-levels of <em>your choice</em> (e.g., “Low”, “Mid”, “High”). Use
-<code>mutate()</code> and <code>case_when()</code> chain and pipe
-(<code>%&gt;%</code>). Store as
-<strong><code>quake_recode</code></strong>.</p>
-<pre class="r"><code>data(&quot;quakes&quot;)
-?quakes</code></pre>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<pre class="r"><code># Quick check
-table(quake_recode$mag)   # should show exactly 3 levels</code></pre>
-</div>
-<div id="task-3" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Task 3</h2>
-<p><strong>Recode categories</strong></p>
-<pre class="r"><code>?dslabs::stars
+<div id="task-4" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Task 4</h2>
+<p>↔︎️<strong>Recode: Name Focus</strong></p>
+<p>With the dataset 🌟<code>stars</code> from the <code>dslabs</code>
+package, classify each <code>star</code> by temperature range in a new
+column called <code>temp_group</code>. Store the result as
+<code>stars_recode</code>.</p>
+<p>Use these rules: Temperatures</p>
+<ul>
+<li><p>less than 4,000 are “Cool”,</p></li>
+<li><p>between 4,000 and 7,500 are “Warm”, and</p></li>
+<li><p>all stars more than 7,500 are “Hot”.</p></li>
+</ul>
+<pre class="r"><code># ✅ pre-check
+?dslabs::stars
 stars &lt;- dslabs::stars
+
 # View(stars)
 colnames(stars)
 summary(stars$temp)</code></pre>
-<p>With 🌟<code>stars</code>, classify each <code>star</code> by
-temperature range in a new column called <code>temp_group</code>. Keep
-the original <code>temp</code> column. Store the result as
-<code>stars_recode</code>. Temperatures less than 4,000 are “Cool”,
-between 4,000 and 7,500 are “Warm” and all stars more than 7,500 are
-“Hot”.</p>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<pre class="r"><code># Quick check
-head(select(stars_recode, type, full_type))</code></pre>
+<p>🗣 What column contains temperature values in the dataframe
+<code>stars</code>. Identify where the new output column name goes, left
+or right of the <code>=</code>?</p>
+<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+demonstrate?</p>
+<pre class="r"><code># ⚡ Code
+______ &lt;- _____ %&gt;%
+  mutate(
+    _____ = case_when(
+      _____ &lt; 4000 ~ &quot;Cool&quot;,
+      _____ &lt;= 7500 ~ &quot;Warm&quot;,
+      _____ ~ &quot;Hot&quot;
+    )
+  )</code></pre>
+<pre class="r"><code># ✅ Checks
+table(stars_recode$temp_group)  # expect 3 levels</code></pre>
+<p>🗣 Comment on the output. Do you see the expected labels? How many
+“Cool”, “Warm”, and “Hot” stars are there? 🪞 What did I learn or notice
+from the output? Did the code work as expected? If I needed help, what
+kind of help did I use?</p>
 </div>
-<div id="task-4" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Task 4</h2>
-<p><strong>Unit conversion</strong></p>
-<p>Create <code>international_friendly_heights</code> by adding a
-<code>height_cm</code> column to <code>heights</code> (inches × 2.54).
-Leave original height.</p>
-<pre class="r"><code>data(&quot;heights&quot;)
-?heights</code></pre>
-<pre class="r"><code>____ &lt;- _____</code></pre>
-<p>🤔 Reflect: Why add—not overwrite—the height column?</p>
-<p>✍️ EXPLANATION: “___”</p>
+<div id="task-5" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Task 5</h2>
+<p>⚖️ <strong>Unit conversion with <code>mutate()</code></strong></p>
+<p>Create <code>international_friendly_heights</code> overwriting the
+<code>height</code> column. <em>💡 hint: inches × 2.54</em></p>
+<pre class="r"><code># ✅ pre-check
+heights &lt;- dslabs::heights
+head(heights)</code></pre>
+<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+demonstrate?</p>
+<pre class="r"><code># ⚡ Code
+international_friendly_heights &lt;- heights %&gt;%
+  mutate(_____ = _____ * _____)</code></pre>
+<pre class="r"><code># ✅ Checks
+head(international_friendly_heights)</code></pre>
+<p>🗣 Comment on the output. Do you see a new column? Do the values look
+correct for a unit conversion from inches to centimeters? 🪞 What did I
+learn or notice from the output? Did the code work as expected? If I
+needed help, what kind of help did I use?</p>
 </div>
-</div>
-<div id="section" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> </h1>
 </div>
 
 <footer>

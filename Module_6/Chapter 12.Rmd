@@ -1,6 +1,6 @@
 ---
 title: "Chapter 12"
-subtitle: "Select & Filter"
+subtitle: "Vectorized Conditionals and mutate()"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Chapter 12"
-subtitle: "Coding"
+subtitle: "Vectorized Conditionals and mutate()"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -54,7 +54,7 @@ biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 # ---
 title: "Chapter 12"
-subtitle: "Select & Filter"
+subtitle: "Vectorized Conditionals and mutate()"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -157,15 +157,37 @@ execute:
 
 The `toc-depth: 2` is a good default. It keeps your notes organized without making the table of contents too crowded.
 
-## Headings
+## Headings (🌱)
 
-Create a simple outline for Chapter 12 using headings. Use the following structure:
+You will want to use headings to see how the table of contents work. Create a simple outline for Chapter 12 using headings. Try using the following structure:
 
 ```markdown
 
-# Load Data
+# Quarto Notes
 
-# 
+# Load Packages
+
+# Vectorized Conditionals
+
+## ifelse()
+
+## case_when()
+
+## More than Two Categories
+
+### Nested ifelse()
+
+### Multiple Rule case_when()
+
+# mutate()
+
+## Column Copy
+
+### mutate() with Arithmetic
+
+### case_when() inside mutate()
+
+## Overwrite Column Values
 
 ```
 
@@ -183,7 +205,7 @@ In Quarto, inline code uses one pair of backticks and the engine name inside the
 
 Using inline R code helps ensure that your report always shows the exact values used to in calculations. 
 
-### Inline R code
+### Inline Example
 
 🎯 Imagine you want to write a sentence that says how many rows are in the filtered `mtcars` dataset. Instead of hardcoding the number, you can use inline code to compute it. 
 
@@ -205,9 +227,12 @@ When rendered to HTML, this will show as:
 
 🗣 The filtered dataset has `r num_rows`  rows.
 
-💡 **Tip:** Keep inline code simple. Use it to display values that you already created in a regular code chunk. Do not try to do lots of work inside the sentence itself. 
 
-For this chapter, set up your notes file so that:
+In this chapter, use inline R code when you want your memo to report a computed value such as a vector length, category count, or converted measurement.
+
+___
+
+🎯  For this chapter, practice setting up your notes file so that:
 
 1. the YAML includes a table of contents and section numbering
 
@@ -217,12 +242,11 @@ For this chapter, set up your notes file so that:
 
 4. your memos use inline R code whenever you want to report a value from your analysis
 
-___
+Now that you have created (*and saved*) your quarto file, follow along this guided practice and taking notes. Fill in each section under the headings. 
 
-Now that you have created (*and saved*) your quarto file, follow along this guided practice and taking notes.
+💡 **Tip:** Test Render your document often to see how your notes are coming together.
 
-
-## 📦 Packages
+# 📦 Packages
 
 In this chapter, you will use `dplyr` verbs and `dslabs` datasets.
 
@@ -321,7 +345,19 @@ x <- c(3, 2, 3, 6, 5)
 length(x)
 ```
 
-🗣 `x` is a vector with the length of `5` and values `3`, `2`, `3`, `6`, and `5`.
+___
+
+🌳 Use this inline code to dynamically report the length of `x` within your memo:
+
+```markdown
+🗣 `x` is a vector with the length of `{r} length(x)` rows.
+```
+
+When rendered to HTML, this should read: 
+
+🗣 `x` is a vector with the length of `r length(x)`
+
+___
 
 ```{r}
 # ⚡ Type this in a Quarto code chunk: 
@@ -437,7 +473,7 @@ ___
 
 So far, `case_when()` has returned a new vector of labels. In real data analysis, you usually want to store that result in a data frame as a new column. That is what `mutate()` does.
 
-`mutate()` creates new columns that are functions of existing columns. It can also modify an existing column if you reuse the same column name. In this course, the main idea is simple: `mutate()` lets you add a new variable to your data without changing the number of rows. 
+`mutate()` creates new columns that are functions of existing columns. It can also modify an existing column if you reuse the same column name. 
 
 📜 The SYNTAX: 
 
@@ -497,7 +533,19 @@ measurements <- data.frame(height_in = c(60, 65, 70))
 measurements
 ```
 
-🗣 The `measurements` data frame has one column called `height_in`.
+___
+
+🌳 Use this inline code to dynamically report within your memo:
+
+```markdown
+🗣 The `measurements` data frame has one column called `{r} colnames(measurements)`.
+```
+
+When rendered to HTML, this should read:
+
+🗣 The `measurements` data frame has one column called `r colnames(measurements)`
+
+___
 
 🎯 Create a new column called `height_cm` that converts inches to centimeters (1 inch = 2.54 cm).
 
@@ -522,7 +570,7 @@ student_scores <- data.frame(scores = c(55, 68, 72, 83, 91))
 
 ```{r}
 # ⚡ Type this in a Quarto code chunk:
-student_scores %>%
+student_scores <- student_scores %>%
   mutate(
     score_level = case_when(
       scores < 60 ~ "Low",
@@ -542,7 +590,36 @@ student_scores %>%
 
 - `case_when(...)` decides what label to return for each row based on the value in `scores`.
 
-`mutate()` + `case_when()` is a powerful way to create new variables based on complex rules. You can have as many conditions as you need, and you can use any existing columns in your data frame to build those rules
+
+```{r}
+# ✅ Verify
+head(student_scores)
+```
+___
+
+🌳 Use this inline code to dynamically report within your memo:
+
+```markdown
+🗣 `student_scores` is a dataframe with columns names: `{r} names(student_scores)`.
+```
+
+When rendered to HTML, this should read: 
+
+🗣 `student_scores` is a dataframe with columns names: `r names(student_scores)`
+
+🌳🌳 Or, you can get fancy with inline code and write and "and" between the column names:
+
+```markdown
+🗣 `student_scores` has the columns `{r} paste(names(student_scores_labeled), collapse = " and ")`.
+```
+When rendered to HTML, this should read:
+
+🗣 `student_scores` has the columns `r paste(names(student_scores), collapse = " and ")`.
+
+___
+
+
+The `mutate()` + `case_when()` duo is a powerful way to create new variables based on complex rules. You can have as many conditions as you need, and you can use any existing columns in your data frame to build those rules
 
 In some situations, you may want to overwrite an existing column instead of creating a new one. That is also possible with `mutate()`, as the next section shows.
 
@@ -574,11 +651,24 @@ cars_overwrite <- mtcars %>%
 unique(cars_overwrite$am)
 ```
 
-🗣 In `cars_overwrite`, the `am` column has been *changed* from `0`/`1` to `"Automatic"`/`"Manual"`. 
+___
 
----
+🌳 Use this inline code to dynamically report within your memo:
 
-**Key takeaway** 
+```markdown
+🗣 The `am` column in `cars_overwrite` has the unique values: `{r} unique(cars_overwrite$am)`.
+```
+
+When rendered to HTML, this should read:
+
+🗣 The `am` column in `cars_overwrite` has the unique values: `r unique(cars_overwrite$am)`.
+
+
+🗣 The `am` column has been *changed* from `0`/`1` to `"Automatic"`/`"Manual"`. 
+
+___
+
+**Overwrite Key Takeaway** 
 
 In every example above, `mutate()` followed the same pattern:
 
@@ -586,10 +676,12 @@ In every example above, `mutate()` followed the same pattern:
 
 - the right side of `=` created its values
 
-When the left side used a new name, R added a new column. When the left side reused an existing name, R overwrote that column.
+When the left side is a new name, R adds a new column. When the left side reused an existing name, R overwrites that column.
 
 
 # Summary
+
+In this chapter, you learned that logical conditions in R can do more than keep or replace values: they can also return a new result for every element. You practiced this with `ifelse()` for simple two-way decisions and `case_when()` for multi-rule classification, then used `mutate()` to store those results as new or overwritten columns in a data frame. You also continued building your Quarto workflow by adding a table of contents, section numbering, and inline R code so your notes can report values dynamically and stay reproducible.
 
 # Chapter Terms
 
@@ -609,45 +701,131 @@ When the left side used a new name, R added a new column. When the left side reu
 
 # 📝 Practice Space
 
-Replace each ____ placeholder with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, submit practice as `chapter12_practice.qmd` along with the `chapter12_practice.RData` workspace.
+This Practice Space helps you turn Chapter 12 concepts into a reproducible analysis workflow. In this chapter, you practiced using vectorized conditionals to return a result for every position, using `case_when()` in the correct order, and using `mutate()` to create new columns or overwrite existing ones. You also continued building your Quarto workflow by using headings, memoing, inline R code, and frequent rendering to HTML.
 
-📦 Library it up!
+This work matters in this course because you are not only learning to write R code. You are learning to document your reasoning, check your results, and produce work that can be re-run and understood later. That connects directly to learning outcomes skills: reproducible workflow, problem-solving with code, and memo-based learning with brief AI disclosure when used.
 
-Make sure there is script in your document that loads `dplyr` and `dslabs` packages so their functions / datasets load.
+These tasks give you practice with the main skills from Chapter 12. These are common data-analysis tasks. Analysts often need to recode values into clearer labels, convert units, and build cleaner variables before they can summarize, graph, or model data.
 
-Template (use around every code chunk):
+## Setup
 
-🎯/❓ Goal. One sentence stating the outcome.
+1. Create a new Quarto file in your course folder and save it as: 
 
-💬 Prediction. (Optional) What you expect to see before you run code.
+- `chapter12_practice.qmd`
 
-```{r}
-#⚡Code attempts.
+- Test Render your document often to see how your Practice Space report is coming together.
 
-# your code here
+- Submit `chapter12_practice.html`
+
+2. Use the heading structure taught earlier in the chapter.
+Your Quarto setup for Chapter 12 should include headings, section numbering, and a table of contents, and you should render often to check both formatting and errors.
+
+3. 📦 Library it up!
+
+- Make sure there is script in your document that loads `dplyr` and `dslabs` packages so their functions / datasets load.
+
+4. Memo your work with the 🎯/⚡/✅ /🗣
+
+- a memo before the code chunk that states the goal of the code and what you are trying to learn or understand
+
+- the code chunk itself
+
+- any needed checks after the code
+
+- a memo after the code chunk that explains what you learned, discovered, or confirmed
+
+- answers to all comment questions included in the task
+
+If you used help while working, document it in a memo. For example, if you used an LLM or another outside resource to understand an error or concept, briefly disclose that use and explain what help you received. Type all code yourself. This is part of the course expectation for AI-supported learning and memo-based workflow.
+
+___
+
+Follow this template for each coding task. 
+
+🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+
+```{r, eval=FALSE}
+#⚡Code 
+your_code <- "here"
 ```
 
-✅Checks (before/after). Show what you’re verifying (names, head(), table(), class(), etc.).
+```{r, eval=FALSE}
+# ✅ Include Checks after and pre-checks as needed
+colnames(your_code)
+head(your_code)
+table(your_code)
+class(your_code)
+unique(your_code)
+```
 
-🗣/🪞What I learned / Next step. 1–2 sentences.
+
+🗣/🪞 What I learned / Next step. 1–2 sentences.
+
+___
 
 ## Task 1
 
-✍️ Practice: Recode the mpg column. Use `mutate()` and `case_when()`
+🧠 **Concept Check**
 
-Fill in the Blanks. 
+Which method returns a new vector with one result for every position?
 
-🎯 Goal: Create `mpg_class` with three labels using `case_when()`:
-"High MPG" if `mpg > 25`; "Low MPG" if `mpg < 15`; otherwise "Medium MPG".
+a. Vectorized conditional functions such as `ifelse()` and `case_when()` 
+
+b. Logical subsetting using `[ ]`
+
+c. Subassignment using `[ ] <-`
+
+d. `filter()`
+
+## Task 2
+
+🔀 **Simple `ifelse()`**
+
+Use `ifelse()` to label each `height` in the dataset `heights` as `"Tall"` if `height` greater than `68` and `"Not Tall"` otherwise. Store the result as `height_label`.
+
+```{r, eval=FALSE}
+# ✅ pre-check
+?dslabs::heights
+heights <- dslabs::heights
+names(heights)
+```
+
+🗣 Which column contains height values in the dataframe `heights`? Should "Tall" be assigned to the yes or no argument in the ifelse statement? Why?
+
+🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+
+```{r, eval=FALSE}
+# ⚡ Code
+height_label <- _____(
+  test = _____$_____ > 68, 
+  yes = ______, 
+  no = ______)
+```
+
+```{r, eval=FALSE}
+# ✅ Check
+table(height_label)  # expect "Tall" and "Not Tall"
+```
+
+🗣 Comment on the output. Do you see the expected labels? How many "Tall" and "Not Tall" are there? / 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
+
+## Task 3
+
+📊 **Recode with `mutate()` and `case_when()`**
+
+Create `mpg_class` with three labels using `case_when()`:
+"High MPG" if `mpg` greater than `25`; "Low MPG" if `mpg` less than `15`; otherwise "Medium MPG".
+
+🎯 What is the goal of this code? What am I trying to learn, check, or demonstrate?
 
 ```{r , eval=FALSE}
 # ⚡ Code
-mtcars %>%
+mpg_recode <- mtcars %>%
   ______(mpg_class = _____(
-    ___ > 25 ~ "High MPG",
+    mpg > 25 ~ "_______",
     mpg < 15 ~ "_______",
-    TRUE     ~ "Medium MPG"
-  )) -> mpg_recode
+    TRUE     ~ "_______"
+  ))
 ```
 
 ```{r , eval=FALSE}
@@ -655,69 +833,80 @@ mtcars %>%
 table(mpg_recode$____)  # expect 3 levels
 ```
 
+🗣 Comment on the output. Do you see the expected labels? How many "High MPG", "Medium MPG", and "Low MPG" are there? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
 
-## Task 2
+## Task 4
 
-📝  **Recode ranges**
+↔️**Recode: Name Focus** 
 
-Using `quakes`, recode `mag` into THREE ordered levels of _your choice_ (e.g., "Low", "Mid", "High"). Use `mutate()` and `case_when()` chain and pipe (`%>%`). Store as **`quake_recode`**.
+With the dataset 🌟`stars` from the `dslabs` package, classify each `star` by temperature range in a new column called `temp_group`. Store the result as `stars_recode`. 
 
-```{r, eval=FALSE}
-data("quakes")
-?quakes
-```
+Use these rules: Temperatures 
 
-```{r, eval=FALSE}
-____ <- _____
-```
+- less than 4,000 are "Cool", 
 
-```{r, eval=FALSE}
-# Quick check
-table(quake_recode$mag)   # should show exactly 3 levels
-```
+- between 4,000 and 7,500 are "Warm", and 
 
-## Task 3
-
-**Recode categories** 
+- all stars more than 7,500 are "Hot".
 
 ```{r, eval=FALSE}
+# ✅ pre-check
 ?dslabs::stars
 stars <- dslabs::stars
+
 # View(stars)
 colnames(stars)
 summary(stars$temp)
 ```
 
-With 🌟`stars`, classify each `star` by temperature range in a new column called `temp_group`. Keep the original `temp` column. Store the result as `stars_recode`. Temperatures less than 4,000 are "Cool", between 4,000 and 7,500 are "Warm" and all stars more than 7,500 are "Hot".
+🗣 What column contains temperature values in the dataframe `stars`. Identify where the new output column name goes, left or right of the `=`? 
 
-
+🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
 
 ```{r, eval=FALSE}
-____ <- _____
+# ⚡ Code
+______ <- _____ %>%
+  mutate(
+    _____ = case_when(
+      _____ < 4000 ~ "Cool",
+      _____ <= 7500 ~ "Warm",
+      _____ ~ "Hot"
+    )
+  )
 ```
 
 ```{r, eval=FALSE}
-# Quick check
-head(select(stars_recode, type, full_type))
+# ✅ Checks
+table(stars_recode$temp_group)  # expect 3 levels
 ```
 
-## Task 4
+🗣 Comment on the output. Do you see the expected labels? How many "Cool", "Warm", and "Hot" stars are there? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
 
-**Unit conversion**
+## Task 5
 
-Create `international_friendly_heights` by adding a `height_cm` column to `heights` (inches × 2.54). Leave original height.
+⚖️  **Unit conversion with `mutate()`**
+
+Create `international_friendly_heights` overwriting the `height` column.
+*💡 hint: inches × 2.54*
 
 ```{r, eval=FALSE}
-data("heights")
-?heights
+# ✅ pre-check
+heights <- dslabs::heights
+head(heights)
+```
+
+🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+
+```{r, eval=FALSE}
+# ⚡ Code
+international_friendly_heights <- heights %>%
+  mutate(_____ = _____ * _____)
 ```
 
 ```{r, eval=FALSE}
-____ <- _____
+# ✅ Checks
+head(international_friendly_heights)
 ```
 
-🤔 Reflect: Why add—not overwrite—the height column? 
+🗣 Comment on the output. Do you see a new column? Do the values look correct for a unit conversion from inches to centimeters? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
 
-✍️ EXPLANATION: "___"
-
-# 
