@@ -1,5 +1,5 @@
 ---
-title: "Chapter 12"
+title: "Chapter 12: Recoding"
 subtitle: "Vectorized Conditionals and mutate()"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
@@ -191,9 +191,11 @@ You will want to use headings to see how the table of contents work. Create a si
 
 ```
 
+**Render** to HTML often to see the results. *Render is like knit or preview.*
+
 ## Dynamic memoing (🌳)
 
-So far, you have used code chunks to run R code. Quarto also lets you place small pieces of R code directly inside normal sentences. This is called inline code. Inline code is useful when you want your written memo to automatically include a value computed by your R code. Quarto evaluates inline code during rendering, so the sentence stays up to date with your analysis.
+So far, you have used code chunks to run R code. Quarto also lets you place small pieces of R code **directly inside normal sentences**. This is called inline code. Inline code is useful when you want your written memo to automatically include a value computed by your R code. Quarto evaluates inline code during rendering, so the sentence stays up to date with your analysis.
 
 In Quarto, inline code uses one pair of backticks and the engine name inside the backticks. For R, the pattern is:
 
@@ -409,7 +411,7 @@ case_when(c(3, 2, 3, 6, 5) > 3 ~ "Large", .default = "Small")
 
 ---
 
-Why do we need both `ifelse()` and `case_when()`? `case_when()` is usually clearer once you have 3+ categories.
+📖 Why do we need both `ifelse()` and `case_when()`? `case_when()` is usually clearer once you have 3+ categories.
 
 ## More Than Two Categories
 
@@ -491,7 +493,7 @@ Or with piping
 
 You can think of `mutate()` as saying: “Take this data frame, and add a new column based on these existing columns.”
 
-**The key idea is this:**
+📖 **The key idea is this:**
 
 - A new name on the left side of `=` adds a new column.
 
@@ -668,7 +670,7 @@ When rendered to HTML, this should read:
 
 ___
 
-**Overwrite Key Takeaway** 
+📖 **Overwrite Key Takeaway** 
 
 In every example above, `mutate()` followed the same pattern:
 

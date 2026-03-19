@@ -70,19 +70,9 @@ output:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
 ```
-# 🚦 Ready, Set, R! 
+# Overview
 
 In Chapter 11 and 12, we explored several functions from `dplyr` (`select()`, `filter()`, `mutate()`, and `case_when()`). This week, we will look at other functions in the `dplyr` package (`group_by()`, `summarize()` and `count()`) that will speed your ability to compare sub-groups and calculate descriptive statistics.
-
-To begin Chapter 13, follow these steps:
-
-1. Open your course project for RStudio 
-   
-2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???). Select either R Script, R Markdown, or Quarto Document. What file type you choose to practice the lesson and complete your assignment in is up to you.
-
-3. Type in the code provided in this document as you follow along with the video. Pause the video at any time to answer assignment questions, dig deeper or add memo notes.
-
-**Lesson Overview**
 
 By the end of Chapter 13 you will be able to:
 
@@ -98,13 +88,86 @@ By the end of Chapter 13 you will be able to:
 
 Keep these goals in mind as you move through each section.
 
+# Quarto: Part 3
+
+In Chapter 11, you learned how to create a Quarto file, keep the YAML header, use Markdown headings, write memos outside code chunks, and control chunks with #| options. In Chapter 12, you add a table of contents and section numbering, and use inline R code inside your sentences. In Chapter 13, you will practice using these skills. 
+
+🎯 Create a Quarto File (🌱)
+
+1. For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push. 
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+2. Open a new Quarto document in your course folder and save it as: `chapter13_notes.qmd` (`File > New File > Quarto Document`).
+
+3. Copy and paste the YAML header from this file into your new Quarto document. Update the title, author, date, and team fields in the YAML header.
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 13 Notes\"
+subtitle: \"group_by() and summarize()\"
+author: \"YOUR NAME\"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: true
+execute:
+  warning: true
+  message: true
+---
+```")
+```
+
+4. Use the section headings in this file to create the structure of your notes. You can copy and paste the section headings into your new Quarto document.
+
+```markdown
+
+# Loading Packages
+
+# Discriptive Statistics
+
+## Addition
+
+## Mode
+
+## Mean
+
+## Variance
+
+## Standard Deviation
+
+## Median
+
+## Range
+
+### Interquartile Range (IQR)
+
+### Percentiles
+
+# summarize()
+
+# group_by()
+
+# multiple statistics
+
+# multiple variables
+
+```
+
+Work through the sections under each heading. Render to HTML often to see the results.
+
 # 📦 Packages
 
 Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`
 
-Load the packages at the start of every session:
+🎯 Load the packages 
 
 ```{r message=FALSE, warning=FALSE}
+# ⚡
 library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package
 ```
@@ -127,9 +190,10 @@ It occurred to me that we have not yet defined some basic terminology that is im
 
 1. **Unordered Sample**: A sample where the order of the elements does not matter. For example, if we have a population of 5 elements and we take a sample of 3, the sample {1, 2, 3} is the same as {3, 2, 1}.
 
-Example: $5.9ft$, $6.1ft$, $5.8ft$, $6.0ft$, $5.7ft$ is a sample of heights of 5 individuals from a population of all individuals in a city.
+🎯 Create the vector `heights_sample` to store the set values: $5.9ft$, $6.1ft$, $5.8ft$, $6.0ft$, $5.7ft$. This is a sample of heights of 5 individuals from a population of all individuals in a city.
 
 ```{r}
+# ⚡
 heights_sample <- c(5.9, 6.1, 5.8, 6.0, 5.7) # heights in feet
 ```
 The order has no inherent meaning.
@@ -139,6 +203,7 @@ The order has no inherent meaning.
 Example: If we take 5 samples of the height of one individual by age, we have an ordered sample. 
 
 ```{r}
+# ⚡
 growth_data <- c(42, 45, 48, 51, 54)  # Heights in inches by age
 race_positions <- c("Kim", "Alex", "Jordan", "Taylor")  # Order indicates ranking
 sorted_temps <- c(72.1, 73.4, 75.2, 76.8, 79.3)  # Ordered for statistical analysis
@@ -157,7 +222,7 @@ sorted_temps <- c(72.1, 73.4, 75.2, 76.8, 79.3)  # Ordered for statistical analy
 
 * **Continuous Data**: Numerical data that can take on any value within a range. For example, the height of individuals in a population (5.0ft, 5.1ft, 5.2ft, etc.).
 
-🧠 Challenge: What type of data is `growth_data`, `race_positions`, and `sort_temps`? Explain your answer in a memo to demonstrate learning skills.
+🧠 Challenge: What type of data is `growth_data`, `race_positions`, and `sort_temps`? Explain your answer in a memo in your notes.
 
 # Choosing the Right Statistical Method
 
@@ -177,19 +242,64 @@ Length, sum, count are all ways to add up values in a dataset. What is the diffe
 
 ### Length
 
+🎯 Count the number of values in the `mpg` column of the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Count number of values in mpg column
 length(mtcars$mpg)
 ```
 
 Length counts the number of values in the set of numbers. In other words, it tells us how many observations we have. In a data table, it tells us how many rows are in a column.
 
+___
+
+🌳 Use this inline code to dynamically report the number of values in the `mpg` column and include it in a sentence.
+
+```markdown
+
+🗣 The `mpg` column in the `mtcars` dataset contains `{r} length(mtcars$mpg)` values.
+
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The `mpg` column in the `mtcars` dataset contains `r length(mtcars$mpg)` values.
+
+___
+
 ### Sum
 
+Summation is the process of adding a sequence of numbers together. 
+
+🎯 Sum the values in the `mpg` column of the `mtcars` dataset. Store the result as sum_sample. 
+
 ```{r}
-# Sum step 1: Sum the values
+# ⚡ Sum the values
 sum_sample <- sum(mtcars$mpg)
+# ✅ 
+sum_sample
 ```
+
+`sum(mtcars$mpg)` is the total value from adding all the values in the `mpg` column of the `mtcars` dataset.
+___
+
+🌳 Use this inline code to dynamically report sum_sample.
+
+```markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum_sample`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `r sum_sample`.
+
+You can also use `sum(mtcars$mpg)` directly in the inline code without storing it in a variable.
+
+```markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum(mtcars$mpg)`
+```
+___
 
 In statistics, summation is represented by the Greek letter sigma (Σ). It indicates that we are summing a series of values. 
 
@@ -211,44 +321,53 @@ This is adding $a$ four times (once each for $i=2$, $i=3$, $i=4$, and $i=5$).
 
 $$\sum_{i=2}^{5} a => a_2 + a_3 + a_4 + a_5 = 4a = (5-2+1)a$$
 
-```{r}
-# table() function to create a frequency table
-table(mtcars$cyl)
-```
-
-🤔 Reflect: Why did we use the `table()` function instead of `sum()` to count the number of occurrences of each unique value in the `cyl` column? Why did we `sum()` the values in the `mpg` column and not use table? In other words, would it make sense to `sum(mtcars$cyl)`? Create a memo to demonstrate your learning skills. 
 
 ### Count
 
 The **`dplyr`** function `count()` is a convenient way to count the number of occurrences of each unique value in a categorical variable.
 
-Use `?count` to learn more about the function.
+📜 The SYNTAX: 
+
+`data %>%`  
+  `count(variable)`
+
+*Use `?count` to learn more about the function.*
+
+🎯 Use `count()` to create a table of the frequency of each unique value in the `cyl` column of the `mtcars` dataset.
 
 ```{r}
+# ⚡
 # Count occurrences of each unique value in the cyl column
 cyl_counts <- mtcars %>%
   count(cyl)
+# ✅ 
 cyl_counts
 ```
 
-`n` is the number of times that each unique value appears in the `cyl` column.
+🗣 `n` is the number of times that each unique value appears in the `cyl` column.
 
-🗣 Comment: What is the difference between `length()` `sum()` and `count()`? Explain your answer in a memo to demonstrate learning skills.
+📖 What is the difference between `length()` `sum()` and `count()`? 
+ 
+ `length()` counts the number of values in a column, `sum()` adds up the values in a column, and `count()` counts the frequency of each unique value in a categorical column.
+ 
 
 ## Mode
 
 The mode is the most frequent value(s) in a dataset. Mode is usually used for categorical data or discrete data where we want to find the most common category or value. It is not commonly used for continuous data.
 
+🎯 Find the mode of the `cyl` column in the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Create a frequency table
 table(mtcars$cyl) 
 ```
 
-🗣 Comment (example): 8 cylinders occur most frequently (14 times) in the `cyl` column of the `mtcars` dataset.
+🗣 8 cylinders occur most frequently (14 times) in the `cyl` column of the `mtcars` dataset.
 
-Note: If no value occurs more than once, then all are the mode or no mode. You get to pick.
+*Note: If no value occurs more than once, then all are the mode or no mode. You get to pick.*
 
-🪞Metacognition: Which function `table()` or `count()` do you prefer for finding the mode? Explain your answer in a memo to demonstrate learning skills.
+🪞 The `table()` and `count()` functions are useful for the column `cyl` because it provides the count the frequency that each of the categorical variables occur in the dataframe. If we had used `sum()`, it would have added the values, 4, 6, and 8, together. Having the total cylinder count of the combined vehicles is unlikely to ever be useful. However, knowing the number of vehicles in the dataset that have each of the cylinders could be helpful in understanding the data. For example, we can determine if the data disproportionately represents vehicles with a certain count of cylinders. 
 
 ## Mean
 
@@ -258,17 +377,39 @@ $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
 
 *Note: We use `sum_sample` from above.*
 
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Mean step 2: Divide by the number of values
-mean_sample <- sum_sample / length(mtcars$mpg) 
+mean_sample <- sum(mtcars$mpg) / length(mtcars$mpg) 
+# ✅ 
 mean_sample
 ```
 
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset using the `mean()` function.
+
 ```{r}
+# ⚡
 # OR use mean() function directly
 mean_value <- mean(mtcars$mpg) 
+# ✅ 
 mean_value
 ```
+
+___
+
+🌳 Use this inline code to dynamically report the mean value.
+
+```markdown
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `{r} mean(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `r mean_value`.
+
+___
 
 ## Variance
 
@@ -278,16 +419,45 @@ Variance is calculated by first finding the difference between each value and th
 
 $$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)} $$
 
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Variance step 3: Calculate the variance
 variance <- sum((mtcars$mpg - mean_value)^2) / (length(mtcars$mpg) - 1)
+# ✅ 
 variance
 ```
+
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset using the `var()` function.
+
 ```{r}
+# ⚡
 # OR use var() function directly
 variance <- var(mtcars$mpg)
+# ✅ 
 variance
 ```
+
+___
+
+🌳 Use this inline code to dynamically report the variance value.
+
+```markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} var(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `r var(mtcars$mpg)`.
+
+You can round the variance to two decimal places for better readability.
+
+```markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`
+```
+___
+
 
 ## Standard Deviation
 
@@ -295,17 +465,44 @@ The standard deviation is a measure of how spread out the values in a dataset ar
 
 $$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}$$
 
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Standard Deviation step 4: Calculate the standard deviation
-std_dev <- sqrt(variance)
+std_dev <- sqrt(sum((mtcars$mpg - mean_value)^2) / (length(mtcars$mpg) - 1))
 std_dev
 ```
 
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset using the `sd()` function.
+
 ```{r}
+# ⚡
 # OR use sd() function directly 
 std_dev <- sd(mtcars$mpg)
+# ✅ 
 std_dev
 ```
+
+___
+
+🌳 Use this inline code to dynamically report the standard deviation value.
+
+```markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} sd(mtcars$mpg)`
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `r sd(mtcars$mpg)`
+
+You can round the standard deviation to two decimal places for better readability.
+
+```markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`
+```
+
+___
 
 ## Median
 
@@ -321,22 +518,86 @@ Step 2: Check the size of the sample (n):
 
 Where $x_{(i)}$ represents the ith ordered value in the sample.
 
+🎯 Calculate the median of the `mpg` column in the `mtcars` dataset.
+
+### Step 1
+
 ```{r}
+# ✅  Pre-check
+print(mtcars$mpg)
+```
+
+```{r}
+# ⚡
 # Median step 1: Sort the data
 sorted_data <- sort(mtcars$mpg)  
+# ✅ 
 sorted_data
 ```
 
+___
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+```markdown
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `{r} sorted_data`.
+```
+
+When rendered to HTML, this will read:
+
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `r sorted_data`.
+
+___
+
+### Step 2
+
+🎯 Find the size of the sample to determine how to calculate the median.
 
 ```{r}
+# ⚡
 # Median step 2: Get the size of the sample
 length(sorted_data)  # Get the size of the sample
 ```
 
+___
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+```markdown
+🗣 There are `{r} length(sorted_data)` values, which is an even number.
+```
+
+When rendered to HTML, this will read: 
+
+🗣 There are `r length(sorted_data)` values, which is `r if (length(sorted_data) %% 2 == 0) "an even" else "an odd"` number.
+
+___
+
+We calculate the median for a dataset with an even number of data points.
+
+🎯 Use `median()` function to calculate the median of the `mpg` column in the `mtcars` dataset.
+
 ```{r}
+# ⚡
 # Or use the median() function
 median(mtcars$mpg)
 ```
+
+___
+
+🌳 Use this inline code to dynamically report the median value.
+
+```markdown
+🗣 The median of the `mpg` column in the `mtcars` dataset is `{r} median(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The median of the `mpg` column in the `mtcars` dataset is `r median(mtcars$mpg)`.
+
+___
+
+An example for calculating the median when odd will be shown in the next section, which explores measures of variability. These measures describe how spread out the values in a dataset are. 
 
 ## Range
 
@@ -366,95 +627,249 @@ A percentile is a value below which a given percentage of observations fall. The
 
 $Q_1$ is the lower quartile (25th percentile), $Q_2$ is the median (50th percentile), and $Q_3$ is the upper quartile (75th percentile).
 
-#### Finding Percentiles in Ordered Data
+#### Step 1 
 
-1st: Sort the data from the smallest to the largest
-
-```{r}
-print(mtcars$mpg)
-```
+🎯 Sort the data from the smallest to the largest
 
 ```{r}
+# ⚡
 # Sort the mpg column in ascending order
 sorted_mpg <- sort(mtcars$mpg)
 ```
 
 ```{r}
+# ✅ Verify data is sorted
 print(sorted_mpg)
 ```
 
-2nd: Find the position value
+#### Step 2
+
+🎯 Find the position value
 
 ```{r}
+# ⚡
 # Find minimum value of mpg in mtcars
 min_mpg <- sorted_mpg[1]
-min_mpg
-# Or simply use min() function
-min_mpg <- min(mtcars$mpg)
+# ✅ 
 min_mpg
 ```
 
-🗣 Comment: How is the minimum value found using [1] in the sorted data? Explain your answer in a memo to demonstrate learning skills.
+🎯 Find the minimum value of the `mpg` column in the `mtcars` dataset using the `min()` function.
+
+```{r}
+# ⚡
+# Or simply use min() function
+min_mpg <- min(mtcars$mpg)
+# ✅ 
+min_mpg
+```
+
+___
+
+🌳 Use this inline code to dynamically report the minimum value.
+
+
+```markdown
+🗣 `{r} min(mtcars$mpg)` is the minimum value in the `mpg` column of the `mtcars` dataset.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 `r min(mtcars$mpg)` is the minimum value in the `mpg` column of the `mtcars` dataset.
+
+___
+
+
+#### Step 3
+
+🎯 Find the position of the 25th percentile (Q1) in the sorted data and then find the value at that position.
 
 *Type ?ceiling to learn about the `ceiling()` function.*
 
 ```{r}
-# Find the 25th percentile (Q1) of mpg in mtcars
+# ⚡ Find the 25th percentile (Q1) of mpg in mtcars
+
+## Step 1: Get the size of the sample
 n <- length(mtcars$mpg)
+
+## Step 2: Calculate the position of Q1
 Q1_position <- 0.25 * (n + 1)
+
+
+## Step 3: Find the value at the Q1 position
 Q1_value <- sorted_mpg[ceiling(Q1_position)]
+
+# ✅ 
 Q1_value
 ```
+
+🎯 Find the position of the 25th percentile (Q1) using the `quantile()` function.
 
 *Type ?quantile to learn about the `quantile()` function.*
 
 ```{r}
+# ⚡
 # Or simply use quantile() function
 Q1_value <- quantile(mtcars$mpg, 0.25)
+# ✅ 
 Q1_value
 ```
 
+___
+
+🌳 Use this inline code to dynamically report the 25th percentile.
+
+```markdown
+🗣 The 25th percentile (Q1) of the `mpg` column in the `mtcars` dataset is `{r} Q1_value`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The 25th percentile (Q1) of the `mpg` column in the `mtcars` dataset is `r Q1_value`.
+
+___
+
+
+#### Step 4
+
+🎯 Find the position of the 50th percentile (median) in the sorted data and then find the value at that position.
+
 ```{r}
-# Find the median (50th percentile) of mpg in mtcars
+# ⚡ Find the median (50th percentile) of mpg in mtcars
+
+## Step 1: Calculate the position of the median
 median_position <- 0.5 * (n + 1)
+
+## Step 2: Find the value at the median position# 
 median_value <- sorted_mpg[ceiling(median_position)]
+
+# ✅ 
 median_value
+```
+
+🎯 Find the position of the 50th percentile (median) using the `median()` function.
+
+```{r}
+# ⚡
 # Or simply use median() function
 median_value <- median(mtcars$mpg)
+# ✅ 
 median_value
 ```
 
+___
+
+🌳 Use this inline code to dynamically report the median.
+
+```markdown
+🗣 The 50th percentile (median) of the `mpg` column in the `mtcars` dataset is `{r} median_value`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The 50th percentile (median) of the `mpg` column in the `mtcars` dataset is `r median_value`.
+
+___
+
+#### Step 5
+
+🎯 Find the position of the 75th percentile (Q3) in the sorted data and then find the value at that position.
 
 ```{r}
-# Find the 75th percentile (Q3) of mpg in mtcars
+# ⚡ Find the 75th percentile (Q3) of mpg in mtcars
+
+## Step 1: Calculate the position of Q3
 Q3_position <- 0.75 * (n + 1)
+
+## Step 2: Find the value at the Q3 position
 Q3_value <- sorted_mpg[ceiling(Q3_position)]
+# ✅ 
 Q3_value
+```
+🎯 Find the position of the 75th percentile (Q3) using the `quantile()` function.
+
+```{r}
+# ⚡
 # Or simply use quantile() function
 Q3_value <- quantile(mtcars$mpg, 0.75)
+# ✅ 
 Q3_value
 ```
 
+___
+
+🌳 Use this inline code to dynamically report the 75th percentile.
+
+```markdown
+🗣 The 75th percentile (Q3) of the `mpg` column in the `mtcars` dataset is `{r} Q3_value`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The 75th percentile (Q3) of the `mpg` column in the `mtcars` dataset is `r Q3_value`.
+
+___
+
+
+#### Step 6
+
+🎯 Find the position of the maximum value in the sorted data and then find the value at that position.
+
 ```{r}
-# Find maximum value of mpg in mtcars
+# ⚡ Find maximum value of mpg in mtcars
 max_mpg <- sorted_mpg[n]
-max_mpg
-# Or simply use max() function
-max_mpg <- max(mtcars$mpg)
+# ✅ 
 max_mpg
 ```
-### Review summary()
+
+🎯 Find the position of the maximum value using the `max()` function.
+
+```{r}
+# ⚡
+# Or simply use max() function
+max_mpg <- max(mtcars$mpg)
+# ✅ 
+max_mpg
+```
+
+___
+
+🌳 Use this inline code to dynamically report the maximum value.
+
+```markdown
+🗣 `r max(mtcars$mpg)` is the maximum value in the `mpg` column of the `mtcars` dataset.
+```
+When rendered to HTML, this will show as:
+
+🗣 `r max(mtcars$mpg)` is the maximum value in the `mpg` column of the `mtcars` dataset.
+
+___
+
+
+### `summary()`
 
 You can use the `summary()` function to get a quick overview of the distribution of a numeric variable, including the minimum, 1st quartile, median, mean, 3rd quartile, and maximum values.
 
-```{r , eval=FALSE}
-?summary
-data("mtcars")
+🎯  Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+*Type `?summary` to learn about the `summary()` function.*
+
+```{r}
+# ⚡
 summary(mtcars)  # Summarizes all columns at once
+```
+
+🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
 summary(mtcars$mpg)  # Summarizes just the mpg column
 ```
 _____
-👇 And now onto the main event: `summarize()` and `group_by()`
+
+So far, you have learned how to calculate descriptive statistics manually and using built-in functions. You have also learned how to use inline R code to dynamically report these statistics in your Quarto document.
+
+In the remaining of this chapter, we will compute specific summary statistics. You will learn how to group your data by certain variables before summarizing. This is where `dplyr`'s `summarize()` and `group_by()` functions come in handy.
 
 # dplyr's summarize()
 
@@ -466,29 +881,31 @@ You can use `summarize()` to compute summary statistics like the mean, median, e
 `data %>%` 
   `summarize(new_column_name = some_operation(column_name))`
   
-🎯 The GOAL: Find the overall mean mpg for all cars.
+🎯 Find the overall mean mpg for all cars.
 
-```{r, eval=FALSE}
-# ⚡Test: 
+```{r}
+# ⚡
 mtcars %>% 
   summarize(mean_mpg = mean(mpg))
 ```
 
-🗣 Comment (example): The code above creates a new column called `mean_mpg` that contains the mean of the `mpg` column from the `mtcars` dataset.
+🗣 The code above creates a new column called `mean_mpg` that contains the mean of the `mpg` column from the `mtcars` dataset.
 
-🎯 The GOAL: Find several summary statistics for mpg: mean, max, and count of cars.
+**We name the new column using `new_name = calculation`.**
 
-```{r, eval=FALSE}
-# ⚡Test: 
+🎯 Find several summary statistics for mpg: mean, max, and count of cars.
+
+```{r}
+# ⚡
 mtcars %>% 
   summarize(mean_mpg = mean(mpg),
             max_mpg = max(mpg),
             count = n())
 ```
 
-🧐 NOTICE: In the code chunk above, why is there not piping `%>%` after the calculation of `mean()`, `max()` and `n()`? Explain your answer in a memo to demonstrate learning skills.
+🧐 **Notice:** There is not piping `%>%` inside of the `summarize()` function. Instead, a comma `,` is used between the `mean()`, `max()` and `n()` calculations. 
 
-🪞 Reflect: ⚖️ Compare `summary()` with `summarize()` Explain your answer and how one or the other might be useful in different situations. Compose a short memo to demonstrate learning skills.
+🪞 `summary()` is a base R function that gives a quick overall description of an object, such as basic statistics for each variable in a data frame. `summarize()` from `dplyr` is used to create your own summary results, usually after `group_by()`, such as the mean or count for each group.
 
 # dplyr's group_by()
 
@@ -500,77 +917,82 @@ mtcars %>%
   `group_by(variable1, variable2, ...) %>%`
   `some_operation()`
 
-🎯 The GOAL: Find the mean mpg for each cylinder count.
+🎯 Find the mean mpg for each cylinder count.
 
-```{r , eval=FALSE}
-# ⚡Test: 
+```{r}
+# ⚡
 cyl_means <- mtcars %>%
   group_by(cyl) %>%
   summarize(mean_mpg = mean(mpg))
 ```
 
-🗣 Comment (example): `group_by(cyl)` treats each unique value separately, and `summarize()` runs `mean(mpg)` **per group**. `mean_mpg` is is the *explicit* name of the new column.
+🗣 `group_by(cyl)` splits the cars into groups based on cylinder count, and `summarize()` calculates `mean(mpg)` for each group. `mean_mpg` is the name of the new summary column.
 
-```{r , eval=FALSE}
-# ✅ Verify
+🧐 **Notice:**  that we chain `group_by()` and `summarize()` together using the pipe operator `%>%`. This allows us to first group the data by the specified variable(s) and then apply the summary function to each group.
+
+```{r}
+# ✅ 
 cyl_means  
 ```
 
-🪞 Metacognition: Reflect on why is it useful or why might it make sense to group cars by cylinders before summarizing mpg. Then determine how might you apply this technique to your signature assignment dataset? Type a memo to demonstrate learning skills.
+🪞 Grouping cars by `cyl` is useful because cars with different numbers of cylinders often have different fuel efficiency, so one overall average mpg would hide those differences. By grouping first, you can compare the typical mpg for 4-, 6-, and 8-cylinder cars separately.
 
-# Explicit vs. Default
+## Explicit vs. Default Naming
 
-❓Question (example): What is the *default* name of the summary column when you do not name it explicitly?
+If you do not give the summary column a name, **`dplyr` uses the summary expression itself as the column name** by default. So `summarize(mean(mpg))` creates a column named `mean(mpg)` instead of a cleaner name like `mean_mpg`.
 
-```{r , eval=FALSE}
-# ⚡Test: 
+🎯 Find the mean mpg for each cylinder count without naming the summary column.
+
+```{r}
+# ⚡
 mtcars %>%
   group_by(cyl) %>%
   summarize(mean(mpg))      
 ```
 
-🗣 Comment (example): The default name is the code itself. Default names can be confusing when sharing results. Naming columns makes tables clearer. Use it whenever you share results.
-
-🧐 NOTICE:  that we chain `group_by()` and `summarize()` together using the pipe operator `%>%`. This allows us to first group the data by the specified variable(s) and then apply the summary function to each group.
+🗣 The default name is the code itself. Default names can be confusing when sharing results. Naming columns makes tables clearer. Use it whenever you share results.
 
 # Multiple Statistics
 
-🎯 The GOAL: We can create several summary columns in one call, separated by commas.
+🎯 We can create several summary columns in one call, separated by commas.
 
-```{r , eval=FALSE}
-# ⚡Test:
+*`?n` to learn about the `n()` function.*
+
+```{r}
+# ⚡
 cyl_stats <- mtcars %>%
   group_by(cyl) %>%
   summarize(mean_mpg = mean(mpg),
             sd_mpg   = sd(mpg),
             n        = n())
-# ✅ Verify: 
+# ✅
 cyl_stats
 ```
 
-*`?n` to learn about the `n()` function.*
-
-🗣 Comment (example): `n()` counts rows in each group. This is similar to the function `length()` which counts the number of values in a vector or row in a data set. It is different from length because `n()` works within `summarize()` and counts the number of rows in each group created by `group_by()`. In this way, `n()` is like `count()`, but it is used within `summarize()`. Using `n()` is a quick way to see how many observations are in each group. 
-
-We *name* each new column using `new_name = calculation`.
+🗣 `n()` counts rows in each group. This is similar to the function `length()` which counts the number of values in a vector or row in a data set. It is different from length because `n()` works within `summarize()` and counts the number of rows in each group created by `group_by()`. In this way, `n()` is like `count()`, but it is used within `summarize()`. Using `n()` is a quick way to see how many observations are in each group. 
 
 # Multiple Variables
 
 `group_by` one column creates one group for each unique value. `group_by` two columns creates one group for each unique combination. 
 
-❓Question (example): How many groups will `group_by(cyl, am)` create? 
+❓How many groups will `group_by(cyl, am)` create? 
 
-```{r , eval=FALSE}
+🎯 Predict how many groups will be created by `group_by(cyl, am)` before running the code.
+
+```{r}
+# ✅  Pre-check
 # Recall that mtcars$cyl has three unique values:
 unique(mtcars$cyl)
 # Recall that mtcars$am has two unique values:  
 unique(mtcars$am)
 ```
 
-💬 Prediction (example): Two variables with 3 and 2 unique values creates 3 x 2 = 6 groups.
+💬 Two variables with 3 and 2 unique values creates 3 x 2 = 6 groups.
 
-```{r , eval=FALSE}
-#⚡Test: 
+🎯 Find the mean mpg for each combination of cylinder count and transmission type.
+
+```{r}
+#⚡
 mtcars %>%
   group_by(cyl, am) %>%
   summarize(avg_mpg = mean(mpg),
@@ -594,12 +1016,12 @@ mtcars %>%
 
 With two grouping vars, the default keeps the earlier group(s). With `.groups = "drop"` (or `ungroup()`), the result is not grouped.
 
-A) Default behavior: keeps earlier groups
+A. Default behavior: keeps earlier groups
 
-🎯 Goal: Show that with two groups `(cyl, gear)`, s`ummarize() `keeps the earlier group `(cyl)` by default.
+🎯 Show that with two groups `(cyl, gear)`, `summarize()` keeps the earlier group `(cyl)` by default.
 
-```{r , eval=FALSE}
-# ⚡Test:
+```{r}
+# ⚡
 # A) Default behavior: "drop_last" (keeps earlier groups)
 cyl_gear_stats <- mtcars %>%
   group_by(cyl, gear) %>%
@@ -607,26 +1029,26 @@ cyl_gear_stats <- mtcars %>%
 ```
 
 
-```{r , eval=FALSE}
-# ✅ Verify: 
+```{r}
+# ✅ 
 group_vars(cyl_gear_stats)  # what groups remain?
 ```
 
-```{r , eval=FALSE}
-# ✅ Verify: 
+```{r}
+# ✅ Verify
 is_grouped_df(cyl_gear_stats) # expect TRUE
 ```
 
-🗣 Comment (example): The `Default = drop_last` from `(cyl,gear)` down to `(cyl)`. 
+🗣 The `Default = drop_last` from `(cyl,gear)` down to `(cyl)`. 
 
 You’ll want to be explicit when you don’t want any grouping left.
 
-B) Make it explicit inside `summarize()`
+B. Make it explicit inside `summarize()`
 
-🎯 Goal: Return a plain, ungrouped table by telling `summarize()` to drop all groups.
+🎯 Return a plain, ungrouped table by telling `summarize()` to drop all groups.
 
-```{r , eval=FALSE}
-# ⚡Test:
+```{r}
+# ⚡
 # B) Make it explicit: drop *all* groups in the result
 cyl_gear_stats_drop <- mtcars %>%
   group_by(cyl, gear) %>%
@@ -634,24 +1056,24 @@ cyl_gear_stats_drop <- mtcars %>%
 ```
 
 
-```{r , eval=FALSE}
-# ✅ Verify: 
+```{r}
+# ✅ 
 group_vars(cyl_gear_stats_drop)  # expect character(0)
 ```
 
-```{r , eval=FALSE}
-# ✅ Verify: 
+```{r}
+# ✅ 
 is_grouped_df(cyl_gear_stats_drop) # expect FALSE
 ```
 
-🗣 Comment (example): Using `.groups = "drop"` tells `summarize()` to remove all grouping after the summary operation, resulting in a plain data frame without any grouping structure.
+🗣 Using `.groups = "drop"` tells `summarize()` to remove all grouping after the summary operation, resulting in a plain data frame without any grouping structure.
 
-C) Alternative: drop groups after summarizing
+C. Alternative: drop groups after summarizing
 
- Goal: Achieve the same ungrouped result using `ungroup()` after `summarize()`
+🎯 Achieve the same ungrouped result using `ungroup()` after `summarize()`
 
-```{r , eval=FALSE}
-# ⚡Test:
+```{r}
+# ⚡
 # C) Alternative: drop groups after summarizing
 cyl_gear_stats_ungroup <- mtcars %>%
   group_by(cyl, gear) %>%
@@ -660,24 +1082,95 @@ cyl_gear_stats_ungroup <- mtcars %>%
 ```
 
 
-```{r , eval=FALSE}
-# ✅ Verify: 
+```{r}
+# ✅ 
 group_vars(cyl_gear_stats_ungroup)  # expect character(0)
 ```
 
-```{r , eval=FALSE}
-# ✅ Verify:
+```{r}
+# ✅ Verify
 is_grouped_df(cyl_gear_stats_ungroup) # expect FALSE
 ```
 
-🗣 Comment (example): Using `ungroup()` after `summarize()` removes all grouping from the resulting data frame, similar to using `.groups = "drop"` within `summarize()`. Both methods achieve the same outcome of returning an ungrouped data frame.
+🗣 Using `ungroup()` after `summarize()` removes all grouping from the resulting data frame, similar to using `.groups = "drop"` within `summarize()`. Both methods achieve the same outcome of returning an ungrouped data frame.
 
 Pick either B) or C) based on your coding style preference.
+
+# Summary
+
+
+
+# Chapter Terms
+
+
 
 
 # 📝 Practice Space
 
-Below are optional activities you can do to practice the skills in this lesson. Pick one or more to complete to earn learning skill points! 
+This Practice Space helps you turn Chapter 13 concepts into a reproducible analysis workflow. In this chapter, you practiced [Complete this]
+
+This work matters in this course because [you are not only learning to write R code. You are learning to document your reasoning, check your results, and produce work that can be re-run and understood later]Complete this]. That connects directly to learning outcomes skills: [Complete this].
+
+These tasks give you practice with the main skills from Chapter 13. These are common data-analysis tasks. Analysts often need to [Complete this]
+
+## Setup
+
+1. Create a new Quarto file in your course folder and save it as: 
+
+- `chapter13_practice.qmd`
+
+- Test Render your document often to see how your Practice Space report is coming together.
+
+- Submit `chapter13_practice.html`
+
+2. Use the heading structure taught earlier in the chapter.
+Your Quarto setup for Chapter 13 should include headings, section numbering, and a table of contents, and you should render often to check both formatting and errors.
+
+3. 📦 Library it up!
+
+- Make sure there is script in your document that loads `dplyr` and `dslabs` packages so their functions / datasets load.
+
+4. Memo your work with the 🎯/⚡/✅ /🗣
+
+- a memo before the code chunk that states the goal of the code and what you are trying to learn or understand
+
+- the code chunk itself
+
+- any needed checks after the code
+
+- a memo after the code chunk that explains what you learned, discovered, or confirmed
+
+- answers to all comment questions included in the task
+
+If you used help while working, document it in a memo. For example, if you used an LLM or another outside resource to understand an error or concept, briefly disclose that use and explain what help you received. Type all code yourself. This is part of the course expectation for AI-supported learning and memo-based workflow.
+
+___
+
+Follow this template for each coding task. 
+
+🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+
+```{r, eval=FALSE}
+#⚡Code 
+your_code <- "here"
+```
+
+```{r, eval=FALSE}
+# ✅ Include Checks after and pre-checks as needed
+colnames(your_code)
+head(your_code)
+table(your_code)
+class(your_code)
+unique(your_code)
+```
+
+
+🗣/🪞 What I learned / Next step. 1–2 sentences.
+
+___
+
+
+## Task 1
 
 🤔 Reflect: How many rows would you expect if each state has 6 diseases? Make a prediction and test it. Then write a memo 🗣 Commenting about the results or 🪞 Explaining why this will be useful.
 
@@ -713,19 +1206,9 @@ heights %>%
 
 ```
 
-# ➤ Assignment
 
-Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, save **BOTH** code script and your `.RData` workspace and upload.
 
-Where appropriate, record: 🎯/❓ Goal → ⚡ Code → ✅ Checks → 🗣/🪞 Reflection (≤ 50 chars).
-
-## Task 0
-
-📦 **Library it up!**
-
-Make sure there is script in your document to load `dplyr` and `dslabs` packages so your functions / datasets load.
-
-## Task 1
+## Task 2
 
 **Single grouping**
 
@@ -746,7 +1229,7 @@ ____ <- _____
 
 🗣 Did it work? What happened? 
 
-## Task 2
+## Task 3
 
 **Single grouping + three stats**
 
@@ -766,9 +1249,9 @@ ____ <- _____
 
 In a short comment, note the region with the highest mean value.
 
-🗣 Comment: "___"
+🗣 "___"
 
-## Task 3
+## Task 4
 
 **Multiple grouping**
 
@@ -796,7 +1279,7 @@ __________ <- us_contagious_diseases %>%
 🗣 Did it work? What happened?
 
 
-## Task 4
+## Task 5
 
 **Putting it all together**
 
@@ -832,40 +1315,11 @@ ____ <- _____
 
 🗣 Did it work? What happened?
 
-## Task 5
+## Task 6
 
 🪞 Reflection
 
 📝 Write a short paragraph reflecting why we need to do `group_by()` come BEFORE `summarize()`?
 
 ✍️ EXPLANATION: "___"
-
-# Save and Upload
-
-1. You will be submitting **both** the script document of your choice and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command:
-
-```{r , eval=FALSE}
-save.image("Assignment10_Workspace.RData")
-```
-
-Or you can click the "Save Workspace" button in the Environment pane. 
-
-💾 **Always save the document before closing.**
-
-2. Find the assignment in this week's module in Canvas and upload **both** the document that contains your code and memos (.R, .Rmd, or .qmd) and the workspace file (.RData).
-
-# Today you practiced:
-
-- Compared overall vs. grouped summaries.
-
-- Used `group_by()` `count()` and  `summarize()` to calculate descriptive statistics.
-
-- Named summary columns for clarity.
-
-- Counted group sizes with `n()`.
-
-- Grouped by multiple variables for richer insights.
-
-✍️ Practice writing one-line summaries on your own data and the syntax will quickly become second nature.
-
 
