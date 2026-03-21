@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 12: Recoding</h1>
 <h3 class="subtitle">Vectorized Conditionals and mutate()</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version March 19, 2026</h4>
+<h4 class="date">Version March 20, 2026</h4>
 
 </div>
 
@@ -1661,7 +1661,6 @@ that are easier to interpret, easier to check, and easier for other
 people to follow. <code>dplyr</code> describes these kinds of recoding
 and column-building tasks as common data manipulation work, especially
 when creating entirely new columns from existing ones</p>
-<p><strong>Lesson Overview</strong></p>
 <p>By the end of Chapter 12 you will be able to:</p>
 <ul>
 <li><p>🔀 Distinguish between logical subsetting, subassignment, and
@@ -1788,11 +1787,11 @@ is like knit or preview.</em></p>
 <h2><span class="header-section-number">2.3</span> Dynamic memoing
 (🌳)</h2>
 <p>So far, you have used code chunks to run R code. Quarto also lets you
-place small pieces of R code directly inside normal sentences. This is
-called inline code. Inline code is useful when you want your written
-memo to automatically include a value computed by your R code. Quarto
-evaluates inline code during rendering, so the sentence stays up to date
-with your analysis.</p>
+place small pieces of R code <strong>directly inside normal
+sentences</strong>. This is called inline code. Inline code is useful
+when you want your written memo to automatically include a value
+computed by your R code. Quarto evaluates inline code during rendering,
+so the sentence stays up to date with your analysis.</p>
 <p>In Quarto, inline code uses one pair of backticks and the engine name
 inside the backticks. For R, the pattern is:</p>
 <pre class="markdown"><code>
@@ -2016,7 +2015,7 @@ returns a new vector with a value for every position based on the
 condition.</li>
 </ul>
 <hr />
-<p>Why do we need both <code>ifelse()</code> and
+<p>📖 Why do we need both <code>ifelse()</code> and
 <code>case_when()</code>? <code>case_when()</code> is usually clearer
 once you have 3+ categories.</p>
 </div>
@@ -2110,7 +2109,7 @@ store in that column.</p></li>
 </ul>
 <p>You can think of <code>mutate()</code> as saying: “Take this data
 frame, and add a new column based on these existing columns.”</p>
-<p><strong>The key idea is this:</strong></p>
+<p>📖 <strong>The key idea is this:</strong></p>
 <ul>
 <li><p>A new name on the left side of <code>=</code> adds a new
 column.</p></li>
@@ -2272,7 +2271,7 @@ unique values: Manual, Automatic.</p>
 <code>0</code>/<code>1</code> to
 <code>&quot;Automatic&quot;</code>/<code>&quot;Manual&quot;</code>.</p>
 <hr />
-<p><strong>Overwrite Key Takeaway</strong></p>
+<p>📖 <strong>Overwrite Key Takeaway</strong></p>
 <p>In every example above, <code>mutate()</code> followed the same
 pattern:</p>
 <ul>
@@ -2435,7 +2434,7 @@ names(heights)</code></pre>
 <p>🗣 Which column contains height values in the dataframe
 <code>heights</code>? Should “Tall” be assigned to the yes or no
 argument in the ifelse statement? Why?</p>
-<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+<p>🎯 Restate the Goal. What are you trying to learn, check, or
 demonstrate?</p>
 <pre class="r"><code># ⚡ Code
 height_label &lt;- _____(
@@ -2445,9 +2444,9 @@ height_label &lt;- _____(
 <pre class="r"><code># ✅ Check
 table(height_label)  # expect &quot;Tall&quot; and &quot;Not Tall&quot;</code></pre>
 <p>🗣 Comment on the output. Do you see the expected labels? How many
-“Tall” and “Not Tall” are there? / 🪞 What did I learn or notice from
-the output? Did the code work as expected? If I needed help, what kind
-of help did I use?</p>
+“Tall” and “Not Tall” are there? / 🪞 What did you learn or notice from
+the output? Did the code work as expected? If you needed help, what kind
+of help did you use?</p>
 </div>
 <div id="task-3" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Task 3</h2>
@@ -2457,8 +2456,8 @@ of help did I use?</p>
 <code>case_when()</code>: “High MPG” if <code>mpg</code> greater than
 <code>25</code>; “Low MPG” if <code>mpg</code> less than
 <code>15</code>; otherwise “Medium MPG”.</p>
-<p>🎯 What is the goal of this code? What am I trying to learn, check,
-or demonstrate?</p>
+<p>🎯 Restate the Goal. What are you trying to learn, check, or
+demonstrate?</p>
 <pre class="r"><code># ⚡ Code
 mpg_recode &lt;- mtcars %&gt;%
   ______(mpg_class = _____(
@@ -2469,9 +2468,9 @@ mpg_recode &lt;- mtcars %&gt;%
 <pre class="r"><code># ✅ Checks
 table(mpg_recode$____)  # expect 3 levels</code></pre>
 <p>🗣 Comment on the output. Do you see the expected labels? How many
-“High MPG”, “Medium MPG”, and “Low MPG” are there? 🪞 What did I learn
-or notice from the output? Did the code work as expected? If I needed
-help, what kind of help did I use?</p>
+“High MPG”, “Medium MPG”, and “Low MPG” are there? 🪞 What did you learn
+or notice from the output? Did the code work as expected? If you needed
+help, what kind of help did you use?</p>
 </div>
 <div id="task-4" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Task 4</h2>
@@ -2496,7 +2495,7 @@ summary(stars$temp)</code></pre>
 <p>🗣 What column contains temperature values in the dataframe
 <code>stars</code>. Identify where the new output column name goes, left
 or right of the <code>=</code>?</p>
-<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+<p>🎯 Restate the Goal. What are you trying to learn, check, or
 demonstrate?</p>
 <pre class="r"><code># ⚡ Code
 ______ &lt;- _____ %&gt;%
@@ -2510,9 +2509,9 @@ ______ &lt;- _____ %&gt;%
 <pre class="r"><code># ✅ Checks
 table(stars_recode$temp_group)  # expect 3 levels</code></pre>
 <p>🗣 Comment on the output. Do you see the expected labels? How many
-“Cool”, “Warm”, and “Hot” stars are there? 🪞 What did I learn or notice
-from the output? Did the code work as expected? If I needed help, what
-kind of help did I use?</p>
+“Cool”, “Warm”, and “Hot” stars are there? 🪞 What did you learn or
+notice from the output? Did the code work as expected? If you needed
+help, what kind of help did you use?</p>
 </div>
 <div id="task-5" class="section level2" number="8.6">
 <h2><span class="header-section-number">8.6</span> Task 5</h2>
@@ -2522,7 +2521,7 @@ kind of help did I use?</p>
 <pre class="r"><code># ✅ pre-check
 heights &lt;- dslabs::heights
 head(heights)</code></pre>
-<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+<p>🎯 Restate the Goal. What are you trying to learn, check, or
 demonstrate?</p>
 <pre class="r"><code># ⚡ Code
 international_friendly_heights &lt;- heights %&gt;%
@@ -2530,9 +2529,9 @@ international_friendly_heights &lt;- heights %&gt;%
 <pre class="r"><code># ✅ Checks
 head(international_friendly_heights)</code></pre>
 <p>🗣 Comment on the output. Do you see a new column? Do the values look
-correct for a unit conversion from inches to centimeters? 🪞 What did I
-learn or notice from the output? Did the code work as expected? If I
-needed help, what kind of help did I use?</p>
+correct for a unit conversion from inches to centimeters? 🪞 What did
+you learn or notice from the output? Did the code work as expected? If
+you needed help, what kind of help did you use?</p>
 </div>
 </div>
 

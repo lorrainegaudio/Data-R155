@@ -81,8 +81,6 @@ In this chapter, you will learn how to use **vectorized conditional functions** 
 
 This chapter matters because data analysts rarely work only with raw variables. In real analysis, you often need to recode categories, group values into meaningful labels, convert units, and create cleaner columns from existing data before you can summarize, visualize, or model it. Learning to do this with readable R code will help you build data sets that are easier to interpret, easier to check, and easier for other people to follow. `dplyr` describes these kinds of recoding and column-building tasks as common data manipulation work, especially when creating entirely new columns from existing ones
 
-**Lesson Overview**
-
 By the end of Chapter 12 you will be able to:
 
 - 🔀 Distinguish between logical subsetting, subassignment, and vectorized conditionals.
@@ -794,7 +792,7 @@ names(heights)
 
 🗣 Which column contains height values in the dataframe `heights`? Should "Tall" be assigned to the yes or no argument in the ifelse statement? Why?
 
-🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+🎯 Restate the Goal. What are you trying to learn, check, or demonstrate?
 
 ```{r, eval=FALSE}
 # ⚡ Code
@@ -809,7 +807,7 @@ height_label <- _____(
 table(height_label)  # expect "Tall" and "Not Tall"
 ```
 
-🗣 Comment on the output. Do you see the expected labels? How many "Tall" and "Not Tall" are there? / 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
+🗣 Comment on the output. Do you see the expected labels? How many "Tall" and "Not Tall" are there? / 🪞 What did you learn or notice from the output? Did the code work as expected? If you needed help, what kind of help did you use?
 
 ## Task 3
 
@@ -818,7 +816,7 @@ table(height_label)  # expect "Tall" and "Not Tall"
 Create `mpg_class` with three labels using `case_when()`:
 "High MPG" if `mpg` greater than `25`; "Low MPG" if `mpg` less than `15`; otherwise "Medium MPG".
 
-🎯 What is the goal of this code? What am I trying to learn, check, or demonstrate?
+🎯 Restate the Goal. What are you trying to learn, check, or demonstrate?
 
 ```{r , eval=FALSE}
 # ⚡ Code
@@ -835,7 +833,8 @@ mpg_recode <- mtcars %>%
 table(mpg_recode$____)  # expect 3 levels
 ```
 
-🗣 Comment on the output. Do you see the expected labels? How many "High MPG", "Medium MPG", and "Low MPG" are there? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
+🗣 Comment on the output. Do you see the expected labels? How many "High MPG", "Medium MPG", and "Low MPG" are there? 🪞 What did you learn or notice from the output? Did the code work as expected? If you needed help, what kind of help did you use?
+
 
 ## Task 4
 
@@ -863,7 +862,7 @@ summary(stars$temp)
 
 🗣 What column contains temperature values in the dataframe `stars`. Identify where the new output column name goes, left or right of the `=`? 
 
-🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+🎯 Restate the Goal. What are you trying to learn, check, or demonstrate?
 
 ```{r, eval=FALSE}
 # ⚡ Code
@@ -882,7 +881,7 @@ ______ <- _____ %>%
 table(stars_recode$temp_group)  # expect 3 levels
 ```
 
-🗣 Comment on the output. Do you see the expected labels? How many "Cool", "Warm", and "Hot" stars are there? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
+🗣 Comment on the output. Do you see the expected labels? How many "Cool", "Warm", and "Hot" stars are there? 🪞 What did you learn or notice from the output? Did the code work as expected? If you needed help, what kind of help did you use?
 
 ## Task 5
 
@@ -897,7 +896,7 @@ heights <- dslabs::heights
 head(heights)
 ```
 
-🎯 What is the goal of the code? What am I trying to learn, check, or demonstrate?
+🎯 Restate the Goal. What are you trying to learn, check, or demonstrate?
 
 ```{r, eval=FALSE}
 # ⚡ Code
@@ -910,5 +909,5 @@ international_friendly_heights <- heights %>%
 head(international_friendly_heights)
 ```
 
-🗣 Comment on the output. Do you see a new column? Do the values look correct for a unit conversion from inches to centimeters? 🪞 What did I learn or notice from the output? Did the code work as expected? If I needed help, what kind of help did I use?
+🗣 Comment on the output. Do you see a new column? Do the values look correct for a unit conversion from inches to centimeters? 🪞 What did you learn or notice from the output? Did the code work as expected? If you needed help, what kind of help did you use?
 

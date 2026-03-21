@@ -741,7 +741,25 @@ Infectious_Burden
 
 **Putting it all together**
 
+🚀 Using `dplyr`'s `starwars` data, create a table of **per-group descriptive statistics** by **two grouping variables**. Use several statistics and more than one numeric variable in a single `summarize()` call. Return an **ungrouped** result. Name it `starwars_summary`.
 
+1. Inspect: Open the help page and glimpse the data. Identify **two categorical** columns you can group by (e.g., `species` and `sex`) and **two numeric** columns to summarize (e.g., `height` and `mass`).
+
+```{r}
+data("starwars")
+```
+
+2. In one code chunk: 
+
+- Use `filter()` to remove rows with missing values so your groups are well-defined.
+
+- `group_by()` your two categorical variables.
+
+- `summarize()` to compute *at least* **two descriptive statistics** (e.g., mean, sd, n) for **each numeric variable**.
+
+- Drop groups to return an ungrouped result.
+
+- Name the result **`starwars_summary`**.
 
 ```{r}
 #⚡ Code

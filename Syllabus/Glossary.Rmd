@@ -46,15 +46,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Census**: A complete count or measurement of every member of a population, rather than just a subset.
 
-**Central Tendency**: A measure that represents the center or typical value of a dataset. Common measures of central tendency include the mean, median, and mode.
+**Center**: The middle or typical location of a dataset. Measures of center, such as the mean and median, summarize where values tend to cluster.
 
-**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
+**Central Tendency**: A measure that represents the center or typical value of a dataset. Common measures of central tendency include the mean, median, and mode.
 
 **Character String**: A single piece of text in R, stored as a character value and written in quotes (for example, "My favorite color is yellow!" or "Who stole the cookie from the cookie jar?"). 
 
 **Character Indexing**: Indexing a named vector using character strings that match element names (for example, `x[c("Octarine", "TARDIS Blue")]`). With `[`, names are matched exactly; any name that doesn’t exist returns `NA` for that position.
 
 **Character Vector**: A vector that stores text strings, written in quotes, such as `"apple", "banana", "grapes"` or `"ID_001", "ID_002", "ID_003"`.
+
+**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
 
 **Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with ```{r}. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
 
@@ -67,6 +69,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Console Pane**: The pane where R executes commands and prints output. Anything you type and run here is evaluated immediately, and messages, warnings, errors, and results appear here.
 
 **Continuous Data**: Numerical data that can take any value within a range, including values between other values. Measurements such as height, weight, and time are typical examples.
+
+**Count**: The number of observations or values in a dataset, group, or category. In introductory statistics, count tells you how many cases are present.
 
 **CSV** (Comma-Separated Values): A plain-text file (`.csv`) for rectangular (row-and-column) data where each row is a line and values are separated by commas. Because it’s plain text, CSV is widely compatible across software, but it does not reliably preserve spreadsheet features like formulas, cell formatting, or multiple sheets.
 
@@ -309,6 +313,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
 
 **Spread**: How much the values in a dataset vary or scatter rather than cluster tightly together. Common measures of spread include range, interquartile range (IQR), variance, and standard deviation.
+
+**Standard Deviation**: A measure of spread that describes how far values typically vary from the mean. A small standard deviation means values are clustered close to the mean, while a large standard deviation means they are more spread out.
 
 **Statistic**: A numerical summary computed from a sample.
 

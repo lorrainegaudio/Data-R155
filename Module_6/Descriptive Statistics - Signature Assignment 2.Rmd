@@ -1,0 +1,938 @@
+---
+title: "Chapter 13"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Chapter 13"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+# ---
+title: "Chapter 13"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+# Overview
+
+In Chapter 11, you learned how to create a Quarto file, keep the YAML header, use Markdown headings, write memos outside code chunks, and control chunks with #| options. In Chapter 12, you add a table of contents and section numbering, and use inline R code inside your sentences. In this guided activity, you will practice using these skills. Additionally, you will practice writing mathematical formulas in Markdown using LaTeX syntax. Completing this activity supports Chapter 13 which teaches you how to use `dplyr`'s `group_by()` and `summarize()` verbs.
+
+By the end of the Descriptive Statistics activity you will be able to:
+
+- Define key data science terms related to data collection and data types.
+
+- Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
+
+
+
+# Setting Up Your Notes
+
+For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push. 
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+Open a new Quarto document in your course folder and save it as: `chapter13_notes.qmd` (`File > New File > Quarto Document`).
+
+## YAML Header 
+
+Copy and paste the YAML header from this file into your new Quarto document. Update the title, author, date, and team fields in the YAML header.
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 13 Notes\"
+subtitle: \"group_by() and summarize()\"
+author: \"YOUR NAME\"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: true
+execute:
+  warning: true
+  message: true
+---
+```")
+```
+
+## Headings
+
+Use the section headings in this file to create the structure of your notes. You can copy and paste the section headings into your new Quarto document.
+
+```markdown
+
+# Loading Packages
+
+# Data Terminology
+
+# Counts
+
+## Length
+
+## Count and Mode
+
+# Center
+
+## Median
+
+## Mean
+
+# Spread
+
+## Variance
+
+## Standard Deviation
+
+## Range
+
+### IQR
+
+### Five Number Summary
+
+
+```
+
+Work through the sections under each heading. Render to HTML often to see the results.
+
+## 📦 Packages
+
+Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`
+
+🎯 Load the packages 
+
+```{r message=FALSE, warning=FALSE}
+# ⚡
+library(dslabs)  # Data science labs package
+library(dplyr)   # Data manipulation package
+```
+
+# Foundations
+
+Before you use `summarize()` and `group_by()` in Chapter 13, you will benefit from learning about what data represents, what kind of variable you are working with, and what a summary value actually means. These opening sections build that foundation by introducing key terms and descriptive statistics. This understanding will help you make informed choices on how to best describe your data. 
+
+As you work through the foundations, focus on matching the kind of data you have to the kind of summary that makes sense. That preparation will help you move beyond remembering definitions and toward actually using `dplyr` to answer questions with data.
+ 
+## Data Collection
+
+Data is a collection of facts, such as numbers, words, measurements, observations, or even just descriptions of things. Data can be qualitative (descriptive) or quantitative (numerical). It can be collected through various methods such as surveys, experiments, or observations.
+
+**Population**: A population is a collection of objects or individuals that we want to study. It can be finite or infinite. The unknown population number is called a *parameter*.
+
+* **Census**: A census is a complete enumeration of all the elements in a population. It is used to collect data from the entire population.
+
+**Sample**: A sample is a subset of the population that we actually observe or measure. It is used to make inferences about the population. We use samples because it is often impractical or impossible to collect data from the entire population. The known sample number is called a *statistic*.
+
+* Population Size **N**: The number of elements in the population.
+
+* Sample Size **n**: The number of elements in the sample.
+
+## Data Types
+
+Your data set is most likely a sample from a larger population and not a census of the entire population.
+
+1. **Unordered Sample**: A sample where the order of the elements does not matter. For example, if we have a population of 5 elements and we take a sample of 3, the set `{1, 2, 3}` **is** the same as `{3, 2, 1}`.
+
+🎯 Create the vector `heights_sample` to store the set values: $5.9ft$, $6.1ft$, $5.8ft$, $6.0ft$, $5.7ft$. This is a sample of heights of *5 individuals* from a population of all individuals in a city.
+
+```{r}
+# ⚡
+heights_sample <- c(5.9, 6.1, 5.8, 6.0, 5.7) # heights in feet
+```
+The order has no inherent meaning.
+
+2. **Ordered Sample**: A sample where the order of the elements does matter. Time series data, growth measurements, finishing positions in a race, and data sorted from smallest to largest for calculating quantiles or medians are examples of ordered samples.
+
+🎯  If we take 5 samples of the height of *one* youth as they grow up, we have an ordered sample. 
+
+```{r}
+# ⚡
+growth_data <- c(42, 45, 48, 51, 54)  # Heights in inches by age
+```
+
+🗣 The order of the values matters because they represent measurements taken at different ages. The first value (42) corresponds to the height at the youngest age, and the last value (54) corresponds to the height at the oldest age. The set `{42, 45, 48, 51, 54}` is **NOT** the same as `{45, 54, 48, 42, 51}`.
+
+Data that can be divided into categories or groups is called **categorical data**. For example, the colors of cars in a parking lot (red, blue, green, etc.). In R, categorical data is often represented as factors. Factors can be ordered or unordered.
+
+🎯 A list of placements in a race is an ordered sample because the order of the placements matters. The first place finisher is different from the second place finisher, and so on. 
+
+```{r}
+# ⚡
+race_positions <- c("Kim", "Alex", "Jordan", "Taylor")  # Order indicates ranking
+```
+
+🗣 The set `{Kim, Alex, Jordan, Taylor}` is **NOT** the same as `{Taylor, Jordan, Alex, Kim}`.
+
+**Ordinal data** is about whether your data values have a meaningful natural ranking order, the intervals between categories aren't necessarily equal. Other examples include Likert scale or types of other hierarchical values like academic hierarchies.
+
+`heights_sample` and `heights_sample` are **numerical data**. This is data that can be measured or counted. Numerical data can be further classified into:
+
+* **Discrete Data**: Numerical data that can take on only specific values. For example, the number of cylinders in a car (4, 6, 8, etc.). In R, discrete data is often represented as integers. In R, we store a vector of counts or whole numbers by including an "L" after the number to indicate that it is an integer (e.g., `c(1L, 2L, 3L)`).
+
+* **Continuous Data**: Numerical data that can take on any value within a range. For example, the height of individuals in a population (e.g., `heights_sample` and `heights_sample`).
+
+___
+
+When describing data, you will need to choose the appropriate statistical method based on the type of sample data you have. 
+
+1. Check the type of sample data
+
+2. Apply the appropriate descriptive statistics
+
+The rest of this activity details common descriptive statistics used to summarize and describe the main features of a dataset. These methods provide a way to understand the distribution and variability of the data. 
+
+# Counts
+
+Use count-based summaries when your question is about how many observations you have or how often values appear. Length, sum, count are all ways to add up values in a dataset. 
+
+## Length
+
+**Length** counts the number of values in the set of numbers. In other words, it tells us how many observations we have. In a data table, it tells us how many rows are in a column.
+
+🎯 Count the number of values in the `mpg` column of the `mtcars` dataset.
+
+```{r}
+# ⚡ length (Step 1a)
+n <- length(mtcars$mpg)
+```
+
+___
+
+🌳 Use this inline R code to dynamically report the number of values in the `mpg` column and include it in a sentence. Write the sentence in your notes document outside of a code chunk and without `#`.
+
+```markdown
+
+🗣 The `mpg` column in the `mtcars` dataset contains `{r} length(mtcars$mpg)` values.
+
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The `mpg` column in the `mtcars` dataset contains `r length(mtcars$mpg)` values.
+
+Test rendering with the inline code to make sure it works. 
+___
+
+*You can also use `nrow(mtcars)` to get the number of rows in the dataset, which should give the same result as `length(mtcars$mpg)` since each row has one value for `mpg`.*
+
+In Chapter 13, you will work inside `summarize()`, you will often use `n()` to count rows within groups.
+
+## Count and Mode
+
+When you want to know how often each value appears in a column, use the **`dplyr`** function `count()`. This is especially useful for categorical variables and discrete variables. A frequency table shows how many times each unique value appears.
+
+The **mode** is the value that appears most often. In other words, once you create a frequency table, the mode is the value with the largest count.
+
+📜 The SYNTAX: 
+
+`data %>%`  
+  `count(variable)`
+
+*Use `?count` to learn more about the function.*
+
+🎯 Use `count()` to create a table of the **frequency** of each unique value in the `cyl` column of the `mtcars` dataset. Determine the mode.
+
+```{r}
+# ⚡ Count discrete values 
+cyl_counts <- mtcars %>%
+  count(cyl)
+# ✅ 
+cyl_counts
+```
+
+🗣 In this table, `n` is the number of times that each unique value appears in the `cyl` column. 8 cylinders occur most frequently (14 times) in the `cyl` column of the `mtcars` dataset.
+
+*Note: If no value occurs more than once, then all are the mode or no mode. You get to pick.*
+
+---
+
+🪞 What is the difference between `length()` `sum()` and `count()`? 
+ 
+ - `length()` counts the number of values in a column, 
+ 
+ - `sum()` adds up the values in a column, and 
+ 
+ - `count()` counts the frequency of each unique value in a categorical column.
+ 
+ For `cyl`, we care about how many cars in the dataset have 4, 6, or 8 cylinders (`count()`) and not about the total of all cylinder values added together (`sum()`). A frequency table helps us describe categorical data, and the mode helps us identify which category appears most often.
+ 
+Mode the only measure of central tendency that works with nomimal (categorical) data. Extreme values don't affect the mode. It is easy to interpret because it's simply the most common value. This data is often depicted in histograms or frequency tables. 
+
+The next sections introduce two other measures of center that are more appropriate for numerical data.
+ 
+# Center
+
+Measures of **central tendency**, or measures of center, are used to describe the typical value in a dataset. They give us an idea of where the center of the data is located. Common measures of central tendency include the mean, median, and mode.
+
+## Median
+
+The **median** is the middle value of a set of numbers when they are arranged in order. The median is often useful when the data may contain unusually high or low values. 
+
+**Step 1**: Sort the data in ascending order.
+
+**Step 2**: Check the size of the sample (n). If there is an even number of values, the median is the average of the two middle values.
+
+**Step 3**: Calculate the median using the appropriate formula based on whether n is odd or even.
+
+* If n is odd, the median is the middle value: $$\text{median} = x_{(\frac{n+1}{2})}$$
+
+* If n is even, the median is the average of the two middle values: $$\text{median} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2}+1)}}{2}$$
+
+Where $x_{(i)}$ represents the ith ordered value in the sample.
+
+___
+
+🌳  Type this in your notes document to see how to write the median calculation mathematically.
+
+```math
+$$
+\text{median} = x_{(\frac{n+1}{2})}
+$$
+
+$$
+\text{median} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2}+1)}}{2}
+$$
+```
+
+___
+
+🎯 Calculate the median of the `mpg` column in the `mtcars` dataset.
+
+### Step 1
+
+```{r}
+# ✅  Pre-check
+print(mtcars$mpg)
+```
+
+```{r}
+# ⚡ Median Step 1: Sort the data
+sorted_data <- sort(mtcars$mpg)  
+# ✅ 
+sorted_data
+```
+
+___
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+```markdown
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `{r} sorted_data`.
+```
+
+When rendered to HTML, this will read:
+
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `r sorted_data`.
+
+___
+
+### Step 2
+
+🎯 Find the size of the sample to determine how to calculate the median.
+
+```{r}
+# ⚡ Median Step 2: Get the size of the sample
+length(sorted_data)
+```
+
+___
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+```markdown
+🗣 There are `{r} length(sorted_data)` values.
+```
+
+When rendered to HTML, this will read: 
+
+🗣 There are `r length(sorted_data)` values.
+
+___
+
+We need to calculate the median for a dataset with an even number of data points.
+
+### Step 3
+
+To do this manually, we find the two middle values and take their average. The two middle values are the 16th and 17th values in the sorted list.
+
+🎯 Find the median using the bracket operator `[]` to access the 16th and 17th values in the sorted list.
+
+```{r}
+# ⚡ Median Step 3: Calculate the median for an even number of values
+median_value <- (sorted_data[16] + sorted_data[17]) / 2
+# ✅
+median_value
+```
+
+R simply gives us the median value without needing to do the manual calculations.
+
+🎯 Use `median()` function to find the middle of the distribution of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡ Or use the median() function
+median(mtcars$mpg)
+```
+
+___
+
+🌳 Use this inline code to dynamically report the median value.
+
+```markdown
+🗣 The median of the `mpg` column in the `mtcars` dataset is `{r} median(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The median of the `mpg` column in the `mtcars` dataset is `r median(mtcars$mpg)`.
+
+___
+
+The median is a measure of center that is sometimes selected when the data contains outliers. The most common measure of center is the mean, which is the average of the values in a dataset. The next section introduces the mean and how to calculate it.
+
+## Mean
+
+The **mean** is the average of a set of numbers. It is calculated by summing all the values and dividing by the number of values.
+
+**Step 1a** is to count the number of values in the dataset.
+
+**Step 1b** is to sum the values in the dataset.
+
+**Step 2** is to divide the sum by the number of values in the dataset.
+
+### Step 1a
+
+We calculated the number of values in the `mpg` column of the `mtcars` dataset in the previous section
+
+```{r}
+# ⚡ length (Step 1a)
+n <- length(mtcars$mpg)
+```
+
+### Step 1b
+
+**Summation** is the process of adding a sequence of numbers together. Summation is represented by the Greek letter sigma (Σ). It indicates that we are summing a series of values. 
+
+___
+
+🌳  Type this in your notes document to see how to write summation in Markdown with LaTeX syntax.
+```math
+$$
+\sum_{i=1}^{n}
+$$
+
+```
+
+$$\sum_{i=1}^{n}$$
+
+When you see $\sum_{i=1}^{5} a$, this means:
+
+* Start with $i=1$ (the second value in the set of numbers)
+
+* Add the value $a$ to your sum
+
+* Increase $i$ by 1
+
+* Repeat until you reach $i=5$ (the fifth value in the set of numbers)
+
+* Then stop
+
+This is adding $a$ four times (once each for $i=2$, $i=3$, $i=4$, and $i=5$).
+
+```math
+$$
+\sum_{i=1}^{5} a => a_1 + a_2 + a_3 + a_4 + a_5 
+$$
+```
+$$
+\sum_{i=1}^{5} a => a_1 + a_2 + a_3 + a_4 + a_5 
+$$
+
+___
+
+🎯 Sum the values in the `mpg` column of the `mtcars` dataset. Store the result as sum_sample. 
+
+```{r}
+# ⚡ Sum (Step 1b)
+sum_x <- sum(mtcars$mpg)
+# ✅ 
+sum_x
+```
+
+`sum(mtcars$mpg)` is the total value from adding all the values in the `mpg` column of the `mtcars` dataset.
+
+___
+
+🌳 Use this inline code to dynamically report `sum_sample`.
+
+```markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum_x`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `r sum_x`.
+
+You can also use `sum(mtcars$mpg)` directly in the inline code without storing it in a variable.
+
+```markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum(mtcars$mpg)`
+```
+___
+
+
+### Step 2
+
+Divide the sum of the values by the number of values to get the mean.
+
+___
+
+🌳  Type this in your notes document to see how to write mean calculation mathematically using LaTeX syntax.
+
+```math
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+$$
+```
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+
+___
+
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡ Mean (Step 2) Divide Step 1 values
+x_bar <- sum_x / n 
+```
+
+🗣 We used `sum_x` and `n` objects created earlier.
+
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset using the `mean()` function.
+
+```{r}
+# ⚡
+# OR use mean() function directly
+x_bar <- mean(mtcars$mpg) 
+# ✅ 
+x_bar
+```
+
+___
+
+🌳 Use this inline code to dynamically report the mean value.
+
+```markdown
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `{r} mean(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `r x_bar`.
+
+___
+
+The next section, which explores measures of variability describe how spread out the values in a dataset are.
+
+# Spread
+
+**Spread** measures tell you how much individual data points deviate from the central tendency. Low spread indicates consistent, predictable data, while high spread suggests more variability and uncertainty. Unusual spread patterns can reveal data quality issues, outliers, or measurement errors that need investigation. Models built on data with known spread characteristics allow analysts to provide confidence intervals and uncertainty estimates. Comparing the spread of different groups, time periods, or conditions helps identify which scenarios are more stable or predictable. Understanding data spread helps choose appropriate analytical techniques and transformation methods.
+
+## Standard Deviation
+
+The **standard deviation** is a measure of how spread out the values in a dataset are. It is calculated as the square root of the variance.
+
+**Step 1** is to calculate the variance, which is the average of the squared differences from the mean.
+
+**Step 2** is to take the square root of the variance to get the standard deviation.
+
+### Step 1
+
+The **variance** is a measure of how spread out the values in a dataset are. It is calculated as the average of the squared differences from the mean.
+
+Variance is calculated by first finding the difference between each value and the mean, squaring those differences, summing them up, and then dividing by the number of values minus one (for a sample variance).
+
+___
+
+🌳  Type this in your notes document to see how to write the variance calculation mathematically.
+
+```math
+$$
+s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}
+$$
+```
+
+$$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}$$
+
+___
+
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+# Variance step 3: Calculate the variance
+variance <- sum((mtcars$mpg - x_bar)^2) / (n - 1)
+# ✅ 
+variance
+```
+
+🗣 We used `x_bar` (mean) and `n` (column length), objects created earlier. Let's break down this nested function to make sure we understand what is happening. 
+
+First, the `mtcars$mpg - x_bar` calculates the difference between *each value* in the `mpg` column and the *mean* of the `mpg` column. 
+
+Rapping that list of difference values `( )` to the power of two `(mtcars$mpg - x_bar)^2` squares each of the differences. 
+
+These squared differences are summed together. 
+
+The sum of squared differences is divided by the length of the column minus 1, `(n - 1)`.  
+
+This results in the sample variance ($s^2$).
+
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset using the `var()` function.
+
+```{r}
+# ⚡
+# OR use var() function directly
+variance <- var(mtcars$mpg)
+# ✅ 
+variance
+```
+
+___
+
+🌳 Use this inline code to dynamically report the variance value.
+
+```markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} var(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `r var(mtcars$mpg)`.
+
+You can round the variance to two decimal places for better readability.
+
+```markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`
+```
+___
+
+
+### Step 2
+
+Find the **standard deviation** by taking the square root of the variance. 
+
+___
+
+🌳 Type this in your notes document to see how to write the standard deviation calculation mathematically.
+
+```math
+$$
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}
+$$
+```
+
+$$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}$$
+
+___
+
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+# Standard Deviation step 4: Calculate the standard deviation
+std_dev <- sqrt(sum((mtcars$mpg - x_bar)^2) / (n - 1))
+std_dev
+```
+
+🗣 This is the formula for $s^2$ inside of the function `sqrt()` which calculates the square root of a value.
+
+
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset using the `sd()` function.
+
+```{r}
+# ⚡
+# OR use sd() function directly 
+std_dev <- sd(mtcars$mpg)
+# ✅ 
+std_dev
+```
+
+___
+
+🌳 Use this inline code to dynamically report the standard deviation value.
+
+```markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} sd(mtcars$mpg)`
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `r sd(mtcars$mpg)`
+
+You can round the standard deviation to two decimal places for better readability.
+
+```markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`
+```
+
+___
+
+Standard deviation works seamlessly with other statistical calculations (confidence intervals, hypothesis tests, regression). It uses every data point, providing a complete picture of variability. It is essential for parametric statistics and probability calculations, enabling standardized comparisons across different scales. But standard deviation is heavily influenced by extreme values, which can be misleading. It is less meaningful for skewed or non-normal distributions. Also, squared units can be less intuitive to interpret. 
+
+In the next section, we will explore measures of spread that are less sensitive to outliers and skewed data.
+
+## Range
+
+This simplest variability measure to calculate and understand is the **range**, which is the difference between the largest and smallest values in a dataset.  This value gives you a quick sense of how spread out the data is, but it can be heavily influenced by outliers.
+
+Determined entirely by just two values:
+
+$$\text{Range} = x_{(n)}- x_{(1)}$$  
+
+Where $x_{(n)}$ is the largest value and $x_{(1)}$ is the smallest value in the dataset.
+
+___
+
+🌳  Type this in your notes document to see how to write the range calculation mathematically.
+
+```math
+$$
+\text{Range} = x_{(n)} - x_{(1)}
+$$
+```
+
+___
+
+In R, you can calculate the range using the `range()` function, which returns a vector containing the minimum and maximum values of the dataset. To get the range, you can subtract the minimum from the maximum.
+
+```{r}
+# ⚡
+mpg_range <- range(mtcars$mpg)
+mpg_range
+```
+
+🗣 mpg_range is a vector that contains the minimum and maximum values of the `mpg` column in the `mtcars` dataset. The first value is the minimum, and the second value is the maximum.
+
+We can use the bracket operator `[]` to access the minimum and maximum values from the `mpg_range` vector.
+
+```{r}
+# Calculate the range by subtracting the minimum from the maximum
+mpg_range_value <- mpg_range[2] - mpg_range[1]
+mpg_range_value
+```
+
+You can also calculate the range directly by using the `max()` and `min()` functions.
+
+```{r}
+# ⚡
+max(mtcars$mpg) - min(mtcars$mpg)
+```
+
+One extreme value can make range misleading and it doesn't indicate where most data falls. The next section introduces the a method for measuring spread that unaffected by outliers or extreme values. 
+
+### Interquartile Range (IQR)
+
+The **interquartile range** (IQR), or the *fourth spread* works well with any data distribution shape. IQR represents the spread of the "typical" middle 50% of data. 
+
+A **quartile** is the whole data range divided into four equal parts.
+
+It is calculated as:
+
+$$IQR = Q_3 - Q_1$$
+
+Where $Q_1$ is the **first quartile** (25th percentile) and $Q_3$ is the **third quartile** (75th percentile).
+
+Removing lower and upper 25% removes extreme values and determine the range between the first and third quartiles.
+
+🎯  Use `IQR()` function to calculate the interquartile range of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+iqr_value <- IQR(mtcars$mpg)
+# ✅
+iqr_value
+```
+
+___
+
+🌳  Use this inline code to dynamically report the interquartile range value.
+
+```markdown
+🗣 The interquartile range of the values in the `mpg` column is `{r} IQR(mtcars$mpg)`
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The interquartile range of the values in the `mpg` column of the `mtcars` dataset is `r IQR(mtcars$mpg)`
+
+___
+
+
+### Five Number Summary
+
+You can use the `summary()` function to get a quick overview of the distribution of a numeric variable, including the minimum, $Q_1$ , median, mean, $Q_3$ , and maximum values.
+
+🎯  Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+*Type `?summary` to learn about the `summary()` function.*
+
+```{r}
+# ⚡
+summary(mtcars)  # Summarizes all columns at once
+```
+
+🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+summary(mtcars$mpg)  # Summarizes just the mpg column
+```
+_____
+
+So far, you have learned how to calculate descriptive statistics manually and using built-in functions. You have also learned how to use inline R code to dynamically report these statistics in your Quarto document.
+
+In the remaining of this chapter, we will compute specific summary statistics. You will learn how to group your data by certain variables before summarizing. This is where `dplyr`'s `summarize()` and `group_by()` functions come in handy.
+
+# Summary
+
+
+
+# Chapter Terms
+
+**Categorical Data**: Data whose values place observations into groups or categories. The categories may have no natural order (nominal) or may have an order with uneven gaps between categories (ordinal). In R, categorical data are often stored as factors.
+
+**Census**: A complete count or measurement of every member of a population, rather than just a subset.
+
+**Central Tendency**: A measure that represents the center or typical value of a dataset. Common measures of central tendency include the mean, median, and mode.
+
+**Continuous Data**: Numerical data that can take any value within a range, including values between other values. Measurements such as height, weight, and time are typical examples.
+
+**Descriptive statistics**: Numerical summaries that describe the main features of a dataset, such as measures of central tendency (mean, median, mode) and measures of variability (range, variance, standard deviation).
+
+**Discrete Data**: Numerical data that can take only specific, separate values, often counts such as 0, 1, 2, 3, and so on. In practice, discrete data are commonly integer-valued.
+
+**Frequency**: The number of times a value or category appears in a dataset.
+
+**Interquartile Range (IQR)**: The range of the middle 50% of the data, calculated as `Q3 - Q1`. Because it ignores the lowest 25% and highest 25%, it is less sensitive to extreme values than the full range.
+
+**Length**: The number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
+
+**Mean**: The arithmetic average of a set of numbers, found by adding all values and dividing by the number of values.
+
+**Median**: The middle value in an ordered dataset. If there is an even number of values, the median is the average of the two middle values.
+
+**Mode** (statistic): The value or category with the greatest frequency in a dataset. A dataset can have one mode, more than one mode, or no mode if no value occurs more often than the others.
+
+**Numerical Data**: Data recorded as numbers, where the values have meaningful magnitudes and consistent intervals. Numerical data are also called *quantitative* data.
+
+**Ordered Sample**: A sample in which the order of the selected elements does matter, so `(1, 2, 3)` is different from `(3, 2, 1)`. In counting language, this is the idea behind a *permutation*.
+
+**Ordinal Data**: Categorical data with a meaningful ranking or order, but where the differences between adjacent categories are not necessarily equal or measurable. Examples include Likert-scale responses such as “strongly disagree” to “strongly agree.”
+
+**Parameter**: A numerical summary of a population.
+
+**Percentile**: A value that marks the point at or below which a given percentage of observations fall. For example, the 50th percentile is the median.
+
+**Population**: The entire collection of individuals, cases, or objects you want to study. 
+
+**Quartile**: One of the cut points that divides ordered data into four equal parts. The first quartile (`Q1`) is the 25th percentile, the second quartile (`Q2`) is the median, and the third quartile (`Q3`) is the 75th percentile.
+
+**Range**: A simple measure of spread found by subtracting the smallest value from the largest value in a dataset.
+
+**Sample**: A subset of the population that you actually observe or measure.
+
+**Spread**: How much the values in a dataset vary or scatter rather than cluster tightly together. Common measures of spread include range, interquartile range (IQR), variance, and standard deviation.
+
+**Standard Deviation**: A measure of spread equal to the square root of the variance. Because it takes the square root, standard deviation is expressed in the same units as the original data.
+
+**Statistic**: A numerical summary computed from a sample.
+
+**Summation**: The process of adding a sequence of values together. In formulas, summation is written with the capital Greek letter sigma, `Σ`, as a compact way to show a sum.
+
+**Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a *combination*.
+
+**Variance**: A measure of spread that describes how far values tend to vary from the mean, based on squared deviations. In introductory statistics, sample variance is commonly calculated using `n - 1` in the denominator.
+
+# 
+
+
+## Task 2
+
+**Single grouping**
+
+🌟 Using `stars`, compute mean temperature **AND** mean magnitude for each type. Name the result **`twinkle_twinkle`**.
+
+🎯 Restate the Goal
+
+```{r, eval=FALSE}
+#⚡ Code
+____ <- _____
+```
+
+
+```{r, eval=FALSE}
+# ✅ Checks
+
+```
+
+🗣 Did it work? What happened? 
