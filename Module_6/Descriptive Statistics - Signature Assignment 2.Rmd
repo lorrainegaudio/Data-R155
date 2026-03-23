@@ -1,12 +1,12 @@
 ---
-title: "Chapter 13"
+title: "Signature Assignment"
 subtitle: "Descriptive Statistics"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: true # Table of contents (TOC)
+    toc: false # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -83,25 +83,37 @@ By the end of the Descriptive Statistics activity you will be able to:
 
 - Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
 
+- Report descriptive statistics using inline R code in a Quarto document.
 
+- Understand the importance of choosing appropriate descriptive statistics based on the type of data and research question.
 
-# Setting Up Your Notes
+- Produce a well-structured and formatted HTML document summarizing the descriptive statistics of a dataset.
+
+# Part 1
+
+Part 1 builds the foundation for the full report. In this section, you will set up your Quarto file, inspect the `penguins` dataset, and begin deciding which descriptive statistics fit which kinds of variables. Your goal is to connect the reading to a real dataset and explain why a summary method makes sense for that kind of data.
+
+You will submit whatever you are able to complete during class. Some students may finish all of Part 1, while others may only finish Task 1 or begin Task 2. That is fine. Save your work, render often, and make sure your progress is visible in your Quarto document.
+
+## Setting Up Your Notes
 
 For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push. 
 
 If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
 
-Open a new Quarto document in your course folder and save it as: `chapter13_notes.qmd` (`File > New File > Quarto Document`).
+Open a new Quarto document in your course folder (`File > New File > Quarto Document`).
 
-## YAML Header 
+Save it as `descriptive_statistics.qmd`.
+
+### YAML Header 
 
 Copy and paste the YAML header from this file into your new Quarto document. Update the title, author, date, and team fields in the YAML header.
 
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
 ---
-title: \"Chapter 13 Notes\"
-subtitle: \"group_by() and summarize()\"
+title: \"Signature Assignment\"
+subtitle: \"Descriptive Statistics\"
 author: \"YOUR NAME\"
 date: today
 toc: true
@@ -117,39 +129,45 @@ execute:
 ```")
 ```
 
-## Headings
+### Headings
 
 Use the section headings in this file to create the structure of your notes. You can copy and paste the section headings into your new Quarto document.
 
 ```markdown
 
-# Loading Packages
+# Part 1
 
-# Data Terminology
+## Load Packages and Data
 
-# Counts
+## Data Types
+
+# Part 2
 
 ## Length
 
-## Count and Mode
+## Count 
 
-# Center
+## Mode
 
 ## Median
 
 ## Mean
 
-# Spread
+# Part 3
 
-## Variance
+# Spread
 
 ## Standard Deviation
 
 ## Range
 
-### IQR
+## IQR
 
-### Five Number Summary
+## Five Number Summary
+
+# Part 4
+
+## Describing Data with `dplyr`
 
 
 ```
@@ -158,9 +176,11 @@ Work through the sections under each heading. Render to HTML often to see the re
 
 ## 📦 Packages
 
+### Guided Activity
+
 Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`
 
-🎯 Load the packages 
+🎯 Load the packages for guided activity
 
 ```{r message=FALSE, warning=FALSE}
 # ⚡
@@ -168,13 +188,35 @@ library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package
 ```
 
-# Foundations
+### Signature Assignment
+
+You will use data for three penguin species observed in the Palmer Archipelago, Antarctica, collected by Dr. Kristen Gorman with Palmer Station LTER. 
+
+[Link to palmerpenguins reference file](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html)
+
+🎯 install the released version of palmerpenguins from CRAN with:
+
+```{r eval=FALSE}
+install.packages("palmerpenguins")
+```
+
+🎯 Load the packages for Descriptive Statistics Capstone Report
+
+```{r message=FALSE, warning=FALSE}
+# ⚡
+library(palmerpenguins)
+data(package = 'palmerpenguins')
+```
+
+**How do penguin body measurements differ by species, sex, and island in the Palmer Archipelago?**
+
+## Foundations
 
 Before you use `summarize()` and `group_by()` in Chapter 13, you will benefit from learning about what data represents, what kind of variable you are working with, and what a summary value actually means. These opening sections build that foundation by introducing key terms and descriptive statistics. This understanding will help you make informed choices on how to best describe your data. 
 
 As you work through the foundations, focus on matching the kind of data you have to the kind of summary that makes sense. That preparation will help you move beyond remembering definitions and toward actually using `dplyr` to answer questions with data.
  
-## Data Collection
+### Data Collection
 
 Data is a collection of facts, such as numbers, words, measurements, observations, or even just descriptions of things. Data can be qualitative (descriptive) or quantitative (numerical). It can be collected through various methods such as surveys, experiments, or observations.
 
@@ -188,7 +230,7 @@ Data is a collection of facts, such as numbers, words, measurements, observation
 
 * Sample Size **n**: The number of elements in the sample.
 
-## Data Types
+### Data Types
 
 Your data set is most likely a sample from a larger population and not a census of the entire population.
 
@@ -226,11 +268,11 @@ race_positions <- c("Kim", "Alex", "Jordan", "Taylor")  # Order indicates rankin
 
 **Ordinal data** is about whether your data values have a meaningful natural ranking order, the intervals between categories aren't necessarily equal. Other examples include Likert scale or types of other hierarchical values like academic hierarchies.
 
-`heights_sample` and `heights_sample` are **numerical data**. This is data that can be measured or counted. Numerical data can be further classified into:
+`heights_sample` and `growth_data` are **numerical data**. This is data that can be measured or counted. Numerical data can be further classified into:
 
 * **Discrete Data**: Numerical data that can take on only specific values. For example, the number of cylinders in a car (4, 6, 8, etc.). In R, discrete data is often represented as integers. In R, we store a vector of counts or whole numbers by including an "L" after the number to indicate that it is an integer (e.g., `c(1L, 2L, 3L)`).
 
-* **Continuous Data**: Numerical data that can take on any value within a range. For example, the height of individuals in a population (e.g., `heights_sample` and `heights_sample`).
+* **Continuous Data**: Numerical data that can take on any value within a range. For example, the height of individuals in a population (e.g., `heights_sample` and `growth_data`).
 
 ___
 
@@ -242,11 +284,91 @@ When describing data, you will need to choose the appropriate statistical method
 
 The rest of this activity details common descriptive statistics used to summarize and describe the main features of a dataset. These methods provide a way to understand the distribution and variability of the data. 
 
-# Counts
+### Task 1
+
+Explore the data types in the penguins dataset and explain how the reading applies to a real dataset.
+
+🎯 Inspect the penguins data, identify what kind of variable each column contains, and explain why that matters for descriptive statistics later in the report.
+
+**Step 1**: Inspect the dataset
+
+Run code that helps you inspect the structure of the dataset.
+
+```{r}
+# ⚡
+glimpse(penguins)  # Check the structure of the dataset
+colnames(penguins)  # List the column names
+```
+
+💡 **Tip:** Look carefully at the column names, the number of rows and columns, and the class of each variable.
+
+**Step 2**: Check the class of each column
+
+🎯 Use `class()` to inspect each column one at a time.
+
+
+```{r, eval=FALSE}
+# ⚡
+class(penguins$______)
+```
+
+**Step 3**
+
+For each variable, identify:
+
+1. the variable name
+
+2. the R class
+
+3. whether it is categorical or numerical
+
+4. if numerical, whether it is discrete or continuous
+
+5. whether the order matters or does not matter
+
+For example, if a column is of class "numeric", it likely contains numerical data that can be measured or counted. If a column is of class "factor", it likely contains categorical data that can be divided into groups or categories. 
+
+**Step 4**
+
+Write inline R sentences
+
+Use inline R code to dynamically report the class of each column in the dataset. For example, you can write a sentence like this:
+
+```markdown
+🗣 The `penguins` dataset contains `{r} nrow(penguins)` rows and `{r} ncol(penguins)` columns.
+
+🗣 The `species` column is stored as `{r} class(penguins$species)` in R.
+
+🗣 The `body_mass_g` column is stored as `{r} class(penguins$body_mass_g)` in R and represents numerical data.
+
+🗣 The `year` column is stored as `{r} class(penguins$year)` in R.
+```
+
+**Step 5**
+
+Reflect on how the reading applies
+
+After your data-type list, write a short memo of 4 to 6 sentences that answers some of these questions:
+
+1. Is the `penguins` dataset more like a sample or a census? Explain.
+
+2. Which variables are categorical?
+
+3. Which variables are numerical?
+
+4. Which numerical variables are better treated as continuous, and which are better treated as discrete?
+
+5. Which variables would make sense to summarize with `count()`?
+
+6. Which variables would make sense to summarize later with mean, median, or spread?
+
+7. Is there any variable that is numeric in R but should still be interpreted carefully before averaging? Explain why.
+
+## Counts
 
 Use count-based summaries when your question is about how many observations you have or how often values appear. Length, sum, count are all ways to add up values in a dataset. 
 
-## Length
+### Length
 
 **Length** counts the number of values in the set of numbers. In other words, it tells us how many observations we have. In a data table, it tells us how many rows are in a column.
 
@@ -278,7 +400,7 @@ ___
 
 In Chapter 13, you will work inside `summarize()`, you will often use `n()` to count rows within groups.
 
-## Count and Mode
+### Count and Mode
 
 When you want to know how often each value appears in a column, use the **`dplyr`** function `count()`. This is especially useful for categorical variables and discrete variables. A frequency table shows how many times each unique value appears.
 
@@ -317,15 +439,71 @@ cyl_counts
  
  For `cyl`, we care about how many cars in the dataset have 4, 6, or 8 cylinders (`count()`) and not about the total of all cylinder values added together (`sum()`). A frequency table helps us describe categorical data, and the mode helps us identify which category appears most often.
  
-Mode the only measure of central tendency that works with nomimal (categorical) data. Extreme values don't affect the mode. It is easy to interpret because it's simply the most common value. This data is often depicted in histograms or frequency tables. 
+The mode is the only measure of central tendency that works with nominal (categorical) data. Extreme values don't affect the mode. It is easy to interpret because it's simply the most common value. This data is often depicted in histograms or frequency tables. 
 
 The next sections introduce two other measures of center that are more appropriate for numerical data.
+
+### Task 2
+
+Decide which variables in the penguins dataset are appropriate for length(), count(), and mode.
+
+🎯 Your goal is to identify which variables make sense for count-based summaries and explain why.
+
+**Step 1**: Choose appropriate variables
+
+Review the columns in `penguins`. Then identify:
+
+1. one column you could use with `length()` to report how many values are in the dataset
+
+2. two columns that make sense to summarize with `count()`
+
+3. one column where the mode would be meaningful
+
+💡 **Tip:** `count()` and mode are most useful for categorical variables and some discrete variables.
+
+**Step 2**: Create one frequency table
+
+Use `count()` to create a frequency table for one appropriate column from the penguins dataset.
+
+```{r eval=FALSE}
+# ⚡
+penguins %>%
+  count(______)
+```
+
+**Step 3**: Identify the mode
+
+1. Look at your frequency table and determine which value appears most often. That value is the mode.
+
+2. Write 2 to 3 sentences in your notes
+
+- which variable you chose for count()
+
+- why that variable is appropriate for a frequency table
+
+- what the mode tells you about the dataset
+
+- You may also briefly state which variables would not make sense to describe with `count()` and mode, and why.
+
+3. use an inline R sentence pattern. Examples:
+
+```markdown
+🗣 The most common value in the `species` column is ______.
+
+🗣 I chose `_____` for `count()` because it is a ______ variable, so it makes sense to count _______________.
+```
+
+**If class ends before you finish, submit the progress visible in your Quarto document.**
+
+____
+
+# Part 2
  
-# Center
+## Center
 
 Measures of **central tendency**, or measures of center, are used to describe the typical value in a dataset. They give us an idea of where the center of the data is located. Common measures of central tendency include the mean, median, and mode.
 
-## Median
+### Median
 
 The **median** is the middle value of a set of numbers when they are arranged in order. The median is often useful when the data may contain unusually high or low values. 
 
@@ -359,7 +537,7 @@ ___
 
 🎯 Calculate the median of the `mpg` column in the `mtcars` dataset.
 
-### Step 1
+#### Step 1
 
 ```{r}
 # ✅  Pre-check
@@ -387,7 +565,7 @@ When rendered to HTML, this will read:
 
 ___
 
-### Step 2
+#### Step 2
 
 🎯 Find the size of the sample to determine how to calculate the median.
 
@@ -412,7 +590,7 @@ ___
 
 We need to calculate the median for a dataset with an even number of data points.
 
-### Step 3
+#### Step 3
 
 To do this manually, we find the two middle values and take their average. The two middle values are the 16th and 17th values in the sorted list.
 
@@ -450,7 +628,7 @@ ___
 
 The median is a measure of center that is sometimes selected when the data contains outliers. The most common measure of center is the mean, which is the average of the values in a dataset. The next section introduces the mean and how to calculate it.
 
-## Mean
+### Mean
 
 The **mean** is the average of a set of numbers. It is calculated by summing all the values and dividing by the number of values.
 
@@ -460,7 +638,7 @@ The **mean** is the average of a set of numbers. It is calculated by summing all
 
 **Step 2** is to divide the sum by the number of values in the dataset.
 
-### Step 1a
+#### Step 1a
 
 We calculated the number of values in the `mpg` column of the `mtcars` dataset in the previous section
 
@@ -469,7 +647,7 @@ We calculated the number of values in the `mpg` column of the `mtcars` dataset i
 n <- length(mtcars$mpg)
 ```
 
-### Step 1b
+#### Step 1b
 
 **Summation** is the process of adding a sequence of numbers together. Summation is represented by the Greek letter sigma (Σ). It indicates that we are summing a series of values. 
 
@@ -541,7 +719,7 @@ You can also use `sum(mtcars$mpg)` directly in the inline code without storing i
 ___
 
 
-### Step 2
+#### Step 2
 
 Divide the sum of the values by the number of values to get the mean.
 
@@ -593,11 +771,13 @@ ___
 
 The next section, which explores measures of variability describe how spread out the values in a dataset are.
 
-# Spread
+# Part 3
+
+## Spread
 
 **Spread** measures tell you how much individual data points deviate from the central tendency. Low spread indicates consistent, predictable data, while high spread suggests more variability and uncertainty. Unusual spread patterns can reveal data quality issues, outliers, or measurement errors that need investigation. Models built on data with known spread characteristics allow analysts to provide confidence intervals and uncertainty estimates. Comparing the spread of different groups, time periods, or conditions helps identify which scenarios are more stable or predictable. Understanding data spread helps choose appropriate analytical techniques and transformation methods.
 
-## Standard Deviation
+### Standard Deviation
 
 The **standard deviation** is a measure of how spread out the values in a dataset are. It is calculated as the square root of the variance.
 
@@ -605,7 +785,7 @@ The **standard deviation** is a measure of how spread out the values in a datase
 
 **Step 2** is to take the square root of the variance to get the standard deviation.
 
-### Step 1
+#### Step 1
 
 The **variance** is a measure of how spread out the values in a dataset are. It is calculated as the average of the squared differences from the mean.
 
@@ -677,7 +857,7 @@ You can round the variance to two decimal places for better readability.
 ___
 
 
-### Step 2
+#### Step 2
 
 Find the **standard deviation** by taking the square root of the variance. 
 
@@ -741,7 +921,7 @@ Standard deviation works seamlessly with other statistical calculations (confide
 
 In the next section, we will explore measures of spread that are less sensitive to outliers and skewed data.
 
-## Range
+### Range
 
 This simplest variability measure to calculate and understand is the **range**, which is the difference between the largest and smallest values in a dataset.  This value gives you a quick sense of how spread out the data is, but it can be heavily influenced by outliers.
 
@@ -790,7 +970,7 @@ max(mtcars$mpg) - min(mtcars$mpg)
 
 One extreme value can make range misleading and it doesn't indicate where most data falls. The next section introduces the a method for measuring spread that unaffected by outliers or extreme values. 
 
-### Interquartile Range (IQR)
+#### Interquartile Range (IQR)
 
 The **interquartile range** (IQR), or the *fourth spread* works well with any data distribution shape. IQR represents the spread of the "typical" middle 50% of data. 
 
@@ -828,7 +1008,7 @@ When rendered to HTML, this will show as:
 ___
 
 
-### Five Number Summary
+#### Five Number Summary
 
 You can use the `summary()` function to get a quick overview of the distribution of a numeric variable, including the minimum, $Q_1$ , median, mean, $Q_3$ , and maximum values.
 
@@ -855,6 +1035,7 @@ In the remaining of this chapter, we will compute specific summary statistics. Y
 
 # Summary
 
+[This document is still under editing. The summary will be added soon.]
 
 
 # Chapter Terms
@@ -912,27 +1093,3 @@ In the remaining of this chapter, we will compute specific summary statistics. Y
 **Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a *combination*.
 
 **Variance**: A measure of spread that describes how far values tend to vary from the mean, based on squared deviations. In introductory statistics, sample variance is commonly calculated using `n - 1` in the denominator.
-
-# 
-
-
-## Task 2
-
-**Single grouping**
-
-🌟 Using `stars`, compute mean temperature **AND** mean magnitude for each type. Name the result **`twinkle_twinkle`**.
-
-🎯 Restate the Goal
-
-```{r, eval=FALSE}
-#⚡ Code
-____ <- _____
-```
-
-
-```{r, eval=FALSE}
-# ✅ Checks
-
-```
-
-🗣 Did it work? What happened? 
