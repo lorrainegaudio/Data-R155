@@ -1632,22 +1632,46 @@ display: none;
 <h1 class="title toc-ignore">Signature Assignment</h1>
 <h3 class="subtitle">Descriptive Statistics</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version March 22, 2026</h4>
+<h4 class="date">Version March 23, 2026</h4>
 
 </div>
 
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>In Chapter 11, you learned how to create a Quarto file, keep the YAML
-header, use Markdown headings, write memos outside code chunks, and
-control chunks with #| options. In Chapter 12, you add a table of
-contents and section numbering, and use inline R code inside your
-sentences. In this guided activity, you will practice using these
-skills. Additionally, you will practice writing mathematical formulas in
-Markdown using LaTeX syntax. Completing this activity supports Chapter
-13 which teaches you how to use <code>dplyr</code>’s
-<code>group_by()</code> and <code>summarize()</code> verbs.</p>
+<p>This Signature Assignment asks you to build a <strong>Data
+Understanding Notebook</strong> in Quarto using the
+<code>penguins</code> dataset. The notebook is a working analytical
+document where you load data, identify variable types, choose
+appropriate descriptive statistics, and explain what those statistics
+show. This activity asks you to 🎯 plan your approach, ✅ monitor
+whether your code and interpretations make sense, and 🗣 revise your
+thinking when something is unclear or incorrect. That process is part of
+self-regulated learning: using metacognitive strategies to guide your
+own understanding.</p>
+<p>This activity is also designed to help you practice writing words
+around code. In this course, explaining your code and output in plain
+English is a learning strategy that helps you rehearse key ideas,
+strengthen your memory, and check whether you truly understand what the
+code is doing. Each part builds on previous sections, so you return to
+earlier ideas and use them again in a new context. This repetition helps
+you develop fluency.</p>
+<p>Learning how to create a <strong>Data Understanding Notebook</strong>
+is something you can use in real analytical settings. Researchers do not
+begin with conclusions. They begin by getting to know the data: what
+each variable represents, what kind of values it contains, which
+summaries make sense, and what early patterns or problems deserve
+attention. This notebook reflects that real workflow. It helps you
+practice persistence on difficult tasks, document your thinking, and
+build habits that matter in real analytical settings where clear
+reasoning, reproducible work, and thoughtful interpretation are
+expected.</p>
+<p>This activity is designed to be open-ended. You have the freedom to
+choose which variables to describe and which descriptive statistics to
+use. The goal is not to get a “right answer” but to make informed
+choices and explain your reasoning. You will learn how to connect the
+reading to the data, make decisions about which summaries fit which
+kinds of variables, and explain why those summaries make sense.</p>
 <p>By the end of the Descriptive Statistics activity you will be able
 to:</p>
 <ul>
@@ -1668,142 +1692,163 @@ the descriptive statistics of a dataset.</p></li>
 <p>Part 1 builds the foundation for the full report. In this section,
 you will set up your Quarto file, inspect the <code>penguins</code>
 dataset, and begin deciding which descriptive statistics fit which kinds
-of variables. Your goal is to connect the reading to a real dataset and
-explain why a summary method makes sense for that kind of data.</p>
-<p>You will submit whatever you are able to complete during class. Some
-students may finish all of Part 1, while others may only finish Task 1
-or begin Task 2. That is fine. Save your work, render often, and make
-sure your progress is visible in your Quarto document.</p>
-<div id="setting-up-your-notes" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Setting Up Your
-Notes</h2>
-<p>For those of you who <strong>have GitHub</strong> and a course
-project, navigate to your course folder and open your course project.
-This will open RStudio. Click “Pull” in the Git pane to get the latest
-version of the course materials. After completing work, save, stage,
-commit, and push.</p>
-<p>If you <strong>don’t have GitHub</strong> or a course project, just
-open RStudio and set your working directory to your course folder.</p>
-<p>Open a new Quarto document in your course folder
-(<code>File &gt; New File &gt; Quarto Document</code>).</p>
-<p>Save it as <code>descriptive_statistics.qmd</code>.</p>
-<div id="yaml-header" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> YAML Header</h3>
-<p>Copy and paste the YAML header from this file into your new Quarto
-document. Update the title, author, date, and team fields in the YAML
+of variables. Your goal is to connect the reading to the penguins
+dataset. You will build on this in Part 2 where you explain why a
+summary method makes sense for that kind of data.</p>
+<div id="task-1-set-up-notebook" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Task 1: Set up
+notebook</h2>
+<div id="step-1" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> <strong>Step
+1</strong></h3>
+<p>The first step to creating a <strong>Data Understanding
+Notebook</strong> is to set up your Quarto document. This will be the
+working document where you will write your notes, run code, and create a
+reproducible report.</p>
+<ul>
+<li><p>For those of you who <strong>have GitHub</strong> and a course
+<strong>project</strong>, (1) navigate to your course folder and (2)
+open your course project. This will open RStudio. (3) Click “Pull” in
+the Git pane to get the latest version of the course materials.
+<em>After completing work: save, stage, commit, and push.</em></p></li>
+<li><p>If you <strong>don’t have GitHub</strong> or a course project,
+just open RStudio and set your working directory to your course
+folder.</p></li>
+</ul>
+</div>
+<div id="step-2-open-a-new-quarto-document" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> <strong>Step
+2</strong> Open a new Quarto document</h3>
+<p><code>File</code> &gt; <code>New File</code> &gt;
+<code>Quarto Document</code></p>
+<p>Enter the document title and your name.</p>
+<ul>
+<li><p>Data Understanding Notebook</p></li>
+<li><p>YOUR NAME</p></li>
+</ul>
+</div>
+<div id="step-3-yaml-header" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> ** Step 3** YAML
+Header</h3>
+<p>Modify your YAML header to custom design your new Quarto document.
+Update the title, author, date, and table of contents in the YAML
 header.</p>
 <pre class="yaml"><code>---
-title: &quot;Signature Assignment&quot;
+title: &quot;Data Understanding Notebook&quot;
 subtitle: &quot;Descriptive Statistics&quot;
 author: &quot;YOUR NAME&quot;
 date: today
 toc: true
 toc-depth: 2
 number-sections: true
-format:
-  html:
-    code-fold: true
-execute:
-  warning: true
-  message: true
+format: html
 ---</code></pre>
+<p>Save it as <code>descriptive_statistics.qmd</code>.</p>
 </div>
-<div id="headings" class="section level3" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Headings</h3>
-<p>Use the section headings in this file to create the structure of your
-notes. You can copy and paste the section headings into your new Quarto
-document.</p>
+<div id="headings" class="section level3" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Headings</h3>
+<p>Use the section headings, like those shown below, to create the
+structure of your notebook. You can copy and paste the section headings
+into your new Quarto document.</p>
 <pre class="markdown"><code>
-# Part 1
+# Purpose of this notebook
 
-## Load Packages and Data
+# Load Packages and Data
 
-## Data Types
+# Variables and Data Types
 
-# Part 2
+# Count-Based Summaries
 
-## Length
+# Median
 
-## Count 
+# Mean
 
-## Mode
-
-## Median
-
-## Mean
-
-# Part 3
-
-# Spread
+# Measures of Spread
 
 ## Standard Deviation
 
 ## Range
 
-## IQR
+## Interquartile Range
 
 ## Five Number Summary
 
-# Part 4
-
-## Describing Data with `dplyr`
-
-</code></pre>
-<p>Work through the sections under each heading. Render to HTML often to
-see the results.</p>
+# Early Takeaways</code></pre>
+<p>Work through the sections under each heading.</p>
+<p>💡 <strong>Tip:</strong> Render to HTML often to see the results.</p>
 </div>
 </div>
-<div id="packages" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> 📦 Packages</h2>
-<div id="guided-activity" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Guided
-Activity</h3>
-<p>Install once (if needed): <code>install.packages(&quot;dplyr&quot;)</code>;
-<code>install.packages(&quot;dslabs&quot;)</code></p>
-<p>🎯 Load the packages for guided activity</p>
-<pre class="r"><code># ⚡
-library(dslabs)  # Data science labs package
-library(dplyr)   # Data manipulation package</code></pre>
-</div>
-<div id="signature-assignment" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Signature
-Assignment</h3>
-<p>You will use data for three penguin species observed in the Palmer
+<div id="task-2-notebook-purpose-statement" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Task 2: Notebook
+Purpose Statement</h2>
+<p>Your Data Understanding Notebook needs to start with a purpose
+statement. Place the short paragraph below under the first heading,
+explaining the purpose of this notebook. Include the research question
+that you will be exploring, a brief description of the dataset, and link
+to the dataset references.</p>
+<div id="step-1-write-a-purpose-statement" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> <strong>Step
+1</strong>: Write a purpose statement</h3>
+<blockquote>
+<p>This document is an exploratory data analysis notebook used to
+understand the dataset <code>penguins</code> and prepare for later
+analysis. It is data for three penguin species observed in the Palmer
 Archipelago, Antarctica, collected by Dr. Kristen Gorman with Palmer
-Station LTER.</p>
-<p><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">Link
-to palmerpenguins reference file</a></p>
-<p>🎯 install the released version of palmerpenguins from CRAN with:</p>
-<pre class="r"><code>install.packages(&quot;palmerpenguins&quot;)</code></pre>
-<p>🎯 Load the packages for Descriptive Statistics Capstone Report</p>
+Station LTER. <strong>How do penguin body measurements differ by
+species, sex, and island in the Palmer Archipelago?</strong></p>
+</blockquote>
+</div>
+<div id="step-2-create-a-link" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> <strong>Step
+2</strong>: Create a link</h3>
+<p>Create a link to the dataset references in the reading. To include a
+link to the dataset references, you can use this inline syntax:</p>
+<pre class="markdown"><code>[Dataset References](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html)</code></pre>
+<p>This will create a hyperlink in your HTML document that readers can
+click to access the dataset references. It will look like this:</p>
+<p><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">Dataset
+References</a></p>
+</div>
+</div>
+<div id="task-3-load-packages" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Task 3: Load 📦
+Packages</h2>
+<p>Under the heading “Load Packages and Data”, you can write a short
+goal statement citing the necessary packages and data for your analysis.
+It’s helpful to jot down a quick note with a link about anything you
+might need to cite later if you decide to publish your work.</p>
+<p><a href="https://education.rstudio.com/blog/2020/07/palmerpenguins-cran/" class="uri">https://education.rstudio.com/blog/2020/07/palmerpenguins-cran/</a></p>
+<p>Then, follow the steps below to load the packages and data.</p>
+<p>🎯 install the released version of <code>palmerpenguins</code> from
+CRAN with:</p>
+<pre class="r"><code># ⚡ Install once (if needed): 
+# install.packages(&quot;dplyr&quot;)
+
+# install.packages(&quot;palmerpenguins&quot;)</code></pre>
+<p>🎯 Load the packages</p>
+<pre class="r"><code>library(dplyr)   # glimpse, %&gt;%, count</code></pre>
 <pre class="r"><code># ⚡
 library(palmerpenguins)
 data(package = &#39;palmerpenguins&#39;)</code></pre>
-<p><strong>How do penguin body measurements differ by species, sex, and
-island in the Palmer Archipelago?</strong></p>
 </div>
-</div>
-<div id="foundations" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Foundations</h2>
-<p>Before you use <code>summarize()</code> and <code>group_by()</code>
-in Chapter 13, you will benefit from learning about what data
-represents, what kind of variable you are working with, and what a
-summary value actually means. These opening sections build that
-foundation by introducing key terms and descriptive statistics. This
-understanding will help you make informed choices on how to best
-describe your data.</p>
-<p>As you work through the foundations, focus on matching the kind of
-data you have to the kind of summary that makes sense. That preparation
-will help you move beyond remembering definitions and toward actually
-using <code>dplyr</code> to answer questions with data.</p>
-<div id="data-collection" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Data
+<div id="foundations" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Foundations</h2>
+<p>Before we continue through more tasks, you will benefit from learning
+about what data represents, what kind of variable you are working with,
+and what a summary value actually means. These foundation sections
+introduce key terms.</p>
+<p>As you work through the next section, <strong>Variables and Data
+Types</strong>, you will think about the kinds of data in
+<code>penguins</code>. This understanding will help you make informed
+choices on how to best describe your data.</p>
+<div id="data-collection" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Data
 Collection</h3>
-<p>Data is a collection of facts, such as numbers, words, measurements,
-observations, or even just descriptions of things. Data can be
-qualitative (descriptive) or quantitative (numerical). It can be
-collected through various methods such as surveys, experiments, or
-observations.</p>
+<p><strong>Data</strong> is a collection of facts, such as numbers,
+words, measurements, observations, or even just descriptions of things.
+Data can be qualitative (descriptive) or quantitative (numerical). It
+can be collected through various methods such as surveys, experiments,
+or observations.</p>
 <p><strong>Population</strong>: A population is a collection of objects
 or individuals that we want to study. It can be finite or infinite. The
 unknown population number is called a <em>parameter</em>.</p>
@@ -1824,12 +1869,12 @@ population.</p></li>
 sample.</p></li>
 </ul>
 </div>
-<div id="data-types" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Data Types</h3>
+<div id="data-types" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Data Types</h3>
 <p>Your data set is most likely a sample from a larger population and
 not a census of the entire population.</p>
 <ol style="list-style-type: decimal">
-<li><strong>Unordered Sample</strong>: A sample where the order of the
+<li><strong>Unordered sample</strong>: A sample where the order of the
 elements does not matter. For example, if we have a population of 5
 elements and we take a sample of 3, the set <code>{1, 2, 3}</code>
 <strong>is</strong> the same as <code>{3, 2, 1}</code>.</li>
@@ -1842,7 +1887,7 @@ city.</p>
 heights_sample &lt;- c(5.9, 6.1, 5.8, 6.0, 5.7) # heights in feet</code></pre>
 <p>The order has no inherent meaning.</p>
 <ol start="2" style="list-style-type: decimal">
-<li><strong>Ordered Sample</strong>: A sample where the order of the
+<li><strong>Ordered sample</strong>: A sample where the order of the
 elements does matter. Time series data, growth measurements, finishing
 positions in a race, and data sorted from smallest to largest for
 calculating quantiles or medians are examples of ordered samples.</li>
@@ -1876,13 +1921,13 @@ of other hierarchical values like academic hierarchies.</p>
 <strong>numerical data</strong>. This is data that can be measured or
 counted. Numerical data can be further classified into:</p>
 <ul>
-<li><p><strong>Discrete Data</strong>: Numerical data that can take on
+<li><p><strong>Discrete data</strong>: Numerical data that can take on
 only specific values. For example, the number of cylinders in a car (4,
 6, 8, etc.). In R, discrete data is often represented as integers. In R,
 we store a vector of counts or whole numbers by including an “L” after
 the number to indicate that it is an integer (e.g.,
 <code>c(1L, 2L, 3L)</code>).</p></li>
-<li><p><strong>Continuous Data</strong>: Numerical data that can take on
+<li><p><strong>Continuous data</strong>: Numerical data that can take on
 any value within a range. For example, the height of individuals in a
 population (e.g., <code>heights_sample</code> and
 <code>growth_data</code>).</p></li>
@@ -1894,22 +1939,26 @@ statistical method based on the type of sample data you have.</p>
 <li><p>Check the type of sample data</p></li>
 <li><p>Apply the appropriate descriptive statistics</p></li>
 </ol>
-<p>The rest of this activity details common descriptive statistics used
-to summarize and describe the main features of a dataset. These methods
-provide a way to understand the distribution and variability of the
-data.</p>
+<p>In your Data Understanding Notebook, you will inspect the
+<code>penguins</code> dataset and identify the types of variables in
+each column. This will help you decide which descriptive statistics to
+use for summarizing the data later in the report.</p>
+<p><strong>Inspect the penguins data</strong>, identify what kind of
+variable each column contains, and explain why that matters for
+descriptive statistics later in the report.</p>
 </div>
-<div id="task-1" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Task 1</h3>
-<p>Explore the data types in the penguins dataset and explain how the
-reading applies to a real dataset.</p>
-<p>🎯 Inspect the penguins data, identify what kind of variable each
-column contains, and explain why that matters for descriptive statistics
-later in the report.</p>
-<p><strong>Step 1</strong>: Inspect the dataset</p>
-<p>Run code that helps you inspect the structure of the dataset.</p>
+</div>
+<div id="task-4-dataset-overview" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Task 4: Dataset
+overview</h2>
+<p>Under the heading <strong>Variables and Data Types</strong>, you will
+explore the data types in the penguins dataset.</p>
+<p>Inspect the penguins data, identify what kind of variable each column
+contains, and explain why that matters for descriptive statistics later
+in the report.</p>
+<p>🎯 State the number of rows and columns.</p>
 <pre class="r"><code># ⚡
-glimpse(penguins)  # Check the structure of the dataset</code></pre>
+glimpse(penguins)  # dplyr::glimpse() Checks the structure of the dataset</code></pre>
 <pre><code>## Rows: 344
 ## Columns: 8
 ## $ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
@@ -1920,22 +1969,37 @@ glimpse(penguins)  # Check the structure of the dataset</code></pre>
 ## $ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
 ## $ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…
 ## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
-<pre class="r"><code>colnames(penguins)  # List the column names</code></pre>
+<pre class="r"><code>colnames(penguins)  # List the column names; alt: names(penguins)</code></pre>
 <pre><code>## [1] &quot;species&quot;           &quot;island&quot;            &quot;bill_length_mm&quot;   
 ## [4] &quot;bill_depth_mm&quot;     &quot;flipper_length_mm&quot; &quot;body_mass_g&quot;      
 ## [7] &quot;sex&quot;               &quot;year&quot;</code></pre>
-<p>💡 <strong>Tip:</strong> Look carefully at the column names, the
-number of rows and columns, and the class of each variable.</p>
-<p><strong>Step 2</strong>: Check the class of each column</p>
-<p>🎯 Use <code>class()</code> to inspect each column one at a time.</p>
-<pre class="r"><code># ⚡
-class(penguins$______)</code></pre>
-<p><strong>Step 3</strong></p>
-<p>For each variable, identify:</p>
+<p>💡 <strong>Tip:</strong> Look carefully at what
+<code>glimpse()</code> returns. Identify the column names, the number of
+rows and columns, and the class of each variable (e.g.,
+<code>&lt;fct&gt;</code> = factor).</p>
+<p>🎯 Write the following inline R sentence into your report to make a
+comment about the number of rows and columns in the
+<code>penguins</code> dataset.</p>
+<pre class="markdown"><code>🗣 The `penguins` dataset contains `{r} nrow(penguins)` rows and `{r} ncol(penguins)` columns: `{r} colnames(penguins)`.</code></pre>
+<p>Render to HTML to see the results. It should read:</p>
+<p>🗣 The <code>penguins</code> dataset contains 344 rows and 8 columns:
+<code>{r} colnames(penguins)</code>.</p>
+</div>
+<div id="task-5-state-class-and-type" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Task 5: State class
+and type</h2>
+<p>List the columns, report their R classes, and explain whether they
+are categorical, discrete numeric, or continuous numeric. Note any
+columns that require careful interpretation.</p>
+<p><strong>Write inline R sentences</strong></p>
+<p>Use inline R code to dynamically report the data types for each
+variable. Identify:</p>
 <ol style="list-style-type: decimal">
-<li><p>the variable name</p></li>
-<li><p>the R class</p></li>
-<li><p>whether it is categorical or numerical</p></li>
+<li><p>the variable name (each column name)</p></li>
+<li><p>the R class of the variable (e.g., factor
+(<code>&lt;fct&gt;</code>), numeric (<code>&lt;dbl&gt;</code>), integer
+(<code>&lt;int&gt;</code>))</p></li>
+<li><p>whether it is categorical or numerical data</p></li>
 <li><p>if numerical, whether it is discrete or continuous</p></li>
 <li><p>whether the order matters or does not matter</p></li>
 </ol>
@@ -1943,44 +2007,40 @@ class(penguins$______)</code></pre>
 numerical data that can be measured or counted. If a column is of class
 “factor”, it likely contains categorical data that can be divided into
 groups or categories.</p>
-<p><strong>Step 4</strong></p>
-<p>Write inline R sentences</p>
-<p>Use inline R code to dynamically report the class of each column in
-the dataset. For example, you can write a sentence like this:</p>
-<pre class="markdown"><code>🗣 The `penguins` dataset contains `{r} nrow(penguins)` rows and `{r} ncol(penguins)` columns.
+<p>🎯 Write inline R sentences for each variable (species, island,
+bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex,
+year) in the <code>penguins</code> dataset to describe the data
+types.</p>
+<pre class="markdown"><code>Template A: factor / categorical / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **categorical** data because it places penguins into groups or categories. The order of these categories does not matter, so this is best understood as an **unordered sample**.
 
-🗣 The `species` column is stored as `{r} class(penguins$species)` in R.
+Template B: double / numerical / continuous / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data because it records a measured quantity. It is continuous data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
 
-🗣 The `body_mass_g` column is stored as `{r} class(penguins$body_mass_g)` in R and represents numerical data.
+Template C: integer / numerical / continuous / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
 
-🗣 The `year` column is stored as `{r} class(penguins$year)` in R.</code></pre>
-<p><strong>Step 5</strong></p>
-<p>Reflect on how the reading applies</p>
-<p>After your data-type list, write a short memo of 4 to 6 sentences
-that answers some of these questions:</p>
-<ol style="list-style-type: decimal">
-<li><p>Is the <code>penguins</code> dataset more like a sample or a
-census? Explain.</p></li>
-<li><p>Which variables are categorical?</p></li>
-<li><p>Which variables are numerical?</p></li>
-<li><p>Which numerical variables are better treated as continuous, and
-which are better treated as discrete?</p></li>
-<li><p>Which variables would make sense to summarize with
-<code>count()</code>?</p></li>
-<li><p>Which variables would make sense to summarize later with mean,
-median, or spread?</p></li>
-<li><p>Is there any variable that is numeric in R but should still be
-interpreted carefully before averaging? Explain why.</p></li>
-</ol>
+Template D: integer year / numerical / discrete / ordered or careful interpretation
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data in R because it is stored as numbers. However, this column should be interpreted carefully because it represents year rather than a body measurement. The values are **discrete**, and their **order matters** because years follow a time sequence.</code></pre>
+<p>Render to HTML to see the results.</p>
+<p>🪞 Was there anything surprising?</p>
+<p>Sometimes variables will have a class that is not correct to the data
+type. In our dataset, Template C integer columns could have been stored
+as double, and the year column could have been stored as a factor. This
+is a common issue in data science, and it is important to check the
+structure of your data before proceeding with analysis.</p>
+<p>These classes are not wrong, but they require careful interpretation.
+In the future, you may want to change the class of a variable to better
+reflect its data type and make it easier to analyze.</p>
 </div>
 </div>
-<div id="counts" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Counts</h2>
+<div id="part-2" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Part 2</h1>
 <p>Use count-based summaries when your question is about how many
 observations you have or how often values appear. Length, sum, count are
 all ways to add up values in a dataset.</p>
-<div id="length" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Length</h3>
+<div id="length" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Length</h2>
 <p><strong>Length</strong> counts the number of values in the set of
 numbers. In other words, it tells us how many observations we have. In a
 data table, it tells us how many rows are in a column.</p>
@@ -1991,11 +2051,10 @@ n &lt;- length(mtcars$mpg)</code></pre>
 <hr />
 <p>🌳 Use this inline R code to dynamically report the number of values
 in the <code>mpg</code> column and include it in a sentence. Write the
-sentence in your notes document outside of a code chunk and without
+sentence in your notebook document outside of a code chunk and without
 <code>#</code>.</p>
 <pre class="markdown"><code>
-🗣 The `mpg` column in the `mtcars` dataset contains `{r} length(mtcars$mpg)` values.
-</code></pre>
+🗣 The `mpg` column in the `mtcars` dataset contains `{r} length(mtcars$mpg)` values.</code></pre>
 <p>When rendered to HTML, this will show as:</p>
 <p>🗣 The <code>mpg</code> column in the <code>mtcars</code> dataset
 contains 32 values.</p>
@@ -2007,8 +2066,8 @@ rows in the dataset, which should give the same result as
 <p>In Chapter 13, you will work inside <code>summarize()</code>, you
 will often use <code>n()</code> to count rows within groups.</p>
 </div>
-<div id="count-and-mode" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Count and Mode</h3>
+<div id="count-and-mode" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Count and Mode</h2>
 <p>When you want to know how often each value appears in a column, use
 the <strong><code>dplyr</code></strong> function <code>count()</code>.
 This is especially useful for categorical variables and discrete
@@ -2063,37 +2122,58 @@ is often depicted in histograms or frequency tables.</p>
 <p>The next sections introduce two other measures of center that are
 more appropriate for numerical data.</p>
 </div>
-<div id="task-2" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Task 2</h3>
-<p>Decide which variables in the penguins dataset are appropriate for
-length(), count(), and mode.</p>
+<div id="task-1" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Task 1</h2>
+<p>Under the heading <strong>Count-Based Summaries</strong>, decide
+which variables in the <code>penguins</code> dataset are appropriate for
+<code>length()</code>, <code>count()</code>, and mode reporting.</p>
 <p>🎯 Your goal is to identify which variables make sense for
-count-based summaries and explain why.</p>
-<p><strong>Step 1</strong>: Choose appropriate variables</p>
+count-based summaries and begin writing the <strong>Count-Based
+Summaries</strong> section of your Data Understanding Notebook.</p>
+<div id="step-1-choose-appropriate-variables" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> <strong>Step
+1</strong>: Choose appropriate variables</h3>
 <p>Review the columns in <code>penguins</code>. Then identify:</p>
 <ol style="list-style-type: decimal">
 <li><p>one column you could use with <code>length()</code> to report how
 many values are in the dataset</p></li>
 <li><p>two columns that make sense to summarize with
 <code>count()</code></p></li>
-<li><p>one column where the mode would be meaningful</p></li>
+<li><p>one column where the <strong>mode</strong> would be
+meaningful</p></li>
 </ol>
 <p>💡 <strong>Tip:</strong> <code>count()</code> and mode are most
-useful for categorical variables and some discrete variables.</p>
-<p><strong>Step 2</strong>: Create one frequency table</p>
-<p>Use <code>count()</code> to create a frequency table for one
-appropriate column from the penguins dataset.</p>
+useful for categorical, factor, and discrete variables.</p>
+</div>
+<div id="step-2-create-one-length-report" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> <strong>Step
+2</strong>: Create one length report</h3>
+<p>🗣 Use <code>length()</code> in an an inline R sentence to report how
+many values are in one <em>appropriate</em> column (your pick) from the
+<code>penguins</code> dataset.</p>
+<p>🪞 Why did you pick that column? Explain your thinking.</p>
+<pre class="markdown"><code>🗣 The `______` column in the `penguins` dataset contains `{r} length(penguins$_____)` observations.
+
+🗣 I chose `_____` for `length()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use length because _______________ (e.g., it might be helpful to point out ...)</code></pre>
+<p><strong>Step 3</strong>: Create one frequency table</p>
+<p>🎯 Use <code>count()</code> to create a frequency table for one
+appropriate column (your choice) from the <code>penguins</code>
+dataset.</p>
 <pre class="r"><code># ⚡
-penguins %&gt;%
+penguin_counts &lt;- penguins %&gt;%
   count(______)</code></pre>
-<p><strong>Step 3</strong>: Identify the mode</p>
+<pre class="r"><code># ✅
+penguin_counts</code></pre>
+<p><strong>Step 4</strong>: Identify the mode</p>
+<p>🗣 Comment on the frequency table you created. What does it tell you
+about the distribution of values in that column?</p>
 <ol style="list-style-type: decimal">
 <li><p>Look at your frequency table and determine which value appears
 most often. That value is the mode.</p></li>
-<li><p>Write 2 to 3 sentences in your notes</p></li>
+<li><p>Write 2 to 3 sentences in your notebook</p></li>
 </ol>
 <ul>
-<li><p>which variable you chose for count()</p></li>
+<li><p>which variable you chose for <code>count()</code></p></li>
 <li><p>why that variable is appropriate for a frequency table</p></li>
 <li><p>what the mode tells you about the dataset</p></li>
 <li><p>You may also briefly state which variables would not make sense
@@ -2102,25 +2182,26 @@ to describe with <code>count()</code> and mode, and why.</p></li>
 <ol start="3" style="list-style-type: decimal">
 <li>use an inline R sentence pattern. Examples:</li>
 </ol>
-<pre class="markdown"><code>🗣 The most common value in the `species` column is ______.
+<pre class="markdown"><code>🗣 The most common value in the `_______` column has `{r} length(penguins$______)` observations.
 
-🗣 I chose `_____` for `count()` because it is a ______ variable, so it makes sense to count _______________.</code></pre>
-<p><strong>If class ends before you finish, submit the progress visible
-in your Quarto document.</strong></p>
+🗣 I chose `_____` for `count()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use count because _______________.</code></pre>
+<p><strong>Step 5</strong> Render your notebook</p>
+<p>Render your Quarto document to HTML and make sure the Count-Based
+Summaries section includes:</p>
+<ul>
+<li><p>one frequency table</p></li>
+<li><p>at least two complete sentences</p></li>
+<li><p>at least one inline R sentence</p></li>
+</ul>
 <hr />
-</div>
-</div>
-</div>
-<div id="part-2" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Part 2</h1>
-<div id="center" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Center</h2>
 <p>Measures of <strong>central tendency</strong>, or measures of center,
 are used to describe the typical value in a dataset. They give us an
 idea of where the center of the data is located. Common measures of
 central tendency include the mean, median, and mode.</p>
-<div id="median" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Median</h3>
+</div>
+</div>
+<div id="median" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Median</h2>
 <p>The <strong>median</strong> is the middle value of a set of numbers
 when they are arranged in order. The median is often useful when the
 data may contain unusually high or low values.</p>
@@ -2140,7 +2221,7 @@ x_{(\frac{n}{2}+1)}}{2}\]</span></p></li>
 <p>Where <span class="math inline">\(x_{(i)}\)</span> represents the ith
 ordered value in the sample.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write the median
+<p>🌳 Type this in your notebook document to see how to write the median
 calculation mathematically.</p>
 <pre class="math"><code>$$
 \text{median} = x_{(\frac{n+1}{2})}
@@ -2152,8 +2233,8 @@ $$</code></pre>
 <hr />
 <p>🎯 Calculate the median of the <code>mpg</code> column in the
 <code>mtcars</code> dataset.</p>
-<div id="step-1" class="section level4" number="3.1.1.1">
-<h4><span class="header-section-number">3.1.1.1</span> Step 1</h4>
+<div id="step-1-1" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Step 1</h3>
 <pre class="r"><code># ✅  Pre-check
 print(mtcars$mpg)</code></pre>
 <pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
@@ -2178,8 +2259,8 @@ sorted in ascending order is: 10.4, 10.4, 13.3, 14.3, 14.7, 15, 15.2,
 33.9.</p>
 <hr />
 </div>
-<div id="step-2" class="section level4" number="3.1.1.2">
-<h4><span class="header-section-number">3.1.1.2</span> Step 2</h4>
+<div id="step-2" class="section level3" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Step 2</h3>
 <p>🎯 Find the size of the sample to determine how to calculate the
 median.</p>
 <pre class="r"><code># ⚡ Median Step 2: Get the size of the sample
@@ -2195,8 +2276,8 @@ sample.</p>
 <p>We need to calculate the median for a dataset with an even number of
 data points.</p>
 </div>
-<div id="step-3" class="section level4" number="3.1.1.3">
-<h4><span class="header-section-number">3.1.1.3</span> Step 3</h4>
+<div id="step-3" class="section level3" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> Step 3</h3>
 <p>To do this manually, we find the two middle values and take their
 average. The two middle values are the 16th and 17th values in the
 sorted list.</p>
@@ -2228,8 +2309,54 @@ which is the average of the values in a dataset. The next section
 introduces the mean and how to calculate it.</p>
 </div>
 </div>
-<div id="mean" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Mean</h3>
+<div id="task-2" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Task 2</h2>
+<p>Place this task after the <strong>Median</strong> section.</p>
+<p>🎯 Your goal is to choose one numerical measurement from the
+<code>penguins</code> dataset and explain why median is an appropriate
+measure of center for that variable.</p>
+<div id="step-1-choose-a-variable" class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Select one variable from <code>penguins</code> that you identified in
+Part 1 as numerical and suitable for a median.</p>
+<p>Good candidates are measurement variables such as bill length, bill
+depth, flipper length, or body mass.</p>
+</div>
+<div id="step-2-calculate-the-median" class="section level3" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> <strong>Step
+2</strong>: Calculate the median</h3>
+<p>🎯 Use the <code>median()</code> function to calculate the middle of
+the distribution for your chosen variable.</p>
+<pre class="r"><code># ⚡
+median(penguins$______, na.rm = TRUE)</code></pre>
+<p>💡 <strong>Tip</strong>: If your variable contains missing values,
+include <code>na.rm = TRUE</code>.</p>
+</div>
+<div id="step-3-write-an-inline-r-sentence" class="section level3" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> <strong>Step
+3</strong>: Write an inline R sentence</h3>
+<p>Write a sentence in your notebook that reports the median value.</p>
+<pre class="markdown"><code>🗣 The median of the `_____` column in the `penguins` dataset is `{r} median(penguins$______, na.rm = TRUE)`.</code></pre>
+<p>Rendered to HTML to see the results.</p>
+</div>
+<div id="step-4-write-a-reflection" class="section level3" number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> <strong>Step
+4</strong>: Write a reflection</h3>
+<p>🪞 <strong>Reflect</strong>: Explain why median makes sense. You can
+use these prompts to help you write 2 to 3 reflection sentences.</p>
+<ul>
+<li><p>why this variable is appropriate for a median?</p></li>
+<li><p>what the median represents in plain language?</p></li>
+<li><p>why the order of the values matters when finding the
+median?</p></li>
+</ul>
+<pre class="markdown"><code>🪞 I chose the `______` variable from the `penguins` dataset to describe with the median because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor) that may contain outliers. The median is a better measure of center for this variable because it is not affected by extreme values, unlike the mean. Using the median allows us to get a more accurate representation of the typical value in the dataset for this variable.
+</code></pre>
+</div>
+</div>
+<div id="mean" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Mean</h2>
 <p>The <strong>mean</strong> is the average of a set of numbers. It is
 calculated by summing all the values and dividing by the number of
 values.</p>
@@ -2238,25 +2365,24 @@ dataset.</p>
 <p><strong>Step 1b</strong> is to sum the values in the dataset.</p>
 <p><strong>Step 2</strong> is to divide the sum by the number of values
 in the dataset.</p>
-<div id="step-1a" class="section level4" number="3.1.2.1">
-<h4><span class="header-section-number">3.1.2.1</span> Step 1a</h4>
+<div id="step-1a" class="section level3" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Step 1a</h3>
 <p>We calculated the number of values in the <code>mpg</code> column of
 the <code>mtcars</code> dataset in the previous section</p>
 <pre class="r"><code># ⚡ length (Step 1a)
 n &lt;- length(mtcars$mpg)</code></pre>
 </div>
-<div id="step-1b" class="section level4" number="3.1.2.2">
-<h4><span class="header-section-number">3.1.2.2</span> Step 1b</h4>
+<div id="step-1b" class="section level3" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Step 1b</h3>
 <p><strong>Summation</strong> is the process of adding a sequence of
 numbers together. Summation is represented by the Greek letter sigma
 (Σ). It indicates that we are summing a series of values.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write summation in
-Markdown with LaTeX syntax.</p>
+<p>🌳 Type this in your notebook document to see how to write summation
+in Markdown with LaTeX syntax.</p>
 <pre class="math"><code>$$
 \sum_{i=1}^{n}
-$$
-</code></pre>
+$$</code></pre>
 <p><span class="math display">\[\sum_{i=1}^{n}\]</span></p>
 <p>When you see <span class="math inline">\(\sum_{i=1}^{5} a\)</span>,
 this means:</p>
@@ -2301,12 +2427,12 @@ code without storing it in a variable.</p>
 <pre class="markdown"><code>🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum(mtcars$mpg)`</code></pre>
 <hr />
 </div>
-<div id="step-2-1" class="section level4" number="3.1.2.3">
-<h4><span class="header-section-number">3.1.2.3</span> Step 2</h4>
+<div id="step-2-1" class="section level3" number="3.6.3">
+<h3><span class="header-section-number">3.6.3</span> Step 2</h3>
 <p>Divide the sum of the values by the number of values to get the
 mean.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write mean
+<p>🌳 Type this in your notebook document to see how to write mean
 calculation mathematically using LaTeX syntax.</p>
 <pre class="math"><code>$$
 \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
@@ -2339,45 +2465,182 @@ x_bar</code></pre>
 spread out the values in a dataset are.</p>
 </div>
 </div>
+<div id="task-3" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Task 3</h2>
+<p>Place this task after the <strong>Mean</strong> section.</p>
+<p>🎯 Your goal is to calculate and report the mean for one numerical
+measurement from the penguins dataset.</p>
+<div id="step-1-choose-a-variable-1" class="section level3" number="3.7.1">
+<h3><span class="header-section-number">3.7.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Use the same variable or choose a new one</p>
+<p>You may use the same variable from Task 2 so that you can compare
+mean and median later, or choose a different numerical measurement.</p>
+</div>
+<div id="step-2-calculate-the-mean" class="section level3" number="3.7.2">
+<h3><span class="header-section-number">3.7.2</span> <strong>Step
+2</strong>: Calculate the mean</h3>
+<p>🎯 Use the <code>mean()</code> function to calculate the average of
+your chosen variable.</p>
+<pre class="r"><code># ⚡
+mean(penguins$______, na.rm = TRUE)</code></pre>
+</div>
+<div id="step-3-write-an-inline-r-sentence-1" class="section level3" number="3.7.3">
+<h3><span class="header-section-number">3.7.3</span> <strong>Step
+3</strong>: Write an inline R sentence</h3>
+<p>Write a sentence in your notebook that reports the mean value.</p>
+<pre class="markdown"><code>🗣 The mean of the `_____` column in the `penguins` dataset is
+`{r} mean(penguins$______, na.rm = TRUE)`.</code></pre>
+<p>Render to HTML to see the results.</p>
+</div>
+<div id="step-4-write-a-reflection-1" class="section level3" number="3.7.4">
+<h3><span class="header-section-number">3.7.4</span> <strong>Step
+4</strong>: Write a reflection</h3>
+<p>🪞 Reflect: Explain why mean makes sense. You can use these prompts
+to help you write 2 to 3 reflection sentences.</p>
+<ul>
+<li><p>Why this variable is appropriate for a mean?</p></li>
+<li><p>What the mean represents in plain language?</p></li>
+<li><p>How the mean compares to the median or simple counting
+methods?</p></li>
+<li><p>Connect back to data type</p></li>
+</ul>
+<pre class="markdown"><code>🪞 I chose the `______` variable from the `penguins` dataset to describe with the mean because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). The mean is a good measure of center for this variable because it takes into account all values in the dataset and provides an average that represents the typical value. </code></pre>
+<p>Comparing the mean to the median can also give us insights into the
+distribution of the data; if they are close, the data may be
+symmetrically distributed, while a large difference may indicate
+skewness.</p>
+</div>
+</div>
+<div id="task-4" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Task 4</h2>
+<p>Place this task under <strong>Measures of Center
+Compared</strong>.</p>
+<p>🎯 Your goal is to compare the mean and median for one variable and
+explain what that comparison suggests about the data.</p>
+<div id="step-1-choose-a-variable-2" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Use a variable for which you have already calculated both the mean
+and the median.</p>
+</div>
+<div id="step-2-write-a-comparison-sentence-with-inline-r" class="section level3" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> <strong>Step
+2</strong>: Write a comparison sentence with inline R</h3>
+<p>Add a sentence that reports both values together.</p>
+<pre class="markdown"><code>🗣 For the `_____` column, the median is `{r} median(penguins$______, na.rm = TRUE)` and the mean is `{r} mean(penguins$______, na.rm = TRUE)`.</code></pre>
+</div>
+<div id="step-3-interpret-the-comparison" class="section level3" number="3.8.3">
+<h3><span class="header-section-number">3.8.3</span> <strong>Step
+3</strong>: Interpret the comparison</h3>
+<p>🪞 Reflect: Write 3 to 4 sentences that answer questions like
+these:</p>
+<ul>
+<li><p>Are the mean and median close together or noticeably
+different?</p></li>
+<li><p>What might that suggest about the distribution of
+values?</p></li>
+<li><p>If this variable had unusually high or low values, which measure
+would you trust more?</p></li>
+<li><p>Which measure would you emphasize in your notebook, and
+why?</p></li>
+</ul>
+<pre class="markdown"><code>🪞 The mean and median for the `_____` column are (close together/different). This suggests that the distribution of values is (symmetrical/skewed). If there are unusually high or low values, I would trust the (mean/median) more because it is (affected by outliers/not affected by outliers). The (mean/median) is the better measure to report for this variable.</code></pre>
+</div>
+</div>
+<div id="task-5" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Task 5</h2>
+<p>Place this task under <strong>Measures of Center
+Compared</strong>.</p>
+<p>🎯 Your goal is to compare a measure of center for one numerical
+variable across at least two groups from one categorical variable.</p>
+<p>This task helps you move from describing a single variable to
+comparing center across groups.</p>
+<div id="step-1-choose-a-numerical-variable-and-a-grouping-variable" class="section level3" number="3.9.1">
+<h3><span class="header-section-number">3.9.1</span> <strong>Step
+1</strong>: Choose a numerical variable and a grouping variable</h3>
+<p>Choose:</p>
+<ul>
+<li><p>one numerical measurement variable</p></li>
+<li><p>one categorical grouping variable</p></li>
+</ul>
+<p>For example, you might compare body mass by sex, or bill length by
+species. The package documentation identifies <code>species</code>,
+<code>island</code>, and <code>sex</code> as factor variables and the
+body-size columns as measurements.</p>
+</div>
+<div id="step-2-calculate-the-mean-or-median-for-each-group" class="section level3" number="3.9.2">
+<h3><span class="header-section-number">3.9.2</span> <strong>Step
+2</strong>: Calculate the mean or median for each group</h3>
+<p>Use logical subsetting to calculate the mean or median for two
+different categories from your grouping variable.</p>
+<pre class="r"><code># ⚡ Example structure using median
+median(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)
+median(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)</code></pre>
+<pre class="r"><code># ⚡ Example structure using mean
+mean(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)
+mean(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)</code></pre>
+</div>
+<div id="step-3-write-a-comparison-sentence-with-inline-r" class="section level3" number="3.9.3">
+<h3><span class="header-section-number">3.9.3</span> <strong>Step
+3</strong>: Write a comparison sentence with inline R</h3>
+<p>Write one sentence that reports both group values.</p>
+<pre class="markdown"><code>🗣 The median `_____` for `_____` penguins is `{r} median(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)`, while the median for `_____` penguins is `{r} median(penguins$______[penguins$______ == &quot;_____&quot;], na.rm = TRUE)`.</code></pre>
+</div>
+<div id="step-4-interpret-the-comparison" class="section level3" number="3.9.4">
+<h3><span class="header-section-number">3.9.4</span> <strong>Step
+4</strong>: Interpret the comparison</h3>
+<p>🪞 Reflect: Write 3 to 4 sentences that answer questions like
+these:</p>
+<ul>
+<li><p>which groups you compared</p></li>
+<li><p>which group had the larger center</p></li>
+<li><p>what that early difference might suggest about the
+dataset</p></li>
+</ul>
+<hr />
+<p>This comparison helps you see an early pattern in the data and
+suggests a direction for later descriptive analysis. While measures of
+center tell us about a typical value, measures of spread tell us how
+tightly clustered or spread out the values are around that center.</p>
+</div>
 </div>
 </div>
 <div id="part-3" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Part 3</h1>
-<div id="spread" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Spread</h2>
-<p><strong>Spread</strong> measures tell you how much individual data
-points deviate from the central tendency. Low spread indicates
-consistent, predictable data, while high spread suggests more
-variability and uncertainty. Unusual spread patterns can reveal data
-quality issues, outliers, or measurement errors that need investigation.
-Models built on data with known spread characteristics allow analysts to
-provide confidence intervals and uncertainty estimates. Comparing the
-spread of different groups, time periods, or conditions helps identify
-which scenarios are more stable or predictable. Understanding data
-spread helps choose appropriate analytical techniques and transformation
-methods.</p>
-<div id="standard-deviation" class="section level3" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span> Standard
-Deviation</h3>
+<p>Measures of <strong>spread</strong> describe how much the values in a
+dataset vary. In this section, you will learn several ways to describe
+variability, including standard deviation, range, interquartile range,
+and the five-number summary. These measures help analysts understand
+whether data values are relatively consistent or whether they vary
+widely.</p>
+<div id="standard-deviation" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Standard
+Deviation</h2>
 <p>The <strong>standard deviation</strong> is a measure of how spread
-out the values in a dataset are. It is calculated as the square root of
-the variance.</p>
-<p><strong>Step 1</strong> is to calculate the variance, which is the
-average of the squared differences from the mean.</p>
-<p><strong>Step 2</strong> is to take the square root of the variance to
-get the standard deviation.</p>
-<div id="step-1-1" class="section level4" number="4.1.1.1">
-<h4><span class="header-section-number">4.1.1.1</span> Step 1</h4>
+out the values in a dataset are. It is calculated by taking the square
+root of the variance. To calculate the <strong>variance</strong>:</p>
+<p><strong>Step 1</strong> Find the difference between each value and
+the mean.</p>
+<p><strong>Step 2</strong> Square those differences</p>
+<p><strong>Step 3</strong> Add them together</p>
+<p><strong>Step 4</strong> Divide that number by the number
+(<code>length()</code>) of values minus 1.</p>
+<p>This results in the sample variance, which is denoted as <span class="math inline">\(s^2\)</span>. You’ll take the square root of the
+variance to get the standard deviation.</p>
+<div id="step-1-calculate-the-variance" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Step 1: Calculate
+the variance</h3>
 <p>The <strong>variance</strong> is a measure of how spread out the
 values in a dataset are. It is calculated as the average of the squared
 differences from the mean.</p>
-<p>Variance is calculated by first finding the difference between each
-value and the mean, squaring those differences, summing them up, and
-then dividing by the number of values minus one (for a sample
-variance).</p>
+<p>To calculate the variance, first find the difference between each
+value and the mean. Then square those differences, add them together,
+and divide by the number of values minus 1.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write the variance
-calculation mathematically.</p>
+<p>🌳 Type this in your notebook under <strong>Measures of
+Spread</strong> to see how to write the variance calculation
+mathematically.</p>
 <pre class="math"><code>$$
 s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}
 $$</code></pre>
@@ -2398,9 +2661,8 @@ to make sure we understand what is happening.</p>
 <p>First, the <code>mtcars$mpg - x_bar</code> calculates the difference
 between <em>each value</em> in the <code>mpg</code> column and the
 <em>mean</em> of the <code>mpg</code> column.</p>
-<p>Rapping that list of difference values <code>( )</code> to the power
-of two <code>(mtcars$mpg - x_bar)^2</code> squares each of the
-differences.</p>
+<p>Raising the differences to the power of 2,
+<code>(mtcars$mpg - x_bar)^2</code>, squares each difference.</p>
 <p>These squared differences are summed together.</p>
 <p>The sum of squared differences is divided by the length of the column
 minus 1, <code>(n - 1)</code>.</p>
@@ -2413,7 +2675,6 @@ variance &lt;- var(mtcars$mpg)
 # ✅ 
 variance</code></pre>
 <pre><code>## [1] 36.3241</code></pre>
-<hr />
 <p>🌳 Use this inline code to dynamically report the variance value.</p>
 <pre class="markdown"><code>🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} var(mtcars$mpg)`.</code></pre>
 <p>When rendered to HTML, this will show as:</p>
@@ -2422,15 +2683,19 @@ variance</code></pre>
 <p>You can round the variance to two decimal places for better
 readability.</p>
 <pre class="markdown"><code>🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`</code></pre>
-<hr />
 </div>
-<div id="step-2-2" class="section level4" number="4.1.1.2">
-<h4><span class="header-section-number">4.1.1.2</span> Step 2</h4>
+<div id="step-2-calculate-the-standard-deviation" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Step 2: Calculate
+the standard deviation</h3>
 <p>Find the <strong>standard deviation</strong> by taking the square
 root of the variance.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write the standard
-deviation calculation mathematically.</p>
+</div>
+</div>
+<div id="task-1-1" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Task 1</h2>
+<p>🌳 Type this in your notebook document to see how to write the
+standard deviation calculation mathematically.</p>
 <pre class="math"><code>$$
 s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}
 $$</code></pre>
@@ -2444,9 +2709,8 @@ the <code>mtcars</code> dataset.</p>
 std_dev &lt;- sqrt(sum((mtcars$mpg - x_bar)^2) / (n - 1))
 std_dev</code></pre>
 <pre><code>## [1] 6.026948</code></pre>
-<p>🗣 This is the formula for <span class="math inline">\(s^2\)</span>
-inside of the function <code>sqrt()</code> which calculates the square
-root of a value.</p>
+<p>🗣 This places the variance formula inside <code>sqrt()</code>, which
+calculates the square root of the variance.</p>
 <p>🎯 Calculate the standard deviation of the <code>mpg</code> column in
 the <code>mtcars</code> dataset using the <code>sd()</code>
 function.</p>
@@ -2467,22 +2731,71 @@ of the <code>mtcars</code> dataset is 6.0269481</p>
 readability.</p>
 <pre class="markdown"><code>🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`</code></pre>
 <hr />
-<p>Standard deviation works seamlessly with other statistical
-calculations (confidence intervals, hypothesis tests, regression). It
-uses every data point, providing a complete picture of variability. It
-is essential for parametric statistics and probability calculations,
-enabling standardized comparisons across different scales. But standard
-deviation is heavily influenced by extreme values, which can be
-misleading. It is less meaningful for skewed or non-normal
-distributions. Also, squared units can be less intuitive to
-interpret.</p>
+<p>Standard deviation uses every value in the dataset, so it gives a
+fuller picture of variability than a measure based on only the smallest
+and largest values. However, standard deviation is affected by unusually
+high or low values. This means it can be less helpful when a
+distribution is strongly skewed or contains outliers.</p>
+</div>
+<div id="task-2-1" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Task 2</h2>
+<p>Place this task after the <strong>Standard Deviation</strong>
+section.</p>
+<p>🎯 Your goal is to calculate and report the standard deviation for
+one numerical measurement from the penguins dataset.</p>
+<div id="step-1-choose-a-variable-3" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Under the heading Standard Deviation in your notebook, choose one
+numerical measurement variable from the penguins dataset.</p>
+<p>Good candidates include:</p>
+<ul>
+<li><p><code>bill_length_mm</code></p></li>
+<li><p><code>bill_depth_mm</code></p></li>
+<li><p><code>flipper_length_mm</code></p></li>
+<li><p><code>body_mass_g</code></p></li>
+</ul>
+<p>💡 <strong>Tip</strong>: Choose a body measurement variable, not a
+categorical variable like <code>species</code> or <code>sex</code>.</p>
+</div>
+<div id="step-2-calculate-the-standard-deviation-1" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> <strong>Step
+2</strong>: Calculate the standard deviation</h3>
+<p>🎯 Use the <code>sd()</code> function to calculate the standard
+deviation of your chosen variable.</p>
+<pre class="r"><code># ⚡
+sd(penguins$______, na.rm = TRUE)</code></pre>
+</div>
+<div id="step-3-write-an-inline-r-sentence-2" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> <strong>Step
+3</strong>: Write an inline R sentence</h3>
+<p>Write a sentence in your notebook that reports the standard deviation
+value.</p>
+<pre class="markdown"><code>🗣 The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$______, na.rm = TRUE), 2)}`.</code></pre>
+<p>Render to HTML to see the result.</p>
+</div>
+<div id="step-4-write-a-reflection-2" class="section level3" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> <strong>Step
+4</strong>: Write a reflection</h3>
+<p>🪞 Reflect: Explain why standard deviation makes sense. You can use
+these prompts to help you write 2 to 3 reflection sentences.</p>
+<ul>
+<li><p>Why this variable is appropriate for standard deviation?</p></li>
+<li><p>What the standard deviation tells you about the spread of the
+values?</p></li>
+<li><p>Why standard deviation uses more information than just the
+minimum and maximum?</p></li>
+</ul>
+<p>You can use this sentence pattern, if helpful:</p>
+<pre class="markdown"><code>🪞 I chose the `______` variable because it is a numerical measurement. The standard deviation tells me how spread out the values are around the mean. A larger standard deviation means the values vary more, while a smaller standard deviation means the values are more tightly clustered.</code></pre>
+<hr />
 <p>In the next section, we will explore measures of spread that are less
 sensitive to outliers and skewed data.</p>
 </div>
 </div>
-<div id="range" class="section level3" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span> Range</h3>
-<p>This simplest variability measure to calculate and understand is the
+<div id="range" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Range</h2>
+<p>The simplest measure of spread to calculate and understand is the
 <strong>range</strong>, which is the difference between the largest and
 smallest values in a dataset. This value gives you a quick sense of how
 spread out the data is, but it can be heavily influenced by
@@ -2494,7 +2807,7 @@ x_{(1)}\]</span></p>
 value and <span class="math inline">\(x_{(1)}\)</span> is the smallest
 value in the dataset.</p>
 <hr />
-<p>🌳 Type this in your notes document to see how to write the range
+<p>🌳 Type this in your notebook document to see how to write the range
 calculation mathematically.</p>
 <pre class="math"><code>$$
 \text{Range} = x_{(n)} - x_{(1)}
@@ -2522,15 +2835,69 @@ mpg_range_value</code></pre>
 <pre class="r"><code># ⚡
 max(mtcars$mpg) - min(mtcars$mpg)</code></pre>
 <pre><code>## [1] 23.5</code></pre>
-<p>One extreme value can make range misleading and it doesn’t indicate
-where most data falls. The next section introduces the a method for
-measuring spread that unaffected by outliers or extreme values.</p>
-<div id="interquartile-range-iqr" class="section level4" number="4.1.2.1">
-<h4><span class="header-section-number">4.1.2.1</span> Interquartile
-Range (IQR)</h4>
-<p>The <strong>interquartile range</strong> (IQR), or the <em>fourth
-spread</em> works well with any data distribution shape. IQR represents
-the spread of the “typical” middle 50% of data.</p>
+<p>Because range depends only on the minimum and maximum values, one
+extreme value can make it misleading. It also does not show where most
+of the data fall. The next section introduces a measure of spread that
+is less affected by extreme values.</p>
+</div>
+<div id="task-3-1" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Task 3</h2>
+<p>Place this task after the <strong>Range</strong> section.</p>
+<p>🎯 Your goal is to calculate and report the range for one numerical
+measurement from the <code>penguins</code> dataset.</p>
+<div id="step-1-choose-a-variable-4" class="section level3" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Under the heading <strong>Range</strong> in your notebook, use the
+same numerical variable from Task 2 or choose another numerical
+measurement variable from <code>penguins</code>.</p>
+</div>
+<div id="step-2-calculate-the-range" class="section level3" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> <strong>Step
+2</strong>: Calculate the range</h3>
+<p>🎯 Calculate the range of your chosen variable. Use
+<code>range()</code> to find the minimum and maximum values. Then
+subtract the minimum from the maximum to calculate the range.</p>
+<pre class="r"><code># ⚡
+penguin_range &lt;- range(penguins$______, na.rm = TRUE)
+# ✅
+penguin_range</code></pre>
+<pre class="r"><code># ⚡ Calculate the range value
+penguin_range_value &lt;- penguin_range[2] - penguin_range[1]
+# ✅
+penguin_range_value</code></pre>
+</div>
+<div id="step-3-write-an-inline-r-sentence-3" class="section level3" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> <strong>Step
+3</strong>: Write an inline R sentence</h3>
+<p>Write one or two sentences in your notebook that report the minimum,
+maximum, and range.</p>
+<pre class="markdown"><code>🗣 The minimum and maximum values in the `_____` column are `{r} range(penguins$______, na.rm = TRUE)[1]}` and `{r} range(penguins$______, na.rm = TRUE)[2]}`.
+
+🗣 The range of the `_____` column in the `penguins` dataset is `{r} diff(range(penguins$______, na.rm = TRUE))}`.</code></pre>
+<p>Render to HTML to see the results.</p>
+</div>
+<div id="step-4-write-a-reflection-3" class="section level3" number="4.5.4">
+<h3><span class="header-section-number">4.5.4</span> <strong>Step
+4</strong>: Write a reflection</h3>
+<p>🪞 Reflect: Explain why range makes sense. You can use these prompts
+to help you write 2 to 3 reflection sentences.</p>
+<ul>
+<li><p>What the range tells you about the spread of the data?</p></li>
+<li><p>Why range is easy to calculate?</p></li>
+<li><p>Why range can be misleading if there are unusually high or low
+values?</p></li>
+</ul>
+<p>You can use this sentence pattern if helpful:</p>
+<pre class="markdown"><code>🪞 The range gives a quick description of how far apart the smallest and largest values are. It is easy to calculate and understand, but it only uses two values. Because of that, one extreme value can make the range seem larger than the spread of most of the data.</code></pre>
+</div>
+</div>
+<div id="interquartile-range-iqr" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Interquartile Range
+(IQR)</h2>
+<p>The <strong>interquartile range</strong> (IQR) describes the spread
+of the middle 50% of the data. It is often useful because it is less
+affected by unusually high or low values than the full range.</p>
 <p>A <strong>quartile</strong> is the whole data range divided into four
 equal parts.</p>
 <p>It is calculated as:</p>
@@ -2538,8 +2905,8 @@ equal parts.</p>
 <p>Where <span class="math inline">\(Q_1\)</span> is the <strong>first
 quartile</strong> (25th percentile) and <span class="math inline">\(Q_3\)</span> is the <strong>third
 quartile</strong> (75th percentile).</p>
-<p>Removing lower and upper 25% removes extreme values and determine the
-range between the first and third quartiles.</p>
+<p>By focusing on the middle 50% of the data, the IQR reduces the
+influence of extreme values.</p>
 <p>🎯 Use <code>IQR()</code> function to calculate the interquartile
 range of the <code>mpg</code> column in the <code>mtcars</code>
 dataset.</p>
@@ -2557,12 +2924,60 @@ value.</p>
 column of the <code>mtcars</code> dataset is 7.375</p>
 <hr />
 </div>
-<div id="five-number-summary" class="section level4" number="4.1.2.2">
-<h4><span class="header-section-number">4.1.2.2</span> Five Number
-Summary</h4>
+<div id="task-4-1" class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> Task 4</h2>
+<p>Place this task after the <strong>Interquartile Range</strong>
+section.</p>
+<p>🎯 Your goal is to calculate and report the interquartile range (IQR)
+for one numerical measurement from the <code>penguins</code>
+dataset.</p>
+<div id="step-1-choose-a-variable-5" class="section level3" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Under the heading <strong>Interquartile Range</strong> in your
+notebook, use the same numerical variable from Task 2 or Task 3, or
+choose another numerical measurement variable from
+<code>penguins</code>.</p>
+</div>
+<div id="step-2-calculate-the-interquartile-range" class="section level3" number="4.7.2">
+<h3><span class="header-section-number">4.7.2</span> <strong>Step
+2</strong>: Calculate the interquartile range</h3>
+<p>🎯 Use the <code>IQR()</code> function to calculate the interquartile
+range of your chosen variable.</p>
+<pre class="r"><code># ⚡
+iqr_value &lt;- IQR(penguins$______, na.rm = TRUE)
+# ✅
+iqr_value</code></pre>
+</div>
+<div id="step-3-write-an-inline-r-sentence-4" class="section level3" number="4.7.3">
+<h3><span class="header-section-number">4.7.3</span> <strong>Step
+3</strong>: Write an inline R sentence</h3>
+<p>Write a sentence in your notebook that reports the interquartile
+range value.</p>
+<pre class="markdown"><code>🗣 The interquartile range of the `_____` column in the `penguins` dataset is `{r} IQR(penguins$______, na.rm = TRUE)}`.</code></pre>
+<p>Render to HTML to see the result.</p>
+</div>
+<div id="step-4-write-a-reflection-4" class="section level3" number="4.7.4">
+<h3><span class="header-section-number">4.7.4</span> <strong>Step
+4</strong>: Write a reflection</h3>
+<p>🪞 Reflect: Explain why interquartile range makes sense. You can use
+these prompts to help you write 2 to 3 reflection sentences.</p>
+<ul>
+<li><p>What does the IQR describe?</p></li>
+<li><p>Why does the IQR focuses on the middle 50% of the data?</p></li>
+<li><p>Why is the IQR is often more useful than the full range when
+there are extreme values?</p></li>
+</ul>
+<p>You can use this sentence pattern if helpful:</p>
+<pre class="markdown"><code>🪞 The IQR describes the spread of the middle 50% of the data. It is useful because it is less affected by unusually high or low values than the full range. This makes it a strong choice when I want to describe the spread of the typical values in the dataset.</code></pre>
+</div>
+<div id="five-number-summary" class="section level3" number="4.7.5">
+<h3><span class="header-section-number">4.7.5</span> Five Number
+Summary</h3>
 <p>You can use the <code>summary()</code> function to get a quick
-overview of the distribution of a numeric variable, including the
-minimum, <span class="math inline">\(Q_1\)</span> , median, mean, <span class="math inline">\(Q_3\)</span> , and maximum values.</p>
+overview of a numeric variable. In R, this includes the minimum, <span class="math inline">\(Q_1\)</span>, median, mean, <span class="math inline">\(Q_3\)</span>, and maximum. The five-number summary
+refers to the minimum, <span class="math inline">\(Q_1\)</span>, median,
+<span class="math inline">\(Q_3\)</span>, and maximum.</p>
 <p>🎯 Use <code>summary()</code> to get a quick overview of the
 distribution of the <code>mpg</code> column in the <code>mtcars</code>
 dataset.</p>
@@ -2598,24 +3013,76 @@ dataset.</p>
 summary(mtcars$mpg)  # Summarizes just the mpg column</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   10.40   15.43   19.20   20.09   22.80   33.90</code></pre>
+</div>
+</div>
+<div id="task-5-1" class="section level2" number="4.8">
+<h2><span class="header-section-number">4.8</span> Task 5</h2>
+<p>Place this task after the <strong>Five Number Summary</strong>
+section.</p>
+<p>🎯 Your goal is to use the <code>summary()</code> function to get a
+quick overview of one numerical measurement from the
+<code>penguins</code> dataset.</p>
+<div id="step-1-choose-a-variable-6" class="section level3" number="4.8.1">
+<h3><span class="header-section-number">4.8.1</span> <strong>Step
+1</strong>: Choose a variable</h3>
+<p>Under the heading <strong>Five Number Summary</strong> in your
+notebook, use the same numerical variable from earlier tasks or choose
+another numerical measurement variable from penguins.</p>
+</div>
+<div id="step-2-generate-the-summary" class="section level3" number="4.8.2">
+<h3><span class="header-section-number">4.8.2</span> <strong>Step
+2</strong>: Generate the summary</h3>
+<p>🎯 Use <code>summary()</code> to get an overview.</p>
+<pre class="r"><code># ⚡
+summary(penguins$______)</code></pre>
+</div>
+<div id="step-3-write-a-reflection" class="section level3" number="4.8.3">
+<h3><span class="header-section-number">4.8.3</span> <strong>Step
+3</strong>: Write a reflection</h3>
+<p>🪞 Reflect: Explain what the summary tells you about the distribution
+of values. You can use these prompts to help you write 2 to 3 reflection
+sentences.</p>
+<ul>
+<li><p>What does the summary tell you about the minimum, maximum, and
+quartiles?</p></li>
+<li><p>How does the summary help you understand the distribution of
+values? Why <code>summary()</code> is a useful function?</p></li>
+<li><p>How does the summary compare to the mean and standard deviation
+you calculated earlier?</p></li>
+</ul>
+<p>You can use this sentence pattern if helpful:</p>
+<pre class="markdown"><code>🗣 In the `_____` column, the minimum value is ______, the median is ______, and the maximum is ______. The first and third quartiles show where the middle half of the data falls. This summary gives me a quick picture of both center and spread in this variable.</code></pre>
 <hr />
 <p>So far, you have learned how to calculate descriptive statistics
 manually and using built-in functions. You have also learned how to use
 inline R code to dynamically report these statistics in your Quarto
 document.</p>
-<p>In the remaining of this chapter, we will compute specific summary
-statistics. You will learn how to group your data by certain variables
-before summarizing. This is where <code>dplyr</code>’s
-<code>summarize()</code> and <code>group_by()</code> functions come in
-handy.</p>
-</div>
+<p>In the next part of this assignment, you will use these ideas about
+center and spread to describe the penguins data more clearly. After
+completing Chapter 13, you will group data before summarizing it using
+<code>dplyr</code> functions.</p>
 </div>
 </div>
 </div>
 <div id="summary" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Summary</h1>
-<p>[This document is still under editing. The summary will be added
-soon.]</p>
+<p>In this activity, you are not only learning how to calculate
+descriptive statistics. You are practicing how to learn from data in a
+more deliberate way. You begin by identifying variable types, then use
+that knowledge to choose appropriate count-based summaries, measures of
+center, and measures of spread. As you build the notebook, you rehearse
+earlier ideas in later sections, explain your code and results in plain
+language, and reflect on why a method does or does not fit a given
+variable. This supports self-regulated learning by asking you to plan,
+monitor, and revise your thinking as you work.</p>
+<p>You should have a reproducible <strong>Data Understanding
+Notebook</strong> that shows both your code and your reasoning. Just as
+importantly, you should have stronger habits for analytical work:
+slowing down to inspect data before summarizing it, persisting when a
+task is difficult, checking whether your interpretation matches the data
+type, and using writing as a strategy for understanding. These are not
+just course tasks. They are foundational habits for credible, careful
+data analysis.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Chapter Terms</h1>
