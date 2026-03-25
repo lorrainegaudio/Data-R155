@@ -2767,7 +2767,7 @@ font-size: 0.95em;
 <h1 class="title toc-ignore">Chapter 13</h1>
 <h3 class="subtitle">Group by, Summarize, and Count</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version March 20, 2026</h4>
+<h4 class="date">Version March 25, 2026</h4>
 
 </div>
 
@@ -2854,10 +2854,7 @@ toc-depth: 2
 number-sections: true
 format:
   html:
-    code-fold: true
-execute:
-  warning: true
-  message: true
+    code-fold: false
 ---</code></pre>
 </div>
 <div id="headings" class="section level2" number="2.3">
@@ -3531,10 +3528,10 @@ colnames(stars)</code></pre>
 demonstrate?</p>
 <pre class="r"><code>#⚡ Code
 twinkle_twinkle &lt;- stars %&gt;%
-  `group_by(type)` %&gt;%
+  _____(_____) %&gt;%
   summarize(
-    mean_temperature = `mean(temp)`,
-    mean_magnitude   = `mean(magnitude)`,
+    mean_temperature = _____(_____),
+    mean_magnitude   = _____(_____),
     .groups = &quot;drop&quot;
   )</code></pre>
 <pre class="r"><code># ✅ Checks
@@ -3561,13 +3558,13 @@ demonstrate?</p>
 <pre class="r"><code>#⚡ Code
 fatty_acid &lt;- &quot;_______&quot; 
 
-Olive_Garden &lt;- olive `%&gt;%`
-  group_by(region) `%&gt;%`
+Olive_Garden &lt;- olive `___`
+  group_by(region) `___`
   summarize(
-    mean_value = mean(fatty_acid)`,`
-    sd_value   = sd(fatty_acid)`,`
+    mean_value = mean(fatty_acid)`___`
+    sd_value   = sd(fatty_acid)`___`
     n          = n()
-  `)`</code></pre>
+  `___`</code></pre>
 <pre class="r"><code># ✅ Checks
 Olive_Garden</code></pre>
 <p>🗣 In a short comment, note the region with the highest mean value for
@@ -3578,8 +3575,7 @@ summary variable?</p>
 <div id="task-3" class="section level2" number="11.4">
 <h2><span class="header-section-number">11.4</span> Task 3</h2>
 <p>🧮 <strong>Counting unique values</strong></p>
-<p>❓ Which functions can you use to count unique values in a
-column?</p>
+<p>❓ Which function can you use to count unique values in a column?</p>
 <p>For 🦠<code>us_contagious_diseases</code> from <code>dslabs</code>,
 determine the number of unique diseases in the column
 <code>disease</code>.</p>
@@ -3590,12 +3586,12 @@ determine the number of unique diseases in the column
 unique(us_contagious_diseases$disease)
 
 ## How many unique diseases are there?
-`length`(unique(us_contagious_diseases$disease))</code></pre>
+_____(unique(us_contagious_diseases$disease))</code></pre>
 <p>🗣 Inline memo sentence</p>
 <p>Write this as normal text in your Quarto document, not as code.
 Replace the blank with the correct function to count unique
 diseases.</p>
-<pre class="r"><code>🗣 There are `r _____(unique(us_contagious_diseases$disease))` unique diseases within the `disease` column of the `us_contagious_diseases` dataset. They are `r unique(us_contagious_diseases$disease)`</code></pre>
+<pre class="r"><code>🗣 There are `r _____(unique(us_contagious_diseases$disease))` unique diseases within the `disease` column of the `us_contagious_diseases` dataset. They are `r unique(us_contagious_diseases$disease)&quot;`</code></pre>
 <p>🎯 For <code>us_contagious_diseases</code>, determine the number of
 states in the column <code>state</code>.</p>
 <pre class="r"><code># ✅ Pre-check
@@ -3603,17 +3599,11 @@ states in the column <code>state</code>.</p>
 unique(us_contagious_diseases$state)
 
 ## How many unique diseases are there?
-`length`(unique(us_contagious_diseases$state))</code></pre>
+_____(unique(us_contagious_diseases$state))</code></pre>
 <p>🗣 Inline memo sentence</p>
 <p>Write this as normal text in your Quarto document, not as code.
 Replace the blank with the correct function to count unique states.</p>
 <pre class="r"><code>🗣 There are `r _____(unique(us_contagious_diseases$state))` unique states within the `state` column of the `us_contagious_diseases` dataset. </code></pre>
-<p>A. <code>sum()</code></p>
-<p>B. <code>length()</code></p>
-<p>C. <code>n()</code></p>
-<p>D. <code>count()</code></p>
-<p>E. <code>unique()</code></p>
-<p>F. <code>max()</code></p>
 </div>
 <div id="task-4" class="section level2" number="11.5">
 <h2><span class="header-section-number">11.5</span> Task 4</h2>
@@ -3643,10 +3633,10 @@ rows for each state and disease combination. Store as
 demonstrate?</p>
 <pre class="r"><code># ⚡ Code
 categorical_counts &lt;- us_contagious_diseases %&gt;%
-  `group_by`(state, disease) %&gt;%
-  `count`()</code></pre>
+  _____(state, disease) %&gt;%
+  _____()</code></pre>
 <pre class="r"><code># ✅ Check row count
-`nrow`(categorical_counts) </code></pre>
+_____(categorical_counts) </code></pre>
 <p>🗣 Comment about the results. Was your prediction of group size
 correct?</p>
 <p>🪞 Explain why <code>group_by()</code> is useful when reporting the
@@ -3664,13 +3654,13 @@ the three diseases with the highest national mean counts. Store as
 <p>💡 <strong>Tip:</strong> Arrange the diseases by their national mean
 and keep the top three.</p>
 <pre class="r"><code>#⚡ National means per disease
-Infectious_Burden &lt;- us_contagious_diseases %&gt;%
-  group_by(disease) %&gt;%
+_____ &lt;- _____ %&gt;%
+  group_by(_____) %&gt;%
   summarize(
-    national_mean = mean(count, na.rm = TRUE),
+    _____ = mean(_____, na.rm = TRUE),
     .groups = &quot;drop&quot;
   ) %&gt;%
-  arrange(desc(national_mean))</code></pre>
+  arrange(desc(_____))</code></pre>
 <pre class="r"><code># ✅ Checks
 head(Infectious_Burden, 3)</code></pre>
 <p>🗣 Comment on the results. Which three diseases had the highest

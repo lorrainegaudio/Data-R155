@@ -383,6 +383,10 @@ These classes are not wrong, but they require careful interpretation. In the fut
 
 Use count-based summaries when your question is about how many observations you have or how often values appear. Length, sum, count are all ways to add up values in a dataset.
 
+For this assignment, I do not expect you to type up all of the reading notes into your report. The report should focus on your work with the penguins dataset. The intended workflow is to read, study, or skim a lesson section as needed, and then complete the task that follows in your notebook. In other words, the reading sections are there to support your learning, but the required submission is the notebook work produced from the tasks.
+
+You are welcome to keep any extra notes that help you learn. That is never a problem. But to earn Complete, you only need to use the task materials to build the notebook, fill in the needed blanks, run the code, and include the required inline R sentences and brief explanations.
+
 ## Length
 
 **Length** counts the number of values in the set of numbers. In other words, it tells us how many observations we have. In a data table, it tells us how many rows are in a column.
@@ -454,8 +458,6 @@ For `cyl`, we care about how many cars in the dataset have 4, 6, or 8 cylinders 
 
 The mode is the only measure of central tendency that works with nominal (categorical) data. Extreme values don't affect the mode. It is easy to interpret because it's simply the most common value. This data is often depicted in histograms or frequency tables.
 
-The next sections introduce two other measures of center that are more appropriate for numerical data.
-
 ## Task 1
 
 Under the heading **Count-Based Summaries**, decide which variables in the `penguins` dataset are appropriate for `length()`, `count()`, and mode reporting.
@@ -486,7 +488,7 @@ Review the columns in `penguins`. Then identify:
 🗣 I chose `_____` for `length()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use length because _______________ (e.g., it might be helpful to point out ...)
 ```
 
-**Step 3**: Create one frequency table
+### **Step 3**: Create one frequency table
 
 🎯 Use `count()` to create a frequency table for one appropriate column (your choice) from the `penguins` dataset.
 
@@ -501,7 +503,7 @@ penguin_counts <- penguins %>%
 penguin_counts
 ```
 
-**Step 4**: Identify the mode
+### **Step 4**: Identify the mode
 
 🗣 Comment on the frequency table you created. What does it tell you about the distribution of values in that column?
 
@@ -525,7 +527,7 @@ penguin_counts
 🗣 I chose `_____` for `count()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use count because _______________.
 ```
 
-**Step 5** Render your notebook
+### **Step 5** Render your notebook
 
 Render your Quarto document to HTML and make sure the Count-Based Summaries section includes:
 
@@ -536,6 +538,8 @@ Render your Quarto document to HTML and make sure the Count-Based Summaries sect
 - at least one inline R sentence
 
 ------------------------------------------------------------------------
+
+The next sections introduce two other measures of center that are more appropriate for numerical data.
 
 Measures of **central tendency**, or measures of center, are used to describe the typical value in a dataset. They give us an idea of where the center of the data is located. Common measures of central tendency include the mean, median, and mode.
 
@@ -759,7 +763,7 @@ When you see $\sum_{i=1}^{5} a$, this means:
 
 -   Then stop
 
-This is adding $a$ four times (once each for $i=2$, $i=3$, $i=4$, and $i=5$).
+This is adding $a$ four times (once each for $i-1$, $i=2$, $i=3$, $i=4$, and $i=5$).
 
 ``` math
 $$

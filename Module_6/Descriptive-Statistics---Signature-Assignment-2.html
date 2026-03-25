@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Signature Assignment</h1>
 <h3 class="subtitle">Descriptive Statistics</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version March 23, 2026</h4>
+<h4 class="date">Version March 25, 2026</h4>
 
 </div>
 
@@ -2039,6 +2039,18 @@ reflect its data type and make it easier to analyze.</p>
 <p>Use count-based summaries when your question is about how many
 observations you have or how often values appear. Length, sum, count are
 all ways to add up values in a dataset.</p>
+<p>For this assignment, I do not expect you to type up all of the
+reading notes into your report. The report should focus on your work
+with the penguins dataset. The intended workflow is to read, study, or
+skim a lesson section as needed, and then complete the task that follows
+in your notebook. In other words, the reading sections are there to
+support your learning, but the required submission is the notebook work
+produced from the tasks.</p>
+<p>You are welcome to keep any extra notes that help you learn. That is
+never a problem. But to earn Complete, you only need to use the task
+materials to build the notebook, fill in the needed blanks, run the
+code, and include the required inline R sentences and brief
+explanations.</p>
 <div id="length" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Length</h2>
 <p><strong>Length</strong> counts the number of values in the set of
@@ -2119,8 +2131,6 @@ which category appears most often.</p>
 nominal (categorical) data. Extreme values don’t affect the mode. It is
 easy to interpret because it’s simply the most common value. This data
 is often depicted in histograms or frequency tables.</p>
-<p>The next sections introduce two other measures of center that are
-more appropriate for numerical data.</p>
 </div>
 <div id="task-1" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Task 1</h2>
@@ -2155,7 +2165,10 @@ many values are in one <em>appropriate</em> column (your pick) from the
 <pre class="markdown"><code>🗣 The `______` column in the `penguins` dataset contains `{r} length(penguins$_____)` observations.
 
 🗣 I chose `_____` for `length()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use length because _______________ (e.g., it might be helpful to point out ...)</code></pre>
-<p><strong>Step 3</strong>: Create one frequency table</p>
+</div>
+<div id="step-3-create-one-frequency-table" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> <strong>Step
+3</strong>: Create one frequency table</h3>
 <p>🎯 Use <code>count()</code> to create a frequency table for one
 appropriate column (your choice) from the <code>penguins</code>
 dataset.</p>
@@ -2164,7 +2177,10 @@ penguin_counts &lt;- penguins %&gt;%
   count(______)</code></pre>
 <pre class="r"><code># ✅
 penguin_counts</code></pre>
-<p><strong>Step 4</strong>: Identify the mode</p>
+</div>
+<div id="step-4-identify-the-mode" class="section level3" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> <strong>Step
+4</strong>: Identify the mode</h3>
 <p>🗣 Comment on the frequency table you created. What does it tell you
 about the distribution of values in that column?</p>
 <ol style="list-style-type: decimal">
@@ -2185,7 +2201,10 @@ to describe with <code>count()</code> and mode, and why.</p></li>
 <pre class="markdown"><code>🗣 The most common value in the `_______` column has `{r} length(penguins$______)` observations.
 
 🗣 I chose `_____` for `count()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use count because _______________.</code></pre>
-<p><strong>Step 5</strong> Render your notebook</p>
+</div>
+<div id="step-5-render-your-notebook" class="section level3" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> <strong>Step
+5</strong> Render your notebook</h3>
 <p>Render your Quarto document to HTML and make sure the Count-Based
 Summaries section includes:</p>
 <ul>
@@ -2194,6 +2213,8 @@ Summaries section includes:</p>
 <li><p>at least one inline R sentence</p></li>
 </ul>
 <hr />
+<p>The next sections introduce two other measures of center that are
+more appropriate for numerical data.</p>
 <p>Measures of <strong>central tendency</strong>, or measures of center,
 are used to describe the typical value in a dataset. They give us an
 idea of where the center of the data is located. Common measures of
@@ -2397,7 +2418,7 @@ sum</p></li>
 <li><p>Then stop</p></li>
 </ul>
 <p>This is adding <span class="math inline">\(a\)</span> four times
-(once each for <span class="math inline">\(i=2\)</span>, <span class="math inline">\(i=3\)</span>, <span class="math inline">\(i=4\)</span>, and <span class="math inline">\(i=5\)</span>).</p>
+(once each for <span class="math inline">\(i-1\)</span>, <span class="math inline">\(i=2\)</span>, <span class="math inline">\(i=3\)</span>, <span class="math inline">\(i=4\)</span>, and <span class="math inline">\(i=5\)</span>).</p>
 <pre class="math"><code>$$
 \sum_{i=1}^{5} a =&gt; a_1 + a_2 + a_3 + a_4 + a_5 
 $$</code></pre>
