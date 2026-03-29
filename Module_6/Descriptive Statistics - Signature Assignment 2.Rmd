@@ -74,7 +74,7 @@ output:
       after_body: ../assets/footer.html
 ```
 
-# Overview
+Overview
 
 This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
 
@@ -1003,7 +1003,49 @@ This comparison helps you see an early pattern in the data and suggests a direct
 
 # Part 3
 
-Measures of **spread** describe how much the values in a dataset vary.  In this section, you will learn several ways to describe variability, including standard deviation, range, interquartile range, and the five-number summary. These measures help analysts understand whether data values are relatively consistent or whether they vary widely.
+Measures of **spread** describe how much the values in a dataset vary. In this part, you will continue learning how to describe variability with standard deviation, range, interquartile range, and the five-number summary. These measures help analysts understand whether data values are relatively consistent or whether they vary widely.
+
+In Part 3, you will also practice new **Quarto formatting** skills so your HTML report reads like an analyst’s notebook rather than a list of answers. In this part, you will practice how to:
+
+- add labels to section headings
+- refer to one section from another section
+- use a callout block to highlight an interpretation
+- format a short results list in Markdown
+
+## Task 0
+
+Add to your YAML:
+
+```markdown
+---
+title: "Your Title"
+format: html
+number-sections: true # This is needed for cross-references to work
+---
+```
+
+A section label is a short name attached to a heading. Quarto can use that label to create links to that section later in your report.
+
+Before you begin, update your remaining section headings so Quarto.
+
+```markdown
+## Standard Deviation {#sec-sd}
+## Range {#sec-range}
+## Interquartile Range {#sec-iqr}
+## Five-Number Summary {#sec-five}
+```
+
+Notice that each section heading has a label in curly braces. The label starts with a hashtag and is followed by a unique identifier (e.g., `sec-sd` for the standard deviation section).
+
+Update an earlier section on measures of center does not yet have a label, add one there too. For example:
+
+```markdown
+## Measures of Center {#sec-center}
+```
+
+These labels allow you to refer to these sections later in the report. For example, you can write:
+
+As you work through Part 3, render to HTML occasionally so you can check that your section links, callout boxes, and inline R code display correctly.
 
 ## Standard Deviation
 
@@ -1159,7 +1201,7 @@ Place this task after the **Standard Deviation** section.
 
 ### **Step 1**: Choose a variable
 
-Under the heading Standard Deviation in your notebook, choose one numerical measurement variable from the penguins dataset.
+Under the heading `## Standard Deviation {#sec-sd}` in your Quarto document, choose one numerical measurement variable from the `penguins` dataset.
 
 Good candidates include:
 
@@ -1194,7 +1236,9 @@ Render to HTML to see the result.
 
 ### **Step 4**: Write a reflection
 
-🪞 Reflect: Explain why standard deviation makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
+A **callout block** creates a shaded note box in your HTML report so an important comment stands out.
+
+🪞 Reflect: Explain why standard deviation makes sense. You can use these prompts to help you write 2 to 3 reflection sentences. Write your interpretation in a callout block
 
 - Why this variable is appropriate for standard deviation?
 
@@ -1202,12 +1246,29 @@ Render to HTML to see the result.
 
 - Why standard deviation uses more information than just the minimum and maximum?
 
-You can use this sentence pattern, if helpful:
+You can use this sentence pattern, if helpful, but place your reflection is place your reflection inside a Quarto callout block to make it visually stand out.
 
 ```markdown
+::: {.callout-note}
+
 🪞 I chose the `______` variable because it is a numerical measurement. The standard deviation tells me how spread out the values are around the mean. A larger standard deviation means the values vary more, while a smaller standard deviation means the values are more tightly clustered.
+
+:::
 ```
 
+### **Step 5**: Add one cross-reference sentence
+
+Write one sentence that connects spread to the earlier section on center. Use a Quarto section cross-reference.
+
+```markdown
+
+::: {.callout-note}
+
+🗣 Compared with the center measures discussed in @sec-center, the standard deviation helps describe how much the values vary around the mean.
+
+:::
+
+```
 ___
 
 In the next section, we will explore measures of spread that are less sensitive to outliers and skewed data.
@@ -1289,19 +1350,38 @@ penguin_range_value <- penguin_range[2] - penguin_range[1]
 penguin_range_value
 ```
 
-### **Step 3**: Write an inline R sentence
+### **Step 3**: Report your results as a short Markdown list
 
-Write one or two sentences in your notebook that report the minimum, maximum, and range.
+Instead of writing only a paragraph, format your results as a short list. 
 
-``` markdown
-🗣 The minimum and maximum values in the `_____` column are `{r} range(penguins$______, na.rm = TRUE)[1]}` and `{r} range(penguins$______, na.rm = TRUE)[2]}`.
+```markdown
+- **Minimum**: {r} range(penguins$______, na.rm = TRUE)[1]}
 
-🗣 The range of the `_____` column in the `penguins` dataset is `{r} diff(range(penguins$______, na.rm = TRUE))}`.
+- **Maximum**: {r} range(penguins$______, na.rm = TRUE)[2]}
+
+- **Range**: {r} diff(range(penguins$______, na.rm = TRUE))}
 ```
 
 Render to HTML to see the results.
 
-### **Step 4**: Write a reflection
+### **Step 4**: Add a comparison sentence with a section cross-reference
+
+
+Write one sentence that connects range to the earlier section on center. Use a Quarto section cross-reference.
+
+```markdown
+::: {.callout-note}
+🗣 Compared with the center measures discussed in @sec-center, the range gives a quick description of how far apart the smallest and largest values are.
+:::
+
+```
+
+🗣 When rendered, `@sec-center` should become a section link if your earlier heading is labeled correctly.
+
+💡 **Tip:** If the link does not work, check that your earlier heading includes `{#sec-center}`. Make sure the earlier heading actually looks like this: `## Measures of Center {#sec-center}`
+
+
+### **Step 5**: Write a reflection
 
 🪞 Reflect: Explain why range makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
 
@@ -1362,7 +1442,7 @@ Place this task after the **Interquartile Range** section.
 
 ### **Step 1**: Choose a variable
 
-Under the heading **Interquartile Range** in your notebook, use the same numerical variable from Task 2 or Task 3, or choose another numerical measurement variable from `penguins`.
+Under the heading `## Interquartile Range {#sec-iqr}` in your Quarto document, use the same numerical variable from Task 2 or Task 3, or choose another numerical measurement variable from `penguins`.
 
 ### **Step 2**: Calculate the interquartile range
 
@@ -1399,6 +1479,14 @@ You can use this sentence pattern if helpful:
 
 ```markdown
 🪞 The IQR describes the spread of the middle 50% of the data. It is useful because it is less affected by unusually high or low values than the full range. This makes it a strong choice when I want to describe the spread of the typical values in the dataset.
+```
+
+### **Step 5** Add one cross-reference sentence
+
+Write one comparison sentence that refers back to the Range section.
+
+```markdown
+🗣 Compared with the full spread described in @sec-range, the IQR focuses on the middle 50% of the data and is less affected by extreme values.
 ```
 
 ### Five Number Summary
@@ -1440,9 +1528,9 @@ Under the heading **Five Number Summary** in your notebook, use the same numeric
 summary(penguins$______)
 ```
 
-### **Step 3**: Write a reflection
+### **Step 3**: Write an interpretation
 
-🪞 Reflect: Explain what the summary tells you about the distribution of values. You can use these prompts to help you write 2 to 3 reflection sentences.
+🪞 Explain what the summary tells you about the distribution of values. You can use these prompts to help you write 2 to 3 reflection sentences.
 
 - What does the summary tell you about the minimum, maximum, and quartiles?
 
@@ -1454,6 +1542,18 @@ You can use this sentence pattern if helpful:
 
 ```markdown
 🗣 In the `_____` column, the minimum value is ______, the median is ______, and the maximum is ______. The first and third quartiles show where the middle half of the data falls. This summary gives me a quick picture of both center and spread in this variable.
+```
+
+## Task 6
+
+**End Part 3 with a takeaway**
+
+Finish Part 3 with one short takeaway. State which measure of spread you think was most useful for your chosen variable and why.
+
+You can use this sentence pattern if helpful:
+
+```markdown
+🪞 For the `_____` variable, I think the most useful measure of spread is ______. I chose this measure because ______.
 ```
 
 ------------------------------------------------------------------------
@@ -1469,6 +1569,8 @@ In this activity, you are not only learning how to calculate descriptive statist
 You should have a reproducible **Data Understanding Notebook** that shows both your code and your reasoning. Just as importantly, you should have stronger habits for analytical work: slowing down to inspect data before summarizing it, persisting when a task is difficult, checking whether your interpretation matches the data type, and using writing as a strategy for understanding. These are not just course tasks. They are foundational habits for credible, careful data analysis.
 
 # Chapter Terms
+
+**Callout Block**: A formatted block in Quarto Markdown that sets off important content—such as a note, tip, warning, or reflection—so it stands out visually in the rendered document. Callout blocks are created with `:::` syntax and a callout class such as `.callout-note`, and in HTML output they appear as styled boxes with distinctive formatting.
 
 **Categorical Data**: Data whose values place observations into groups or categories. The categories may have no natural order (nominal) or may have an order with uneven gaps between categories (ordinal). In R, categorical data are often stored as factors.
 

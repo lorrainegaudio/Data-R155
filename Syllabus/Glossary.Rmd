@@ -42,6 +42,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # C
 
+**Callout Block**: A formatted block in Quarto Markdown that sets off important content—such as a note, tip, warning, or reflection—so it stands out visually in the rendered document. Callout blocks are created with `:::` syntax and a callout class such as `.callout-note`, and in HTML output they appear as styled boxes with distinctive formatting.
+
 **Categorical Data**: Data whose values place observations into groups or categories. The categories may have no natural order (nominal) or may have an order with uneven gaps between categories (ordinal). In R, categorical data are often stored as factors.
 
 **Census**: A complete count or measurement of every member of a population, rather than just a subset.
