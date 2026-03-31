@@ -716,6 +716,10 @@ Rendered to HTML to see the results.
 
 ```
 
+___
+
+The next section introduces the mean, which is the most common measure of center and is often used for numerical data that does not contain outliers.
+
 ## Mean
 
 The **mean** is the average of a set of numbers. It is calculated by summing all the values and dividing by the number of values.
@@ -1229,7 +1233,7 @@ sd(penguins$______, na.rm = TRUE)
 Write a sentence in your notebook that reports the standard deviation value.
 
 ``` markdown
-🗣 The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$______, na.rm = TRUE), 2)}`.
+🗣 The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$______, na.rm = TRUE), 2)`.
 ```
 
 Render to HTML to see the result.
@@ -1355,11 +1359,11 @@ penguin_range_value
 Instead of writing only a paragraph, format your results as a short list. 
 
 ```markdown
-- **Minimum**: {r} range(penguins$______, na.rm = TRUE)[1]}
+- **Minimum**: `{r} range(penguins$______, na.rm = TRUE)[1]`
 
-- **Maximum**: {r} range(penguins$______, na.rm = TRUE)[2]}
+- **Maximum**: `{r} range(penguins$______, na.rm = TRUE)[2]`
 
-- **Range**: {r} diff(range(penguins$______, na.rm = TRUE))}
+- **Range**: `{r} diff(range(penguins$______, na.rm = TRUE))`
 ```
 
 Render to HTML to see the results.
@@ -1460,7 +1464,7 @@ iqr_value
 Write a sentence in your notebook that reports the interquartile range value.
 
 ``` markdown
-🗣 The interquartile range of the `_____` column in the `penguins` dataset is `{r} IQR(penguins$______, na.rm = TRUE)}`.
+🗣 The interquartile range of the `_____` column in the `penguins` dataset is `{r} IQR(penguins$______, na.rm = TRUE)`.
 ```
 
 Render to HTML to see the result.
