@@ -3,28 +3,20 @@ title: "Fire Assignment 12"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
-   bookdown::pdf_document2:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    citation_package: natbib
-    fig_caption: true
-    df_print: kable # Data frame printing
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+      in_header: ../../assets/header.html
+      after_body: ../../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -72,13 +64,13 @@ output:
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
       smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
     number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    css: ../../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
     fig_caption: true #Whether figures are rendered with captions.
     df_print: paged # Printing data frames with interactivne scrolling
     code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
     includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+      in_header: ../../assets/header.html
+      after_body: ../../assets/footer.html
 ```
 
 # ➤ Point-Boost Activity
@@ -340,23 +332,30 @@ Explore and wrangling of the raw WHP sample data.
 
 ## Task 1
 
+Before I can analyze wildfire hazard, I need to load the sample data into R and confirm that the file imported correctly.
+
+**Load data**
+
 🎯 Goal: Read the `whp_raw_sample.csv` using `readr`, storing it in your environment as `county_raw`.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-⚡ Code
+#⚡ Code
 library(readr)
-county_raw <- readr::read_csv("whp_raw_sample.csv")
+`county_raw` <- `readr::read_csv`(`"whp_raw_sample.csv"`)
+
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-# ✅  Verify Ideas
+# ✅  Verify 
 dplyr::glimpse(county_raw)
-colnames(county_raw)
-summary(county_raw$whp)
+
 nrow(county_raw)
 ```
+🗣 Comment: In 1–2 sentences, describe what kind of dataset county_raw is and what one row represents.
 
-🗣 Comment: `county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
+🗣 Example: 
+
+`county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
 
 **whp** – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
 
@@ -366,9 +365,15 @@ nrow(county_raw)
 
 **cell_area_km2** – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
 
+---
+
 🎯 Task 2 through 5 Goal: Compute quantile cut-points, label categories, and estimate probability (statewide area share) from this.
 
 ## Task 2
+
+Analysts often begin with a basic audit to check how many rows they have, whether key variables are missing values, and whether numeric columns look reasonable.
+
+**Check data**
 
 🎯 Goal: Use `dplyr::summarize()` to report the following about `county_raw`:
 
@@ -380,20 +385,25 @@ nrow(county_raw)
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: for dplyr::summarize
-county_raw %>%
+`county_summary` <- county_raw %>%
   summarize(
-    n_rows   = n(),
-    n_na_whp = sum(is.na(whp)),
-    min_area = min(cell_area_km2),
-    max_area = max(cell_area_km2)
+    n_rows   = `n()`,
+    n_na_whp = `sum(is.na(whp))`,
+    min_area = `min(cell_area_km2)`,
+    max_area = `max(cell_area_km2)`
   )
+
+# ✅ Verify
+county_summary
 ```
 
-🗣 Comment: 
+🗣 Comment: What do these audit numbers tell you about the dataset structure or quality?
 
 ## Task 3
 
-Compute WHP quantile edges (category cutpoints)
+To turn wildfire hazard values into categories, you first need cutpoints that reflect the distribution of the data.
+
+**Compute WHP quantile edges** (category cutpoints)
 
 🎯 Goal: Use `quantile()` function from base R's `stats` package to compute the quantiles of the `whp` column in `county_raw`. Store the result as `e` for "edges".
 
@@ -403,10 +413,10 @@ Create the seven category edges using the quantiles (0, .25, .50, .75, .90, .95,
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: Base R stats::quantile 
-e <- stats::quantile(
-  county_raw$whp,
-  probs = c(0, .25, .50, .75, .90, .95, .99, 1),
-  na.rm = TRUE
+`e` <- stats::quantile(
+  county_raw$`whp`,
+  probs = `c(0, .25, .50, .75, .90, .95, .99, 1)`,
+  na.rm = `TRUE`
 )
 ```
 
@@ -415,7 +425,9 @@ e <- stats::quantile(
 e
 ```
 
-🗣 Comment: The `e` object now contains the cut-points for categorizing WHP into quantile-based bins.
+🗣 Comment: What does the object e represent, and how will it be used later?
+
+🗣 Example: The `e` object now contains the cut-points for categorizing WHP into quantile-based bins.
 
 - `e[1]` = minimum WHP (0th percentile)
 
@@ -435,7 +447,9 @@ e
 
 ## Task 4
 
-Add a Category label
+Analysts often turn a continuous variable into labeled groups so they can compare patterns more clearly across categories.
+
+**Add a Category label**
 
 🎯 Goal: Use `dplyr::mutate()` and `dplyr::case_when()` to turn the numeric `whp` values in `county_raw` into an ordered categorical variable called `Category`, using the quantile edges `e` you computed in Task 3. Store the resultant data set as `county_cats`.
 
@@ -469,22 +483,30 @@ If a value of whp does not fall in any of these ranges (e.g., `NA`), `Category` 
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code:  dplyr::mutate + dplyr::case_when
-county_cats <- county_raw %>%
+`county_cats` <- county_raw %>%
   mutate(
-    Category = case_when(
-      whp >= e[1] & whp <  e[2] ~ "Very Low",
-      whp >= e[2] & whp <  e[3] ~ "Low",
-      whp >= e[3] & whp <  e[4] ~ "Moderate",
-      whp >= e[4] & whp <  e[5] ~ "High",
-      whp >= e[5] & whp <  e[6] ~ "Very High",
-      whp >= e[6] & whp <  e[7] ~ "Extreme",
-      whp >= e[7] & whp <= e[8] ~ "Ultra (Top 1%)",
-      TRUE                      ~ NA_character_
+    Category = `case_when`(
+      whp >= e[`1`] & whp <  e[`2`] ~ `"Very Low"`,
+      whp >= e[2]  & whp <  e[3]  ~ "Low",
+      whp >= e[3]  & whp <  e[4]  ~ "Moderate",
+      whp >= e[4]  & whp <  e[5]  ~ "High",
+      whp >= e[5]  & whp <  e[6]  ~ "Very High",
+      whp >= e[6]  & whp <  e[7]  ~ "Extreme",
+      whp >= e[`7`] & whp `<=` e[`8`] ~ `"Ultra (Top 1%)"`,
+      TRUE ~ `NA_character_`
     ),
-    Category = factor(
+    Category = `factor`(
       Category,
-      levels = c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)"),
-      ordered = TRUE
+      levels = c(
+        "Very Low",
+        "Low",
+        "Moderate",
+        "High",
+        "Very High",
+        "Extreme",
+        "Ultra (Top 1%)"
+      ),
+      ordered = `TRUE`
     )
   )
 ```
@@ -494,9 +516,15 @@ county_cats <- county_raw %>%
 county_cats %>% count(Category)
 ```
 
-🗣 Comment: I used `case_when` to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The `cell_area_km2` column lets you compute true area easily.
+🗣 Comment: Explain how the case_when logic turns numeric WHP values into ordered risk categories.
+
+🗣 Example: I used `case_when` to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The `cell_area_km2` column lets you compute true area easily.
 
 ## Task 5
+
+After categories are created, you can summarize how much statewide area falls into each category and turn those area totals into probabilities.
+
+**Build `prob_tbl` from `county_cats`**
 
 🎯 Goal: Use `dplyr::group_by()` and `dplyr::summarize()` to aggregate total area by `Category`, then compute `Probability` as each category’s share of the total statewide area. Store the result as `prob_tbl`.
 
@@ -521,17 +549,17 @@ This makes `Probability` the fraction of statewide area that falls in each `Cate
 
 ```{r , eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
-prob_tbl <- county_cats %>%
-  group_by(Category) %>%
+`prob_tbl` <- county_cats %>%
+  group_by(`Category`) %>%
   summarize(
-    area_km2 = sum(cell_area_km2),
-    n_cells  = n(),
-    .groups = "drop"
+    area_km2 = `sum(cell_area_km2)`,
+    n_cells  = `n()`,
+    .groups  = `"drop"`
   ) %>%
   mutate(
-    Probability = area_km2 / sum(area_km2)
+    Probability = area_km2 / `sum(area_km2)`
   ) %>%
-  select(Category, Probability, area_km2, n_cells)
+  select(`Category`, `Probability`, `area_km2`, `n_cells`)
 ```
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
@@ -540,7 +568,9 @@ prob_tbl
 sum(prob_tbl$Probability)
 ```
 
-🗣 Comment: The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
+🗣 Comment: What does prob_tbl tell you about the statewide hazard pattern in Idaho?
+
+🗣 Example: The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
 
 # Part B
 
@@ -1060,7 +1090,7 @@ prob_at_least_50 <- mean(counts_fast_mix >= 50)    # Monte Carlo estimate of P(T
 
  
 
-```{r}
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test
 library(ggplot2)
 threshold <- 50  # "at least 5 fast fires"

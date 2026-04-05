@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-03-20" />
+<meta name="date" content="2026-04-05" />
 
 <title>Glossary</title>
 
@@ -1632,7 +1632,7 @@ display: none;
 
 <h1 class="title toc-ignore">Glossary</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">March 20, 2026</h4>
+<h4 class="date">April 05, 2026</h4>
 
 </div>
 
@@ -1674,9 +1674,18 @@ YAML fields like <code>date: “`r Sys.Date()`”</code>, which gets
 evaluated when you render the document. In R, backticks can also quote
 non-syntactic names (e.g., names with spaces) so they can be used safely
 in code.</p>
+<p><strong>Biased Outcome</strong>: An outcome in a random process where
+some results are more likely than others, so the outcomes are not
+equally likely.</p>
 </div>
 <div id="c" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> C</h1>
+<p><strong>Callout Block</strong>: A formatted block in Quarto Markdown
+that sets off important content—such as a note, tip, warning, or
+reflection—so it stands out visually in the rendered document. Callout
+blocks are created with <code>:::</code> syntax and a callout class such
+as <code>.callout-note</code>, and in HTML output they appear as styled
+boxes with distinctive formatting.</p>
 <p><strong>Categorical Data</strong>: Data whose values place
 observations into groups or categories. The categories may have no
 natural order (nominal) or may have an order with uneven gaps between
@@ -1763,6 +1772,9 @@ variance, standard deviation).</p>
 <p><strong>Discrete Data</strong>: Numerical data that can take only
 specific, separate values, often counts such as 0, 1, 2, 3, and so on.
 In practice, discrete data are commonly integer-valued.</p>
+<p><strong>Distribution</strong>: The pattern of possible values of a
+variable, together with how likely those values are or how often they
+occur.</p>
 <p><strong>Dollar Sign Operator</strong> (<code>$</code>): An extraction
 (and replacement) operator used to access a single named component of a
 recursive object. Most commonly a data frame column
@@ -1821,6 +1833,9 @@ can take (for example, <code>&quot;freshman&quot;</code>,
 <code>&quot;sophomore&quot;</code>, <code>&quot;junior&quot;</code>, <code>&quot;senior&quot;</code>).
 Levels define the set and order of categories, and each factor value is
 internally stored as the index of its level.</p>
+<p><strong>Fair Outcome</strong>: An outcome in a random process where
+all possible results are equally likely. For example, in a fair
+six-sided die, each face has probability 1/6.</p>
 <p><strong>File Menu</strong>: The top-left menu in RStudio that
 provides commands for creating, opening, saving, exporting, and printing
 files and projects. It’s where you start new items (for example, a new R
@@ -1897,6 +1912,9 @@ intensities using two hex digits each (00–FF), for example
 include transparency as a fourth pair, <code>#RRGGBBAA</code>, where
 <code>AA</code> controls alpha (00 = fully transparent, FF = fully
 opaque).</p>
+<p><strong>Histogram</strong>: A graph for numerical data that groups
+values into intervals (bins) and shows how many observations fall in
+each bin.</p>
 <p><strong>Honesty</strong>: Accurately reporting what you did in R—your
 actual steps, mistakes, revisions, and uncertainty—without presenting
 outside work as your own. This includes clearly attributing code, ideas,
@@ -1923,6 +1941,11 @@ document what method you used and why.</p>
 that returns a logical vector indicating whether each element on the
 left appears anywhere in the vector on the right (e.g.,
 <code>region %in% c(&quot;West&quot;,&quot;South&quot;)</code>)</p>
+<p><strong>Independent Events</strong>: Events where the occurrence of
+one does not change the probability of the other. In probability
+notation, events A and B are independent when <span class="math inline">\(P(A \cap B) = P(A)P(B)\)</span>; equivalently,
+knowing that one happened does not change the probability of the
+other.</p>
 <p><strong>Indexing Operator</strong>: The square-bracket indexing
 operator <code>[</code> or <code>[[</code> are used to extract or
 replace parts of an object in R (for example, <code>x[i]</code>). For
@@ -2056,6 +2079,9 @@ computations.</p>
 <p><strong>Mode</strong> (statistic): The value or category with the
 greatest frequency in a dataset. A dataset can have one mode, more than
 one mode, or no mode if no value occurs more often than the others.</p>
+<p><strong>Monte Carlo Simulation</strong>: A simulation method that
+uses repeated random sampling to approximate probabilities, study
+uncertainty, or estimate numerical results.</p>
 </div>
 <div id="n" class="section level1" number="14">
 <h1><span class="header-section-number">14</span> N</h1>
@@ -2090,6 +2116,9 @@ becomes an argument to the outer function (for example,
 <code>mean(sample(x, 5))</code>). This works because a function call can
 appear anywhere an expression is allowed, and functions return a value
 that can be passed directly into the next call.</p>
+<p><strong>Normal Distribution</strong>: A continuous, bell-shaped
+distribution that is symmetric around its center, with most values near
+the mean and fewer values farther away.</p>
 <p><strong>Not</strong> (<code>!</code>): A logical operator that
 negates a logical value: <code>!TRUE</code> becomes <code>FALSE</code>,
 and <code>!FALSE</code> becomes <code>TRUE</code> (and <code>!NA</code>
@@ -2181,6 +2210,13 @@ actions (e.g., HTML/PDF/Word). Preview renders an HTML view using
 outputs from chunks you’ve already run (it does not re-execute code),
 while knit options render the full document to the selected output
 format.</p>
+<p><strong>Probability</strong>: A number from 0 to 1 that describes how
+likely an event is to occur, where 0 means impossible and 1 means
+certain.</p>
+<p><strong>Probability Weights</strong>: Numbers that control how likely
+each value is to be selected in a random sample. In R, the prob argument
+in <code>sample()</code> supplies these weights; they must be
+nonnegative and do not have to add up to 1.</p>
 <p><strong>Propagation</strong>: R’s default behavior where an unknown
 value “spreads” through a computation. If an expression includes
 <code>NA</code>, the result will usually be <code>NA</code> (e.g.,
@@ -2237,9 +2273,16 @@ RStudio’s Console pane when you Knit/Render an R Markdown
 rendering log—progress messages, warnings, and errors—separately from
 your interactive Console, and typically includes a Stop control so you
 can interrupt a failed or long render.</p>
+<p><strong>Replacement</strong>: A sampling method where a selected
+value is put back before the next draw, so it can be chosen again. In R,
+this is controlled by replace = TRUE in functions like
+<code>sample()</code>.</p>
 <p><strong>Required Arguments</strong>: Inputs a function needs because
 they have no default value in the function definition; you must supply
 them in the call (or the function can’t do its job).</p>
+<p><strong>Reproducibility</strong>: The ability to get the same
+computational results again by using the same data, code, steps, and
+analysis conditions.</p>
 <p><strong>Research Journal</strong>: A running record of your R
 analysis process. This inlcudes what question you asked, what code you
 tried (including failed attempts), what outputs you got, and what
@@ -2258,6 +2301,11 @@ code easier.</p>
 <h1><span class="header-section-number">19</span> S</h1>
 <p><strong>Sample</strong>: A subset of the population that you actually
 observe or measure.</p>
+<p><strong>Sample Space</strong>: The set of all possible outcomes of a
+random experiment.</p>
+<p><strong>Sampling Variability</strong>: The natural sample-to-sample
+differences that occur because different random samples from the same
+population usually produce different statistics.</p>
 <p><strong>Scalars</strong>: Single-value objects (length 1). In R,
 scalars are not a separate data type—what people call a “scalar” is
 typically an atomic vector with exactly one element (numeric, character,
@@ -2272,6 +2320,12 @@ workspace). You use it to restart or terminate R, manage what is loaded
 in memory, and set session-specific settings like the working directory.
 It sits alongside menus like File, Edit, Code, View, Plots, Tools, and
 Help at the top of the RStudio window.</p>
+<p><strong><code>set.seed()</code></strong>: An R function that sets the
+starting state of the random number generator so random operations can
+be repeated and produce the same results again.</p>
+<p><strong>Simulation</strong>: A model of a random process that
+generates artificial outcomes so you can study what might happen and
+estimate probabilities or patterns.</p>
 <p><strong>Special Values</strong> (NA, NaN, Inf, -Inf, NULL): Reserved
 constants in R that represent non-standard values: <code>NA</code> for
 missing data, <code>NaN</code> for undefined numeric results,
@@ -2341,6 +2395,8 @@ including documenting if and how you used AI).</p>
 </div>
 <div id="u" class="section level1" number="21">
 <h1><span class="header-section-number">21</span> U</h1>
+<p><strong>Uniform Distribution</strong>: A distribution in which all
+possible outcomes in the range are equally likely.</p>
 <p><strong>Unordered Sample</strong>: A sample in which the order of the
 selected elements does not matter, so <code>{1, 2, 3}</code> represents
 the same selection as <code>{3, 2, 1}</code>. In counting language, this

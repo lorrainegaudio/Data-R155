@@ -40,6 +40,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
+**Biased Outcome**: An outcome in a random process where some results are more likely than others, so the outcomes are not equally likely.
+
 # C
 
 **Callout Block**: A formatted block in Quarto Markdown that sets off important content—such as a note, tip, warning, or reflection—so it stands out visually in the rendered document. Callout blocks are created with `:::` syntax and a callout class such as `.callout-note`, and in HTML output they appear as styled boxes with distinctive formatting.
@@ -88,6 +90,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Discrete Data**: Numerical data that can take only specific, separate values, often counts such as 0, 1, 2, 3, and so on. In practice, discrete data are commonly integer-valued.
 
+**Distribution**: The pattern of possible values of a variable, together with how likely those values are or how often they occur.
+
 **Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
 
 **Double Square Bracket Operator** (`[[`): An extraction operator used to pull out one single element from a list (or one column from a data frame) and return the element itself, not a same-type subset. Unlike `[`, which can return multiple elements and preserves the container type, `[[` is for “give me the one thing inside” (e.g., a vector inside a dataframe).
@@ -113,6 +117,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Factor Class**: An R object class for categorical data, where each value is stored as an integer code that points to a category label. Factors help R handle categories correctly in tables, plots, and statistical models, even though they may print like text.
 
 **Factor Levels**: The distinct category labels a factor can take (for example, `"freshman"`, `"sophomore"`, `"junior"`, `"senior"`). Levels define the set and order of categories, and each factor value is internally stored as the index of its level.
+
+**Fair Outcome**: An outcome in a random process where all possible results are equally likely. For example, in a fair six-sided die, each face has probability 1/6.
 
 **File Menu**: The top-left menu in RStudio that provides commands for creating, opening, saving, exporting, and printing files and projects. It’s where you start new items (for example, a new R Script), open existing files, manage recent files/projects, and access project-level actions. 
 
@@ -148,6 +154,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Hexadecimal Color Codes**: A way to specify colors using a `#` followed by hexadecimal digits. In R (and most software), `#RRGGBB` defines the red, green, and blue intensities using two hex digits each (00–FF), for example `#FF0000` (red) or `#1E90FF` (blue). Some codes include transparency as a fourth pair, `#RRGGBBAA`, where `AA` controls alpha (00 = fully transparent, FF = fully opaque).
 
+**Histogram**: A graph for numerical data that groups values into intervals (bins) and shows how many observations fall in each bin.
+
 **Honesty**: Accurately reporting what you did in R—your actual steps, mistakes, revisions, and uncertainty—without presenting outside work as your own. This includes clearly attributing code, ideas, and any AI assistance, and being able to explain the code you submit.
 
 **HTML**: A web page file type (`.html`) written in **HyperText Markup Language** that a web browser can open and display as a formatted document. In this course, Preview/Knit/Render can create an HTML file (often `.html` or `.nb.html`) that shows your notebook’s text, code, and output in the browser; because it opens from your computer (a local `file://` path), you can’t submit it by copying the browser address. Upload the HTML file itself.
@@ -157,6 +165,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Impute**: To replace missing or unusable values (e.g., `NA`) with substituted values—often a plausible estimate based on the observed data (such as mean/median imputation or model-based predictions)—so the dataset can be analyzed without dropping incomplete cases. Because imputed values are estimates, you should document what method you used and why.
 
 **In Set** (`%in%`): A membership operator that returns a logical vector indicating whether each element on the left appears anywhere in the vector on the right (e.g., `region %in% c("West","South")`)
+
+**Independent Events**: Events where the occurrence of one does not change the probability of the other. In probability notation, events A and B are independent when $P(A \cap B) = P(A)P(B)$; equivalently, knowing that one happened does not change the probability of the other.
 
 **Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
@@ -210,6 +220,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Mode** (statistic): The value or category with the greatest frequency in a dataset. A dataset can have one mode, more than one mode, or no mode if no value occurs more often than the others.
 
+**Monte Carlo Simulation**: A simulation method that uses repeated random sampling to approximate probabilities, study uncertainty, or estimate numerical results.
+
 # N
 
 **NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
@@ -223,6 +235,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Negative Indexing**: Using negative integers inside the single bracket operator `[` to exclude elements (or rows/columns) by position (e.g., `x[-2]` drops the 2nd element; `df[ , -c(8, 9)]` drops columns 8 and 9). In base R, negative and positive indices can’t be mixed in the same subset (except `0`)
 
 **Nesting Function Calls**: Writing one function call inside another so the inner function runs first and its returned value becomes an argument to the outer function (for example, `mean(sample(x, 5))`). This works because a function call can appear anywhere an expression is allowed, and functions return a value that can be passed directly into the next call.
+
+**Normal Distribution**: A continuous, bell-shaped distribution that is symmetric around its center, with most values near the mean and fewer values farther away.
 
 **Not** (`!`): A logical operator that negates a logical value: `!TRUE` becomes `FALSE`, and `!FALSE` becomes `TRUE` (and `!NA` remains `NA`).
 
@@ -270,6 +284,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Preview Menu**: The drop-down attached to the Preview button in an R Notebook (`output: html_notebook`) that lets you generate a quick notebook preview and choose other render (“knit”) actions (e.g., HTML/PDF/Word). Preview renders an HTML view using outputs from chunks you’ve already run (it does not re-execute code), while knit options render the full document to the selected output format.
 
+**Probability**: A number from 0 to 1 that describes how likely an event is to occur, where 0 means impossible and 1 means certain.
+
+**Probability Weights**: Numbers that control how likely each value is to be selected in a random sample. In R, the prob argument in `sample()` supplies these weights; they must be nonnegative and do not have to add up to 1.
+
 **Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`)
 
 # Q
@@ -294,7 +312,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Render Tab**: A temporary tab that appears in RStudio’s Console pane when you Knit/Render an R Markdown (`.Rmd`) or Quarto (`.qmd`) document. It shows the rendering log—progress messages, warnings, and errors—separately from your interactive Console, and typically includes a Stop control so you can interrupt a failed or long render.
 
+**Replacement**: A sampling method where a selected value is put back before the next draw, so it can be chosen again. In R, this is controlled by replace = TRUE in functions like `sample()`.
+
 **Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
+
+**Reproducibility**: The ability to get the same computational results again by using the same data, code, steps, and analysis conditions.
 
 **Research Journal**: A running record of your R analysis process. This inlcudes what question you asked, what code you tried (including failed attempts), what outputs you got, and what decisions you made along the way. In practice, it’s maintained in an R script or R Markdown/Notebook with dated notes, comments, and citations so you (or someone else) can retrace, verify, and reproduce the work.
 
@@ -306,11 +328,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Sample**: A subset of the population that you actually observe or measure. 
 
+**Sample Space**: The set of all possible outcomes of a random experiment.
+
+**Sampling Variability**: The natural sample-to-sample differences that occur because different random samples from the same population usually produce different statistics.
+
 **Scalars**: Single-value objects (length 1). In R, scalars are not a separate data type—what people call a “scalar” is typically an atomic vector with exactly one element (numeric, character, logical, etc.).
 
 **Script Editor Pane**: Source; The pane where you write, edit, and save code in script files (typically .R) and author documents like R Markdown/Quarto notebooks. Code written here can be run line-by-line or in chunks without retyping it in the Console.
 
 **Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
+
+**`set.seed()`**: An R function that sets the starting state of the random number generator so random operations can be repeated and produce the same results again.
+
+**Simulation**: A model of a random process that generates artificial outcomes so you can study what might happen and estimate probabilities or patterns.
 
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
 
@@ -339,6 +369,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Transparency**: The practice of clearly disclosing your methods, materials, assumptions, tools, values, and sources so another person can follow your workflow, reproduce your results, and evaluate your claims. In this course, transparency supports explanatory power (you can explain what your code does and why) and originality/accountability (you produce and attribute work honestly, including documenting if and how you used AI).
 
 # U
+
+**Uniform Distribution**: A distribution in which all possible outcomes in the range are equally likely.
 
 **Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a combination.
 

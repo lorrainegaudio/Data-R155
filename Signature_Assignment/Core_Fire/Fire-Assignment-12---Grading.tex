@@ -1,0 +1,1267 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  12pt,
+]{scrreprt}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Garamond}
+  \setsansfont[]{Gotham-Book.otf}
+  \setmonofont[]{Courier New}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{apalike}
+% header.tex
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{fontspec}   % For loading fonts
+\usepackage{xcolor}     % For color definitions
+\usepackage{mdframed}
+\usepackage{tocloft}    % For customizing the TOC
+
+% Define the Boise State Blue color
+\definecolor{boisestateblue}{HTML}{0033A0}
+
+% Load Gotham fonts
+\newfontface\gothamblack{Gotham-Black.otf}[Path=../Document_fonts/]
+\newfontface\gothambold{Gotham-Bold_0.otf}[Path=../Document_fonts/]
+\newfontface\gothambolditalic{Gotham-BoldItalic.otf}[Path=../Document_fonts/]
+\newfontface\gothambook{Gotham-Book.otf}[Path=../Document_fonts/]
+\newfontface\gothammedium{Gotham-Medium.otf}[Path=../Document_fonts/]
+
+% Set the document's main font to Garamond
+\setmainfont{Garamond}
+% Set the sans-serif font (used for headings) to Gotham Book
+\setsansfont{Gotham-Book.otf}[Path=../Document_fonts/]
+% Set the monospace font to Garamond
+\setmonofont{Garamond}
+
+% -----------------------------------------------------------------------------
+% Style the Table of Contents using tocloft + Gotham
+% -----------------------------------------------------------------------------
+\renewcommand{\cfttoctitlefont}{\Huge \sffamily \bfseries \color{boisestateblue}}
+\renewcommand{\cftsecfont}{\normalfont\sffamily}
+\renewcommand{\cftsecpagefont}{\normalfont\sffamily}
+\renewcommand{\cftsubsecfont}{\normalfont\sffamily}
+\renewcommand{\cftsubsecpagefont}{\normalfont\sffamily}
+\renewcommand{\cftsubsubsecfont}{\normalfont\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\normalfont\sffamily}
+
+\cftsetindents{section}{0em}{2.5em}
+\cftsetindents{subsection}{1.5em}{3.5em}
+\cftsetindents{subsubsection}{3em}{4.5em}
+
+% -----------------------------------------------------------------------------
+% Define the custom title page style with the logo
+% -----------------------------------------------------------------------------
+\fancypagestyle{titlepage}{
+  \fancyhf{} % Clear all headers/footers
+  \fancyfoot[C]{
+    \begin{minipage}{\textwidth}
+      \centering
+      \vspace{-3cm}
+      \includegraphics[width=0.4\textwidth]{../images/boisestate-primarylogo-1color-orange-rgb.png}
+    \end{minipage}
+  }
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% -----------------------------------------------------------------------------
+% Custom maketitle: No page number on cover
+% -----------------------------------------------------------------------------
+\renewcommand{\maketitle}{
+  \thispagestyle{titlepage}  % style with no visible page number
+  \begin{center}
+    \vspace*{3cm}
+    {\Huge\sffamily\bfseries\color{boisestateblue}\thetitle}\\[4cm]
+
+    \vspace*{1cm}
+    {\Large\sffamily\color{boisestateblue}\theauthor}\\[0.5cm]
+    {\large\sffamily\color{boisestateblue}\thedate}
+  \end{center}
+  \clearpage
+  \thispagestyle{empty}  % also no page # on next side
+  %
+  % Now we start real numbering in Arabic:
+  \pagenumbering{arabic}
+  \setcounter{page}{1}
+}
+
+% -----------------------------------------------------------------------------
+% If you redefined \tableofcontents before, remove that code. Let R Markdown do it
+% and it will appear as page 1 (the first counted page).
+% -----------------------------------------------------------------------------
+
+% -----------------------------------------------------------------------------
+% Customize links
+% -----------------------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=boisestateblue,
+    urlcolor=D64309,
+    citecolor=green
+}
+
+% -----------------------------------------------------------------------------
+% Customize chapter titles for scrreprt (optional)
+% -----------------------------------------------------------------------------
+\renewcommand{\chapterformat}{\thechapter.\ }
+
+% -----------------------------------------------------------------------------
+%  Guiding Questions custom styled text box using mdframed
+% -----------------------------------------------------------------------------
+\usepackage{mdframed}
+
+% Define the style for the text box
+\newmdenv[
+    linewidth=0.5pt,              % Border thickness
+    linecolor=black,              % Border color
+    backgroundcolor=lightgray!20, % Light gray background
+    innerleftmargin=1em,          % Padding inside the box (left)
+    innerrightmargin=1em,         % Padding inside the box (right)
+    innertopmargin=1em,           % Padding inside the box (top)
+    innerbottommargin=1em,        % Padding inside the box (bottom)
+    skipabove=1em,                % Space above the box
+    skipbelow=1em,                % Space below the box
+    nobreak=true                  % Prevents splitting across pages
+]{customtextbox}
+% -----------------------------------------------------------------------------
+% Include bibliography in the TOC and number it
+% -----------------------------------------------------------------------------
+\AtBeginDocument{
+  \renewcommand{\bibname}{References}
+  \renewcommand{\refname}{References}
+}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Fire Assignment 12},
+  pdfauthor={by Lorraine Gaudio},
+  colorlinks=true,
+  linkcolor={boisestateblue},
+  filecolor={Maroon},
+  citecolor={black},
+  urlcolor={magenta},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Fire Assignment 12}
+\author{by Lorraine Gaudio}
+\date{Lesson generated on April 05, 2026}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\chapter{➤ Point-Boost Activity}\label{point-boost-activity}
+
+🔥 Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state. For more information this \href{https://www.boisestate.edu/coas/2024/12/04/boise-state-experts-provide-perspective-on-idaho-mountain-wildfires/}{research at Boise State}.
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?
+
+This is an optional two-part point-boost activity. You can work in groups but each person submits their own work independently. Please record group members within your document.
+
+\section{Assignment Directions}\label{assignment-directions}
+
+Read the background material below, then complete the tasks that follow. Replace each \_\_\_\_ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Technical Skill Points}
+\end{enumerate}
+
+You could earn \emph{up to} \textbf{10} points in Technical skill. This assignment will require code covered in modules 1 through 13. You will load a CSV file, manipulate the data frame with \texttt{dplyr} verbs, simulate random numbers and visualize results. Additionally, you will be asked to use functions that were not covered in any modules. You will need to look up the function documentation and figure out how to use them on your own. The submission must include an HTML report and RData of the environment.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Learning Skill Points}
+\end{enumerate}
+
+You could earn up to \textbf{10} points Learning skill on this optional Point Boost assignment!
+
+\begin{itemize}
+\item
+  Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment
+\item
+  👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste).
+\item
+  🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
+\item
+  📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+\item
+  🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+\item
+  🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Signature Assignment Option}
+\end{enumerate}
+
+You may choose to direct these points to your Signature Assignment requirement. If you do, you \textbf{must} complete all tasks and submit a polished HTML document with clear code, thorough comments, and well-written explanations.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+When finished, 🧶 Knit or Render your report to HTML, and upload with your RData to Canvas by or before December 12th.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Dataset}\label{dataset}
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service's Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard). For this activity we use an Idaho-only WHP file prepared by Dr.~Matt Williamson \href{https://www.spaseslab.com/}{SPASES Lab Page}.
+
+Figure 1 shows the Idaho WHP raster created in R with the packages \texttt{terra} (raster operations), \texttt{sf} (vector data), \texttt{tidyverse} (data wrangling), \texttt{tidyterra} (ggplot helpers for rasters), and \texttt{tigris} (state/county boundaries). The GeoTIFF uses an Albers Equal Area projection (units: meters) with 240 × 240 m cells. Within Idaho, valid cells cover about 216,315 km²; cells outside the state within the file's bounding box are NoData. WHP values in this subset range from 0 to 64,185.656; the median is about 397, and the upper tail is steep (e.g., 95th percentile ≈ 7,753, 99th ≈ 22,429).
+
+\textbf{Formal dataset citation}
+
+Dillon, Gregory K.; Gilbertson-Day, Julie W. 2020. Wildfire Hazard Potential for the United States (270-m), version 2020. 3rd Edition. Forest Service Research Data Archive. \url{https://doi.org/10.2737/RDS-2015-0047-3}.
+
+Idaho subset (whp\_id.tif) prepared and provided by Matt Williamson, SPASES Lab, Boise State University.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{Fire-Assignment-12---Grading_files/figure-latex/unnamed-chunk-2-1.pdf}}
+\caption{\label{fig:unnamed-chunk-2}Figure 1. Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) from the USFS WHP v2020 raster, clipped to the Idaho boundary. Colors use a viridis gradient (dark purple = lower WHP; yellow = higher WHP); values span approximately 0--64,186. Raster resolution is 240 m in an Albers Equal Area projection; NoData cells are transparent. Red outline shows the TIGER/Line state boundary reprojected to the raster CRS. Idaho subset prepared by Matt Williamson (SPASES Lab, Boise State University); original dataset: Dillon \& Gilbertson-Day (2020), USFS Research Data Archive (DOI: 10.2737/RDS-2015-0047-3).}
+\end{figure}
+
+\chapter{Part A}\label{part-a}
+
+Explore and wrangling of the raw WHP sample data.
+
+\section{Task 1}\label{task-1}
+
+Before I can analyze wildfire hazard, I need to load the sample data into R and confirm that the file imported correctly.
+
+\textbf{Load data}
+
+🎯 Goal: Read the \texttt{whp\_raw\_sample.csv} using \texttt{readr}, storing it in your environment as \texttt{county\_raw}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⚡ Code}
+\FunctionTok{library}\NormalTok{(readr)}
+\StringTok{\textasciigrave{}}\AttributeTok{county\_raw}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \StringTok{\textasciigrave{}}\AttributeTok{readr::read\_csv}\StringTok{\textasciigrave{}}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{"whp\_raw\_sample.csv"}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify }
+\NormalTok{dplyr}\SpecialCharTok{::}\FunctionTok{glimpse}\NormalTok{(county\_raw)}
+
+\FunctionTok{nrow}\NormalTok{(county\_raw)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: In 1--2 sentences, describe what kind of dataset county\_raw is and what one row represents.
+
+🗣 Example:
+
+\texttt{county\_raw} is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
+
+\textbf{whp} -- The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
+
+\textbf{county} -- The county name (e.g., ``Idaho'', ``Twin Falls'') obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
+
+\textbf{county\_fips} -- The county's 3-digit FIPS code from TIGER/Line. \emph{Option: To create the standard 5-digit FIPS for Idaho, prepend the state code 16: e.g., 049 → 16049. Need to use the 5-digit code when joining to external datasets (ACS, MTBS summaries, etc.).}
+
+\textbf{cell\_area\_km2} -- The area (in square kilometers) represented by that raster cell, computed from the raster's equal-area projection. With 240 m × 240 m cells this is \textasciitilde0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+🎯 Task 2 through 5 Goal: Compute quantile cut-points, label categories, and estimate probability (statewide area share) from this.
+
+\section{Task 2}\label{task-2}
+
+Analysts often begin with a basic audit to check how many rows they have, whether key variables are missing values, and whether numeric columns look reasonable.
+
+\textbf{Check data}
+
+🎯 Goal: Use \texttt{dplyr::summarize()} to report the following about \texttt{county\_raw}:
+
+\begin{itemize}
+\tightlist
+\item
+  Number of rows
+\item
+  Number of missing values in \texttt{whp}
+\item
+  Minimum value of \texttt{cell\_area\_km2}
+\item
+  Maximum value of \texttt{cell\_area\_km2}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Code: for dplyr::summarize}
+\StringTok{\textasciigrave{}}\AttributeTok{county\_summary}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\NormalTok{ county\_raw }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{n\_rows   =} \StringTok{\textasciigrave{}}\AttributeTok{n()}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \AttributeTok{n\_na\_whp =} \StringTok{\textasciigrave{}}\AttributeTok{sum(is.na(whp))}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \AttributeTok{min\_area =} \StringTok{\textasciigrave{}}\AttributeTok{min(cell\_area\_km2)}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \AttributeTok{max\_area =} \StringTok{\textasciigrave{}}\AttributeTok{max(cell\_area\_km2)}\StringTok{\textasciigrave{}}
+\NormalTok{  )}
+
+\CommentTok{\# ✅ Verify}
+\NormalTok{county\_summary}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: What do these audit numbers tell you about the dataset structure or quality?
+
+\section{Task 3}\label{task-3}
+
+To turn wildfire hazard values into categories, you first need cutpoints that reflect the distribution of the data.
+
+\textbf{Compute WHP quantile edges} (category cutpoints)
+
+🎯 Goal: Use \texttt{quantile()} function from base R's \texttt{stats} package to compute the quantiles of the \texttt{whp} column in \texttt{county\_raw}. Store the result as \texttt{e} for ``edges''.
+
+Create the seven category edges using the quantiles (0, .25, .50, .75, .90, .95, .99, 1.00).
+
+📜 The SYNTAX: quantile(x, probs, na.rm)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Code: Base R stats::quantile }
+\StringTok{\textasciigrave{}}\AttributeTok{e}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{quantile}\NormalTok{(}
+\NormalTok{  county\_raw}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{whp}\StringTok{\textasciigrave{}}\NormalTok{,}
+  \AttributeTok{probs =} \StringTok{\textasciigrave{}}\AttributeTok{c(0, .25, .50, .75, .90, .95, .99, 1)}\StringTok{\textasciigrave{}}\NormalTok{,}
+  \AttributeTok{na.rm =} \StringTok{\textasciigrave{}}\AttributeTok{TRUE}\StringTok{\textasciigrave{}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{e}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: What does the object e represent, and how will it be used later?
+
+🗣 Example: The \texttt{e} object now contains the cut-points for categorizing WHP into quantile-based bins.
+
+\begin{itemize}
+\item
+  \texttt{e{[}1{]}} = minimum WHP (0th percentile)
+\item
+  \texttt{e{[}2{]}} = 25th percentile
+\item
+  \texttt{e{[}3{]}} = 50th percentile (median)
+\item
+  \texttt{e{[}4{]}} = 75th percentile
+\item
+  \texttt{e{[}5{]}} = 90th percentile
+\item
+  \texttt{e{[}6{]}} = 95th percentile
+\item
+  \texttt{e{[}7{]}} = 99th percentile
+\item
+  \texttt{e{[}8{]}} = maximum WHP (100th percentile)
+\end{itemize}
+
+\section{Task 4}\label{task-4}
+
+Analysts often turn a continuous variable into labeled groups so they can compare patterns more clearly across categories.
+
+\textbf{Add a Category label}
+
+🎯 Goal: Use \texttt{dplyr::mutate()} and \texttt{dplyr::case\_when()} to turn the numeric \texttt{whp} values in \texttt{county\_raw} into an ordered categorical variable called \texttt{Category}, using the quantile edges \texttt{e} you computed in Task 3. Store the resultant data set as \texttt{county\_cats}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Start from \texttt{county\_raw}.
+\item
+  Use \texttt{mutate()} to add a new variable \texttt{Category}.
+\item
+  Use \texttt{case\_when()} to assign a label based on which interval of e each whp value falls into.
+\item
+  Convert \texttt{Category} to an ordered factor so the levels follow the intended risk order.
+\end{enumerate}
+
+Each row will be assigned exactly one of these labels based on its \texttt{whp} value:
+
+\begin{itemize}
+\item
+  If a row's \texttt{whp} value is \emph{at least} the minimum WHP AND \emph{less than} the 25th percentile, label it ``Very Low''.
+\item
+  If \texttt{whp} is \emph{at least} the 25th percentile AND \emph{less than} the 50th percentile (median), label it ``Low''.
+\item
+  If \texttt{whp} is \emph{at least} the 50th percentile AND \emph{less than} the 75th percentile, label it ``Moderate''.
+\item
+  If \texttt{whp} is \emph{at least} the 75th percentile AND \emph{less than} the 90th percentile, label it ``High''.
+\item
+  If \texttt{whp} is \emph{at least} the 90th percentile AND \emph{less than} the 95th percentile, label it ``Very High''.
+\item
+  If \texttt{whp} is \emph{at least} the 95th percentile AND \emph{less than} the 99th percentile, label it ``Extreme''.
+\item
+  If \texttt{whp} is \emph{at least} the 99th percentile AND \emph{less than or equal to} the maximum WHP, label it ``Ultra (Top 1\%)''.
+\end{itemize}
+
+If a value of whp does not fall in any of these ranges (e.g., \texttt{NA}), \texttt{Category} should be \texttt{NA}.
+
+\textbf{Hint}: All intervals are closed on the left (\texttt{\textgreater{}=}) and open on the right (\texttt{\textless{}}), except the last one, which is closed on both sides (\texttt{\textgreater{}=} and \texttt{\textless{}=}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Code:  dplyr::mutate + dplyr::case\_when}
+\StringTok{\textasciigrave{}}\AttributeTok{county\_cats}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\NormalTok{ county\_raw }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Category =} \StringTok{\textasciigrave{}}\AttributeTok{case\_when}\StringTok{\textasciigrave{}}\NormalTok{(}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}}\NormalTok{] }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\StringTok{\textasciigrave{}}\AttributeTok{2}\StringTok{\textasciigrave{}}\NormalTok{] }\SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{"Very Low"}\StringTok{\textasciigrave{}}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\DecValTok{2}\NormalTok{]  }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\DecValTok{3}\NormalTok{]  }\SpecialCharTok{\textasciitilde{}} \StringTok{"Low"}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\DecValTok{3}\NormalTok{]  }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\DecValTok{4}\NormalTok{]  }\SpecialCharTok{\textasciitilde{}} \StringTok{"Moderate"}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\DecValTok{4}\NormalTok{]  }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\DecValTok{5}\NormalTok{]  }\SpecialCharTok{\textasciitilde{}} \StringTok{"High"}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\DecValTok{5}\NormalTok{]  }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\DecValTok{6}\NormalTok{]  }\SpecialCharTok{\textasciitilde{}} \StringTok{"Very High"}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\DecValTok{6}\NormalTok{]  }\SpecialCharTok{\&}\NormalTok{ whp }\SpecialCharTok{\textless{}}\NormalTok{  e[}\DecValTok{7}\NormalTok{]  }\SpecialCharTok{\textasciitilde{}} \StringTok{"Extreme"}\NormalTok{,}
+\NormalTok{      whp }\SpecialCharTok{\textgreater{}=}\NormalTok{ e[}\StringTok{\textasciigrave{}}\AttributeTok{7}\StringTok{\textasciigrave{}}\NormalTok{] }\SpecialCharTok{\&}\NormalTok{ whp }\StringTok{\textasciigrave{}}\AttributeTok{\textless{}=}\StringTok{\textasciigrave{}}\NormalTok{ e[}\StringTok{\textasciigrave{}}\AttributeTok{8}\StringTok{\textasciigrave{}}\NormalTok{] }\SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{"Ultra (Top 1\%)"}\StringTok{\textasciigrave{}}\NormalTok{,}
+      \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{NA\_character\_}\StringTok{\textasciigrave{}}
+\NormalTok{    ),}
+    \AttributeTok{Category =} \StringTok{\textasciigrave{}}\AttributeTok{factor}\StringTok{\textasciigrave{}}\NormalTok{(}
+\NormalTok{      Category,}
+      \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Very Low"}\NormalTok{,}
+        \StringTok{"Low"}\NormalTok{,}
+        \StringTok{"Moderate"}\NormalTok{,}
+        \StringTok{"High"}\NormalTok{,}
+        \StringTok{"Very High"}\NormalTok{,}
+        \StringTok{"Extreme"}\NormalTok{,}
+        \StringTok{"Ultra (Top 1\%)"}
+\NormalTok{      ),}
+      \AttributeTok{ordered =} \StringTok{\textasciigrave{}}\AttributeTok{TRUE}\StringTok{\textasciigrave{}}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{county\_cats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(Category)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: Explain how the case\_when logic turns numeric WHP values into ordered risk categories.
+
+🗣 Example: I used \texttt{case\_when} to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The \texttt{cell\_area\_km2} column lets you compute true area easily.
+
+\section{Task 5}\label{task-5}
+
+After categories are created, you can summarize how much statewide area falls into each category and turn those area totals into probabilities.
+
+\textbf{Build \texttt{prob\_tbl} from \texttt{county\_cats}}
+
+🎯 Goal: Use \texttt{dplyr::group\_by()} and \texttt{dplyr::summarize()} to aggregate total area by \texttt{Category}, then compute \texttt{Probability} as each category's share of the total statewide area. Store the result as \texttt{prob\_tbl}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Start from \texttt{county\_cats} (the data set you created in Task 4, which already has \texttt{Category} and \texttt{cell\_area\_km2}).
+\item
+  Use \texttt{group\_by()} so that all rows in the same \texttt{Category} are treated as a single group.
+\item
+  Use \texttt{summarize()} to compute, for each \texttt{Category}:
+\end{enumerate}
+
+\begin{itemize}
+\item
+  \texttt{area\_km2}: the total area in square kilometers, as the sum of \texttt{cell\_area\_km2} across all cells in that category.
+\item
+  \texttt{n\_cells}: the number of grid cells in that category using \texttt{n()}.
+\item
+  Use \texttt{.groups\ =\ "drop"} so that the result is no longer grouped after summarizing.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Use mutate() to create a new variable called \texttt{Probability} that is the \texttt{area\_km2} divided by \texttt{sum(area\_km2)}.
+\end{enumerate}
+
+This makes \texttt{Probability} the fraction of statewide area that falls in each \texttt{Category}. The probabilities across all categories should sum to 1 (up to rounding error).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Use \texttt{select()} to keep only the columns, in this order:
+  \texttt{Category}, \texttt{Probability}, \texttt{area\_km2}, \texttt{n\_cells}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Code: dplyr::group\_by + dplyr::summarize + dplyr::mutate}
+\StringTok{\textasciigrave{}}\AttributeTok{prob\_tbl}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\NormalTok{ county\_cats }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Category}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{area\_km2 =} \StringTok{\textasciigrave{}}\AttributeTok{sum(cell\_area\_km2)}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \AttributeTok{n\_cells  =} \StringTok{\textasciigrave{}}\AttributeTok{n()}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \AttributeTok{.groups  =} \StringTok{\textasciigrave{}}\AttributeTok{"drop"}\StringTok{\textasciigrave{}}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Probability =}\NormalTok{ area\_km2 }\SpecialCharTok{/} \StringTok{\textasciigrave{}}\AttributeTok{sum(area\_km2)}\StringTok{\textasciigrave{}}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Category}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Probability}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{area\_km2}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{n\_cells}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{prob\_tbl}
+\FunctionTok{sum}\NormalTok{(prob\_tbl}\SpecialCharTok{$}\NormalTok{Probability)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: What does prob\_tbl tell you about the statewide hazard pattern in Idaho?
+
+🗣 Example: The \texttt{prob\_tbl} tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.
+
+\chapter{Part B}\label{part-b}
+
+The table below summarizes the quantile-based wildfire hazard categories derived from Idaho's continuous USFS WHP raster and the distance distributions used for an 8-hour run. The \textbf{Category} column lists seven bins (Very Low to Ultra) defined from the raster's cumulative distribution; the WHP index itself is unitless. The \textbf{Probability} column is the statewide area share for each bin---expressed as a percent of valid raster area (NA excluded)---and is interpreted as the chance that a random ignition falls in that category.
+
+The table also defines a simple fire-spread scenario using ``plausible values'' derived from ChatGPT for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
+
+The \textbf{Normal mean (km)} and \textbf{Normal SD (km)} columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The \textbf{Mean log} and \textbf{SD log} columns give the parameters \(\mu\) and \(\sigma\) of a lognormal distance model in which
+
+\[
+\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
+\]
+
+Labels ``Extreme'' and ``Ultra'' denote upper-tail bins (approximately the 95--99\% and 99--100\% quantiles, respectively).
+
+\begin{table}[!h]
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\begin{tabular}[t]{lrrrrr}
+\toprule
+Category & Probability & Mean (km) & SD (km) & Mean log & SD log\\
+\midrule
+Very Low & 25 & 2.0 & 1.0 & 0.582 & 0.472\\
+Low & 25 & 3.0 & 1.0 & 1.046 & 0.325\\
+Moderate & 25 & 4.5 & 1.5 & 1.451 & 0.325\\
+High & 15 & 7.0 & 2.0 & 1.907 & 0.280\\
+Very High & 5 & 12.0 & 3.0 & 2.455 & 0.246\\
+\addlinespace
+Extreme & 4 & 18.0 & 4.0 & 2.866 & 0.220\\
+Ultra (Top 1\%) & 1 & 28.0 & 6.0 & 3.310 & 0.212\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\section{Statistical Methods}\label{statistical-methods}
+
+A continuous random variable is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km.
+
+Throughout the assignment, you will see mathematical notation. You do not need to understand these equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor).
+
+\begin{customtextbox}
+
+Let $X$ be the continuous random variable of straight-line kilometer distance in an 8-hour period. Then a probability distribution of $X$ is a function $f(x)$ such that for any two numbers $a$ and $b$ with $a \leq b$, 
+
+$$
+P(a \leq X \leq b) =  \int_{a}^{b} f(x) \, dx
+$$
+
+The probability that $X$ takes on a value in the interval $[a, b]$ is given by the area above this interval and under the graph of the density function. 
+
+\end{customtextbox}
+
+\section{Log Normal Distribution}\label{log-normal-distribution}
+
+In this assignment, we will use the lognormal distribution to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?Lognormal}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Task 1}\label{task-1-1}
+
+\texttt{plnorm()} computes the cumulative distribution function (CDF) for a lognormal distribution. It gives the probability that a lognormally distributed random variable is less than or equal to a certain value.
+
+❓ Question a: If a new ignition starts in a High-hazard area, what is the probability that its 8-hour straight-line spread is at least 10 km?
+
+\begin{customtextbox}
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$ 
+
+In particular, the probability that the 8-hour straight-line spread is at least 10 km is given by
+
+$$ P(X \leq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, $$ 
+
+and in this problem, $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution. 
+
+\end{customtextbox}
+
+🎯 Goal: Compute the exact probability that a new ignition in a High-hazard area spreads at least 10 km in 8 hours using the \texttt{plnorm()} function. Use the \textbf{High} row's \textbf{Mean log} and \textbf{SD log} in \textbf{Table 1}. Set the lower.tail equal to FALSE. Store the result as \texttt{p\_high\_exact}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test: single lognormal, single threshold}
+\NormalTok{p\_high\_exact }\OtherTok{\textless{}{-}} \FunctionTok{plnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{meanlog =} \FloatTok{1.907}\NormalTok{, }\AttributeTok{sdlog =} \FloatTok{0.280}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{p\_high\_exact}
+\NormalTok{p\_high\_exact }\SpecialCharTok{*} \DecValTok{100}  \CommentTok{\# as a percentage}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: The value 0.0788567 indicates a 7.9\% chance that a new ignition in a High-hazard area will spread at least 10 km in 8 hours.
+
+\subsection{Task 2}\label{task-2-1}
+
+\texttt{qlnorm()} computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.
+
+❓ Question b: We'll treat distances above the 95th percentile as `extreme fast runs'. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 10\% of the time? In other words, what is the 95th percentile run length?
+
+\begin{customtextbox}
+  
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. The cumulative distribution function (CDF) of $X$ is given by
+
+$$ F(x) = P(X \leq x) = \int_{0}^{x} \mathcal{f_{high}}(t) dt. $$
+
+We define the 95th percentile of $X$, denoted by $q_{0.95}$ of this distribution to be the value satisfying
+
+$$ P(X \leq q_{0.95}) = F(q_{0.95}) = 0.95. $$
+
+equivalently, 
+
+$$ q_{0.95} = \int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx. $$
+
+In particular, the 95th percentile of the 8-hour straight-line spread distance for new ignitions in High-hazard areas is given by 
+
+$$ q_{0.95} = F^{-1}(0.95), $$ 
+
+and in this problem $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution.
+
+\end{customtextbox}
+
+🎯 Goal: Compute the distance such that there is a 95\% chance the 8-hour spread is no more than this value and a 5\% chance it exceeds it. Use \texttt{qlnorm()}. Set the probability to 0.95 and use the parameters in the \textbf{High} row's \textbf{Mean log} and \textbf{SD log} in \textbf{Table 1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{q90\_high }\OtherTok{\textless{}{-}} \FunctionTok{qlnorm}\NormalTok{(}\FloatTok{0.95}\NormalTok{, }\AttributeTok{meanlog =} \FloatTok{1.907}\NormalTok{, }\AttributeTok{sdlog =} \FloatTok{0.280}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{q90\_high}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: Based on this model, about 95\% of new ignitions in High-hazard areas are expected to spread no more than roughly 10.7 km in 8 hours, and only about 5\% would be expected to spread farther than 10.7 km in that time.
+
+\subsection{Task 3}\label{task-3-1}
+
+\texttt{dlnorm()} computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
+
+❓ Question c: Under our High-hazard lognormal model, how concentrated the distribution is locally around the shorter 3 km run verses the longer 10 km distance in 8 hours? \emph{Note: Higher density indicates a more likely value in a small neighborhood around that point.}
+
+\begin{customtextbox}
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$
+
+The values $\mathcal{f_{high}}(x)$ are densities, not probabilities. They represent the height of the distribution at the point x. In particular, the density at 3 km and 10 km are given by
+
+$$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
+
+\end{customtextbox}
+
+🎯 Goal: Compute the density at 3 km and 10 km using \texttt{dlnorm()}. Use the \textbf{High} row's \textbf{Mean log} and \textbf{SD log} in \textbf{Table 1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+
+\NormalTok{d\_3  }\OtherTok{\textless{}{-}} \FunctionTok{dlnorm}\NormalTok{(}\DecValTok{3}\NormalTok{,  }\AttributeTok{meanlog =} \FloatTok{1.907}\NormalTok{, }\AttributeTok{sdlog =} \FloatTok{0.280}\NormalTok{)}
+\NormalTok{d\_10 }\OtherTok{\textless{}{-}} \FunctionTok{dlnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{meanlog =} \FloatTok{1.907}\NormalTok{, }\AttributeTok{sdlog =} \FloatTok{0.280}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_3; d\_10  }\CommentTok{\# compare heights}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: The density at 10 km \(\mathcal{f_{high}}(10) \approx 0.0525\)) is higher than at 3 km (\(\mathcal{f_{high}}(3) \approx 0.00736\)), which implies that values in a small neighborhood around 10 km are more likely than values in a small neighborhood around 3 km under the High-hazard lognormal model.
+
+\subsection{Task 4}\label{task-4-1}
+
+\texttt{rlnorm()} generates random numbers from a lognormal distribution. \textbf{Note}: This task has three parts.
+
+❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would we expect to classify as `fast-growing' (≥10 km in 8 hours)?
+
+\begin{customtextbox}
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Assume
+
+$$ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ meanlog High}), $$
+
+with density function $\mathcal{f_{high}}(x)$ and CDF $F_{high}(x)$. 
+
+The probability that a single new ignition is 'fast-growing' (i.e., spreads 10 km or more in 8 hours) is given by
+
+$$ P(X \geq 10) = 1 - F_{high}(10)$$
+
+Now suppose we observe (or simulate) $n = 450$ new ignitions in High-hazard areas this season. Let $X_1, X_2, \ldots, X_{450}$ be random variables, each with the same lognormal distribution as $X$. 
+
+Define indicator variables for 'fast-growing' ignitions:
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq 10 \\ 0 & \text{if } X_i < 10 \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions, $S$, is given by
+
+$$ S = \sum_{i=1}^{450} I_i $$
+
+Each $I_i$ is a Bernoulli random variable with success probability $P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),$ so, the expected number of 'fast-growing' ignitions is
+
+$$ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). $$
+
+\end{customtextbox}
+
+Simulate distances for the \textbf{High} WHP category using a lognormal distribution. We'll estimate that the upcoming season will have 450 new ignitions and consider a fire fast growing if it spreads 10 km or more in 8 hours.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  🎯 Goal: Generate a large vector of simulated 8-hour distances for the \textbf{High} category using \texttt{rlnorm()}. Look up the \textbf{High} row's \textbf{Mean log} and \textbf{SD log} in \textbf{Table 1}, and store the result as \texttt{High\_Lognorm}. Set the number of ignitions per season to 450.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2025}\NormalTok{)}
+\CommentTok{\# ⚡ Test}
+\NormalTok{High\_Lognorm }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{450}\NormalTok{, }\AttributeTok{meanlog =} \FloatTok{1.907}\NormalTok{, }\AttributeTok{sdlog =} \FloatTok{0.280}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\FunctionTok{summary}\NormalTok{(High\_Lognorm)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  🎯 Goal: Use \texttt{sum()} to find the count of new ignitions in the simulation where the wildfire is classified as `fast-growing'.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{fast\_growing\_count }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(High\_Lognorm }\SpecialCharTok{\textgreater{}=} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{fast\_growing\_count}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment: Based on the simulation, we would expect approximately 30 new ignitions in High-hazard areas to be classified as `fast-growing' (spreading 10 km or more in 8 hours) this season.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  🎯 Goal: Use \texttt{hist()} to create a histogram of \texttt{High\_Lognorm}. In one sentence, note how the shape matches your descriptive summaries in Task 1.
+\end{enumerate}
+
+The histogram is a discrete approximation to the empirical density of these 450 values. It counts how many simulated distances fall into each of several bins. In other words, it shows what the simulated sample looks like.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\FunctionTok{hist}\NormalTok{(High\_Lognorm,}
+     \AttributeTok{col    =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{main   =} \StringTok{"Simulated 8{-}Hour Distances for High WHP (Log}
+\StringTok{ Normal Model)"}\NormalTok{,}
+     \AttributeTok{xlab   =} \StringTok{"Distance (km)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment
+
+\chapter{Part C}\label{part-c}
+
+\texttt{rlnorm} + \texttt{replicate()}
+
+❓ Question e: In a season with 450 new ignitions \textbf{statewide}, what is the probability we see at least 50 fast-growing events (≥10 km in 8 hours) when ignitions can occur in any hazard category according to their statewide area weights?
+
+\begin{customtextbox}
+
+Let there be $L$ hazard categories indexed by $i = 1, 2, \ldots, L$ with:
+
+- statewide area weights $p_j$ such that $\sum_{j=1}^{L} p_j = 1$.
+
+- lognormal spread model in category $j$: 
+
+$ X | \text{category} = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $
+
+Consider a season with $N = 450$ new ignitions **statewide**. For each ignition $i = 1, 2, \ldots, N$:
+
+1. Draw a hazard category 
+
+$$ C_i \in \{1, 2, \ldots, L\}, \space \space P(C_i = j) = p_j. $$
+
+independently across ignitions.
+
+2. Conditional on $C_i = j$, draw an 8-hour straight-line spread distance $X_i$ as
+
+$$ X_i | C_i = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $$
+
+independently across ignition given their categories.
+
+Define the indicator variable for a 'fast-growing' ignition (≥ $k = 10$ km in 8 hours) as
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq k \\ 0 & \text{if } X_i < k \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions in the season, $S$, is given by
+
+$$ T = \sum_{i=1}^{450} I_i $$
+
+We are interested in the probability that a season has at least 5 fast-growing events:
+
+$$ P(T \geq 50). $$
+
+and is approximated by Monte Carlo simulation.
+
+$$
+\widehat{P(T \ge 50)}
+\;\approx\;
+\frac{1}{S} \sum_{s=1}^{S} \mathbf{1}\{T^{(s)} \ge 50\},
+$$
+
+where $T^{(s)}$ is the simulated count of fast-growing ignitions in season $s$, and $S$ is the total number of simulated seasons.
+
+\end{customtextbox}
+
+\section{Task 1}\label{task-1-2}
+
+🎯 Goal: Create a vector of category \texttt{labels} that describe the seven wildfire hazard categories as shown in the Category column of Table 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{labels  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Very Low"}\NormalTok{,}\StringTok{"Low"}\NormalTok{,}\StringTok{"Moderate"}\NormalTok{,}\StringTok{"High"}\NormalTok{,}\StringTok{"Very High"}\NormalTok{,}\StringTok{"Extreme"}\NormalTok{,}\StringTok{"Ultra (Top 1\%)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{labels}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 2}\label{task-2-2}
+
+🎯 Goal: Create a vector called \texttt{prob} with from the Probability column from Table 1. The order must match the order of \texttt{labels}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{prob    }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.15}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.04}\NormalTok{, }\FloatTok{0.01}\NormalTok{)   }\CommentTok{\# from Table 1, as proportions}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\FunctionTok{sum}\NormalTok{(prob)  }\CommentTok{\# should equal 1}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 3}\label{task-3-2}
+
+🎯 Goal: Create vectors of \texttt{meanlog} and \texttt{sdlog} parameters for the lognormal distribution for each category. The order must match the order of \texttt{labels}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{meanlog }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.582}\NormalTok{, }\FloatTok{1.046}\NormalTok{, }\FloatTok{1.451}\NormalTok{, }\FloatTok{1.907}\NormalTok{, }\FloatTok{2.455}\NormalTok{, }\FloatTok{2.866}\NormalTok{, }\FloatTok{3.310}\NormalTok{)}
+\NormalTok{sdlog   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.472}\NormalTok{, }\FloatTok{0.325}\NormalTok{, }\FloatTok{0.325}\NormalTok{, }\FloatTok{0.280}\NormalTok{, }\FloatTok{0.246}\NormalTok{, }\FloatTok{0.220}\NormalTok{, }\FloatTok{0.212}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{meanlog}
+\NormalTok{sdlog}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 4}\label{task-4-2}
+
+🎯 Goal: Set the number of ignitions per season \texttt{N} to 450 and the number of simulations \texttt{S} to 100000. Also, set the fast threshold \texttt{k} to 10 km.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{450}
+\NormalTok{S }\OtherTok{\textless{}{-}} \DecValTok{100000}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{10} 
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 5}\label{task-5-1}
+
+🎯 Goal: Sample categories for one season
+
+Simulate one season's worth of categories, without any distances. Each ignition gets a hazard category chosen at random according to the statewide area weights in \texttt{prob}. Use \texttt{sample.int()} to sample indices from \texttt{1:length(labels)} and store them in a vector named \texttt{idx}. Then check the first few values and a frequency table to see how often each category appears.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{idx }\OtherTok{\textless{}{-}} \FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(labels),}
+                  \AttributeTok{size    =}\NormalTok{ N,}
+                  \AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{,}
+                  \AttributeTok{prob    =}\NormalTok{ prob)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\FunctionTok{table}\NormalTok{(labels[idx])}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment:
+
+\section{Task 6}\label{task-6}
+
+🎯 Goal: Draw distances for one season
+
+Next, turn those category indices into distances. For each ignition, use \texttt{rlnorm()} with the \texttt{meanlog} and \texttt{sdlog} for that ignition's category. You do this by indexing the parameter vectors with \texttt{idx}. Store the simulated distances in a vector \texttt{d}, then look at the first few values and a summary.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(N,}
+            \AttributeTok{meanlog =}\NormalTok{ meanlog[idx],}
+            \AttributeTok{sdlog   =}\NormalTok{ sdlog[idx])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\FunctionTok{head}\NormalTok{(d)}
+\FunctionTok{summary}\NormalTok{(d)}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment:
+
+\section{Task 7}\label{task-7}
+
+🎯 Goal: Count fast runs for one season
+
+Now that you have one season of distances in \texttt{d}, count how many ignitions are ``fast'' (distance at least \texttt{k\ =\ 10} km). Use a logical comparison \texttt{d\ \textgreater{}=\ k} to mark fast runs with TRUE/FALSE, then wrap that in \texttt{sum()} to count how many TRUE values there are. Store this in \texttt{fast\_count\_one} and print it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{fast\_flags\_one  }\OtherTok{\textless{}{-}}\NormalTok{ d }\SpecialCharTok{\textgreater{}=}\NormalTok{ k}
+\NormalTok{fast\_count\_one  }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(fast\_flags\_one)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{fast\_count\_one}
+\FunctionTok{mean}\NormalTok{(fast\_flags\_one)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 8}\label{task-8}
+
+Braces \texttt{\{\ ...\ \}} group several lines together so they act as one expression and return the final result.
+
+🎯 Goal: Bundle the three steps above into one block of code that represents a single season. (1) sampling \texttt{idx}, (2) drawing \texttt{d}, and (3) counting fast ignitions.
+Run it to make sure it still returns a single count.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\NormalTok{fast\_count\_one }\OtherTok{\textless{}{-}}\NormalTok{ \{}
+\NormalTok{  idx }\OtherTok{\textless{}{-}} \FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(labels),}
+                    \AttributeTok{size    =}\NormalTok{ N,}
+                    \AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{,}
+                    \AttributeTok{prob    =}\NormalTok{ prob)}
+\NormalTok{  d   }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(N,}
+                \AttributeTok{meanlog =}\NormalTok{ meanlog[idx],}
+                \AttributeTok{sdlog   =}\NormalTok{ sdlog[idx])}
+  \FunctionTok{sum}\NormalTok{(d }\SpecialCharTok{\textgreater{}=}\NormalTok{ k)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ✅  Verify}
+\NormalTok{fast\_count\_one}
+\end{Highlighting}
+\end{Shaded}
+
+🗣 Comment:
+
+\section{Task 9}\label{task-9}
+
+🎯 Goal: Use \texttt{replicate()} to simulate many seasons.
+
+Now that the one season computation works and returns a single count, use \texttt{replicate()} to repeat it \texttt{S} times. Store the vector of seasonal counts as \texttt{counts\_fast\_mix}. Then compute the expected number of fast runs per season and the probability that a season has at least 5 fast-growing events.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test: Final, complete simulation}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2025}\NormalTok{)}
+\NormalTok{counts\_fast\_mix }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}
+  \AttributeTok{n =}\NormalTok{ S,}
+  \AttributeTok{expr =}\NormalTok{ \{}
+\NormalTok{    idx }\OtherTok{\textless{}{-}} \FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(labels), }\AttributeTok{size =}\NormalTok{ N, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ prob)}
+\NormalTok{    d   }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(N, }\AttributeTok{meanlog =}\NormalTok{ meanlog[idx], }\AttributeTok{sdlog =}\NormalTok{ sdlog[idx])}
+    \FunctionTok{sum}\NormalTok{(d }\SpecialCharTok{\textgreater{}=}\NormalTok{ k)}
+\NormalTok{  \}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test:  Answer Question}
+\NormalTok{prob\_at\_least\_50 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(counts\_fast\_mix }\SpecialCharTok{\textgreater{}=} \DecValTok{50}\NormalTok{)    }\CommentTok{\# Monte Carlo estimate of P(T \textgreater{}= 50)  }
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 10}\label{task-10}
+
+🎯 Goal: Use \texttt{ggplot2::geom\_histogram()} to create a histogram of \texttt{counts\_fast\_mix}. In one sentence, note how the shape matches your descriptive summaries in Task 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ⚡ Test}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{threshold }\OtherTok{\textless{}{-}} \DecValTok{50}  \CommentTok{\# "at least 5 fast fires"}
+
+\NormalTok{counts\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{fast\_count =}\NormalTok{ counts\_fast\_mix}
+\NormalTok{)}
+
+\CommentTok{\# Pick a reasonable y{-}position for the annotation (near the top of the tallest bar)}
+\NormalTok{max\_y }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{table}\NormalTok{(counts\_df}\SpecialCharTok{$}\NormalTok{fast\_count))}
+
+\FunctionTok{ggplot}\NormalTok{(counts\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ fast\_count)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \AttributeTok{binwidth =} \DecValTok{1}\NormalTok{,                }\CommentTok{\# one bin per integer count}
+    \AttributeTok{boundary =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,             }\CommentTok{\# centers bins on 0, 1, 2, ...}
+    \AttributeTok{color    =} \StringTok{"white"}\NormalTok{,}
+    \AttributeTok{fill     =} \StringTok{"steelblue"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}
+    \AttributeTok{xintercept =}\NormalTok{ threshold }\SpecialCharTok{{-}} \FloatTok{0.5}\NormalTok{,  }\CommentTok{\# boundary between 4 and 5}
+    \AttributeTok{linetype   =} \StringTok{"dashed"}\NormalTok{,}
+    \AttributeTok{linewidth  =} \FloatTok{0.8}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}
+    \StringTok{"text"}\NormalTok{,}
+    \AttributeTok{x      =}\NormalTok{ threshold }\SpecialCharTok{+} \FloatTok{0.2}\NormalTok{,}
+    \AttributeTok{y      =}\NormalTok{ max\_y }\SpecialCharTok{*} \FloatTok{0.9}\NormalTok{,   }\CommentTok{\# use the precomputed max\_y, not ..count..}
+    \AttributeTok{label  =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"Seasons with \textbackslash{}u2265 "}\NormalTok{, threshold, }\StringTok{" fast fires"}\NormalTok{),}
+    \AttributeTok{angle  =} \DecValTok{90}\NormalTok{,}
+    \AttributeTok{vjust  =} \FloatTok{0.5}\NormalTok{,}
+    \AttributeTok{hjust  =} \DecValTok{0}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title    =} \StringTok{"Simulated number of fast{-}growing fires per season"}\NormalTok{,}
+    \AttributeTok{subtitle =} \FunctionTok{paste0}\NormalTok{(}
+      \StringTok{"Fast = distance \textbackslash{}u2265 10 km in 8 hours; N = 450 ignitions per season}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
+      \StringTok{"Estimated P(season has \textbackslash{}u2265 "}\NormalTok{, threshold, }\StringTok{" fast fires) \textbackslash{}u2248 "}\NormalTok{,}
+      \FunctionTok{sprintf}\NormalTok{(}\StringTok{\textquotesingle{}\%.1f\%\%\textquotesingle{}}\NormalTok{, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ prob\_at\_least\_50)}
+\NormalTok{    ),}
+    \AttributeTok{x        =} \StringTok{"Number of fast{-}growing fires in a season"}\NormalTok{,}
+    \AttributeTok{y        =} \StringTok{"Number of simulated seasons"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \DecValTok{0}\SpecialCharTok{:}\FunctionTok{max}\NormalTok{(counts\_df}\SpecialCharTok{$}\NormalTok{fast\_count)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{plot.title      =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
+    \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.text.x     =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Save and Upload}\label{save-and-upload}
+
+\renewcommand\bibname{Today you practiced:}
+\bibliography{references.bib}
+
+\end{document}
