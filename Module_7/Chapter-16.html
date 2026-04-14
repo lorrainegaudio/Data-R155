@@ -1631,65 +1631,133 @@ display: none;
 
 <h1 class="title toc-ignore">Chapter 16: ggplot</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version February 11, 2026</h4>
+<h4 class="date">Version April 13, 2026</h4>
 
 </div>
 
 
-<div id="lets-bake-a-plot-layering-data-with-ggplot2." class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 🎂 Let’s Bake a Plot!
-Layering Data with ggplot2.</h1>
-<p>In Chapter 15, we did simple data visualizations using R’s built‑in
-function <code>hist()</code>. Today, we use the package
-<code>ggplot2</code> to turn data frames into clear, publication‑quality
-plots. Specifically, we’ll look at the grammar of graphics.</p>
-<p>To begin Chapter 16, follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open your course project for RStudio</p></li>
-<li><p>Create a new file. From the file types we have used so far, pick
-which file type you want to use. (File &gt; New File &gt; ???).</p></li>
-<li><p>Type in the code provided in this document as you follow along
-with the video. Pause the video at anytime to answer assignment
-questions, dig deeper or add memo notes.</p></li>
-</ol>
-<p><strong>Chapter Overview</strong></p>
+<div id="overview" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Overview</h1>
+<p>In earlier chapters, you practiced working with data frames,
+variables, and reproducible Quarto notes. In this chapter, you will use
+<code>ggplot2</code> to turn data into graphs that are easier to read
+and explain. You will build plots by combining a data frame, aesthetic
+mappings, and geometric layers.</p>
+<p>This chapter matters because analysts do not only calculate results.
+They also need to communicate patterns, comparisons, distributions, and
+possible relationships in a clear visual form. In R,
+<code>ggplot2</code> is one of the main tools for doing that.</p>
 <p>By the end of Chapter 16 you will be able to:</p>
-<ol style="list-style-type: decimal">
-<li><p>⚡ Remember – State the steps: <code>data</code> ➜
-<code>aes()</code> ➜ <code>geom()</code>.</p></li>
-<li><p>🔍 Understand – Describe how <code>aes()</code> maps variables to
-plot elements.</p></li>
-<li><p>🛠 Apply – Build scatterplots, histograms, and boxplots.</p></li>
-<li><p>📊 Analyze – Use color or fill aesthetics to compare
-groups.</p></li>
-<li><p>🧠️ Evaluate – Choose suitable geoms and themes for a
-question.</p></li>
-</ol>
+<ul>
+<li>🎨 Build a plot by combining <code>data</code>, <code>aes()</code>,
+and <code>geom_*()</code>.</li>
+<li>📍 Map variables to visual properties such as the x-axis, y-axis,
+<code>fill</code>, and <code>color</code>.</li>
+<li>🔵 Create scatterplots with <code>geom_point()</code>.</li>
+<li>📊 Create histograms with <code>geom_histogram()</code>.</li>
+<li>📦 Create boxplots with <code>geom_boxplot()</code>.</li>
+<li>🏷️ Improve readability with labels and themes.</li>
+<li>📝 Continue using Quarto to organize code, output, checks, and
+written interpretation in a reproducible analysis document.</li>
+</ul>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="packages" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> 📦 Packages</h1>
+<div id="setting-up-your-notes" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Setting Up Your
+Notes</h1>
+<p>In Chapter 11, you learned how to create a Quarto file, keep the YAML
+header, use Markdown headings, write memos outside code chunks, and
+control chunks with <code>#|</code> options. In Chapter 12, you added a
+table of contents and section numbering. In Chapter 13, you continued
+using those Quarto skills in a reproducible workflow. In Chapter 16, you
+will keep practicing those same habits while learning
+<code>ggplot2</code>.</p>
+<div id="create-a-quarto-file" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Create a Quarto
+File</h2>
+<p>For those of you who <strong>have GitHub</strong> and a course
+project, navigate to your course folder and open your course project.
+This will open RStudio. Click “Pull” in the Git pane to get the latest
+version of the course materials. After completing work, save, stage,
+commit, and push.</p>
+<p>If you <strong>don’t have GitHub</strong> or a course project, just
+open RStudio and set your working directory to your course folder.</p>
+<p>Open a new Quarto document in your course folder and save it as:
+<code>chapter16_notes.qmd</code>
+(<code>File &gt; New File &gt; Quarto Document</code>).</p>
+</div>
+<div id="yaml-header" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> YAML Header</h2>
+<p>Copy and paste this YAML header into your new Quarto document. Update
+the author field with your name.</p>
+<pre class="yaml"><code>---
+title: &quot;Chapter 16 Notes&quot;
+subtitle: &quot;ggplot2&quot;
+author: &quot;YOUR NAME&quot;
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: false
+---</code></pre>
+<p>Since this document can act as a resource for you to review later,
+set code-fold to <code>false</code> so that all code is visible by
+default.</p>
+</div>
+<div id="headings" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Headings</h2>
+<p>Use the section headings in this file to structure your notes. You
+can copy and paste these into your new Quarto document:</p>
+<pre class="markdown"><code># Loading Packages
+
+# What is ggplot2?
+
+# The Blank Canvas
+
+# Mapping Aesthetics
+
+# Scatterplots
+
+# Histograms
+
+# Boxplots
+
+# Labels and Themes
+</code></pre>
+<p>Work through the sections under each heading. Render to HTML often to
+check both formatting and code output.</p>
+</div>
+</div>
+<div id="packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 📦 Packages</h1>
 <p>Install once (if needed): <code>install.packages(&quot;dplyr&quot;)</code>;
 <code>install.packages(&quot;dslabs&quot;)</code></p>
 <pre class="r"><code>install.packages(&quot;ggplot2&quot;)</code></pre>
-<p>Load the packages at the start of every session:</p>
-<pre class="r"><code>library(dslabs)  # Data science labs package
+<p>Turn off <code>install.packages()</code> after you have installed the
+package once. You only need to install a package one time on your
+computer. After that, you can load the package with
+<code>library()</code>.</p>
+<p>🎯 Load the packages at the start of every session:</p>
+<pre class="r"><code># ⚡
+library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package
 library(ggplot2) # Data visualization</code></pre>
 </div>
-<div id="what-is-ggplot2" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> What is ggplot2?</h1>
+<div id="what-is-ggplot2" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> What is ggplot2?</h1>
 <p>Open the help file for <code>ggplot()</code> to see its formal
 arguments and description.</p>
 <pre class="r"><code>?ggplot   # skim the Details section</code></pre>
 <p>📜 The SYNTAX (basic/general):</p>
 <p><code>ggplot(data = NULL, mapping = aes(), ..., environment = parent.frame())</code></p>
-<p>The three core steps of ggplot2 are: (1) supply a data frame, (2) map
-aesthetics with <code>aes()</code>, and (3) add geometric objects
-(geoms) with <code>geom_*()</code> functions.</p>
+<p>The three core steps of <strong>ggplot2</strong> are: (1) supply a
+data frame, (2) map aesthetics with <code>aes()</code>, and (3) add
+geometric objects (geoms) with <code>geom_*()</code> functions.</p>
 </div>
-<div id="the-blank-canvas" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> The Blank Canvas</h1>
+<div id="the-blank-canvas" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> The Blank Canvas</h1>
 <p>We’ll start building a plot step-by-step. First, we create a blank
 canvas with <code>ggplot()</code>. The data set we’ll use is
 <code>divorce_margarine</code> from the <code>dslabs</code> package.</p>
@@ -1708,8 +1776,12 @@ ggplot(data = divorce_margarine)</code></pre>
 <p>R does not throw an error. 📝 Note that ggplot needs three main steps
 (data → <code>aes()</code> → <code>geom_*()</code>).</p>
 </div>
-<div id="mapping-aesthetics" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Mapping Aesthetics</h1>
+<div id="mapping-aesthetics" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Mapping Aesthetics</h1>
+<p><strong>Aesthetic mapping</strong> is the process of connecting
+variables in your data to visual properties of the plot, such as
+position, color, size, and shape. In <code>ggplot2</code>, this is done
+using the <code>aes()</code> function.</p>
 <p>Review the syntax for ggplot2 again.</p>
 <p>📜 The SYNTAX (basic):
 <code>⁠ggplot(data = df, mapping = aes(x, y, other aesthetics))</code></p>
@@ -1737,15 +1809,20 @@ structure. By setting <code>aes()</code> inside <code>ggplot()</code> we
 create a shared mapping that all later geoms can reuse, instead of
 repeating ourselves for each layer.</p>
 </div>
-<div id="adding-geometric-objects-geoms" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Adding Geometric
+<div id="adding-geometric-objects-geoms" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Adding Geometric
 Objects (Geoms)</h1>
-<p>Geometric objects (geoms) are the actual shapes drawn on the plot:
-points, lines, bars, boxplots, etc. Each geom answers the question:
-<em>Given these aesthetics, how should the data be drawn?</em></p>
-<div id="scatterplot-example" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Scatterplot
+<p>Geometric objects (<strong>geoms</strong>) are the actual shapes
+drawn on the plot: points, lines, bars, boxplots, etc. Each geom answers
+the question: <em>Given these aesthetics, how should the data be
+drawn?</em></p>
+<div id="scatterplot-example" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Scatterplot
 Example</h2>
+<p><strong>Scatterplots</strong> are used to visualize the relationship
+between two numeric variables. Each point represents an observation in
+the data, with its position determined by the values of the two
+variables.</p>
 <p><code>geom_point()</code> is a geometric object (or “geom”) in
 <code>ggplot2</code> that creates a scatter plot by placing points at
 the specified x and y coordinates.</p>
@@ -1799,8 +1876,8 @@ different layers of the plot behave.</p>
 <p>🚀 Explore and Play: Try adding any of the above aesthetics to
 <code>geom_point()</code>. How does it change the plot?</p>
 </div>
-<div id="layering-geoms" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Layering geoms</h2>
+<div id="layering-geoms" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Layering geoms</h2>
 <p>Different geoms tell different stories. Let’s explore more geoms!</p>
 <p>We’ve seen that <code>geom_point()</code> highlights individual data
 points. <code>geom_smooth()</code> adds a smoothed line to show trends
@@ -1829,9 +1906,12 @@ divorce_margarine %&gt;%
 <p>🗣 Comment: The trend line shows a positive linear relationship
 between divorce rate and margarine consumption.</p>
 </div>
-<div id="histogram-example" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Histogram
+<div id="histogram-example" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Histogram
 Example</h2>
+<p><strong>Histograms</strong> are used to visualize the distribution of
+a single numeric variable. They group values into bins and show the
+count (or density) of observations in each bin.</p>
 <pre class="r"><code>?geom_histogram</code></pre>
 <p>📜 The SYNTAX:</p>
 <p><code>geom_histogram(mapping = NULL, data = NULL, ..., binwidth = NULL, bins = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)</code></p>
@@ -1914,8 +1994,8 @@ report.</p>
 <p>🛠 Break Things! Test out your hand at adding aesthetics
 <code>geom_histogram()</code> understands.</p>
 </div>
-<div id="density-plot" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Density Plot</h2>
+<div id="density-plot" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Density Plot</h2>
 <p>Now we’ll look at a smooth version of the height distribution using a
 density curve.</p>
 <p>Density plots are smoothed versions of histograms that estimate the
@@ -1954,8 +2034,8 @@ shape.</p></li>
 outline.</p></li>
 </ul>
 </div>
-<div id="overlaid-histograms" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Overlaid
+<div id="overlaid-histograms" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Overlaid
 Histograms</h2>
 <p>Let’s compare the two height distributions by overlaying histograms
 and using <code>fill = Country</code> to distinguish groups.</p>
@@ -1980,11 +2060,12 @@ x-scale so they overlap. The <code>alpha = 06</code> makes bars
 transparent (0 = invisible, 1 = solid), so we can see where the two
 distributions overlap.</p>
 </div>
-<div id="boxplot" class="section level2" number="6.6">
-<h2><span class="header-section-number">6.6</span> Boxplot</h2>
-<p>Boxplots summarize distributions using five statistics: minimum,
-first quartile (Q1), median, third quartile (Q3), and maximum. They are
-useful for comparing distributions across groups.</p>
+<div id="boxplot" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Boxplot</h2>
+<p><strong>Boxplots</strong> summarize distributions using five
+statistics: minimum, first quartile (Q1), median, third quartile (Q3),
+and maximum. They are useful for comparing distributions across
+groups.</p>
 <pre class="r"><code>?geom_boxplot</code></pre>
 <p>📜 The SYNTAX:</p>
 <p><code>geom_boxplot(mapping = NULL, data = NULL, ..., outlier.color = NULL, outlier.shape = 19, outlier.size = 1.5, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)</code></p>
@@ -2008,8 +2089,8 @@ and that each box shows median, IQR, and dots for each of the
 outliers.</p>
 </div>
 </div>
-<div id="labels-and-themes" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Labels and Themes</h1>
+<div id="labels-and-themes" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Labels and Themes</h1>
 <p>We can enhance our plots by adding axis labels and applying themes
 for better aesthetics.</p>
 <p><code>xlab()</code> and <code>ylab()</code> functions set the labels
@@ -2037,48 +2118,174 @@ you’re using the <code>theme_light()</code> function from the
 <code>ggplot2</code> package. This is useful when multiple packages have
 functions with the same name.)</p>
 </div>
-<div id="summary" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Summary</h1>
+<div id="summary" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Summary</h1>
+<p>In this chapter, you learned that <code>ggplot2</code> builds plots
+by combining a data frame, an aesthetic mapping in <code>aes()</code>,
+and one or more geometric layers such as <code>geom_point()</code>,
+<code>geom_histogram()</code>, and <code>geom_boxplot()</code>. You
+practiced starting with a blank canvas, mapping variables to visual
+properties, and then choosing a geom that fits the question you want to
+answer.</p>
+<p>You also improved plot readability by adding axis labels and applying
+themes. These are foundational data-storytelling skills in R. You will
+reuse them whenever you need to explore data or communicate a pattern to
+someone else.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Chapter Terms</h1>
+<p><strong>Aesthetic mapping</strong>: A connection between a variable
+in the data and a visual property in the plot, such as position, color,
+or fill. In <code>ggplot2</code>, mappings are usually set inside
+<code>aes()</code>.</p>
+<p><strong>Boxplot</strong>: A graph that summarizes a distribution
+using the median, quartiles, spread, and possible outliers.</p>
+<p><strong>Density Plot</strong>: A graph for continuous numerical data
+that shows a smoothed estimate of the distribution of values. In
+<code>ggplot2</code>, a density plot is typically created with
+<code>geom_density()</code> and can be understood as a smooth
+alternative to a histogram.</p>
+<p><strong>ggplot2</strong>: An R package for data visualization based
+on the grammar of graphics. It builds plots by combining data, mappings,
+and geometric layers.</p>
+<p><strong>geom</strong>: A geometric layer that controls how data are
+drawn on the plot. Examples include <code>geom_point()</code>,
+<code>geom_histogram()</code>, and <code>geom_boxplot()</code>.</p>
+<p><strong>Histogram</strong>: A graph that shows the distribution of
+one numeric variable by grouping values into bins.</p>
+<p><strong>Labels</strong>: Text added to a <code>ggplot2</code> graphic
+to identify and explain what the plot shows, such as axis labels, legend
+titles, plot titles, subtitles, captions, and tags. In
+<code>ggplot2</code>, labels are commonly set with <code>labs()</code>,
+<code>xlab()</code>, <code>ylab()</code>, and <code>ggtitle()</code></p>
+<p><strong>Scatterplot</strong>: A graph that shows the relationship
+between two numeric variables by placing one point for each
+observation.</p>
+<p><strong>Theme</strong>: A set of display settings that controls the
+non-data parts of a <code>ggplot2</code> graphic, such as fonts,
+background, gridlines, axis text, legend appearance, and title styling.
+Complete themes like <code>theme_bw()</code> or
+<code>theme_light()</code> change the overall look of a plot, while
+<code>theme()</code> lets you customize individual parts.</p>
 </div>
-<div id="practice-space" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
-<p>To earn technical skill points, replace each ____ placeholder (and
-any TODO comments) with working code or a short written answer. Run each
-section. When you’re done, your workspace should contain FOUR new
-objects: <code>Pretty_Flowers</code>, <code>Petal_Spread</code>,
-<code>CO2_Graph</code>, <code>Tall_Density</code>. Run each section so
-that the requested objects appear in your Environment. Save and submit
-both the “your choice” file with your code (R, Rmd, or Qmd) and the data
-in your environment (RData). The highest points you can earn in the
-technical skill practice portion are 3.50.</p>
-<p>For every code chunk you add or edit, use the <strong>🎯/❓ Goal →
-⚡Code attempts → ✅Checks (print the figures) → 🗣/🪞 Explain the code,
-the results or what you learned</strong> structure to earn learning
-skill points. The highest learning skill points you can earn on this
-submission is 2.50.</p>
-<div id="task-0" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Task 0</h2>
-<p>📦 Packages</p>
+<div id="practice-space" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> 📝 Practice Space</h1>
+<p>In this Practice Space, you are expected to:</p>
+<ul>
+<li>build plots with the three core <code>ggplot2</code> steps:
+<code>data</code> → <code>aes()</code> → <code>geom_*()</code></li>
+<li>store requested plots with the exact object names given in the
+task</li>
+<li>use <code>ggplot2</code> layers to add labels, color or fill
+mappings, transparency, and other formatting</li>
+<li>check your results by printing plots and using simple checks such as
+<code>class()</code>, <code>names()</code>, <code>head()</code>,
+<code>nrow()</code>, <code>table()</code>, or other appropriate
+checks</li>
+<li>write short interpretations that explain what the graph shows, not
+just what code you ran</li>
+</ul>
+<p>When a task asks for explanation or reflection, answer in a short
+memo after your code and checks.</p>
+<p>Replace every <code>____</code> placeholder and any TODO comment with
+working code or a short written response. Run each section and make sure
+the requested objects appear in the Environment. For every task, use the
+pattern 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Explain.</p>
+<p>You will submit your <code>chapter16_practice.qmd</code>, your
+rendered <code>chapter16_practice.html</code> (optional), and your
+<code>chapter16_practice.RData</code> workspace file.</p>
+<div id="setup" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Setup</h2>
+<ol style="list-style-type: decimal">
+<li>Create a <strong>new Quarto file</strong> in your course folder and
+save it as:</li>
+</ol>
+<ul>
+<li><code>chapter16_practice.qmd</code></li>
+<li>Test Render your document often so you can catch formatting problems
+and code errors early.</li>
+<li>You may also render and submit
+<code>chapter16_practice.html</code>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Use the heading structure taught earlier in the chapter.</li>
+</ol>
+<p>Your Quarto setup for Chapter 16 should include headings, section
+numbering, and a table of contents, and you should render often to check
+both formatting and errors.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>📦 Load the packages used in this chapter</li>
+</ol>
+<p>This Practice Space uses <code>ggplot2</code>, <code>dplyr</code>,
+and <code>dslabs</code>, so your document should load those packages
+near the top and run cleanly from start to finish.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Make your plotting work reproducible.</li>
+</ol>
+<ul>
+<li>Run your document from top to bottom to confirm that your plots,
+objects, and explanations all match.</li>
+<li>Print each plot object after you create it so you can verify what it
+looks like in your rendered document.</li>
+<li>Make sure the requested plot objects appear in your Environment with
+the exact names listed in the tasks.</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Memo your work with the 🎯 / ⚡ / ✅ / 🗣</li>
+</ol>
+<ul>
+<li>🎯 a memo before the code chunk that states the goal of the code and
+what you are trying to learn, check, or demonstrate</li>
+<li>⚡ the code chunk itself</li>
+<li>✅ any needed checks after the code</li>
+<li>🗣 a memo after the code chunk that explains what you learned,
+discovered, or confirmed</li>
+<li>🗣 answers to all comment questions included in the task</li>
+</ul>
+<p>👀 If you <strong>used help</strong> while working, document it in a
+memo. For example, if you used an LLM or another outside resource to
+understand an error or concept, briefly disclose that use and explain
+what help you received. <strong>Type all code yourself.</strong> This is
+part of the course expectation for AI-supported learning and memo-based
+workflow.</p>
+<hr />
+<p>Follow this template for each coding task.</p>
+<p>🎯 What is the goal of the code? What am I trying to learn, check, or
+demonstrate?</p>
+<pre class="r"><code># ⚡ Code
+your_object &lt;- &quot;here&quot;</code></pre>
+<p>✅ What checks can I do to confirm that the code worked as
+expected?</p>
+<pre class="r"><code># ✅ Checks
+class(your_object)
+your_object</code></pre>
+<p>🗣/🪞 What I learned / Next step. 1–2 sentences.</p>
+<hr />
+</div>
+<div id="task-0" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Task 0</h2>
+<p>📦 <strong>Packages</strong></p>
 <p>Make sure your script includes code that attached
 <code>ggplot2</code>, <code>dplyr</code>, and <code>dslabs</code>
 packages so that your script runs from start to finish without
 errors.</p>
+<pre class="r"><code># ⚡Code
+library(ggplot2)
+library(dplyr)
+library(dslabs)</code></pre>
 </div>
-<div id="task-1" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Task 1</h2>
-<p>🧠 Quick Recall</p>
+<div id="task-1" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Task 1</h2>
+<p>🧠 <strong>Quick Recall</strong></p>
 <p>List the three core <code>ggplot2</code> steps and write a short
 explanation of each step.</p>
 <p>✍️ EXPLANATION: “___”</p>
 <p>✍️ EXPLANATION: “___”</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
-<div id="task-2" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 2</h2>
-<p><strong>Scatterplot </strong></p>
+<div id="task-2" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Task 2</h2>
+<p><strong>Scatterplot</strong></p>
 <p>🎯 Create a scatterplot from the built-in <code>iris</code> dataset,
 and save it in an object called <code>Pretty_Flowers</code>. Put sepal
 length on the horizontal axis and petal length on the vertical axis.
@@ -2087,10 +2294,18 @@ Make the points moderately large so they are easy to see. Finally, label
 the x-axis as “Sepal Length (cm)” and the y-axis as “Petal Length
 (cm)”.</p>
 <pre class="r"><code># ⚡Code 
-_____ &lt;- _____</code></pre>
+Pretty_Flowers &lt;- iris %&gt;% 
+  ggplot(`aes(x = Sepal.Length, y = Petal.Length, color = Species)`) +
+  `geom_point(size = 3)` + 
+  `xlab(&quot;Sepal Length (cm)&quot;)` + 
+  `ylab(&quot;Petal Length (cm)&quot;)`</code></pre>
+<pre class="r"><code># ✅ Checks
+class(Pretty_Flowers)
+pretty_flowers</code></pre>
+<p>🗣/🪞 What pattern do you notice in petal length across species?</p>
 </div>
-<div id="task-3" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 3</h2>
+<div id="task-3" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Task 3</h2>
 <p><strong>Boxplot: Group Comparison</strong></p>
 <p>🎯 Create a boxplot from the built-in iris dataset and store it in an
 object called <code>Petal_Spread</code>. Put species on the horizontal
@@ -2100,10 +2315,18 @@ Fill each box with a different color according to species, but remove
 the legend so only the colored boxplots and axis labels indicate which
 species is which.</p>
 <pre class="r"><code># ⚡Code 
-_____ &lt;- _____</code></pre>
+Petal_Spread &lt;- iris %&gt;% 
+  ggplot(`aes(x = Species, y = Petal.Width, fill = Species)`) +
+  `geom_boxplot(show.legend = FALSE)`</code></pre>
+<pre class="r"><code># ✅ Checks
+class(Petal_Spread)
+Petal_Spread</code></pre>
+<p>🗣/🪞 Which species appears to have the widest petal-width
+distribution? What does the boxplot help you see that a table of values
+would not show as quickly?</p>
 </div>
-<div id="task-4" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 4</h2>
+<div id="task-4" class="section level2" number="11.6">
+<h2><span class="header-section-number">11.6</span> Task 4</h2>
 <p><strong>Density plot: split + transparency</strong></p>
 <p>🎯 Create a density plot using the built-in <code>CO2</code> dataset
 and store the plot in an object called <code>CO2_Graph</code>. Put CO2
@@ -2114,11 +2337,20 @@ curves can overlap and still be visible where they intersect. Finally,
 add the title “CO2 Uptake by Plant Type” (use <code>ggtitle()</code>) at
 the top of the plot.</p>
 <pre class="r"><code># ⚡Code 
-_____ &lt;- _____</code></pre>
+CO2_Graph &lt;- CO2 %&gt;% 
+  ggplot(`aes(x = uptake, fill = Type)`) + 
+  `geom_density(alpha = 0.5)` + 
+  `ggtitle(&quot;CO2 Uptake by Plant Type&quot;)`
+CO2_Graph</code></pre>
+<pre class="r"><code># ✅ Checks
+class(CO2_Graph)
+CO2_Graph</code></pre>
+<p>🗣/🪞 What does the overlap between the density curves suggest about
+the two plant types?</p>
 </div>
-<div id="task-5" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 5</h2>
-<p>⚖️ Histogram vs. Density</p>
+<div id="task-5" class="section level2" number="11.7">
+<h2><span class="header-section-number">11.7</span> Task 5</h2>
+<p>⚖️ <strong>Histogram vs. Density</strong></p>
 <p>🎯 Create a graph from the <code>heights</code> dataset and save it
 in an object called <code>Tall_Density</code>. Put height (in inches) on
 the horizontal axis. Draw a histogram of heights using bars that are 1
@@ -2133,34 +2365,44 @@ underneath. Label the x-axis “Height (inches)” and the y-axis “Density”
 <code>geom_histogram()</code> first, then
 <code>geom_density()</code>.)</p>
 <pre class="r"><code># ⚡Code 
-_____ &lt;- _____</code></pre>
+Tall_Density &lt;- heights %&gt;% 
+  ggplot(`aes(x = height)`) +
+  geom_histogram(`aes(y = after_stat(density))`,
+                 `binwidth = 1`,
+                 `fill     = &quot;blue&quot;`,
+                 `color    = &quot;white&quot;`) +
+  geom_density(`color    = &quot;darkorange&quot;`,
+               `fill     = &quot;darkorange&quot;`,
+               `alpha    = 0.3`,
+               `linewidth = 1`) +
+  `xlab(&quot;Height (inches)&quot;)` +
+  `ylab(&quot;Density&quot;)`</code></pre>
+<pre class="r"><code># ✅ Checks
+class(Tall_Density)
+Tall_Density</code></pre>
+<pre class="r"><code>head(heights)
+nrow(heights)</code></pre>
+<p>🗣/🪞 What does the density curve add to the histogram? Does the
+combined graph make the overall shape easier to describe?</p>
 </div>
-<div id="task-6" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 6</h2>
-<p>🤔 Reflect:</p>
+<div id="task-6" class="section level2" number="11.8">
+<h2><span class="header-section-number">11.8</span> Task 6</h2>
+<p>🤔 <strong>Reflect</strong>:</p>
 <p>📝 Write a short paragraph reflecting on when would a density curve
 be more useful than a histogram?</p>
 <p>✍️ EXPLANATION: “___”</p>
 </div>
-</div>
-<div id="save-and-upload" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Save and Upload</h1>
-<ol style="list-style-type: decimal">
-<li>You will be submitting <strong>both</strong> the “your choice” code
-file (R, Rmd, Qmd) and the workspace file (RData).</li>
-</ol>
-</div>
-<div id="today-you-practiced" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Today you
-practiced:</h1>
+<div id="save-and-upload" class="section level2" number="11.9">
+<h2><span class="header-section-number">11.9</span> Save and Upload</h2>
 <ul>
-<li><p>Created a blank canvas with <code>ggplot()</code>.</p></li>
-<li><p>Mapped variables inside <code>aes()</code>.</p></li>
-<li><p>Added geoms for scatter, histogram, and boxplot.</p></li>
-<li><p>Used color / fill to compare groups.</p></li>
-<li><p>Applied labels and a light theme for clarity.</p></li>
-<li><p>Saved plots as objects for submission.</p></li>
+<li>Save your Quarto file as <code>chapter16_practice.qmd</code>.</li>
+<li>Save your workspace as <code>chapter16_practice.RData</code>.</li>
+<li>You will submit your code file (<code>.qmd</code>) and your
+workspace file (<code>.RData</code>).</li>
+<li>You may also submit the rendered HTML file if you can successfully
+render. Show off your formatting skill!</li>
 </ul>
+</div>
 </div>
 
 <footer>

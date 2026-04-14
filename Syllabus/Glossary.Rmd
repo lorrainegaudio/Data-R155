@@ -28,6 +28,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Accountability**: Taking responsibility for the results you report by verifying them, responding to questions or critiques, and correcting errors when found. In practice, this means you keep a clear record (e.g., in an R Markdown/Notebook or script) that shows how you checked your work and why you made your choices.
 
+**Aesthetic mapping**: A connection between a variable in the data and a visual property in the plot, such as position, color, or fill. In `ggplot2`, mappings are usually set inside `aes()`.
+
 **And** (`&`): An element-by-element logical operator that returns `TRUE` only where both conditions are `TRUE`; otherwise it returns `FALSE` (or `NA` when the result can’t be determined because of missing values).
 
 **Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
@@ -41,6 +43,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
 
 **Biased Outcome**: An outcome in a random process where some results are more likely than others, so the outcomes are not equally likely.
+
+**Boxplot**: A graph that summarizes a distribution using the median, quartiles, spread, and possible outliers.
 
 # C
 
@@ -85,6 +89,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Data Frame**: A two-dimensional R object for tabular data, organized as rows and columns. Each column is a vector (or factor) with the same number of rows, columns can have different data types, and the object has class "`data.frame`".
 
 **Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
+
+**Density Plot**: A graph for continuous numerical data that shows a smoothed estimate of the distribution of values. In `ggplot2`, a density plot is typically created with `geom_density()` and can be understood as a smooth alternative to a histogram.
 
 **Descriptive statistics**: Numerical summaries that describe the main features of a dataset, such as measures of central tendency (mean, median, mode) and measures of variability (range, variance, standard deviation).
 
@@ -135,6 +141,10 @@ knitr::opts_chunk$set(echo = TRUE)
 **Function Object**: A function stored as an R object (functions are “first-class” in R, meaning you can assign them to names, pass them to other functions, and inspect them). 
 
 # G
+
+**geom**: A geometric layer that controls how data are drawn on the plot. Examples include `geom_point()`, `geom_histogram()`, and `geom_boxplot()`.
+
+**ggplot2**: An R package for data visualization based on the grammar of graphics. It builds plots by combining data, mappings, and geometric layers.
 
 **Global Options**: A settings window that controls how RStudio behaves across projects and sessions. This is where you can set defaults like appearance, saving behavior, code formatting, and how RStudio runs R.
 
@@ -189,6 +199,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Knit Button**: The toolbar button in RStudio that renders an R Markdown file (`.Rmd`) into a finished output (e.g., HTML, PDF, Word) by calling `rmarkdown::render()` and running the document’s code to generate results. The output file is saved next to the `.Rmd` (same base name), and the button’s drop-down lets you choose among available output formats (shortcut: Ctrl/Cmd + Shift + K).
 
 # L
+
+**Labels**: Text added to a `ggplot2` graphic to identify and explain what the plot shows, such as axis labels, legend titles, plot titles, subtitles, captions, and tags. In `ggplot2`, labels are commonly set with `labs()`, `xlab()`, `ylab()`, and `ggtitle()`
 
 **Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.
 
@@ -334,6 +346,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Scalars**: Single-value objects (length 1). In R, scalars are not a separate data type—what people call a “scalar” is typically an atomic vector with exactly one element (numeric, character, logical, etc.).
 
+**Scatterplot**: A graph that shows the relationship between two numeric variables by placing one point for each observation.
+
 **Script Editor Pane**: Source; The pane where you write, edit, and save code in script files (typically .R) and author documents like R Markdown/Quarto notebooks. Code written here can be run line-by-line or in chunks without retyping it in the Console.
 
 **Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
@@ -359,6 +373,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # T
 
 **Tabular Data**: Data arranged in a table (a rectangular structure) where rows represent records/observations and columns represent variables/attributes. This row–column layout is the standard format used by spreadsheets, databases, and data frames.
+
+**Theme**: A set of display settings that controls the non-data parts of a `ggplot2` graphic, such as fonts, background, gridlines, axis text, legend appearance, and title styling. Complete themes like `theme_bw()` or `theme_light()` change the overall look of a plot, while `theme()` lets you customize individual parts.
 
 **Tidyverse**: An opinionated collection of R packages designed to work together for data science. The packages share a common design philosophy, data structures, and coding style, which makes it easier to import, clean, reshape, visualize, and analyze data within a consistent workflow.
 
