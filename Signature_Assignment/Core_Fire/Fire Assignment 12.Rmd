@@ -98,8 +98,6 @@ By the end of this Wildfire Signature Assignment you will be able to:
 
 6. 🪞 Reflect – Document troubleshooting, AI use, and learning-skill growth (curiosity, courage, tenacity, thoroughness, open-mindedness) through short memos embedded in the workflow.
 
-## Assignment Directions
-
 # Setting Up Your Notes
 
 To begin Wildfire guided activity, follow these steps:
@@ -373,8 +371,7 @@ Task instructions:
 
 4. Write a short comment describing what kind of dataset `county_raw` is (size, what a row represents, high-level purpose).
 
-🎯 **Goal.**  
-_Write your own one-sentence goal here (e.g., what you want to load and understand)._
+🎯 **Goal.** Write your own one-sentence goal here (e.g., what you want to load and understand).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 #⚡ Code: readr::read_csv
@@ -389,7 +386,7 @@ ____ # e.g., check column names or a summary of whp / cell_area_km2
 ```
 
 🗣 Comment (TODO).
-_In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful)._
+In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful).
 
 ___
 
@@ -423,8 +420,7 @@ Task instructions:
 
 2. Store the summary tibble (or data frame) in a clearly named object (e.g., `county_summary`).
 
-🎯 Goal.
-_Write your own one-sentence goal about what you are summarizing._
+🎯 Goal. Write your own one-sentence goal about what you are summarizing.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: summarize key audit quantities for county_raw
@@ -438,7 +434,7 @@ ____ # 1. compute max_area
 ✅ Checks: print the summary object and confirm the summary makes sense.
 
 🗣 Comment (TODO).
-_In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.)._
+In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.).
 
 ## Task 3
 
@@ -457,7 +453,7 @@ Task instructions
 📜 The SYNTAX: quantile(x, probs, na.rm)
 
 🎯 Goal.
-_Write your own goal explaining quantiles/edges goal._
+Write your own goal explaining quantiles/edges goal.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Code: Base R stats::quantile 
@@ -473,9 +469,9 @@ ____ # print e
 ```
 
 🗣 Comment (TODO).
-_In 1–2 sentences, describe what `e` represents and how these cut points will be used in later tasks._
+In 1–2 sentences, describe what `e` represents and how these cut points will be used in later tasks.
 
-_Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
 
 ___
 
@@ -532,7 +528,7 @@ Task instructions:
 - `"Very Low"`, `"Low"`, `"Moderate"`, `"High"`, `"Very High"`, `"Extreme"`, `"Ultra (Top 1%)"`.
 
 🎯 Goal.
-_Write your own sentence(s) goal for turning numeric WHP into ordered risk categories._
+Write your own sentence(s) goal for turning numeric WHP into ordered risk categories.
 
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
@@ -550,9 +546,9 @@ ____ # optional: str() or glimpse()
 ```
 
 🗣 Comment (TODO).
-_Either: (a) explain briefly how the `case_when` logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard._
+Either: (a) explain briefly how the `case_when` logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard.
 
-_Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
 
 ## Task 5
 
@@ -575,7 +571,7 @@ _Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect
 5. Use `dplyr::select()` to keep only `Category`, `Probability`, `area_km2`, `n_cells` in this order.
 
 🎯 Goal.
-_Write your own one-sentence goal for summarizing WHP categories into areas and probabilities._
+Write your own one-sentence goal for summarizing WHP categories into areas and probabilities.
 
 💬 Prediction.
 
@@ -595,7 +591,7 @@ ____ # check that probabilities sum to ~1
 ```
 
 🗣 Comment (TODO).
-_In 1–2 sentences, describe what `prob_tbl` tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”_
+In 1–2 sentences, describe what `prob_tbl` tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”
 
 # Part B
 
@@ -726,7 +722,7 @@ Task instructions
 5.  Check both the raw probability and the corresponding percentage.
 
 🎯 **Goal.**  
-_In your own words, state what you are finding the probability of, including time and distance and model type._
+In your own words, state what you are finding the probability of, including time and distance and model type.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test: lognormal tail probability for High category
@@ -741,7 +737,7 @@ ____ # convert p_high_exact to a percentage
 ```
 
 🗣 Comment (TODO).
-_Interpret what your probability means for High-hazard ignitions._
+Interpret what your probability means for High-hazard ignitions.
 
 ## Task 2
 
@@ -783,7 +779,7 @@ ___
 5. Check that this distance is plausible given the High category’s mean and SD.
 
 🎯 Goal.
-_Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below._
+Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test: 95th percentile distance for High category
@@ -796,13 +792,13 @@ ____ # display q95_high
 ```
 
 🗣 Comment (TODO).
-_Explain in words what this percentile distance means in the context of High-hazard ignitions._
+Explain in words what this percentile distance means in the context of High-hazard ignitions.
 
 ## Task 3
 
 `dlnorm()` computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
 
-❓ Question c: Under our High-hazard lognormal model, how concentrated the distribution is locally around the shorter 3 km run verses the longer 10 km distance in 8 hours? *Note: Higher density indicates a more likely value in a small neighborhood around that point.*
+❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? _Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point._
 
 
 Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
@@ -825,7 +821,7 @@ $$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
 4. Compare `d_3` and `d_10` to decide which distance is more locally likely.
 
 🎯 Goal.
-_Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model._
+Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model.
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test: compare densities at 3 km and 10 km
@@ -842,7 +838,7 @@ ____ # display d_10
 ```
 
 🗣 Comment (TODO).
-_Use your two density values to describe which distance is more locally likely and what that implies._
+Use your two density values to describe which distance is more locally likely and what that implies.
 
 ## Task 4
 
@@ -891,7 +887,7 @@ Task instructions
 5. Summarize the simulated distances to understand their range and typical values.
 
 🎯 Goal.
-_Write your own sentence(s) goal for Task 4.1_.
+Write your own sentence(s) goal for Task 4.1.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test: simulate 8-hour distances for High category
@@ -906,7 +902,7 @@ ____ # confirm the length of High_Lognorm is 450)
 ```
 
 🗣 Comment (TODO).
-_Describe briefly how the simulated distances behave (range, skew, center)._
+Describe briefly how the simulated distances behave (range, skew, center).
 
 ### Task 4.2
 
@@ -925,7 +921,7 @@ _Describe briefly how the simulated distances behave (range, skew, center)._
 5. Optionally, compute the simulated proportion of fast-growing ignitions and compare it to `p_high_exact` from Task 1.
 
 🎯 Goal.
-_Write your own sentence(s) goal for Task 4.2._
+Write your own sentence(s) goal for Task 4.2.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # ⚡ Test: count fast-growing ignitions (≥ 10 km)
@@ -940,7 +936,7 @@ ____ # optionally compute the proportion fast_growing_count / length(High_Lognor
 ```
 
 🗣 Comment (TODO).
-_Explain what your simulated count suggests about how many fast-growing events you might see in a season._
+Explain what your simulated count suggests about how many fast-growing events you might see in a season.
 
 ### Task 4.3
 
@@ -957,7 +953,7 @@ _Explain what your simulated count suggests about how many fast-growing events y
 4. Connect the shape of the histogram to your numeric summaries from Task 4.1.
 
 🎯 Goal.
-_Write your own sentence(s) goal for visualizing the simulated High-hazard distances._
+Write your own sentence(s) goal for visualizing the simulated High-hazard distances.
 
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
@@ -966,7 +962,7 @@ ____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit
 ```
 
 🗣 Comment (TODO).
-_In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model._
+In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model.
 
 
 # Part C
@@ -1033,7 +1029,7 @@ where $T^{(s)}$ is the simulated count of fast-growing ignitions in season $s$, 
 3. Check that the vector prints correctly.
 
 🎯 **Goal.**  
-_Write your own sentence(s) goal for creating a vector of category labels._
+Write your own sentence(s) goal for creating a vector of category labels.
 
 ```{r, eval=FALSE}
 # ⚡ Test: vector of category labels
@@ -1048,7 +1044,7 @@ ____ # display labels
 ```
 
 🗣 Comment (TODO).
-_Explain briefly why matching the order and spelling of these labels will matter later._
+Explain briefly why matching the order and spelling of these labels will matter later.
 
 
 ## Task 2
@@ -1064,7 +1060,7 @@ _Explain briefly why matching the order and spelling of these labels will matter
 3. Check that the probabilities sum to 1 (within rounding error).
 
 🎯 Goal.
-_Write your own sentence(s) goal for building vector._
+Write your own sentence(s) goal for building vector.
 
 
 ```{r, eval=FALSE}
@@ -1093,7 +1089,7 @@ ____ # check that sum() is 1
 3. Check that both vectors line up with **`labels`** (same length, same order).
 
 🎯 Goal.
-_Write your own sentence(s) goal for vectors._
+Write your own sentence(s) goal for vectors.
 
 ```{r, eval=FALSE}
 # ⚡ Test: vectors of lognormal parameters
@@ -1109,7 +1105,7 @@ ____ # check length of labels vector, with vector 1 and 2.
 ```
 
 🗣 Comment (TODO).
-_Describe any pattern you see_
+Describe any pattern you see.
 
 ## Task 4
 
@@ -1126,7 +1122,7 @@ Task instructions
 4. Store these three values in objects `N`, `S`, and `k`.
 
 🎯 Goal.
-_Write your own sentence(s) goal for setting up the core constants._ 
+Write your own sentence(s) goal for setting up the core constants. 
 
 ```{r, eval=FALSE}
 # ⚡ Test: number of ignitions, seasons, and fast threshold
@@ -1158,7 +1154,7 @@ ____ # display k
 4. Use `table()` with `labels[idx]` to see how many ignitions fall into each category.
 
 🎯 Goal.
-_Write your own sentence(s) goal for simulating a single season’s mix of categories._
+Write your own sentence(s) goal for simulating a single season’s mix of categories.
 
 ```{r, eval=FALSE}
 # ⚡ Test: sample category indices for one season
@@ -1173,7 +1169,7 @@ ____ # use table() to see counts per category
 ```
 
 🗣 Comment (TODO).
-_Compare your simulated category counts to the theoretical proportions from prob._
+Compare your simulated category counts to the theoretical proportions from prob.
 
 ## Task 6
 
@@ -1192,7 +1188,7 @@ _Compare your simulated category counts to the theoretical proportions from prob
 5. Inspect the first few values and a summary of `d`.
 
 🎯 Goal.
-_Write your own sentence(s) goal for turning category indices into distances for one season._
+Write your own sentence(s) goal for turning category indices into distances for one season.
 
 ```{r, eval=FALSE}
 # ⚡ Test: simulate distances for one season
@@ -1206,7 +1202,7 @@ ____ # summarize d
 ```
 
 🗣 Comment (TODO).
-_Describe what you notice about the distribution of distances across all categories._
+Describe what you notice about the distribution of distances across all categories.
 
 ## Task 7
 
@@ -1223,7 +1219,7 @@ _Describe what you notice about the distribution of distances across all categor
 4. Compute `mean()` of `fast_flags_one` to get the fraction of fast ignitions.
 
 🎯 Goal.
-_Write your own sentence(s) goal for counting fast-growing ignitions._
+Write your own sentence(s) goal for counting fast-growing ignitions.
 
 ```{r, eval=FALSE}
 # ⚡ Test: count fast runs in one season
@@ -1261,7 +1257,7 @@ Braces `{ ... }` group several lines together so they act as one expression and 
 3. Run the block and confirm it returns a single number (the fast count).
 
 🎯 Goal.
-_Write your own sentence(s) goal for packaging the one-season simulation into one code block._
+Write your own sentence(s) goal for packaging the one-season simulation into one code block.
 
 ```{r, eval=FALSE}
 # ⚡ Test: bundled one-season simulation returning a single fast count
@@ -1277,10 +1273,10 @@ ____ # display fast_count_one
 ```
 
 🗣 Comment (TODO).
-_Explain why having this one-season block is useful when you move to many seasons._ 
+Explain why having this one-season block is useful when you move to many seasons. 
 
 
-_Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
 
 ## Task 9
 
@@ -1297,7 +1293,7 @@ _Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect
 4. Estimate the probability that a season has at least 50 fast-growing events by computing the fraction of seasons where the count is ≥ 50.
 
 🎯 Goal.
-_Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires._
+Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires.
 
 ```{r, eval=FALSE}
 # ⚡ Test: many-season simulation with replicate()
@@ -1316,9 +1312,9 @@ ____ # compute mean() for Monte Carlo estimate of P(T >= 50)
 ```
 
 🗣 Comment (TODO).
-_Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words._
+Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words.
 
-_Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried._
+Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
 
 ## Task 10
 
@@ -1337,7 +1333,7 @@ _Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect
 5. Relate the shape of the histogram to your numeric summaries from Task 9.
 
 🎯 Goal.
-_Write your own sentence(s) goal for plotting the distribution of fast fires per season._
+Write your own sentence(s) goal for plotting the distribution of fast fires per season.
 
 ```{r, eval=FALSE}
 # ⚡ Test: histogram of seasonal fast counts
@@ -1355,10 +1351,10 @@ ____ # display the histogram
 ```
 
 🗣 Comment (TODO).
-_In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires._
+In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires.
 
 
 # Save and Upload
 
-Submit your (1) completed assignment notebook (R Markdown/Quarto file) (2) rendered HTML and (3) environment (RData) to Canvas. 
+Submit your (1) completed assignment notebook `QMD` (2) rendered `HTML` and (3) environment (`RData`) to appropriate Canvas pages, as directed. 
 

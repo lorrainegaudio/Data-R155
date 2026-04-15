@@ -3065,7 +3065,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Wildfire Signature Assignment</h1>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">Version April 05, 2026</h4>
+<h4 class="date">Version April 14, 2026</h4>
 
 </div>
 
@@ -3153,8 +3153,7 @@ Figure 2.1: Figure 1. Idaho Wildfire Hazard Potential (WHP), continuous index (u
 <li><p>Run at least two <strong>structural checks</strong> to make sure the data imported correctly (for example: number of rows, variable names, a summary of key columns).</p></li>
 <li><p>Write a short comment describing what kind of dataset <code>county_raw</code> is (size, what a row represents, high-level purpose).</p></li>
 </ol>
-<p>🎯 <strong>Goal.</strong><br />
-<em>Write your own one-sentence goal here (e.g., what you want to load and understand).</em></p>
+<p>🎯 <strong>Goal.</strong> Write your own one-sentence goal here (e.g., what you want to load and understand).</p>
 <pre class="r"><code>#⚡ Code: readr::read_csv
 ____ # 1. e.g., load any needed package(s)
 ____ # 2. e.g., read the CSV into county_raw</code></pre>
@@ -3162,7 +3161,7 @@ ____ # 2. e.g., read the CSV into county_raw</code></pre>
 ____ # 3. e.g., structure or glimpse of county_raw
 ____ # e.g., check column names or a summary of whp / cell_area_km2</code></pre>
 <p>🗣 Comment (TODO).
-<em>In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful).</em></p>
+In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful).</p>
 <hr />
 <div id="column-meanings" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> <strong>Column meanings</strong></h3>
@@ -3189,8 +3188,7 @@ ____ # e.g., check column names or a summary of whp / cell_area_km2</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Store the summary tibble (or data frame) in a clearly named object (e.g., <code>county_summary</code>).</li>
 </ol>
-<p>🎯 Goal.
-<em>Write your own one-sentence goal about what you are summarizing.</em></p>
+<p>🎯 Goal. Write your own one-sentence goal about what you are summarizing.</p>
 <pre class="r"><code># ⚡ Code: summarize key audit quantities for county_raw
 ____ # 1/2. assign county_summary and use county_raw
 ____ # 1. compute n_rows
@@ -3199,7 +3197,7 @@ ____ # 1. compute min_area
 ____ # 1. compute max_area</code></pre>
 <p>✅ Checks: print the summary object and confirm the summary makes sense.</p>
 <p>🗣 Comment (TODO).
-<em>In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.).</em></p>
+In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.).</p>
 </div>
 <div id="task-3" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Task 3</h2>
@@ -3213,7 +3211,7 @@ ____ # 1. compute max_area</code></pre>
 </ol>
 <p>📜 The SYNTAX: quantile(x, probs, na.rm)</p>
 <p>🎯 Goal.
-<em>Write your own goal explaining quantiles/edges goal.</em></p>
+Write your own goal explaining quantiles/edges goal.</p>
 <pre class="r"><code># ⚡ Code: Base R stats::quantile 
 ____ # 2. store WHP quantile edges in object e
 ____ # 1. call quantile() on county_raw&#39;s whp column
@@ -3222,8 +3220,8 @@ ____ # 3. include remove NA from calculation</code></pre>
 <pre class="r"><code># ✅  Verify
 ____ # print e</code></pre>
 <p>🗣 Comment (TODO).
-<em>In 1–2 sentences, describe what <code>e</code> represents and how these cut points will be used in later tasks.</em></p>
-<p><em>Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</em></p>
+In 1–2 sentences, describe what <code>e</code> represents and how these cut points will be used in later tasks.</p>
+<p>Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 <hr />
 <p>✅ Verify Option: Each element corresponds to a specific percentile:</p>
 <ul>
@@ -3264,7 +3262,7 @@ ____ # print e</code></pre>
 <li><code>&quot;Very Low&quot;</code>, <code>&quot;Low&quot;</code>, <code>&quot;Moderate&quot;</code>, <code>&quot;High&quot;</code>, <code>&quot;Very High&quot;</code>, <code>&quot;Extreme&quot;</code>, <code>&quot;Ultra (Top 1%)&quot;</code>.</li>
 </ul>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for turning numeric WHP into ordered risk categories.</em></p>
+Write your own sentence(s) goal for turning numeric WHP into ordered risk categories.</p>
 <pre class="r"><code># ⚡ Code:  dplyr::mutate + dplyr::case_when
 ____ # 1. assign county_cats and pipe county_raw into it 
 ____ # 2. use mutate() to create Category 
@@ -3274,8 +3272,8 @@ ____ # 4. convert Category to an ordered factor with the specified levels</code>
 ____ # e.g., count() or table()
 ____ # optional: str() or glimpse()</code></pre>
 <p>🗣 Comment (TODO).
-<em>Either: (a) explain briefly how the <code>case_when</code> logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard.</em></p>
-<p><em>Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</em></p>
+Either: (a) explain briefly how the <code>case_when</code> logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard.</p>
+<p>Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 </div>
 <div id="task-5" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Task 5</h2>
@@ -3295,7 +3293,7 @@ ____ # optional: str() or glimpse()</code></pre>
 <li><p>Use <code>dplyr::select()</code> to keep only <code>Category</code>, <code>Probability</code>, <code>area_km2</code>, <code>n_cells</code> in this order.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own one-sentence goal for summarizing WHP categories into areas and probabilities.</em></p>
+Write your own one-sentence goal for summarizing WHP categories into areas and probabilities.</p>
 <p>💬 Prediction.</p>
 <pre class="r"><code># ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
 ____ # 1. store prob_tbl and pipe county_cats into it
@@ -3307,7 +3305,7 @@ ____ # 5. select()</code></pre>
 ____ # print prob_tbl
 ____ # check that probabilities sum to ~1</code></pre>
 <p>🗣 Comment (TODO).
-<em>In 1–2 sentences, describe what <code>prob_tbl</code> tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”</em></p>
+In 1–2 sentences, describe what <code>prob_tbl</code> tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”</p>
 </div>
 </div>
 <div id="part-b" class="section level1" number="4">
@@ -3519,14 +3517,14 @@ P(a \leq X \leq b) =  \int_{a}^{b} f(x) \, dx
 <li><p>Check both the raw probability and the corresponding percentage.</p></li>
 </ol>
 <p>🎯 <strong>Goal.</strong><br />
-<em>In your own words, state what you are finding the probability of, including time and distance and model type.</em></p>
+In your own words, state what you are finding the probability of, including time and distance and model type.</p>
 <pre class="r"><code># ⚡ Test: lognormal tail probability for High category
 ____  # store p_high_exact, use plnorm(), 10 km threshold, High Mean log, High SD log</code></pre>
 <pre class="r"><code># ✅  Verify: eexamine probability and percentage
 ____ # display p_high_exact
 ____ # convert p_high_exact to a percentage</code></pre>
 <p>🗣 Comment (TODO).
-<em>Interpret what your probability means for High-hazard ignitions.</em></p>
+Interpret what your probability means for High-hazard ignitions.</p>
 </div>
 <div id="task-2-1" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Task 2</h2>
@@ -3551,18 +3549,18 @@ ____ # convert p_high_exact to a percentage</code></pre>
 <li><p>Check that this distance is plausible given the High category’s mean and SD.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below.</em></p>
+Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below.</p>
 <pre class="r"><code># ⚡ Test: 95th percentile distance for High category
 ____ # store q95_high, use qlnorm() with p = 0.95, High Mean log, High SD log</code></pre>
 <pre class="r"><code># ✅  Verify: print and sanity-check the 95th percentile
 ____ # display q95_high</code></pre>
 <p>🗣 Comment (TODO).
-<em>Explain in words what this percentile distance means in the context of High-hazard ignitions.</em></p>
+Explain in words what this percentile distance means in the context of High-hazard ignitions.</p>
 </div>
 <div id="task-3-1" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Task 3</h2>
 <p><code>dlnorm()</code> computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.</p>
-<p>❓ Question c: Under our High-hazard lognormal model, how concentrated the distribution is locally around the shorter 3 km run verses the longer 10 km distance in 8 hours? <em>Note: Higher density indicates a more likely value in a small neighborhood around that point.</em></p>
+<p>❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? <em>Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point.</em></p>
 <p>Let <span class="math inline">\(X\)</span> be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose <span class="math inline">\(X\)</span> has the probability density function <span class="math inline">\(\mathcal{f_{high}}(x)\)</span>. Then for any two distances <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with <span class="math inline">\(0 \leq a \leq b\)</span>,</p>
 <p><span class="math display">\[ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. \]</span></p>
 <p>The values <span class="math inline">\(\mathcal{f_{high}}(x)\)</span> are densities, not probabilities. They represent the height of the distribution at the point x. In particular, the density at 3 km and 10 km are given by</p>
@@ -3575,7 +3573,7 @@ ____ # display q95_high</code></pre>
 <li><p>Compare <code>d_3</code> and <code>d_10</code> to decide which distance is more locally likely.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model.</em></p>
+Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model.</p>
 <pre class="r"><code># ⚡ Test: compare densities at 3 km and 10 km
 ____ # compute d_3 using dlnorm() at 3 km with High Mean log, High SD log
 ____ # compute d_10 using dlnorm() at 10 km with High Mean log, High SD log</code></pre>
@@ -3584,7 +3582,7 @@ ____ # compute d_10 using dlnorm() at 10 km with High Mean log, High SD log</cod
 ____ # display d_3
 ____ # display d_10</code></pre>
 <p>🗣 Comment (TODO).
-<em>Use your two density values to describe which distance is more locally likely and what that implies.</em></p>
+Use your two density values to describe which distance is more locally likely and what that implies.</p>
 </div>
 <div id="task-4-1" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> Task 4</h2>
@@ -3614,7 +3612,7 @@ ____ # display d_10</code></pre>
 <li><p>Summarize the simulated distances to understand their range and typical values.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for Task 4.1</em>.</p>
+Write your own sentence(s) goal for Task 4.1.</p>
 <pre class="r"><code># ⚡ Test: simulate 8-hour distances for High category
 ____ # set a seed for reproducibility
 ____ # store High_Lognorm, use rlnorm() to generate 450 values with High Mean log, High SD log</code></pre>
@@ -3622,7 +3620,7 @@ ____ # store High_Lognorm, use rlnorm() to generate 450 values with High Mean lo
 ____ # summarize High_Lognorm (e.g., summary())
 ____ # confirm the length of High_Lognorm is 450)</code></pre>
 <p>🗣 Comment (TODO).
-<em>Describe briefly how the simulated distances behave (range, skew, center).</em></p>
+Describe briefly how the simulated distances behave (range, skew, center).</p>
 </div>
 <div id="task-4.2" class="section level3" number="4.6.2">
 <h3><span class="header-section-number">4.6.2</span> Task 4.2</h3>
@@ -3636,7 +3634,7 @@ ____ # confirm the length of High_Lognorm is 450)</code></pre>
 <li><p>Optionally, compute the simulated proportion of fast-growing ignitions and compare it to <code>p_high_exact</code> from Task 1.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for Task 4.2.</em></p>
+Write your own sentence(s) goal for Task 4.2.</p>
 <pre class="r"><code># ⚡ Test: count fast-growing ignitions (≥ 10 km)
 ____ # store as fast_growing_count,use sum() to count TRUEs of logical vector </code></pre>
 <pre class="r"><code># ✅  Verify: inspect count (and optional proportion)
@@ -3644,7 +3642,7 @@ ____ # store as fast_growing_count,use sum() to count TRUEs of logical vector </
 ____ # display fast_growing_count
 ____ # optionally compute the proportion fast_growing_count / length(High_Lognorm)</code></pre>
 <p>🗣 Comment (TODO).
-<em>Explain what your simulated count suggests about how many fast-growing events you might see in a season.</em></p>
+Explain what your simulated count suggests about how many fast-growing events you might see in a season.</p>
 </div>
 <div id="task-4.3" class="section level3" number="4.6.3">
 <h3><span class="header-section-number">4.6.3</span> Task 4.3</h3>
@@ -3657,11 +3655,11 @@ ____ # optionally compute the proportion fast_growing_count / length(High_Lognor
 <li><p>Connect the shape of the histogram to your numeric summaries from Task 4.1.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for visualizing the simulated High-hazard distances.</em></p>
+Write your own sentence(s) goal for visualizing the simulated High-hazard distances.</p>
 <pre class="r"><code># ⚡/✅ Code histogram of simulated High_Lognorm distances
 ____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit</code></pre>
 <p>🗣 Comment (TODO).
-<em>In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model.</em></p>
+In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model.</p>
 </div>
 </div>
 </div>
@@ -3709,14 +3707,14 @@ ____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit</c
 <li><p>Check that the vector prints correctly.</p></li>
 </ol>
 <p>🎯 <strong>Goal.</strong><br />
-<em>Write your own sentence(s) goal for creating a vector of category labels.</em></p>
+Write your own sentence(s) goal for creating a vector of category labels.</p>
 <pre class="r"><code># ⚡ Test: vector of category labels
 ____  # create vector &lt;- c( ... ) using the Category names from Table 1</code></pre>
 <pre class="r"><code># ✅  Verify: inspect labels
 
 ____ # display labels</code></pre>
 <p>🗣 Comment (TODO).
-<em>Explain briefly why matching the order and spelling of these labels will matter later.</em></p>
+Explain briefly why matching the order and spelling of these labels will matter later.</p>
 </div>
 <div id="task-2-2" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Task 2</h2>
@@ -3728,7 +3726,7 @@ ____ # display labels</code></pre>
 <li><p>Check that the probabilities sum to 1 (within rounding error).</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for building vector.</em></p>
+Write your own sentence(s) goal for building vector.</p>
 <pre class="r"><code># ⚡ Test: vector of category probabilities
 ____ # create vector &lt;- c( ... ) using the Probability column from Table 1</code></pre>
 <pre class="r"><code># ✅  Verify: : confirm they form a valid distribution
@@ -3745,7 +3743,7 @@ ____ # check that sum() is 1</code></pre>
 <li><p>Check that both vectors line up with <strong><code>labels</code></strong> (same length, same order).</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for vectors.</em></p>
+Write your own sentence(s) goal for vectors.</p>
 <pre class="r"><code># ⚡ Test: vectors of lognormal parameters
 ____ # create vector 1 &lt;- c( ...) from the Mean log column
 ____ # create vector 2 &lt;- c( ...) from the SD log column</code></pre>
@@ -3754,7 +3752,7 @@ ____ # display vector 1
 ____ # display vector 2
 ____ # check length of labels vector, with vector 1 and 2.</code></pre>
 <p>🗣 Comment (TODO).
-<em>Describe any pattern you see</em></p>
+Describe any pattern you see.</p>
 </div>
 <div id="task-4-2" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Task 4</h2>
@@ -3767,7 +3765,7 @@ ____ # check length of labels vector, with vector 1 and 2.</code></pre>
 <li><p>Store these three values in objects <code>N</code>, <code>S</code>, and <code>k</code>.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for setting up the core constants.</em></p>
+Write your own sentence(s) goal for setting up the core constants.</p>
 <pre class="r"><code># ⚡ Test: number of ignitions, seasons, and fast threshold
 ____ # set N to the number of ignitions per season 
 ____ # set S to the number of simulated seasons
@@ -3788,7 +3786,7 @@ ____ # display k</code></pre>
 <li><p>Use <code>table()</code> with <code>labels[idx]</code> to see how many ignitions fall into each category.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for simulating a single season’s mix of categories.</em></p>
+Write your own sentence(s) goal for simulating a single season’s mix of categories.</p>
 <pre class="r"><code># ⚡ Test: sample category indices for one season
 ____ # create idx using sample.int() (or sample()) with size = N, prob = prob</code></pre>
 <pre class="r"><code># ✅  Verify: examine realized category mix
@@ -3796,7 +3794,7 @@ ____ # create idx using sample.int() (or sample()) with size = N, prob = prob</c
 ____ # inspect the first few indices
 ____ # use table() to see counts per category</code></pre>
 <p>🗣 Comment (TODO).
-<em>Compare your simulated category counts to the theoretical proportions from prob.</em></p>
+Compare your simulated category counts to the theoretical proportions from prob.</p>
 </div>
 <div id="task-6" class="section level2" number="5.6">
 <h2><span class="header-section-number">5.6</span> Task 6</h2>
@@ -3810,7 +3808,7 @@ ____ # use table() to see counts per category</code></pre>
 <li><p>Inspect the first few values and a summary of <code>d</code>.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for turning category indices into distances for one season.</em></p>
+Write your own sentence(s) goal for turning category indices into distances for one season.</p>
 <pre class="r"><code># ⚡ Test: simulate distances for one season
 ____ # store d, use rlnorm() with n = N, meanlog = meanlog[idx], sdlog = sdlog[idx]</code></pre>
 <pre class="r"><code># ✅  Verify: examine distances
@@ -3818,7 +3816,7 @@ ____ # store d, use rlnorm() with n = N, meanlog = meanlog[idx], sdlog = sdlog[i
 ____ # show head()
 ____ # summarize d </code></pre>
 <p>🗣 Comment (TODO).
-<em>Describe what you notice about the distribution of distances across all categories.</em></p>
+Describe what you notice about the distribution of distances across all categories.</p>
 </div>
 <div id="task-7" class="section level2" number="5.7">
 <h2><span class="header-section-number">5.7</span> Task 7</h2>
@@ -3831,7 +3829,7 @@ ____ # summarize d </code></pre>
 <li><p>Compute <code>mean()</code> of <code>fast_flags_one</code> to get the fraction of fast ignitions.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for counting fast-growing ignitions.</em></p>
+Write your own sentence(s) goal for counting fast-growing ignitions.</p>
 <pre class="r"><code># ⚡ Test: count fast runs in one season
 ____ # create fast_flags_one as a logical vector using d &gt;= k
 ____ # compute fast_count_one using sum() of fast_flags_one</code></pre>
@@ -3859,7 +3857,7 @@ Comment on how many fast runs you saw in this particular simulated season.</p>
 <li><p>Run the block and confirm it returns a single number (the fast count).</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for packaging the one-season simulation into one code block.</em></p>
+Write your own sentence(s) goal for packaging the one-season simulation into one code block.</p>
 <pre class="r"><code># ⚡ Test: bundled one-season simulation returning a single fast count
 ____ &lt;- { #store vector and start block
 ____ # sample idx for one season
@@ -3869,8 +3867,8 @@ ____ # return the count of d values that are greater than or equal to k
 <pre class="r"><code># ✅  Verify: confirm the block works
 ____ # display fast_count_one</code></pre>
 <p>🗣 Comment (TODO).
-<em>Explain why having this one-season block is useful when you move to many seasons.</em></p>
-<p><em>Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</em></p>
+Explain why having this one-season block is useful when you move to many seasons.</p>
+<p>Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 </div>
 <div id="task-9" class="section level2" number="5.9">
 <h2><span class="header-section-number">5.9</span> Task 9</h2>
@@ -3883,7 +3881,7 @@ ____ # display fast_count_one</code></pre>
 <li><p>Estimate the probability that a season has at least 50 fast-growing events by computing the fraction of seasons where the count is ≥ 50.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires.</em></p>
+Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires.</p>
 <pre class="r"><code># ⚡ Test: many-season simulation with replicate()
 set.seed(2025)
 ____ # store resulting vector, use replicate() 
@@ -3896,8 +3894,8 @@ ____ # inspect summary() of counts_fast_mix
 ____ # compute mean() for expected fast runs
 ____ # compute mean() for Monte Carlo estimate of P(T &gt;= 50)  </code></pre>
 <p>🗣 Comment (TODO).
-<em>Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words.</em></p>
-<p><em>Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</em></p>
+Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words.</p>
+<p>Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 </div>
 <div id="task-10" class="section level2" number="5.10">
 <h2><span class="header-section-number">5.10</span> Task 10</h2>
@@ -3911,7 +3909,7 @@ ____ # compute mean() for Monte Carlo estimate of P(T &gt;= 50)  </code></pre>
 <li><p>Relate the shape of the histogram to your numeric summaries from Task 9.</p></li>
 </ol>
 <p>🎯 Goal.
-<em>Write your own sentence(s) goal for plotting the distribution of fast fires per season.</em></p>
+Write your own sentence(s) goal for plotting the distribution of fast fires per season.</p>
 <pre class="r"><code># ⚡ Test: histogram of seasonal fast counts
 
 ____ # load ggplot2 if you choose to use it
@@ -3922,12 +3920,12 @@ ____ # Add a vertical line at the threshold of 50 fast fires</code></pre>
 <pre class="r"><code># ✅  Verify: inspect histogram
 ____ # display the histogram</code></pre>
 <p>🗣 Comment (TODO).
-<em>In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires.</em></p>
+In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires.</p>
 </div>
 </div>
 <div id="save-and-upload" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Save and Upload</h1>
-<p>Submit your (1) completed assignment notebook (R Markdown/Quarto file) (2) rendered HTML and (3) environment (RData) to Canvas.</p>
+<p>Submit your (1) completed assignment notebook <code>QMD</code> (2) rendered <code>HTML</code> and (3) environment (<code>RData</code>) to appropriate Canvas pages, as directed.</p>
 </div>
 
 <footer>

@@ -779,7 +779,7 @@ nrow(heights)
 - Save your Quarto file as `chapter16_practice.qmd`.
 - Save your workspace as `chapter16_practice.RData`.
 - You will submit your code file (`.qmd`) and your workspace file (`.RData`).
-- You may also submit the rendered HTML file if you can successfully render. Show off your formatting skill!
+- You may also submit the rendered HTML file if you can successfully render. Show off your formatting skills!
 
 
 

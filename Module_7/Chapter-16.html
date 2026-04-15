@@ -2295,10 +2295,10 @@ the x-axis as “Sepal Length (cm)” and the y-axis as “Petal Length
 (cm)”.</p>
 <pre class="r"><code># ⚡Code 
 Pretty_Flowers &lt;- iris %&gt;% 
-  ggplot(`aes(x = Sepal.Length, y = Petal.Length, color = Species)`) +
-  `geom_point(size = 3)` + 
-  `xlab(&quot;Sepal Length (cm)&quot;)` + 
-  `ylab(&quot;Petal Length (cm)&quot;)`</code></pre>
+  ggplot(aes(x = ________, y = _______, color = _______)) +
+  geom_point(size = 3) + 
+  xlab(_______) + 
+  ylab(_______)</code></pre>
 <pre class="r"><code># ✅ Checks
 class(Pretty_Flowers)
 pretty_flowers</code></pre>
@@ -2316,8 +2316,8 @@ the legend so only the colored boxplots and axis labels indicate which
 species is which.</p>
 <pre class="r"><code># ⚡Code 
 Petal_Spread &lt;- iris %&gt;% 
-  ggplot(`aes(x = Species, y = Petal.Width, fill = Species)`) +
-  `geom_boxplot(show.legend = FALSE)`</code></pre>
+  _____(___(_ = Species, _ = Petal.Width, _____ = Species)) +
+  ________(________ = FALSE)</code></pre>
 <pre class="r"><code># ✅ Checks
 class(Petal_Spread)
 Petal_Spread</code></pre>
@@ -2338,9 +2338,9 @@ add the title “CO2 Uptake by Plant Type” (use <code>ggtitle()</code>) at
 the top of the plot.</p>
 <pre class="r"><code># ⚡Code 
 CO2_Graph &lt;- CO2 %&gt;% 
-  ggplot(`aes(x = uptake, fill = Type)`) + 
-  `geom_density(alpha = 0.5)` + 
-  `ggtitle(&quot;CO2 Uptake by Plant Type&quot;)`
+  _____(_____(x = uptake, fill = Type)) + 
+  _____(alpha = 0.5) + 
+  _____(__________)
 CO2_Graph</code></pre>
 <pre class="r"><code># ✅ Checks
 class(CO2_Graph)
@@ -2366,17 +2366,17 @@ underneath. Label the x-axis “Height (inches)” and the y-axis “Density”
 <code>geom_density()</code>.)</p>
 <pre class="r"><code># ⚡Code 
 Tall_Density &lt;- heights %&gt;% 
-  ggplot(`aes(x = height)`) +
-  geom_histogram(`aes(y = after_stat(density))`,
-                 `binwidth = 1`,
-                 `fill     = &quot;blue&quot;`,
-                 `color    = &quot;white&quot;`) +
-  geom_density(`color    = &quot;darkorange&quot;`,
-               `fill     = &quot;darkorange&quot;`,
-               `alpha    = 0.3`,
-               `linewidth = 1`) +
-  `xlab(&quot;Height (inches)&quot;)` +
-  `ylab(&quot;Density&quot;)`</code></pre>
+  _____(_____(___ = height)) +
+  __________(___(___ = after_stat(density)),
+                 _____ = 1,
+                 _____     = &quot;blue&quot;,
+                 _____    = &quot;white&quot;) +
+  __________(color    = &quot;darkorange&quot;,
+            fill      = &quot;darkorange&quot;,
+            _____     = 0.3,
+            _____     = 1) +
+  _____(&quot;Height (inches)&quot;) +
+  _____(&quot;Density&quot;)</code></pre>
 <pre class="r"><code># ✅ Checks
 class(Tall_Density)
 Tall_Density</code></pre>

@@ -752,7 +752,7 @@ q90_high
 
 `dlnorm()` computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
 
-❓ Question c: Under our High-hazard lognormal model, how concentrated the distribution is locally around the shorter 3 km run verses the longer 10 km distance in 8 hours? *Note: Higher density indicates a more likely value in a small neighborhood around that point.*
+❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? _Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point._
 
 \begin{customtextbox}
 
@@ -830,7 +830,7 @@ High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
 summary(High_Lognorm)
 ```
 
- 🗣 Comment
+🗣 Comment: Why do we use `rlnorn()` and not `plnorm()`, `qlnorm()`, or `dlnorm()`?
 
 2. 🎯 Goal: Use `sum()` to find the count of new ignitions in the simulation where the wildfire is classified as ‘fast-growing’. 
 

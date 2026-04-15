@@ -1,6 +1,6 @@
 ---
 title: "Chapter 13"
-subtitle: "Group by, Summarize, and Count"
+subtitle: "Grouped Summaries"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Chapter 13"
-subtitle: "Group by, Summarize, and Count"
+subtitle: "Grouped Summaries"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -54,7 +54,7 @@ biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 # ---
 title: "Chapter 13"
-subtitle: "Group by, Summarize, and Count"
+subtitle: "Grouped Summaries"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
@@ -730,7 +730,7 @@ data(olive)
 colnames(olive)
 ```
 
-🎯 Restate the Goal. What are you trying to learn, check, or demonstrate?
+🎯 Restate the goal. What are you trying to learn, check, or demonstrate?
 
 ```{r, eval=FALSE}
 #⚡ Code
