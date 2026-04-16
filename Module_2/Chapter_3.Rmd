@@ -1,5 +1,6 @@
 ---
 title: "Chapter 3"
+subtitle: "Vector Basics"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -33,6 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r eval=FALSE, include=FALSE}
 title: "Chapter 3"
+subtitle: "Vector Basics"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output: 
@@ -60,6 +62,7 @@ biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 # ---
 title: "Chapter 3"
+subtitle: "Vector Basics"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"
