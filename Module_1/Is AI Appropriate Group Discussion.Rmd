@@ -2,7 +2,7 @@
 title: "Is AI Appropriate? Group Discussion"
 author: "Lorraine Gaudio"
 date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
-team: "Spring 2026"
+team: "Summer 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -26,9 +26,6 @@ knitr::opts_chunk$set(echo = TRUE)
 # Overview
 
 In this activity, you will learn how to make a defensible decision about when AI help supports your learning and when it replaces the learning work you need to do to build coding skill. In R, getting “working code” is not the same thing as understanding why it works and AI can easily create the illusion of competence if you copy solutions. This matters because your long-term ability to work in data analytics depend on you being able to explain and reproduce your work. You will practice a “tenacity-first” approach: attempt first, document what happened, then seek help (including AI) in a way that keeps you accountable for understanding and verification.
-
-
-
 
 # AI, Tenacity, and Human-Centered Learning
 

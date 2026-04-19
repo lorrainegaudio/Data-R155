@@ -736,13 +736,13 @@ colnames(olive)
 #⚡ Code
 fatty_acid <- "_______" 
 
-Olive_Garden <- olive `___`
-  group_by(region) `___`
+Olive_Garden <- olive ___
+  group_by(region) ___
   summarize(
-    mean_value = mean(fatty_acid)`___`
-    sd_value   = sd(fatty_acid)`___`
+    mean_value = mean(fatty_acid)___
+    sd_value   = sd(fatty_acid)___
     n          = n()
-  `___`
+  ___
 ```
 
 ```{r, eval=FALSE}

@@ -156,7 +156,7 @@ Dillon, Gregory K.; Gilbertson-Day, Julie W. 2020. Wildfire Hazard Potential for
 
 Idaho subset (whp_id.tif) prepared and provided by Matt Williamson, SPASES Lab, Boise State University.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide', fig.cap='Figure 1. Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) from the USFS WHP v2020 raster, clipped to the Idaho boundary. Colors use a viridis gradient (dark purple = lower WHP; yellow = higher WHP); values span approximately 0–64,186. Raster resolution is 240 m in an Albers Equal Area projection; NoData cells are transparent. Red outline shows the TIGER/Line state boundary reprojected to the raster CRS. Idaho subset prepared by Matt Williamson (SPASES Lab, Boise State University); original dataset: Dillon & Gilbertson-Day (2020), USFS Research Data Archive (DOI: 10.2737/RDS-2015-0047-3).'}
+```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide', fig.cap='Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) from the USFS WHP v2020 raster, clipped to the Idaho boundary. Colors use a viridis gradient (dark purple = lower WHP; yellow = higher WHP); values span approximately 0–64,186. Raster resolution is 240 m in an Albers Equal Area projection; NoData cells are transparent. Red outline shows the TIGER/Line state boundary reprojected to the raster CRS. Idaho subset prepared by Matt Williamson (SPASES Lab, Boise State University); original dataset: Dillon & Gilbertson-Day (2020), USFS Research Data Archive (DOI: 10.2737/RDS-2015-0047-3).'}
 ## **First Install R Packages: 'terra', 'tidyterra', 'tigris'
 library(terra)
 library(tidyverse)
@@ -655,8 +655,9 @@ kbl(param_tbl,
 
 ```
 
-The table also defines a simple fire-spread scenario using "plausible values" derived from ChatGPT for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
+The table also defines a simple fire-spread scenario using "plausible values" for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.
 
+___
 
 The Normal mean (km) and Normal SD (km) columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The Mean log and SD log columns give the parameters \( \mu \) and \( \sigma \) of a lognormal distance model in which
 
@@ -666,10 +667,15 @@ The Normal mean (km) and Normal SD (km) columns give the mean and standard devia
 
 Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
 
+___
 
 ## Statistical Methods
 
 A continuous random variable is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km. 
+
+_You do not need to understand the text descriptions of the equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor)._
+
+___
 
 Let $X$ be the continuous random variable of straight-line kilometer distance in an 8-hour period. Then a probability distribution of $X$ is a function $f(x)$ such that for any two numbers $a$ and $b$ with $a \leq b$, 
 
@@ -679,6 +685,7 @@ $$
 
 The probability that $X$ takes on a value in the interval $[a, b]$ is given by the area above this interval and under the graph of the density function. 
 
+___
 
 ## Lognormal Distribution
 
@@ -688,6 +695,130 @@ In this assignment, we will use **lognormal distribution** to model the 8-hour s
 ?Lognormal
 ```
 
+A **lognormal distribution** is used to model a variable that is always positive and becomes normal after taking the logarithm of the values. 
+
+```{r echo=FALSE}
+# Parameters
+meanlog <- 1.5
+sdlog   <- 0.6
+p_cut   <- 0.80   # chosen percentile
+
+# Simulate data
+x <- rlnorm(3000, meanlog = meanlog, sdlog = sdlog)
+log_x <- log(x)
+
+# Percentile on original scale
+x_p <- qlnorm(p_cut, meanlog = meanlog, sdlog = sdlog)
+
+# Grids for smooth curves
+x_max   <- qlnorm(0.995, meanlog, sdlog)
+x_grid  <- seq(0.001, x_max, length.out = 1000)
+y_grid  <- dlnorm(x_grid, meanlog, sdlog)
+
+x_shade <- seq(0.001, x_p, length.out = 500)
+y_shade <- dlnorm(x_shade, meanlog, sdlog)
+
+# Layout: two plots on top, one caption strip below
+layout(matrix(c(1, 2, 3, 3), nrow = 2, byrow = TRUE),
+       heights = c(4, 1.15))
+
+par(oma = c(0, 0, 2.2, 0),
+    mgp = c(2.4, 0.8, 0),
+    tcl = -0.3,
+    cex.main = 1.05)
+
+# -------------------------
+# Panel 1: Lognormal distribution
+# -------------------------
+par(mar = c(4.2, 4.2, 2.8, 1.2))
+
+hist(x,
+     breaks = 28,
+     probability = TRUE,
+     xlim = c(0, x_max),
+     col = "gray88",
+     border = "white",
+     main = "Lognormal distribution",
+     xlab = "Original scale (X > 0)",
+     ylab = "Density")
+
+# Shaded probability area
+polygon(c(0, x_shade, x_p),
+        c(0, y_shade, 0),
+        col = adjustcolor("goldenrod1", alpha.f = 0.45),
+        border = NA)
+
+# Re-draw histogram lightly so bars remain visible
+hist(x,
+     breaks = 28,
+     probability = TRUE,
+     xlim = c(0, x_max),
+     col = adjustcolor("lightblue3", alpha.f = 0.35),
+     border = "white",
+     add = TRUE)
+
+# Density curve and percentile line
+lines(x_grid, y_grid, col = "navy", lwd = 2)
+abline(v = x_p, col = "firebrick", lwd = 2, lty = 2)
+
+# Small percentile label only
+usr1 <- par("usr")
+text(x_p, usr1[4] * 0.93,
+     labels = paste0(round(100 * p_cut), "th percentile"),
+     pos = 4, cex = 0.82, col = "firebrick")
+
+# -------------------------
+# Panel 2: After taking logs
+# -------------------------
+par(mar = c(4.2, 4.2, 2.8, 1.2))
+
+hist(log_x,
+     breaks = 28,
+     probability = TRUE,
+     col = "gray82",
+     border = "white",
+     main = "After taking logs",
+     xlab = "log(X)",
+     ylab = "Density")
+
+curve(dnorm(x, mean = meanlog, sd = sdlog),
+      add = TRUE, col = "darkgreen", lwd = 2)
+
+# -------------------------
+# Panel 3: Caption / key strip
+# -------------------------
+par(mar = c(0.4, 1, 0.2, 1))
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1))
+box(col = "gray85")
+
+# Row 1
+rect(0.04, 0.63, 0.08, 0.78,
+     col = adjustcolor("lightblue3", alpha.f = 0.35), border = NA)
+text(0.10, 0.705, "Bars show the distribution of X",
+     adj = 0, cex = 0.9)
+
+segments(0.39, 0.705, 0.45, 0.705, col = "navy", lwd = 2)
+text(0.47, 0.705, "Height of the curve = concentration (density)",
+     adj = 0, cex = 0.9)
+
+# Row 2
+rect(0.04, 0.20, 0.08, 0.35,
+     col = adjustcolor("goldenrod1", alpha.f = 0.45), border = NA)
+text(0.10, 0.275,
+     labels = paste0("Shaded area = probability = P(X <= percentile) = ", p_cut),
+     adj = 0, cex = 0.9)
+
+segments(0.58, 0.275, 0.64, 0.275, col = "firebrick", lwd = 2, lty = 2)
+text(0.66, 0.275,
+     labels = paste0("Percentile = x-value where area reaches ", p_cut),
+     adj = 0, cex = 0.9)
+
+mtext("A lognormal variable is positive, and log(X) is approximately normal",
+      outer = TRUE, line = 0.5, cex = 1.05)
+```
+
+
 ## Task 1
 
 **Tail probability with `plnorm()`**
@@ -696,6 +827,7 @@ In this assignment, we will use **lognormal distribution** to model the 8-hour s
 
 ❓ Question a: If a new ignition starts in a **High-hazard area**, what is the probability that its 8-hour straight-line spread is at least 10 km?
 
+___
 
 Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
 
@@ -703,10 +835,11 @@ $$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$
 
 In particular, the probability that the 8-hour straight-line spread is at least 10 km is given by
 
-$$ P(X \leq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, $$ 
+$$ P(X \geq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, $$ 
 
 and in this problem, $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution. 
 
+___
 
 Task instructions
 
@@ -715,7 +848,7 @@ Task instructions
 2. Model \(X\) with a lognormal distribution using the **High** row’s **Mean log** and **SD log** from **Table 1**.
 
 3. Use `plnorm()` with `lower.tail = FALSE` to compute  
-  \( P(X \ge 10) = P(X > 10) \).
+  \( P(X \geq 10) = P(X > 10) \).
 
 4.  Store the result as **`p_high_exact`**.
 
@@ -743,8 +876,9 @@ Interpret what your probability means for High-hazard ignitions.
 
 `qlnorm()` computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.
 
-❓ Question b: We’ll treat distances above the 95th percentile as ‘extreme fast runs’. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 10% of the time? In other words, what is the 95th percentile run length?
+❓ Question b: We’ll treat distances above the 95th percentile as ‘extreme fast runs’. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 5% of the time? In other words, what is the 95th percentile run length?
 
+___
   
 Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. The cumulative distribution function (CDF) of $X$ is given by
 
@@ -756,7 +890,9 @@ $$ P(X \leq q_{0.95}) = F(q_{0.95}) = 0.95. $$
 
 equivalently, 
 
-$$ q_{0.95} = \int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx. $$
+$$
+\int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx = 0.95
+$$
 
 In particular, the 95th percentile of the 8-hour straight-line spread distance for new ignitions in High-hazard areas is given by 
 
@@ -800,6 +936,7 @@ Explain in words what this percentile distance means in the context of High-haza
 
 ❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? _Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point._
 
+___
 
 Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
 
@@ -809,6 +946,7 @@ The values $\mathcal{f_{high}}(x)$ are densities, not probabilities. They repres
 
 $$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
 
+___
 
 **Task instructions**
 
@@ -844,11 +982,13 @@ Use your two density values to describe which distance is more locally likely an
 
 `rlnorm()` generates random numbers from a lognormal distribution. **Note**: This task has three parts.
 
-❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would we expect to classify as ‘fast-growing’ (≥10 km in 8 hours)?
+❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would be classified as ‘fast-growing’ (≥10 km in 8 hours)?
+
+___
 
 Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Assume
 
-$$ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ meanlog High}), $$
+$$ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ sdlog  High}), $$
 
 with density function $\mathcal{f_{high}}(x)$ and CDF $F_{high}(x)$. 
 
@@ -866,9 +1006,13 @@ Then, the total number of 'fast-growing' ignitions, $S$, is given by
 
 $$ S = \sum_{i=1}^{450} I_i $$
 
-Each $I_i$ is a Bernoulli random variable with success probability $P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),$ so, the expected number of 'fast-growing' ignitions is
+Each $I_i$ is a Bernoulli random variable with success probability $P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),$. Therefore, the **theoretical expected number** of 'fast-growing' ignitions is
 
 $$ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). $$
+
+___
+
+In Tasks 4.1 and 4.2, you will simulate one season of 450 ignitions and count how many simulated ignitions are fast-growing. This simulated count may differ from the theoretical expected value.
 
 ### Task 4.1
 
@@ -884,7 +1028,7 @@ Task instructions
 
 4. Store the simulated distances in a vector `High_Lognorm`.
 
-5. Summarize the simulated distances to understand their range and typical values.
+5. Summarize the simulated distances to understand the range, center, and skew of this simulated season’s distances.
 
 🎯 Goal.
 Write your own sentence(s) goal for Task 4.1.
