@@ -1,0 +1,14 @@
+---
+title: "Course Resources"
+author: "Lorraine Gaudio"
+date: 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+course policies on AI use, memoing, reproducibility, revision, and what counts as “good enough for Core”
+
+

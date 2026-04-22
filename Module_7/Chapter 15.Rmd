@@ -185,7 +185,7 @@ legend("topright",
 
 3. **Skewed Right**: The right _tail_ is longer than the left tail, indicating that there are a few high values that pull the mean to the right. *Positive skewness*. The mean is more right than the median due to extreme values. $Median < Mean$.
 
-```{r echo=FALSE,fig.width=6.5, fig.height=4, out.width='100%'}
+```{r echo=FALSE, fig.width=6.5, fig.height=4, out.width='100%', fig.alt="Histogram of a right-skewed distribution. Most values are clustered near the lower end, with a long tail extending to the right. A dashed blue line marks the median at about 6.6, and a solid red line marks the mean at about 9.6. The mean is to the right of the median, showing that a few high values pull the mean upward."}
 # Generate right-skewed data
 right_skewed_data <- rexp(1000, rate = 0.1)
 

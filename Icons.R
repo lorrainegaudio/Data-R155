@@ -25,7 +25,8 @@
 👀 Cite
   
 🐙 GitHub
-✔️ Nice! 
+
+✔️ Throughness
 
 💥
 
@@ -56,6 +57,8 @@
 🧹
 
 ⭕ No Submission
+
+❌ Missing
 
 🌱 Core
 
