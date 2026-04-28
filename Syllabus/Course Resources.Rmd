@@ -1,14 +1,646 @@
 ---
 title: "Course Resources"
-author: "Lorraine Gaudio"
-date: 
-output: html_document
+subtitle: "For Introduction to R Programming"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-course policies on AI use, memoing, reproducibility, revision, and what counts as “good enough for Core”
 
 
+# How this Course Works
+
+This document is your go-to resource for understanding how the course works, including course policies on AI use, memoing, reproducibility, revision, and what is “Core”.
+
+- There are two learning tracks: **🌱 Core** and **🌳 Advanced**. Learn more about that on this page: [How to Earn Your Grade:🌱 vs🌳 and ✅ vs 🟡](https://boisestatecanvas.instructure.com/courses/47710/pages/how-to-earn-your-grade-vs-and-vs)
+- The course runs on a repeated weekly rhythm. 🌳 Advanced activities unlock only after Core completion. Learn more about that on this page: [🗺️ Course Roadmap](https://boisestatecanvas.instructure.com/courses/47710/pages/course-roadmap)
+- Core work has revision windows. Learn more about that on this page: [🌱 Core Practice Space 🎟️ Token Bank (Tracking Only)](https://boisestatecanvas.instructure.com/courses/47710/assignments/1654286)
+- Advanced is for exploration and choice, not “the real course hidden somewhere else.” Learn more about the 🌳 Advanced activities options on this page: [🌳 Advance Activities Tour](https://boisestatecanvas.instructure.com/courses/47710/pages/advance-activities-tour)
+
+# How to Earn Your Grade:🌱 vs🌳 and ✅ vs 🟡
+
+In this course, we use **Specifications Grading**. Instead of chasing partial credit or worrying about a 79% vs. 81%, your grade is determined by which bundle you complete to a professional standard.
+
+## Quick Legend
+
+**Think of this like growing a garden:** the 🌱 **Core** work is the set of “must-grow” seedlings every student needs for a healthy foundation. The 🌳 **Advanced** work is where you plant extra trees—optional, but they grow your final grade higher.
+
+- 🌱 **Core (required)** = every item must earn Complete to earn **C or higher**
+- 🌳 **Advanced (optional)** = you choose which of these you can complete to earn **B or A**
+
+You’ll see these emojis in assignment titles so you can instantly tell what type of work it is.
+
+---
+
+## What Your Scores Mean
+
+Every activity is graded using simple status labels, not points for partial credit. When you look in **Grades**, you’ll see:
+
+### For 🌱 Core (required to earn C or better)
+
+- ✅ **Complete** = meets the specifications
+- 🟡 **Not Ready** = revision needed (you can fix and resubmit)
+- ❌ **Missing** = required work not submitted
+
+### For 🌳 Advanced (options to pick from to earn B or A)
+
+- ✅ **Complete** = counts toward your B/A course grade bundle
+- 🟡 **Not Ready** = revision needed (you can fix and resubmit)
+- ⭕ **No Submission** = you didn’t choose that option (no penalty)
+
+Advanced modules are unlocked when you complete Core prerequisites!
+
+---
+
+## The Bundle System
+
+Your final grade is determined by the **highest bundle you fully complete**. At the bottom of the module page, you’ll see your **Bundle Trackers**.
+
+### 🥉 C Bundle Requirements
+
+**Required:** Earn **“Complete”** for **ALL 🌱 Core** items to earn a **C grade or better**.
+
+### 🥈 B Bundle Requirements
+
+**Required:**
+
+- Earn **“Complete”** for **ALL 🌱 Core** assignments **AND**
+- Earn **“Complete”** for **at least 12 🌳 Advanced** assignments
+
+### 🥇 A Bundle Requirements
+
+**Required:**
+
+- Earn **“Complete”** for **ALL 🌱 Core** assignments **AND**
+- Earn **“Complete”** for **at least 18 🌳 Advanced** assignments
+
+---
+
+## How to Use the Core and Advanced Bundle Trackers
+
+Core and Advanced trackers are at the bottom of the modules page. When you meet the requirement, Canvas shows completion indicators.
+
+### What the icons mean in Modules
+
+- ✅ **Checkmark** = requirement met (you earned **Complete**)
+- 🔵 **Blue info icon** = submitted but **not graded yet** (wait—your tracker will update after grading)
+- ⭕/➖ **Circle/dash icon** = requirement **not met yet** (often because your submission is not ready, missing, or no submission)
+
+# 🗺️ Course Roadmap
+
+This page is empty.
+
+# How to Complete 🌱 Core Guided Activities
+
+## Purpose
+
+This page explains what Guided Activities are, how to complete them, and where to get help. Each Topic Guided Activity is your primary “learn-by-doing” work. It is designed to help you build real fluency in R by reading, running the code yourself, and documenting your process so you can reproduce it later. Guided Activities directly prepare you for the Practice Space. If you skim the chapter or watch only the provided video(s), you will miss the required steps.
+
+---
+
+## What to Expect in a 🌱 Core Guided Activity
+
+Each Guided Activity is built into the **Chapter HTML** and may include:
+
+- **R coding examples** you are expected to run in RStudio
+- Instructions for creating or editing **specific files** (`.R`, `.Rmd`, or `.qmd`)
+- **Memo examples and prompts** (short notes you write to document learning, confusion, errors, and fixes)
+- Guidance on **how to use / not use AI tools (LLMs)** in this course
+- Sometimes, **walkthrough videos** (helpful, but not complete)
+- Sometimes, a **dataset download** (linked on the same page as the chapter)
+
+The Chapter HTML is required. Videos are offered as support and do **not** include all required content.
+
+---
+
+## How to Complete a 🌱 Core Guided Activity
+
+- **Open the Chapter HTML** in Canvas or download and open it in a browser.
+- **Open RStudio Desktop** and work alongside the chapter. When the chapter tells you to create or open a file, do it immediately.
+- **Type the code yourself and run it.**  
+  Don’t just read code blocks. Don’t copy and paste unless directed. Guided Activities are designed to build muscle memory: typing, running, checking output, and fixing mistakes.
+- **Pause and verify your output matches the chapter.**  
+  If your output differs, don’t plow ahead. Troubleshoot!
+  - Re-run lines in smaller chunks
+  - Check spelling, punctuation, parentheses, and commas
+  - Confirm object names match exactly
+- **Write memos when prompted (and when you get stuck).**  
+  Memos are part of learning R responsibly. Use them to document:
+  - what you were trying to do
+  - what happened (output or error)
+  - what you changed to fix it (and what resource helped)
+- **If the Guided Activity includes a dataset: download and place it correctly.**  
+  Use the dataset link on the Guided Activity page and save it exactly where the chapter specifies, often inside a `data/` folder. If the chapter tells you to verify the file loads, do that before moving on.
+- **Use videos as support, not as the main content.**  
+  Watch the video when you need a walkthrough or a second explanation. Then return to the HTML to complete the remaining required steps.
+- **Finish by checking you’re ready for the Core Practice Space.**  
+  Before leaving, confirm:
+  - your file is saved
+  - required objects exist in your Environment, if the chapter calls for it
+  - you can run the workflow again, from a clean start if instructed
+
+---
+
+## Getting Help
+
+If something still feels unclear during or after completing the Guided Activity:
+
+- Ask peers in your discussion group
+- Message the instructor via **Canvas Inbox**
+- Use **[office hours](https://calendar.app.google/wknv2CQ18RsN3YNb6)**
+- You may choose to use AI tools (LLMs) during Guided Activities. Please use [boisestate.ai](https://boisestate.ai/a/30fd3d7e-d5f7-4489-91c9-ed076a5918c2) “Introduction To R Programming Tutor.”
+- Use the **Supplemental Readings and Multimedia** page for alternative explanations. Supplemental materials are optional and do not match the chapter 1:1.
+
+---
+
+## Code Language
+
+In most instructional materials, you will see code as red and/or bold, for example `mean()`. In some situations, code may have a grey background, for example `paste()`. In other situations, code may be surrounded with backticks like `head()`. This will help you determine what the code is and what describes the code or provides instructions about it.
+
+For information on using R and screen readers, see [Resources for Using R with Screen Readers](https://ropensci.org/blog/2024/09/05/screen-readers-tools/).
+
+# How to Complete 🌱 Core Practice Space
+
+## Purpose
+
+🌱 Core Practice Space Quizzes and Assignments are learning checks on key concepts from the associated Guided Activity. They help you confirm your understanding, identify what you still need to review, and build fluency through practice.
+
+### General Practice Space Workflow
+
+Before you begin, complete the Guided Activity and, if needed, proactively seek assistance on any areas of confusion.
+
+1. Complete the associated Guided Activity first.
+2. Open the chapter HTML page and go to the **Practice Task** section.
+3. Complete the Practice Tasks in **RStudio Desktop**.
+4. Return to Canvas and take the Core Practice Space Quiz.
+5. After you submit, read the quiz feedback carefully.
+6. Review the chapter and your work as needed, then retake the quiz until you reach **Complete**.
+7. Submit your required practice file in the separate Practice Space file upload assignment.
+
+---
+
+## Quiz
+
+To earn ✅ **Complete**, you must answer **every question correctly**. Any score below 100% earns 🟡 **Not Ready**.
+
+- Most answers are checked automatically after you submit.
+- Read your quiz results carefully before trying again.
+- You may retake the quiz as many times as needed before it locks.
+- Plan to complete it early so you have time to review and retake it if needed.
+- Remember: to earn a C or higher in this course, all Core items must be marked **Complete**.
+
+### What to Watch for in Auto-Graded Answers
+
+- Some questions require **exact text** to be marked correct.
+- Use correct **R syntax**.
+- Pay attention to capitalization, punctuation, parentheses, commas, quotation marks, and object names.
+- If your answer is marked wrong, compare your response carefully to the expected format before retrying.
+
+---
+
+## File Upload Assignment
+
+Every 🌱 Core Practice Space Quiz includes a separate file-upload assignment. The quiz checks your answers in Canvas, and the file upload assignment collects your practice work product.
+
+- Code files contain all Practice Space tasks with answers.
+- Correct files are uploaded successfully.
+- Files containing code also include memos. These memo responses are part of the Core expectations for reproducible work and transparency.
+
+### Completion Rules
+
+#### To earn ✅ **Complete**
+
+A. **⚡ Code**
+
+- The file contains all coding tasks in the practice space
+- The **⚡ code** is correct (free of errors)
+
+B. **🎯/🗣 Memos**
+
+- Your report contains memos for every task
+- Each task includes a **🎯** goal memo that explicitly states the **⚡ code** task
+- Each task includes **🗣** self-evaluation (“why did this work?”, “what did I learn?”, “what will I do differently next time?”)
+
+C. **✍️ Reproducibility Object**
+
+- You upload the correct file
+- The file is not blank, cut off, or from a different assignment
+
+#### Otherwise 🟡 **Not Ready**
+
+If you earn 🟡 Not Ready, do not panic. Revision is part of the course expectations.
+
+#### ❌ **Missing** if no submission
+
+To learn more about what to do when the assignment locks, see [🌱 Core Practice Space 🎟️ Token Bank (Tracking Only)](https://boisestatecanvas.instructure.com/courses/47710/assignments/1654286)
+
+## Common Upload Mistakes
+
+- Uploading the wrong file or assignment
+- Uploading the wrong file type
+- Uploading an incomplete file
+- Not including memos
+- Skipping verification checks
+- Not disclosing outside resources used, including LLM use documentation
+
+---
+
+## Academic Integrity Expectations
+
+- You may use your notes, chapter materials, and course readings during the quiz.
+- You may work with classmates to understand the concepts, but your submission must reflect **your own understanding**.
+- Do **not** use AI tools to generate answers or code for the **Practice Space Quiz** (including “fix my code,” “write the answer,” or “solve this question”). If you rely on AI to produce the work, you are not learning the Core tasks, and that will show up later.
+- You may use AI tools to aid your understanding and troubleshoot errors for the **Practice Space File Submission**. More details on AI use are provided in Guided Activities.
+- If you get stuck, ask for help right away instead of guessing repeatedly or waiting until the deadline.
+
+### Getting Help
+
+If you are confused before, during, or after Practice Space, get help early.
+
+- Message the instructor through Canvas Inbox.
+- Attend [office hours](https://calendar.app.google/JVV3rg7bgY6H75sAA).
+- Review the Guided Activity and the chapter again before retaking the quiz.
+
+# 🌱 Core Practice Space 🎟️ Token Bank (Tracking Only)
+
+## Purpose
+
+This gradebook tool shows how many reopening tokens you have left for 🌱 Core Practice modules. It is not a submission assignment, and it does not count toward your final grade. It exists so you can quickly see how many tokens remain and understand how to use them if a module is locked.
+
+---
+
+## What the Token Bank means
+
+At the start of the course, every student begins with **3 tokens** for 🌱 Core Practice modules.
+
+- If you have 3 tokens, the gradebook display will show: **🎟️ 🎟️ 🎟️**
+- If you have 2 tokens left, it will show: **🎟️ 🎟️**
+- If you have 1 token left, it will show: **🎟️**
+- If you have used all 3 tokens, no tokens remain.
+
+## When you need a token
+
+### If you earn **🟡 Not Ready**
+
+Do not panic. Revision is part of the learning process and is built into the course structure.
+
+#### Practice Space Quiz
+
+- Take the quiz as many times as needed before it locks.
+- The first deadline to watch is the due date. **Try to reach ✅ Complete by that date.**
+- If you do not reach ✅ Complete by the due date, keep working and get help right away.
+- You may continue retaking the quiz until you reach ✅ Complete before the lock date.
+
+#### Practice Space File Upload Assignment
+
+- Submit your file by the due date, even if it is not perfect.
+- On-time Practice Space files are graded within 24 hours of the due date. Submitting early helps because grading may happen early.
+- After grading, you have 24 hours to revise and resubmit if your file is marked 🟡 Not Ready.
+- 🌱 Core Practice Space items lock for submission 2 days after the due date because this is a 7-week course that moves quickly.
+
+### **❌ Missing**
+
+You didn't submit before the **lock date**.
+
+### Due date and lock date
+
+- On the Canvas assignment or New Quiz page, look for the **Due** date.
+- Also look for **Available until** or **Until**. That is the **lock date**.
+- The **due date** tells you when the work is first expected.
+- The **lock date** tells you when quiz attempts, submissions, and resubmissions stop.
+
+### After the lock date
+
+After the lock date, the 🌱 Core Practice Space Quiz and File Upload Assignment are closed. You cannot submit, resubmit, or retake the quiz unless the module is reopened for you.
+
+---
+
+## How tokens work
+
+- **1 token** may be used to adjust the due dates and lock dates for an **entire 🌱 Core module**.
+- In each 🌱 Core module, the quiz and file upload are treated as one activity group, so the date change applies to the full module.
+- You may request a token at any time, even if the module has closed weeks earlier.
+
+---
+
+## How to use a token
+
+To request a token, email me directly through **Canvas Inbox** or at **lorrainegaudio@boisestate.edu**.
+
+- State which **🌱 Core module** you want reopened.
+- If approved, the due dates and lock dates for that **entire module** will be adjusted.
+- ❤️ **Student Care**: If you use all tokens and still have **🟡 Not Ready** on a 🌱 Core Practice Space activity, please contact me. I can help you explore your options.
+
+# 🌳 Advanced Activities Tour
+
+## 🌳 Welcome to the Canopy
+
+Now that you've mastered the **Core 🌱** basics, it’s time to climb higher.  Below is a tour of the Advanced activities available throughout this course. You only need to "harvest" the number required for your target grade!
+
+[🐣 Resilient Beginnings Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/01-dot-2-00-resilient-beginnings-overview)
+
+[🪴 Innovation Nursery Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/02-dot-2-00-innovation-nursery-overview)
+
+[👾 Hack-A-Prompt (Round 1) Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/03-dot-2-00-hack-a-prompt-overview)
+
+[📝 Notebook Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/04-dot-2-00-notebook-overview)
+
+[👾 Hack-A-Prompt (Round 2) Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/05-dot-2-00-hack-a-prompt-overview)
+
+[🐙 GitHub Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/06-dot-2-00-github-overview)
+
+[🔥 Wildfire Overview](https://boisestatecanvas.instructure.com/courses/47710/pages/07-dot-2-00-wildfire-overview)
+
+# How to Complete 🌳 Advanced Guided Activities
+
+## Purpose
+
+🌳 Advanced Guided Activities are applied follow-along activities that help you extend the 🌱 Core work into longer, more independent analytical tasks. Like Core Guided Activities, you will open an HTML activity page and work alongside it in RStudio Desktop. Unlike Core Guided Activities, Advanced Guided Activities usually include embedded tasks that produce something you will submit, such as a discussion post, a draft, a screenshot, or a file.
+
+One main difference between Core and Advanced Guided Activities is that Core guides learning before independent Practice Space work. It is never submitted. Advanced Guided Activities are submitted work built from recent Core skills.
+
+These activities are designed to help you practice a more realistic workflow: setting up files, following directions carefully, producing evidence that your code or process worked, and preparing work for feedback or submission. Many Advanced Guided Activities are broken into parts. In most cases, each part should take about 30 minutes to one hour.
+
+---
+
+## What to Expect in an 🌳 Advanced Guided Activity
+
+Each Advanced Guided Activity is built into an HTML page and may include:
+
+- step-by-step coding or workflow directions to complete in RStudio Desktop
+- instructions for creating, editing, or extending a file such as an `.R`, `.Rmd`, or `.qmd` document
+- a dataset, template, or other downloadable file
+- embedded tasks that must be completed during the activity
+- memo prompts, reflection prompts, or interpretation questions
+- a linked submission page, such as a discussion, peer review task, or file upload assignment
+
+Some Advanced Guided Activities are completed via a single-file submission. Others are completed across multiple parts, such as:
+
+- a first part that produces a draft or screenshot
+- a discussion post for peer review
+- a reply or feedback step
+- a final revised file submission
+
+Read the page carefully so you know what the current part asks you to produce.
+
+---
+
+## How to Complete an 🌳 Advanced Guided Activity
+
+1. Open the Advanced Guided Activity HTML page in Canvas.
+2. Open RStudio Desktop and work alongside the activity page.
+3. If the page includes a dataset, template, or other file, download it and save it exactly where the activity says to.
+4. Follow the activity in order. Complete the embedded tasks as you go, rather than waiting until the end.
+5. Create or update the required file for that part of the activity.
+6. Check that your code, output, screenshots, tables, plots, or written responses match what the activity asks for.
+7. If the activity is split into parts, keep your files organized so that later parts build on earlier work.
+8. Submit the required product to the correct Canvas item for that part, such as a discussion post or file upload assignment.
+
+### Submission patterns you may see
+
+Not all Advanced Guided Activities are submitted the same way. Common patterns include:
+
+#### File submission only
+
+You complete the activity and upload the required file to the linked Canvas assignment.
+
+#### Discussion first, then revision
+
+You complete part of the activity and post a draft, reflection, or screenshot to a discussion. Then you respond to peer review or instructor feedback and submit a revised version later.
+
+#### Multi-part sequence
+
+You complete several short parts across the module. Each part has its own submission page. Later parts may depend on files, drafts, or decisions from earlier parts.
+
+Because **these activities often build across parts**, start early and keep your working files in order.
+
+---
+
+## Getting Help
+
+If something still feels unclear during or after completing the Guided Activity:
+
+- Ask peers in your discussion group
+- Message the instructor via **Canvas Inbox**
+- Use **[office hours](https://calendar.app.google/wknv2CQ18RsN3YNb6)**
+- You may choose to use AI tools (LLMs) during Guided Activities. Please use [boisestate.ai](https://boisestate.ai/a/30fd3d7e-d5f7-4489-91c9-ed076a5918c2) "Introduction To R Programming Tutor."
+- Some activities require AI use.
+
+# How to Participate in 🌳Discussion Groups
+
+## Purpose
+
+🌳 Discussion Groups are the small-group discussion spaces used in this online course for selected Advanced activities. Because our course has many students, discussions happen in smaller groups so you can navigate posts, receive responses, and give useful feedback without working inside one giant class-wide thread. To begin the first discussion-group assignment, you will choose one group. After that, you'll stay in that same group but post in different threads for future discussion group activities, enabling you to learn from your peers.
+
+These discussions are part of your 🌳 Advanced learning workflow. Depending on the assignment, you may post an R report draft, a learning reflection, a screenshot, feedback for peers, or questions. Read each prompt carefully so you know what to post, when to post it, and whether replies are required.
+
+---
+
+## What to Expect in a 🌳 Discussion Group
+
+Each 🌳 Discussion Group assignment is connected to a specific discussion prompt in Canvas. In most cases, you will work with the same small group throughout the course.
+
+- your group will usually include about 10 to 15 students
+- each discussion assignment has its own instructions, due dates, and rubric or checklist
+- some discussions ask for an initial post only, but many also ask for replies, feedback, or follow-up work
+- the discussion prompt may ask you to share evidence from an Advanced activity, such as a draft, screenshot, memo, or reflection
+- when you open a group discussion, you will see your group’s discussion space, not one course-wide thread
+
+Join **one** group only. Do not post the same work in multiple groups.
+
+---
+
+## How to Join Your 🌳 Discussion Group
+
+1. Open the course in Canvas.
+2. In the course navigation, click **People**.
+3. Open the **Groups** tab.
+4. Find an available discussion group and click **Join**.
+5. After you join, return to **Modules** and open the discussion assignment.
+6. For later 🌳 Discussion Group assignments, keep using that same group unless the course tells you otherwise.
+
+If Canvas allows group switching, make any change **before** you begin posting. Once you have started participating, do not move between groups unless the instructor tells you to do so.
+
+### How discussion access works
+
+- You may open a discussion from **Modules** or from the course **Discussions** area if that link is visible.
+- Canvas takes you into **your group’s copy** of that discussion.
+- You will only see posts from the students in your discussion group for that assignment.
+- If you have already joined a group, you can also view your active groups from **Global Navigation > Groups**.
+
+---
+
+## Discussion Workflow
+
+Use this basic workflow each time you complete a 🌳 Discussion Group assignment:
+
+1. Open the assignment prompt and read the instructions all the way through.
+2. Check whether the assignment asks for an initial post only, an initial post plus replies, or a later revision step.
+3. Complete the required Advanced activity work first, if the prompt expects you to share a draft, screenshot, memo, or reflection.
+4. Post in your group’s discussion space by the required deadline.
+5. Return later for replies, peer feedback, or revisions if the assignment requires them.
+6. Before you leave, confirm that your post actually appears in the discussion thread and includes everything the prompt asked for.
+
+Do not wait until the last minute. Group discussions work best when everyone posts early enough for others to read and respond.
+
+---
+
+## Discussion Guidelines
+
+To keep discussion work useful, respectful, and manageable in an online course, follow these expectations:
+
+- Post by the due date so your group has time to read and respond.
+- Address the actual prompt, not just the topic in general.
+- Use complete sentences and a professional, respectful tone.
+- Be specific. Refer to the work, evidence, or idea you are responding to.
+- Write replies that add something: a question, a comparison, a suggestion, or a useful observation.
+- Do not post very short replies such as “I agree,” “Nice job,” or “Same.”
+- Keep your post focused on your own work, thinking, and experience.
+- Follow the AI directions and icon shown on the assignment page. Your discussion post should still reflect your own thinking and course work.
+
+Each discussion prompt may add more specific rules. Always follow the instructions on the assignment page first.
+
+---
+
+## Initial Post Expectations
+
+Your initial post should match the assignment directions for that week. In many 🌳 Discussion Group assignments, the initial post asks you to share part of your Advanced work and explain something about your process, result, or next step.
+
+- Include the required artifact, such as a draft, screenshot, reflection, memo, or short explanation.
+- Answer all parts of the prompt.
+- Make sure any file, image, or screenshot is readable.
+- Give enough context so your group can understand what you did and respond meaningfully.
+- If the prompt asks a question for peers to respond to, ask that question clearly.
+
+## Reply Expectations
+
+Reply posts should help move the discussion forward. In most cases, that means responding to what a classmate actually posted rather than dropping in a generic comment.
+
+- Reply to the required number of peers listed in the prompt.
+- Refer to a specific part of your peer’s work, explanation, or question.
+- Offer useful feedback, a thoughtful question, or a concrete suggestion.
+- Be honest, respectful, and constructive.
+- When appropriate, connect your reply to your own experience or approach without taking over the conversation.
+
+A good reply helps your peer think more clearly, check their work, or decide what to revise next.
+
+---
+
+## Troubleshooting
+
+### I do not see the Groups tab or cannot join a group.
+
+Group sign-up only works if the course is using self-sign-up groups and the needed Canvas navigation is available. If you cannot join a group, contact the instructor.
+
+### I do not see any groups listed.
+
+You may not have joined a group yet, or you may not have been added to one. Contact the instructor if the assignment requires a discussion group and you do not see one.
+
+### I opened the discussion and do not see the whole class.
+
+That is normal for a group discussion. You are supposed to see only your group’s version of the discussion thread.
+
+---
+
+## Getting Help
+
+If something is unclear while you are trying to join a group or participate in a discussion:
+
+- re-read the assignment prompt and rubric or checklist first
+- message me through **Canvas Inbox**
+- use **[office hours](https://calendar.app.google/wknv2CQ18RsN3YNb6)**
+
+If the problem is technical, include a screenshot and a short explanation of what you clicked and what you expected to see.
+
+# 👋 Instructor Information
+
+## Lorraine Gaudio
+
+**Email:** [lorrainegaudio@boisestate.edu](mailto:lorrainegaudio@boisestate.edu)
+
+**Office Hours:** By appointment; please email to arrange a time. You can schedule a 30-minute Zoom meeting using [this link](https://calendar.app.google/kFNZMdRdBUwKp3A27).
+
+Hi there—welcome! You can call me Lorraine (she/her/hers). I’m an Adjunct in the Anthropology Department, a data analyst in the Provost’s Office, and a Ph.D. student in the School of Computing focusing on Data Analytics. My day-to-day work and research are conducted in RStudio. I currently have five active R projects, and while R is my primary language, I also dabble in Python.
+
+I hold an M.A. in Anthropology, a B.S. in Biology (with a minor in Psychology), an A.S. in Chemistry, and several university teaching certificates. My research examines the social implications of emerging technologies through a mixed-methods approach.
+
+Outside of work, I run daily with my miniature poodle, I play Gloomhaven on the weekends, and I sing lead in an all-women’s barbershop chorus. I’m glad you’re here and excited to learn with you!
+
+# How to 📅 Book a Meeting with the Instructor
+
+## Purpose
+
+Hi! I’m glad you’re scheduling time with me. Here’s how the booking page works and exactly what to do after you pick a time.
+
+---
+
+## Booking Steps
+
+### Step 1: Choose a time and complete the booking form
+
+When you book, you’ll be asked for **First Name, Last Name, Email Address, and Topic** (all required).
+
+Please:
+
+- Use the **email address you actually check** (ideally your Boise State email).
+- **Double-check the spelling** of your email before you submit.
+- In **Topic**, write a short phrase that helps me prepare (example: “Homework 3 question about ggplot labels”).
+
+### Step 2: Confirm you received the calendar invite
+
+After you click **Book**, Google **adds the appointment to my calendar** and you should receive a **confirmation email/calendar invitation** at the email address you entered.
+
+What to do next:
+
+- **Open the confirmation email** and **accept** the invitation if your email/calendar system asks you to, especially if you use Outlook or Apple Calendar.
+- Also check your calendar—you should see the event appear there.
+
+### Step 3: Join Zoom at the meeting time
+
+**Your Zoom link is in the calendar event’s _Location_ field.**
+
+At meeting time:
+
+1. Open the calendar event details.
+2. Click the **Zoom link in Location** to join.
+
+Please join **1–2 minutes early** so we can start on time.
+
+---
+
+## If something looks wrong
+
+- **No confirmation email?** Check Spam/Junk, then email me with your name, the email you used to book, and the time you selected. A typo in the email field is the most common cause.
+- **Time looks wrong?** Make sure you’re reading the time in **Mountain Time**. Your device or calendar may convert times if your time zone settings are off.
+- **Can’t find the Zoom link?** Open the event details and look for the **Location** field. If it’s missing, email me and I’ll resend the join information.
+
+### Learn more
+
+- Google Help: [How appointment schedules work](https://support.google.com/calendar/answer/11608416?hl=en)
+- Google Help: [How calendar invitations work (including non-Google Calendar users)](https://support.google.com/calendar/answer/37161?co=GENIE.Platform%3DDesktop&hl=en)

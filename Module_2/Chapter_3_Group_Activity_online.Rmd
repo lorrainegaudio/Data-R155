@@ -1,5 +1,5 @@
 ---
-title: "Chapter 3 Activity (Online)"
+title: "🎮 Vector Play Lab"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Spring 2026"

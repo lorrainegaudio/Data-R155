@@ -1,5 +1,6 @@
 ---
-title: "Is AI Appropriate? Group Discussion"
+title: "Is AI Appropriate?"
+subtitle: "Tenacity-First AI"
 author: "Lorraine Gaudio"
 date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
 team: "Summer 2026"
@@ -25,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-In this activity, you will learn how to make a defensible decision about when AI help supports your learning and when it replaces the learning work you need to do to build coding skill. In R, getting “working code” is not the same thing as understanding why it works and AI can easily create the illusion of competence if you copy solutions. This matters because your long-term ability to work in data analytics depend on you being able to explain and reproduce your work. You will practice a “tenacity-first” approach: attempt first, document what happened, then seek help (including AI) in a way that keeps you accountable for understanding and verification.
+In this activity, you will learn how to make a defensible decision about when AI help supports your learning and when it replaces the learning work you need to do to build coding skill. In R, getting “working code” is not the same thing as understanding why it works and AI can easily create the illusion of competence if you copy solutions. This matters because your long-term ability to work in data analytics depends on you being able to explain and reproduce your work. You will practice a “tenacity-first” approach: attempt first, document what happened, then seek help (including AI) in a way that keeps you accountable for understanding and verification.
 
 # AI, Tenacity, and Human-Centered Learning
 
@@ -139,21 +140,21 @@ ___
 
 Use AI when it keeps you thinking, speeds up understanding, and helps you debug systematically. Avoid AI when it replaces the struggle that produces learning. Tenacity is not “do everything alone.” Tenacity is “do the learning work, then seek the right help in the right way.”
 
-# Is AI Appropriate? Discussion
+# Discussion Activity
 
-Your main goal today is to create one original vignette as a group (Task 3) that a stranger could read and make a defensible “AI appropriate?” decision.
+Your main goal is to create one original vignette in Task 3 that a reader could use to make a defensible “AI appropriate?” decision.
 
-Tasks 1–2 are warm-ups: they give you language, examples, and “decision rules” you can reuse when you write your vignette.
+Tasks 1–2 are warm-ups. They give you language, examples, and decision rules you can reuse when you write your vignette.
 
 **How to work**
 
-1. **Silent work** (individual, 3 minutes): Skim Tasks 1–2. Jot short notes (keywords are fine).
+1. **Review Tasks 1–2:** Skim the scenarios and jot short notes. Keywords are fine.
 
-2. **Group discussion**(group, 7 minutes): Discuss Tasks 1–2 and agree on 2–3 decision rules your group will use.
+2. **Identify decision rules:** Use Tasks 1–2 to identify 2–3 decision rules that help distinguish appropriate AI help from inappropriate AI replacement.
 
-3. Main task (group, 10 minutes): Use discussion ideas from tasks 1 and 2 to complete Task 3: compose a vignette. Trade ideas with your partner/group to evaluate each other’s vignettes. 
+3. **Complete the main task:** Use ideas from Tasks 1 and 2 to complete Task 3. Compose a vignette, evaluate whether AI is appropriate, and revise your condition/limit until it is specific enough for someone else to follow.
 
-4. **Write up**: Each person will paste their Task 3 vignette into the Canvas assignment text box. Keep it brief and follow the template. *This is a participation check, not an essay.*
+4. **Write up:** Prepare your Task 3 vignette using the template. Keep it brief and focused. This is a participation check, not an essay.
 
 ## Task 1
 
@@ -161,53 +162,47 @@ Tasks 1–2 are warm-ups: they give you language, examples, and “decision rule
 
 Below are five micro-scenarios. Consider each one and decide:
 
-      - Is AI is appropriate? yes/no/depends; 
-      - What should the student do first; 
-      - How should the student use the AI tool, and 
-      - How should they verify the result.
+- Is AI appropriate? yes/no/depends
+- What should the student do first?
+- How should the student use the AI tool?
+- How should they verify the result?
 
 1. “I paste my error + code + what I tried and ask AI for a checklist.”
 
 2. “I ask AI to provide feedback on my R Script after I completed it independently. I plan to revise based on feedback."
 
-3. “I ask AI what seq(from=0,to=10,by=1) returns and why. I paste the explanation into my memo.”
+3. “I ask AI what `seq(from = 0, to = 10, by = 1)` returns and why. I paste the explanation into my memo.”
 
 4. “I ask AI to generate extra practice problems.”
 
 5. “I ask AI to write the script for Chapter 2.”
 
-**Group goal**: After discussion, your group should be able to explain why each item belongs in its category.
+**Goal:** Be able to explain why each item belongs in its category.
 
 ## Task 2
 
-Answer one or both of the following vignettes. Include one reason and one condition/limit. 
+Answer one or both of the following vignettes. Include one reason and one condition/limit.
 
-### **Vignette 4:**
+### Vignette 4: “Explain what my output means”
 
-**“Explain what my output means”**
+While working through a guided activity, Priya runs code that prints a number, and she doesn’t understand why it’s that number. She asks AI:
 
-    While working through a guided activity (Chapter reading), 
-    Priya runs code that prints a number, 
-    and she doesn’t understand why it’s that number. 
-    She asks AI: 
-    “Explain this output step-by-step using my variable names.”
+> “Explain this output step-by-step using my variable names.”
 
-**Is AI appropriate?** Write a couple sentences explaining your answer. 
+**Is AI appropriate?** Write a couple sentences explaining your answer.
 
 ```{r eval=FALSE, include=FALSE}
 # Yes, with one condition.
 # This is AI as a tutor. It can be useful for Priya to actively check the explanation by rerunning smaller “code trials” (printing intermediate objects and confirming each step). If she accepts the explanation without verifying, she’s delegating understanding. Tenacity means "trust, but verify."
 ```
 
-### **Vignette 5:** 
+### Vignette 5: “Write my reflection”
 
-**"Write my reflection"**
+Devin hits three errors in a row and feels discouraged. After using AI to help him understand and solve the errors, he asks AI:
 
-    Devin hits three errors in a row and feels discouraged. 
-    After using AI to help him understand and solve the errors, he asks AI: 
-    “Write my memo about what I learned and how I showed tenacity.”
+> “Write my memo about what I learned and how I showed tenacity.”
 
-**Is AI appropriate?** Write a couple sentences explaining your answer. 
+Is AI appropriate? Write a couple sentences explaining your answer.
 
 ```{r eval=FALSE, include=FALSE}
 # Mostly no.
@@ -215,43 +210,47 @@ Answer one or both of the following vignettes. Include one reason and one condit
 # What is appropriate: asking AI to generate reflection prompts (questions) you answer yourself, like: “What did the error message literally say? What did you change? What did you learn about object creation and order?”
 ```
 
-**Group goal**: Reach a consensus that includes a clear condition/limit and a non-negotiable verification step.
-
 ## Task 3
 
 **Write your own vignette**
 
-Write a short vignette from your own experience (or invent one) using the template above. Then trade with a partner and decide whether AI is appropriate, including one reason and one condition/limit. Compare your decisions and revise your condition/limit until it’s specific enough that a stranger could follow it.
+Write a short vignette from your own experience, or invent one, using the template below. Then evaluate whether AI is appropriate. Include one reason and one condition/limit. Revise your condition/limit until it is specific enough that a reader could follow it.
 
 Vignette template
 
-    Name: [Name of person in vignette] 
-    
-    Context: What task was [Name] doing?
+```markdown
+Name: [Name of person in vignette]
 
-    Action: Provide code snippet 1–3 lines or describe the action if not code.
+Context: What task was [Name] doing?
 
-    Problem: State the error message or result
+Action: Provide code snippet 1–3 lines or describe the action if not code.
 
-    Next Action: Did [Name] try something before asking for help
+Problem: State the error message or result.
 
-    AI Prompt: How does [Name] engage with AI?
+Next Action: Did [Name] try something before asking for help?
 
-    Evaluate: AI appropriate? (Yes/No/Depends/Unsure)
+AI Prompt: How does [Name] engage with AI?
 
-    Reason: Explain your evaluation
-    
-    Verification plan: How could [Name] check the AI output?
-    
-**Group goal**: Revise your condition/limit until it is specific enough that a stranger could follow it.   
+```
+
+## Task 4
+
+Respond to at least one other person’s vignette. 
+
+```markdown
+Evaluate: AI appropriate? (Yes/No/Depends/Unsure)
+
+Reason: Explain your evaluation.
+
+Verification plan: How could [Name] check the AI output?
+```
 
 
+# Summary
 
----
+Practice responsible help-seeking while you learn to code. In this course, AI is acceptable when it helps you think and it is not acceptable when it replaces the work that builds skill.
 
-# Wrap-Up: What You Should Take With You
+Going forward, use this rule-of-thumb: attempt → document → ask → verify. If you can’t show what you tried, you’re not ready to ask for help yet. If you do ask for help, you’re still responsible for verifying the result by rerunning code, checking intermediate objects, and explaining what changed in your own words. This is how you build confidence that lasts beyond this class.
 
-The point of this activity is not to decide whether AI is “good” or “bad.” The point is to practice **responsible help-seeking** while you learn to code. In this course, AI is acceptable when it helps you *think* and it is not acceptable when it replaces the work that builds skill.
 
-Going forward, use this rule-of-thumb: **attempt → document → ask → verify.** If you can’t show what you tried, you’re not ready to ask for help yet. If you do ask for help, you’re still responsible for verifying the result by rerunning code, checking intermediate objects, and explaining what changed in your own words. This is how you build confidence that lasts beyond this class.
 
