@@ -66,11 +66,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
 
-**Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with ```{r}. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
+**Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with <code>&#96;&#96;&#96;{r}</code>. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
 
 **Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
 
-**Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y))`.
+**Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y)`.
 
 **Conditional Subsetting** (Logical Subsetting): Filtering an object by using a logical condition inside [ (e.g., `df[df$cyl != 4, ]`), where `TRUE` keeps an element/row and `FALSE` drops it. This contrasts with negative indexing, which excludes by position rather than by a condition.
 
@@ -320,6 +320,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Range**: A simple measure of spread found by subtracting the smallest value from the largest value in a dataset.
 
+**Real Numbers**: Numbers that can be located on the number line, including whole numbers, integers, fractions, decimals, and irrational numbers such as `pi` and `sqrt(2)`. Real numbers do not include imaginary numbers, and in statistics they are commonly used to represent measured quantitative values such as height, weight, or time.
+
 **Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
 
 **Render Tab**: A temporary tab that appears in RStudio’s Console pane when you Knit/Render an R Markdown (`.Rmd`) or Quarto (`.qmd`) document. It shows the rendering log—progress messages, warnings, and errors—separately from your interactive Console, and typically includes a Stop control so you can interrupt a failed or long render.
@@ -405,6 +407,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # W
 
 **Warning**: A console message indicating that R did run the command but detected a potential problem. Execution continues and a result is produced, but the output may be incomplete, unexpected, or based on an assumption (for example, coercing types, removing missing elements, or using a function in a way that may not behave as intended).
+
+**Whole Numbers**: The counting numbers together with zero: `0, 1, 2, 3, ....` Whole numbers do not include negative numbers, fractions, or decimals.
 
 **Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
 

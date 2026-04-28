@@ -1,6 +1,10 @@
 🚀 **Explore and Play:**
   
 💡 **Tip:**
+
+🌱
+
+🌳
   
 🛠 **Break Things!**
 
