@@ -1,6 +1,7 @@
 ---
 title: "Wildfire"
-author: "Lorraine Gaudio"
+subtitle: "Part B: Probability Calculations"
+author: "YOUR NAME"
 date: today
 format: html
 ---
@@ -56,7 +57,7 @@ q95_high <- qlnorm(___, meanlog = _____, sdlog = _____)
 q95_high
 ```
 
-🗣 Based on this model, about ___% of new ignitions in High-hazard areas are expected to spread no more than roughly 10.7 km in 8 hours, and only about __% of wildfires would be expected to spread farther than 10.7 km in 8 hours.
+🗣 Based on this model, about \___\% of new ignitions in High-hazard areas are expected to spread no more than roughly __ km in __ hours, and only about \__\% of wildfires would be expected to spread farther than \___ km in __ hours.
 
 ## Density
 
@@ -79,7 +80,7 @@ d_10 <- ______(10, ______ = ______, ______ = ______)
 d_3; d_10  
 ```
 
-🗣 The density at 10 km $\mathcal{f_{high}}(10) \approx$ _____) is higher than at 3 km ($\mathcal{f_{high}}(3) \approx$ _____), which implies that values in a small neighborhood around 10 km are **more likely/less likely** than values in a small neighborhood around 3 km under the High-hazard lognormal model.
+🗣 The density at __ km $\mathcal{f_{high}}(10) \approx$ _____) is higher than at 3 km ($\mathcal{f_{high}}(3) \approx$ _____), which implies that values in a small neighborhood around 10 km are **more likely/less likely** than values in a small neighborhood around 3 km under the High-hazard lognormal model.
 
 ## Replication
 

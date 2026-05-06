@@ -2630,230 +2630,6 @@ window.onload = function() {
   PagedTableDoc.initAll();
 };
 </script>
-<script>$(document).ready(function(){
-    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
-        $('[data-toggle="tooltip"]').tooltip();
-    }
-    if ($('[data-toggle="popover"]').popover === 'function') {
-        $('[data-toggle="popover"]').popover();
-    }
-});
-</script>
-<style type="text/css">
-.lightable-minimal {
-border-collapse: separate;
-border-spacing: 16px 1px;
-width: 100%;
-margin-bottom: 10px;
-}
-.lightable-minimal td {
-margin-left: 5px;
-margin-right: 5px;
-}
-.lightable-minimal th {
-margin-left: 5px;
-margin-right: 5px;
-}
-.lightable-minimal thead tr:last-child th {
-border-bottom: 2px solid #00000050;
-empty-cells: hide;
-}
-.lightable-minimal tbody tr:first-child td {
-padding-top: 0.5em;
-}
-.lightable-minimal.lightable-hover tbody tr:hover {
-background-color: #f5f5f5;
-}
-.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-classic {
-border-top: 0.16em solid #111111;
-border-bottom: 0.16em solid #111111;
-width: 100%;
-margin-bottom: 10px;
-margin: 10px 5px;
-}
-.lightable-classic tfoot tr td {
-border: 0;
-}
-.lightable-classic tfoot tr:first-child td {
-border-top: 0.14em solid #111111;
-}
-.lightable-classic caption {
-color: #222222;
-}
-.lightable-classic td {
-padding-left: 5px;
-padding-right: 5px;
-color: #222222;
-}
-.lightable-classic th {
-padding-left: 5px;
-padding-right: 5px;
-font-weight: normal;
-color: #222222;
-}
-.lightable-classic thead tr:last-child th {
-border-bottom: 0.10em solid #111111;
-}
-.lightable-classic.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-classic.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-classic-2 {
-border-top: 3px double #111111;
-border-bottom: 3px double #111111;
-width: 100%;
-margin-bottom: 10px;
-}
-.lightable-classic-2 tfoot tr td {
-border: 0;
-}
-.lightable-classic-2 tfoot tr:first-child td {
-border-top: 3px double #111111;
-}
-.lightable-classic-2 caption {
-color: #222222;
-}
-.lightable-classic-2 td {
-padding-left: 5px;
-padding-right: 5px;
-color: #222222;
-}
-.lightable-classic-2 th {
-padding-left: 5px;
-padding-right: 5px;
-font-weight: normal;
-color: #222222;
-}
-.lightable-classic-2 tbody tr:last-child td {
-border-bottom: 3px double #111111;
-}
-.lightable-classic-2 thead tr:last-child th {
-border-bottom: 1px solid #111111;
-}
-.lightable-classic-2.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-material {
-min-width: 100%;
-white-space: nowrap;
-table-layout: fixed;
-font-family: Roboto, sans-serif;
-border: 1px solid #EEE;
-border-collapse: collapse;
-margin-bottom: 10px;
-}
-.lightable-material tfoot tr td {
-border: 0;
-}
-.lightable-material tfoot tr:first-child td {
-border-top: 1px solid #EEE;
-}
-.lightable-material th {
-height: 56px;
-padding-left: 16px;
-padding-right: 16px;
-}
-.lightable-material td {
-height: 52px;
-padding-left: 16px;
-padding-right: 16px;
-border-top: 1px solid #eeeeee;
-}
-.lightable-material.lightable-hover tbody tr:hover {
-background-color: #f5f5f5;
-}
-.lightable-material.lightable-striped tbody tr:nth-child(even) {
-background-color: #f5f5f5;
-}
-.lightable-material.lightable-striped tbody td {
-border: 0;
-}
-.lightable-material.lightable-striped thead tr:last-child th {
-border-bottom: 1px solid #ddd;
-}
-.lightable-material-dark {
-min-width: 100%;
-white-space: nowrap;
-table-layout: fixed;
-font-family: Roboto, sans-serif;
-border: 1px solid #FFFFFF12;
-border-collapse: collapse;
-margin-bottom: 10px;
-background-color: #363640;
-}
-.lightable-material-dark tfoot tr td {
-border: 0;
-}
-.lightable-material-dark tfoot tr:first-child td {
-border-top: 1px solid #FFFFFF12;
-}
-.lightable-material-dark th {
-height: 56px;
-padding-left: 16px;
-padding-right: 16px;
-color: #FFFFFF60;
-}
-.lightable-material-dark td {
-height: 52px;
-padding-left: 16px;
-padding-right: 16px;
-color: #FFFFFF;
-border-top: 1px solid #FFFFFF12;
-}
-.lightable-material-dark.lightable-hover tbody tr:hover {
-background-color: #FFFFFF12;
-}
-.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
-background-color: #FFFFFF12;
-}
-.lightable-material-dark.lightable-striped tbody td {
-border: 0;
-}
-.lightable-material-dark.lightable-striped thead tr:last-child th {
-border-bottom: 1px solid #FFFFFF12;
-}
-.lightable-paper {
-width: 100%;
-margin-bottom: 10px;
-color: #444;
-}
-.lightable-paper tfoot tr td {
-border: 0;
-}
-.lightable-paper tfoot tr:first-child td {
-border-top: 1px solid #00000020;
-}
-.lightable-paper thead tr:last-child th {
-color: #666;
-vertical-align: bottom;
-border-bottom: 1px solid #00000020;
-line-height: 1.15em;
-padding: 10px 5px;
-}
-.lightable-paper td {
-vertical-align: middle;
-border-bottom: 1px solid #00000010;
-line-height: 1.15em;
-padding: 7px 5px;
-}
-.lightable-paper.lightable-hover tbody tr:hover {
-background-color: #F9EEC1;
-}
-.lightable-paper.lightable-striped tbody tr:nth-child(even) {
-background-color: #00000008;
-}
-.lightable-paper.lightable-striped tbody td {
-border: 0;
-}
-</style>
 <header>
   <div class="header-wrapper">
     <h1>INTRODUCTION TO R PROGRAMMING</h1>
@@ -3137,548 +2913,8 @@ Figure 2.1: Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) f
 </div>
 </div>
 </div>
-<div id="part-a" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Part A</h1>
-<p>Explore and wrangling of the raw WHP sample data.</p>
-<div id="task-1" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Task 1</h2>
-<p><strong>Load Data</strong></p>
-<p>Task instructions:</p>
-<ol style="list-style-type: decimal">
-<li><p>Use <strong><code>readr</code></strong> to read the file <code>whp_raw_sample.csv</code> from your working directory.</p></li>
-<li><p>Store the result in an object named <strong><code>county_raw</code></strong> in your Environment.</p></li>
-<li><p>Run at least two <strong>structural checks</strong> to make sure the data imported correctly (for example: number of rows, variable names, a summary of key columns).</p></li>
-<li><p>Write a short comment describing what kind of dataset <code>county_raw</code> is (size, what a row represents, high-level purpose).</p></li>
-</ol>
-<p>🎯 <strong>Goal.</strong> Write your own one-sentence goal here (e.g., what you want to load and understand).</p>
-<pre class="r"><code>#⚡ Code: readr::read_csv
-____ # 1. e.g., load any needed package(s)
-____ # 2. e.g., read the CSV into county_raw</code></pre>
-<pre class="r"><code># ✅  Explore Data
-____ # 3. e.g., structure or glimpse of county_raw
-____ # e.g., check column names or a summary of whp / cell_area_km2</code></pre>
-<p>🗣 Comment (TODO).
-In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful).</p>
-<hr />
-<div id="column-meanings" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> <strong>Column meanings</strong></h3>
-<p><strong>whp</strong> – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.</p>
-<p><strong>county</strong> – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.</p>
-<p><strong>county_fips</strong> – The county’s 3-digit FIPS code from TIGER/Line. <em>Option: To create the standard 5-digit FIPS for Idaho, prepend the state code 16: e.g., 049 → 16049. Need to use the 5-digit code when joining to external datasets (ACS, MTBS summaries, etc.).</em></p>
-<p><strong>cell_area_km2</strong> – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.</p>
-<hr />
-</div>
-</div>
-<div id="task-2" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Task 2</h2>
-<p><strong>Basic data audit summaries</strong></p>
-<p>Task instructions:</p>
-<ol style="list-style-type: decimal">
-<li>Using <code>dplyr::summarize()</code> (or base R equivalents), compute and report the following for county_raw:</li>
-</ol>
-<ul>
-<li><p>Total number of rows.</p></li>
-<li><p>Number of missing values in <code>whp</code>.</p></li>
-<li><p>Minimum value of <code>cell_area_km2</code>.</p></li>
-<li><p>Maximum value of <code>cell_area_km2</code>.</p></li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Store the summary tibble (or data frame) in a clearly named object (e.g., <code>county_summary</code>).</li>
-</ol>
-<p>🎯 Goal. Write your own one-sentence goal about what you are summarizing.</p>
-<pre class="r"><code># ⚡ Code: summarize key audit quantities for county_raw
-____ # 1/2. assign county_summary and use county_raw
-____ # 1. compute n_rows
-____ # 1. compute n_na_whp
-____ # 1. compute min_area
-____ # 1. compute max_area</code></pre>
-<p>✅ Checks: print the summary object and confirm the summary makes sense.</p>
-<p>🗣 Comment (TODO).
-In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.).</p>
-</div>
-<div id="task-3" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Task 3</h2>
-<p><strong>Compute WHP quantile edges</strong> (category cut points)</p>
-<p>Task instructions</p>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>stats::quantile()</code> on the <code>whp</code> column of <code>county_raw</code> to compute the quantiles for <code>prob</code> using <code>0, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99, 1.00</code>.</p></li>
-<li><p>Store the result in an object named <code>e</code> (for “edges”).</p></li>
-<li><p>Use<code>na.rm = TRUE</code> so missing values are ignored.</p></li>
-<li><p>Look at <code>e</code> and make sure it has 8 ordered values that look reasonable for a right-skewed variable.</p></li>
-</ol>
-<p>📜 The SYNTAX: quantile(x, probs, na.rm)</p>
-<p>🎯 Goal.
-Write your own goal explaining quantiles/edges goal.</p>
-<pre class="r"><code># ⚡ Code: Base R stats::quantile 
-____ # 2. store WHP quantile edges in object e
-____ # 1. call quantile() on county_raw&#39;s whp column
-____ # 1. specify the probs vector
-____ # 3. include remove NA from calculation</code></pre>
-<pre class="r"><code># ✅  Verify
-____ # print e</code></pre>
-<p>🗣 Comment (TODO).
-In 1–2 sentences, describe what <code>e</code> represents and how these cut points will be used in later tasks.</p>
-<p>Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
-<hr />
-<p>✅ Verify Option: Each element corresponds to a specific percentile:</p>
-<ul>
-<li><p><code>e[1]</code> = minimum WHP (0th percentile)</p></li>
-<li><p><code>e[2]</code> = 25th percentile</p></li>
-<li><p><code>e[3]</code> = 50th percentile (median)</p></li>
-<li><p><code>e[4]</code> = 75th percentile</p></li>
-<li><p><code>e[5]</code> = 90th percentile</p></li>
-<li><p><code>e[6]</code> = 95th percentile</p></li>
-<li><p><code>e[7]</code> = 99th percentile</p></li>
-<li><p><code>e[8]</code> = maximum WHP (100th percentile)</p></li>
-</ul>
-<hr />
-</div>
-<div id="task-4" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Task 4</h2>
-<p><strong>Add a categorical WHP risk label</strong></p>
-<p>Task instructions:</p>
-<ol style="list-style-type: decimal">
-<li><p>Start from <code>county_raw</code>, create a new data frame called <code>county_cats</code>.</p></li>
-<li><p>Use <code>dplyr::mutate()</code> and <code>dplyr::case_when()</code> to add a new variable <code>Category</code> that assign a label based on <code>whp</code> and the edges in <code>e</code>.</p></li>
-<li><p>Use the following intervals (closed on the left (&gt;=), open on the right (&lt;), except the last, which is closed on both sides (&gt;=; &lt;=)):</p></li>
-</ol>
-<ul>
-<li><p>If a row’s <code>whp</code> value is <em>at least</em> the minimum WHP AND <em>less than</em> the 25th percentile, label it “Very Low”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 25th percentile AND <em>less than</em> the 50th percentile (median), label it “Low”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 50th percentile AND <em>less than</em> the 75th percentile, label it “Moderate”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 75th percentile AND <em>less than</em> the 90th percentile, label it “High”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 90th percentile AND <em>less than</em> the 95th percentile, label it “Very High”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 95th percentile AND <em>less than</em> the 99th percentile, label it “Extreme”.</p></li>
-<li><p>If <code>whp</code> is <em>at least</em> the 99th percentile AND <em>less than or equal to</em> the maximum WHP, label it “Ultra (Top 1%)”.</p></li>
-<li><p>If a value of <code>whp</code> does not fall in any of these ranges (e.g., <code>NA</code>), <code>Category</code> should be <code>NA</code>.</p></li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Convert <code>Category</code> to an <strong>ordered factor</strong> so the levels follow the intended risk order.</li>
-</ol>
-<ul>
-<li><code>&quot;Very Low&quot;</code>, <code>&quot;Low&quot;</code>, <code>&quot;Moderate&quot;</code>, <code>&quot;High&quot;</code>, <code>&quot;Very High&quot;</code>, <code>&quot;Extreme&quot;</code>, <code>&quot;Ultra (Top 1%)&quot;</code>.</li>
-</ul>
-<p>🎯 Goal.
-Write your own sentence(s) goal for turning numeric WHP into ordered risk categories.</p>
-<pre class="r"><code># ⚡ Code:  dplyr::mutate + dplyr::case_when
-____ # 1. assign county_cats and pipe county_raw into it 
-____ # 2. use mutate() to create Category 
-____ # 3. with case_when() and e[ ] bounds
-____ # 4. convert Category to an ordered factor with the specified levels</code></pre>
-<pre class="r"><code># ✅  Verify: confirm Category looks right
-____ # e.g., count() or table()
-____ # optional: str() or glimpse()</code></pre>
-<p>🗣 Comment (TODO).
-Either: (a) explain briefly how the <code>case_when</code> logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard.</p>
-<p>Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
-</div>
-<div id="task-5" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Task 5</h2>
-<p><strong>Aggregate area and compute category probabilities</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Start from <code>county_cats</code></p></li>
-<li><p>Use <code>dplyr::group_by()</code> with <code>Category</code>.</p></li>
-<li><p>Use <code>summarize()</code> to compute, for each <code>Category</code>:</p></li>
-</ol>
-<ul>
-<li><p><code>area_km2</code> equals the sum of <code>cell_area_km2</code>.</p></li>
-<li><p><code>n_cells</code> equals the number of grid cells using <code>n()</code>.</p></li>
-<li><p>Use <code>.groups = &quot;drop&quot;</code> so that the result is ungrouped.</p></li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li><p>Use <code>dplyr::mutate()</code> to create a new variable called <code>Probability</code> that is the <code>area_km2</code> divided by <code>sum(area_km2)</code>.</p></li>
-<li><p>Use <code>dplyr::select()</code> to keep only <code>Category</code>, <code>Probability</code>, <code>area_km2</code>, <code>n_cells</code> in this order.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own one-sentence goal for summarizing WHP categories into areas and probabilities.</p>
-<p>💬 Prediction.</p>
-<pre class="r"><code># ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
-____ # 1. store prob_tbl and pipe county_cats into it
-____ # 2. group_by()
-____ # 3. summarize()
-____ # 4. mutate())
-____ # 5. select()</code></pre>
-<pre class="r"><code># ✅  Verify: validate prob_tbl
-____ # print prob_tbl
-____ # check that probabilities sum to ~1</code></pre>
-<p>🗣 Comment (TODO).
-In 1–2 sentences, describe what <code>prob_tbl</code> tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”</p>
-</div>
-</div>
-<div id="part-b" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Part B</h1>
-<p>The table below summarizes the quantile-based wildfire hazard categories derived from Idaho’s continuous USFS WHP raster and the distance distributions used for an 8-hour run. The <strong>Category</strong> column lists seven bins (Very Low to Ultra) defined from the raster’s cumulative distribution; the WHP index itself is unitless. The <strong>Probability</strong> column is the statewide area share for each bin—expressed as a percent of valid raster area (NA excluded)—and is interpreted as the chance that a random ignition falls in that category.</p>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Category
-</th>
-<th style="text-align:right;">
-Probability
-</th>
-<th style="text-align:right;">
-Mean (km)
-</th>
-<th style="text-align:right;">
-SD (km)
-</th>
-<th style="text-align:right;">
-Mean log
-</th>
-<th style="text-align:right;">
-SD log
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Very Low
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-2.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0.582
-</td>
-<td style="text-align:right;">
-0.472
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Low
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-1.046
-</td>
-<td style="text-align:right;">
-0.325
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Moderate
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-4.5
-</td>
-<td style="text-align:right;">
-1.5
-</td>
-<td style="text-align:right;">
-1.451
-</td>
-<td style="text-align:right;">
-0.325
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-High
-</td>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-7.0
-</td>
-<td style="text-align:right;">
-2.0
-</td>
-<td style="text-align:right;">
-1.907
-</td>
-<td style="text-align:right;">
-0.280
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Very High
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-12.0
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-2.455
-</td>
-<td style="text-align:right;">
-0.246
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Extreme
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-18.0
-</td>
-<td style="text-align:right;">
-4.0
-</td>
-<td style="text-align:right;">
-2.866
-</td>
-<td style="text-align:right;">
-0.220
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Ultra (Top 1%)
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-28.0
-</td>
-<td style="text-align:right;">
-6.0
-</td>
-<td style="text-align:right;">
-3.310
-</td>
-<td style="text-align:right;">
-0.212
-</td>
-</tr>
-</tbody>
-</table>
-<p>The table also defines a simple fire-spread scenario using “plausible values” for an 8-hour straight-line distance by hazard category. These distances are not estimated from the WHP raster. They are modeling assumptions chosen for this assignment. Specifically, we assume that (1) ignitions are equally likely anywhere within the valid WHP raster (so Probability reflects area share), (2) higher WHP categories correspond to larger 8-hour straight-line spread distances, and (3) within each category, 8-hour distances follow either a zero-truncated normal distribution with the given mean and SD or a lognormal distribution.</p>
-<hr />
-<p>The Normal mean (km) and Normal SD (km) columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The Mean log and SD log columns give the parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> of a lognormal distance model in which</p>
-<p><span class="math display">\[
-\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
-\]</span></p>
-<p>Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).</p>
-<hr />
-<div id="statistical-methods" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Statistical Methods</h2>
-<p>A continuous random variable is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km.</p>
-<p><em>You do not need to understand the text descriptions of the equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor).</em></p>
-<hr />
-<p>Let <span class="math inline">\(X\)</span> be the continuous random variable of straight-line kilometer distance in an 8-hour period. Then a probability distribution of <span class="math inline">\(X\)</span> is a function <span class="math inline">\(f(x)\)</span> such that for any two numbers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with <span class="math inline">\(a \leq b\)</span>,</p>
-<p><span class="math display">\[
-P(a \leq X \leq b) =  \int_{a}^{b} f(x) \, dx
-\]</span></p>
-<p>The probability that <span class="math inline">\(X\)</span> takes on a value in the interval <span class="math inline">\([a, b]\)</span> is given by the area above this interval and under the graph of the density function.</p>
-<hr />
-</div>
-<div id="lognormal-distribution" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Lognormal Distribution</h2>
-<p>In this assignment, we will use <strong>lognormal distribution</strong> to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:</p>
-<pre class="r"><code>?Lognormal</code></pre>
-<p>A <strong>lognormal distribution</strong> is used to model a variable that is always positive and becomes normal after taking the logarithm of the values.</p>
-<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAABrVBMVEUAAAAAADoAAGYAAIAAOjoAOmYAOpAAZAAAZmYAZpAAZrY6AAA6ADo6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kLY6kNtmAABmADpmOgBmOjpmOmZmOpBmZgBmZjpmZmZmZpBmkGZmkJBmkLZmkNtmtrZmtttmtv+QOgCQOjqQZgCQZjqQZmaQZpCQkDqQkGaQkJCQkLaQtpCQtraQttuQ27aQ2/+bVwCyIiKyIk6yInWyTk6yTnWyTpqydb22ZgC2Zjq2kDq2kGa2kJC2kLa2tma2tpC2tra2ttu227a229u22/+2/7a2/9u2///AIiLATiLATk7Adb3Amr3Amt7I1dnNIiLNTiLNdSLNdU7NdXXNmr3Nvd7Nvf/RzKPR0dHZ2dnaTiLavd7a3t7a3v/bkDrbkGbbtmbbtpDbtrbbttvb25Db27bb29vb2//b/7bb/9vb///c6e7mdSLmdU7mmk7mmnXm3t7m3v/m/97m///ymk7ymnXyvXXyvZry/97y////tmb/tpD/vXX/25D/27b/29v/3pr/3r3/453//7b//73//9v//97///+37obhAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO29j9/cNn6gx1fSq8lpaqmWzq8itbty7a2kRG7cS1RXSZOMVttkN1biba/nTdu7rC7XjiUnthJ1++PavbvuNK+U7LuT+ZvL3wRA8BeGAAHyeT4fW/NyQBIEvnwIgCAnOgAAgBHR1BkAAAgVBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGhC/QTRRd+kKzfP8wOvnMdWY0HJePxrUvbquH3b0jO0WibtVlwe+i6FpbXjrZJutvoyg6Exaer9O/4409UNP7EFUj52HaQ/KhQI8heIHGIpGjv8CXmlmOQPdPz+ztRc+xAt2lhRivJa6W/Hn1zSERae3S7ENUmeUhr52xNjcWPhToMQQv0PgUysNdwZeaWYxA/791FJpA4+RplpOrcBVD27JPs5G3PnwHVjDKQ1E7I21uNHwo0GMIXaBx+V/6jrYKfKkZS/kwEahdtvqegFWOFOi2KMOd0I1JPudd97gvX+vEB0pz7SDQYwhdoHGIX3sZ1RoKB39qBoFa5DiBxmVY5HhTduKT1mi5zY22cxMiCNQOoQs0iYu6SxJ8qRkEapHjBLqtirDsxJcDoCnzaYIiUDsELtCs+De64PClZhCoRY4SaFyE1cpJxz35a6veT5pJExSB2iFwge7S5sJOdxtJqJm3j9bxaXHzefXd03jB6ePy/Nsko17f3I0XXvm42pCyWtKdO78TRTeeZ/J6+V6c/H6ytWfpp2LF/atkQ9GVfEUlQqS8FuZXVhF2Va2tpEnzsH8WL7rx+E3nAatFkm2rWLMkO7Cv2stBXbu8iKWc5X9rj7MpY1Ima2WhqZu0yIUKrB9hd6UnH4Tm5SYd+twpczq2yundWYT1I6gXqqaYqxqv5T2ZVFWNycYf8zwMicKqdupFk21OClOlReLw9AiOwAWa1XTS/2qesbd/mkdPdCuvxN06DydBoPeLVEV11laLI+Sv12mCNEKeCsKIhKkAL9fFetqb0vG65Z/FZ3UVYVfl2mqaJA9/lu/59HnTAeuLpMhxvAO52NID24gb1ZSDurZeoLrjbMyYgKYs6nVTq0CTSk/uP34hHXt06U9vKxtMxtgHFaG+puRC1RRzVeP1vJezApKdXjtIAn0qlHqKPgpFgaq1kG9OaKKKdddUBZZOj+AIW6BFP3aruY1UD/WiEs/LOrxXCVRNVF9tE53eSf66lu72t8qAKldOA2InburBoR4hwtU9P5Vrqwi7KtaupUny8J1iQVoIugOWSyVPISaQg1c8MOGklcqhtrZeoJrjbM5Yha4sBJoq0KTS4yVSvyVPIQ+MxCUiJeosQn1NyYWqKeaqxvUlnuY4N6kg0L5RKAi0Vgv55oTiUC9LLk+P0AhboNvqXKjVQlEzyWMmSXfh7aO8EtNp0/fzBYJA00R38nqtr5Ymuvr8sH+dTd4/eRx/mXxIuoWHV+sskJKNn36e7OXVnVIbUt6qvm2S9oFuFWFXwgkrp8nyEPeo0qbANeWAb70+HN49WysN8zzFLjn+JK9JpqUzJd1o0qQoN1ovh9rawn7P5L3Ix9mSMTGHurKQ66aowKwRpBVon0rfqaOC2/KsFtjItddZhA01JRWqppirGtdEXt6JL/rylUD7R2HVwKzVQhVixZFulFJweXqERtACLc7M9IM6RC6EWf5VfgHflY2GjRi+ZwdxS/XVhGdG095e2vVKLqjZwl32QbiO5x/VCKn+jhPoVxF2VW8e5B/TKM3C/GUkngFC/0ttY9U6a2qCdKP3i6PWF19t7QaB1o6zJWMl+rJQ6qaqwJcNAu1V6VtVlmmrSg0jJVVnETbUVK1Q5SVKcCmRl30oG6LCQfaOwjLH9VpQ669+f9Ll6REaQQu0qo5t/TZSrSFU+LbqW5ZT/jZVom3ZrVZWSxJdq9Y7q39SAiHv/dUiRGwLKD3ZosNY7aoeX3kaYbpiHtXVAZcS0Defkv3qby3XN1ovh9raDQKtHWdLxhryUpSFUjfC4MBGL9Cela7kIRWoGkZKO7WzCOtHUC/U+hLhQDSRl6XaCKMq8lWiRxSWtVGvhaK+yrNJ7cG7PT0CI2iBymeF0veqj41ntS/W2LYSqDJeV1tNv7cqLpQIeff1p+9F+ggpArU8PWqrCLtS1q7SiPvbifcWxP6X/uxP2gUnH/5IIwCxGLOjrpdDbe0mgarH2ZKxGtqykI9TWFI7wj6VXj9zN9VQXYWyh84irB9BvVDrS4Sj1ERe0enPVxIE2jsKy83Wa6EsiE35r3IuOT09AiNkgeZRVaC05vQ+uSZ1UHaNAq2tJi7SxUUVCO+e3S1uWGgjRBBMkRFlFWFXjZsVDyNT1b6YjtJYKsodkJOP1OlE9Y3Wy6G2dpNAleNsy5iIpizkulEyqRNon0qvdVQTKb5XuyekdNE7i7B+BPVCrS8RcqyJvDxzSq9kUBQWtaOphXKdXdk9V2YYOz09AiNkge7kWKh3yE6U6W1psIpnhDQPVFxUX60xQuTBSmF6R2OEbMureHZG1FbRCLSW5giBZvcCsjK7L+WstlFdOahrNwlUOc5+Am0ri7xuxAqU5sIfBlW66om0X32+VjvxeoE2F2GfmmoTqK7E89Ir1tEJtCsK+wg071TXR5bcnh5hEbBA1VhQOl92BVqNlysRks/auPL+7/xN0yBPtlLVg6+tohFoLc0xAj0cXt3VeqyXQNW1GwUqH2c/gbaVhVWB5oZSJ9I3CbSxCPvUlIFA0zlWckwMisI+As368OrIkq4KrJ4eYRGwQOW5S1t1Bt/ALrwcIZ19lKYISU7Am5+/yb9riJB0S+KYvbJKXaD1NC0CbQxI6btvPnkvjWXxZOnTha+t3ShQ+Th7nSmtZWG1C7+NypFaKZuNAj3oi7BPTQ3vwmfek0NtUBQKAlVroVqU7k4YWSpwfHoERcAClbsa5w2THvveRFIiRD9K3h0hwnBR8zyNdB/lHuqr1AVaTyOOym+bbiIp1LKizmKsb1R7S0Neu1mgtePsfDFHa1nYvIlUtjwvbsudeP1NpFohtBxBvVDrS4Sj1JZ48uH7gk07BKopRt1NJPWQUqdpHkpxfHoERbgCVboa+4f6c2knjR3JM1rKdeoRUl+tV4QoJ6rw3IjIRfYYZrZYs0pNoJo0wky8/UOxJaiZ0SUXSYuA6hutlUN97WaBSsfZljE5g01lIbR1irOweRpTn0qv6kXQZvFWkSobYpe+qwh71VR9iXCUmsjLOlvlze1OgeqKsTiOei0IqZMn/zXXOcenR1CEK9Cd0mffKn2vKsyKAK/Nqd5GjQKtrzb0Eps89NsUIfEmPyq7hvVV2lqgRZokg9VhCDvKf9BH2bSyseKUV/RQ32i9HGprNwtUPs6WjJW0loVw9lZNXK1Ae1W6OEVe7LhvpE65fiJ9cxH2qan6Ejm41Mjbl3NyxWd2B0Vhmc16LQj1FX/5TzXvhnR9eoREuAJVGx/CZT1FOK/1T/W9exo1C1T/rFp3hCQa/14sjG8eFYNWugjJHrvOc1tfpS7Qepp0Dld5GGfCAW/Scab4wzd3lGuMoNg0QbKqlLd8o2+qjdbLoba2UNDqYKd0nC0ZK2ktC/GZ+vQh1uRhRK1Ae1X6TpJgpcm9cMO7VnudRdhYU0KhaopZOMp65G2rCQnC4MOgKKxanrVaEA4xG2qt3d5zfXqERLACvahNnd/IZ2VRM+J9xyyEqvdKtAi0vlqvCJHnpop+EUk3Xiytr1IXaD3NhfgyEUlc0o1W3bBwcSu0On6hUE/ek49aWw7S2sVWs1llZ7UTsjz6esZq7zBoLYuybqpU73e+LKm50i9ui21jZTi9+PNC/zKR1iKs15RSqJpiFo6ylveylPKY7xaophiL2qnXgtKv1vjM9ekREsEKtHbXPQ0ReVA0q5n6m82Kk+nk02aB6t7X1WeeRvHWtOjkP5eGJmu5F+bVqKtopjHV0lwIr7MrVZcf8KMyQuU5iqVeykNT3iuXbPRP8xmON4tH9dRyUNcutpqdHLUbNoKAahmrvwSmrSyquilmYV776waB9qn0chBUanIWua5GJKWxhs4i1NeUXKiaYhZHHpW876sXPWSd+G6BaoqxqJ16LYj1VZ8Hq2TOzekREKEKtHbPKFskVL5QM/V366bveP34TfM0Js1q/SIkXyt50a50c1xGHImqr6IRaC3NhfBC5doBf5Mkjq5/rJwKVYq3j5IW0JWPX8sJso0mLx6+8Xm1tFZ88tpCFuOl/+SNekKKAlIypnmLVktZCHWzz1/X2zCNSZtrtdKTzaVbVmcuiUZtfqFyQxE21ZRYqJpilm/dSHkXmgpZ1PcQaL0Yi9pJPsq1INaXIGsB56dHQIQq0HHY6sJlwShzIx2wdX/2lJWuzsLXsB/hJz3qheq+mPtyUXvnB7SzQIEK19M+UxOXhPsze+PofNVWutq8rLMbIUBCEuiue6oZSCxToHnDQ/ce5kXj/MzeP3R0vmor/eJ2VwdkjJ81Dkig5cRT6MsCBZo+TvY8GUdT3ya+eJyf2VtX56u+0rcdh3s+xq8ahyPQ5MaQlxnzmAUKVJyBQbhIuD6z97/xPVd70lZ6vLS1CboZ4wIbiEDzWQo0QIexQIEKJ9Op5m2OS8bLM3sc9JW+az3e8/UYIzyBCDSb59T8c6mgZYkCPWS/6X1SzP+BAi/P7LHQVvq2pY0ZO3eM9lggAk3671fud6cDiWUKFABgBBAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwJCFCPTidhRdfTN1LhL2D6Po0hctXzQmOLz9T5XFRdJeR5et3bx1CImkysU6f3s3/vvKB280UdKCPq0aI8NjZkFRhkAdYyzQt49qiwcItFh7QaE9a3axL6OTz6Q/o+iaLkoaaUqLQAeAQB1jKlDd4v4CLddeUGjPmk0qzDP5z+hsSPV2RmJnwuGbnh8I1DG9w3bA1wMECrMg7cFXVZpUb9octSLQ4Swo3BCoYxAoHE/SZb8X//cg+9Oog4FAx2DBAt0/ux6H4PWPi8X7l+9F0ZX7h23VLz47JMtObr3RrpKkuHZ+J4puPD9fx8G8f5ZtoNySuFJ043G6Vj220tVOH9e78K/urpM7Ax+/jj9vsz5afBDCXuUu/Ks7SeI30uHmKaq1hd3XD0Y9XPCUtBb/NAmE9M9NUb3fL+v5kAxxrovokWI138ZWSNsQopvsazHMlBBRzhkpf9nfHWeZHOUBslyBvlznEZQPxSeVnnBLEOgH+bLTL3SrJCl+7Xbak0oE+lH+7bViS1l0nxcrSUqrKFLfVAVanBbRyQNVoPleJYE+ErLaR6Cag1EOF3wlialrSYBkVakVaFHnJ+mFXIiafBuCQBtCdJuHghhmcoio50xBY5TV15CiPEAWK9BdFMlVt6kWlOFSck23SpniTAhBkSRRETFZOv0IvbRfMXyrxbJA862JkV2SHGYPgTYeTHm44C3bNLh2eUhpBSqEjxKrwjaqmNCE6DZSxgXqIaKeMwWNUVZbY6vfQDgsVaBpMMQdkf3TvOqSqk4u1uklswyXeMl+I1hJWiVLkV5ZU4GePs91ePI4+5AE2S5be//9fCuqQNMQE/ebJ0j+iTd4ePsbp2nvplxP2KsU2WXmH9QFWh8kazgY4XDBW/JKrIK6PgaaBGQchmlElMFbTXuSVtKH6MvGMCtDpHbOqJvuPMvUKA+PpQp0G4kDSGflP4fywptWfnHxLi6W0ippiuyKnsZrEm274pJ/nkfu4ZtH/9FnQg5UgZb73ckCVXMsC/RMWlZmtchjt0D1ByMeLnhL1oNPq05WnDT+k321qy6pVevzIK2kDdE/iqRut/aMqJ0z6qY7zzJ/bu6aslCBlvM+CtNV0VRERykSoUkorZKmkJdkH8omgLDHbx5FisqqjMj7FXYXRTf+2Ws1obBXMbKrjeQ5axWo/mCYKRoG21xkZR++JtDk36vl/cRrUtQUqBUthWhUNAQOmjATgkiOXWXT3WeZGuXhsVCBCjWeVWq9O6RKqLaKuKRoE1TeFDb46rvrapRHCdv6fot/y+Gjm8/FrzX5qG+kU6D6g9Hf5QLPKCuvXmfa4Urp+lgh3iqvhWix3uHQfkYoQwjypnucZUqUh8eCBSqFRz+ByhHVJNBr0h6+SkLz5P3f1nfhmwVa3cCMbh1sCLR+MAg0CHaiHMs7lUcIVBOiYhP0KIF2nGVKlIfHggVqrQUqCTTpbt163TgGWm2j5rrD4dXdKpBpgUKOeCc7i7bjBKoL0Sh6f92/SWHeAj3IUR4eCxVozzFQMVz0w4b5RhsFWg5GNQi02qoyBprz7o/vZCeJJFBN30o/BlrbaPfBIFDPkeWorV5hDFRYSblbU0srCfRadcOnSaAjjIHmlFEeHgsVaM+78LV5xbUb110CLdPkc0Vqfmq6C1+Sb7FLoFXmrwnhWdto98EgUM/ZVa5JVfdAU73VXficFoE2hWjttmItRI6/C19SnjehsSCBVsShVZuhlk5Eun/Yf1Vc1WvhUlulr0CjD95kQz06gaYzSDXzQA/vnt1JZsilezsrm6rvGgVa7uVB0YZ4c3glbjRdu/tgEKjnlBI6ZB4SHras6rmYB/r2N6589PmhUaBJ2sYQLfTXKNDaOSNuWhtltTWUKA+PpQpUekYivVTrnkSSjaKu0kegtc3W/NSQQHy2qWhTRPI4kn7EK937NmpYu/tgEKjflFOOhT+qOivqWQqrB1qBlmmbQrSY+tQo0GFPIunOslqUB8diBdr4lO4HjeGie3y8U6DFnk+fydFYUuz39Lfk8N2tpezmsdgo0H96J0tcjdGLGy3X7j4YBOo320hQYVrPZ0KdFfWctemy+k0ehtcJVIwobYgWjyg1nhHqOXMQsqWNstoaapQHx3IFetint/+u3y+DUX4rks4o8iq9BBpHcvJSnPtv1LHMivT9NB+/2arDlc/y99TkGUzetnTyHzcJ9Kx8F1R+MNleq5feZGt3HwwC9ZpcmQWZTsV72lk9H/K3MRXvQdIJtEzbFKL5EGvLGaGcM2ImtVFWX0ON8tBYiEAHgEAAhjH8nJnNWYZAc7bX08H2hms1AKgMP2fmd5Yh0Jxt3rXfb6JA7wcCuGX4OTO/swyB5oijpIGOZwM4Zfg5M7+zDIEWCPcDg3ymDMA1w8+Z2Z1lCLQk/2GYYH+dBcA1w8+ZuZ1lCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADBklgK9HPPLkuSvy1NnCQBmyAIE+ksECgBWmKNAL2sEikEBYHTmKtBf/tJ6E/TJkyfjbxQAAmIxAh3foAgUYOnMUKA1f9ppgj5BoABLZzkCHdugCBRmy2rqDATDMgRqowmKQGGOrHKmzkcgzE+gOn/aaIIiUJgfK5GpMxMCCxGohSYoAoXZsVph0GEgUFMQKMyNlcrUGfKf2QlU708LBkWgMC8kaWLQfiBQUxAozApVmRi0DwjUFAQKc6Le5MSgPViMQEc3KAKFGaGzJQbtZm4CbfQnAgVoRO9KDNrJHAXa/M2YBkWgMB8aTIlAu1iOQNu+MgGBwmxoFCUG7WAeAv2yIJHkTxtIvvtyvH0iUJgNqSZf1MGgXSxIoD8dtwmKQGEurDoEikEbQaCmIFCYC5kjtQKlCdrO0gQ6rkHH2xjAZKzaBIpBW5mXQFv9OXYTFGAe5IZsEOgBgbaAQEfl3/93T578N/8q+/wf/vzJk9//N9nHf3k4/ONf/u7/Ovbuku0efv7kXxx+9ZPf+3/G3jgshFUPgWLQBhYnUKsG/dmTlH+RfP677PNfpB//0IpA0+0iUDiOwo9NAqUJ2sKiBGq7Cfr3P/7duPX573+cmPJXP4m99o//x5NEbHYFmoBAwZRVq0CT/6cpVKtCCgIdkZ9nbc+fJ83On2dy+1myCIGCv5Tty0aBKgadOL9+gUBHRBToz9LOe9wo/cOsY/+HiUD/3Y+f/H5l0TjJv//xk9/9l79I/0qGTLPh05/93v/9l09+798e/vH/1Hwbb+Z/+d+zwdVsu2IXvtoGQD9WCPQYEOiI/OonWRc+ltk//mXWJPzVT/7gF6VA/6fkQ9UO/dmT/zkdJv2DxJE/z4ZMkyblz37vf0wW/uNflkuEb/OlyWZqAhW2AdBCpcjSjW0ClQ06dea9YlYC7fKndYP+w58nAvv9f1v1qdN/8y78k1iv//CXWSs1IRbgH/7i8B9+nCz5+x///v91SL5NG6+pZH+etEL/Ph1QFb4tN/OHtZtI4jYAWhgq0BcItAEEOiZxjzxpHP6rrOWZLElbooVAE3VW45axKNM0f5f887OsYZqu9rM0ST5mmg4LCN+Km1EEKm4DoIW6P3sIdFUuhBIEOiJ/9+R3/01q0b/QCzRpGf79j0u95cOkSZKiY/4kuWuf3ngS7wuJ34qbkQUqbQOgBUmgiiu1An2BQPUsTKBWDZq7LfWargufNhBFgWYtxuSLX/1EEqhiWvFbcTOyQKVtALRQb4AiUDMQ6HiI0hRvIvUSqCA9jUCrb9sEijihH1otdgq0VC2UzEmgPfzpTKCFHZNpTI0CzRqsmfx+V5redJCsKX7bJtDxnxWdKfu/epP88/bTu9ff/2dvps7NBGhHNlsF+gKBalmaQEd8L33tbUxVFz6WW9NEekmgf1gmzz+n32YCFdML3zYLVNoGNLN/Gl36Iv0n5eR7U2fIPfUGaC+BFreboASBGlN/nd3Pn2TzQBMB/uonT/6HX+SPcqZK0wk0TpJMY/qL9Mn5+PM//Hl6zz3zcDqNKZv2JHwrbibbVilQcRvQyP5hlAg0+Se6/t3r8f+vTZ0l59QboJ0CfYFAdSBQU3QvVP6ZMJNdeJnI3/84fxLpoAj0v0+T/PPkj3wSfPJleXe+Ns1e8XC63fpEehqgrWyj6Nab9J8Pkt570hB9MHWeXFNvgCJQMxYp0FEMqn0jfcPr7P7dj5/8wf+rGwONW6ti8uzBzVyg2aOc//wX8reSh5Pt/kJ5lLN4+BP0xC3Ps+qfhM3ymqCmAl0hUAWbAt3/4LvXb3z4ucU9FPT250/H+3HO43/S42c8MjQBF7dPPqv+SThfJ0Oii6Leg+8W6AsEqmF8gV7cvfFF+uGrdTZIf/pZ+wojgEChLxe3U13m/xzkj0uh3gDtKdAVApWxINA8HLexO6+8fzexqPUhpqECHcOgCDRM9g/Tpmf+T8JCW6C1t3x2CfQFAq1jTaC7bKj+cHh7Jzqx3QYdItBfItBls4muJoG5XfoYqOxPBGqGNYFWUbl/aD1AwxQoTML5Ojp9nobl/eTPxd6FNxPoCoFK2BKoMEYfR+xVy097DBboCAZFoKGySwbmP/rhnzyMTu7duxv/cda9zsyo9+D7CPQFAq1hT6DVuJL9Qfre/kwEOlITFIEGy/mdSGR5/jy8qDVAewt0hUBFbAlUGKNHoOAb3zzKp4hEVz5+PXVmJqDeAO0l0BcIVMXiGGh5Yd9FLrrwCBQGsf/222+X+CKRhHoDFIGaYUOgUXRy8/Pz9cn9bMH52nonCYECDOAYgfIT8SLjC3T/7G7eO8omLN/JP9hkuECPNygChWCp9+D7CfQFAlWw8yjn/utP7xYCvZ1OGrHLMIGO0wRFoLPh3eupc+CaegN0gEAxqIDFZ+Gzt9ZefPLY/kBTb38iUKjReJOzvE/vNj8OMBYoTVCFecQGAgVzugU6j7NEoN6DR6BmzCM0DAQ6ikFHyDpMzv6TD9s7SfMUaKcrGwWKQSvmERoDBTrW05ywDBAoTdAm5hEaCBQsgkARaBPzCA0TgWJQ6MnsBKoZAkWgZswjNIYKlCbo0vn603vXY+599KMec0RmKdAermwUKAYtsfMkkor9Z+F7+hOBwuHw9pEYnDc7pykjUJqgTVh4EukhAgWfeZm8SOQkbn7GjdD0Y9frQOcmUF0PHoGaYSM0tlF09YcSffpJx2AkUAy6TJIXKj+u/nzV/YsJcxRoL1c2ChSDFlgJja3rd3wPFihN0OWyUV4O1v2LCQiUJmgTdkJjY//9IRIIFPoi/lZCRuePys1MoNoePAI1w9LLRPr9DNJoT8qZCRSDLpH6g5udL/yeoUB7uhKBdmEpNHa9folztGeNhwuUJuhSoQU6hkAxaI4XoYFAwR2b6Nqix0D1PfgBAj0g0AovQgOBgjuWfhde708EaoYXoTGVQI8zKG9jCpSdMg80ut+xAgKtCxSDZngRGscLtK8/K4Ee3wRFoKEiP4l0Y1lPIjX04IcIlCZohRehEaRAeaFyyGTPwt9Y4LPwqfwQ6Fg4CY2u35yZTKDHGBSBLgYEqhEoBk1xERr259mZCPTYJigCXQxzEuhqDIHSBC1BoKYg0MUwN4EOcSUCbcdFaNj/zRkEChZBoDqBYtAEL0IDgYLPzEigq3EEShO0wIvQQKDgMzMT6AGBjocXoXF0gPb2pyrQIwyKQBcDAq3QEz8AACAASURBVEWgTdgKDbe/OWMk0COboAh0McxHoKsxBYpBD5YE6vw3ZxAoWGReAk3+PVqgNEFzbISG+9+cQaBgEQSKQJuwEBoTvO3GTKDHGRSBLobZCHQ1rkAxqBWBTvCbMwgULDIrgaYfjhcoTdAMG78L7/6N3wgULIJAEWgTNgTq/jdnjhCosUER6GJAoA0CxaDzaIH296cs0KOaoAh0McxFoKsxBUoTNMXKGKjr35yZRKC8UHkxzEmg2ScEOhazuAs/jUBhKSDQJoFiUBuh4fw3Z44SKAaFDmYi0NW4AqUJmuDgSST7vzljLFCaoNCDGQk0/4hAx8Lus/COfnMGgYJNECgCbcKL0ECg4DPzEOjKhkAXb1AvQmM6gWJQ6GY+Ai0+jyJQmqCHeQh0gD8RKAwnaIGW3qt+D/5ogda2KFh1YXgRGggUfAaBNgt0VS5cJl6ExsQCxaDQyiwEuhpfoC8Q6OIFShMUOpmNQI9wJQLV40VoIFDwGQSKQJvwIjQQKPgMAm0RaDkssEy8CA0ECj6DQJsWIlAvQiNMgfI2pqUwB4GuEKgVvAiNqQVqZlAEGjj7H3z3+o0PP+9OOBeBHuXKRoGuEOjUHBegQ/xZF6hxE5QXKofJxd0bX6QfvlpnL7s57XjZIgJtWYhAp85AAgIFZxQ/MLON3Xnl/buJRa3/7PaUIFCreBEaCBSckQt0F0W30heFvXXws9tTUokOgVrAi9CYVKCmBkWgYZILdFP+zoyDn92eEkV0CHRcvAgNBArOyAQq/vTh+fpq+0trEWirQFcIdGIQKDijEGj1S7H2f3Z7SuwK9AUC9YDpBWpgUAQaJpku9w+rFigCRaDGeBEa0wrUsAmKQMOkHAM9K5bsotl34VcI1BJehAYCBWdc3I6ik5ufn69P8h+LPV9XLtUzD4Ee7cpGga4Q6LQcFaCD/IlAF8/+2d3852LTlujFnfxDCwi0ZSECnR4PBDrcoAg0XPZff3q3EOjt6LTrd7cRKAJtwovQcCrQhk0M3i8CDZz9XyUjnxefPO784e3gBbpCoLbwIjQQKPjMLAQ6gisRaB0vQsOpQDULk018Wad9vwh0MSDQDoGuEOikTC3QBoO27xeBLobQBbqyKdAXCHRyEChMybvX7d/PQaCjuBKB1vAiNIIUKC9UnguNTyJFJW4zNCoI1CpehIYXAq0bdLTjA69BoEcLdIVAp2RygeqboKMdH3jN/pMPZ/0opzoEOrJAXyDQqUGg4DMzEOhIrkSgKl6EBgIFn0GgCLQJL0IDgYLPhC3QWg/ehkBXUx/mVHgRGggUHPP1p/eux9z76EedD3LOQaBjuVK/EIFOzDEBmj6GOYpAawYd7wDBK94+igRudr1LBIEi0Ea8CI3pBaptgo53gOATL5OfMj6Jm59xIzT9OO+fNXYj0KUa1IvQQKDgjvN1dPq4+vPVzH/WuD4EOrpAl9wE9SI0ECi4Y6P8gsfMf9a47k8EOiJehIYHAtUZdLwDBH8Qf9A443w95x+VQ6BW8SI0ECg4o/7g5rx/ldOVQBdqUC9CA4GCM2iBji/QBTdBvQgNXwR6eZBAeRtTmGyiawsaA9XcQ0KgI+JFaPggUE0TtGPPCDRMlnUXXuNPSwJdpkG9CI0gBcoLlUNlp8wDje53rIBAOxci0Ck5IkCz34NDoDAA+UmkG7N+EgmB2sWL0PBGoJcR6ELInoW/Mftn4XVDoAh0RLwIDS8EWm+Ctu8ZgS6GwAU6sisbBbpIg3oRGggUfAaBdi9EoBPij0AvI1CogUARaBNehIYfAq01Qdv3jEAXAwJFoE14ERoIFHwmXIFq7yFZE+gSDepFaCBQ8JmwBTq6K/ULEeh0eCTQywgUVBAoAm3Ci9DwRKBqE7R9zwh0MSBQBNqEF6FhHqCJ8n6JQMEqCLSnQBdoUC9CA4GCzwQrUP09JDsCXWgT1IvQ8EWgikHbd41AF0PQArXhSgRa4kVoIFDwGQSKQJvwIjQQKPgMAu0r0OUZ1IvQCFKgvFB5MYQq0IYhUEsCXWYT1IvQCFOgsBRCFqgVVyLQEi9CwyuBXkagIINAEWgTXoSGNwL9KQKFOgi0t0AXZ1AvQgOBgs8EKtCVY4EusgnqRWggUPCZgAVqx5UItMSL0DAO0NSfYwpUMuioxwjhgkARaBNehAYCBZ9BoP0FujSDehEaCBR8JkyBrpwLdIlNUC9CwzOBXkagIBKuQA8I1DJehIZHAv0pAgUVBIpAm/AiNBAo+AwCRaBNeBEaCBR8JkiBriYS6MIM6kVo+CRQwaCjHiOES7ACTf51KdAFNkG9CI0wBcrbmJYCAkWgTXgRGggUfAaBItAmvAgN7wR6mRcqQ0WIAl0hUCd4ERqmAZr5c2SB/hSBgkyoAk0/OBfosgzqRWggUJiGi7s3vuhOhUD7CnR5TVBbofH1p/eux9z76EdvemQCgcIkXNy+9EV3KgSKQJuwEhpvH0UCN593ZsIrgZYGbd85Ag2Ud99WfHP70ufxP6/b1whQoCsE6gYbofFyHWvzJG5+xo3Q9OODrkwgUHDFxe2oRkczNFCBZp/cC3RRBrUQGufr6PRx9eerO9HJZx2ZQKDgCgRqU6CLa4JaCI1NdFUa99w/jK51ZAKBgjPePoyimz/M+OP1ye/E/3QM1CNQBNrE+KFxcVttcJ6vLV3hESiY8HIdXc0G5ud6E2mFQB1hQ6BqTHZGqWcCLQzavnMEGi5xI/TkfvJhzgLNPyJQq9ACRaBL5KusEYpAbQh0SQa1MgZ6LewxUAS6AN7eSRqhMxXoajqBLq0JGvJd+NyfdgR6GYHOnKQR+ifzFWjxGYFaxUZo7JR5oNH9rkx4JtCfItAlEDdCO2cwpSBQBNqEgyeRbth6EgmBwnHEjVAEakGgCzKo3Wfhb1h9Ft6uQC8j0Pnz9pMPLb6rYSpWUwp0YU1QL0LDO4H+tIdAeaHyYghRoOUfCNQqXoRGmAKFpYBAEWgTXoQGAoUpefe6/XsEOlSgyzGoF6Hhn0BTg458lOApjZNBqxuhbjN0JKtpBbqsJqgXoYFAYULmKNDqLwRqFS9CA4HChOy7bsUjUATahI1n4V29b9G2QDEopCDQwQJdjEHHD439wzkIlCYolCDQYQuTDKhWnSt9QuPi1z/qfJhIZBtFV38oYeWFtYU/EejCGRqfgwlLoCsE6pBeAo075SfdPw1XERu062eQ5Ex4KlAMGgSD4/Pg6Fdjp0HpQCNQq/QJjf2z95J++IAY3fR6xLjKhIcCpQkaDIPj09Wvxk6DHwJdIVCR/Q/uDInR7leAZjs/apoIAoWCQfHp7Fdjp2F6gb5AoBr2r/IY/bxH4l3nO0DTnSNQGIve8enuV2OnAYG6ZFBo7F/dTWP04x7jRoMygUBhBPrFp7tfjZ0EdRIRArXKsND45tN0tCn/Ra7xMuGrQFsNytuYvKNPfDr8za5JUCdhTiXQFQJV+OZRdnn/9tl64F32zkz4KNDOJigC9Yue8enwV2MnwQeBvkCgKq8eiYP0W6UXdGwmQhQoL1T2if7xOeMWqOguZ65EoN1kQ0tRNTzf78cM+2cCgcIRDItPd78a6xoE6p6+E+mjG4+lJYMEaud9i7YF2mFQBOoLA+NzvnfhC3UhUHf0E+jpY7lH9PaHfeYyVetb6SIhUEgZGp+ufjXWOYK6PBDoCoGOBAIFr3D0q7HO8UegLxBoI/tvB69h532L1gV6aDUoAvWTfvHp4ldjnYNA3dOvCy+0IDtvWZpkAoGCOZ7Gp3sQqHsGC3TkG/BZJhAomONpfLrnRe0eEgK1TVdoPLt379531yfv3yt4b9iLlvplwlOBthoUgfqAx/Hpnhe1BuikAl0h0HTOh8pZn+3af99i6U8EumBM43MQCHT4QgSa8/T69fei6Mr1ghs93iTi5H2LCBQOZvE5FASKQJsYPAbaAzfvW3Ql0CaDIlBfsDHsKRGOQNUhUARqm15vpO+ahiTj6EkPFwL9JQINgIHxOZywBOrclY0CXcJPc1oIDUfvW0Sg4AgEarAQgSbsv/7Rm/h/Q35i09XbbpwJtMGgCNQDDOLTAASKQJvoCI10eCl9WUNFhw1dvW/RiUBbmqAI1AMM4tOAYARaGwJFoLaxIdAZtUA7+vAG2YYxQaAi9QYoArVNV2ikb6J7963I645VHL1v0Z1A+WkkfzGIz+EgUEOBLsCgFkJjTnfhW5ugsBBCEWi9Bz+hQBfSBLURGm7et4hAwREhCXQSVyLQfuy//uGP+qRz8r5FBAoKfeNzKAgUgTbRMzRe/Rdf5D+d0NUdz7H/vkUECiWD43MQCNRUoPM3aL/Q2CS3NvcPLd3kNArQyp92BYpBA8DD+JwAzRDolAJdRhO0V2js0rA8X0fXDm8fevK2GwQKBT7G5wRo/IlAbdMrNDZpUG7T7tH5etSfhM8ygUDhCHyMzwlAoBPQ721MSWTGPaQkNH1547czgWJQ3/EyPifAR4HO3qD9X2cX95DODv4EKAKFHC/j0z26IdBJBbqIJmh/gWY9JG+6SAgUcryMT/fo/IlAbdPrfaDJwHzeQ+p+LtMkE14LFIN6jpfx6R4EOgV978JfWSc/NrN/trYx0Q6BwjH4GJ/u8VOgczdov9B4mkywiy/wyVTl8WeJBCpQ3sbkDR7Gp3O0Q6DTCnQJTdC+TyLdu/c4ucX5692/EGeSCb8F2mBQBOoP/sWnc7T+RKC28SI0ghQoL1ReDAgUgTbhRWggUPAZBHqEQGdu0P6h4dcLawV/2heo1qAI1C/8ik/n6IdAJxboAYFmSO+n82KiMgKFCv/i0zl6fyJQ2/QKjfO1d785416gqkERqDcYx+er716/8fHrzmQIFIE20fNlItHN3/HrZ2PdClTXBEWg3jA0PvfPrt94/KZ4/133xKcABNrQg/dBoPM2aL9HOW1MrhMzgUDBnKHxmf7kTHT1Tezdk/ev9zBoIAKd1pX6hQj0YOf9DHImECiYMzA+k9n212Nvvr8+SX77cP/Uzo8eugWBTgQCRaChMzA+t+lD829vl97cWPnZbbcg0InoOQb6wG4mvBeoxqAI1BsGxef+YSbOXVS8tqnzBU7+C3Tls0BnbdCed+HHf0WYlAkECkcwKD6L9urF7WKlzhZsGAKd2pXahbNvgvYKjXcvo5Obi74Lr5nIhEC9YVB8lgK9g0AR6NH0vAu/8HmguiYoAvWFYfG5r/3s3DaaRRd+alc2C3TOBkWgCDR0BsbnNjq5L/79at01j8l7ga78Fejcm6D9uvDfirwePxODA1T0pzuBSgZFoN4wLD6T+fOVZBP7do2gBiHQw9SuRKCTEYJAa01QBBoq+6eyQE+/aE6bgkARaBNehEaQAuWFyuGy/2/LNufFJ487kyPQIwU6Y4P2DY23j95LLtsX/4kfb/yeQKD8NJLPeBafjvFZoDNvgvYLjf3TfHQ+7vBYmFOPQOEovItPt6wQ6GT0C41NFJ3+Z+s4QPcP/fjVQwQKAt7Fp1sKRfkr0PkatOfPGsdRmU03rs+iGyMTQQgUg/rKsfH57nX79wj0GIHOuwna81n4s/J5jV3npA+DTCBQOIIj47PxSaRqbumRGbQMAp2OfhPpk25RHmY2Xs0UkEAxqH8cG5+hC3SFQKej/+vsEChNUD85Nj73n3wY9KOcpaA8FuhsDTq4BXq+RqDgFR7Gp1N8F+ism6CDx0A73z5rkgkECkfgX3w6BYFOSM+78NH9LECTCXfjT7QLSaAY1D/8i0+nINAJ6T0P9Mp31yf/5XejyMIFfniASv50J1CaoJ4yPD6//vTe9Zh7H/V5u63fAl0h0AnpGRpPy/uRtyy8mx6BwnEMi8+3j8TX393sfPrTf4Fmn3wW6FwN2jc03j17L461K93BZpSJUASKQX1lSHy+TH7W+CRufsaN0PRjV6cfgR4n0Dk3Qb0IjTAFytuYwuR8HZ0Kb2B6dSfwnzVGoFPiRWiEJdDCoAg0TDbKs0r7h2H/rDECnRIvQiMcgQpNUF6oHCbZrFGRzqmjXgt0FYhAZ2rQPqGxf3U3GSqKTt7vfvesWSYQKJgzLD7rjyqF/aucgpu8FeiMm6DdobF/tq7uWJ58z0omfBVow67TDwjUD4bG5xxboPlHBOqeztBIfoIruvHRD3/4wz/+JLnROf67mBAomDM8PjfRtRmNga4Q6KR0hsZGnFqXPOixpIn0moXpbaQvYxKBflkyfqFAL4bH57zuwotqQqDu6QqN9Ck56W8f3vg9oUB/ikB9wiQ+d8o8UHkLGhDoGAKdp0G7QqP2boaND2+kR6CQYRSf8pNIN4J+EikMgc63CdoRGvuH6gXdhzfSy/50LNDCoAjUA4zjM3sW/kbwz8KvEOi0dIRGfYaHD+9bRKCQ4Wd8OkQSEwJ1z2CB+vBGegQKGX7Gp0NCEugsDYpAEWjA+Bmf7liFItDZNkER6PC0mUERqAf4GZ/ukLXkoUDLj0lOi4VzAoEi0IDxMz7dgUCnBoGaCfQyAvUBP+PTHWEJdJUvnBOdAj15/57Edz24yzmxQH+KQH3Bz/h0gGoln1ypX7hUgUY1pg9QHwR6GYF6gJ/x6QBFSn65UrtwoQK9e73GjS9Gz0RgAi2boAh0YvyMTwcoUvLLldqFZWt56qIbFy9CI0yBStgpGPACXwW6CkmgLxCoNYITaN2gdgoGvMBngU6txf4LEag1ECj4DAIdYyECtUaYAr2MQBeCpwJdhSfQ1QsEaoHwBFprgtopGPACjwU6uRYHLESgtghUoJcR6DJAoKMsRKC2CFCgahPUTsGAFyDQURbmffipi25cvAgNBAo+46dAV6EJ9AUCtUSIAlUMaqdgwAv8FagPWuy/EIFaYmCAKv5EoGAXBDrOQgRqCQQKPuOlQNUevF+u1C7Msjx10Y2LF6ERpEBlg1oqGfABbwXqhRYHLESgdkCg4DMIdKSFCNQOYQr0yZMnlUEtlQz4AAIdaeEMf1rOi9BAoOAzPgq0NgTqmSv1CxGoFYIU6JNUoJcR6PzxVaC+aLH/QgRqBQQKPoNAx1o4vz68F6ERskAvI9DZ46FA6z1431ypX4hAbYBAwWc8Fag/Wuy/EIEOYP+D716/8eHnPTKBQMFjEOhoCxFoJxd381/1+mqd/Uri6WedmQhVoF+WBjUqKggDBDrawtkNgloQ6O3sd2W3sTuvvH83seiDrkwMyoXqTwQKdvFPoJohUO9cqV+IQLvIBbqLoltvkr/f3olOOtqgYQv0MgINjnffvq7+2H/9ozetqf0UqE9aRKDjkQt0E13LF+wflh+bMhGsQL9EoAHy8r1kaOnW6/zPos/UCAIdb+Hc+vC2BHpxu2p2nq+vjnmFR6BwFNtsbD46uZ/9jUBdLkSgHRQCrYJy5AD1SqCFQU1KCiZhF0Wnn3/7zaNYoWfpgvAEqhsC9dCVCNSELBz3D6sWKAIFj9hE14rB+cygYQrULy0OE+iMDGpxDPSsWLKL5tuFL24jGRUVTEB1ad8/jKKkF49AnS5EoO1c3I6ik5ufn6+LIabzdeXShkwELNAvEWhYCLpMDPoAgTpeiEDb2T+7mw/Sp2F5cSf/0JaJ0AV6GYEGg6jL2KBxczQ4gWqHQH10JQI1ZP/1p3cLgd6OTp93ZSJkgX6JQIMilmb1YMdFMkk5SIH6psVhAp2PQS2Gxv6vkpHPi08etw+AHgIV6E9FgV42LiVwzVYcko+v7ye/jUCdLkSgYxOmQH9avI0egQZF4swPS4W+vR11jjEh0FEXItCxmYFAMWg47NaiMXsM0nsmUP0Q6NRaRKCj8vWn967H3Puo4zHjLBNDclHz5+QCxaCB8e5Z/sKwlP2zdXgC9U+LwwQ6G4NaCY23jyKBm133kBAoeA0CHXchAm3nZfIKu5O4+Rk3QtOPo77OzkOBMgo6b/wSaEMPfnIt9l+IQFs5X0enj6s/X438OjsfBYpBZ41/AvVRi/0XItBWNsqTmyO/zg6Bwsi8e93+PQIdd+GcBkFtPMqpNjjPRx2k91agGDRQGifSV+P4bjPUyip8gc6pCWrvJz3alqiZCF6gNEEDJjyBTm3AIxci0DYW2QKlCRow+08+DOgnPRCoV1gZA722uDHQLw8IdL74JNDVXAQ6E4NOehfeqIvksUAx6DzxTaCHqQ145MI5NUFthMZOmQca3W/a+YwEikHnCwIddyEC7UB+EunGTJ9EKt7GhEADxN6jxnZZzUeg8zCo3Wfhb4wfoHV/eiJQDBoMVh81tkshHg+12H/hYUZNUC9CI0iBPlEFyn2kQLD7qLFdEKhneBEaMxIoBvUey48aW2U1J4HOwqBehMZMBEoTNAgsP2pslVI7Hmqx/0LpSALHSWiM+ayx7wLFoJ5j+0EPq8xLoHMwqIvQGPVRTp8FShM0AGw/amyT1TwEmv6jvJRv4pI1BoGOLVAM6jcht0CrVpsHBjxyIQLtzajPGnstUJqgAWD5UWObzE2gK3FpmHgRGvMSKAb1m4Dvws9JoC8Q6GjMR6AYNAB6P2pc4ItAVwjUO7wIDQQKLrH6qLFFhBvXPhjwyIVyH37Sgj2C0H7WWONPrwSKQcPA2qPGNpmXQF8g0CYsPmvsvUAx6PzwRKArBOofof2sMQIF53gk0OKzFwY8cqHUh5+yYI8htJ811tvJJ4EylWl2IFA7CxGoFqvPGgcgUAw6NxConYUIVMdYT3p8qSWRkz0pjidQDDoj/BDoapYCXZVLw8TfnzX2XaC1FyqXINCZ4Y9Ayz/8MOCxCxGohqW0QNXfRBLAoPNiWoFqbeOJAY9cKDRBpyzhY/D3Z40DFigGnRdeCHQ1Q4G+QKAaRroLj0DBE7wRqH8GPHIhAtUxzrPGIQsUg84KHwS6mq1AV/nSMPH3Z42DFigGnRO+CNRDAx67EIE2cPyzxr39iUDBLgjU2kIEOgYzFCgGnREeCFR9dZE3BjxyYXlcU5bwMSBQSwLleaT54IlAp5adlYUIdARmIVBdVi9rD8J5+cJxTC/Q2u9f+GPAIxci0BGYpUCbDeq8fOE4/BDo9LKzsbC4NExZwseAQO0KVGdQ5+ULx4FALS5EoMczT4E2NkGdly8cx+QCXSFQX0Gg9gTaZFDn5QvH4YVAfZCdjYX5xWHKEj4GBGqcVnkbU1N26wZ1Xr5wHFMLVG2A+mXAYxci0KOZt0BrBnVevnAcPgjUD9nZWIhAjyZIgaovVG7MLwINHQRqc2HWvp6yhI8BgVoVqNagzssXjmNigdZ68J4Z8NiFCPRYZixQnUGdly8chwcC9UV2NhYi0GNBoOAz0wq03gD1zYBHLpR+7Ck0EKhlgWoM6rx84TimF6g3srOyEIEeyawFWjeo8/KF40CgdheG3AQNS6BafwYhUNGgzssXjmNSgWp68N4Z8NiFCPQ45i3QmkGdly8cx+QC9Ul2tgQaqEERqH2Bqp145+ULxzGlQHUNUP8MeOxCBHoUcxeoYlDn5QvHMbVA/ZIdAhVBoC4EKhvUefnCcSBQ2wvD7cMjUHcCvVymhaCYUKDaHryHBjx2IQI9hvkLVDKo8/KF45hYoL7JzpZAgzQoAnUjUNGgzssXBC5uRzUufdG6ynQC1TdAfTTgkQuDbYIiUEcCFQzqvHxBYP8wMIF6JztrAg3RoAjUlUC/RKCesI2iqz+U+NGb1hUQqPWFLw4I1JwgBdrnhcp6gzovX5CJDfpgSPrJBNrQg/fRgAh0QvoKVO9Pf38TqcGgzssXFDZdnXaZSQXqn+zsCTRAgyJQ1wK9jEAnZ/8wujYgOQK1vvDFIdAmKAJ1KNDcoM7LF1R20cln/VNPJdDV4gQankERqEuBYtAgmVKgHsrOkkDDbIIiUKcCxaAhMpFAVwjUfxCoW4Fi0ACZUKAHD2VnU6DBGRSBOhYoBg2PaQS6WppAg2yCIlDXAsWgwTGdQJN/vZOdVYGGZlAE6lygGNQ33r1u/34Sga6WJ9AQm6AI1L1ADxjUKy5uN0yrrx6Wd5uhlFIm3snOrkADM2hIAm3wZ3gCxaBe4aVAV0sUaIBNUAQ6hUAxqE/sP/nQv5eJVCrxTnaWBRqWQRHoJALFoCExgUBXyxRoeE1QBGqcdvDbmESBYtCAmEig+UfvZGdboEEZFIFOJFAMGg7uBbpaqkCDa4IiUNO0g1+orAg0NygKnYSvP713PebeRx3vUk5xLlCpHead7KwLNCSDItDJBIpBp+LtI/H3PG4+70qPQK0vfCEdu+PiPgYEOp1AMeg0vFzH2jyJm59xIzT92PV6etcClVth3snOvkADMigCnVCgGHQKztfR6ePqz1d3Ot8NOoVAq7+8k51dgQZm0IAE2uTPgAXKraQJ2ERXpXHP7tfTOxboCoEi0EEsXqAo1B0Xt9UG5/nar581VgTinewsCzQsgyLQaQVKN9419Qc3Gx/lLHAm0FQl8k9xeig72wIN6j4SAp1aoBjULT63QFOVyD9l7KHsnAg0FIMi0MkFikHdsomu+ToGmphkhUBDMigCnV6gKNQpHt+FT0wi+9NH2SFQAQTqg0AxqEt2yjzQ6H7HCi4FulqsQMW/8lJwVOzHgEC9ECgGdYn8JNINf55EelFrgPooOwcCfYFAh4BAmc/kmOxZ+BuePQtfb4D6KDtXAl0h0J70EmijP+chUBTqL44F6pHXJhPoi1CGQRGoNwLFoL7iTqC1BqiPskOgAgh0CoE2fFEY9HK3bMEhzgRa96ePsnMi0FAMikCN044v0EqhCNQnXAl0hUAFEGhvwhToEb+J1PKlolDndQF1nAp0KoV5KVD/DYpAPROo0o93XhdQx5FAdf70UXaOBBqGQRGobwKVG6HO6wLquBGo1p8+yg6BCiBQ/wQqNkKd1wXUQaDWF2qXhmDQYATa7M/5CVRQqPO6gDpOBKr3p4+ycybQEAyKQM3TWhQoCvUJFwJt8KePsnMsUL8NikDN01oVaGVQFDo1CNT6thMWBAAAIABJREFUwoakCLQXCBSF+owDgWammFJhXgrUf4MiUPO0tgWKQj3BvkBzT0ypMD8F6r1BEah5WvsCRaFeYF2gKwTaKlCPDYpAzdO6EGj1ihHxCfmmtGAF2wItJTGlwjwVqO8GRaDmac2lOCxtX4U6r7elYFmglSKmVJivAvXcoAjUPO0xUhyW9nIvhzqvt6VgQ6CVJcpXiHjoNR8E6vcwKAI1TmvjbUyNafso1Hm9LQWrAq1eweSh17wQqNcGDUWgLf5chEAlhTY41Hm9LQWbAhVeYeeh1/wQqM8GRaCmaS28ULkjbZdCndfbUrAoUPEVoB56zSeB+mlQBBqOQL/scKjzelsK9gQqvULZQ695IlCPDYpAgxKorNDLalqwgjWByq+g99BrvgjUX4Mi0MAE2uJQ5/W2FGwJVPanj17zRqDeGhSBhidQRaGXq7RgBUsCVfzpo9cmF2j1WZjt5RO2BPr1p/eux9z76EdvemSiU6Bt/lygQPUOHb0SIcOOQFV/+ug1jwRaltf4dXEMVgT69lEkcPN5ZyYQqEnay4pELdQkJFgRaM2fPnrNJ4EWJTZ+XRyDDYG+XMfaPImbn3EjNP34oCsTCNQwreJQC5UJdgRa96ePXvNKoF6+X9lCaJyvo9PH1Z+v7kQnn3VkAoGap72MRG1jQaAaf/roNb8E6qNBLQh0E12Vxj33D6NrHZlAoEelVR2KRMdldIGudP700WueCdRDg44v0IvbaoPzfH3pi/ZMINCj0yJRe4wtUL0/ffSabwLNDeqRQm0IVNVlfYmaiS6BtvoTgQqlhEUtMK5AVw3+9NFr3gnUO4OG0QJFoP3Siq9fxqJtHD/NzpBGfU6tsEAEWhjUF4VaGQO9NvYYKALtlzZDJ1EsKjDKNDszytPfkZhCWThkfa8UGsZdeATaL22FVqJYNGWcaXYmCKe+IzGFsnDQ+j4Z1MY80J0SoNH9rkx0CLTdnwi0TKugt+jSNTrSBd4A8bx3JKZQFg5a3yeFOngS6cbRTyJ5KVDXL1Tuk1ZHg0WX69GRptkNRzrpHYkplIUDBeqPQu0+C39jnGfh/RSow99E6pu2kUaLLk+kY93k7E962ss3jzxUWEACTf9ZSSV6VAUdQxBvY0KgPdO202bR5Yh0rGl2/amd7VPbysOFJuuLhXpUBR1DCALt8CcCHZS2Q6OzN+kELdCV6k8fFRaeQAWFTteTD+F1dgjUQtpuj87VpSNNs+tNXZ9T28rDhabrT67QEF5nh0BtpM3pJ9I5ydThXfjVSmdPSw4KeqH5+k1F/MJNvz6A19l1+ROBGqVV6C/S4H06zjS7DlYy4+pmfguPWb+xoI2iYyABTKRHoE7TDjZpeEodZZpdCyuVsXUzv4VHrq8vb9P4GEIAr7NDoFOlNXep92Y9fpqdnpo7dfqc2lYeLjx6o7pSPyI+euP/y0Q6/YlArac9GHTx/Zdob/oJtMGdHtrKw4VjbFRXAQl2Y2P0LY78OrvLCNTHtIsyaKNAm05Zsd3poa08XDjWRttqxIpJfW+BXkaggaRdmEBbz1QLZpj5wlE32lo3I8vV39fZCeeeQykOSeuPvLxOm1eiJqkvvHvd/r0mPnu5c3QzzHfh6Bt1ZdBJ78JXd0JrX82k7QIB0DjE1BKfYzZiwCrBCbT/PLt+ArWQw1F48uTJ1FmAMThCoJZzBmMSjEAHz7PT4Ls9Dwh0Nuw/+bDHXCYADV68zi5IniBQgKXjxduYggSBAiweBGoKAgVYPAjUFAQaMoNetwjQhBOBds2zCxIEGixDX7cI0IQLgXY+yhkkCDRUBr9uEaAJBGoKAg2U4a9bBGjChUDnOc8OgQbK8NctAjTBTSRTEGiYGLzsBqAJBGoKAg0Tg9ctAjSBQE1BoGFCCxRGxIufNQ4SBBoow1+3CNCEFz9rHCQINFC4Cw/j4cXPGgcJAg2VwT9rDNCEFz9rrCXynESgU+fBR0aLI3uM8LrFo5mqeubAFPXVhBc/a6xh6jrqBoHqGS2OrDLx6xanrqSwmaLGmvDiR+U0uC0l9hbm3oLFWTHNb0eehZgXP2usYc6nPXtbPPPzGgIdC1qg7A06mJ/XEOhojDLPbs6nPXtbPPPzGgIdjVHuws/5tGdvi2d+XkOg4zHGPLs5n/bsbfHMz2sIdERGmGc359OevS2e+XkNgY7LsfPs5nzas7fFMz+vIVC/mPNpz94Wz/y8hkABAGAQCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAM8VKgb+9GUXTjuZudbaOca9Z3tX946Yvis/1jFPZm+RjfPXtPOhin9RceLotHDDlrqPVvkZfxnk5uvXawp574KNBddrKfPHCyt407gW6jMpodHKOwN7vHuFvnWz/L/3Zaf8HhtHiEILCGWv/22D/My+4z23vqjYcCPV9HV58f3j50U0wXt53VRtwOLKLZwTEKe7N7jPGxnH5+SA4mepD/7bD+gsNp8QhBYA21/i2yiU7ux3u64+Cq0BcPBbqJrr45pFcb+23CpPrTvdln/zSqotn6MUp7s3uMRSMnPph0N27rLzgcFo8UBNZQ698esapTRV/ctt/Y7Yt/Ao1LJ7uQ7ZxcZ3aOTvNXd6LoenFE1o9R2pvdY6xMsEsbVY7rLzQcFo8cBLZQ698i5XjExp9rs38C3dUsY5Wti52kB3Nyvzw028co783VMZ6vkxPIcf2FhrviUYLAPln9uwCBtrAtOgLxpc1BQ31z6b96tI6iG5/b3c3F7VtvqpPH9jHKe3N1jFkLxHH9hYa74lGCwD7WW6AFRVfeB/wT6EaIMPvXmfgy7eYW4uuD0PqwfozS3lwd4ybdodv6Cw6HxfP64HYcZeNoX6/WtgdbB+CjQK/VPtkjvpidfPzm8O6pg0kYokAdHGO5N0fHGO8mORa39RccjovHoUDz+rdMOpPpA2/8uXiB7oq5Fy4unxMJ1M0xxpGdbh2BtjJbgRb1b5mLX7++jqKb3hh06QItcTE1YiKBltg8xn0xDRCBtjJXge4dTAMt8KkPj0BzXIzYTS1Qi8eYnD+ZnBFoKzMVaFX/Lti5k3UXPgp0mpsQDuLZ3U0kaW8V1o5ROH+4idSK4+JxJFC3/vQptPwT6FTTYFwK1MkxOhToxZ0oup9/ZhpTK46Lx41Axfp3gj+dG/8EOtFEbBfx7GwivbyTElvH+Pa28GoMJtK34rh4nAhUqn8X0AJtwe2jgGWPysXk3PrJY/MY6wMGlo4xeeTlM/EvHuVsxvmTyvb3Ite/RcpA9uhheP8E6vZlFMXTE/bfhHAQo9nFMQrtXavHuFdeLMTLRFpxWzwOBKrWvz2E+XjevOnLQ4E6fd9XUvvZG7IcdKiqaHZxjOXeLB/jVtksr7NrxW3xOBCoWv/2SAP5zeHdI6d3rNrxUKCHly7fOJtoJd2bg0FwIZodHGO1N6vHWD0oWjwr6rT+wsNp8dgXaL3+Le7rjqtXN/fGR4G6/UmIffJ7BCc3XexNjGb7xyjszeYxnq9rJxA/6dGKy+KxL1BN/dtj/9LZydoTLwUKABACCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYg0IR3z65HUXTl5nP1i/N19KCWWrvQII3ZivuHV98cNtHJZ+XfUbygB2/vxsd443m+lzOj3MGc6Buk+pAjhhIQaBwPT6MCVaEeCnSTfB+nKqy5rQK7lV12hCcPqq3AsukbpA0hRwwdEOghvZ5GNz6PY+Pbp+ueMurGmkB30bXkn20UnRXpezUEkvh/fnj7MD/Ci9uXvjDKH8yHnkHaFHLE0AGBHpIL6cn9/OPbO9FIMWFLoPuHmQBj66c57d2B32Tp4vTp2RCfDnTAlk6/IG0OOWIIgaZd2yqKLm7nfjkWWwLdFfmL0yWf1A78Vx/rdRof2IN8A9klguYD9AvS5pAjhhBo1STL2KXRcb6+9GdPo+j0syLE9s/eS27AnK+zb/MxoQfpfZli3DS7E3WS/anG5jdJyiul3V7Gmzsp/tKvmK5x43Ett8Vmt4n4d5HSCIiX3nqtOczCm5VJNzQflk4Za6+kWJOCvTXkiCEEqpgu9stZKtDvxCF16Yv822SYNOEjWaD31tl9mfSCvFsXd6Ie1De7zb/KLFZsLusJ6VcsbmzJHfQ4Y19UOb30Z7UO/D5Rc302QZyBPGG87yzod2ONVkCoFNFdxNqtNETkYG8NOWIIgW6VGNhkMzSi6IM3+x8VIbaJTr735vByHUWSQKPTzw/770dpEzYOrqvPE4Gt0w3KAo3/SoLzVdYHijcXb/3wMruU61fcpkn2X63lIYWt8OeukrfEqztpxmQ2gkCzTZRNUVgqZXQn0ZloNI9OMdhbQ44YQqAbpQ23zQWaLa166/lfkkAz9W7Sf0sRb4U00kYPRaLiLua2ecX4/9mNrZ2kyLL5mGdd7cDnvH0UK1Tu/G/K06D4JG8LFkgZa1kgyJGbB3tryBFDCLQu0NhnZUxl0VT2fzey47R94Z1WoGKS4i+lmy+uWO5RMN9BveKXCq+zfxaH/33hwOoCrR05LI0i1qrh8bNasLeHHDGEQBsEmkVN+qG6z7STBfpAWJiy/+aPvxtpBLpLbiC9rnZZu9OvrChc2bdi/vJx/XI7UfOcgaRHJjUdagLdLj74l44S3em5UA/2tpAjhhBot0CzK3P2Z4tA01uZxSCR0rrcpMtvpiOTyn1/3YrxHiuES77UoW8aA0330aMFqo7+wtLQXazVYG8POWJo8QJtuok0WKCZI99//FIn0HTeUvL9/frAkWbFPgJNbj79zW1tC0A7BqreRCL4F48S3WlEtAm0HnLE0OIFKndRymlMgwW6jaKsgakbA03Y/+BuNlVJaYHqVhSCWkIcLUgfytxqbiNp78LXpzER/ItnYAtUE3LE0OIF2jCRfugYqNiw0ws04WV6d1+4D35Nv2Ktl58j2D6L4/1DpRPfNA+0PpGe8avFM3AMVBNyxNDiBap9lFMWaNX/3TQKtLxw5/ElCVTpNheX7XQd/Yob/ZW9sl8x0Up4R06+A/2TSLVHObmDCtq78Jumu/C6kCOGEKjuZSKKQJvmgepaoDvdTaQyRosR1moeqH7F87XYSi0pu1tVM2Ajd+KbnoWvvUyEOXwwaB6oLuSIIQRavM7uIL7OThFo7thX6pNI4hho9nRR9lTcA1Wg8WU8GZVMvq029zILXP2Km6wj/s0duYtezcgvIjfedMOdeBnldXY8RQLNTyIJwd4acsQQAj1kc36KJ8+LF7bLAs0fDz651yzQ4sb56W+vpdtQGeXz7rcO1eayyNSvWD6ffCJFaP5g8k54Rn6nPi/fwEtlezzHvHhan4XPg7015IghBJqyV37SQxVo8YKanfC4ujqNaR+3X5P3LWWdZPUm0ttH63Ii6CGb1XQlHzhoWDGdHXpFGdDMXo0jtzo3Ub9mgPiTHgfepANKrN0oglMK9taQI4YQaB/KofLpr7i7sUbthZfsAFTUgr055IghBNqL4hWyTbOLHFK8HvxoeJs4aKkFe3PIEUMItBdxV+f0efqAz0j2OoLdOA7nZeKgpx7sTSFHDB0QaD+K9yGX850mZJzfQtwu/vYpNFAP9oaQI4YOCLQn6T0gze/GT0D6I93Hcr6eeiwCvKUW7PqQI4YSECgAgCEIFADAEAQKAGAIAgUAMASBAgAYgkABAAxBoAAAhiBQAABDECgAgCEIFADAEAQKAGAIAgUAMASBAgAYgkABAAxBoAAAhiBQAABDECgAgCEIFADAEAQKAGAIAgUAMASBAgAYgkABAAxBoAAAhiBQAABDECgAgCEIFADAEAQKAGAIAgUAMASBAgAYgkABAAxBoAAAhnQJ9F8DACyVIwU6dfYBACbkWIF2GRgAYKYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQ3wX6P82ELu5AQAQQKAAAIYgUAAAQxAozJn9m7EThkDbwbg+0FkVbB0ECh5zvr70Rf7x4vbJZ8q32+haywoJr+48aNz2V+so+idvpITK2qHSdtTZd5qSa2IjFskmat6ySraPel52A7bhPwjUMmNdgIduZx4X/iMFun/YfLLuophrcsJ5CLTtqPPv+gtU1t1ggerysplDIRcsRaAXt6OMKx8bm8Xk9BrcsklDtB7f8oU8/X4XXW0+lMENDQGhaRbHf7GFbdvubNEu0PYVDu0q2VbNz+UJtDcXt6VaHyLQxv2dr02i0lMWJ9DI3AMGp9fwE1MvUCUOOwU6uKEhIDXNztf5js/Xffw1NhYFuonOagkRqMpWTj6KQA+bKULJEssRaH5qvFobtcoS3Am0aTsSPQRqhNQ0i/9Ksx5v8KxpBYtoBPr2UdxAvvE8y1tale+exktuvUlLLlnh5XtRdPo4/T5BKIi3j6J83fQqERUbLxJKa8v7Knl1J+7G3Bczl+VsF53t1tHpe3k5ZbWj24CWaqtiLuNdXP3bZ+sqQ3KytTZZcTB5huKsvbpbdL2K7/KSa9lTUeh5jIll3LzrYouPi9rJ9xcnyjaTXbXm1ARdnEDjuDJtZSxEoFLTrOjEb6bowOsEGjuh1GKmgfNsyel3coF+p0ygCjRf9+RBi0CrteV9FWRJcw/IAn0/Tn7pj/Lrc1qKmg1syp6QeCEXtirmMt7F6R3hK02yqJasEmiaoS8OT6uulyzQlj2V+TrL60Eo4+ZdF+nSz4JA9w+zi19eh8Wfc2B5Ai0+VZfl6lotXD8LhEX19kl+/S50lVumMtuQlo14jc/iu9q12qgouvB/G69zcvN5kbns8OLgHNrQaGyaZQuSHU8T8jWBXtyOy+iw/36an+I2xenzZEmUCTSKPnhzePswrQP5OhJ/d/X54d2j7Fj0XXhxbWlf1TY+eBMvSrKlCjTZ+us8vNJlug1oBSpvVchllaH8qzKZtG05WX4weYaSuovbrPunafmIYzsteyqLpRCfWMYtu95E19Jvks/iTaRcxMWZsZUsHTTLE2jenRAuy+W1Wrx+HorUUotD0z45eVAERBwsabxV4TGgZSNd44v4bmpU5ALNr/0nYiNXI9DuhkZj0yxhE136k9tNEX95HJqqrSiDLHufVaO66b95MWSZ3RYCPctWTFLLAi1a0Zu8Ta0VqLC2tK+yRq+VyVWBZrLZ5PZK23v1DWgRtyrlUpehLJm0be1RVxk6yw/xTBZoy57K4s+OsBDfLmrfddnCLJOVBZtuoCjznfEwmncsTqCvsgqXLsvFtVq8fuaIi+T2iXj9zuIj+f6B3EHp3bKRr/F5fFe7VhoVuTmyjd7RNIeGNTRammaH/P6bvgM/kj6bDaoKtCzbtMTzYjorsvmgOv+lYpDqotCBXqDC2vK+lG1ky2WBFrLJ9PxAuwEt4lblXCoZEpOJ29YetTJWVRNoy54KdqVihTJu2XXSGyi7NqJAs3XKbc/jZl3KcgRanodpLEiX5fxaLV0/i9WERfJFWrx+Z3reRfeSBOLp0rtlU7/GS7tWGhWFQIVjaBZod0OjpWmW56mhA+9AoHIXXqjG+AtJA4fyJlKtGKS6LNK03YXX7EvZxkFNXdZgGgv5/+ob0CJuVc6lkiExmbht7VELY+T7b374yXuRItCWPRXkESqXcduu0/5LPlNQmge6zc6zPEdVfzB4FijQm0JroBBocadZGRqUF+mbA2lUpCfv5uS3E3eK/ZO+LRulHZWbodq10qiQ+q5FC6JBoN0NjbamWZbPJgF4IdDiQLoFmm8r+2BLoOkknbSCtALVjYHKZhRzOYpAk9H3oukgCbRxTwWlQMUybtt1Ok0gP8ckgaa388si7zclLQiWI9A8Wr59VMRVdVkWmn/qTHtxkT6a06W79FS++jfJXsT76H1PTKUdVXbRi10r50T+fX4GaloQgxoabU2zbN/SHWOX1AUqnnm2W6D1s7yPQHfRWbY5rSa6BdqzBSpuu1WgSQfixoe/863ahTdvgTbvOkn8g7vZsclPIsWXlWpFBNp//SMZXaBFlYqX5TL2hetngbBIiWbx+p1cYJPZbWmYSLcx+wpUakcVjxGXuz5KoF0NjbamWZqjS38k3/ByhypQ+a6QNAaqu7EzfAxUWFs3Fax1DLTsn17967UwcN1N2xhoQ4bU+QXNAi1m8HaOgTYLVC7jtl2X6+X9A3EnZ1XXjC58//WPZHyBls276rIsjhYV18+KclFLCzQx5y697X0m3WHs27LRtUDFXU/YAk1HZTfGk2ePozaNaVM2q4qbSNXNmw6BFuuWM1s7BCrvq9xGWuj53bliRFoS6GFz6beyVLoNaBG3KuVSzVAtWcv4Tb7XIvJ3a0WgbXvKqRqxYhk377r4I/1XFmh8Wfl+WRldd9UCYqEClS/LSoBv67bY1oZ7lPbMNnqQjH3FUpMefuvbslHaUfLEmXhdvUCNxkDr50nrGGjcXr5W/N89NYFmEwYOL1MbiPNAv1rrBfo9cWNt80C/d1DXlvZVbeODN8lUjgfiDFRZoMnYy4Nqh/IGGg6z2qoyaULJkJIs37b2qEuBprM5ksm/Z+V3uukZGoEWC9Uybtp1nC755u1DsQuf18BG6HAxjan/+kcyvkBTZ8qX5TzUpOtnhrRI2z7J2zPn619Lhskvbp/eEduXvVs28jU+iT1p13qBZqdpcRdebA4Na2i0N83SFXbTdOKbn0S6dVCeRLr6m3WBpiOO1dGIE2KV60SWUFlb3FfBVhi/zObMRh88lAUaK6sYDtVsQIu0VWnarpQhTbJ029qjroIlK5/v57WbfKebIKwJjHJk6e1toYxbdl1MO0uWbYX9ZYVVWrN2nzJcFifQbAakfFmuRouq62eGtEjXPinaM8mdluyCK7Vme7ds5Gt83nKsdi03KqpRiO+V80Dl5tDQhkZj02xbiHOaTnzTs/Cn5dPWh+wZrhPhWXgh9f6RNB7zNhkRyZ7cUp9YTROqpSPsq0R8HD15mu3K/b0iUGHTug1okR5yr3KpZqj2LPzpY02y7GCku/DxStnf2XfFI2rNe8oonwnZ15+F1+46/eYkvfOZT/svaiCbX5Jt7OFshkAXJNDyzs1J1jYTLstFqInXzxxxkb59krVnCtNs5Ed8+rdspGu89CRSuqraqJCeREojXmoODWtoNDfNzkvJT9WJ703vWzbQH+Vtdsdtao49+OUJ9EreABEvy+W1Wrh+FgiLau0ToT1TzHFXHxrv37LZa56Fr3IjNyqkZ+Fv5dkVm0MDGxpNTbOqMzpZJ76TYrx4Rk+3eMR2tEoXrMnr7AasfyRjCRTmyi59NvWY1xRCM6M1Qd9WV+w5vc0OgULgpPP809GPucyM8YpxfsFoE4m3kObUVfBdoABdpC8mvH4ff1phFN1tk9Gp/DM/KjdofQCAuYJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBAECgBgCAIFADAEgQIAGIJAAQAMQaAAAIYgUAAAQxAoAIAhCBQAwBDfBfrLgdjNDQCAAAIFADAEgS6H/ZupczAW8zkSCJzlCHT/6m4URVduPk//Ol9f+qJr35vogcFXltlFV5vsIX+1ja4dDhe3Tz7LPx5e3RmS54vbUc6Nx8WyzaUv9g/TbWU7aMyJZbIjEQ5QYterbt4+ig8tD4a2ZQBtLEagF3cKIdxK/lyeQGP1mQk0KpSZmul8nW/mfF1TlyPyI2kSaOL5zm3khyetHB9abRlAK0sRaHzSnX4e//vu+1F0dliCQFMEvwwWaF5A+6/WaYnFS9LNb6P0i3hzZwM2NybikegEer6+pi7SbOLq88Pbh2KJ6ZYFBkMbzlmKQCth7lIBINAOSoGWffVttn7eid/o87F/dmvATszoEuhh09mIzKs/boc+aF1mHd1IiTHtQxsjYbzlPqfcRAzNmjDWsxSBVnLJAiApspfvRdFpHrbZAOnHWZp3T+PO3K03uSXfPor/upGPjMlfHWor76Kz3To6/UxZTdp8M3Eu//bZuqgbcVtRsa0kSZyHk5v1LctfKV34bXqWPjhf5+Ww6WhACgLNwitvgCa7iQ9+p+3pvnta9vc7jk0qn+pAX92JD+Z+LUGc63TdtLbyI5FFIZV2dxN0m2dzK5RCHiIDLzRHohkpMaZraGMcEKg0/rMcgV6Sbg7ERfadKD8TY57mMZyeQvlY2Ol30u92ayGd/FWOuPIuej9OEleHtJq0+YyN7sSJz+HfzOom3bOyrXzh6Z3qL2Xf4ld6ge4fZuEvngbarNQEWrlmE136k9sa/35zN7Hfm17HJpVPeaAa6yLiAAAJtUlEQVRZJrNNiwnO1/mRJV/pBCqV9qE4yOajKy6AYqO9bIG6HAStj5SY09kyHwUEKo31LEWg8UGf3Py8+jsx4QdvilKI21Nxs2f/ND0D4+vL6fPD/vtR8detN8lfSdjIX+VIK8fNs7hwX8urSSlyGiSTNG+TXCUVWmwrzmv877tH+bayjN/Jk8j7Fr5quImUe1A0R5dA0y68IKX0AlzrwMeNx6JZ3OPYlPIpD/SDN/GyWoKqtpKv6i0tKfFBbljqMlOqpmyQZyndj4HWR0rMQaCmDMuaNNazFIHmd+Gv3My77Of59T67l5z3Z7MbI4Vb0q6q0Nm7pn6Vo6ychZe0mpSijV1+ksvbKoYbN1kWxI0p+xb/ahBoroyuHnx1Zie33R7IMbar3arexx3s0/ZBPPnYlGIVCy3LqJRArq26QKXE6b7au8OlBKQzZ581529KGnuioG6q5/fNOVEa+jaHNhrJK0CcWFEESBbywkBRNQR2ODTvp5B5HrvJVtRRM+2B6vJrMkLWJ2FVqC1Zy4fPxNiWxn8WI9C4h/ko60F+kHXT611ZWUrZFaZseKXikb5SKCSW36MWV5NStFGOLKZhW25L7G/mC+U2pLTv/KsGgWY5625GiINzt5TdxT5TrtibpGU+4Njk8lEP9KAWoFxbNYHWSrurRaEX6Hk2THAqlIyqR1WF/b9vzIkiUJtDGykNQxppJ0MaEb6Wf3MmDxRpBVrfT9YJSDp+n+V/KaNm2gPV5NdshKxHQqFQW7KWD9qJZ640/rMggca8e5VcWpLiU6+gh/03P/zkvaScqtM4KSjBI+kscuErgXLlwjPSanKKNkpLpdkrtyWe7WXjqjgCcd/iV03zQLdiK7uZ8giuZCMfW6kDrN7x6NUCFY5NLh/1QA9qAcq1VRNorbQFLTUcnEag8amSjAM8FVvXLgWaduHtDm0kaAWaNvF34mUxz1i6HWWEqy5QzX6ya1mSwQf55VAeNdMeqC6/ZiNk3QnFQm3JWtztSz9XRSOP/yxLoAkv12KPND+VkvZ7fqGpBvs0AhW/qrZYrdwgUDHFodiCJo4bBJpXXvpBEai87z4CTe+mSz34rjHQFEGgm+jSH8mNhITuMVCXAhX7ovXMaMdAizIRjtShQPORErtDG81s0xuDYp1u8rZhFS1ZC1UnUM1+sgPbRfeSdfJuhJjZlgOV82s2QtadUCzU5qzlkaQdXk7LYCECFc+oPPTEAEgG9W58+DvfPtS0QOUuvqYFKq6sc4GS4lBsob9Am1ugyr77CDSZJSlnb6BA0wHgjdqJP/S4Cy8KVC4fjUDFBJ0CVQYkOucYaO7CC+MADm92KCMlloc2mqn3Knb5dN8HYhq9QLX7SdfcnPx2diDXlFGzhgNtzu/AEbLOhNJsteasJQ/gKD2rRQpULNy6QItv5THQtIjlWYHSV8qmpTtQ0mpyijbkUUx1W/UxUHXfPcZAs/H17jmHjQKNT/lrxf9V2ueByhl/IH5VKzQ5QYdAa1M3u7rwunmg+nFR2ygjJZZb5i3s1DRpGVazrMqBIo1AtftJYmz/8OrfJFvY1Dp9DQeqz6/BCFlnQumi25q1SLk/tUiBxlFVlNfF7axTIRVZ9sduLXoou9Ve3AKX7CXehVdXLu6YV6vJKdqQ76Mr28oeASp2nSZR9y181SzQuA///e654qqDiszss/E2eSJCRfOTSOr0AalYhWkGZXdLSNAhCjnxoUeLS/fU0aaUqsN5TEoxOxCotkWeTW7M7nOnPMie58ovNOJAUV+BJkNFyRMNaYcnG2g0E6jRCFlnwr4CTe/VR+LcjGWOgSa3A2+9jv99dSfS1WYyUpxMCDlLkyaTPb9aF2PNV5+nI6e1rzLklatTuFpNTtFGNZMzu+UobquaB3ryvWKyp7pv4SudQL+X7WXTo0FSE2hRYNvi0HWd+P7HJhWrcKBxilfrWrnXRPG9g3SAUuJD9zSmvCLlOZ+7KL+J5PZJJEWgVoc2EhoEus39Uwk07qnkW5QGirQC1ewnMecunRSQd3haVtEOfJXfmYyQdSZsE6iSi/0P7kaN4z9LEWg2yJOSTrhRB8FT4pZZUkxvs0vQ1d+UnkRKW1byVxnSyuWgmriavPkWdtGV7BqZVqG6LeVJpM/q+5a/Uu4lbIpL9K7PU4OqQPORofOyFa3vxPc9Nql8ygPdCie2mEC55ZcdiW66Tt787ZzlWsxOyfJStnzVdox9lGK2PLTRTLylP1ZerxU3If96nd/dF/oO2jFQ3X620YOkERvbc5tPCGpcpeUpWsMRss6Eyhho19FshebCcueBJifNjcfSTEHhLvyV+2Wx15+FL0aS95pn4cWVq7sS4mry5ptJn2aPT+uPpQ5pvK3kEnhTehb+1hvdvoWvagLdP8rV1Ot1GbVhxG129lSH0NCJ73dsUvlUB1qbMJ4lUGorO5L6hPGykh52N47Fd38WnffkLtgYL/UYgFrMdoc2GkmdslGuiJtLv5UukQeKCoFm5b6NGvdzvv612+nErNM7+bVXzGzDgda2YzhC1p1QLNTmrBXfyPPdhPGfBQk0ALqnZ45B5y2WhrWOy5ubY8t3NahtPCX1kRKbQxuN5DqWr4i7rCuvDBSV+8ofam7cT9Lny4aOssOQM9t0oOp2DEfIuhPKhdqUtey592SwpwopafwHgfqEG8kY+mV73NigQ4F2v87OG2oXM6tDG825yEd91DtaV98Iu88GiootZ8s+eNi8n3y4fJOLreHhJelANdsxGyHrkVAo1JasFU8iiSUjjv/86/+6vWgRqEucSOZt52Oceo5sgroTaI8XKntDvTdgcWijkU05tnMmL87/FAeKii2/Smf9FpMmdfvZFUP5WRLt4/PqgWq2YzRC1ieh/Cx8Q9ayzyfymyjF94EiUI9wIJlN1OcWkpZ+PzbUvLYrgfb5SQ+AUaAL7xMOJLNNJ+uYcZSZnAn0OM8DDMF3gQIAeAsCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIQgUAMAQBAoAYAgCBQAwBIECABiCQAEADEGgAACGIFAAAEMQKACAIccLFABgsSBQAABDjhMoAAA0gUABAAxBoAAAhiBQAABDECgAgCEIFADAEAQKAGAIAgUAMASBAgAYgkABAAxBoAAAhiBQAABD/n86mScO4R5NnQAAAABJRU5ErkJggg==" width="672" /></p>
-</div>
-<div id="task-1-1" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Task 1</h2>
-<p><strong>Tail probability with <code>plnorm()</code></strong></p>
-<p><code>plnorm()</code> computes the cumulative distribution function (CDF) for a lognormal distribution. It gives the probability that a lognormally distributed random variable is less than or equal to a certain value.</p>
-<p>❓ Question a: If a new ignition starts in a <strong>High-hazard area</strong>, what is the probability that its 8-hour straight-line spread is at least 10 km?</p>
-<hr />
-<p>Let <span class="math inline">\(X\)</span> be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose <span class="math inline">\(X\)</span> has the probability density function <span class="math inline">\(\mathcal{f_{high}}(x)\)</span>. Then for any two distances <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with <span class="math inline">\(0 \leq a \leq b\)</span>,</p>
-<p><span class="math display">\[ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. \]</span></p>
-<p>In particular, the probability that the 8-hour straight-line spread is at least 10 km is given by</p>
-<p><span class="math display">\[ P(X \geq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, \]</span></p>
-<p>and in this problem, <span class="math inline">\(\mathcal{f_{high}}(x)\)</span> is the density of a lognormal distribution.</p>
-<hr />
-<p>Task instructions</p>
-<ol style="list-style-type: decimal">
-<li><p>Treat <span class="math inline">\(X\)</span> as the 8-hour distance (km) for a new ignition in a High-hazard area.</p></li>
-<li><p>Model <span class="math inline">\(X\)</span> with a lognormal distribution using the <strong>High</strong> row’s <strong>Mean log</strong> and <strong>SD log</strong> from <strong>Table 1</strong>.</p></li>
-<li><p>Use <code>plnorm()</code> with <code>lower.tail = FALSE</code> to compute<br />
-<span class="math inline">\(P(X \geq 10) = P(X &gt; 10)\)</span>.</p></li>
-<li><p>Store the result as <strong><code>p_high_exact</code></strong>.</p></li>
-<li><p>Check both the raw probability and the corresponding percentage.</p></li>
-</ol>
-<p>🎯 <strong>Goal.</strong><br />
-In your own words, state what you are finding the probability of, including time and distance and model type.</p>
-<pre class="r"><code># ⚡ Test: lognormal tail probability for High category
-____  # store p_high_exact, use plnorm(), 10 km threshold, High Mean log, High SD log</code></pre>
-<pre class="r"><code># ✅  Verify: eexamine probability and percentage
-____ # display p_high_exact
-____ # convert p_high_exact to a percentage</code></pre>
-<p>🗣 Comment (TODO).
-Interpret what your probability means for High-hazard ignitions.</p>
-</div>
-<div id="task-2-1" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Task 2</h2>
-<p><code>qlnorm()</code> computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.</p>
-<p>❓ Question b: We’ll treat distances above the 95th percentile as ‘extreme fast runs’. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 5% of the time? In other words, what is the 95th percentile run length?</p>
-<hr />
-<p>Let <span class="math inline">\(X\)</span> be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose <span class="math inline">\(X\)</span> has the probability density function <span class="math inline">\(\mathcal{f_{high}}(x)\)</span>. The cumulative distribution function (CDF) of <span class="math inline">\(X\)</span> is given by</p>
-<p><span class="math display">\[ F(x) = P(X \leq x) = \int_{0}^{x} \mathcal{f_{high}}(t) dt. \]</span></p>
-<p>We define the 95th percentile of <span class="math inline">\(X\)</span>, denoted by <span class="math inline">\(q_{0.95}\)</span> of this distribution to be the value satisfying</p>
-<p><span class="math display">\[ P(X \leq q_{0.95}) = F(q_{0.95}) = 0.95. \]</span></p>
-<p>equivalently,</p>
-<p><span class="math display">\[
-\int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx = 0.95
-\]</span></p>
-<p>In particular, the 95th percentile of the 8-hour straight-line spread distance for new ignitions in High-hazard areas is given by</p>
-<p><span class="math display">\[ q_{0.95} = F^{-1}(0.95), \]</span></p>
-<p>and in this problem <span class="math inline">\(\mathcal{f_{high}}(x)\)</span> is the density of a lognormal distribution.</p>
-<hr />
-<p><strong>Task instructions</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Continue modeling the High-hazard 8-hour distance <span class="math inline">\(X\)</span> with a lognormal distribution.</p></li>
-<li><p>Use <code>qlnorm()</code> to find the 95th percentile distance (km) for <span class="math inline">\(X\)</span>.</p></li>
-<li><p>Use the High row’s Mean log and SD log from Table 1.</p></li>
-<li><p>Store the result as <code>q95_high</code>.</p></li>
-<li><p>Check that this distance is plausible given the High category’s mean and SD.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below.</p>
-<pre class="r"><code># ⚡ Test: 95th percentile distance for High category
-____ # store q95_high, use qlnorm() with p = 0.95, High Mean log, High SD log</code></pre>
-<pre class="r"><code># ✅  Verify: print and sanity-check the 95th percentile
-____ # display q95_high</code></pre>
-<p>🗣 Comment (TODO).
-Explain in words what this percentile distance means in the context of High-hazard ignitions.</p>
-</div>
-<div id="task-3-1" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Task 3</h2>
-<p><code>dlnorm()</code> computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.</p>
-<p>❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? <em>Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point.</em></p>
-<hr />
-<p>Let <span class="math inline">\(X\)</span> be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose <span class="math inline">\(X\)</span> has the probability density function <span class="math inline">\(\mathcal{f_{high}}(x)\)</span>. Then for any two distances <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with <span class="math inline">\(0 \leq a \leq b\)</span>,</p>
-<p><span class="math display">\[ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. \]</span></p>
-<p>The values <span class="math inline">\(\mathcal{f_{high}}(x)\)</span> are densities, not probabilities. They represent the height of the distribution at the point x. In particular, the density at 3 km and 10 km are given by</p>
-<p><span class="math display">\[ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). \]</span></p>
-<hr />
-<p><strong>Task instructions</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Under the High-hazard lognormal model, use <code>dlnorm()</code> to compute the density at 3 km and 10 km.</p></li>
-<li><p>Use the High row’s Mean log and SD log from Table 1.</p></li>
-<li><p>Store the results as <code>d_3</code> and <code>d_10</code>.</p></li>
-<li><p>Compare <code>d_3</code> and <code>d_10</code> to decide which distance is more locally likely.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model.</p>
-<pre class="r"><code># ⚡ Test: compare densities at 3 km and 10 km
-____ # compute d_3 using dlnorm() at 3 km with High Mean log, High SD log
-____ # compute d_10 using dlnorm() at 10 km with High Mean log, High SD log</code></pre>
-<pre class="r"><code># ✅ Checks: print and compare heights
-
-____ # display d_3
-____ # display d_10</code></pre>
-<p>🗣 Comment (TODO).
-Use your two density values to describe which distance is more locally likely and what that implies.</p>
-</div>
-<div id="task-4-1" class="section level2" number="4.6">
-<h2><span class="header-section-number">4.6</span> Task 4</h2>
-<p><code>rlnorm()</code> generates random numbers from a lognormal distribution. <strong>Note</strong>: This task has three parts.</p>
-<p>❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would be classified as ‘fast-growing’ (≥10 km in 8 hours)?</p>
-<hr />
-<p>Let <span class="math inline">\(X\)</span> be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Assume</p>
-<p><span class="math display">\[ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ sdlog  High}), \]</span></p>
-<p>with density function <span class="math inline">\(\mathcal{f_{high}}(x)\)</span> and CDF <span class="math inline">\(F_{high}(x)\)</span>.</p>
-<p>The probability that a single new ignition is ‘fast-growing’ (i.e., spreads 10 km or more in 8 hours) is given by</p>
-<p><span class="math display">\[ P(X \geq 10) = 1 - F_{high}(10)\]</span></p>
-<p>Now suppose we observe (or simulate) <span class="math inline">\(n = 450\)</span> new ignitions in High-hazard areas this season. Let <span class="math inline">\(X_1, X_2, \ldots, X_{450}\)</span> be random variables, each with the same lognormal distribution as <span class="math inline">\(X\)</span>.</p>
-<p>Define indicator variables for ‘fast-growing’ ignitions:</p>
-<p><span class="math display">\[ I_i = \begin{cases} 1 &amp; \text{if } X_i \geq 10 \\ 0 &amp; \text{if } X_i &lt; 10 \end{cases} \quad i = 1,\dots,450.\]</span></p>
-<p>Then, the total number of ‘fast-growing’ ignitions, <span class="math inline">\(S\)</span>, is given by</p>
-<p><span class="math display">\[ S = \sum_{i=1}^{450} I_i \]</span></p>
-<p>Each <span class="math inline">\(I_i\)</span> is a Bernoulli random variable with success probability <span class="math inline">\(P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),\)</span>. Therefore, the <strong>theoretical expected number</strong> of ‘fast-growing’ ignitions is</p>
-<p><span class="math display">\[ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). \]</span></p>
-<hr />
-<p>In Tasks 4.1 and 4.2, you will simulate one season of 450 ignitions and count how many simulated ignitions are fast-growing. This simulated count may differ from the theoretical expected value.</p>
-<div id="task-4.1" class="section level3" number="4.6.1">
-<h3><span class="header-section-number">4.6.1</span> Task 4.1</h3>
-<p><strong>Simulate High-hazard distances</strong></p>
-<p>Task instructions</p>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>rlnorm()</code> to simulate 450 independent 8-hour distances for ignitions in the High category.</p></li>
-<li><p>Use the High row’s Mean log and SD log from Table 1.</p></li>
-<li><p>Set a seed with <code>set.seed(2025)</code> for reproducibility.</p></li>
-<li><p>Store the simulated distances in a vector <code>High_Lognorm</code>.</p></li>
-<li><p>Summarize the simulated distances to understand the range, center, and skew of this simulated season’s distances.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own sentence(s) goal for Task 4.1.</p>
-<pre class="r"><code># ⚡ Test: simulate 8-hour distances for High category
-____ # set a seed for reproducibility
-____ # store High_Lognorm, use rlnorm() to generate 450 values with High Mean log, High SD log</code></pre>
-<pre class="r"><code># ✅  Verify: look at basic summaries
-____ # summarize High_Lognorm (e.g., summary())
-____ # confirm the length of High_Lognorm is 450)</code></pre>
-<p>🗣 Comment (TODO).
-Describe briefly how the simulated distances behave (range, skew, center).</p>
-</div>
-<div id="task-4.2" class="section level3" number="4.6.2">
-<h3><span class="header-section-number">4.6.2</span> Task 4.2</h3>
-<p><strong>Count fast-growing ignitions</strong> (≥10 km)</p>
-<p><strong>Task instructions</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Define a “fast-growing” ignition as one with an 8-hour distance ≥ 10 km.</p></li>
-<li><p>Use a logical condition on <code>High_Lognorm</code> to identify fast-growing runs.</p></li>
-<li><p>Use <code>sum()</code> on that logical vector to count how many simulated ignitions are fast-growing.</p></li>
-<li><p>Store the count as <code>fast_growing_count</code>.</p></li>
-<li><p>Optionally, compute the simulated proportion of fast-growing ignitions and compare it to <code>p_high_exact</code> from Task 1.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own sentence(s) goal for Task 4.2.</p>
-<pre class="r"><code># ⚡ Test: count fast-growing ignitions (≥ 10 km)
-____ # store as fast_growing_count,use sum() to count TRUEs of logical vector </code></pre>
-<pre class="r"><code># ✅  Verify: inspect count (and optional proportion)
-
-____ # display fast_growing_count
-____ # optionally compute the proportion fast_growing_count / length(High_Lognorm)</code></pre>
-<p>🗣 Comment (TODO).
-Explain what your simulated count suggests about how many fast-growing events you might see in a season.</p>
-</div>
-<div id="task-4.3" class="section level3" number="4.6.3">
-<h3><span class="header-section-number">4.6.3</span> Task 4.3</h3>
-<p><strong>Visualize simulated distances</strong></p>
-<p><strong>Task instructions</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>hist()</code> to create a histogram of <code>High_Lognorm</code>.</p></li>
-<li><p>Choose a reasonable bin setting and axis labels.</p></li>
-<li><p>Use the plot to comment on the distribution shape (e.g., skew, tail length).</p></li>
-<li><p>Connect the shape of the histogram to your numeric summaries from Task 4.1.</p></li>
-</ol>
-<p>🎯 Goal.
-Write your own sentence(s) goal for visualizing the simulated High-hazard distances.</p>
-<pre class="r"><code># ⚡/✅ Code histogram of simulated High_Lognorm distances
-____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit</code></pre>
-<p>🗣 Comment (TODO).
-In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model.</p>
-</div>
-</div>
-</div>
-<div id="part-c" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Part C</h1>
+<div id="part-c" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Part C</h1>
 <p><code>rlnorm</code> + <code>replicate()</code></p>
 <p>❓ Question e: In a season with 450 new ignitions <strong>statewide</strong>, what is the probability we see at least 50 fast-growing events (≥10 km in 8 hours) when ignitions can occur in any hazard category according to their statewide area weights?</p>
 <p>Let there be <span class="math inline">\(L\)</span> hazard categories indexed by <span class="math inline">\(i = 1, 2, \ldots, L\)</span> with:</p>
@@ -3711,8 +2947,8 @@ In one sentence, relate the histogram’s shape to your earlier summaries and to
 \frac{1}{S} \sum_{s=1}^{S} \mathbf{1}\{T^{(s)} \ge 50\},
 \]</span></p>
 <p>where <span class="math inline">\(T^{(s)}\)</span> is the simulated count of fast-growing ignitions in season <span class="math inline">\(s\)</span>, and <span class="math inline">\(S\)</span> is the total number of simulated seasons.</p>
-<div id="task-1-2" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Task 1</h2>
+<div id="task-1" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Task 1</h2>
 <p><strong>Create category labels</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3730,8 +2966,8 @@ ____ # display labels</code></pre>
 <p>🗣 Comment (TODO).
 Explain briefly why matching the order and spelling of these labels will matter later.</p>
 </div>
-<div id="task-2-2" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Task 2</h2>
 <p><strong>Create category probabilities</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3747,8 +2983,8 @@ ____ # create vector &lt;- c( ... ) using the Probability column from Table 1</c
 ____ # display vector
 ____ # check that sum() is 1</code></pre>
 </div>
-<div id="task-3-2" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Task 3</h2>
 <p><strong>Create lognormal parameter vectors</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3768,8 +3004,8 @@ ____ # check length of labels vector, with vector 1 and 2.</code></pre>
 <p>🗣 Comment (TODO).
 Describe any pattern you see.</p>
 </div>
-<div id="task-4-2" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Task 4</h2>
 <p><strong>Set global simulation constants</strong></p>
 <p>Task instructions</p>
 <ol style="list-style-type: decimal">
@@ -3789,8 +3025,8 @@ ____ # display N
 ____ # display S
 ____ # display k</code></pre>
 </div>
-<div id="task-5-1" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Task 5</h2>
+<div id="task-5" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Task 5</h2>
 <p><strong>Sample categories for one season</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3810,8 +3046,8 @@ ____ # use table() to see counts per category</code></pre>
 <p>🗣 Comment (TODO).
 Compare your simulated category counts to the theoretical proportions from prob.</p>
 </div>
-<div id="task-6" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Task 6</h2>
+<div id="task-6" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Task 6</h2>
 <p><strong>Draw distances for one season</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3832,8 +3068,8 @@ ____ # summarize d </code></pre>
 <p>🗣 Comment (TODO).
 Describe what you notice about the distribution of distances across all categories.</p>
 </div>
-<div id="task-7" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> Task 7</h2>
+<div id="task-7" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Task 7</h2>
 <p><strong>Count fast runs for one season</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3853,8 +3089,8 @@ ____ # optionally compute mean() of fast_flags_one to get proportion</code></pre
 <p>🗣 Comment (TODO).
 Comment on how many fast runs you saw in this particular simulated season.</p>
 </div>
-<div id="task-8" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Task 8</h2>
+<div id="task-8" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Task 8</h2>
 <p><strong>Bundle one-season logic in a single block</strong></p>
 <p>Braces <code>{ ... }</code> group several lines together so they act as one expression and return the final result.</p>
 <p><strong>Task instructions</strong></p>
@@ -3884,8 +3120,8 @@ ____ # display fast_count_one</code></pre>
 Explain why having this one-season block is useful when you move to many seasons.</p>
 <p>Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 </div>
-<div id="task-9" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Task 9</h2>
+<div id="task-9" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Task 9</h2>
 <p><strong>Use <code>replicate()</code> to simulate many seasons</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3911,8 +3147,8 @@ ____ # compute mean() for Monte Carlo estimate of P(T &gt;= 50)  </code></pre>
 Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words.</p>
 <p>Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.</p>
 </div>
-<div id="task-10" class="section level2" number="5.10">
-<h2><span class="header-section-number">5.10</span> Task 10</h2>
+<div id="task-10" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Task 10</h2>
 <p><strong>Visualize the distribution of seasonal fast counts</strong></p>
 <p><strong>Task instructions</strong></p>
 <ol style="list-style-type: decimal">
@@ -3937,8 +3173,8 @@ ____ # display the histogram</code></pre>
 In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires.</p>
 </div>
 </div>
-<div id="save-and-upload" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Save and Upload</h1>
+<div id="save-and-upload" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Save and Upload</h1>
 <p>Submit your (1) completed assignment notebook <code>QMD</code> (2) rendered <code>HTML</code> and (3) environment (<code>RData</code>) to appropriate Canvas pages, as directed.</p>
 </div>
 

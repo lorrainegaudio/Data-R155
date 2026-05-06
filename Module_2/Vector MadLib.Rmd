@@ -83,10 +83,13 @@ This coding challenge is designed to deepen your understanding of vectors in R. 
 
 In this activity, you will practice how to:
 
-- 🔨 Build and inspect vectors: numeric, integer, logical, and character
-- 🔧 Use logical operators to create logical vectors
-- 🪄 Convert a character vector into factor class
-- 💪 Practice reproducible work by fixing errors and documenting what happened
+1. 🔨 Build and inspect vectors: numeric, integer, logical, and character
+
+2.  🔧 Use logical operators to create logical vectors
+
+3. 🪄 Convert a character vector into factor class
+
+4. 💪 Practice reproducible work by fixing errors and documenting what happened
 
 ## How to complete this activity
 

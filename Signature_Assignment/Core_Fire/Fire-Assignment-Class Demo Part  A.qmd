@@ -1,6 +1,7 @@
 ---
 title: "Wildfire"
-author: "Lorraine Gaudio"
+subtitle: "Part A: Explore and Wrangle"
+author: "YOUR NAME"
 date: today
 format: html
 ---
@@ -46,13 +47,13 @@ nrow(county_raw)
 
 🗣 `county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
 
-whp – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
+`whp` – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
 
-county – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
+`county` – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
 
-county_fips – The county’s 3-digit FIPS code from TIGER/Line.
+`county_fips` – The county’s 3-digit FIPS code from TIGER/Line.
 
-cell_area_km2 – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
+`cell_area_km2` – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
 
 ## Audit Check
 

@@ -28,6 +28,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this activity, you will learn how to make a defensible decision about when AI help supports your learning and when it replaces the learning work you need to do to build coding skill. In R, getting “working code” is not the same thing as understanding why it works and AI can easily create the illusion of competence if you copy solutions. This matters because your long-term ability to work in data analytics depends on you being able to explain and reproduce your work. You will practice a “tenacity-first” approach: attempt first, document what happened, then seek help (including AI) in a way that keeps you accountable for understanding and verification.
 
+By the end of this activity, you will be able to:
+
+1. ⚖️ Distinguish between AI help and AI replacement in an R learning workflow;
+
+2. 🧗 Apply the Tenacity-First AI rule: attempt → document → ask → verify;
+
+3. 🚦 Evaluate whether AI use is appropriate, inappropriate, or conditional in realistic coding scenarios;
+
+4. 🎨 Create an original vignette that gives classmates enough context to evaluate AI use;
+
+5. 🔍 Propose a verification plan for checking AI-supported code, explanations, or debugging advice.
+
 # AI, Tenacity, and Human-Centered Learning
 
 In this course, you are the learner and decision-maker. AI is useful, fast, and sometimes wrong. A human-centered approach means:
